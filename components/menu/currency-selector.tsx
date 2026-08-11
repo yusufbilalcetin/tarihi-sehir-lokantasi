@@ -1,7 +1,8 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
-import { Check, ChevronDown, Search, X } from "lucide-react";
+import { useState } from "react";
+import Image from "next/image";
+import { Check, ChevronDown, X } from "lucide-react";
 import {
   Dialog,
   DialogClose,
@@ -19,29 +20,44 @@ const currencyOptions: Array<{
   id: MenuCurrency;
   symbol: string;
   name: string;
+  imageSrc: string;
+  imageAlt: string;
 }> = [
-  { id: "TRY", symbol: "₺", name: "Türk Lirası" },
-  { id: "USD", symbol: "$", name: "Amerikan Doları" },
-  { id: "EUR", symbol: "€", name: "Euro" },
+  {
+    id: "TRY",
+    symbol: "₺",
+    name: "Türk Lirası",
+    imageSrc: "/images/currency/try-1-lira.webp",
+    imageAlt: "1 Türk lirası madeni para",
+  },
+  {
+    id: "USD",
+    symbol: "$",
+    name: "Amerikan Doları",
+    imageSrc: "/images/currency/usd-1-dollar.webp",
+    imageAlt: "1 Amerikan doları banknotu",
+  },
+  {
+    id: "EUR",
+    symbol: "€",
+    name: "Euro",
+    imageSrc: "/images/currency/eur-1-euro.webp",
+    imageAlt: "1 euro madeni para",
+  },
 ];
 
-function CurrencyThumbnail({ id, symbol }: { id: MenuCurrency; symbol: string }) {
+function CurrencyThumbnail({ src, alt }: { src: string; alt: string }) {
   return (
     <span
-      aria-hidden="true"
-      className={cn(
-        "relative flex h-9 w-14 shrink-0 items-center justify-center overflow-hidden rounded-lg border shadow-sm",
-        id === "TRY" && "border-[#B98A87] bg-[#F0D9D1] text-[#7A2029]",
-        id === "USD" && "border-[#9CAE91] bg-[#DCE7D4] text-[#35563D]",
-        id === "EUR" && "border-[#9EADC5] bg-[#DCE4F0] text-[#243F70]",
-      )}
+      className="relative h-9 w-14 shrink-0 overflow-hidden rounded-lg border border-[#D4C2AA] bg-[#F7ECDD] shadow-[0_2px_7px_rgba(64,48,31,0.12)]"
     >
-      <span className="absolute inset-1 rounded-[5px] border border-current/25" />
-      <span className="absolute start-1.5 size-2 rounded-full border border-current/25" />
-      <span className="absolute end-1.5 size-2 rounded-full border border-current/25" />
-      <span className="relative text-sm font-black tracking-tight">
-        {id === "TRY" ? symbol : `${symbol}1`}
-      </span>
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        sizes="56px"
+        className="object-cover"
+      />
     </span>
   );
 }
@@ -49,33 +65,17 @@ function CurrencyThumbnail({ id, symbol }: { id: MenuCurrency; symbol: string })
 export function CurrencySelector({ variant = "header" }: { variant?: "header" | "surface" }) {
   const { currency, direction, setCurrency, t } = useMenuPreferences();
   const [open, setOpen] = useState(false);
-  const [query, setQuery] = useState("");
-  const searchInputRef = useRef<HTMLInputElement>(null);
   const selected = currencyOptions.find((option) => option.id === currency)!;
-  const filteredOptions = useMemo(() => {
-    const normalizedQuery = query.trim().toLocaleLowerCase("tr-TR");
-    if (!normalizedQuery) return currencyOptions;
-
-    return currencyOptions.filter((option) =>
-      `${option.symbol} ${option.id} ${option.name}`
-        .toLocaleLowerCase("tr-TR")
-        .includes(normalizedQuery),
-    );
-  }, [query]);
 
   function selectCurrency(nextCurrency: MenuCurrency) {
     setCurrency(nextCurrency);
     setOpen(false);
-    setQuery("");
   }
 
   return (
     <Dialog
       open={open}
-      onOpenChange={(nextOpen) => {
-        setOpen(nextOpen);
-        if (!nextOpen) setQuery("");
-      }}
+      onOpenChange={setOpen}
     >
       <DialogTrigger
         aria-label={t("currencyLabel")}
@@ -94,7 +94,6 @@ export function CurrencySelector({ variant = "header" }: { variant?: "header" | 
       <DialogContent
         dir={direction}
         showCloseButton={false}
-        initialFocus={searchInputRef}
         className="flex max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] max-w-[32rem] flex-col gap-0 overflow-hidden rounded-[24px] border border-[#D8C7AF] bg-[#F8F0E4] p-0 text-[#292D25] shadow-[0_24px_70px_rgba(24,30,23,0.24)] sm:max-h-[82dvh] sm:max-w-[32rem]"
       >
         <DialogHeader className="relative items-center gap-1 px-14 pb-4 pt-5 text-center sm:px-16 sm:pt-6">
@@ -112,42 +111,9 @@ export function CurrencySelector({ variant = "header" }: { variant?: "header" | 
           </DialogClose>
         </DialogHeader>
 
-        <div className="border-y border-[#DFD1BD] bg-[#F8F0E4]/96 px-5 py-3 backdrop-blur-sm sm:px-6">
-          <label className="relative block">
-            <span className="sr-only">Döviz ara</span>
-            <Search
-              className="pointer-events-none absolute start-3.5 top-1/2 size-5 -translate-y-1/2 text-burgundy"
-              aria-hidden="true"
-            />
-            <input
-              ref={searchInputRef}
-              type="search"
-              value={query}
-              onChange={(event) => setQuery(event.target.value)}
-              placeholder="Döviz ara..."
-              autoComplete="off"
-              className="h-12 w-full rounded-2xl border border-[#CDBDA7] bg-[#FFFDF8] ps-11 pe-11 text-base text-[#292D25] outline-none placeholder:text-[#776D62] focus:border-burgundy focus:ring-2 focus:ring-burgundy/20"
-            />
-            {query ? (
-              <button
-                type="button"
-                onClick={() => setQuery("")}
-                aria-label={t("clearSearch")}
-                className="absolute end-2 top-1/2 inline-flex size-8 -translate-y-1/2 items-center justify-center rounded-full text-[#70665C] outline-none transition-colors hover:bg-[#EFE4D4] focus-visible:ring-2 focus-visible:ring-burgundy"
-              >
-                <X className="size-4" aria-hidden="true" />
-              </button>
-            ) : null}
-          </label>
-        </div>
-
-        <p className="sr-only" aria-live="polite">
-          {query ? `${filteredOptions.length} döviz bulundu` : ""}
-        </p>
-        <div className="menu-dialog-scroll min-h-0 flex-1 overflow-y-auto overscroll-contain p-4 sm:p-5">
-          {filteredOptions.length > 0 ? (
-            <div className="grid gap-2" role="listbox" aria-label="Döviz seçenekleri">
-              {filteredOptions.map((option) => {
+        <div className="menu-dialog-scroll min-h-0 flex-1 overflow-y-auto overscroll-contain border-t border-[#DFD1BD] p-4 sm:p-5">
+          <div className="grid gap-2" role="listbox" aria-label="Döviz seçenekleri">
+              {currencyOptions.map((option) => {
                 const isSelected = currency === option.id;
                 return (
                   <button
@@ -163,7 +129,7 @@ export function CurrencySelector({ variant = "header" }: { variant?: "header" | 
                         : "border-[#DED0BC] bg-[#FFFDF8] hover:border-copper/70 hover:bg-[#F7EEDF]",
                     )}
                   >
-                    <CurrencyThumbnail id={option.id} symbol={option.symbol} />
+                    <CurrencyThumbnail src={option.imageSrc} alt={option.imageAlt} />
                     <span className="min-w-0">
                       <span dir="ltr" className="block text-sm font-bold text-[#292D25]">
                         {option.symbol} {option.id}
@@ -178,13 +144,7 @@ export function CurrencySelector({ variant = "header" }: { variant?: "header" | 
                   </button>
                 );
               })}
-            </div>
-          ) : (
-            <div className="px-6 py-10 text-center">
-              <p className="font-bold text-[#292D25]">Döviz bulunamadı.</p>
-              <p className="mt-1 text-sm text-[#70665C]">TRY, USD veya EUR koduyla aramayı deneyin.</p>
-            </div>
-          )}
+          </div>
         </div>
       </DialogContent>
     </Dialog>
