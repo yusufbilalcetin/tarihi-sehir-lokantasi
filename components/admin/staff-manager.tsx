@@ -39,7 +39,17 @@ const permissions: StaffPermission[] = [
   "Rapor görüntüle",
 ];
 
-const roles: StaffRole[] = ["Admin", "Garson", "Şef Garson", "Mutfak", "Kasa"];
+const roleOptions: { value: StaffRole; label: string }[] = [
+  { value: "ADMIN", label: "Yönetici" },
+  { value: "Garson", label: "Garson" },
+  { value: "Şef Garson", label: "Şef Garson" },
+  { value: "Mutfak", label: "Mutfak" },
+  { value: "Kasa", label: "Kasa" },
+];
+
+function getRoleLabel(role: StaffRole): string {
+  return roleOptions.find((option) => option.value === role)?.label ?? role;
+}
 
 export function StaffManager() {
   const [staff, setStaff] = useState<StaffUser[]>(initialStaff);
@@ -89,7 +99,7 @@ export function StaffManager() {
       toast.error("Ad soyad ve personel kodunu girin.");
       return;
     }
-    setStaff((current) => [...current, { id: `staff-${Date.now()}`, name: newName.trim(), code: newCode.trim(), role: newRole, active: true, phone: newPhone.trim() || "Belirtilmedi", shift: "10:00 - 18:00", permissions: ["Sipariş görüntüle"] }]);
+    setStaff((current) => [...current, { id: `staff-${Date.now()}`, name: newName.trim(), code: newCode.trim(), role: newRole, roleLabel: getRoleLabel(newRole), active: true, phone: newPhone.trim() || "Belirtilmedi", shift: "10:00 - 18:00", permissions: ["Sipariş görüntüle"] }]);
     setDialogOpen(false);
     toast.success("Personel demo listesine eklendi.");
   }
@@ -116,7 +126,7 @@ export function StaffManager() {
           </div>
           <NativeSelect value={role} onChange={(event) => setRole(event.target.value as "all" | StaffRole)} className="sm:w-48" aria-label="Rol filtresi">
             <option value="all">Tüm roller</option>
-            {roles.map((item) => <option key={item} value={item}>{item}</option>)}
+            {roleOptions.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
           </NativeSelect>
         </DataToolbar>
 
@@ -128,7 +138,7 @@ export function StaffManager() {
                   <Avatar size="lg"><AvatarFallback className="bg-olive text-xs font-extrabold text-cream">{getInitials(user.name)}</AvatarFallback></Avatar>
                   <span className="min-w-0"><span className="block truncate text-sm font-extrabold">{user.name}</span><span className="mt-0.5 block text-xs text-muted-foreground">Kod: {user.code}</span></span>
                 </button>
-                <div><Badge variant="outline" className="bg-background">{user.role}</Badge></div>
+                <div><Badge variant="outline" className="bg-background">{user.roleLabel}</Badge></div>
                 <div className="text-xs"><p className="font-bold">{user.shift}</p><p className="mt-1 truncate text-muted-foreground">{user.phone}</p></div>
                 <label className="flex items-center gap-2 text-xs font-bold"><Switch checked={user.active} onCheckedChange={(checked) => toggleActive(user.id, checked)} aria-label={`${user.name} aktiflik durumu`} /> {user.active ? "Aktif" : "Pasif"}</label>
                 <Button variant="outline" size="sm" className="w-full sm:w-auto" onClick={() => setSelectedId(user.id)}><UserRoundCog /> Yetkiler</Button>
@@ -147,7 +157,7 @@ export function StaffManager() {
               <SheetHeader className="border-b px-5 py-5 pr-12">
                 <div className="flex items-center gap-3">
                   <Avatar size="lg"><AvatarFallback className="bg-olive font-extrabold text-cream">{getInitials(selected.name)}</AvatarFallback></Avatar>
-                  <div><SheetTitle className="text-xl">{selected.name}</SheetTitle><SheetDescription>{selected.role}, personel kodu {selected.code}</SheetDescription></div>
+                  <div><SheetTitle className="text-xl">{selected.name}</SheetTitle><SheetDescription>{selected.roleLabel}, personel kodu {selected.code}</SheetDescription></div>
                 </div>
               </SheetHeader>
               <div className="space-y-6 px-5">
@@ -184,7 +194,7 @@ export function StaffManager() {
             <div className="grid gap-4 py-5 sm:grid-cols-2">
               <Field label="Ad soyad" className="sm:col-span-2"><Input value={newName} onChange={(event) => setNewName(event.target.value)} className="h-10" placeholder="Örn. Selin Aksoy" /></Field>
               <Field label="Personel kodu"><Input value={newCode} onChange={(event) => setNewCode(event.target.value)} className="h-10" placeholder="1048" /></Field>
-              <Field label="Rol"><NativeSelect value={newRole} onChange={(event) => setNewRole(event.target.value as StaffRole)}>{roles.map((item) => <option key={item} value={item}>{item}</option>)}</NativeSelect></Field>
+              <Field label="Rol"><NativeSelect value={newRole} onChange={(event) => setNewRole(event.target.value as StaffRole)}>{roleOptions.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</NativeSelect></Field>
               <Field label="Telefon" className="sm:col-span-2"><Input value={newPhone} onChange={(event) => setNewPhone(event.target.value)} className="h-10" placeholder="05xx xxx xx xx" /></Field>
             </div>
             <DialogFooter><Button type="button" variant="outline" onClick={() => setDialogOpen(false)}>Vazgeç</Button><Button type="submit">Personel Ekle</Button></DialogFooter>
@@ -194,4 +204,3 @@ export function StaffManager() {
     </div>
   );
 }
-

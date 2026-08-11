@@ -80,7 +80,7 @@ export interface RestaurantTable {
   orderId?: string;
 }
 
-export type StaffRole = "Admin" | "Garson" | "Şef Garson" | "Mutfak" | "Kasa";
+export type StaffRole = "ADMIN" | "Garson" | "Şef Garson" | "Mutfak" | "Kasa";
 
 export type StaffPermission =
   | "Sipariş görüntüle"
@@ -96,6 +96,7 @@ export interface StaffUser {
   name: string;
   code: string;
   role: StaffRole;
+  roleLabel: string;
   active: boolean;
   phone: string;
   shift: string;

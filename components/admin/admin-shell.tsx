@@ -35,6 +35,8 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { getInitials } from "@/lib/format";
+import { adminUser } from "@/lib/mock-data";
 import { cn } from "@/lib/utils";
 
 interface NavItem {
@@ -69,6 +71,8 @@ const titleByPath = [...primaryNav, ...catalogNav, ...managementNav].reduce<Reco
   },
   {},
 );
+
+const adminInitials = getInitials(adminUser.name);
 
 function NavGroup({
   label,
@@ -140,11 +144,11 @@ function SidebarContent({ pathname, onNavigate }: { pathname: string; onNavigate
         </Link>
         <div className="mt-3 flex items-center gap-3 px-2 py-1.5">
           <div className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-sidebar-primary text-sm font-bold text-sidebar-primary-foreground">
-            NÇ
+            {adminInitials}
           </div>
           <div className="min-w-0 flex-1">
-            <p className="truncate text-sm font-semibold">Nermin Çelik</p>
-            <p className="truncate text-xs text-sidebar-foreground/50">Yönetici</p>
+            <p className="truncate text-sm font-semibold">{adminUser.name}</p>
+            <p className="truncate text-xs text-sidebar-foreground/50">{adminUser.roleLabel}</p>
           </div>
           <SlidersHorizontal className="size-4 text-sidebar-foreground/50" />
         </div>
@@ -211,11 +215,11 @@ export function AdminShell({ children }: { children: ReactNode }) {
             <Bell className="size-[18px]" />
             <span className="absolute right-2 top-2 size-2 rounded-full bg-burgundy ring-2 ring-card" />
           </Button>
-          <Button variant="ghost" className="hidden h-10 gap-2 px-2 sm:flex" aria-label="Kullanıcı menüsü">
-            <span className="flex size-8 items-center justify-center rounded-lg bg-olive text-xs font-bold text-cream">NÇ</span>
+          <Button variant="ghost" className="hidden h-10 gap-2 px-2 sm:flex" aria-label={`${adminUser.name} kullanıcı menüsü`}>
+            <span className="flex size-8 items-center justify-center rounded-lg bg-olive text-xs font-bold text-cream">{adminInitials}</span>
             <span className="hidden text-left xl:block">
-              <span className="block text-xs font-bold">Nermin Çelik</span>
-              <span className="block text-[11px] text-muted-foreground">Admin</span>
+              <span className="block text-xs font-bold">{adminUser.name}</span>
+              <span className="block text-[11px] text-muted-foreground">{adminUser.roleLabel}</span>
             </span>
             <ChevronDown className="size-4 text-muted-foreground" />
           </Button>

@@ -4,16 +4,17 @@ import { AdminKpi, AdminPageHeader, AdminPanel } from "@/components/admin/admin-
 import { DashboardSalesChart } from "@/components/admin/admin-charts";
 import { Button } from "@/components/ui/button";
 import { StatusBadge } from "@/components/shared/status-badge";
-import { bestSellers, orders, restaurantTables } from "@/lib/mock-data";
+import { adminUser, bestSellers, orders, restaurantTables } from "@/lib/mock-data";
 import { formatCurrency } from "@/lib/format";
 
 export function DashboardView() {
   const activeTables = restaurantTables.filter((table) => table.status !== "available").slice(0, 6);
+  const adminFirstName = adminUser.name.split(" ")[0];
 
   return (
     <div className="space-y-6">
       <AdminPageHeader
-        title="Günün özeti"
+        title={`Merhaba ${adminFirstName}`}
         description="Salon, mutfak ve satış hareketlerini tek ekrandan takip edin. Veriler demo amacıyla hazırlanmıştır."
         actions={
           <Button render={<Link href="/admin/reports" />} nativeButton={false} variant="outline" className="h-10 bg-card">
