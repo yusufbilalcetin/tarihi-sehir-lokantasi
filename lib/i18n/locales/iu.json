@@ -1,0 +1,349 @@
+{
+  "locale": "iu",
+  "ui": {
+    "menu": "ᓂᕆᔭᒃᓴᑦ",
+    "search": "ᕿᓂᕐᓗᒍ menu...",
+    "searchLabel": "ᕿᓂᕐᓗᒍ menu",
+    "categories": "ᖃᓄᐃᑦᑑᓂᖏᑦ",
+    "categoryIntro": "ᓂᕈᐊᕐᓗᑎᑦ ᑎᐱᖓᓂᒃ ᑭᐳᒧᑦ.",
+    "categoryNavigation": "ᓂᕆᔭᒃᓴᑦ ᖃᓄᐃᑦᑑᓂᖏᑦ",
+    "openCategory": "ᒪᑐᐃᖓᔪᑦ {name}, {count}",
+    "items": "ᐃᓗᓕᖏᑦ",
+    "item": "ᐃᓗᓕᖏᑦ",
+    "searchResults": "ᕿᓂᖅᑕᐅᔪᑦ ᓴᖅᑭᑦᑐᑦ",
+    "productsFound": "{count} ᓇᓂᔭᐅᔪᑦ",
+    "backToCategories": "ᐅᑎᕐᕕᒋᓗᒋᑦ ᖃᓄᐃᑦᑑᓂᖏᑦ",
+    "backToCategory": "ᐅᑎᕐᕕᒋᓗᒍ {name}",
+    "clearSearch": "ᑐᑭᓯᓇᑦᑎᐊᖅᑐᒥᒃ ᕿᓂᕐᓂᖅ",
+    "noResults": "ᐊᔾᔨᒌᒃᑐᓂᒃ ᐱᖁᑎᓂᒃ ᓇᓂᓯᔪᖃᙱᑦᑐᖅ",
+    "noResultsDescription": "ᐊᓯᐊᓂᒃ ᕿᓂᕆᐊᒃᑲᓐᓂᕆᑦ ᐅᕝᕙᓘᓐᓃᑦ ᐅᑎᕐᕕᒋᓗᒋᑦ ᖃᓄᐃᑦᑑᓂᖏᑦ.",
+    "order": "ᑎᓕᓯᔾᔪᑎᒐ",
+    "waiter": "ᐱᔨᑲᑖᖅ",
+    "bill": "ᐊᑭᓕᒃᓴᖅ",
+    "addToCart": "ᐃᓚᓗᒍ ᑎᑭᓴᖅᑕᐅᔪᒧᑦ",
+    "addedToCart": "{name} ᐃᓚᔭᐅᓗᓂ ᑎᑭᓴᖅᑕᕐᓄᑦ.",
+    "removeFromCart": "ᐲᕐᓗᒍ {name}",
+    "soldOut": "ᐅᓪᓗᒥ ᑕᑕᓗᐊᕈᓐᓃᖅᑐᖅ",
+    "productDetails": "ᒪᑐᐃᙶᖅᑐᑦ ᓇᓗᓇᐃᔭᐅᑎᑦ {name}",
+    "portion": "ᐃᓚᖓ",
+    "standardPortion": "ᐃᓚᔭᐅᒐᔪᒃᑐᑦ",
+    "allergens": "ᑎᒥᒧᑦ ᓈᒻᒪᒍᓐᓃᕈᑕᐅᓲᑦ",
+    "noAllergens": "ᑎᒥᒧᑦ ᓈᒻᒪᒍᓐᓃᕈᑕᐅᔪᓐᓇᖅᑐᓂᑦ ᐱᑕᖃᙱᑦᑐᖅ",
+    "productNote": "ᖃᐅᔨᒪᔭᐅᔭᕆᐊᓕᒃ",
+    "productNotePlaceholder": "ᓲᕐᓗ ᐃᒻᒨᔮᖅᑐᖃᙱᓪᓗᓂ, ᐊᑏ",
+    "decreaseQuantity": "ᐅᓄᕈᓐᓃᕆᐊᕐᓗᒋᑦ ᖃᔅᓯᐅᓂᖏᑦ",
+    "increaseQuantity": "ᐅᓄᖅᓯᒋᐊᕐᓗᒋᑦ ᐅᓄᕐᓂᖏᑦ",
+    "each": "ᐊᑐᓂ",
+    "note": "ᖃᐅᔨᒪᔭᕆᐊᓕᒃ",
+    "subtotal": "ᑲᑎᑕᐅᓂᖏᑦ",
+    "serviceFee": "ᐱᔨᑦᑎᕋᕐᓂᕐᒧᑦ ᐊᑭᓕᒃᑲᓐᓂᕆᐊᓕᒃ",
+    "total": "ᑲᑎᖦᖢᒋᑦ",
+    "sendOrder": "ᓇᒃᓯᐅᑎᓗᒍ ᑎᑭᓴᖅᑕᐅᔪᖅ",
+    "orderSent": "ᑎᑭᓴᖅᑕᐃᑦ ᓂᕿᓕᐅᕐᕕᖕᒧᑦ ᐊᐅᓪᓚᖅᑎᑕᐅᓚᐅᖅᑐᖅ",
+    "orderTracking": "ᑐᔾᔭᕐᓗᒍ ᑎᓕᓯᔾᔪᑎ #{number} ᐅᕙᓂ.",
+    "newItem": "ᐃᓚᓯᒃᑲᓐᓂᕆᑦ",
+    "emptyCart": "ᑎᑭᓴᖅᑕᐃᑦ ᐃᓗᓕᖃᙱᓚᖅ",
+    "emptyCartDescription": "ᓂᖀᑦ ᓂᕈᐊᖅᑕᑎᑦ ᓱᔾᔪᑎᓂᑦ ᓴᖅᑭᓐᓂᐊᖅᑐᑦ ᐅᕙᓂ.",
+    "browseMenu": "ᕿᓂᕐᓗᒍ ᓱᔾᔪᑎ",
+    "orderReceived": "ᑎᑭᓴᖅᑕᐅᔪᖅ",
+    "waiterConfirmed": "ᐅᑕᖅᑭᔨ ᓇᓗᓇᐃᖅᑕᐅᔪᖅ",
+    "preparing": "ᐱᕙᒌᔭᕐᓂᖅ",
+    "ready": "ᐱᔭᕇᖅᓯᒪᔪᖅ",
+    "served": "ᑐᓂᐅᖅᑲᖅᑕᐅᔪᖅ",
+    "preparingDescription": "ᓂᕿᓕᐅᕐᕕᕗᑦ ᑎᑭᓴᐃᕙᓪᓕᐊᓕᖅᐳᑦ.",
+    "orderStatus": "ᑎᑭᓴᖅᑕᐅᔫᑉ ᖃᓄᐃᓕᖓᓂᖓ",
+    "callWaiter": "ᐅᖄᓚᕕᒋᓗᒍ ᐅᑕᖅᑭᔨ",
+    "placeOrder": "ᑎᑭᓴᐃᔪᒪᕗᖓ",
+    "wantWater": "ᐃᒥᕈᒪᔪᖓ",
+    "wantBread": "ᐸᓚᐅᒑᖅᑖᕈᒪᔪᖓ",
+    "wantService": "ᐱᔨᑦᑎᕋᖅᑕᐅᒃᑲᓐᓂᕐᓂᖅ",
+    "other": "ᐊᓯᖏᑦ",
+    "generalRequest": "ᑭᓱᑐᐃᓐᓇᕐᒥᒃ ᑐᒃᓯᕋᕋᒪ",
+    "orderHelp": "ᐃᑲᔪᖅᑕᐅᔭᕆᐊᖃᖅᐳᖓ ᑎᑭᓴᖅᑕᓐᓄᑦ",
+    "waterDescription": "ᐃᒪᕐᒥᒃ ᓇᒃᓴᕐᓂᐊᖅᐳᓯ ᑭᐳᒧᑦ",
+    "breadDescription": "ᓂᐊᖂᔭᕐᒥᒃ ᓇᒃᓴᕐᓂᐊᖅᐳᓯ ᑭᐳᒧᑦ",
+    "serviceDescription": "ᓂᕆᔾᔪᑎᑖᕆᐊᖃᖅᐳᖓ ᐸᓕᐊᒥᒡᓘᓐᓃᑦ",
+    "otherDescription": "ᐊᓯᐊᓂᒃ ᐃᑲᔪᖅᑕᐅᔭᕆᐊᖃᖅᐳᖓ",
+    "waiterHelpTitle": "ᖃᓄᖅ ᐃᑲᔪᕈᓐᓇᖅᐱᑕ?",
+    "waiterHelpDescription": "ᑐᒃᓯᕋᐅᑏᑦ ᓇᒃᓯᐅᔾᔭᐅᓂᐊᖅᑐᖅ {table}.",
+    "waiterRequestSent": "ᑐᒃᓯᕋᖅᑕᐃᑦ ᓇᒃᓯᐅᔾᔭᐅᓚᐅᖅᐳᖅ ᐱᔨᑦᑎᕋᖅᑎᑦᑎᓐᓄᑦ.",
+    "requestBill": "ᑐᒃᓯᕋᕐᓂᖅ ᐱᖁᔭᒃᓴᒥᒃ",
+    "billSent": "ᐊᑭᓕᒐᒃᓴᖅᑖᕈᒪᔾᔪᑎᒋᔭᐃᑦ ᓇᒃᓯᐅᔾᔭᐅᓚᐅᖅᑐᖅ",
+    "billConfirm": "ᑐᒃᓯᕋᕈᒪᕕᓰ ᐱᖁᔭᒃᓴᒥᒃ?",
+    "billSentDescription": "ᓂᕆᔨᕗᑦ ᐱᖃᑎᒋᓂᐊᓕᖅᑕᐃᑦ ᒫᓐᓇᕈᓗᒃ.",
+    "billConfirmDescription": "ᑐᒃᓯᕋᖅᑕᐃᑦ ᐱᔨᑦᑎᕋᖅᑎᒨᑲᐅᑎᒋᓂᐊᖅᐳᖅ. ᐊᑭᓖᔪᓐᓇᖅᐳᑎᑦ ᑭᐳᒥ ᓂᐅᕕᕐᕕᖕᒥᓪᓘᓐᓃᑦ.",
+    "billToast": "ᐊᑭᓕᒐᒃᓴᖅᑖᕈᒪᔾᔪᑎᒋᔭᐃᑦ ᓇᒃᓯᐅᔾᔭᐅᓚᐅᖅᐳᖅ ᐱᔨᑦᑎᕋᖅᑎᑦᑎᓐᓄᑦ.",
+    "backToMenu": "ᐅᑎᕐᕕᒋᓗᒍ menu",
+    "back": "ᑐᓄ",
+    "close": "ᖃᓂᑦᑐᖅ",
+    "yourTable": "ᑭᐳᓯ",
+    "serviceOpen": "ᐱᔨᑦᑎᕋᕐᓂᖅ ᒪᑐᐃᙶᖅᐳᖅ",
+    "slogan": "ᐃᓄᐃᑦ ᒪᒪᖅᓴᐅᑎᑐᖃᖏᑦ • ᒫᓐᓇᓕᓴᐃᑦ ᑭᐳᐃᑦ",
+    "location": "ᐴᓴ, ᐅᔅᒪᖓᔨ",
+    "languageLabel": "ᐅᖃᐅᓯᖅ ᓂᕈᐊᕐᓗᒍ",
+    "currencyLabel": "ᓂᕈᐊᕐᓗᒍ ᑮᓇᐅᔭᖅ",
+    "customerNavigation": "ᓂᐅᕕᖅᐸᒃᑐᓄᑦ ᓇᕿᑦᑕᕆᐊᓕᖕᓂᒃ ᕿᓂᕐᓂᖅ",
+    "approximateCurrency": "ᑲᓇᑕᐅᑉ ᓯᓚᑖᓂᙶᖅᑐᑦ ᑮᓇᐅᔭᖏᑦ ᐊᑭᖏᑦ ᓇᓚᐅᑦᑖᖅᓯᒪᕗᑦ. ᐊᑭᓕᐅᑎᑦ ᐱᓕᕆᐊᖑᓲᑦ ᑐᕇᒃ ᓖᕋᒃᑯᑦ.",
+    "orderSuccess": "ᑎᑭᓴᖅᑕᐃᑦ ᓇᒃᓯᐅᔾᔭᐅᑦᑎᐊᓚᐅᖅᐳᖅ.",
+    "languagePickerTitle": "ᐅᖃᐅᓯᖅ ᓂᕈᐊᕐᓗᒍ",
+    "languagePickerDescription": "ᓂᕈᐊᕐᓗᑎᑦ ᐅᖃᐅᓯᕐᒥᒃ ᐊᑐᕈᒪᔭᕐᓂᒃ menu-ᒧᑦ.",
+    "searchLanguage": "ᕿᓂᕐᓗᒋᑦ ᐅᖃᐅᓰᑦ...",
+    "recommendedLanguages": "ᐊᑐᓕᖁᔭᐅᔪᑦ",
+    "recentLanguages": "ᒫᓐᓇᓕᓴᑦ ᐅᖃᐅᓰᑦ",
+    "allLanguages": "ᐅᖃᐅᓯᓕᒫᑦ",
+    "languageNotFound": "ᐅᖃᐅᓯᖅ ᓇᓂᔭᐅᙱᑦᑐᖅ.",
+    "languageNotFoundDescription": "ᐊᓯᐊᓂᒃ ᐅᖃᐅᓯᕐᒥᒃ ᐊᑎᕐᒥᒃ ᐅᕝᕙᓘᓐᓃᑦ ᓇᓗᓇᐃᒃᑯᑎᒥᒃ ᐆᒃᑐᕐᓗᑎᑦ.",
+    "tableNumber": "ᑎᑎᕋᖅᓯᒪᔪᑦ {number}",
+    "itemCount": "{count}",
+    "splashLabel": "Tarihi Şehir Lokantası ᓴᖅᑭᔮᖅᑐᖅ",
+    "cancel": "ᓄᖅᑲᖅᑎᓪᓗᒍᑦ",
+    "confirmOrder": "ᓇᓗᓇᐃᕐᓗᒍ ᑎᑭᓴᖅᑕᐅᔪᖅ",
+    "orderSummary": "ᑎᑭᓴᖅᑕᐅᔪᑦ ᓇᐃᓈᖅᓯᒪᔪᑦ",
+    "payment": "ᐊᑭᓕᐅᑎᑦ",
+    "tableNotFound": "ᑭᑉᐹᕆᒃᓯᓕᖅᓯᒪᔪᖅ ᓇᓂᔭᐅᙱᑦᑐᖅ.",
+    "invalidQr": "ᐊᑐᙱᑦᑐᖅ QR ᓇᓗᓇᐃᒃᑯᑕᖅ.",
+    "menuUnavailable": "ᓂᕆᔭᒃᓴᑦ ᒫᓐᓇ ᐊᑐᐃᓐᓇᐅᙱᑦᑐᑦ.",
+    "networkError": "ᐱᓕᕆᔨᓄᑦ ᑐᓴᐅᒪᖃᑦᑕᐅᑎᖃᑎᒌᒍᑎᓂᒃ ᑕᒻᒪᖅᑐᖃᓚᐅᖅᐳᖅ.",
+    "productUnavailable": "ᑖᓐᓇ ᒫᓐᓇ ᐊᑐᐃᓐᓇᐅᙱᑦᑐᖅ.",
+    "unableToSendOrder": "ᑎᑭᓴᖅᑕᐅᔪᖅ ᓇᒃᓯᐅᑎᔪᓐᓇᙱᖦᖢᒍ.",
+    "tryAgain": "ᐆᒃᑐᒃᑲᓐᓂᕆᑦ",
+    "somethingWentWrong": "ᖃᓄᐃᑦᑐᖃᑳᓪᓚᒃᑐᖅ.",
+    "loadingLanguage": "ᐴᖅᑲᐃᓂᖅ ᐅᖃᐅᓯᕐᒥᒃ...",
+    "languageLoadError": "ᐅᖃᐅᓯᖅᑕᖅ ᐃᓕᐅᖅᑲᖅᑕᐅᔪᓐᓇᓚᐅᙱᓚᖅ. ᐆᒃᑐᒃᑲᓐᓂᕆᑦ."
+  },
+  "categories": {
+    "soups": "ᖃᔪᐃᑦ",
+    "grill": "ᐆᑦᑎᔾᔪᑎᑦ",
+    "mains": "ᓂᕆᔭᒃᓴᓪᓗᐊᑕᑦ",
+    "drinks": "ᓂᐅᖅᑲᒐᒃᓴᑦ",
+    "kebabs": "Kebabs",
+    "dessert": "ᓰᕐᓇᖅᑐᑦ ᓰᕐᓇᖅᑐᑦ"
+  },
+  "products": {
+    "mercimek": {
+      "name": "lentil ᖃᔪᒃᓴᖅ",
+      "description": "ᐊᖏᕐᕋᒥ ᓴᓇᓯᒪᔪᖅ lentil ᖃᔪᒃᓴᖅ ᓴᓇᔭᐅᓯᒪᓪᓗᓂ ᐊᑐᖅᑕᐅᒐᔪᙱᑦᑐᒥᒃ, ᐱᐊᓂᒃᓯᒪᓪᓗᓂ ᕙᑕᒥᒃ ᑭᓂᖅᑐᓕᖕᒥᒃ."
+    },
+    "tas-kebabi": {
+      "name": "ᐊᕿᒡᒋᕐᔪᐊᖅ ᑐᒃᑐᕙᒃ ᐊᒡᒍᐊᓕᕿᓵᖅ",
+      "description": "ᑐᒃᑐᕙᒃ, ᐱᕈᖅᑐᕕᓃᑦ, ᐊᒻᒪᓗ ᓂᕆᕝᕕᑦᑕ ᓱᒃᑲᐃᑦᑐᒥᒃ ᐆᓯᒪᔪᖅ ᑭᓂᖅᑐᒃᓴᖅ."
+    },
+    "kuzu-tandir": {
+      "name": "ᐃᒐᐅᑉ ᐃᓗᐊᓂ ᐃᒐᓯᒪᔪᖅ ᓛᒻ",
+      "description": "ᓂᕆᕝᕕᑦᑕ ᐊᑎᖓ ᓛᒻ ᑕᓐdoori, ᓱᒃᑲᐃᑦᑐᒥᒃ ᐆᑕᐅᓲᖅ ᐆᓇᓗᐊᙱᖦᖢᓂ."
+    },
+    "pirinc-pilavi": {
+      "name": "ᐊᓛᓰᑦ ᐱᓚᕝ",
+      "description": "ᐸᑕ, ᐊᕿᑦᑐᔮᖅᑐᖅ ᐹᓪᑐ ᐊᓛᓯ ᐱᓚᕝ."
+    },
+    "firin-sutlac": {
+      "name": "ᐊᓛᓯ ᐳᑎᖕ ᐃᒐᐅᑉ ᐃᓗᐊᓂ ᐃᒐᐅᑉ ᐃᓗᐊᓂ",
+      "description": "ᐊᓛᓰᑦ ᐳᑎᖕ ᐃᒐᓯᒪᔪᑦ ᐱᖅᑯᓯᑐᖃᖅᑎᒍᑦ ᐃᒐᓯᒪᓪᓗᑎᒃ, ᖃᐅᑕᒫᑦ ᐸᕙᓘ ᐃᒻᒧᖃᖅᖢᓂ."
+    },
+    "kuru-fasulye": {
+      "name": "ᖃᑯᖅᑕᖅ ᓂᓕᕐᓇᖅ ᐊᒡᒍᐊᓕᕿᓵᖅ ᑐᒃᑐᕙᖕᒥᓪᓗ",
+      "description": "ᐄᔅᐱᕐ ᓂᓕᕐᓇᐃᑦ, ᐊᒡᒍᖅᓯᒪᔪᑦ ᑐᒃᑐᕙᐃᑦ, ᐊᒻᒪᓗ ᓂᕆᕝᕕᖕᒥ ᑐᒫᑐ ᐸᓚᐅᒑᒃᓴᖅ."
+    },
+    "izgara-kofte": {
+      "name": "ᐊᖕᒪᓗᖅᑐᑦ ᓂᖀᑦ ᐆᓯᒪᔪᑦ",
+      "description": "ᓂᕿᒥᒃ ᓂᕿᒥᒃ ᐊᖕᒪᓗᖅᑐᓂᒃ ᓂᕿᖃᖅᖢᓂ ᐸᐸᒥᒃ ᐊᒻᒪᓗ ᑐᒫᑐᒥᒃ."
+    },
+    "ayran": {
+      "name": "ᐃᕿᐊᙳᐊᖅ ᐊᐃᕋᓐ",
+      "description": "ᐱᖅᑯᓯᑐᖃᖅᑎᒍᑦ ᐸᑕᒻ ᐃᒻᒧᒃ ᐊᕿᐊᕈᖃᕐᔪᐊᖅᖢᓂ, ᖃᐅᑕᒫᑦ ᔫᒍᑦ−ᒥᑦ ᓴᓇᓯᒪᔪᖅ."
+    },
+    "ezogelin-corbasi": {
+      "name": "Ezogelin ᖃᔪᒃᓴᖅ",
+      "description": "ᓂᕆᔭᖅᑐᕐᕕᖕᒥ ᖃᔪᓕᐊᕆᔭᐅᓲᑐᖃᖅ ᐊᐅᐸᖅᑐᑦ lentils, bulgur, ᐊᒻᒪ ᐊᓛᓰᑦ ᓱᕕᕐᓇᖅᑐᖃᖅᖢᑎᒃ."
+    },
+    "tarhana-corbasi": {
+      "name": "ᑕᕼᐋᓇ ᖃᔪᒃᓴᖅ",
+      "description": "ᐊᖏᕐᕋᒥ ᓴᓇᓯᒪᔪᖅ ᑕᕼᐋᓇ, ᐋᓇᑐᓕᐊᓐ ᐊᑐᖅᑕᐅᒐᔪᒃᑐᖅ ᓱᒃᑲᐃᑦᑐᒥᒃ ᐆᑕᐅᓪᓗᓂ ᑐᒫᑐᓂᒃ ᐊᒻᒪ ᐸᓂᖅᑎᓯᒪᔪᒥᒃ ᓱᕕᕐᓇᖅᑐᒥᒃ."
+    },
+    "yayla-corbasi": {
+      "name": "ᔫᒍᑦ ᐊᒻᒪ ᐊᓛᓯ ᖃᔪᒃᓴᖅ",
+      "description": "ᓂᕈᒥᓇᑦᑎᐊᖅᑐᖅ ᐊᒻᒪᓗ ᑭᓂᖅᑐᖅ ᔮᓚ ᖃᔪᖅ ᐃᓚᖃᖅᖢᓂ ᔫᒍᑦ, ᐊᓛᓯᒥᒃ, ᐊᒻᒪᓗ ᐸᓂᖅᑐᒥᒃ ᓱᕕᕐᓇᖅᑐᒥᒃ."
+    },
+    "iskembe-corbasi": {
+      "name": "Tripe ᖃᔪᒃᓴᖅ",
+      "description": "ᐃᒻᒧᒃᓯᐅᒐᖅ ᖃᔪᓕᐊᕆᓯᒪᔪᖅ ᒪᒪᖅᓴᐅᑎᖃᖅᖢᓂ ᐊᒻᒪᓗ ᒑᓕᒃ ᕕᓂᒐᒥᒃ."
+    },
+    "dugun-corbasi": {
+      "name": "ᑲᑎᑎᑕᐅᔪᓄᑦ ᖃᔪᒃᓴᖅ",
+      "description": "ᑲᑎᑎᑕᐅᔪᓄᑦ ᖃᔪᒃᓴᖅ ᓴᓇᓯᒪᔪᖅ ᓯᖃᓪᓕᓯᒪᔪᒥᒃ ᓛᒻ ᐊᒻᒪᓗ ᒪᒪᖅᓴᐅᑎᖃᖅᖢᓂ ᓚᒪᓐᒥᒃ ᒪᒪᖅᓴᐅᑎᒥᒃ."
+    },
+    "tavuk-suyu-corbasi": {
+      "name": "ᐊᕿᒡᒋᕐᔪᐊᖅ ᖃᔪᖅ ᖃᔪᖅ",
+      "description": "ᒪᒥᓴᐅᑎ ᖃᔪᖅ ᓴᓇᓯᒪᔪᖅ ᓵᑦᑐᑯᓗᖕᓂᒃ ᐊᕿᒡᒋᕐᔪᐊᑉ ᓂᕿᖓᓂᒃ ᐆᑦᑎᓯᒪᔪᒥᒃ ᐊᒻᒪᓗ ᓯᖃᓪᓕᓯᒪᔪᒥᒃ ᐊᕿᒡᒋᕐᔪᐊᑉ ᓂᕿᖓᓂᒃ."
+    },
+    "domates-corbasi": {
+      "name": "ᑐᒫᑐ ᖃᔪᒃᓴᖅ",
+      "description": "ᑎᐱᖃᑦᑎᐊᖅᖢᓂ ᐆᑕᐅᓪᓗᓂ ᑐᒫᑐᓂᒃ, ᐃᒻᒨᑕᒥᒃ, ᐊᒻᒪᓗ basilic-ᒥᒃ, ᓰᓯᖃᖅᖢᓂ."
+    },
+    "sebze-corbasi": {
+      "name": "ᐱᕈᖅᑐᒥᓂᕐᓃᙶᖅᑐᑦ ᖃᔪᒃᓴᖅ",
+      "description": "ᓂᕆᔭᖅᑐᕐᕕᖕᒥ ᖃᔪᓕᐊᕆᓯᒪᔪᖅ ᐱᕈᖅᑐᕕᓂᕐᓂᒃ ᐃᓚᓯᒪᓪᓗᓂ, ᐅᖅᓱᖃᖅᖢᓂ, ᐊᒻᒪ ᐱᕈᖅᑐᕕᓂᕐᓂᒃ ᐱᕈᖅᑐᕕᓂᕐᓂᒃ."
+    },
+    "beyran-corbasi": {
+      "name": "Spicy Lamb Beyran ᖃᔪᖅ",
+      "description": "ᐊᕕᒃᑐᖅᓯᒪᔪᓂᒃ ᖃᔪᓕᐊᕆᔭᐅᓲᖅ ᐆᓇᖅᓯᑎᓪᓗᒍ ᓛᒻ, ᐊᓛᓯ, ᒑᓕᒃ, ᐊᒻᒪ ᐸᐸ."
+    },
+    "kelle-paca-corbasi": {
+      "name": "ᓂᐊᖁᖅ ᐊᒻᒪ ᑐᕉᑐ ᖃᔪᒃᓴᖅ",
+      "description": "ᓴᐅᓂᓕᒃ ᖃᔪᖅ ᐃᒻᒧᒃᓯᐅᒐᖅ ᐊᒻᒪᓗ ᓂᐊᖁᖓ ᖃᔪᓕᐊᕆᔭᐅᓪᓗᓂ ᐃᑲᕐᕋᒐᓴᖕᓄᑦ."
+    },
+    "sehriye-corbasi": {
+      "name": "Vermicelli ᖃᔪᒃᓴᖅ",
+      "description": "ᖃᐅᑕᒫᑦ ᖃᔪᓕᐅᕐᓂᖅ ᐊᕿᒡᒋᕐᔪᐊᑉ ᖃᔪᖓᓂᒃ ᑐᒫᑐᖃᖅᖢᓂ, vermicelli, ᐊᒻᒪᓗ persil."
+    },
+    "tavuk-sis": {
+      "name": "ᐊᕿᒡᒋᕐᔪᐊᖅ ᑭᑉᐹᕆᒃᓯᓕᖅᓯᒪᔪᑦ",
+      "description": "ᐊᕿᒡᒋᕐᔪᐊᖅ ᐊᒡᒍᖅᓯᒪᔪᑦ ᐃᒪᕐᒨᖓᓪᓗᑎᒃ ᐊᔾᔨᐅᙱᑦᑐᓂᒃ ᒪᒪᖅᓴᐅᑎᓂᒃ, ᐃᒐᓯᒪᔪᑦ ᐸᐸᐃᑦ ᐊᒻᒪ ᑐᒫᑐᐃᑦ."
+    },
+    "kasap-sucuk": {
+      "name": "Grilled Butcher's Sucuk",
+      "description": "ᐃᒻᒧᒃᓯᐅᒐᖅ ᓵᑦᔅ ᐃᒐᓯᒪᔪᖅ ᐊᐅᒪᒨᖅᑐᒧᑦ, ᐃᒐᐅᑉ ᐃᓗᐊᓂ ᐃᒐᐅᑉ ᐃᓗᐊᓂ ᐱᕈᖅᑐᕕᓃᑦ ᐊᒻᒪᓗ ᐊᐃᓂᐊᓐ ᓱᒫᒃ."
+    },
+    "karisik-izgara": {
+      "name": "ᑲᑎᙵᔪᑦ ᐆᑦᑎᔾᔪᑎᑦ",
+      "description": "ᐊᒥᓱᐊᓗᖕᓂᒃ ᐊᒻᒪ ᐊᔾᔨᒌᙱᑦᑑᑎᓂᒃ ᐆᑦᑎᔾᔪᑎᒥᒃ ᓂᕿᖃᖅᖢᓂ ᐊᖕᒪᓗᖅᑐᓂᒃ ᓂᕿᓂᒃ, ᐊᕿᒡᒋᕐᔪᐊᑉ ᑭᑉᐹᕆᒃᑐᖁᑎᖏᓐᓂᒃ, ᓛᒻ ᓵᑦᑐᒐᕐᓂᒃ, ᐊᒻᒪ ᓵᑦᔅᓂᒃ."
+    },
+    "nohut-yemegi": {
+      "name": "Chickpea ᐊᒡᒍᐊᓕᕿᓵᖅ ᑐᒃᑐᕙᖕᒥᓪᓗ",
+      "description": "ᐊᖏᕐᕋᒥ ᓂᕆᔭᒃᓴᖅ chickpeas ᐊᒻᒪᓗ ᐊᒡᒍᖅᓯᒪᔪᖅ ᑐᒃᑐᕙᒃ ᓱᒃᑲᐃᑦᑐᒥᒃ ᐆᑕᐅᓪᓗᓂ ᑲᓐᓄᔭᕐᒧᑦ ᐅᒃᑯᓯᖕᒧᑦ."
+    },
+    "patlican-musakka": {
+      "name": "Eggplant Moussaka",
+      "description": "ᐃᒐᐅᑉ ᐃᓗᐊᓂ ᐆᑦᑎᓯᒪᔪᑦ, ᑐᒃᑐᕙᒃ ᓯᖃᓪᓕᑎᖅᓯᒪᔪᑦ, ᐊᒻᒪ ᒪᓴᑲ ᐃᒐᐅᑉ ᐃᓗᐊᓂ ᐃᒐᐅᑉ ᐃᓗᐊᓂ ᐃᒐᐅᑉ ᐃᓗᐊᓂ ᑐᒫᑐ ᑭᓂᖅᑐᓕᖅᓯᒪᓪᓗᓂ, ᓂᕆᔭᖅᑐᕐᕕᒃᑎᑐᑦ."
+    },
+    "zeytinyagli-taze-fasulye": {
+      "name": "ᐆᔭᐅᔭᑦ ᓂᓕᕐᓇᐃᑦ ᐅᖅᓱᖃᖅᖢᑎᒃ",
+      "description": "ᐃᒐᓯᒪᔪᖅ ᐋᓕᕝ ᐅᖅᓱᖓᓂ ᐆᔭᐅᔭᖃᖅᖢᓂ ᐆᔭᐅᔭᕐᓂᒃ ᓂᓕᕐᓇᓂᒃ, ᑐᒫᑐᓂᒃ, ᐊᒻᒪ ᐊᐃᓂᐊᓂᒃ, ᓂᒡᓕᓇᖅᓯᑎᑕᐅᕙᒃᖢᓂ."
+    },
+    "tavuk-sote": {
+      "name": "ᐊᕿᒡᒋᕐᔪᐊᖅ ᓵᑦᑑᔭᖅᓯᒪᔪᖅ",
+      "description": "ᐊᕿᒡᒋᕐᔪᐊᑉ ᐊᒡᒍᖅᑐᖅᓯᒪᓂᖏᑦ ᓵᑦᑑᔭᖅᑕᐅᓲᑦ ᐆᓇᕐᔪᐊᖅᑐᒥ ᑕᖅᓴᓕᖕᓂᒃ ᐸᐸᓂᒃ, ᐳᔪᕐᓂᒃ, ᐊᒻᒪ ᑐᒫᑐᓂᒃ."
+    },
+    "izmir-kofte": {
+      "name": "ᐄᔅᒥᕐᑎᑐᑦ ᐊᖕᒪᓗᖅᑐᑦ ᓂᖀᑦ",
+      "description": "ᐱᖅᑯᓯᑐᖃᖅᑎᒍᑦ ᓂᕆᔭᒃᓴᖅ ᐃᒻᒧᒃᓯᐅᒐᖅ ᐊᖕᒪᓗᖅᓯᓯᒪᔪᑦ, ᐸᑏᑏᑦ, ᐊᒻᒪ ᐸᐸᐃᑦ ᐃᒐᓯᒪᔪᑦ ᑐᒫᑐ ᑭᓂᖅᑐᒥᑦ."
+    },
+    "etli-bezelye": {
+      "name": "ᐲᔅ ᐃᒻᒧᒃᓯᐅᒐᖅ",
+      "description": "ᖃᐅᑕᒫᑦ ᓂᕿᓕᐅᓲᑦ ᐅᒃᑯᓯᖕᒥ ᐊᒡᒍᖅᓯᒪᔪᓂ ᑐᒃᑐᕙᖕᒥ, ᐲᔅ, ᑭᐅᕋᑦ, ᐊᒻᒪ ᐸᑏᑏᑦ."
+    },
+    "patlican-oturtma": {
+      "name": "ᐃᒐᐅᑉ ᐃᓗᐊᓂ",
+      "description": "ᐅᖃᖓ ᐃᒐᐅᑉ ᐃᓗᐊᓂ ᐃᒐᐅᑉ ᐃᓗᐊᓂ ᐃᒐ"
+    },
+    "salgam-suyu": {
+      "name": "ᐃᒍᓇᖅᓯᐊᓕᒃ ᑑᓂᑉ ᐃᒥᒐᒃᓴᖓ",
+      "description": "ᐱᖅᑯᓯᑐᖃᖅᑎᒍᑦ ᑑᓂᑉ ᐃᒥᒐᒃᓴᖓ ᐃᒍᓇᖅᓯᓯᒪᓪᓗᓂ ᑐᖑᔪᖅᑐᙳᐊᒥᒃ ᑭᐅᕋᑦ ᐊᒻᒪᓗ ᐳᒃᑐᖅᑎᕈᑎᒥᒃ."
+    },
+    "maden-suyu": {
+      "name": "ᐅᔭᕋᖕᓂᐊᒐᒃᓴᖅ ᐃᒪᖅ",
+      "description": "ᓄᓇᒥᙶᖅᑐᖅ ᐅᔭᕋᖕᓂᐊᒐᒃᓴᖅ ᐃᒪᖅ ᓂᒡᓕᓇᖅᑐᒦᑎᑕᐅᔪᖅ."
+    },
+    "su": {
+      "name": "ᐃᒪᑦᑎᐊᕙᒃ",
+      "description": "ᐃᒪᓪᓚᑦᑖᖅ ᓂᒡᓕᓇᖅᑐᖅ ᐊᓕᒍᕐᒥ ᐊᓕᒍᕐᒥ."
+    },
+    "kola": {
+      "name": "ᑰᓚ",
+      "description": "ᐃᒥᒐᒃᓴᑦᑎᐊᕙᒃ ᓂᒡᓕᓇᖅᑐᖅ ᓂᒡᓕᓇᖅᖢᓂ."
+    },
+    "gazoz": {
+      "name": "Turkey Lemon Soda",
+      "description": "ᐱᖅᑯᓯᑐᖃᖅᑎᒍᑦ ᑎᐱᓖᑦ, ᓂᒡᓕᓇᖅᑐᑦ ᐃᒥᒐᐃᑦ."
+    },
+    "turk-kahvesi": {
+      "name": "Turkey ᑳᐱ",
+      "description": "ᐱᖅᑯᓯᑐᖃᖅᑎᒍᑦ ᑳᐱ ᐊᕿᐊᕈᖃᖅᖢᓂ, ᐆᑕᐅᓪᓗᓂ ᐆᓇᕐᔪᐊᖅᑐᒥ ᑲᓐᓄᔭᕐᒧᑦ ᓰᔅᕕᒧᑦ."
+    },
+    "demleme-cay": {
+      "name": "Turkey Brewed Tea",
+      "description": "ᐃᒐᓵᖅᓯᒪᔪᖅ ᐆᓇᖅᑐᖅ ᕆᔅ ᑏ ᓵᑦᑐᒧᑦ ᐃᒥᐅᑎᒧᑦ."
+    },
+    "ev-yapimi-limonata": {
+      "name": "ᐊᖏᕐᕋᒥ ᐃᒥᒐᖅ ᓚᒪᓐait",
+      "description": "ᓂᕈᒥᓇᑦᑎᐊᖅᑐᖅ ᓚᒪᓐ ᓴᓇᔭᐅᕙᒃᖢᓂ ᖃᐅᑕᒫᑦ ᓄᑖᕐᒥᒃ ᓚᒪᓐᒥᒃ, ᓱᕕᕐᓇᖅᑐᒥᒃ, ᐊᒻᒪᓗ ᓱᑲᖃᒐᓛᒃᑐᒥᒃ."
+    },
+    "hosaf": {
+      "name": "ᖃᐅᑕᒫᑦ ᓰᕐᓇᖅᑐᑦ ᓰᕐᓇᖅᑐᑦ ᑲᑎᖅᓱᖅᓯᒪᔪᑦ",
+      "description": "ᐊᖏᕐᕋᒥ ᓴᓇᓯᒪᔪᑦ ᖃᓛᖅᑎᑕᐅᓲᑦ ᖃᐅᑕᒫᑦ ᐸᐅᕐᖓᕐᓂᒃ, ᐋᐳᐃᑳᑦᓂᒃ, ᐅᕝᕙᓘᓐᓃᑦ ᐸᓚᐅᒑᓂᒃ ᒪᓕᒃᖢᑎᒃ ᐅᑭᐅᑉ ᐃᓚᖓᓂ."
+    },
+    "iskender-kebabi": {
+      "name": "Bursa İskender Kebab",
+      "description": "ᓂᖀᑦ ᓂᖀᑦ ᓂᑭᑦᑖᖅᑕᐅᓪᓗᑎᒃ ᐱᑦᒧᑦ, ᑐᒫᑐ ᑭᓂᖅᑐᓕᖅᑕᐅᓪᓗᓂ, ᐆᓇᖅᑐᖅ ᕙᑕ, ᐊᒻᒪ ᔫᒍᑦ."
+    },
+    "kazandibi": {
+      "name": "Caramelized Milk Pudding",
+      "description": "ᐱᖅᑯᓯᑐᖃᖅᑎᒍᑦ ᐃᒻᒧᒃ ᓰᕐᓇᖅᑐᑦ ᓰᕐᓇᖅᑐᑦ ᓰ"
+    },
+    "tavuk-gogsu": {
+      "name": "ᐃᒻᒧᒃ ᐳᑎᖕ",
+      "description": "ᐃᒻᒧᒃ ᐃᒻᒧᒃ ᓰᕐᓇᖅᑐᖅ ᓴᓇᔭᐅᓯᒪᔪᖅ ᐱᖅᑯᓯᑐᖃᖅᑎᒍᑦ ᓂᕿᓕᐅᒐᒃᓴᖅ, ᓯᓇᒪᓐ ᐃᓚᖃᖅᖢᓂ."
+    },
+    "keskul": {
+      "name": "ᐃᒻᒧᒃ ᐳᑎᖕ",
+      "description": "ᐃᒻᒧᒃᑎᑐᑦ ᓰᕐᓇᖅᑐᑦ ᓰᕐᓇᖅᑐᑦ ᐃᓚᓯᒪᓪᓗᑎᒃ ᐊᒫᓐᑕᒥᒃ ᐊᒻᒪᓗ ᑯᑯᓇᑦᒥᒃ."
+    },
+    "irmik-helvasi": {
+      "name": "ᓰᒧᓖᓇ ᕼᐋᓪᕙ",
+      "description": "Semolina halva, ᐃᒐᓯᒪᔪᖅ ᐃᒻᒨᔮᖅᑐᒥᒃ ᐊᒻᒪᓗ ᐸᐃᓐ ᓇᑦᔅᒥᒃ, ᐆᓇᖅᓯᑎᑕᐅᓪᓗᓂ ᐊᒻᒪᓗ ᓯᖃᓪᓕᓯᒪᓪᓗᓂ."
+    },
+    "kabak-tatlisi": {
+      "name": "ᐸᒻᑭᓐ ᓰᕐᓇᖅᑐᑦ ᑕᕼᐃᓂ",
+      "description": "ᐸᒻᑭᓐ, ᓱᒃᑲᐃᑦᑐᒥᒃ ᐆᑕᐅᓪᓗᓂ ᓇᖕᒥᓂᖅ ᐃᒥᒐᒃᓴᒥᓄᑦ, ᓂᕆᔭᐅᕙᒃᐳᖅ ᑕᕼᐃᓂ ᐊᒻᒪ ᖃᖅᑯᐊᒐᕐᓂᒃ."
+    },
+    "ayva-tatlisi": {
+      "name": "ᑯᐃᓐᔅ ᓰᕐᓇᖅᑐᑦ",
+      "description": "ᑯᐃᓐᔅ ᐆᓯᒪᔪᖅ ᓰᕐᓇᖅᑐᒥᒃ ᐊᒻᒪᓗ ᓯᓇᒪᓐᒥᒃ, ᐃᓚᖃᖅᖢᓂ ᑯᐃᓐᒥᒃ ᐊᒻᒪᓗ ᖃᖅᑯᐊᒐᕐᓂᒃ."
+    },
+    "revani": {
+      "name": "ᓰᒧᓖᓇ ᓯᐅᕋᐅᔮᖅᑐᖅ ᑮᒃ",
+      "description": "ᓂᕆᔭᖅᑐᕐᕕᖕᒥ ᓰᕐᓇᖅᑐᑦ ᓰᕐᓇᖅᑐᑦ ᓰᕐᓇᖅᑐᑦ ᑲᐃᒃ ᐃᓚᖃᖅᖢᓂ ᓚᒪᓐᒥᒃ ᑎᐱᖃᖅᑐᒥᒃ ᓯᐅᕋᕐᒥᒃ."
+    },
+    "ekmek-kadayifi": {
+      "name": "ᐸᓚᐅᒑᖅ ᐸᓚᐅᒑᖅ ᐃᓚᖃᖅᖢᓂ Clotted Cream",
+      "description": "ᐸᓚᐅᒑᖅ ᐸᓚᐅᒑᖅ ᖃᐅᓯᓕᖅᓯᒪᔪᖅ caramelized syrup-ᒥᒃ ᓂᕆᑎᑕᐅᕙᒃᐳᖅ ᐸᕙᓘ clotted cream-ᒥᒃ."
+    },
+    "cevizli-baklava": {
+      "name": "ᖃᑯᖅᑕᑦ ᐸᓚᐅᒑᖅ",
+      "description": "ᓵᑦᑐᑯᓘᓪᓗᑎᒃ ᐃᒧᓯᒪᓪᓗᑎᒃ, ᐸᓚᐅᒑᖅ ᐸᓚᐅᒑᖅ ᓴᓇᓯᒪᓪᓗᓂ ᖃᖅᑯᐊᒐᕐᓂᒃ ᐊᒻᒪᓗ ᐃᒻᒨᔮᖅᑐᒥᒃ."
+    }
+  },
+  "allergens": {
+    "Süt ürünleri": "ᐃᒻᒧᐃᑦ",
+    "Gluten": "gluten",
+    "Yumurta": "ᒪᓐᓃᑦ",
+    "Badem": "ᐊᒫᓐᑦ",
+    "Çam fıstığı": "ᐸᐃᓐ ᖃᖅᑯᐊᒐᖅ",
+    "Susam": "ᓰᓴ",
+    "Ceviz": "ᐊᐃᕖᑦ"
+  },
+  "tags": {
+    "Popüler": "ᐱᐅᒋᔭᐅᒻᒪᕆᒃᑐᖅ",
+    "Vejetaryen": "ᐱᕈᖅᑐᕕᓃᙶᖅᑐᑦ",
+    "Günün Yemeği": "ᓂᕆᔭᒃᓴᑦᑎᐊᕙᐅᓛᖅ",
+    "Şefin Önerisi": "ᐃᒐᔨᐅᑉ ᓂᕈᐊᕆᔭᖓ",
+    "Yeni": "ᓄᑖᖅ",
+    "Acılı": "ᖃᑯᖅᓯᓇᖅᑐᖅ",
+    "Ev Yapımı": "ᐊᖏᕐᕋᒥ ᓴᓇᔭᐅᓯᒪᔪᖅ",
+    "Lokanta Klasiği": "ᓂᕆᔭᖅᑐᕐᕕᖕᒥ ᐊᑐᖅᑕᐅᒐᔪᒃᑐᖅ",
+    "Günün Çorbası": "ᐅᓪᓗᕐᒧᑦ ᖃᔪᖅᑐᕐᓂᖅ",
+    "Vegan": "ᐱᕈᖅᑐᕕᓃᙶᖅᑐᑦ",
+    "Hafif": "ᐅᕿᑦᑐᖅ",
+    "Yöresel": "ᐊᕕᒃᑐᖅᓯᒪᔪᖅ",
+    "Paylaşmalık": "ᐊᒥᖅᑳᕈᑎᒋᓗᒍ",
+    "Ev Yemeği": "ᐊᖏᕐᕋᖅᓯᒪᓗᓂ",
+    "Zeytinyağlı": "ᐅᖅᓱᖅ",
+    "Nostaljik": "ᐃᖅᑲᐅᒪᓇᖅᑐᖅ",
+    "Geleneksel": "ᐃᓕᖅᑯᓯᕆᔭᐅᔪᒃᑯᑦ",
+    "Bursa Lezzeti": "ᐴᓴ ᑎᐱᖓ",
+    "Sütlü Tatlı": "ᐃᒻᒧᒃ ᓰᕐᓇᖅᑐᑦ",
+    "Sıcak Tatlı": "ᐆᓇᔪᒃᑐᖅ ᓰᕐᓇᖅᑐᑦ",
+    "Mevsimlik": "ᐊᕐᕌᒍ ᐃᓚᐃᓐᓇᖓᑕ ᐃᓗᐊᓂ",
+    "Şerbetli": "ᓰᕐᓇᖅᑐᑦ ᓰᕐᓇᖅᑐᑦ"
+  }
+}

@@ -1,0 +1,349 @@
+{
+  "locale": "ro",
+  "ui": {
+    "menu": "Meniu",
+    "search": "Caută în meniu...",
+    "searchLabel": "Caută în meniu",
+    "categories": "Categorii",
+    "categoryIntro": "Alege aroma pentru masa ta.",
+    "categoryNavigation": "Categorii de meniu",
+    "openCategory": "Deschide {name}, {count} articole",
+    "items": "articole",
+    "item": "articol",
+    "searchResults": "Rezultatele căutării",
+    "productsFound": "{count} articole găsite",
+    "backToCategories": "Înapoi la categorii",
+    "backToCategory": "Înapoi la {name}",
+    "clearSearch": "Șterge căutarea",
+    "noResults": "Nu s-au găsit articole care să corespundă",
+    "noResultsDescription": "Încercați o altă căutare sau reveniți la categorii.",
+    "order": "Comanda mea",
+    "waiter": "Chelner",
+    "bill": "Nota de plată",
+    "addToCart": "Adaugă la comandă",
+    "addedToCart": "{name} a fost adăugat la comanda ta.",
+    "removeFromCart": "Elimină {name}",
+    "soldOut": "Epuizat astăzi",
+    "productDetails": "Deschide detalii pentru {name}",
+    "portion": "Porție",
+    "standardPortion": "Porție standard",
+    "allergens": "Alergeni",
+    "noAllergens": "Nu sunt alergeni declarați",
+    "productNote": "Notă pentru produs",
+    "productNotePlaceholder": "De ex. fără unt, vă rog",
+    "decreaseQuantity": "Scade cantitatea",
+    "increaseQuantity": "Crește cantitatea",
+    "each": "fiecare",
+    "note": "Notă",
+    "subtotal": "Subtotal",
+    "serviceFee": "Taxă de serviciu",
+    "total": "Total",
+    "sendOrder": "Trimite Comanda",
+    "orderSent": "Comanda ta a fost trimisă în bucătărie",
+    "orderTracking": "Urmărește comanda #{number} aici.",
+    "newItem": "Adaugă un alt articol",
+    "emptyCart": "Comanda ta este goală",
+    "emptyCartDescription": "Articolele pe care le alegi din meniu vor apărea aici.",
+    "browseMenu": "Răsfoiește Meniul",
+    "orderReceived": "Comandă primită",
+    "waiterConfirmed": "Ospătar confirmat",
+    "preparing": "Se pregătește",
+    "ready": "Gata",
+    "served": "Servit",
+    "preparingDescription": "Bucătăria noastră pregătește comanda dumneavoastră.",
+    "orderStatus": "Starea comenzii",
+    "callWaiter": "Chemare Ospătar",
+    "placeOrder": "Doresc să comand",
+    "wantWater": "Aș dori apă",
+    "wantBread": "Aș dori pâine",
+    "wantService": "Serviciu suplimentar",
+    "other": "Altele",
+    "generalRequest": "Am o cerere generală",
+    "orderHelp": "Am nevoie de ajutor cu comanda mea",
+    "waterDescription": "Vă rugăm să aduceți apă la masă",
+    "breadDescription": "Vă rog să aduceți pâinea la masă",
+    "serviceDescription": "Am nevoie de tacâmuri sau o farfurie",
+    "otherDescription": "Am nevoie de ajutor cu altceva",
+    "waiterHelpTitle": "Cu ce putem ajuta?",
+    "waiterHelpDescription": "Cererea dvs. va fi trimisă cu {table}.",
+    "waiterRequestSent": "Cererea dvs. a fost trimisă chelnerului nostru.",
+    "requestBill": "Cerere Notă de plată",
+    "billSent": "Cererea dvs. pentru notă a fost trimisă",
+    "billConfirm": "Doriți să solicitați nota de plată?",
+    "billSentDescription": "Chelnerul nostru va fi cu dvs. în scurt timp.",
+    "billConfirmDescription": "Cererea dvs. va fi trimisă direct chelnerului. Puteți plăti la masă sau la casierie.",
+    "billToast": "Cererea dumneavoastră de plată a fost trimisă chelnerului nostru.",
+    "backToMenu": "Înapoi la Meniu",
+    "back": "Înapoi",
+    "close": "Închide",
+    "yourTable": "MASA DUMNEAVOASTRĂ",
+    "serviceOpen": "Serviciu deschis",
+    "slogan": "Gust Tradițional • Masă Modernă",
+    "location": "Bursa, Osmangazi",
+    "languageLabel": "Selectați limba",
+    "currencyLabel": "Selectați moneda",
+    "customerNavigation": "Navigarea în meniul clientului",
+    "approximateCurrency": "Prețurile în valută străină sunt aproximative. Plata se efectuează în lire turcești.",
+    "orderSuccess": "Comanda dvs. a fost trimisă cu succes.",
+    "languagePickerTitle": "Selectați Limba",
+    "languagePickerDescription": "Alege limba pe care vrei să o folosești pentru meniu.",
+    "searchLanguage": "Caută limbi...",
+    "recommendedLanguages": "Recomandate",
+    "recentLanguages": "Limbi recente",
+    "allLanguages": "Toate limbile",
+    "languageNotFound": "Limba nu a fost găsită.",
+    "languageNotFoundDescription": "Încearcă un alt nume sau cod de limbă.",
+    "tableNumber": "Masa {number}",
+    "itemCount": "{count} articole",
+    "splashLabel": "Ecranul de deschidere Tarihi Şehir Lokantası",
+    "cancel": "Anulează",
+    "confirmOrder": "Confirmă comanda",
+    "orderSummary": "Rezumat comandă",
+    "payment": "Plată",
+    "tableNotFound": "Masa nu a fost găsită.",
+    "invalidQr": "Cod QR invalid.",
+    "menuUnavailable": "Meniul nu este disponibil în prezent.",
+    "networkError": "A apărut o eroare de rețea.",
+    "productUnavailable": "Acest articol nu este disponibil în prezent.",
+    "unableToSendOrder": "Nu se poate trimite comanda.",
+    "tryAgain": "Încearcă din nou",
+    "somethingWentWrong": "Ceva a mers prost.",
+    "loadingLanguage": "Se încarcă limba...",
+    "languageLoadError": "Nu s-a putut încărca limba. Vă rugăm să încercați din nou."
+  },
+  "categories": {
+    "soups": "Ciorbe",
+    "grill": "Grătare",
+    "mains": "Feluri principale",
+    "drinks": "Băuturi",
+    "kebabs": "Kebaburi",
+    "dessert": "Desserturi"
+  },
+  "products": {
+    "mercimek": {
+      "name": "Ciorbă de linte",
+      "description": "Ciorbă de linte de casă pregătită în stil clasic, completată cu un sos de unt."
+    },
+    "tas-kebabi": {
+      "name": "Tocăniță turcească de vită",
+      "description": "Vită, legume de sezon și sosul special gătit lent al restaurantului nostru."
+    },
+    "kuzu-tandir": {
+      "name": "Miel copt lent",
+      "description": "Mielul tandoori semnătură al restaurantului nostru, gătit lent la foc mic."
+    },
+    "pirinc-pilavi": {
+      "name": "Pilaf de orez",
+      "description": "Pilaf de orez Baldo, pufos și cu unt."
+    },
+    "firin-sutlac": {
+      "name": "Budincă de orez la cuptor",
+      "description": "Budincă de orez coaptă în mod tradițional, preparată cu lapte de bivoliță zilnic."
+    },
+    "kuru-fasulye": {
+      "name": "Fasole albă tocăniță cu vită",
+      "description": "Fasole İspir, carne de vită tăiată cubulețe și pastă de tomate simplă de restaurant."
+    },
+    "izgara-kofte": {
+      "name": "Chiftele la grătar",
+      "description": "Chiftele de vită în stil măcelar cu ardei copți și roșii."
+    },
+    "ayran": {
+      "name": "Ayran bătut",
+      "description": "Băutură tradițională de zer bătut cu multă spumă, făcută cu iaurt de zi cu zi."
+    },
+    "ezogelin-corbasi": {
+      "name": "Supă Ezogelin",
+      "description": "O supă tradițională de restaurant în care lintea roșie, bulgurul și orezul se întâlnesc cu menta."
+    },
+    "tarhana-corbasi": {
+      "name": "Supă Tarhana",
+      "description": "Tarhana de casă, un clasic anatolian gătit lent cu roșii și mentă uscată."
+    },
+    "yayla-corbasi": {
+      "name": "Supa de iaurt cu orez",
+      "description": "O supă răcoritoare și cremoasă de yayla preparată cu iaurt, orez și mentă uscată."
+    },
+    "iskembe-corbasi": {
+      "name": "Supa de burtă",
+      "description": "O supă autentică de burtă de vită servită cu condimentul său și oțet de usturoi."
+    },
+    "dugun-corbasi": {
+      "name": "Supa de nuntă",
+      "description": "Supa tradițională de nuntă făcută cu miel mărunțit și aromată cu o marinadă de lămâie."
+    },
+    "tavuk-suyu-corbasi": {
+      "name": "Supa de pui",
+      "description": "O supă vindecătoare preparată cu tăiței subțiri gătiți în supă de oase și carne de pui mărunțită."
+    },
+    "domates-corbasi": {
+      "name": "Supa de roșii",
+      "description": "Un gust bogat gătit cu roșii coapte, unt și busuioc, completat cu brânză."
+    },
+    "sebze-corbasi": {
+      "name": "Ciorbă de legume",
+      "description": "O ciorbă ușoară de restaurant, preparată cu legume de sezon, ulei de măsline și ierburi proaspete."
+    },
+    "beyran-corbasi": {
+      "name": "Ciorbă picantă de miel Beyran",
+      "description": "O ciorbă regională preparată la foc mare cu miel, orez, usturoi și ardei iute."
+    },
+    "kelle-paca-corbasi": {
+      "name": "Ciorbă din cap și picioare",
+      "description": "O ciorbă bogată de oase, preparată cu picioare și carne de cap de vită fierte multe ore."
+    },
+    "sehriye-corbasi": {
+      "name": "Ciorbă de vermicelli",
+      "description": "Supă zilnică preparată cu supă de pui cu roșii, vermicelli și pătrunjel."
+    },
+    "tavuk-sis": {
+      "name": "Frigărui de pui",
+      "description": "Bucăți de pui marinate cu condimente speciale, servite cu ardei copți și roșii."
+    },
+    "kasap-sucuk": {
+      "name": "Sucuk de măcelar la grătar",
+      "description": "Cârnat de vită picant gătit pe cărbuni, cu legume coapte și ceapă cu sumac."
+    },
+    "karisik-izgara": {
+      "name": "Grătar mixt",
+      "description": "O farfurie generoasă și diversă de grătar constând din chiftele, frigărui de pui, cotlete de miel și cârnat."
+    },
+    "nohut-yemegi": {
+      "name": "Tocăniță de năut cu vită",
+      "description": "O masă de casă cu năut și carne de vită tăiată cuburi, gătite încet într-o oală de cupru."
+    },
+    "patlican-musakka": {
+      "name": "Moussaka de vinete",
+      "description": "Vinete prăjite, carne tocată de vită și moussaka coaptă în cuptor cu sos de roșii, în stil restaurant."
+    },
+    "zeytinyagli-taze-fasulye": {
+      "name": "Fasole verde în ulei de măsline",
+      "description": "Un clasic gătit în ulei de măsline cu fasole verde, roșii și ceapă, servit rece."
+    },
+    "tavuk-sote": {
+      "name": "Pui sauté",
+      "description": "Bucăți de pui sunt sărate rapid la foc mare cu ardei colorați, ciuperci și roșii."
+    },
+    "izmir-kofte": {
+      "name": "Chiftele în stil İzmir",
+      "description": "Un fel principal tradițional de chiftele de vită, cartofi și ardei copți în sos de roșii."
+    },
+    "etli-bezelye": {
+      "name": "Piure de mazăre cu vită",
+      "description": "Fel zilnic gătit într-un vas cu cuburi de vită, mazăre, morcovi și cartofi."
+    },
+    "patlican-oturtma": {
+      "name": "Vinete la cuptor cu carne tocată",
+      "description": "Limba este pregătită la cuptor cu vinete, carne tocată picantă și sos de roșii cu usturoi."
+    },
+    "salgam-suyu": {
+      "name": "Suc de napi fermentat",
+      "description": "Suc tradițional picant de napi, fermentat cu morcov mov și drojdie de bulgur."
+    },
+    "maden-suyu": {
+      "name": "Apă minerală",
+      "description": "Apă minerală naturală simplă servită rece."
+    },
+    "su": {
+      "name": "Apă naturală de izvor",
+      "description": "Apă naturală de izvor servită rece într-o sticlă de sticlă."
+    },
+    "kola": {
+      "name": "Cola",
+      "description": "O băutură carbogazoasă clasică servită foarte rece."
+    },
+    "gazoz": {
+      "name": "Sodă de lămâie turcească",
+      "description": "Sodă tradițională aromată, răcoritoare și servită rece simplă."
+    },
+    "turk-kahvesi": {
+      "name": "Cafea turcească",
+      "description": "Cafea turcească tradițională cu spumă, preparată la foc mare într-un cezve de cupru."
+    },
+    "demleme-cay": {
+      "name": "Ceai turcesc la ibric",
+      "description": "Ceai Rize proaspăt preparat fierbinte într-un pahar cu talie subțire."
+    },
+    "ev-yapimi-limonata": {
+      "name": "Limonadă de casă",
+      "description": "Limonadă răcoritoare preparată zilnic cu lămâie proaspătă, mentă și puțin zahăr."
+    },
+    "hosaf": {
+      "name": "Compot de fructe zilnic",
+      "description": "Compot de casă fiert zilnic cu stafide, caise sau prune, în funcție de sezon."
+    },
+    "iskender-kebabi": {
+      "name": "Bursă İskender Kebab",
+      "description": "Carnea se rotește pe un frigare deasupra pide-ului, servită cu sos de roșii, unt topit și iaurt."
+    },
+    "kazandibi": {
+      "name": "Budincă de lapte caramelizată",
+      "description": "Un desert tradițional din lapte, caramelizat corespunzător, cu o textură mătăsoasă."
+    },
+    "tavuk-gogsu": {
+      "name": "Budincă otomană de lapte",
+      "description": "Un desert ușor și fibroasă de lapte, preparat după o rețetă tradițională, servit cu scorțișoară."
+    },
+    "keskul": {
+      "name": "Pudding de Lapte de Migdale",
+      "description": "Desert de lapte în stil otoman, completat cu aromă de migdale și cocos."
+    },
+    "irmik-helvasi": {
+      "name": "Halva de Grâu",
+      "description": "Halva de griș, prăjită cu unt și muguri de pin, servită fierbinte și granuloasă."
+    },
+    "kabak-tatlisi": {
+      "name": "Dessert de Dovleac cu Tahini",
+      "description": "Dovleacul, gătit încet în propriul suc, este servit cu tahini și nuci."
+    },
+    "ayva-tatlisi": {
+      "name": "Dessert de Gutui",
+      "description": "Gutuiul gătit cu cuișoare și scorțișoară este servit cu smântână groasă și nuci."
+    },
+    "revani": {
+      "name": "Prăjitură cu griș și sirop",
+      "description": "Desertul clasic de restaurant în care prăjitura moale de griș întâlnește siropul cu aromă de lămâie."
+    },
+    "ekmek-kadayifi": {
+      "name": "Pudim de pâine cu cremă de lapte bătrână",
+      "description": "Pudim de pâine însiropat cu caramel este servit cu cremă de lapte bătrână de bivoliță."
+    },
+    "cevizli-baklava": {
+      "name": "Baklava cu nuci",
+      "description": "Straturi rulate foarte subțiri, baklava crocantă preparată cu multe nuci și unt simplu."
+    }
+  },
+  "allergens": {
+    "Süt ürünleri": "Lactate",
+    "Gluten": "Gluten",
+    "Yumurta": "Ou",
+    "Badem": "Migdale",
+    "Çam fıstığı": "Nuci de pin",
+    "Susam": "Susan",
+    "Ceviz": "Nucă"
+  },
+  "tags": {
+    "Popüler": "Popular",
+    "Vejetaryen": "Vegetarian",
+    "Günün Yemeği": "Felul zilei",
+    "Şefin Önerisi": "Alegerea bucătarului",
+    "Yeni": "Nou",
+    "Acılı": "Picant",
+    "Ev Yapımı": "De casă",
+    "Lokanta Klasiği": "Clasic de restaurant",
+    "Günün Çorbası": "Ciorba zilei",
+    "Vegan": "Vegan",
+    "Hafif": "Ușor",
+    "Yöresel": "Regional",
+    "Paylaşmalık": "Pentru a împărți",
+    "Ev Yemeği": "În stil de casă",
+    "Zeytinyağlı": "Ulei de măsline",
+    "Nostaljik": "Nostalgic",
+    "Geleneksel": "Tradițional",
+    "Bursa Lezzeti": "Gustul Bursei",
+    "Sütlü Tatlı": "Desert de lapte",
+    "Sıcak Tatlı": "Desert cald",
+    "Mevsimlik": "De sezon",
+    "Şerbetli": "Desert cu sirop"
+  }
+}

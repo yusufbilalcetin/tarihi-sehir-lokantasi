@@ -1,0 +1,349 @@
+{
+  "locale": "mi",
+  "ui": {
+    "menu": "Tahua",
+    "search": "Rapua te tahua...",
+    "searchLabel": "Rapua te tahua",
+    "categories": "Ngā Kāwai",
+    "categoryIntro": "Kōwhiria te reka mō tō teepu.",
+    "categoryNavigation": "Ngā kāwai o te tahua",
+    "openCategory": "Whakatuwheratia {name}, {count} ngā tūemi",
+    "items": "ngā tūemi",
+    "item": "tūemi",
+    "searchResults": "Ngā Hua Rapu",
+    "productsFound": "{count} ngā tūemi i kitea",
+    "backToCategories": "Hoki ki ngā kāwai",
+    "backToCategory": "Hoki ki {name}",
+    "clearSearch": "Mukua te rapu",
+    "noResults": "Kāore he tūemi e hāngai ana i kitea",
+    "noResultsDescription": "Ngana ki te rapu anō, ki te hoki rānei ki ngā kāwai.",
+    "order": "Ta Taku Neke",
+    "waiter": "Kaiāpiha",
+    "bill": "Pire",
+    "addToCart": "Whakaurua ki te Neke",
+    "addedToCart": "I whakaurua a {name} ki tō neke.",
+    "removeFromCart": "Tangohia a {name}",
+    "soldOut": "Kua Hokona Katoa i Te Rā Nei",
+    "productDetails": "Whakatuwheratia ngā taipitopito mō {name}",
+    "portion": "Wāhanga",
+    "standardPortion": "Wāhanga paerewa",
+    "allergens": "Ngutu pakaru kai:",
+    "noAllergens": "Kāore he ngutu pakaru i pānuitia",
+    "productNote": "Tuhipoka mea",
+    "productNotePlaceholder": "Hei tauira: kāore te pata, koa",
+    "decreaseQuantity": "Whakaitihia te rahinga",
+    "increaseQuantity": "Whakanuia te rahinga",
+    "each": "ia",
+    "note": "Tuhipoka",
+    "subtotal": "Tapeke wātea",
+    "serviceFee": "Utu ratonga",
+    "total": "Tapeke",
+    "sendOrder": "Tukuna te Tono",
+    "orderSent": "I tukuna tō tono ki te kītini",
+    "orderTracking": "Aroturukahia te tono #{number} i konei.",
+    "newItem": "Taapirihia Tētahi Atu Mea",
+    "emptyCart": "He kau tō tono",
+    "emptyCartDescription": "Ka puta ngā mea ka tīpakohia e koe i te tahua ki konei.",
+    "browseMenu": "Tirohia te Tahua",
+    "orderReceived": "Kua Riro te Tono",
+    "waiterConfirmed": "Kaiwhakarite Kai i Whakaaetia",
+    "preparing": "Kei Te Whakarite",
+    "ready": "Reri",
+    "served": "Kaua I Kai",
+    "preparingDescription": "Kei te whakarite to ota tō mātou kīhini.",
+    "orderStatus": "Āhua o te ota",
+    "callWaiter": "Karangahia te Kaiwhakarite Kai",
+    "placeOrder": "Kei te hiahia au ki te ota",
+    "wantWater": "Kei te hiahia au ki te wai",
+    "wantBread": "Kei te hiahia au ki te paihi",
+    "wantService": "Ratonga atu",
+    "other": "Ētahi atu",
+    "generalRequest": "He tono whānui āku",
+    "orderHelp": "Kei te hiahia āwhina au ki taku ota",
+    "waterDescription": "Tēnā, kawea mai te wai ki te tēpu",
+    "breadDescription": "Tēnā, kawea te parāoa ki te tēpu",
+    "serviceDescription": "Me hiahia au ki ngā taputapu hīni, ki tētahi rīhi rānei",
+    "otherDescription": "Me hiahia āwhina au mō tētahi atu mea",
+    "waiterHelpTitle": "Me pēhea mātou e āwhina ai?",
+    "waiterHelpDescription": "Ka tukuna to tono me {table}.",
+    "waiterRequestSent": "I tukuna tō tono ki tō mātou kaikaiwai.",
+    "requestBill": "Tonohia te Pire",
+    "billSent": "I tukuna tō tono pire",
+    "billConfirm": "E hiahia ana koe ki te tono i te pire?",
+    "billSentDescription": "Ka tae mai tō mātou kaitūmau ki a koe ā te wā poto",
+    "billConfirmDescription": "Ka haere tika tō tono ki te kaitūmau. Ka taea e koe te utu i te tēpu, te utu rānei ki te kaitā",
+    "billToast": "Kua tukuna tō tono pānui ki tō kaitiaki.",
+    "backToMenu": "Hoki ki te Tahua",
+    "back": "Hoki",
+    "close": "Katia",
+    "yourTable": "TO TEPU",
+    "serviceOpen": "Kia tuwhera te ratonga",
+    "slogan": "Hāngī Whaiwhai • Teepu Hou",
+    "location": "Bursa, Osmangazi",
+    "languageLabel": "Kōwhiri reo",
+    "currencyLabel": "Kōwhiri moni",
+    "customerNavigation": "Whakatere tahua kiritaki",
+    "approximateCurrency": "He tata ki te utu moni kē. Ka utua i roto i te Lira Paniora.",
+    "orderSuccess": "Kua tukuna tō ota i runga i te tiketike.",
+    "languagePickerTitle": "Kōwhiri Reo",
+    "languagePickerDescription": "Kōwhiria te reo e hiahia ana koe ki te whakamahi mō te rārangi.",
+    "searchLanguage": "Rapua ngā reo...",
+    "recommendedLanguages": "Ngā mea taunaki",
+    "recentLanguages": "Ngā Reo Tata",
+    "allLanguages": "Ngā Reo Katoa",
+    "languageNotFound": "Kāore te reo i kitea.",
+    "languageNotFoundDescription": "Ngana anō ki tētahi ingoa reo, kī ranei.",
+    "tableNumber": "Te Ripanga {number}",
+    "itemCount": "{count} ngā tūemi",
+    "splashLabel": "Te mata whakatuwhera o Tarihi Şehir Lokantası",
+    "cancel": "Utua",
+    "confirmOrder": "Whakamutua te Tono",
+    "orderSummary": "Whakarāpopototanga Tono",
+    "payment": "Utu",
+    "tableNotFound": "Kāore te ripanga i kitea.",
+    "invalidQr": "Kore QR waehere tika.",
+    "menuUnavailable": "Ehara i te wātea te tahua ināianei.",
+    "networkError": "He hapa whatunga i puta.",
+    "productUnavailable": "Ehara i te wātea tēnei tūemi ināianei.",
+    "unableToSendOrder": "Kāore e taea te tuku i te ota.",
+    "tryAgain": "Ngana anō",
+    "somethingWentWrong": "He raru i puta.",
+    "loadingLanguage": "Kei te uta te reo...",
+    "languageLoadError": "Kāore i taea te utaina te reo. Tēnā ngana anō."
+  },
+  "categories": {
+    "soups": "Hupa",
+    "grill": "Hūiri",
+    "mains": "Kai Matua",
+    "drinks": "Waipiro / Inu",
+    "kebabs": "Kēbā",
+    "dessert": "Rēmana / Mīti reka"
+  },
+  "products": {
+    "mercimek": {
+      "name": "Rēmana Pēhi",
+      "description": "Rēmana pēhi hanga-a-ringa i te momo tuku iho, oti i te tīhi pata."
+    },
+    "tas-kebabi": {
+      "name": "Rākau Pihikete Pākehā Tūki",
+      "description": "Pihikete, huawhenua wā, me te rēmana motuhake a tō mātou wharekai i kīnaki mā te tunu ātaahua."
+    },
+    "kuzu-tandir": {
+      "name": "Hipi Inu-Tunu Āta",
+      "description": "Te tandoori hipi tohu o tō mātou wharekai, kua tunua āta i te wera iti."
+    },
+    "pirinc-pilavi": {
+      "name": "Rīwai Piripiri",
+      "description": "Rīwai piripiri Baldo momona, pīhi."
+    },
+    "firin-sutlac": {
+      "name": "Hākari Rīwai Tunu",
+      "description": "Rīwai tunu i te āhua tuku iho, i whakatapua ki te miraka pāmamao o ia rā."
+    },
+    "kuru-fasulye": {
+      "name": "Rihi Pī White me Pēhi",
+      "description": "Ngā pī İspir, pēhi tapahia, me te pāme pāmu tomato o te wharekai."
+    },
+    "izgara-kofte": {
+      "name": "Poaka Kīhini Paraoa",
+      "description": "Ngā poi mīti pēhi ā-tuhi me pepa parai me tomato."
+    },
+    "ayran": {
+      "name": "Ayran Whakarau",
+      "description": "Miraka tīhi tuku iho o te tikanga tawhito me te nui o te pahū, hangaia me te miraka tii i ia rā."
+    },
+    "ezogelin-corbasi": {
+      "name": "Rēmara Ezogelin",
+      "description": "He rēmara wharekai tuku iho e hui ana ngā pīnati whero, bulgur, me te raihi me te mīti."
+    },
+    "tarhana-corbasi": {
+      "name": "Rēmara Tarhana",
+      "description": "Tarhana hanga-a-roto, he tohu o Anatolia ka tunua a ngenge me te tomato me te mīti maroke."
+    },
+    "yayla-corbasi": {
+      "name": "Rewena me te Tunu Parāoa Rīhi",
+      "description": "He kuwha hou, kirīmi rānei ā-wai me te rewena, rīhi, me te māmīti maroke."
+    },
+    "iskembe-corbasi": {
+      "name": "Reweti Rīhi",
+      "description": "He reweti kau tūturu ka whakaritea me tōna tauhi me te waina hekere."
+    },
+    "dugun-corbasi": {
+      "name": "Reweti Tūāmai",
+      "description": "He reweti tuku iho mō te tūāmai ka hangaia mā te mīti hipi kōhua me te momona rēmana."
+    },
+    "tavuk-suyu-corbasi": {
+      "name": "Reweti Hiku Hēki",
+      "description": "He reweti whakaora ka whakaritea me ngā nūipi whakarahi i tunua i roto i te korokoro huhu me te mīti hēki ngarohanga."
+    },
+    "domates-corbasi": {
+      "name": "Reweti Tāmato",
+      "description": "He reka nui te rūrū i tunua me ngā tīmata mātua, pata, me te basil, ā, ka oti ki te tīhi."
+    },
+    "sebze-corbasi": {
+      "name": "Rēmana Huawhenua",
+      "description": "He rēmana māmā o te wharekai i tunua me ngā huawhenua wā, hinu oriwa, me ngā rākau rāwhiti hou."
+    },
+    "beyran-corbasi": {
+      "name": "Rēmana Hipi Rerehua",
+      "description": "He rēmana ā-rohe i tunua ki te wera teitei me te hipi, rīwai, tōmato, me te pepa wera."
+    },
+    "kelle-paca-corbasi": {
+      "name": "Rēmana Upoko me ngā Waewae Hipi",
+      "description": "He rēmana kōrero tohunga i hangaia me ngā wāewae hipi me te mīti upoko i whakamātao mō ētahi hāora roa."
+    },
+    "sehriye-corbasi": {
+      "name": "Rēmana Whirikoka",
+      "description": "Ka tunua te hēki o ia rā me te kohua heihei, me te tōmato, vermicelli, me te perehi."
+    },
+    "tavuk-sis": {
+      "name": "Kākano Heihei",
+      "description": "Ngā wāhanga heihei i marinatehia ki ngā rēmana motuhake, ka tuku ki ngā pepa me te tōmato kua tunua."
+    },
+    "kasap-sucuk": {
+      "name": "Sūkūku Kaihoko i Paraoahia",
+      "description": "Hūiheihei tīhi tunua ki te charco, me ngā huawhenua me te riki ki te sumac."
+    },
+    "karisik-izgara": {
+      "name": "Kararehe Mixta",
+      "description": "He pereti kī katoa me ngā momo kēmu: balls mīti, kākano heihei, paraka hipi, me te tīhi."
+    },
+    "nohut-yemegi": {
+      "name": "Rūrū Pī Kina me te Mīti Hipi",
+      "description": "He kai ā-ringa o ngā pihikete me te mīti hipi tapahia i tunua āta i roto i te akupara."
+    },
+    "patlican-musakka": {
+      "name": "Mōsaka Tūturu",
+      "description": "Wētā pāhi, mīti hipi onepū, me te mōsaka i tunua i te ouhini me te tīhi tōmato, he momo wharekai."
+    },
+    "zeytinyagli-taze-fasulye": {
+      "name": "Pēpi Pango i te Hinu Ōriva",
+      "description": "He momo katoa i tunua i te hinu Ōriva me ngā pēpi pango, tōmato, me ngā rikarika, ka tukuna makariri."
+    },
+    "tavuk-sote": {
+      "name": "Hēki Heihei I Reri",
+      "description": "Ka rererihia ngā wāhanga heihei i runga i te wera teitei me ngā pepa tae, ngā mātaitai, me ngā tōmato."
+    },
+    "izmir-kofte": {
+      "name": "Pihikete Mīti Ōhāmiru-momo",
+      "description": "He rihi tuku iho nui o ngā pōhā mīti kau, tīhi, me ngā pepa i tunua ki te tiihi rēmana."
+    },
+    "etli-bezelye": {
+      "name": "Pī me te Mīti Kau",
+      "description": "Hua rīhi ia rā i tunua i roto i te ipu ki te mīti kau tapahia, pī, kāreti, me ngā tīhi."
+    },
+    "patlican-oturtma": {
+      "name": "Āwhe Rēmana Tunu me te Mīti Hērere",
+      "description": "Ka tunua te arero ki te umu me te āwhe, mīti hērere rāwāhi, me te tiihi rēmana me te tīwai."
+    },
+    "salgam-suyu": {
+      "name": "Karaka Rutū Huawhenua",
+      "description": "He huawhenua rutū tuku iho, rerekē, kua whakakōhiritia me te kāreti porohita me te huawhenua puehu."
+    },
+    "maden-suyu": {
+      "name": "Wai Kohuke",
+      "description": "Wai kohuke māori ma, ka tukuna i te makariri."
+    },
+    "su": {
+      "name": "Ko te Wai Puna Taiao",
+      "description": "Ko te wai puna taiao e whakaratohia ana kia makariri i roto i một ipu karaihe."
+    },
+    "kola": {
+      "name": "Cola",
+      "description": "He inu waipiro karaehe tuku iho e tukuna ana kia heke te hohonu."
+    },
+    "gazoz": {
+      "name": "Soda Ārepa Rēmana",
+      "description": "He inu tawhito katoa, he rongo ātaahua, e tukuna ana kia makariri, kākahu noa."
+    },
+    "turk-kahvesi": {
+      "name": "Kōhi Tūkehi",
+      "description": "Kōhi Tūkehi tuku iho me te āwhi, i tunua i runga i te wera teitei i roto i te cezve kāpia."
+    },
+    "demleme-cay": {
+      "name": "Tī Tūkehi Kōhua",
+      "description": "Tī Rize hou kua kōhua i te pāmahana wera i roto i tētahi ipu angiangi-waewae."
+    },
+    "ev-yapimi-limonata": {
+      "name": "Lēmona Hoki-whakawhanake",
+      "description": "He rēmana whakahou i whakaritea ia rā me te rēmana hou, menta, me te huka iti."
+    },
+    "hosaf": {
+      "name": "Ranu Hua Ia Rā",
+      "description": "He ranu kīhai i te kāinga i kohuatia ia rā me te rīno, āporo maroke, te āporo wera rānei i runga i te wā o te tau."
+    },
+    "iskender-kebabi": {
+      "name": "Bursa İskender Kebab",
+      "description": "Ka kōrerehia te mīti ki runga i te rākau hāngai ki runga i te pide, ka tukuna ki te ranu tōmato, pata wera, me te miraka tīhi."
+    },
+    "kazandibi": {
+      "name": "Miraka Pini Karamela",
+      "description": "He matatiki āhua o te miraka tuku iho i karamela tika, he kowhatu tūturu te whakakoi."
+    },
+    "tavuk-gogsu": {
+      "name": "Miraka Pudding Ottoman",
+      "description": "He tīhi miraka māmā, ā, he miro, i tunua mā te tohutao tuku iho, ka kawea me te kinamona."
+    },
+    "keskul": {
+      "name": "Parāoa Miraka Āmeraka",
+      "description": "He tīhi miraka āhua Ōtomania i oti me te kakara āmeraka me te kōhatu niu."
+    },
+    "irmik-helvasi": {
+      "name": "Halva Semolina",
+      "description": "He halva semolina, i pāwhara ki te pata me ngā nati pīn, ka kawea wera, ā, he pūtāwai."
+    },
+    "kabak-tatlisi": {
+      "name": "Parakari tīhi me te Tahini",
+      "description": "Ko te parakari, i tunua āta i roto i tōna rēmana ake, ka kawea me te tahini me ngā nati."
+    },
+    "ayva-tatlisi": {
+      "name": "Parakari Kiwikiwi",
+      "description": "Ko te kiwikiwi i tunua me te kawakawa me te kinamona ka kawea me te kirīmi pōkai me ngā nati."
+    },
+    "revani": {
+      "name": "Keke Huka Semolina",
+      "description": "Te parai tuhinga rēhi nāianei e hono ana te keke māmā semolina ki te huka ā-pīhera rēmana."
+    },
+    "ekmek-kadayifi": {
+      "name": "Pāhina Parāoa me te Kirīma Pāwera",
+      "description": "Ka whakamāhorahora te pāhina parāoa ki te huka karamele ka kōrerohia me te kirīma pāwera tepo."
+    },
+    "cevizli-baklava": {
+      "name": "Baklava Ōriwa",
+      "description": "Ngā papa ka hurihia kia tino rahi, baklava māmā i hangaia me te nui o ngā ōriwa me te pata noa."
+    }
+  },
+  "allergens": {
+    "Süt ürünleri": "Miraka",
+    "Gluten": "Glutene",
+    "Yumurta": "Heihei",
+    "Badem": "Āmona",
+    "Çam fıstığı": "Ngākau pīnati",
+    "Susam": "Kikī",
+    "Ceviz": "Mengere"
+  },
+  "tags": {
+    "Popüler": "Rangatira",
+    "Vejetaryen": "Ngā Kai Hua Rākau",
+    "Günün Yemeği": "Rīhi o te Rā",
+    "Şefin Önerisi": "Ko te Kōwhiringa a te Hākui",
+    "Yeni": "Hou",
+    "Acılı": "Rēmere",
+    "Ev Yapımı": "Hāngai ki te Kaainga",
+    "Lokanta Klasiği": "Paerewa Wharekai",
+    "Günün Çorbası": "Hāpara o te Rā",
+    "Vegan": "Ngā Kai Hua Rākau Katoa",
+    "Hafif": "Maama",
+    "Yöresel": "Ā-Rohe",
+    "Paylaşmalık": "Hei Tūmau",
+    "Ev Yemeği": "Āhua Kaainga",
+    "Zeytinyağlı": "Hinu Ōlive",
+    "Nostaljik": "Whakamaharatanga",
+    "Geleneksel": "Tikanga",
+    "Bursa Lezzeti": "Rongo o Bursa",
+    "Sütlü Tatlı": "Hūmā Karepe",
+    "Sıcak Tatlı": "Hūmā Wera",
+    "Mevsimlik": "Ā-Tau",
+    "Şerbetli": "Hūmā Hākari"
+  }
+}

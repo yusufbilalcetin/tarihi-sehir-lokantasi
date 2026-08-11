@@ -1,4 +1,5 @@
 import type { MenuCurrency, MenuLanguage } from "@/lib/i18n/menu-translations";
+import { getMenuLanguage } from "@/lib/i18n/languages";
 
 export const MOCK_EXCHANGE_RATES: Record<MenuCurrency, number> = {
   TRY: 1,
@@ -6,19 +7,12 @@ export const MOCK_EXCHANGE_RATES: Record<MenuCurrency, number> = {
   EUR: 0.022,
 };
 
-const MENU_LOCALES: Record<MenuLanguage, string> = {
-  tr: "tr-TR",
-  en: "en-US",
-  de: "de-DE",
-  ar: "ar",
-};
-
 export function formatMenuPrice(
   priceTRY: number,
   currency: MenuCurrency,
   language: MenuLanguage,
 ) {
-  return new Intl.NumberFormat(MENU_LOCALES[language], {
+  return new Intl.NumberFormat(getMenuLanguage(language)?.locale ?? "tr-TR", {
     style: "currency",
     currency,
     minimumFractionDigits: currency === "TRY" ? 0 : 2,

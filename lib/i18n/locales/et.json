@@ -1,0 +1,349 @@
+{
+  "locale": "et",
+  "ui": {
+    "menu": "Menüü",
+    "search": "Otsi menüüst...",
+    "searchLabel": "Otsi menüüst",
+    "categories": "Kategooriad",
+    "categoryIntro": "Valige oma laua maitse.",
+    "categoryNavigation": "Menüü kategooriad",
+    "openCategory": "Ava {name}, {count} eset",
+    "items": "esemed",
+    "item": "eseme",
+    "searchResults": "Otsingutulemused",
+    "productsFound": "Leiti {count} eset",
+    "backToCategories": "Tagasi kategooriatesse",
+    "backToCategory": "Tagasi {name} juurde",
+    "clearSearch": "Tühjenda otsing",
+    "noResults": "Sobivaid esemeid ei leitud",
+    "noResultsDescription": "Proovi uut otsingut või naase kategooriate juurde.",
+    "order": "Minu Ordu",
+    "waiter": "Ettekandja",
+    "bill": "Bill",
+    "addToCart": "Lisa järjekorda",
+    "addedToCart": "{name} lisatud sinu tellimusse.",
+    "removeFromCart": "Eemalda {name}",
+    "soldOut": "Täna välja müüdud",
+    "productDetails": "Ava üksikasjad {name}",
+    "portion": "Osa",
+    "standardPortion": "Standardne osa",
+    "allergens": "Allergeenid",
+    "noAllergens": "Deklareeritud allergeene ei ole",
+    "productNote": "Toote märkus",
+    "productNotePlaceholder": "Näiteks ilma võita, palun.",
+    "decreaseQuantity": "Vähenda kogust",
+    "increaseQuantity": "Suurenda kogust",
+    "each": "iga",
+    "note": "Märkus",
+    "subtotal": "Vahekokku",
+    "serviceFee": "Teenustasu",
+    "total": "Kokku",
+    "sendOrder": "Saada tellimus",
+    "orderSent": "Teie tellimus on saadetud kööki",
+    "orderTracking": "Jälgi tellimust #{number} siin.",
+    "newItem": "Lisa veel üks toode",
+    "emptyCart": "Teie tellimus on tühi",
+    "emptyCartDescription": "Menüüst valitud tooted kuvatakse siin.",
+    "browseMenu": "Sirvi menüüd",
+    "orderReceived": "Tellimus vastu võetud",
+    "waiterConfirmed": "Ettekandja kinnitas",
+    "preparing": "Valmistamisel",
+    "ready": "Valmis",
+    "served": "Serveeritud",
+    "preparingDescription": "Meie köök valmistab teie tellimust.",
+    "orderStatus": "Tellimuse olek",
+    "callWaiter": "Kutsu ettekandja",
+    "placeOrder": "Ma tahan tellida",
+    "wantWater": "Ma sooviksin vett",
+    "wantBread": "Ma sooviksin leiba",
+    "wantService": "Lisateenus",
+    "other": "Muu",
+    "generalRequest": "Mul on üldine soov",
+    "orderHelp": "Vajan abi oma tellimusega",
+    "waterDescription": "Palun tooge laudadele vett",
+    "breadDescription": "Palun tooge leib lauale",
+    "serviceDescription": "Mul on vaja söögiriistu või taldrikut",
+    "otherDescription": "Mul on vaja abi millegi muuga",
+    "waiterHelpTitle": "Kuidas saame aidata?",
+    "waiterHelpDescription": "Teie päring saadetakse koos {table}.",
+    "waiterRequestSent": "Teie päring saadeti meie ettekandjale.",
+    "requestBill": "Telli arve",
+    "billSent": "Teie arve päring saadeti",
+    "billConfirm": "Kas soovite arvet tellida?",
+    "billSentDescription": "Meie ettekandja tuleb Teieni peagi.",
+    "billConfirmDescription": "Teie päring läheb otse ettekandjale. Võite maksta lauas või kassas.",
+    "billToast": "Teie arve päring saadeti meie ettekandjale.",
+    "backToMenu": "Tagasi menüüsse",
+    "back": "Tagasi",
+    "close": "Sulge",
+    "yourTable": "TEIE LAUD",
+    "serviceOpen": "Teenindus avatud",
+    "slogan": "Traditsiooniline maitse • moodsas lauas",
+    "location": "Bursa, Osmangazi",
+    "languageLabel": "Vali keel",
+    "currencyLabel": "Vali valuuta",
+    "customerNavigation": "Kliendi menüü navigeerimine",
+    "approximateCurrency": "Välisvaluuta hinnad on ligikaudsed. Maksmine toimub Türgi liiras.",
+    "orderSuccess": "Teie tellimus saadeti edukalt.",
+    "languagePickerTitle": "Vali keel",
+    "languagePickerDescription": "Valige menüü jaoks soovitud keel.",
+    "searchLanguage": "Otsi keeli...",
+    "recommendedLanguages": "Soovitatud",
+    "recentLanguages": "Hiljutised keeled",
+    "allLanguages": "Kõik keeled",
+    "languageNotFound": "Keelt ei leitud.",
+    "languageNotFoundDescription": "Proovige mõne teise keele nime või koodi.",
+    "tableNumber": "Laud {number}",
+    "itemCount": "{count} üksust",
+    "splashLabel": "Tarihi Şehir Lokantası avakraan",
+    "cancel": "Tühista",
+    "confirmOrder": "Kinnita tellimus",
+    "orderSummary": "Tellimuse kokkuvõte",
+    "payment": "Makse",
+    "tableNotFound": "Lauda ei leitud.",
+    "invalidQr": "Kehtetu QR-kood.",
+    "menuUnavailable": "Menüü pole hetkel saadaval.",
+    "networkError": "Ilmus võrguviga.",
+    "productUnavailable": "See toode pole hetkel saadaval.",
+    "unableToSendOrder": "Tellimust ei õnnestunud saata.",
+    "tryAgain": "Proovi uuesti",
+    "somethingWentWrong": "Midagi läks valesti.",
+    "loadingLanguage": "Laaditakse keelt...",
+    "languageLoadError": "Keele laadimine ebaõnnestus. Palun proovi uuesti."
+  },
+  "categories": {
+    "soups": "Supid",
+    "grill": "Grillid",
+    "mains": "Põhiroad",
+    "drinks": "Jookid",
+    "kebabs": "Kebabid",
+    "dessert": "Magustoidud"
+  },
+  "products": {
+    "mercimek": {
+      "name": "Läätsesupp",
+      "description": "Kodune läätsesupp klassikalises stiilis, serveeritud võikastme lisandiga."
+    },
+    "tas-kebabi": {
+      "name": "Türgi veisepada",
+      "description": "Veiseliha, hooajalised köögiviljad ja meie restorani aeglaselt küpsetatud erikastmes."
+    },
+    "kuzu-tandir": {
+      "name": "Aeglaselt röstitud lambaliha",
+      "description": "Meie restorani eriline lambatandoori, aeglaselt madalal kuumusel küpsetatud."
+    },
+    "pirinc-pilavi": {
+      "name": "Riisipiim",
+      "description": "Võine, kohev Baldo riisipilaff."
+    },
+    "firin-sutlac": {
+      "name": "Küpsetatud riisipuding",
+      "description": "Traditsiooniliselt küpsetatud riisipuding, valmistatud igapäevase pühvlipiimaga."
+    },
+    "kuru-fasulye": {
+      "name": "Valged ubadest hautis veiselihaga",
+      "description": "İspiri oad, kuubikuteks lõigatud veiseliha ja tavaline restorani tomatipasta."
+    },
+    "izgara-kofte": {
+      "name": "Grillitud lihapallid",
+      "description": "Lihakaupluse stiilis veiseliha lihapallid röstitud pipra ja tomatiga."
+    },
+    "ayran": {
+      "name": "Kohviveskis ajatud Ayran",
+      "description": "Traditsiooniline vahuga ajatud kefiirimaitseline piim, valmistatud igapäevasest jogurtist."
+    },
+    "ezogelin-corbasi": {
+      "name": "Ezogelini supp",
+      "description": "Traditsiooniline restorani supp, kus punased läätsed, bulgur ja riis kohtuvad mündiga."
+    },
+    "tarhana-corbasi": {
+      "name": "Tarhana supp",
+      "description": "Kodune tarhana, Anatoolia klassika, mis saab aeglaselt tomatite ja kuivatatud mündiga keedetud."
+    },
+    "yayla-corbasi": {
+      "name": "Jogurti- ja riisisupp",
+      "description": "Värskendav ja kreemjas yayla supp, valmistatud jogurti, riisi ja kuivatatud piparmündiga."
+    },
+    "iskembe-corbasi": {
+      "name": "Värskesupi",
+      "description": "Õige veise triibi supp serveeritud oma maitseaine ja küüslaugusoodaga."
+    },
+    "dugun-corbasi": {
+      "name": "Pulmasupp",
+      "description": "Traditsiooniline pulmasupp, valmistatud rebitud lambalihast ja maitsestatud sidrunimarinaadiga."
+    },
+    "tavuk-suyu-corbasi": {
+      "name": "Kanapuljongi supp",
+      "description": "Tervendav supp, valmistatud õhukestest nuudlitest, keedetud luupuljongis ja rebitud kanalihaga."
+    },
+    "domates-corbasi": {
+      "name": "Tomatisupp",
+      "description": "Rikas maitse, valmistatud küpsetest tomatitest, võist ja basiilikust, lõpetatud juustuga."
+    },
+    "sebze-corbasi": {
+      "name": "Köögiviljasupp",
+      "description": "Kerge restorani supp, valmistatud hooajalistest köögiviljadest, oliiviõlist ja värsketest ürtidest."
+    },
+    "beyran-corbasi": {
+      "name": "Vürtsikas lambaliha Beyran-supp",
+      "description": "Piirkondlik supp, valmistatud suurel kuumusel lambast, riisist, küüslaugust ja tulisest piprast."
+    },
+    "kelle-paca-corbasi": {
+      "name": "Pea- ja jalasupp",
+      "description": "Rikas luupuljongi supp, valmistatud veisejalgadest ja pea lihast, keedetud pikki tunde."
+    },
+    "sehriye-corbasi": {
+      "name": "Vermicelli-supp",
+      "description": "Igapäevane supp, mis on valmistatud kanapuljongist tomatite, vermicelli ja peterselliga."
+    },
+    "tavuk-sis": {
+      "name": "Kanavardad",
+      "description": "Kanatükid, marineeritud eriliste vürtsidega, serveeritud röstitud paprikate ja tomatitega."
+    },
+    "kasap-sucuk": {
+      "name": "Grillitud lihuniku sucuk",
+      "description": "Vürtsikas veisevorst, mis on küpsetatud söel, röstitud köögiviljade ja sibula sumakiga."
+    },
+    "karisik-izgara": {
+      "name": "Segagrill",
+      "description": "Rikkalik ja mitmekesine grilltaldrik, mis koosneb lihapallidest, kanavardatest, lambakarbonaadid ja vorstist."
+    },
+    "nohut-yemegi": {
+      "name": "Kikerhernehautis veiselihaga",
+      "description": "Kodune eine, kus kikerherned ja tükeldatud veiseliha on aeglaselt kuumutatud vasest potis."
+    },
+    "patlican-musakka": {
+      "name": "Baklažaani Moussaka",
+      "description": "Praetud baklažaan, hakkliha ja moussaka küpsetatud ahjus tomatikastmega, restoranistiilis."
+    },
+    "zeytinyagli-taze-fasulye": {
+      "name": "Rohelised oad oliiviõlis",
+      "description": "Klassikaline roog, mis on küpsetatud oliiviõlis koos roheliste ubade, tomatite ja sibulaga, serveeritakse külmalt."
+    },
+    "tavuk-sote": {
+      "name": "Kana praadimine",
+      "description": "Kanatükid on kuumutatud kõrgel kuumusel koos värviliste piparde, seente ja tomatitega."
+    },
+    "izmir-kofte": {
+      "name": "İzmiiri stiilis lihakeb.",
+      "description": "Traditsiooniline pearoog veiseliha lihapallide, kartulite ja paprikaga, küpsetatud tomatikastmes."
+    },
+    "etli-bezelye": {
+      "name": "Herne-praad veiselihaga",
+      "description": "Igapäevane eine, valmistatud potis kuubikuteks lõigatud veiseliha, herneste, porgandi ja kartulitega."
+    },
+    "patlican-oturtma": {
+      "name": "Ahjuköögivili hakklihaga",
+      "description": "Keel valmistatakse ahjus baklažaani, vürtsika hakkliha ja küüslauguse tomatikastmega."
+    },
+    "salgam-suyu": {
+      "name": "Kääritatud naerisemahl",
+      "description": "Traditsiooniline vürtsikas naerimahl, kääritatud lilla porgandi ja bulguri pärmiga."
+    },
+    "maden-suyu": {
+      "name": "Värskendav mineraalvesi",
+      "description": "Looduslik selge mineraalvesi, serveeritud külmalt."
+    },
+    "su": {
+      "name": "Looduslik allikavesi",
+      "description": "Looduslik allikavesi serveeritakse külmalt klaaspudelis."
+    },
+    "kola": {
+      "name": "Cola",
+      "description": "Klassikaline gaseeritud jook serveerituna jääkülmalt."
+    },
+    "gazoz": {
+      "name": "Türgi sidrunisooda",
+      "description": "Traditsioonilise maitsega, värskendav ja serveeritud külma tavalise limonaadiga."
+    },
+    "turk-kahvesi": {
+      "name": "Türgi kohv",
+      "description": "Traditsiooniline Türgi kohv vahuga, keedetud kõrgel kuumusel vask-cezves."
+    },
+    "demleme-cay": {
+      "name": "Türgi pruulitud tee",
+      "description": "Värskelt keedetud kuum Rize tee õhukese vöökohaga klaasis."
+    },
+    "ev-yapimi-limonata": {
+      "name": "Kodune limonaad",
+      "description": "Värskendav limonaad, valmistatud iga päev värsketest sidrunitest, mündist ja veidi suhkrust."
+    },
+    "hosaf": {
+      "name": "Igapäevane puuviljakompott",
+      "description": "Kodus keedetud kompott, valmistatud iga päev viinamarjade, aprikooside või ploomidega vastavalt hooajale."
+    },
+    "iskender-kebabi": {
+      "name": "Bursa İskender kebab",
+      "description": "Liha keerleb vardal üle pide, serveeritakse tomatikastme, kuuma või ja jogurtiga."
+    },
+    "kazandibi": {
+      "name": "Karamelliga piimakook",
+      "description": "Traditsiooniline piimajäätis, korralikult karamelliseeritud, siidise tekstuuriga."
+    },
+    "tavuk-gogsu": {
+      "name": "Osmaniakas piimakook",
+      "description": "Kerge ja kiuline piimajäätis, valmistatud traditsioonilise retsepti järgi, serveeritud kaneeliga."
+    },
+    "keskul": {
+      "name": "Mandlipiima puding",
+      "description": "Osmaliiklus stiilis piimajäätis, lisatud mandlilõhna ja kookospähkliga."
+    },
+    "irmik-helvasi": {
+      "name": "Taigna halva",
+      "description": "Taignahvava, röstitud võis ja männipähklitega, serveeritud kuumalt ja teralisena."
+    },
+    "kabak-tatlisi": {
+      "name": "Kõrvitsamagustoit tahiniga",
+      "description": "Kõrvits, aeglaselt küpsetatud oma mahlas, serveeritakse tahini ja pähklitega."
+    },
+    "ayva-tatlisi": {
+      "name": "Jõhvikamagustoit",
+      "description": "Jõhvik, keedetud nelgi ja kaneeliga, serveeritud paksendatud koore ja pähklitega."
+    },
+    "revani": {
+      "name": "Semolinisiirupi kook",
+      "description": "Klassikaline restorani magustoit, kus kohtuvad pehme semolinikook ja sidrunilõhnaline siirup."
+    },
+    "ekmek-kadayifi": {
+      "name": "Leivapuding koorevõiga",
+      "description": "Leivapuding karamelliseeritud siirupiga serveeritakse veiselihast koorevõiga."
+    },
+    "cevizli-baklava": {
+      "name": "Pähklibaklava",
+      "description": "Väga õhukeseks rullitud kihid, krõbe baklava, valmistatud rohkete pähklite ja tavalise võiga."
+    }
+  },
+  "allergens": {
+    "Süt ürünleri": "Piimatooted",
+    "Gluten": "Gluteen",
+    "Yumurta": "Muna",
+    "Badem": "Mandlid",
+    "Çam fıstığı": "Seedermari",
+    "Susam": "Seesamiseemned",
+    "Ceviz": "Pähkel"
+  },
+  "tags": {
+    "Popüler": "Populaarne",
+    "Vejetaryen": "Taimetoitlane",
+    "Günün Yemeği": "Päeva roog",
+    "Şefin Önerisi": "Koka soovitus",
+    "Yeni": "Uus",
+    "Acılı": "Vürtsikas",
+    "Ev Yapımı": "Kodune",
+    "Lokanta Klasiği": "Restorani klassika",
+    "Günün Çorbası": "Päeva supp",
+    "Vegan": "Vegan",
+    "Hafif": "Kerge",
+    "Yöresel": "Regionaalne",
+    "Paylaşmalık": "Jagamiseks",
+    "Ev Yemeği": "Kodune stiil",
+    "Zeytinyağlı": "Oliiviõli",
+    "Nostaljik": "Nostalgiline",
+    "Geleneksel": "Traditsiooniline",
+    "Bursa Lezzeti": "Bursa maitse",
+    "Sütlü Tatlı": "Piimajäätis",
+    "Sıcak Tatlı": "Soe magustoit",
+    "Mevsimlik": "Hooajaline",
+    "Şerbetli": "Siirupimagustoit"
+  }
+}

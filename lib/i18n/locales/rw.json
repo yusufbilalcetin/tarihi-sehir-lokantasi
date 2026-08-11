@@ -1,0 +1,349 @@
+{
+  "locale": "rw",
+  "ui": {
+    "menu": "Menu",
+    "search": "Shakisha muri menu...",
+    "searchLabel": "Shakisha muri menu",
+    "categories": "Ibice",
+    "categoryIntro": "Hitamo uburyohe bw'ameza yawe.",
+    "categoryNavigation": "Ibice bya menu",
+    "openCategory": "Fungura {name}, ibintu {count}",
+    "items": "ibintu",
+    "item": "ikintu",
+    "searchResults": "Ibyavuye mu gushakisha",
+    "productsFound": "Ibintu {count} byabonetse",
+    "backToCategories": "Subira mu bice",
+    "backToCategory": "Subira kuri {name}",
+    "clearSearch": "Siba gushakisha",
+    "noResults": "Nta kintu gihura cyabonetse",
+    "noResultsDescription": "Gerageza gushakisha ahandi cyangwa subira mu byiciro.",
+    "order": "Itegeko ryanjye",
+    "waiter": "Umukozi w'ikiribwa",
+    "bill": "Fatura",
+    "addToCart": "Ongeramo ku itegeko",
+    "addedToCart": "{name} yongewemo ku itegeko ryawe.",
+    "removeFromCart": "Kuraho {name}",
+    "soldOut": "Byaracurujwe Uyu Munsi",
+    "productDetails": "Fungura ibisobanuro bya {name}",
+    "portion": "Igice",
+    "standardPortion": "Igice gisanzwe",
+    "allergens": "Ibiyobyabwenge biterwa n'amafunguro",
+    "noAllergens": "Nta bikoresho byugarijwe byatangajwe",
+    "productNote": "Icyitonderwa ku kintu",
+    "productNotePlaceholder": "Urugero: nta butereri, nyamuneka",
+    "decreaseQuantity": "Gabanya umubare",
+    "increaseQuantity": "Ongera umubare",
+    "each": "buri kimwe",
+    "note": "Icyitonderwa",
+    "subtotal": "Igiteranyo",
+    "serviceFee": "Amafaranga y'ubucuruzi",
+    "total": "Igiteranyo cyose",
+    "sendOrder": "Ohereza Itegeko",
+    "orderSent": "Itegeko ryawe ryoherejwe mu gikoni",
+    "orderTracking": "Kurikira itegeko #{number} hano.",
+    "newItem": "Ongeraho Ikintu KindI",
+    "emptyCart": "Itegeko ryawe nta gikubiyemo",
+    "emptyCartDescription": "Ibintu wahisemo ku rutonde bizagaragara hano.",
+    "browseMenu": "Suzuma Urutonde",
+    "orderReceived": "Itegeko Ryakiriwe",
+    "waiterConfirmed": "Ubufasha bwemejwe",
+    "preparing": "Birategurwa",
+    "ready": "Biteguye",
+    "served": "Byatanzwe",
+    "preparingDescription": "Igikoni cyacu kirimo gutegura ibyo wagabye.",
+    "orderStatus": "Imiterere y'itegeko",
+    "callWaiter": "Hamagara Ubufasha",
+    "placeOrder": "Nshaka gutumiza",
+    "wantWater": "Nashaka amazi",
+    "wantBread": "Nashaka umugati",
+    "wantService": "Serivisi y'inyongera",
+    "other": "Ibindi",
+    "generalRequest": "Ndagira icyo nsaba rusange",
+    "orderHelp": "Nkeneye ubufasha ku itegeko ryanjye",
+    "waterDescription": "Nyamuneka uzane amazi ku meza",
+    "breadDescription": "Nyamuneka uzane umugati ku meza",
+    "serviceDescription": "Nkeneye ibikoresho byo kurya cyangwa isahani",
+    "otherDescription": "Nkeneye ubufasha ku kindi kintu",
+    "waiterHelpTitle": "Twashobora gute kugufasha?",
+    "waiterHelpDescription": "Ubusabe bwawe buzoherezwa hamwe na {table}.",
+    "waiterRequestSent": "Ubusabe bwawe bwoherejwe ku murimyi wacu.",
+    "requestBill": "Saba fagitire",
+    "billSent": "Ubusabe bwa fagitire bwawe bwoherejwe",
+    "billConfirm": "Waba wifuza gusaba fagitire?",
+    "billSentDescription": "Umurimyi wacu azahita agera aho uri.",
+    "billConfirmDescription": "Ubusabe bwawe buzajya mu buryo butaziguye ku murimyi. Ushobora kwishyura ku meza cyangwa kuri kasiye.",
+    "billToast": "Ubusabe bwa fagitire yawe bwatanzwe kuri waiter wacu.",
+    "backToMenu": "Subira ku Menu",
+    "back": "Subira inyuma",
+    "close": "Funga",
+    "yourTable": "IMEZA YAWE",
+    "serviceOpen": "Serivisi ifunguye",
+    "slogan": "Uburyo Busanzwe bw'Ibiryo • Imeza Igezweho",
+    "location": "Bursa, Osmangazi",
+    "languageLabel": "Hitamo ururimi",
+    "currencyLabel": "Hitamo ifaranga",
+    "customerNavigation": "Guhagarika imyirondoro y'abakiriya ku menu",
+    "approximateCurrency": "Ibiciro by'ifaranga ryo hanze ni by'ibyiyongera gusa. Kwishyura bikorwa mu Lira y'Uburusiya.",
+    "orderSuccess": "Itegeko ryawe ryoherejwe neza.",
+    "languagePickerTitle": "Hitamo Ururimi",
+    "languagePickerDescription": "Hitamo ururimi ushaka gukoresha ku murongo wa menu.",
+    "searchLanguage": "Shakisha indimi...",
+    "recommendedLanguages": "Byemejwe",
+    "recentLanguages": "Indimi ziheruka gukoreshwa",
+    "allLanguages": "Indimi zose",
+    "languageNotFound": "Ururimi ntirwabonywe.",
+    "languageNotFoundDescription": "Gerageza izina ry'indi ndimi cyangwa code yayo.",
+    "tableNumber": "Ameza {number}",
+    "itemCount": "Ibintu {count}",
+    "splashLabel": "Ekrani yo gufungura ya Tarihi Şehir Lokantası",
+    "cancel": "Hagarika",
+    "confirmOrder": "Emeza Itegeko",
+    "orderSummary": "Isuzuma ry'Itegeko",
+    "payment": "Ubwishyu",
+    "tableNotFound": "Ameza ntayabonetse.",
+    "invalidQr": "Ikode ya QR ntikora.",
+    "menuUnavailable": "Menu ubu ntiboneka.",
+    "networkError": "Icyibazo cy'umuyoboro cyabaye.",
+    "productUnavailable": "Iki kintu ubu ntikiboneka.",
+    "unableToSendOrder": "Ntibishobotse kohereza itegeko.",
+    "tryAgain": "Gerageza kongera",
+    "somethingWentWrong": "Hari ikitagenda neza.",
+    "loadingLanguage": "Gutanga ururimi...",
+    "languageLoadError": "Ntibishobotse gusohoza ururimi. Nyamuneka gerageza kongera."
+  },
+  "categories": {
+    "soups": "Isupu",
+    "grill": "Ibyo ku ziko",
+    "mains": "Ibiribwa nyamukuru",
+    "drinks": "Ibinyobwa",
+    "kebabs": "Kebabu",
+    "dessert": "Ibinyobwa bya nyuma"
+  },
+  "products": {
+    "mercimek": {
+      "name": "Isupu ya Lentile",
+      "description": "Isupu ya lentile yo mu rugo itewe mu buryo gakondo, irangizwa n'isosi y'amavuta y'intama."
+    },
+    "tas-kebabi": {
+      "name": "Ibishyimbo by'Inyama y'Inka ya Turkish",
+      "description": "Inyama y'inka, imboga zo mu gihe, n'isosi idasanzwe y'aho muri resitora itogosheje gahoro gahoro."
+    },
+    "kuzu-tandir": {
+      "name": "Intama yatogoshejwe buhoro",
+      "description": "Intama ya tandoori y'akarango ka resitora yacu, itogoshejwe buhoro ku ziko ryoroshye."
+    },
+    "pirinc-pilavi": {
+      "name": "Umuceri wa Pilaf",
+      "description": "Umuceri wa Baldo urimo amavuta, woroshye kandi uhumura neza."
+    },
+    "firin-sutlac": {
+      "name": "Ubuki bw'umuceri bwatekeshejwe mu ifuru",
+      "description": "Ubuki bw'umuceri bwatekeshejwe mu buryo gakondo, buteguwe n'amata y'inka ya buffalo buri munsi."
+    },
+    "kuru-fasulye": {
+      "name": "Isupu y'ibishyimbo byera n'inyama y'inka",
+      "description": "Ibisembo bya İspir, inyama y'inka icagaguritse, n'isosiyete ya tomate isanzwe yo muri resitora."
+    },
+    "izgara-kofte": {
+      "name": "Inyama z'ibibabi ziteguye ku muriro",
+      "description": "Inyama z'inka ziteguye nka butcher hamwe n'ibirungo by'ikirunga n'inyanya."
+    },
+    "ayran": {
+      "name": "Ayran ivanganye",
+      "description": "Amavuta ya buttermilk gakondo afite umwuzure mwinshi, akorwa n'ubuki busanzwe bwa yoguti."
+    },
+    "ezogelin-corbasi": {
+      "name": "Isupu ya Ezogelin",
+      "description": "Isupu gakondo ya resitora aho ibishyimbo by'umutuku, bulgur, n'umuceri byubakana na minti."
+    },
+    "tarhana-corbasi": {
+      "name": "Isupu ya Tarhana",
+      "description": "Tarhana yo mu rugo, ikinyarwanda cya Anatolia itegurwa buhoro buhoro hamwe n'inyanya n'umunetsi wakanye."
+    },
+    "yayla-corbasi": {
+      "name": "Isupu ya Yoguti n'Umuceri",
+      "description": "Isupu ikonje kandi yoroshye ya yayla ikozwe muri yoguti, umuceri, n'ibibabi by'umutonyanga byumye."
+    },
+    "iskembe-corbasi": {
+      "name": "Isupu y'Imboga z'Inyama z'Inka",
+      "description": "Isupu y'inyama z'inka ikozwe neza iteguye hamwe n'ibirungo byayo na vinegere ya tungurusumu."
+    },
+    "dugun-corbasi": {
+      "name": "Isupu y'Ubukwe",
+      "description": "Isupu gakondo y'ubukwe ikozwe mu nyama y'ihene yatomowe kandi icuruzwa n'amavuta ya limoni."
+    },
+    "tavuk-suyu-corbasi": {
+      "name": "Isupu y'Inkoko",
+      "description": "Isupu ikiza ikozwe n'imisohoro mito ibikwa mu buliri bw'inyama z'inyama hamwe n'inyama y'inkoko yatomowe."
+    },
+    "domates-corbasi": {
+      "name": "Isupu ya Tumatire",
+      "description": "Impumuro ikungahaye yatekwemo inyanya zikuze, amavuta, na basil, irangijwe n'ibirayi."
+    },
+    "sebze-corbasi": {
+      "name": "Isupu y'imboga",
+      "description": "Isupu yoroheje yo muri resitora yakozwe n'imboga z'igihe, amavuta ya elayo, n'ibyatsi bishya."
+    },
+    "beyran-corbasi": {
+      "name": "Isupu y'Inyama y'Intama Ishyushye ya Beyran",
+      "description": "Isupu y'akarere itewe ku muriro mwinshi hakoreshejwe inyama y'intama, umuceri, tungurusumu, n'igitunguru gishyushye."
+    },
+    "kelle-paca-corbasi": {
+      "name": "Isupu y'Umusoro n'Akarimwe",
+      "description": "Isupu ikungahaye ku magufa yakozwe n'umusoro w'inka n'inyama y'umusoro yatetse amasaha menshi."
+    },
+    "sehriye-corbasi": {
+      "name": "Isupu ya Vermicelli",
+      "description": "Isupu ya buri munsi ikozwe mu isosi y'inkoko hamwe n'inyanya, vermiselli, na peteroli."
+    },
+    "tavuk-sis": {
+      "name": "Ibibabi by'Inkoko",
+      "description": "Ududomo tw'inkoko twatewe amavuta n'ibirungo byihariye, dutegurwa hamwe n'ibirayi byokeje n'inyanya."
+    },
+    "kasap-sucuk": {
+      "name": "Amarangi y'Inyama y'inka Yumye ku muriro",
+      "description": "Isosi y'inyama y'inka ifite akanyafu ku muriro, hamwe n'imboga zokeje n'ibitunguru bifite sumac."
+    },
+    "karisik-izgara": {
+      "name": "Gushushanya ku Muriro",
+      "description": "Icyo kurya cyuzuye kandi gitandukanye kigizwe n'umutobe w'inyama, ibibabi by'inkoko, amashaza y'ingurube, n'isosi."
+    },
+    "nohut-yemegi": {
+      "name": "Isupu y'Ibishyimbo hamwe n'Inyama y'inka",
+      "description": "Icyokurya cy'iwanyu cya kabichi n'inyama y'inka yacagaguriwe buhoro buhoro mu isafuriya ya kopore."
+    },
+    "patlican-musakka": {
+      "name": "Moussaka y'ibitunguru by'umweru",
+      "description": "Ibitunguru by'umweru by'inka byotswe, inyama y'inka, na moussaka ishyushye mu ifuru hamwe na sauce ya tomate, mu buryo bw'amarestora."
+    },
+    "zeytinyagli-taze-fasulye": {
+      "name": "Ibishyimbo by'icyatsi mu mavuta y'ibihwagari",
+      "description": "Icyokurya gakondo cyatewemo mu mavuta y'ibihwagari hamwe n'ibishyimbo by'icyatsi, inyanya, n'ibitunguru, bitetse gikonje."
+    },
+    "tavuk-sote": {
+      "name": "Inkoko ishushanyije mu mavuta",
+      "description": "Udusate tw'inkoko dushushanyijwe hejuru y'umuriro mwinshi hamwe n'ubwoko butandukanye bw'ibirungo, ubugari, n'inyanya."
+    },
+    "izmir-kofte": {
+      "name": "Inyama zikorwa mu buryo bwa İzmir",
+      "description": "Icyokurya gakondo gikozwe n'inyama y'ihene zikoze umupira, ibirayi, n'ibitunguru byotsa mu isosi y'inyanya."
+    },
+    "etli-bezelye": {
+      "name": "Ibishyimbo n'Inyama y'ihene",
+      "description": "Ifunguro rya buri munsi ritegurwa mu isafuriya rikozwe mu nyama y'ihene icagaguye, ibishyimbo, karoti, n'ibirayi."
+    },
+    "patlican-oturtma": {
+      "name": "Inyanya y'ibirayi n'inyama zicagaguye",
+      "description": "Ururimi rutewe mu ifuru hamwe n'ibirayi, inyama zicagaguye zitewe n'ibirungo, n'isosi y'inyanya n'umutunguru."
+    },
+    "salgam-suyu": {
+      "name": "Umuneke w'ikinyomoro cyahindutse",
+      "description": "Umuneke gakondo w'ibitunguru wuzuyeho karoti y'ubururu n'urumogi rwa bulgur."
+    },
+    "maden-suyu": {
+      "name": "Amazi ya Minerale",
+      "description": "Amazi karemano ya minerale atetse akonje."
+    },
+    "su": {
+      "name": "Amazi y'Isoko Kamere",
+      "description": "Amazi y'isoko kamere atetse akonje mu icupa ry'ikirahure."
+    },
+    "kola": {
+      "name": "Cola",
+      "description": "Ikirungo gisanzwe cyuzuye gaze gitangwa gikonje cyane."
+    },
+    "gazoz": {
+      "name": "Soda y'indimu ya Kisilike",
+      "description": "Soda gakondo ifite uburyohe, ishushe kandi itangwa ikonje ifite uburyohe bw'umwimerere."
+    },
+    "turk-kahvesi": {
+      "name": "Icyayi cya Kisilike",
+      "description": "Icyayi cya Kisilike gakondo gifite umwuma, gitekerea ku ziko rihiye cyane mu isafuriya ya kashe."
+    },
+    "demleme-cay": {
+      "name": "Icyayi Gishyushye cya Kisilike",
+      "description": "Icyayi gishyushye gishya cya Rize gitanzwe mu icupa rigufi rifite igituza cyoroheje."
+    },
+    "ev-yapimi-limonata": {
+      "name": "Lemonade yo mu rugo",
+      "description": "Lemonade isukuye itewe buri munsi n'imizambwe mishya, minti, n'isukari nkeya."
+    },
+    "hosaf": {
+      "name": "Compote y'imbuto ya buri munsi",
+      "description": "Compote yo mu rugo ishyushye buri munsi hamwe n'imizabibu, abrikoti, cyangwa amaplamu bitewe n'igihembwe."
+    },
+    "iskender-kebabi": {
+      "name": "Bursa İskender Kebab",
+      "description": "Inyama ikorwaho urushinge hejuru ya pide, itangwa ifite isosi y'inyanya, amavuta ashyushye, na yoguti."
+    },
+    "kazandibi": {
+      "name": "Umutobe w'amata w'ikarameli",
+      "description": "Umutsima gakondo w'amata ukarahirwa neza, ufite ubunyamavuta bwo hejuru."
+    },
+    "tavuk-gogsu": {
+      "name": "Umutobe w'amata w'Abotomani",
+      "description": "Isukari yoroshye kandi ifite ibyuma bya fibre ikozwe n’amata, itewe n’ubuhanga gakondo, ikabikwa hamwe n’ikirungo cya sinamoni."
+    },
+    "keskul": {
+      "name": "Pudding y’amata y’Ibihwagari",
+      "description": "Isukari y’amata mu buryo bwa Ottoman yuzuye n’impumuro y’ibihwagari n’umunyu w’itorero."
+    },
+    "irmik-helvasi": {
+      "name": "Halva ya Semolina",
+      "description": "Halva ya semolina, itetse mu butari n’imyembe y’ibiti by’inzitiramibu, ikabikwa ishyushye kandi ifite uduce twayo."
+    },
+    "kabak-tatlisi": {
+      "name": "Isukari y’Igikakarubamba hamwe na Tahini",
+      "description": "Igikakarubamba, gitogoshewe gahoro gahoro mu mariba yacyo, gikabikwa hamwe na tahini n’imbuto z’umunyu."
+    },
+    "ayva-tatlisi": {
+      "name": "Isukari y’Igitoki cya Quince",
+      "description": "Igitoki cya quince, gitogoshewe hamwe n’ikariso na sinamoni, gikaba gitewe hamwe n’amavuta akomeye n’imbuto z’umunyu."
+    },
+    "revani": {
+      "name": "Ikeke rya Semolina Riseye Sirupe",
+      "description": "Umukino w'ikirangirire muri resitora aho ikeke rito rya semolina rihura na sirupe iryoshye ifite impumuro ya limon."
+    },
+    "ekmek-kadayifi": {
+      "name": "Pudingi y'Umugati n'Agafu k'Amata Gatogosheje",
+      "description": "Pudingi y'umugati ruhutse hamwe na sirupe yanyanyaguwe itangwa hamwe n'agafu k'amatako k'inka za buffalo."
+    },
+    "cevizli-baklava": {
+      "name": "Baklava y'Inyanya z'Umwembe",
+      "description": "Amashami aringanijwe neza, baklava yumutetse ikozwe n'inyanya nyinshi hamwe n'amavuta asukuye."
+    }
+  },
+  "allergens": {
+    "Süt ürünleri": "Ibikomoka ku Mata",
+    "Gluten": "Gluteni",
+    "Yumurta": "Igitunguru cy'Inka",
+    "Badem": "Ubutare bw'Inyanya",
+    "Çam fıstığı": "Inyanya z'Ikibabi",
+    "Susam": "Sesame",
+    "Ceviz": "Inzungu"
+  },
+  "tags": {
+    "Popüler": "Izakunzwe",
+    "Vejetaryen": "Indyo y'Ibimera",
+    "Günün Yemeği": "Icyo kurya cy'Umunsi",
+    "Şefin Önerisi": "Guhitamo kwa Chef",
+    "Yeni": "Gishya",
+    "Acılı": "Kirimo Ibitunguru",
+    "Ev Yapımı": "Gikozwe mu rugo",
+    "Lokanta Klasiği": "Isahani isanzwe ya Restaurant",
+    "Günün Çorbası": "Isupu y'Umunsi",
+    "Vegan": "Ikoze ku bimera gusa",
+    "Hafif": "Byoroshye",
+    "Yöresel": "By'umwihariko w'Akarere",
+    "Paylaşmalık": "Byagenewe gusangirwa",
+    "Ev Yemeği": "By'umwimerere byo mu rugo",
+    "Zeytinyağlı": "Amavuta y'Olive",
+    "Nostaljik": "Ibikurura amarangamutima ya kera",
+    "Geleneksel": "Umwimerere",
+    "Bursa Lezzeti": "Umuti w'icyayi wa Bursa",
+    "Sütlü Tatlı": "Icyokurya cy'amata",
+    "Sıcak Tatlı": "Icyokurya gishyushye",
+    "Mevsimlik": "Igihe cy'ibihe",
+    "Şerbetli": "Icyokurya cy'isukari"
+  }
+}

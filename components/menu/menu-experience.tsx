@@ -78,7 +78,7 @@ export function MenuExperience() {
 }
 
 function MenuExperienceContent() {
-  const { currency, direction, formatPrice, language, t } = useMenuPreferences();
+  const { currency, direction, formatPrice, language, languageDefinition, preferencesReady, t } = useMenuPreferences();
   const params = useParams<{ tableToken?: string }>();
   const categoryHeadingRef = useRef<HTMLHeadingElement>(null);
   const productHeadingRef = useRef<HTMLHeadingElement>(null);
@@ -98,25 +98,25 @@ function MenuExperienceContent() {
   const finishIntro = useCallback(() => setIntroComplete(true), []);
   const tableName = useMemo(() => {
     const token = params?.tableToken;
-    if (!token || token === "demo-table") return "Masa 7";
+    if (!token || token === "demo-table") return t("tableNumber", { number: 7 });
     const tableNumber = token.match(/\d+/)?.[0];
-    if (tableNumber) return `Masa ${tableNumber}`;
-    return decodeURIComponent(token).replaceAll("-", " ").replace(/\b\p{L}/gu, (letter) => letter.toLocaleUpperCase("tr-TR"));
-  }, [params]);
+    if (tableNumber) return t("tableNumber", { number: Number(tableNumber) });
+    return decodeURIComponent(token).replaceAll("-", " ").replace(/\b\p{L}/gu, (letter) => letter.toLocaleUpperCase(languageDefinition.locale));
+  }, [languageDefinition.locale, params, t]);
   const selectedCategory = menuCategories.find((category) => category.id === activeCategory);
   const selectedCategoryName = selectedCategory
     ? getMenuCategoryName(selectedCategory, language)
     : "";
 
   const filteredProducts = useMemo(() => {
-    const normalized = search.trim().toLocaleLowerCase(language === "tr" ? "tr-TR" : language);
+    const normalized = search.trim().toLocaleLowerCase(languageDefinition.locale);
     return publicProducts.filter((product) => {
       const matchesCategory = normalized ? true : Boolean(activeCategory) && product.categoryId === activeCategory;
       const searchableText = `${getMenuProductName(product, language)} ${getMenuProductDescription(product, language)} ${getMenuCategoryName(categories.find((category) => category.id === product.categoryId) ?? { id: product.categoryId, name: product.category, slug: product.categoryId, productCount: 0, active: true, sortOrder: 0 }, language)}`;
-      const matchesSearch = !normalized || searchableText.toLocaleLowerCase(language === "tr" ? "tr-TR" : language).includes(normalized);
+      const matchesSearch = !normalized || searchableText.toLocaleLowerCase(languageDefinition.locale).includes(normalized);
       return matchesCategory && matchesSearch;
     });
-  }, [activeCategory, language, search]);
+  }, [activeCategory, language, languageDefinition.locale, search]);
 
   const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
   const subtotal = cart.reduce((sum, item) => sum + item.unitPrice * item.quantity, 0);
@@ -388,7 +388,8 @@ function MenuExperienceContent() {
   return (
     <>
       <SplashIntro onComplete={finishIntro} />
-      <div dir={direction} lang={language} className={cn("menu-content min-h-[100dvh] pb-24", introComplete && "menu-content-ready")} aria-hidden={!introComplete} inert={!introComplete}>
+      {introComplete && !preferencesReady ? <div className="fixed inset-0 z-[90] min-h-[100dvh] bg-[#120c08]" aria-hidden="true" /> : null}
+      <div dir={direction} lang={languageDefinition.locale} className={cn("menu-content min-h-[100dvh] pb-24", introComplete && preferencesReady && "menu-content-ready")} aria-hidden={!introComplete || !preferencesReady} inert={!introComplete || !preferencesReady}>
         {activeTab === "menu" ? (
           <>
             <RestaurantHeader tableName={tableName} />
@@ -419,7 +420,7 @@ function MenuExperienceContent() {
                   <div className="mb-4 mt-2 flex items-end justify-between gap-3">
                     <div>
                       <h1 ref={productHeadingRef} id="product-list-heading" tabIndex={-1} className="font-heading text-2xl font-semibold outline-none sm:text-3xl">{hasSearch ? t("searchResults") : selectedCategoryName}</h1>
-                      <p className="mt-1 text-xs text-[#70665C]" role="status" aria-live="polite">{hasSearch ? t("productsFound", { count: filteredProducts.length }) : `${selectedCategory?.productCount ?? filteredProducts.length} ${t("items")}`}</p>
+                      <p className="mt-1 text-xs text-[#70665C]" role="status" aria-live="polite">{hasSearch ? t("productsFound", { count: filteredProducts.length }) : t("itemCount", { count: selectedCategory?.productCount ?? filteredProducts.length })}</p>
                     </div>
                     {hasSearch ? <button type="button" onClick={clearSearch} className="min-h-11 shrink-0 text-sm font-semibold text-burgundy">{t("clearSearch")}</button> : null}
                   </div>
@@ -439,7 +440,7 @@ function MenuExperienceContent() {
               <section className="mt-6 rounded-3xl border bg-card p-5 surface-shadow sm:p-6">
                 <div className="flex size-12 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-700"><CheckCircle2 className="size-6" /></div>
                 <h2 className="mt-4 font-heading text-2xl font-semibold">{t("orderSent")}</h2>
-                <p className="mt-1 text-sm leading-6 text-muted-foreground">{t("orderTracking", { number: "2420" })}</p>
+                <p className="mt-1 text-sm leading-6 text-muted-foreground">{t("orderTracking", { number: 2420 })}</p>
                 <OrderStatusTimeline currentStep={2} />
                 <div className="mt-5 border-t pt-4"><div className="flex justify-between text-sm text-muted-foreground"><span>{t("total")}</span><strong dir="ltr" className="text-lg text-burgundy">{formatPrice(submittedTotal)}</strong></div></div>
                 <Button type="button" variant="outline" onClick={() => { setOrderSent(false); openCategoryHome(); }} className="mt-4 h-11 w-full rounded-xl">{t("newItem")}</Button>
@@ -473,16 +474,16 @@ function MenuExperienceContent() {
 
       <Sheet open={waiterOpen} onOpenChange={setWaiterOpen}>
         <SheetContent dir={direction} side="bottom" showCloseButton={false} className="mx-auto max-h-[88dvh] w-full overflow-y-auto rounded-t-3xl p-0 sm:max-w-xl">
-          <SheetClose className="absolute right-3 top-3 z-10 inline-flex size-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+          <SheetClose className="absolute end-3 top-3 z-10 inline-flex size-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
             <X className="size-4" aria-hidden="true" />
             <span className="sr-only">{t("close")}</span>
           </SheetClose>
-          <SheetHeader className="px-5 pb-2 pr-14 pt-6 text-start"><div className="mb-2 flex size-11 items-center justify-center rounded-2xl bg-burgundy/8 text-burgundy"><BellRing className="size-5" /></div><SheetTitle className="font-heading text-2xl font-semibold">{t("waiterHelpTitle")}</SheetTitle><SheetDescription>{t("waiterHelpDescription", { table: tableName })}</SheetDescription></SheetHeader>
+          <SheetHeader className="px-5 pb-2 pe-14 pt-6 text-start"><div className="mb-2 flex size-11 items-center justify-center rounded-2xl bg-burgundy/8 text-burgundy"><BellRing className="size-5" /></div><SheetTitle className="font-heading text-2xl font-semibold">{t("waiterHelpTitle")}</SheetTitle><SheetDescription>{t("waiterHelpDescription", { table: tableName })}</SheetDescription></SheetHeader>
           <div className="space-y-2 px-5 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-3">{waiterOptions.map((option) => <button key={option.type} type="button" onClick={() => sendWaiterCall(option.type)} className="flex min-h-16 w-full items-center justify-between rounded-2xl border bg-card px-4 py-3 text-start transition-colors hover:border-copper focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"><span><span className="block text-sm font-bold">{t(option.titleKey)}</span><span className="mt-0.5 block text-xs text-muted-foreground">{t(option.descriptionKey)}</span></span><ChevronLeft className={cn("size-4 text-muted-foreground", direction === "ltr" && "rotate-180")} /></button>)}</div>
         </SheetContent>
       </Sheet>
 
-      {introComplete ? <BottomNavigation active={activeTab} cartCount={cartCount} onChange={handleTabChange} /> : null}
+      {introComplete && preferencesReady ? <BottomNavigation active={activeTab} cartCount={cartCount} onChange={handleTabChange} /> : null}
     </>
   );
 }

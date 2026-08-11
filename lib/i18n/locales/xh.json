@@ -1,0 +1,349 @@
+{
+  "locale": "xh",
+  "ui": {
+    "menu": "Umyalelo",
+    "search": "Khangela kwimenyu...",
+    "searchLabel": "Khangela kwimenyu",
+    "categories": "Izihloko",
+    "categoryIntro": "Khetha ivumba lelita yakho.",
+    "categoryNavigation": "Izihloko zemenu",
+    "openCategory": "Vula {name}, izinto {count}",
+    "items": "izinto",
+    "item": "into",
+    "searchResults": "Iziphumo zoKhangelo",
+    "productsFound": "{count} izinto ezifunyenweyo",
+    "backToCategories": "Buyela kwizigaba",
+    "backToCategory": "Buyela ku {name}",
+    "clearSearch": "Cima ukukhangela",
+    "noResults": "Akukho zinto ezifumanekayo",
+    "noResultsDescription": "Zama uphinde ukufuna okanye ubuyele kwiindidi.",
+    "order": "Umyalelo wam",
+    "waiter": "Umsebenzi wokumisela",
+    "bill": "IBhili",
+    "addToCart": "Yongeza kuMyalelo",
+    "addedToCart": "{name} yongezwe kumyalelo wakho.",
+    "removeFromCart": "Susa {name}",
+    "soldOut": "Izinto zithengisiwe namhlanje",
+    "productDetails": "Vula iinkcukacha ze {name}",
+    "portion": "Icandelo",
+    "standardPortion": "Icandelo eliqhelekileyo",
+    "allergens": "Izinto ezinokubangela urhudo",
+    "noAllergens": "Akukho nto ibhengezwayo ebangela urhudo",
+    "productNote": "Inqaku lentloko",
+    "productNotePlaceholder": "Umzekelo, ngaphandle kwebhotela, nceda",
+    "decreaseQuantity": "Yehlisa ubungakanani",
+    "increaseQuantity": "Yonyusa ubungakanani",
+    "each": "nganye",
+    "note": "Inqaku",
+    "subtotal": "Ingqokelela",
+    "serviceFee": "Umrhumo wenkonzo",
+    "total": "Isixa esipheleleyo",
+    "sendOrder": "Thumela i-odolo",
+    "orderSent": "I-odolo yakho ithunyelwe ekhitshini",
+    "orderTracking": "Landela iodolo #{number} apha.",
+    "newItem": "Yongeza enye into",
+    "emptyCart": "I-odolo yakho ayinalutho",
+    "emptyCartDescription": "Izinto ozikhethayo kwimenyu ziza kuvela apha.",
+    "browseMenu": "Khangela imenyu",
+    "orderReceived": "I-odolo ifunyenwe",
+    "waiterConfirmed": "Umqhubi wokuqinisekisa",
+    "preparing": "Ukulungiselela",
+    "ready": "Ilungele",
+    "served": "Ikhonjisiwe",
+    "preparingDescription": "Ikhitshi lethu liyalungiselela iodolo yakho.",
+    "orderStatus": "Isimo seodolo",
+    "callWaiter": "Biza umqhubi",
+    "placeOrder": "Ndifuna ukwenza iodolo",
+    "wantWater": "Ndicela amanzi",
+    "wantBread": "Ndicela isonka",
+    "wantService": "Inkonzo eyongezelelweyo",
+    "other": "Ezinye",
+    "generalRequest": "Ndinxibelelana nesicelo esiqhelekileyo",
+    "orderHelp": "Ndidinga uncedo ngeodolo yam",
+    "waterDescription": "Nceda ulethe amanzi etafile",
+    "breadDescription": "Nceda uza nezonka etafileni",
+    "serviceDescription": "Ndidinga izixhobo zokutya okanye ipleyiti",
+    "otherDescription": "Ndidinga uncedo ngento enye",
+    "waiterHelpTitle": "Singenza njani ukukunceda?",
+    "waiterHelpDescription": "Isicelo sakho siya kuthunyelwa kunye {table}.",
+    "waiterRequestSent": "Isicelo sakho sithunyelwe kumsebenzisi wethu wokubonelela.",
+    "requestBill": "Cela iBill",
+    "billSent": "Isicelo sakho sebhili sithunyelwe",
+    "billConfirm": "Ungathanda ukucela ibhili?",
+    "billSentDescription": "Umsebenzisi wethu uzakuba kunye nawe kungekudala.",
+    "billConfirmDescription": "Isicelo sakho siya ngqo kumsebenzisi. Ungahlawula etafileni okanye kubhodo yokuhlawula.",
+    "billToast": "Isicelo sakho somvuzo sithunyelwe kumntu wethu okhonzayo.",
+    "backToMenu": "Buya kwiMenyu",
+    "back": "Buya",
+    "close": "Vala",
+    "yourTable": "ITafile Yakho",
+    "serviceOpen": "Inkonzo ivuliwe",
+    "slogan": "Incasa Yesintu • Itafula LemaXesha",
+    "location": "Bursa, Osmangazi",
+    "languageLabel": "Khetha ulwimi",
+    "currencyLabel": "Khetha imali",
+    "customerNavigation": "Ukuzula kwimenyu yabathengi",
+    "approximateCurrency": "Amaxabiso emali yangaphandle angalunganga. Intlawulo iyenziwa ngeLira yaseTurkey.",
+    "orderSuccess": "Umyalelo wakho uthunyelwe ngempumelelo.",
+    "languagePickerTitle": "Khetha ulwimi",
+    "languagePickerDescription": "Khetha ulwimi ofuna ukulusebenzisa kwimenyu.",
+    "searchLanguage": "Khangela ulwimi...",
+    "recommendedLanguages": "Icebisiweyo",
+    "recentLanguages": "Ulwimi Lwakutshanje",
+    "allLanguages": "Onke Amaqhutywa",
+    "languageNotFound": "Ulwimi alufunyenwanga.",
+    "languageNotFoundDescription": "Zama igama okanye ikhowudi yolwimi olunye.",
+    "tableNumber": "Itafile {number}",
+    "itemCount": "{count} izinto",
+    "splashLabel": "Isikrini sokuqala se Tarihi Şehir Lokantası",
+    "cancel": "Rhoxisa",
+    "confirmOrder": "Qinisekisa i-Order",
+    "orderSummary": "Isishwankathelo se-Order",
+    "payment": "Intlawulo",
+    "tableNotFound": "Itafile ayifumanekanga.",
+    "invalidQr": "Ikhowudi ye-QR ayisebenzi.",
+    "menuUnavailable": "Imenyu ayifumaneki ngoku.",
+    "networkError": "Imposiso yenethiwekhi yenzekile.",
+    "productUnavailable": "Le nto ayifumaneki ngoku.",
+    "unableToSendOrder": "Akukwazeki ukuthumela iodolo.",
+    "tryAgain": "Zama kwakhona",
+    "somethingWentWrong": "Into ayihambanga kakuhle.",
+    "loadingLanguage": "Ukulayisha ulwimi...",
+    "languageLoadError": "Ulwimi alunakulayishwa. Nceda uzame kwakhona."
+  },
+  "categories": {
+    "soups": "Isuphu",
+    "grill": "Amagrili",
+    "mains": "Iikhosi eziPhambili",
+    "drinks": "Iziselo",
+    "kebabs": "Ikebhabu",
+    "dessert": "Iidesathi"
+  },
+  "products": {
+    "mercimek": {
+      "name": "Isuphu yeLentile",
+      "description": "Isuphu yasekhaya ye-lentile elungiselelwe ngendlela yesintu, igqitywe ngesosi yeBhotolo."
+    },
+    "tas-kebabi": {
+      "name": "Isityu seNyama yeBhere yaseTurkey",
+      "description": "Inyama yephezolo, imifuno yesizini, kunye nesosi ekhethekileyo epholileyo yase-restorenti yethu."
+    },
+    "kuzu-tandir": {
+      "name": "Imvubu eRhotshiwe kancinci",
+      "description": "Imvubu ebonakalayo yase-restorenti yethu ye-tandoori, iphekwa kancinci ngaphezu kobushushu obuphantsi."
+    },
+    "pirinc-pilavi": {
+      "name": "Ipilaf yeRayi",
+      "description": "Ipilaf yeRayi eneBhotolo, epholileyo nefuphume kancinci."
+    },
+    "firin-sutlac": {
+      "name": "Ipudding yeRayi eBhakiweyo",
+      "description": "Ipudding yerayisi ebhakwe ngendlela yesintu, ilungiselelwe nobisi lwemvu lwemihla ngemihla."
+    },
+    "kuru-fasulye": {
+      "name": "Isuphu yeBhinzi emhlophe neNyama yenkabi",
+      "description": "Iibhonzi ze-İspir, inyama yenkabi eqingqiweyo, kunye nephepha leetumato elilula lesitayile seshishini lokutyela."
+    },
+    "izgara-kofte": {
+      "name": "Inyama ezitya ezigrileyiweyo",
+      "description": "Amazambane enyama yenkabi esitayile sobugcisa besidlo kunye nephepha elibhemileyo kunye neetumato."
+    },
+    "ayran": {
+      "name": "Ayran eChurniweyo",
+      "description": "Ubisi oluqhelekileyo oluchurniweyo olunemfo emininzi, lwenziwe ngeyogathi yosuku nosuku."
+    },
+    "ezogelin-corbasi": {
+      "name": "Isuphu ye-Ezogelin",
+      "description": "Isuphu yesitayile seshishini lokutyela apho iilentshi ezibomvu, ibulgur, kunye nerayisi kudibana neminti."
+    },
+    "tarhana-corbasi": {
+      "name": "Isuphu ye-Tarhana",
+      "description": "ITarhana yasekhaya, iklasi yakwa-Anatolia ephekiwe kancinci kunye neetumato kunye neminti eyomileyo."
+    },
+    "yayla-corbasi": {
+      "name": "Isuphu yobisi olubisiweyo kunye nerayisi",
+      "description": "Isuphu esihlaziyayo nesinobisi esilungiselelwe ngobisi, irayisi, kunye neminti eyomileyo."
+    },
+    "iskembe-corbasi": {
+      "name": "Isuphu yeTripe",
+      "description": "Isuphu efanelekileyo ye-tripe yenkomo isetyenziswa kunye nezithako zayo kunye neviniga ye-garlic."
+    },
+    "dugun-corbasi": {
+      "name": "Isuphu YoMnyango",
+      "description": "Isuphu yesiqhelo yomtshato esenziwe ngemvu egayiwe kwaye ifakwe incasa ye-lemon marinade."
+    },
+    "tavuk-suyu-corbasi": {
+      "name": "Isuphu yeChicken Broth",
+      "description": "Isuphu esonyibilikayo esilungiselelwe ngamanqina amancinci abiliswe kwi-bone broth kunye nenyama yekukhiye egayiwe."
+    },
+    "domates-corbasi": {
+      "name": "Isuphu yetumato",
+      "description": "Ukunambitha ocekeceke ukupheka kunye notumato oluhlumeleyo, ibhotela, kunye ne-basil, kugqitywa neshizi."
+    },
+    "sebze-corbasi": {
+      "name": "Isuphu yeMifuno",
+      "description": "Isuphu ekhanyayo yesitayile sase-restoranti elungiselelwe ngemifuno yesizini, ioli ye-olivo, kunye neemifuno ezitsha."
+    },
+    "beyran-corbasi": {
+      "name": "Isuphu yeLamb Beyran enePepper",
+      "description": "Isuphu yesithili elungiselelwe ngaphezulu kobushushu obuphezulu kunye ne-lamb, irayisi, igalikhi, kunye nepepper eshushu."
+    },
+    "kelle-paca-corbasi": {
+      "name": "Isuphu yeNtloko neZinyawo",
+      "description": "Isuphu egcwele umhluzi wemathambo yenziwe ngeenyawo zenkukhu kunye nenyama yentloko ephekiweyo iiyure ezininzi."
+    },
+    "sehriye-corbasi": {
+      "name": "Isuphu yeVermicelli",
+      "description": "Isuphu yemihla ngemihla elungiswe ngebroth yenkuku eneitumato, ivemicelli, kunye neparsley."
+    },
+    "tavuk-sis": {
+      "name": "Izinti Zenkuku",
+      "description": "Izingceba zenkuku ezimakishwa ngezixholo ezikhethekileyo, zisetyenziselwa kunye neepere ezivuthayo neeitumato."
+    },
+    "kasap-sucuk": {
+      "name": "ISucuk yoMthengisi eGrilwe",
+      "description": "Isosi yenkomo enencasa ephakathi ifakwe ecaleni komlilo, kunye nemifuno evuthayo kunye anyanisi onesumac."
+    },
+    "karisik-izgara": {
+      "name": "Gril EliHlanganisiweyo",
+      "description": "Ipheyile enkulu kwaye yokudibanisa igrill equlethe ibifteki, izinti zenkuku, iziqholo zompheki, kunye nesosi."
+    },
+    "nohut-yemegi": {
+      "name": "Istoo seChickpea kunye neNkomo",
+      "description": "Isidlo sasekhaya sefunde kunye nenyama yenkomo egayiweyo iphekwa kancinci epotini yentsimbi yerhasi."
+    },
+    "patlican-musakka": {
+      "name": "I-Eggplant Moussaka",
+      "description": "I-eggplant ephosiweyo, inyama yenkomo egayiweyo, kunye ne-moussaka iphekwe kwi-oveni kunye nesosi yetumato, ngendlela yesityebi esitshayelwa yindawo yokutyela."
+    },
+    "zeytinyagli-taze-fasulye": {
+      "name": "I-Green Beans kwi-Olive Oil",
+      "description": "Eyomveli iphekiwe kwi-olive oil kunye neebhontshisi eziluhlaza, iitamatato, kunye ne-anyanisi, inikezelwe ipholile."
+    },
+    "tavuk-sote": {
+      "name": "Inkukhu eSautéed",
+      "description": "Iziqephu zenkukhu ziyasautèed phezu kobushushu obuphezulu kunye neepaprika ezinemibala, iimushrooms, kunye neetamatato."
+    },
+    "izmir-kofte": {
+      "name": "Amaqhambazi e-İzmir-Style",
+      "description": "Isidlo sesiqhelo esikhulu esenziwe nenyama yenkomo, amathanga, neephepha ezibhakiweyo kwisosi yetumato."
+    },
+    "etli-bezelye": {
+      "name": "Imbewu yePeas kunye neNyama yEnkomo",
+      "description": "Isidlo semihla ngemihla esibilisiweyo epotini nenyama yenkomo eqhotsiweyo, imbewu yepeasi, iikaroti, namathanga."
+    },
+    "patlican-oturtma": {
+      "name": "I-Eggplant ebhakwe nenyama egayiweyo",
+      "description": "Ulwimi lulungiselelwe ehoveni ne-eggplant, inyama eshushu egayiweyo, kunye nesosi yetumato negalikhi."
+    },
+    "salgam-suyu": {
+      "name": "Ijusi yeTurnip eFermented",
+      "description": "Ijusi yesiqhelo ye-turnip eshushu efakwe i-fermented kwi-karoti ephuphuma kunye nobhiya be-bulgur."
+    },
+    "maden-suyu": {
+      "name": "Amanzi eMinerali",
+      "description": "Amanzi eminerali esiqhelo, eplaini anikezelwe ebanda."
+    },
+    "su": {
+      "name": "Amanzi anemithombo yendalo",
+      "description": "Amanzi emithombo yendalo aphakelwa epholile kwiibhotile zeglasi."
+    },
+    "kola": {
+      "name": "ICola",
+      "description": "Isiselo esiqhelekileyo esinecarbonated esiphakelwa sishushu kakhulu."
+    },
+    "gazoz": {
+      "name": "Isoda yeLemoni yaseTurkey",
+      "description": "Isoda esiqhelekileyo enevumba elintle, epholileyo kwaye ingenamtya."
+    },
+    "turk-kahvesi": {
+      "name": "Ikaffee yesiTurkey",
+      "description": "Ikaffee yesiTurkey yesintu eneqhukula, iphekwe kumlilo ophezulu kwisitya sesilivere."
+    },
+    "demleme-cay": {
+      "name": "Iti yesiTurkey epholileyo",
+      "description": "Iti eshushu yeRize epholileyo kwisitya esincinane esinemiphetho emxinwa."
+    },
+    "ev-yapimi-limonata": {
+      "name": "Ilamani ekhaya",
+      "description": "Lemonade epholileyo ilungiselelwa mihla le ngomlomo omtsha, iminti, kunye nomgubo omncinci."
+    },
+    "hosaf": {
+      "name": "Isiqhamo seKomphote Ngemihla",
+      "description": "Ikhompote yasekhaya ibhakedwa mihla le kunye neerayisi, ii-aprikoti, okanye ii-plamu ngokwe ixesha lesizini."
+    },
+    "iskender-kebabi": {
+      "name": "Bursa İskender Kebab",
+      "description": "Inyama ijikeleziswa kwisikhonkwane phezu kwepide, inikezelwa nesosi yetamato, ibhotolo eshushu, kunye nobisi olunencindi."
+    },
+    "kazandibi": {
+      "name": "Pudingi yobisi oluneKhemikhali",
+      "description": "Idesethi yobisi yesiqhelo iphambili ngokuchanekileyo, ngobumba obuthambileyo."
+    },
+    "tavuk-gogsu": {
+      "name": "Pudingi yobisi ye-Ottoman",
+      "description": "Isidlo esimnandi esilula nesinothayo esenziwe ngobugcisa bendabuko, sinikwa nesinamoni."
+    },
+    "keskul": {
+      "name": "Ipudding yobisi lwe-Almond",
+      "description": "Isidlo sobisi ngendlela yakwa-Ottoman esigqityiweyo ngesiphumo se-almond kunye nekhokhonathi."
+    },
+    "irmik-helvasi": {
+      "name": "I-Semolina Halva",
+      "description": "I-semolina halva, itshisiwe ngebhotela kunye neentlobo zomthi wepinen, inikwa ishushu kwaye inesayizi yembewu."
+    },
+    "kabak-tatlisi": {
+      "name": "Isidlo soMququ wePumpkin kunye neTahini",
+      "description": "Ipumpkin, iphekwa kancinci kumthamo walo, inikwa kunye ne-tahini kunye neengqolowa."
+    },
+    "ayva-tatlisi": {
+      "name": "Isidlo seQuince",
+      "description": "I-Quince iphekiwe kunye ne-clove kunye nesinamoni inikwa kunye ne-cream eqinileyo kunye neengqolowa."
+    },
+    "revani": {
+      "name": "Ikhekhe yeSemolina eneSiraphu",
+      "description": "Ideserta yesiqhelo yezindawo zokutyela apho ikhekhe elithambileyo lesemolina lihlangana nesiraphu enuka ilamuni."
+    },
+    "ekmek-kadayifi": {
+      "name": "Ipudingi yesonka eneCream eqinileyo",
+      "description": "Ipudingi yesonka elivela kwisiraphu eshukumayo lisetyenziswa kunye ne-cream eqinileyo yebhufu."
+    },
+    "cevizli-baklava": {
+      "name": "Walnut Baklava",
+      "description": "Iileya ezityiweyo kakhulu, i-baklava eswiti eyenziwe ngama-walnut amaninzi kunye nebhotolo eqhelekileyo."
+    }
+  },
+  "allergens": {
+    "Süt ürünleri": "Iziqhamo neziqhamo ezivela emntwini",
+    "Gluten": "Igolteni",
+    "Yumurta": "Amaqanda",
+    "Badem": "I-Almond",
+    "Çam fıstığı": "Imbewu yePine",
+    "Susam": "I-Sesame",
+    "Ceviz": "Uwalnut"
+  },
+  "tags": {
+    "Popüler": "Edumileyo",
+    "Vejetaryen": "Isitya Sabantu Abadala Ukutya",
+    "Günün Yemeği": "Isitya Sosuku",
+    "Şefin Önerisi": "Ukukhetha KweChef",
+    "Yeni": "Entsha",
+    "Acılı": "Enesiphepho",
+    "Ev Yapımı": "Eyakhiwe Ngaphakathi",
+    "Lokanta Klasiği": "Isitya Esidumileyo Esweni",
+    "Günün Çorbası": "Isuphu Sosuku",
+    "Vegan": "Ezingadlayo",
+    "Hafif": "Elula",
+    "Yöresel": "Kwendawo",
+    "Paylaşmalık": "Ukwabelana",
+    "Ev Yemeği": "Eyakhayo Yasendlwini",
+    "Zeytinyağlı": "Oliwe We-olive",
+    "Nostaljik": "Eyobugcisa Bendulo",
+    "Geleneksel": "Yesiqhelo",
+    "Bursa Lezzeti": "Ivumba leBursa",
+    "Sütlü Tatlı": "Isidlo sobisi",
+    "Sıcak Tatlı": "Isidlo esishushu",
+    "Mevsimlik": "Ixesha",
+    "Şerbetli": "Isidlo seSyrup"
+  }
+}

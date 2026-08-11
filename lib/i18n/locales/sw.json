@@ -1,0 +1,349 @@
+{
+  "locale": "sw",
+  "ui": {
+    "menu": "Menu",
+    "search": "Tafuta kwenye menyu...",
+    "searchLabel": "Tafuta kwenye menyu",
+    "categories": "Vikundi",
+    "categoryIntro": "Chagua ladha kwa meza yako.",
+    "categoryNavigation": "Vikundi vya menyu",
+    "openCategory": "Fungua {name}, vitu {count}",
+    "items": "vitu",
+    "item": "kitu",
+    "searchResults": "Matokeo ya Utafutaji",
+    "productsFound": "vitu {count} vimepatikana",
+    "backToCategories": "Rudi kwenye vikundi",
+    "backToCategory": "Rudi kwenye {name}",
+    "clearSearch": "Futa utafutaji",
+    "noResults": "Hakuna vitu vinavyolingana vilivyopatikana",
+    "noResultsDescription": "Jaribu utafutaji mwingine au rudi kwenye makundi.",
+    "order": "Agizo Langu",
+    "waiter": "Mhudumu",
+    "bill": "Bili",
+    "addToCart": "Ongeza kwenye Oda",
+    "addedToCart": "{name} imeongezwa kwenye oda yako.",
+    "removeFromCart": "Ondoa {name}",
+    "soldOut": "Imeuzwa Yote Leo",
+    "productDetails": "Fungua maelezo ya {name}",
+    "portion": "Sehemu",
+    "standardPortion": "Sehemu ya kawaida",
+    "allergens": "Vikadiri vya sumu",
+    "noAllergens": "Hakuna vichochezi vilivyotangazwa",
+    "productNote": "Kumbuka kipengee",
+    "productNotePlaceholder": "K.m. hakikisha hakuna siagi, tafadhali",
+    "decreaseQuantity": "Punguza kiasi",
+    "increaseQuantity": "Ongeza kiasi",
+    "each": "kila",
+    "note": "Kumbuka",
+    "subtotal": "Jumla ndogo",
+    "serviceFee": "Shilingi ya huduma",
+    "total": "Jumla",
+    "sendOrder": "Tuma Oda",
+    "orderSent": "Oda yako imetumwa jikoni",
+    "orderTracking": "Fuatilia oda #{number} hapa.",
+    "newItem": "Ongeza Kitu Kingine",
+    "emptyCart": "Oda yako ni tupu",
+    "emptyCartDescription": "Vitu unavyochagua kutoka kwenye menyu vitaonekana hapa.",
+    "browseMenu": "Tazama Menyu",
+    "orderReceived": "Oda Imepokelewa",
+    "waiterConfirmed": "Mhudumu Thibitishwa",
+    "preparing": "Inaandaliwa",
+    "ready": "Tayari",
+    "served": "Imetumika",
+    "preparingDescription": "Jikoni yetu inaandaa oda yako.",
+    "orderStatus": "Hali ya oda",
+    "callWaiter": "Piga Simu Mhudumu",
+    "placeOrder": "Nataka kuagiza",
+    "wantWater": "Ningependa maji",
+    "wantBread": "Ningependa mkate",
+    "wantService": "Huduma ya ziada",
+    "other": "Nyingine",
+    "generalRequest": "Nina ombi la jumla",
+    "orderHelp": "Nahitaji msaada na oda yangu",
+    "waterDescription": "Tafadhali letee maji mezani",
+    "breadDescription": "Tafadhali lete mkate mezani",
+    "serviceDescription": "Nahitaji vyombo vya chakula au sahani",
+    "otherDescription": "Nahitaji msaada na jambo lingine",
+    "waiterHelpTitle": "Tunawezaje kusaidia?",
+    "waiterHelpDescription": "Ombi lako litatumwa na {table}.",
+    "waiterRequestSent": "Ombi lako limepelekwa kwa mhudumu wetu.",
+    "requestBill": "Omba",
+    "billSent": "Muswada Ombi lako la bili lilitumwa",
+    "billConfirm": "Je, ungependa kuomba muswada huo?",
+    "billSentDescription": "Mhudumu wetu atakuwa nawe hivi karibuni.",
+    "billConfirmDescription": "Ombi lako litaenda moja kwa moja kwa mhudumu. Unaweza kulipa kwenye meza au cashier.",
+    "billToast": "Ombi lako la bili limepelekwa kwa mhudumu wetu.",
+    "backToMenu": "Rudi kwenye Menu",
+    "back": "Rudi",
+    "close": "Funga",
+    "yourTable": "MEZA YAKO",
+    "serviceOpen": "Huduma wazi",
+    "slogan": "Ladha ya Kiasili • Meza ya Kisasa",
+    "location": "Bursa, Osmangazi",
+    "languageLabel": "Chagua lugha",
+    "currencyLabel": "Chagua sarafu",
+    "customerNavigation": "Uongozi wa menyu ya mteja",
+    "approximateCurrency": "Bei za fedha za kigeni ni makadirio. Malipo yanafanywa kwa Lira ya Kituruki.",
+    "orderSuccess": "Oda yako imetumwa kwa mafanikio.",
+    "languagePickerTitle": "Chagua Lugha",
+    "languagePickerDescription": "Chagua lugha unayotaka kutumia kwa menyu.",
+    "searchLanguage": "Tafuta lugha...",
+    "recommendedLanguages": "Inayopendekezwa",
+    "recentLanguages": "Lugha za Hivi Karibuni",
+    "allLanguages": "Lugha Zote",
+    "languageNotFound": "Lugha haijapatikana.",
+    "languageNotFoundDescription": "Jaribu jina au namba nyingine ya lugha.",
+    "tableNumber": "Meza {number}",
+    "itemCount": "vipengele {count}",
+    "splashLabel": "skrini ya kufungua ya Tarihi Şehir Lokantası",
+    "cancel": "Ghairi",
+    "confirmOrder": "Thibitisha Agizo",
+    "orderSummary": "Muhtasari wa Agizo",
+    "payment": "Malipo",
+    "tableNotFound": "Meza haijapatikana.",
+    "invalidQr": "Kanuni ya QR si sahihi.",
+    "menuUnavailable": "Orodha ya chakula kwa sasa haipatikani.",
+    "networkError": "Kosa la mtandao limetokea.",
+    "productUnavailable": "Kipengele hiki kwa sasa hakipatikani.",
+    "unableToSendOrder": "Haiwezi kutuma oda.",
+    "tryAgain": "Jaribu tena",
+    "somethingWentWrong": "Kitu kimeenda vibaya.",
+    "loadingLanguage": "Inapakia lugha...",
+    "languageLoadError": "Lugha haiwezi kupakuliwa. Tafadhali jaribu tena."
+  },
+  "categories": {
+    "soups": "Supuu",
+    "grill": "Grill",
+    "mains": "Chakula Kikuu",
+    "drinks": "Kinywaji",
+    "kebabs": "Kebab",
+    "dessert": "Vinywaji tamu"
+  },
+  "products": {
+    "mercimek": {
+      "name": "Supu ya Maharagwe",
+      "description": "Supu ya maharagwe nyumbani iliyotengenezwa kwa mtindo wa jadi, ikikamilishwa na mchuzi wa siagi."
+    },
+    "tas-kebabi": {
+      "name": "Stew ya Ng'ombe ya Kituruki",
+      "description": "Ng'ombe, mboga za msimu, na mchuzi wetu maalum uliopikwa taratibu kando ya mkate."
+    },
+    "kuzu-tandir": {
+      "name": "Kondoo waliopikwa taratibu",
+      "description": "Kondoo wa tandoori wa saini ya mgahawa wetu, uliopikwa taratibu kwa moto mdogo."
+    },
+    "pirinc-pilavi": {
+      "name": "Pilaf ya Mchele",
+      "description": "Pilaf ya mchele wa Baldo yenye siagi na laini."
+    },
+    "firin-sutlac": {
+      "name": "Puding ya Mchele Iliyopikwa",
+      "description": "Puding ya mchele iliyopikwa kwa njia ya jadi, ikitengenezwa kwa maziwa ya buffalo ya kila siku."
+    },
+    "kuru-fasulye": {
+      "name": "Mchuzi wa Maharagwe Meusi na Nyama ya Ng'ombe",
+      "description": "Maharagwe ya İspir, nyama ya ng'ombe iliyokatwa vipande vidogo, na pasta ya nyanya ya kawaida ya mgahawa."
+    },
+    "izgara-kofte": {
+      "name": "Kefta za Kuchoma",
+      "description": "Kefta za nyama ya ng'ombe kwa mtindo wa muuzaji wa nyama zilizo na pilipili na nyanya zilizochomwa."
+    },
+    "ayran": {
+      "name": "Ayran Iliyopindishwa",
+      "description": "Maziwa ya asili ya kupindishwa yenye povu nyingi, yameandaliwa kwa mtindo wa kawaida wa mtindi."
+    },
+    "ezogelin-corbasi": {
+      "name": "Supu ya Ezogelin",
+      "description": "Supu ya kitamaduni ya mgahawa ambapo dengu nyekundu, bulgur, na wali hukutana na minti."
+    },
+    "tarhana-corbasi": {
+      "name": "Supu ya Tarhana",
+      "description": "Tarhana ya nyumbani, classic ya Anatolia inayopikwa taratibu na nyanya na minti kavu."
+    },
+    "yayla-corbasi": {
+      "name": "Sup ya Yoghurt na Mchele",
+      "description": "Sup ya yayla ya kupendeza na creamy iliyotengenezwa kwa yoghurt, mchele, na minti kavu."
+    },
+    "iskembe-corbasi": {
+      "name": "Sup ya Matumbo",
+      "description": "Sup halisi ya matumbo ya ng'ombe inayotolewa pamoja na viungo vyake na siki ya kitunguu saumu."
+    },
+    "dugun-corbasi": {
+      "name": "Sup ya Harusi",
+      "description": "Sup ya harusi ya jadi inayotengenezwa kwa nyama ya kondoo iliyokanywa na kupewa ladha kwa marinade ya limao."
+    },
+    "tavuk-suyu-corbasi": {
+      "name": "Sup ya Broth ya Kuku",
+      "description": "Sup ya uponyaji inayotengenezwa na tambi nyembamba zilizopikwa kwenye broth ya mfupa na nyama ya kuku iliyokanywa."
+    },
+    "domates-corbasi": {
+      "name": "Sup ya Nyanya",
+      "description": "Kitamu chenye ladha kilichopikwa na nyanya zilizokomaa, siagi, na basil, kimekamilishwa na jibini."
+    },
+    "sebze-corbasi": {
+      "name": "Supu ya Mboga",
+      "description": "Supu nyepesi ya mgahawa iliyotengenezwa na mboga za msimu, mafuta ya zeituni, na mimea mipya."
+    },
+    "beyran-corbasi": {
+      "name": "Supu ya Kondoo Beyran Yenye Pilipili",
+      "description": "Supu ya kikanda iliyotengenezwa kwa moto mkali na kondoo, mchele, kitunguu saumu, na pilipili kali."
+    },
+    "kelle-paca-corbasi": {
+      "name": "Supu ya Kichwa na Miguu ya Ng'ombe",
+      "description": "Supu ya mfupa yenye utajiri iliyotengenezwa na miguu na nyama ya kichwa ya ng'ombe iliyochemshwa kwa masaa marefu."
+    },
+    "sehriye-corbasi": {
+      "name": "Supu ya Vermicelli",
+      "description": "Supu ya kila siku iliyotengenezwa na mchuzi wa kuku, nyanya, vermicelli, na parsley."
+    },
+    "tavuk-sis": {
+      "name": "Skewers za Kuku",
+      "description": "Vipande vya kuku vilivyochovwa na viungo maalum, vinatolewa na pilipili na nyanya zilizookwa."
+    },
+    "kasap-sucuk": {
+      "name": "Sucuk ya Mchungaji Iliyokaangwa",
+      "description": "Sausaji ya ng'ombe yenye pilipili iliyopikwa kwenye mkaa, na mboga zilizookwa na vitunguu vyenye sumac."
+    },
+    "karisik-izgara": {
+      "name": "Grill Mchanganyiko",
+      "description": "Sahani ya grill yenye wingi na mchanganyiko inayojumuisha meatballs, skewers za kuku, mabega ya kondoo, na sausage."
+    },
+    "nohut-yemegi": {
+      "name": "Mchuzi wa Mchicha na Ng'ombe",
+      "description": "Chakula cha nyumbani cha kikundi cha kunde na nyama ya ng'ombe iliyokatwa vipande inayopikwa taratibu katika sufuria ya shaba."
+    },
+    "patlican-musakka": {
+      "name": "Moussaka ya Biringanya",
+      "description": "Biringanya iliyokaangwa, nyama ya ng'ombe iliyopondwa, na moussaka iliyoekwa kwenye tanuri na mchuzi wa nyanya, kwa mtindo wa mgahawa."
+    },
+    "zeytinyagli-taze-fasulye": {
+      "name": "Mboga za Majani ya Kijani katika Maziwa ya Mizeituni",
+      "description": "Klassiki iliyopikwa kwa mizeituni na mboga za majani ya kijani, nyanya, na vitunguu, inatumikia baridi."
+    },
+    "tavuk-sote": {
+      "name": "Kuku Aliyekatwakatwa na Kuakwa",
+      "description": "Vipande vya kuku vinakaangwa kwa moto mkali pamoja na pilipili za rangi tofauti, uyoga, na nyanya."
+    },
+    "izmir-kofte": {
+      "name": "Mbali za Nyama za Mtindo wa İzmir",
+      "description": "Chakula kikuu cha jadi cha mipira ya nyama ya ng'ombe, viazi, na pilipili iliyopikwa katika mchuzi wa nyanya."
+    },
+    "etli-bezelye": {
+      "name": "Pwa na Nyama ya Ng'ombe",
+      "description": "Chakula cha kila siku kilichopikwa kwenye sufuria pamoja na nyama ya ng'ombe iliyokatwa vipande, pwa, karoti, na viazi."
+    },
+    "patlican-oturtma": {
+      "name": "Biringanya Iliyopikwa na Nyama Ndogo",
+      "description": "Ndimi huandaliwa kwenye tanuri pamoja na biringanya, nyama ndogo ya pilipili, na mchuzi wa nyanya na vitunguu saumu."
+    },
+    "salgam-suyu": {
+      "name": "Juisi ya Tuni Iliyofunguka",
+      "description": "Juisi ya tuni ya kitamaduni yenye viungo iliyofunguka na karoti ya zambarau na chachu ya bulgur."
+    },
+    "maden-suyu": {
+      "name": "Maji ya Madini",
+      "description": "Maji ya madini ya asili, ya kawaida yasiyo na ladha yaliyopewa baridi."
+    },
+    "su": {
+      "name": "Maji ya Asili ya Chemchemi",
+      "description": "Maji ya asili ya chemchemi yanayohudumiwa baridi kwenye chupa ya kioo."
+    },
+    "kola": {
+      "name": "Cola",
+      "description": "Kileo cha kaboni cha kawaida kinachohudumiwa baridi sana."
+    },
+    "gazoz": {
+      "name": "Soda ya Ndimu ya Kituruki",
+      "description": "Soda ya kiasili yenye ladha, yenye kupendeza, na inahudumiwa baridi bila ladha nyingine."
+    },
+    "turk-kahvesi": {
+      "name": "Kahawa ya Kituruki",
+      "description": "Kahawa ya Kituruki ya jadi yenye povu, iliyopikwa kwa moto mkali katika cezve ya shaba."
+    },
+    "demleme-cay": {
+      "name": "Chai Ilivyopikwa ya Kituruki",
+      "description": "Chai ya Rize iliyopikwa hivi karibuni yenye moto katika glasi nyembamba yenye kiuno."
+    },
+    "ev-yapimi-limonata": {
+      "name": "Limonadi ya Nyumbani",
+      "description": "Limonadi ya kupendeza inayotengenezwa kila siku kwa limau safi, minti, na sukari kidogo."
+    },
+    "hosaf": {
+      "name": "Kompotu ya Matunda Kila Siku",
+      "description": "Kompotu ya nyumbani inayochemshwa kila siku na zabibu, aprikoti, au plamu kulingana na msimu."
+    },
+    "iskender-kebabi": {
+      "name": "Bursa İskender Kebab",
+      "description": "Nyama inazungushwa kwenye shoti juu ya pide, ikitolewa na mchuzi wa nyanya, siagi moto, na mtindi."
+    },
+    "kazandibi": {
+      "name": "Puding ya Maziwa Yanayokarameleka",
+      "description": "Kitindamazi cha jadi cha maziwa kilichokarameleka ipasavyo, chenye muundo laini."
+    },
+    "tavuk-gogsu": {
+      "name": "Puding ya Maziwa ya Ki-Ottoman",
+      "description": "Tangawizi nyepesi na yenye nyuzi, iliyotayarishwa kwa mapishi ya jadi, inatumikia pamoja na mdalasini."
+    },
+    "keskul": {
+      "name": "Pudingi ya Maziwa ya Almond",
+      "description": "Kitoweo cha maziwa cha mtindo wa Ottoman kilichokamilishwa na ladha ya almond na nazi."
+    },
+    "irmik-helvasi": {
+      "name": "Halva ya Semolina",
+      "description": "Halva ya semolina, iliyochomekwa na siagi na pini za mkarafu, inatumikia moto na yenye chembe."
+    },
+    "kabak-tatlisi": {
+      "name": "Kitoweo cha Maboga na Tahini",
+      "description": "Maboga, yaliyopikwa taratibu kwenye juisi yake, inatumikia pamoja na tahini na loosheni za walnut."
+    },
+    "ayva-tatlisi": {
+      "name": "Kitoweo cha Quince",
+      "description": "Quince iliyopikwa na karafuu na mdalasini inatumikia pamoja na krimu yenye kuganda na loosheni za walnut."
+    },
+    "revani": {
+      "name": "Keki ya Syrupu ya Semolina",
+      "description": "Kitindamlo cha mgahawa cha kijumla ambapo keki laini ya semolina inakutana na syrupu yenye harufu ya limao."
+    },
+    "ekmek-kadayifi": {
+      "name": "Puding ya Mkate na Krimu Iliyopangwa",
+      "description": "Puding ya mkate iliyopumzika na syrupu ya caramel hutolewa na krimu ya bawalufu iliyopangwa."
+    },
+    "cevizli-baklava": {
+      "name": "Baklava ya Karanga",
+      "description": "Tabaka zilizopanuliwa sana, baklava yenye mkate mkavu iliyotengenezwa kwa karanga nyingi na siagi ya kawaida."
+    }
+  },
+  "allergens": {
+    "Süt ürünleri": "Maziwa",
+    "Gluten": "Gluteni",
+    "Yumurta": "Yai",
+    "Badem": "Lozi",
+    "Çam fıstığı": "Njugu za Pini",
+    "Susam": "Unga wa Sesame",
+    "Ceviz": "Walnut"
+  },
+  "tags": {
+    "Popüler": "Kipendwa",
+    "Vejetaryen": "Mwenye Mboga",
+    "Günün Yemeği": "Chakula cha Siku",
+    "Şefin Önerisi": "Uchaguzi wa Mpishi",
+    "Yeni": "Mpya",
+    "Acılı": "Chumvi Kali",
+    "Ev Yapımı": "Nyumbani",
+    "Lokanta Klasiği": "Klassiki ya Mgahawa",
+    "Günün Çorbası": "Sup ya Siku",
+    "Vegan": "Vegan",
+    "Hafif": "Nyepesi",
+    "Yöresel": "Ya Kanda",
+    "Paylaşmalık": "Kwa Kugawana",
+    "Ev Yemeği": "Mtindo wa Nyumbani",
+    "Zeytinyağlı": "Mafuta ya Zaituni",
+    "Nostaljik": "Kikumbukumbu",
+    "Geleneksel": "Ya Kiasili",
+    "Bursa Lezzeti": "Ladha ya Bursa",
+    "Sütlü Tatlı": "Kitindamlo cha Maziwa",
+    "Sıcak Tatlı": "Kitindamlo cha Moto",
+    "Mevsimlik": "Kipindi",
+    "Şerbetli": "Kitindamlo cha Syrupu"
+  }
+}

@@ -7,8 +7,8 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-manrope);
-  --font-heading: var(--font-lora);
+  --font-sans: var(--font-manrope), system-ui, -apple-system, "Segoe UI", "Noto Sans", Arial, sans-serif;
+  --font-heading: var(--font-lora), "Noto Serif", "Times New Roman", serif;
   --color-cream: #F5EBDD;
   --color-burgundy: #681F25;
   --color-olive: #30382D;

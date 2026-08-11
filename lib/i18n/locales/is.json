@@ -1,0 +1,349 @@
+{
+  "locale": "is",
+  "ui": {
+    "menu": "Matseðill",
+    "search": "Leitaðu í matseldinum...",
+    "searchLabel": "Leitaðu í matseldinum",
+    "categories": "Flokkar",
+    "categoryIntro": "Veldu bragð fyrir borðið þitt.",
+    "categoryNavigation": "Flokkar matseldisins",
+    "openCategory": "Opna {name}, {count} atriði",
+    "items": "atriði",
+    "item": "atriði",
+    "searchResults": "Leitarniðurstöður",
+    "productsFound": "{count} atriði fundust",
+    "backToCategories": "Til baka í flokka",
+    "backToCategory": "Til baka í {name}",
+    "clearSearch": "Hreinsa leit",
+    "noResults": "Engin samræmi fundust",
+    "noResultsDescription": "Reyndu aðra leit eða farðu aftur í flokkana.",
+    "order": "Röð mín",
+    "waiter": "Þjónn",
+    "bill": "Bill",
+    "addToCart": "Bæta við pöntun",
+    "addedToCart": "{name} bætt við pöntunina þína.",
+    "removeFromCart": "Fjarlægðu {name}",
+    "soldOut": "Uppselt í dag",
+    "productDetails": "Opnar upplýsingar um {name}",
+    "portion": "Hluti",
+    "standardPortion": "Venjulegur hluti",
+    "allergens": "Ofnæmisvaldar",
+    "noAllergens": "Engar tilkynntar ofnæmisvaldar",
+    "productNote": "Athugasemd um atriði",
+    "productNotePlaceholder": "T.d. ekkert smjör, takk",
+    "decreaseQuantity": "Minnka magn",
+    "increaseQuantity": "Auka magn",
+    "each": "hvert",
+    "note": "Athugasemd",
+    "subtotal": "Samtala",
+    "serviceFee": "Þjónustugjald",
+    "total": "Samtals",
+    "sendOrder": "Senda pöntun",
+    "orderSent": "Pöntun þín var send til eldhússins",
+    "orderTracking": "Fylgstu með pöntun #{number} hér.",
+    "newItem": "Bæta við annarri vöru",
+    "emptyCart": "Pöntun þín er tóm",
+    "emptyCartDescription": "Vörur sem þú velur úr matseðlinum birtast hér.",
+    "browseMenu": "Vafra í matseðli",
+    "orderReceived": "Pöntun móttekin",
+    "waiterConfirmed": "Þjónn staðfesti",
+    "preparing": "Við erum að undirbúa",
+    "ready": "Tilbúið",
+    "served": "Born fram",
+    "preparingDescription": "Eldhúsið okkar er að undirbúa pöntunina þína.",
+    "orderStatus": "Staða pantana",
+    "callWaiter": "Hringja á þjón",
+    "placeOrder": "Ég vil panta",
+    "wantWater": "Mig langar í vatn",
+    "wantBread": "Mig langar í brauð",
+    "wantService": "Viðbótareftirvænting",
+    "other": "Annað",
+    "generalRequest": "Ég hef almenn beiðni",
+    "orderHelp": "Ég þarf hjálp með pöntunina mína",
+    "waterDescription": "Vinsamlegast komið með vatn á borðið",
+    "breadDescription": "Vinsamlegast berðu brauð á borðið",
+    "serviceDescription": "Ég þarf áhöld eða disk",
+    "otherDescription": "Ég þarf hjálp með eitthvað annað",
+    "waiterHelpTitle": "Hvernig getum við aðstoðað?",
+    "waiterHelpDescription": "Beiðnin þín verður send með {table}.",
+    "waiterRequestSent": "Beiðnin þín var send þjóninum okkar.",
+    "requestBill": "Biðja um reikning",
+    "billSent": "Beiðni um reikning var send",
+    "billConfirm": "Viltu biðja um reikninginn?",
+    "billSentDescription": "Þjónninn okkar kemur til þín fljótlega.",
+    "billConfirmDescription": "Beiðnin þín fer beint til þjónsins. Þú getur greitt við borðið eða í kassa.",
+    "billToast": "Beiðni þín um reikning var send þjóninum okkar.",
+    "backToMenu": "Til baka í matseðil",
+    "back": "Til baka",
+    "close": "Loka",
+    "yourTable": "BORÐIÐ ÞITT",
+    "serviceOpen": "Þjónusta opin",
+    "slogan": "Hefðbundinn bragur • Nútímaborð",
+    "location": "Bursa, Osmangazi",
+    "languageLabel": "Veldu tungumál",
+    "currencyLabel": "Veldu gjaldmiðil",
+    "customerNavigation": "Stjórnborð viðskiptavinar",
+    "approximateCurrency": "Verð í erlendri mynt eru áætluð. Greiðsla fer fram í tyrkneskri líru.",
+    "orderSuccess": "Pöntun þín var send með góðum árangri.",
+    "languagePickerTitle": "Veldu tungumál",
+    "languagePickerDescription": "Veldu tungumálið sem þú vilt nota fyrir valmyndina.",
+    "searchLanguage": "Leita að tungumálum...",
+    "recommendedLanguages": "Mælt með",
+    "recentLanguages": "Nýleg tungumál",
+    "allLanguages": "Öll tungumál",
+    "languageNotFound": "Tungumál fundist ekki.",
+    "languageNotFoundDescription": "Reyndu annað tungumál eða kóða.",
+    "tableNumber": "Borð {number}",
+    "itemCount": "{count} atriði",
+    "splashLabel": "Tarihi Şehir Lokantası aðalvalmynd",
+    "cancel": "Hætta við",
+    "confirmOrder": "Staðfesta pöntun",
+    "orderSummary": "Yfirlit pöntunar",
+    "payment": "Greiðsla",
+    "tableNotFound": "Borð fannst ekki.",
+    "invalidQr": "Ógildur QR-kóði.",
+    "menuUnavailable": "Matseðillinn er ekki í boði núna.",
+    "networkError": "Netvandamál kom upp.",
+    "productUnavailable": "Þessi vara er ekki í boði núna.",
+    "unableToSendOrder": "Ekki tókst að senda pöntunina.",
+    "tryAgain": "Reyndu aftur",
+    "somethingWentWrong": "Eitthvað fór úrskeiðis.",
+    "loadingLanguage": "Hleður tungumál...",
+    "languageLoadError": "Ekki tókst að hlaða tungumálið. Vinsamlegast reyndu aftur."
+  },
+  "categories": {
+    "soups": "Súpur",
+    "grill": "Grillréttir",
+    "mains": "Aðalréttir",
+    "drinks": "Drykkir",
+    "kebabs": "Kebab",
+    "dessert": "Eftirréttir"
+  },
+  "products": {
+    "mercimek": {
+      "name": "Linsusúpa",
+      "description": "Heimasneidd linsusúpa undirbúin á klassískan hátt, fullgerð með smjörsósu."
+    },
+    "tas-kebabi": {
+      "name": "Tyrknesk nautasteik",
+      "description": "Nautakjöt, árstíðabundnar grænmeti og sérsósu veitingastaðarins sem elduð er hægt."
+    },
+    "kuzu-tandir": {
+      "name": "Seinsoðin lambakjöt",
+      "description": "Sérstakt lambatandoori veitingastaðarins, eldað hægt við lágan hita."
+    },
+    "pirinc-pilavi": {
+      "name": "Hrísgrjónapilaf",
+      "description": "Smjörkennt, loftkennt Baldo-hrísgrjónapilaf."
+    },
+    "firin-sutlac": {
+      "name": "Eldaður hrísgrjónagrautur",
+      "description": "Hrísgrjónagrautur eldaður á hefðbundinn hátt, undirbúinn með daglegu vatnalambi (eða buffalomjólk)."
+    },
+    "kuru-fasulye": {
+      "name": "Hvítbaunastew með nautakjöti",
+      "description": "İspir-baunir, tært nautakjöt og einfalt tómatsósa frá veitingastað."
+    },
+    "izgara-kofte": {
+      "name": "Grillaðar kjötbollur",
+      "description": "Nautakjötsbollur á slátrara hátt með ristum pipar og tómati."
+    },
+    "ayran": {
+      "name": "Rúllað Ayran",
+      "description": "Heimagerður súrmjólkurdrykkur með miklu froðu, gerður með hversdags jógúrt."
+    },
+    "ezogelin-corbasi": {
+      "name": "Ezogelin-súpa",
+      "description": "Hefðbundin veitingastaðasúpa þar sem rauðar linsubaunir, bulgur og hrísgrjón mætast með myntu."
+    },
+    "tarhana-corbasi": {
+      "name": "Tarhana-súpa",
+      "description": "Heimagerð tarhana, anatólísk klassík, hægt soðið með tómötum og þurrkuðum mynta."
+    },
+    "yayla-corbasi": {
+      "name": "Jógúrt- og hrísgrjónasúpa",
+      "description": "Endurnærandi og rjómakennd yayla-súpa útbúin með jógúrt, hrísgrjónum og þurrkuðu myntu."
+    },
+    "iskembe-corbasi": {
+      "name": "Kviðssúpa",
+      "description": "Rétt beinakviðssúpa af nautakjöti borin fram með kryddi sínu og hvítvínsediki."
+    },
+    "dugun-corbasi": {
+      "name": "Brúðkaupssúpa",
+      "description": "Fjölskylduleg brúðkaupssúpa búin til með rifnu lambakjöti og bragðbætt með sítrónumari."
+    },
+    "tavuk-suyu-corbasi": {
+      "name": "Kjúklingasoðsúpa",
+      "description": "Lækningasúpa útbúin með þunnum núðlum soðnum í beinsoði og rifnu kjúklingakjöti."
+    },
+    "domates-corbasi": {
+      "name": "Tómatsúpa",
+      "description": "Ríkur bragðréttur eldaður með þroskuðum tómötum, smjöri og basil, fullkomnaður með osti."
+    },
+    "sebze-corbasi": {
+      "name": "Grænmetissúpa",
+      "description": "Létt veitingahúsasúpa tilbúin með árstíðabundnu grænmeti, ólífuolíu og ferskum kryddjurtum."
+    },
+    "beyran-corbasi": {
+      "name": "Sterk lamb Beyran súpa",
+      "description": "Svæðisbundin súpa elduð við háan hita með lambakjöti, hrísgrjónum, hvítlauk og sterkum pipar."
+    },
+    "kelle-paca-corbasi": {
+      "name": "Haus- og fótasúpa",
+      "description": "Rík beinagrunnssúpa gerð með nautahöfðum og fótum soðnum í mörgum klukkustundum."
+    },
+    "sehriye-corbasi": {
+      "name": "Vermicelli súpa",
+      "description": "Dagleg súpa gerð með kjúklingasoði með tómötum, vermicelli og steinselju."
+    },
+    "tavuk-sis": {
+      "name": "Kjúklingaspjót",
+      "description": "Kjúklingabitar marineraðir með sérstökum kryddum, bornir fram með grilluðum pipar og tómötum."
+    },
+    "kasap-sucuk": {
+      "name": "Grillað Sucuk frá slátrara",
+      "description": "Sterk nautahakks pylsa elduð á kolum, með grillaðri grænmeti og lauki með súmak."
+    },
+    "karisik-izgara": {
+      "name": "Blandað Grill",
+      "description": "Ríkur og fjölbreyttur grill diskur samansettur af kjötbollum, kjúklingaspjótum, lambakjötsbitum og pylsu."
+    },
+    "nohut-yemegi": {
+      "name": "Kikerta pottur með nautakjöti",
+      "description": "Heimatilbúið máltíð úr kjúklingabaunum og teningnum af nautakjöti, eldað hægt í koparpotti."
+    },
+    "patlican-musakka": {
+      "name": "Eggaldin Moussaka",
+      "description": "Steikt eggaldin, nautahakk og moussaka bakað í ofni með tómatsósu, veitingahúsastíll."
+    },
+    "zeytinyagli-taze-fasulye": {
+      "name": "Grænar Baunir í Ólífuolíu",
+      "description": "Klassík elduð í ólífuolíu með grænum baunum, tómötum og lauk, borin fram köld."
+    },
+    "tavuk-sote": {
+      "name": "Steiktur Kjúklingur",
+      "description": "Kjúklingabitar steiktir við háan hita með litríkum pipar, sveppum og tómötum."
+    },
+    "izmir-kofte": {
+      "name": "İzmir-stíls kjötbollur",
+      "description": "Dægurlegur aðalréttur með nautahakkbollum, kartöflum og pipar steikt í tómatsósu."
+    },
+    "etli-bezelye": {
+      "name": "Baunir með nautakjöti",
+      "description": "Dagleg máltíð soðin í potti með ferninglaga nautakjöti, baunum, gulrótum og kartöflum."
+    },
+    "patlican-oturtma": {
+      "name": "Bökuð eggaldin með hakki",
+      "description": "Tungan er tilbúin í ofni með eggaldini, sterku hakki og hvítlauks-tómatsósu."
+    },
+    "salgam-suyu": {
+      "name": "Gerjad rótardrykkur",
+      "description": "Hefðbundinn sterkur rótardrykkur gerjaður með fjólubláum gulrótum og bulgur-geri."
+    },
+    "maden-suyu": {
+      "name": "Steinefnavatn",
+      "description": "Náttúrulegt steinefnavatn án bragðs, borið fram kalt."
+    },
+    "su": {
+      "name": "Náttúrulegt Vorvatn",
+      "description": "Náttúrulegt vorvatn borið fram kalt í glerflösku."
+    },
+    "kola": {
+      "name": "Kóki",
+      "description": "Klassísk gosdrykkur borinn fram ískaldur."
+    },
+    "gazoz": {
+      "name": "Tyrknesk Sítrónusóda",
+      "description": "Heimagerð, bragðbætt, svalandi og borin fram köld sóda."
+    },
+    "turk-kahvesi": {
+      "name": "Tyrkneskt Kaffi",
+      "description": "Heimilt tyrkneskt kaffi með froðu, eldað á háum hita í kopar cezve."
+    },
+    "demleme-cay": {
+      "name": "Tyrkneskt Soðið Te",
+      "description": "Ferskt soðið Rize-te borið fram heitt í gleri með mjórri mitti."
+    },
+    "ev-yapimi-limonata": {
+      "name": "Heimalagað Sítrónudrykkur",
+      "description": "Endurnærandi límonaði sem er útbúinn daglega með ferskum sítrónum, myntu og smá sykri."
+    },
+    "hosaf": {
+      "name": "Dags fersk ávaxtakompót",
+      "description": "Heimatilbúið kompot sem er soðið daglega með vínberjum, apríkósum eða plómum eftir árstíðum."
+    },
+    "iskender-kebabi": {
+      "name": "Bursa İskender Kebab",
+      "description": "Kjötið er snúið á spjóti yfir pide-brauði, borið fram með tómatsósu, heitu smjöri og jógúrti."
+    },
+    "kazandibi": {
+      "name": "Karamelliserður mjólkurpúðingur",
+      "description": "Sérstaklega karamelliserður hefðbundinn mjólkurdessert með silkimjúkri áferð."
+    },
+    "tavuk-gogsu": {
+      "name": "Osmanska mjólkurpúðingur",
+      "description": "Létt og trefjaríkt mjólkurdessert búið til með hefðbundinni uppskrift, borið fram með kanil."
+    },
+    "keskul": {
+      "name": "Möndlumjólkurpúðingur",
+      "description": "Osmanska mjólkurdessert fullkomnað með mandlu- og kókosbragði."
+    },
+    "irmik-helvasi": {
+      "name": "Haframjölshalva",
+      "description": "Haframjölshalva, ristas með smjöri og pinjekjörnum, borin fram heit og kornótt."
+    },
+    "kabak-tatlisi": {
+      "name": "Graskeradessert með Tahini",
+      "description": "Graskerið, hægt eldað í eigin safa, er borið fram með tahini og valhnetum."
+    },
+    "ayva-tatlisi": {
+      "name": "Quince Dessert",
+      "description": "Quitten eldað með króni og kanil er borið fram með súrum rjóma og valhnetum."
+    },
+    "revani": {
+      "name": "Grískur hveitiköku-sykursírópskaka",
+      "description": "Hin klassíska veitingahúðar-dessert þar sem mjúk hveitikaka mætir sítrónulyktandi sírópi."
+    },
+    "ekmek-kadayifi": {
+      "name": "Brauðterta með stinningsrjóma",
+      "description": "Brauðterta sem hefur staðið í karamellusírópi er borin fram með buffaló stinningsrjóma."
+    },
+    "cevizli-baklava": {
+      "name": "Hnetubaklava",
+      "description": "Margar þunnar lög, stökk baklava gerð með miklu af hnetum og venjulegu smjöri."
+    }
+  },
+  "allergens": {
+    "Süt ürünleri": "Mjólkurvara",
+    "Gluten": "Glúten",
+    "Yumurta": "Egg",
+    "Badem": "Möndlur",
+    "Çam fıstığı": "Furuhnetur",
+    "Susam": "Sesam",
+    "Ceviz": "Valhnetur"
+  },
+  "tags": {
+    "Popüler": "Vinsælt",
+    "Vejetaryen": "Grænmetis",
+    "Günün Yemeği": "Dagsréttur",
+    "Şefin Önerisi": "Efri kosning kokks",
+    "Yeni": "Nýtt",
+    "Acılı": "Sterkt",
+    "Ev Yapımı": "Heimatilbúið",
+    "Lokanta Klasiği": "Veitingahúsarklassík",
+    "Günün Çorbası": "Súpa dagsins",
+    "Vegan": "Vegan",
+    "Hafif": "Léttur",
+    "Yöresel": "Svæðisbundið",
+    "Paylaşmalık": "Til að deila",
+    "Ev Yemeği": "Heimilislegt",
+    "Zeytinyağlı": "Ólífuolía",
+    "Nostaljik": "Nostalgískt",
+    "Geleneksel": "Dagsbrúnna",
+    "Bursa Lezzeti": "Bragð af Bursa",
+    "Sütlü Tatlı": "Mjólkursmjör",
+    "Sıcak Tatlı": "Heitt eftirréttur",
+    "Mevsimlik": "Árstíðabundinn",
+    "Şerbetli": "Síróp eftirréttur"
+  }
+}

@@ -1,0 +1,349 @@
+{
+  "locale": "tl",
+  "ui": {
+    "menu": "Menu",
+    "search": "Maghanap sa menu...",
+    "searchLabel": "Maghanap sa menu",
+    "categories": "Kategorya",
+    "categoryIntro": "Piliin ang lasa para sa iyong mesa.",
+    "categoryNavigation": "Kategorya ng menu",
+    "openCategory": "Buksan ang {name}, {count} na item",
+    "items": "mga item",
+    "item": "item",
+    "searchResults": "Mga Resulta ng Paghahanap",
+    "productsFound": "{count} na item ang natagpuan",
+    "backToCategories": "Balik sa mga kategorya",
+    "backToCategory": "Balik sa {name}",
+    "clearSearch": "Linisin ang paghahanap",
+    "noResults": "Walang natagpuang katugmang item",
+    "noResultsDescription": "Subukang maghanap muli o bumalik sa mga kategorya.",
+    "order": "Aking Order",
+    "waiter": "Tagapaglingkod",
+    "bill": "Resibo",
+    "addToCart": "Idagdag sa Order",
+    "addedToCart": "Idinagdag ang {name} sa iyong order.",
+    "removeFromCart": "Alisin ang {name}",
+    "soldOut": "Ubos na Ngayon",
+    "productDetails": "Buksan ang detalye para sa {name}",
+    "portion": "Hati",
+    "standardPortion": "Karaniwang bahagi",
+    "allergens": "Mga allergens",
+    "noAllergens": "Walang idineklarang allergens",
+    "productNote": "Tala sa item",
+    "productNotePlaceholder": "Hal. walang mantikilya, pakiusap",
+    "decreaseQuantity": "Bawasan ang dami",
+    "increaseQuantity": "Dagdagan ang dami",
+    "each": "bawat isa",
+    "note": "Tala",
+    "subtotal": "Kabuuan",
+    "serviceFee": "Bayad sa serbisyo",
+    "total": "Kabuuan",
+    "sendOrder": "Isumite ang Order",
+    "orderSent": "Naipadala na ang iyong order sa kusina",
+    "orderTracking": "Subaybayan ang order #{number} dito.",
+    "newItem": "Magdagdag ng Isa Pang Item",
+    "emptyCart": "Walang laman ang iyong order",
+    "emptyCartDescription": "Ang mga item na pipiliin mo mula sa menu ay makikita dito.",
+    "browseMenu": "Mag-browse ng Menu",
+    "orderReceived": "Tanggap ang Order",
+    "waiterConfirmed": "Kinumpirma ng Serbidora",
+    "preparing": "Inihahanda",
+    "ready": "Handa na",
+    "served": "Ipinaghain",
+    "preparingDescription": "Inihahanda ng aming kusina ang iyong order.",
+    "orderStatus": "Status ng order",
+    "callWaiter": "Tawagin ang Serbidora",
+    "placeOrder": "Nais kong umorder",
+    "wantWater": "Gusto ko ng tubig",
+    "wantBread": "Gusto ko ng tinapay",
+    "wantService": "Karatugang serbisyo",
+    "other": "Iba pa",
+    "generalRequest": "Mayroon akong pangkalahatang kahilingan",
+    "orderHelp": "Kailangan ko ng tulong sa aking order",
+    "waterDescription": "Pakidala ng tubig sa mesa",
+    "breadDescription": "Pakidala ng tinapay sa mesa",
+    "serviceDescription": "Kailangan ko ng kubyertos o isang plato",
+    "otherDescription": "Kailangan ko ng tulong sa iba pang bagay",
+    "waiterHelpTitle": "Paano kami makakatulong?",
+    "waiterHelpDescription": "Ang iyong kahilingan ay ipapadala kasama ang {table}.",
+    "waiterRequestSent": "Ang iyong kahilingan ay ipinadala sa aming waiter.",
+    "requestBill": "Humiling ng Bili",
+    "billSent": "Ang iyong kahilingan para sa bill ay ipinadala",
+    "billConfirm": "Nais mo bang humiling ng bill?",
+    "billSentDescription": "Ang aming waiter ay malapit nang dumating sa iyo.",
+    "billConfirmDescription": "Ang iyong kahilingan ay direktang pupunta sa waiter. Maaari kang magbayad sa mesa o sa cashier.",
+    "billToast": "Ang iyong kahilingan para sa bill ay naipadala sa aming waiter.",
+    "backToMenu": "Bumalik sa Menu",
+    "back": "Bumalik",
+    "close": "Isara",
+    "yourTable": "ANG IYONG MESA",
+    "serviceOpen": "Bukas ang Serbisyo",
+    "slogan": "Tradisyonal na Lasa • Modernong Mesa",
+    "location": "Bursa, Osmangazi",
+    "languageLabel": "Piliin ang wika",
+    "currencyLabel": "Piliin ang pera",
+    "customerNavigation": "Navigasyon ng menu ng customer",
+    "approximateCurrency": "Ang mga presyo sa banyagang pera ay tantya lamang. Ang pagbabayad ay ipoproseso sa Turkish Lira.",
+    "orderSuccess": "Matagumpay na naipadala ang iyong order.",
+    "languagePickerTitle": "Piliin ang Wika",
+    "languagePickerDescription": "Piliin ang wika na gusto mong gamitin para sa menu.",
+    "searchLanguage": "Maghanap ng mga wika...",
+    "recommendedLanguages": "Inirerekomenda",
+    "recentLanguages": "Kamakailang Mga Wika",
+    "allLanguages": "Lahat ng Wika",
+    "languageNotFound": "Walang nahanap na wika.",
+    "languageNotFoundDescription": "Subukan ang ibang pangalan o code ng wika.",
+    "tableNumber": "Table {number}",
+    "itemCount": "{count} item",
+    "splashLabel": "Panimulang screen ng Tarihi Şehir Lokantası",
+    "cancel": "Ikansela",
+    "confirmOrder": "Kumpirmahin ang Order",
+    "orderSummary": "Buod ng Order",
+    "payment": "Pagbabayad",
+    "tableNotFound": "Hindi nahanap ang Table.",
+    "invalidQr": "Di-wastong QR code.",
+    "menuUnavailable": "Kasalukuyang hindi available ang menu.",
+    "networkError": "Nagkaroon ng error sa network.",
+    "productUnavailable": "Ang item na ito ay kasalukuyang hindi available.",
+    "unableToSendOrder": "Hindi maipadala ang order.",
+    "tryAgain": "Subukan muli",
+    "somethingWentWrong": "May nagkamaling nangyari.",
+    "loadingLanguage": "Naglo-load ng wika...",
+    "languageLoadError": "Hindi ma-load ang wika. Pakisubukang muli."
+  },
+  "categories": {
+    "soups": "Sopas",
+    "grill": "Inihaw",
+    "mains": "Pangunahing Ulam",
+    "drinks": "Inumin",
+    "kebabs": "Kebab",
+    "dessert": "Panghimagas"
+  },
+  "products": {
+    "mercimek": {
+      "name": "Sabaw ng Lentil",
+      "description": "Gawang bahay na sabaw ng lentil na inihanda sa klasikong estilo, kumpleto sa mantikang sarsa."
+    },
+    "tas-kebabi": {
+      "name": "Turkish Beef Stew",
+      "description": "Baka, mga gulay na pan-season, at espesyal na sarsa ng aming restawran na dahan-dahang niluto."
+    },
+    "kuzu-tandir": {
+      "name": "Dahan-dahang Inihaw na Kordero",
+      "description": "Firma ng aming restawran na korderong tandoori, dahan-dahang niluto sa mababang init."
+    },
+    "pirinc-pilavi": {
+      "name": "Pilaf ng Kanin",
+      "description": "Malambot at malapot na pilaf ng Baldo na kanin na may mantikilya."
+    },
+    "firin-sutlac": {
+      "name": "Inihurnong Pudding ng Kanin",
+      "description": "Pudding ng kanin na inihurno sa tradisyunal na paraan, inihanda gamit ang araw-araw na gatas ng kalabaw."
+    },
+    "kuru-fasulye": {
+      "name": "Guisong Puting Beans na may Baka",
+      "description": "Mga beans ng İspir, hiniwang baka, at karaniwang tomato paste ng restawran."
+    },
+    "izgara-kofte": {
+      "name": "Inihaw na Meatballs",
+      "description": "Mga meatball ng baka na parang butcher na may inihaw na paminta at kamatis."
+    },
+    "ayran": {
+      "name": "Pinaghalong Ayran",
+      "description": "Tradisyonal na pinaghalong buttermilk na may maraming bula, gawa sa pang-araw-araw na yogurt."
+    },
+    "ezogelin-corbasi": {
+      "name": "Ezogelin Soup",
+      "description": "Tradisyonal na sopas sa restawran kung saan nagtatagpo ang pulang lentil, bulgur, at bigas kasama ang mint."
+    },
+    "tarhana-corbasi": {
+      "name": "Tarhana Soup",
+      "description": "Gawang bahay na tarhana, isang klasikong Anatolian na dahan-dahang niluto kasama ang kamatis at tuyong mint."
+    },
+    "yayla-corbasi": {
+      "name": "Yogurt at Sabaw ng Bigas",
+      "description": "Isang nakakapreskong at malinamnam na yayla na sabaw na inihanda gamit ang yogurt, bigas, at tuyong mint."
+    },
+    "iskembe-corbasi": {
+      "name": "Sabaw ng Tripe",
+      "description": "Tamang sabaw ng baka na tripe na inihain kasama ang pampalasa at suka na may bawang."
+    },
+    "dugun-corbasi": {
+      "name": "Sabaw ng Kasal",
+      "description": "Tradisyonal na sabaw ng kasal na ginawa gamit ang hiwa-hiwalay na tupa at pinasarap gamit ang marinade ng lemon."
+    },
+    "tavuk-suyu-corbasi": {
+      "name": "Sabaw ng Manok",
+      "description": "Isang nakagagamot na sabaw na inihanda gamit ang manipis na noodles na niluto sa sabaw ng buto at hiniwang karne ng manok."
+    },
+    "domates-corbasi": {
+      "name": "Sabaw ng Kamatis",
+      "description": "Isang mayamang lasa na niluto kasama ang hinog na kamatis, mantikilya, at basil, tapos na may keso."
+    },
+    "sebze-corbasi": {
+      "name": "Sabaw ng Gulay",
+      "description": "Isang magaan na sabaw sa restawran na inihanda gamit ang mga gulay ng panahon, langis ng oliba, at sariwang mga damo."
+    },
+    "beyran-corbasi": {
+      "name": "Maanghang na Sabaw ng Lamb Beyran",
+      "description": "Isang rehiyonal na sabaw na inihanda sa mataas na init gamit ang karne ng tupa, bigas, bawang, at maanghang na sili."
+    },
+    "kelle-paca-corbasi": {
+      "name": "Sabaw ng Ulo at Paa",
+      "description": "Isang mayamang sabaw na gawa sa buto na niluluto gamit ang paa at karne ng ulo ng baka na pinakuluan nang mahabang oras."
+    },
+    "sehriye-corbasi": {
+      "name": "Sabaw ng Vermicelli",
+      "description": "Araw-araw na sopas na gawa sa sabaw ng manok na may kamatis, vermicelli, at perehil."
+    },
+    "tavuk-sis": {
+      "name": "Manok na Nakaprito sa Pangkabit",
+      "description": "Mga piraso ng manok na marinated sa espesyal na pampalasa, inihain kasama ng inihaw na sili at kamatis."
+    },
+    "kasap-sucuk": {
+      "name": "Inihaw na Sucuk ng Magsasaka",
+      "description": "Maanghang na sausage ng baka na niluto sa uling, may kasamang inihaw na gulay at sibuyas na may sumac."
+    },
+    "karisik-izgara": {
+      "name": "Halo-halong Inihaw",
+      "description": "Masagana at iba't ibang pinggan ng inihaw na binubuo ng meatballs, manok na nakaprito sa pangkabit, tadyang ng tupa, at sausage."
+    },
+    "nohut-yemegi": {
+      "name": "Guisadong Garbanzos na may Baka",
+      "description": "Isang lutong-bahay na ulam na gawa sa chickpeas at hiniwang baka na dahan-dahang niluluto sa tanso na kawali."
+    },
+    "patlican-musakka": {
+      "name": "Eggplant Moussaka",
+      "description": "Ipinirito na talong, giniling na baka, at moussaka na inihurno sa oven na may tomato sauce, gaya sa restawran."
+    },
+    "zeytinyagli-taze-fasulye": {
+      "name": "Green Beans sa Olive Oil",
+      "description": "Isang klasiko na niluto sa olive oil kasama ang green beans, kamatis, at sibuyas, ihinahain nang malamig."
+    },
+    "tavuk-sote": {
+      "name": "Piniritong Manok",
+      "description": "Ang mga piraso ng manok ay piniprito sa mataas na init kasama ang makukulay na sili, kabute, at kamatis."
+    },
+    "izmir-kofte": {
+      "name": "Meatballs na Estilong İzmir",
+      "description": "Isang tradisyonal na pangunahing ulam na binubuo ng mga bola-bolang baka, patatas, at paminta na inihurno sa sarsa ng kamatis."
+    },
+    "etli-bezelye": {
+      "name": "Bata na may Mga Butil ng Repolyo",
+      "description": "Araw-araw na pagkain na niluto sa kaldero na may hiniwang baka, mga peas, karot, at patatas."
+    },
+    "patlican-oturtma": {
+      "name": "Inihurnong Talong na may Giniling",
+      "description": "Inihahanda ang dila sa oven kasama ang talong, maanghang na giniling na karne, at bawang-kamatis na sarsa."
+    },
+    "salgam-suyu": {
+      "name": "Asin ng Labanos na Pina-ferment",
+      "description": "Tradisyonal na maanghang na katas ng labanos na pina-ferment gamit ang lila na karot at pampaalsa ng bulgur."
+    },
+    "maden-suyu": {
+      "name": "Mineral na Tubig",
+      "description": "Natural na mineral na tubig na walang lasa, ihinahain na malamig."
+    },
+    "su": {
+      "name": "Natural na Tubig-Bukal",
+      "description": "Natural na tubig-bukal na ihinain nang malamig sa isang basong bote."
+    },
+    "kola": {
+      "name": "Cola",
+      "description": "Isang klasikong inuming may carbonasyon na ihinain nang yelo ang lamig."
+    },
+    "gazoz": {
+      "name": "Turkish Lemon Soda",
+      "description": "Tradisyonal na may lasa, nakakapreskong soda na ihinain nang malamig."
+    },
+    "turk-kahvesi": {
+      "name": "Turkish Coffee",
+      "description": "Tradisyonal na Turkish coffee na may bula, niluto sa mataas na init sa isang tanso na cezve."
+    },
+    "demleme-cay": {
+      "name": "Turkish Brewed Tea",
+      "description": "Biglang nilagang mainit na tsaang Rize sa isang baso na makakasipit ang katawan."
+    },
+    "ev-yapimi-limonata": {
+      "name": "Gawang-Bahay na Lemonada",
+      "description": "Nakakapreskong lemonade na inihahanda araw-araw gamit ang sariwang lemon, mint, at kaunting asukal."
+    },
+    "hosaf": {
+      "name": "Araw-araw na Fruit Compote",
+      "description": "Gawang-bahay na compote na pinakukuluan araw-araw gamit ang pasas, aprikot, o plum ayon sa panahon."
+    },
+    "iskender-kebabi": {
+      "name": "Bursa İskender Kebab",
+      "description": "Ang karne ay iniikot sa skewers sa ibabaw ng pide, inihahain kasama ang sarsa ng kamatis, mainit na mantikilya, at yogurt."
+    },
+    "kazandibi": {
+      "name": "Caramelised Milk Pudding",
+      "description": "Isang tradisyonal na panghimagas na gatas na maayos na na-caramelize, may mala-silky na tekstura."
+    },
+    "tavuk-gogsu": {
+      "name": "Ottoman Milk Pudding",
+      "description": "Isang magaan at hibang-hibang pang-milkg panghimagas na inihanda ayon sa tradisyonal na resipe, na sinamahan ng kanela."
+    },
+    "keskul": {
+      "name": "Puding na Gatas ng Almendras",
+      "description": "Pang-milkg panghimagas sa estilo Ottoman na may lasa ng almendras at niyog."
+    },
+    "irmik-helvasi": {
+      "name": "Semolina Halva",
+      "description": "Semolina halva, inihaw sa mantikilya at pine nut, inihahain na mainit at may grumo."
+    },
+    "kabak-tatlisi": {
+      "name": "Panghimagas na Kalabasa na may Tahini",
+      "description": "Ang kalabasa, dahan-dahang niluto sa sariling katas, ay inihahain na may tahini at walnuts."
+    },
+    "ayva-tatlisi": {
+      "name": "Panghimagas na Quince",
+      "description": "Quince na niluto kasama ng clove at kanela ay inihahain na may clotted cream at walnuts."
+    },
+    "revani": {
+      "name": "Semolina Syrup Cake",
+      "description": "Ang klasikong panghimagas sa restawran kung saan ang malambot na cake na gawa sa semolina ay hinaluan ng lemon-scented syrup."
+    },
+    "ekmek-kadayifi": {
+      "name": "Bread Pudding with Clotted Cream",
+      "description": "Ang bread pudding na pinahinga sa caramelized syrup ay inihahain kasama ang buffalo clotted cream."
+    },
+    "cevizli-baklava": {
+      "name": "Walnut Baklava",
+      "description": "Mga layer na manipis na ipinahiga, malutong na baklava na ginawa gamit ang maraming walnuts at plain na mantikilya."
+    }
+  },
+  "allergens": {
+    "Süt ürünleri": "Gatas",
+    "Gluten": "Gluten",
+    "Yumurta": "Itlog",
+    "Badem": "Almendras",
+    "Çam fıstığı": "Pine nut",
+    "Susam": "Sesame",
+    "Ceviz": "Mansanas ng Walnut"
+  },
+  "tags": {
+    "Popüler": "Sikat",
+    "Vejetaryen": "Vegetarian",
+    "Günün Yemeği": "Ulam ng Araw",
+    "Şefin Önerisi": "Piling ng Chef",
+    "Yeni": "Bago",
+    "Acılı": "Maanghang",
+    "Ev Yapımı": "Gawang Bahay",
+    "Lokanta Klasiği": "Klasikong Restawran",
+    "Günün Çorbası": "Sabaw ng Araw",
+    "Vegan": "Vegan",
+    "Hafif": "Magaang",
+    "Yöresel": "Panrehiyon",
+    "Paylaşmalık": "Para sa Pagbabahagi",
+    "Ev Yemeği": "Estilong Bahay",
+    "Zeytinyağlı": "Langis ng Oliba",
+    "Nostaljik": "Nostalgiko",
+    "Geleneksel": "Tradisyonal",
+    "Bursa Lezzeti": "Panlasa ng Bursa",
+    "Sütlü Tatlı": "Gatas na Panghimagas",
+    "Sıcak Tatlı": "Mainit na Panghimagas",
+    "Mevsimlik": "Pana-panahon",
+    "Şerbetli": "Panghimagas na May Syrup"
+  }
+}

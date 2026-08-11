@@ -3,8 +3,8 @@ import { MenuExperience } from "@/components/menu/menu-experience";
 import { INTRO_SESSION_KEY } from "@/lib/intro-constants";
 
 export const metadata: Metadata = {
-  title: "QR Menü",
-  description: "Tarihi Şehir Lokantası dijital menüsü",
+  title: "Tarihi Şehir Lokantası",
+  description: "Tarihi Şehir Lokantası QR",
 };
 
 export function generateStaticParams() {

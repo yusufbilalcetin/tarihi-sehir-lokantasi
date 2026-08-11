@@ -1,0 +1,349 @@
+{
+  "locale": "lt",
+  "ui": {
+    "menu": "Meniu",
+    "search": "Ieškoti meniu...",
+    "searchLabel": "Ieškoti meniu",
+    "categories": "Kategorijos",
+    "categoryIntro": "Pasirinkite skonį jūsų stalui.",
+    "categoryNavigation": "Meniu kategorijos",
+    "openCategory": "Atidaryti {name}, {count} elementų",
+    "items": "elementai",
+    "item": "elementas",
+    "searchResults": "Paieškos rezultatai",
+    "productsFound": "Rasta {count} elementų",
+    "backToCategories": "Grįžti prie kategorijų",
+    "backToCategory": "Grįžti į {name}",
+    "clearSearch": "Išvalyti paiešką",
+    "noResults": "Atitikmenų nerasta",
+    "noResultsDescription": "Pabandykite kitą paiešką arba grįžkite į kategorijas.",
+    "order": "Mano užsakymas",
+    "waiter": "Padavėjas",
+    "bill": "Sąskaita",
+    "addToCart": "Pridėti prie užsakymo",
+    "addedToCart": "{name} pridėtas prie jūsų užsakymo.",
+    "removeFromCart": "Pašalinti {name}",
+    "soldOut": "Šiandien išparduota",
+    "productDetails": "Atidaryti {name} informaciją",
+    "portion": "Porcija",
+    "standardPortion": "Standartinė porcija",
+    "allergens": "Alergenai",
+    "noAllergens": "Nėra deklaruotų alergenų",
+    "productNote": "Prekės pastaba",
+    "productNotePlaceholder": "Pvz., be sviesto, prašau",
+    "decreaseQuantity": "Mažinti kiekį",
+    "increaseQuantity": "Didinti kiekį",
+    "each": "vnt.",
+    "note": "Pastaba",
+    "subtotal": "Tarpu suma",
+    "serviceFee": "Aptarnavimo mokestis",
+    "total": "Iš viso",
+    "sendOrder": "Siųsti užsakymą",
+    "orderSent": "Jūsų užsakymas buvo siunčiamas į virtuvę",
+    "orderTracking": "Stebėkite užsakymą #{number} čia.",
+    "newItem": "Pridėti kitą prekę",
+    "emptyCart": "Jūsų užsakymas tuščias",
+    "emptyCartDescription": "Patiekalai, kuriuos pasirinksite iš meniu, bus rodomi čia.",
+    "browseMenu": "Peržiūrėti meniu",
+    "orderReceived": "Užsakymas gautas",
+    "waiterConfirmed": "Padavėjas Patvirtino",
+    "preparing": "Ruošiama",
+    "ready": "Paruošta",
+    "served": "Patiekta",
+    "preparingDescription": "Mūsų virtuvė ruošia jūsų užsakymą.",
+    "orderStatus": "Užsakymo būsena",
+    "callWaiter": "Iškviesti padavėją",
+    "placeOrder": "Noriu užsisakyti",
+    "wantWater": "Norėčiau vandens",
+    "wantBread": "Norėčiau duonos",
+    "wantService": "Papildomos paslaugos",
+    "other": "Kita",
+    "generalRequest": "Turiu bendrą prašymą",
+    "orderHelp": "Man reikia pagalbos su užsakymu",
+    "waterDescription": "Prašau atneškite vandens prie stalo",
+    "breadDescription": "Prašome atnešti duonos prie stalo",
+    "serviceDescription": "Man reikia įrankių arba lėkštės",
+    "otherDescription": "Man reikia pagalbos su kažkuo kitu",
+    "waiterHelpTitle": "Kaip galime padėti?",
+    "waiterHelpDescription": "Jūsų užklausa bus išsiųsta su {table}.",
+    "waiterRequestSent": "Jūsų užklausa buvo išsiųsta mūsų padavėjui.",
+    "requestBill": "Prašyti sąskaitos",
+    "billSent": "Jūsų sąskaitos užklausa buvo išsiųsta",
+    "billConfirm": "Ar norėtumėte paprašyti sąskaitos?",
+    "billSentDescription": "Mūsų padavėjas netrukus bus pas jus.",
+    "billConfirmDescription": "Jūsų užklausa bus išsiųsta tiesiai padavėjui. Galite atsiskaityti prie stalo arba kasoje.",
+    "billToast": "Jūsų sąskaitos užklausimas buvo išsiųstas mūsų padavėjui.",
+    "backToMenu": "Atgal į meniu",
+    "back": "Atgal",
+    "close": "Uždaryti",
+    "yourTable": "JŪSŲ STALIUKAS",
+    "serviceOpen": "Aptarnavimas atidarytas",
+    "slogan": "Tradicinis skonis • Modernus stalas",
+    "location": "Bursa, Osmangazi",
+    "languageLabel": "Pasirinkite kalbą",
+    "currencyLabel": "Pasirinkite valiutą",
+    "customerNavigation": "Kliento meniu navigacija",
+    "approximateCurrency": "Užsienio valiutos kainos yra apytikslės. Mokėjimas vykdomas Turkijos liromis.",
+    "orderSuccess": "Jūsų užsakymas buvo sėkmingai išsiųstas.",
+    "languagePickerTitle": "Pasirinkite kalbą",
+    "languagePickerDescription": "Pasirinkite kalbą, kuria norite naudotis meniu.",
+    "searchLanguage": "Ieškoti kalbų...",
+    "recommendedLanguages": "Rekomenduojama",
+    "recentLanguages": "Neseniai naudota",
+    "allLanguages": "Visos kalbos",
+    "languageNotFound": "Kalba nerasta.",
+    "languageNotFoundDescription": "Išbandykite kitą kalbos pavadinimą arba kodą.",
+    "tableNumber": "Lentelė {number}",
+    "itemCount": "{count} prekės",
+    "splashLabel": "Tarihi Şehir Lokantası pradžios ekranas",
+    "cancel": "Atšaukti",
+    "confirmOrder": "Patvirtinti užsakymą",
+    "orderSummary": "Užsakymo santrauka",
+    "payment": "Mokėjimas",
+    "tableNotFound": "Lentelė nerasta.",
+    "invalidQr": "Neteisingas QR kodas.",
+    "menuUnavailable": "Meniu šiuo metu neprieinamas.",
+    "networkError": "Iškilo tinklo klaida.",
+    "productUnavailable": "Šis produktas šiuo metu neprieinamas.",
+    "unableToSendOrder": "Negalima išsiųsti užsakymo.",
+    "tryAgain": "Pabandykite dar kartą",
+    "somethingWentWrong": "Įvyko klaida.",
+    "loadingLanguage": "Kraunama kalba...",
+    "languageLoadError": "Negalima įkelti kalbos. Prašome pabandyti dar kartą."
+  },
+  "categories": {
+    "soups": "Sriubos",
+    "grill": "Kepsniai",
+    "mains": "Pagrindiniai patiekalai",
+    "drinks": "Gėrimai",
+    "kebabs": "Kebabai",
+    "dessert": "Desertai"
+  },
+  "products": {
+    "mercimek": {
+      "name": "Lęšių sriuba",
+      "description": "Namų gamybos lęšių sriuba, paruošta klasikiniu stiliumi, papildyta sviestiniu padažu."
+    },
+    "tas-kebabi": {
+      "name": "Turkiškas jautienos troškinys",
+      "description": "Jautiena, sezoninės daržovės ir mūsų restorano lėtai gaminamas specialus padažas."
+    },
+    "kuzu-tandir": {
+      "name": "Lėtai kepta ėriena",
+      "description": "Mūsų restorano firminė ėrienos tandoori, lėtai gaminama žemoje temperatūroje."
+    },
+    "pirinc-pilavi": {
+      "name": "Ryžių plovas",
+      "description": "Sviestinis, purūs Baldo ryžių plovas."
+    },
+    "firin-sutlac": {
+      "name": "Keptas ryžių pudingas",
+      "description": "Ryžių pudingas, keptas tradiciniu būdu, paruoštas iš kasdienio buivolų pieno."
+    },
+    "kuru-fasulye": {
+      "name": "Baltųjų pupelių troškinys su jautiena",
+      "description": "İspir pupelės, supjaustyta jautiena ir paprastas restorano pomidorų padažas."
+    },
+    "izgara-kofte": {
+      "name": "Kepti kepsneliai",
+      "description": "Mėsininko stiliaus jautienos kepsneliai su kepta paprika ir pomidoru."
+    },
+    "ayran": {
+      "name": "Plaktas Ayran",
+      "description": "Tradiciškai plakta rūgpienė su daug putos, pagaminta iš kasdieninio jogurto."
+    },
+    "ezogelin-corbasi": {
+      "name": "Ezogelino sriuba",
+      "description": "Tradiciška restorano sriuba, kurioje raudonos lęšiai, bulgur ir ryžiai susitinka su mėtomis."
+    },
+    "tarhana-corbasi": {
+      "name": "Tarhanos sriuba",
+      "description": "Namų gamybos tarhana, Anatolijos klasika, lėtai virta su pomidorais ir džiovintomis mėtomis."
+    },
+    "yayla-corbasi": {
+      "name": "Jogurto ir ryžių sriuba",
+      "description": "Gaivi ir kreminė yayla sriuba, pagaminta iš jogurto, ryžių ir džiovintų mėtų."
+    },
+    "iskembe-corbasi": {
+      "name": "Kepsnių sriuba",
+      "description": "Tinkamai paruošta jautienos kepenėlių sriuba, patiekiama su prieskoniais ir česnako actu."
+    },
+    "dugun-corbasi": {
+      "name": "Vestuvių sriuba",
+      "description": "Tradicinė vestuvių sriuba, pagaminta iš smulkintos ėrienos ir pagardinta citrinos marinatu."
+    },
+    "tavuk-suyu-corbasi": {
+      "name": "Vištienos sultinio sriuba",
+      "description": "Gydomoji sriuba, paruošta iš plonų makaronų, virtiems kaulų sultinyje ir suplėšytos vištienos mėsos."
+    },
+    "domates-corbasi": {
+      "name": "Pomidorų sriuba",
+      "description": "Turtingas skonis, gamintas su prinokusiais pomidorais, sviestu ir baziliku, baigtas su sūriu."
+    },
+    "sebze-corbasi": {
+      "name": "Daržovių sriuba",
+      "description": "Lengva restorano sriuba, ruošta iš sezoninių daržovių, alyvuogių aliejaus ir šviežių žolelių."
+    },
+    "beyran-corbasi": {
+      "name": "Aštri avienos Beyran sriuba",
+      "description": "Regioninė sriuba, ruošiama didelėje kaitroje su aviena, ryžiais, česnakais ir aitriosiomis paprikomis."
+    },
+    "kelle-paca-corbasi": {
+      "name": "Galvos ir kojos sriuba",
+      "description": "Turtinga kaulų sultinio sriuba, ruošiama iš jautienos kojų ir galvos mėsos ilgai virinant."
+    },
+    "sehriye-corbasi": {
+      "name": "Vermicelli sriuba",
+      "description": "Kasdienė sriuba, ruošiama su vištienos sultiniu, pomidorais, vermišeliais ir petražolėmis."
+    },
+    "tavuk-sis": {
+      "name": "Vištienos iešmeliai",
+      "description": "Vištienos gabalėliai marinuoti su specialiais prieskoniais, patiekiami su keptais pipirais ir pomidorais."
+    },
+    "kasap-sucuk": {
+      "name": "Kepta mėsos dešra Sucuk",
+      "description": "Pikantiška jautienos dešra, kepama ant anglių, su keptomis daržovėmis ir svogūnais su sumaku."
+    },
+    "karisik-izgara": {
+      "name": "Mišri kepsnių lėkštė",
+      "description": "Gausi ir įvairi kepsnių lėkštė, sudaryta iš kukuliukų, vištienos iešmelių, ėrienos šonkauliukų ir dešros."
+    },
+    "nohut-yemegi": {
+      "name": "Avinžirnių troškinys su jautiena",
+      "description": "Naminis patiekalas iš avinžirnių ir kubeliais supjaustytos jautienos, lėtai troškinamas variniame puode."
+    },
+    "patlican-musakka": {
+      "name": "Baklažanų Musaka",
+      "description": "Kepti baklažanai, maltos jautienos ir musaka, kepta orkaitėje su pomidorų padažu, restorano stiliumi."
+    },
+    "zeytinyagli-taze-fasulye": {
+      "name": "Pupelės aliejuje",
+      "description": "Klasikinis patiekalas, gaminamas su alyvuogių aliejumi, žaliomis pupelėmis, pomidorais ir svogūnais, patiekiamas šaltas."
+    },
+    "tavuk-sote": {
+      "name": "Keptas Vištienos Patiekalas",
+      "description": "Vištienos gabaliukai kepami didelėje temperatūroje su spalvotais pipirais, grybais ir pomidorais."
+    },
+    "izmir-kofte": {
+      "name": "Izmiro Stiliaus Kukuliai",
+      "description": "Tradicinis pagrindinis patiekalas iš jautienos kukulių, bulvių ir paprikų, keptų pomidorų padaže."
+    },
+    "etli-bezelye": {
+      "name": "Žirniai su jautiena",
+      "description": "Kasdieninis patiekalas puode su kubeliais pjaustyta jautiena, žirniais, morkomis ir bulvėmis."
+    },
+    "patlican-oturtma": {
+      "name": "Keptos baklažanų su faršu",
+      "description": "Lūpa ruošiama orkaitėje su baklažanu, aštriu maltos mėsos padažu ir česnakiniais pomidorų padažu."
+    },
+    "salgam-suyu": {
+      "name": "Fermentuotos ropės sultys",
+      "description": "Tradicinės aštrios ropės sultys, fermentuotos su violetine morka ir bulguro mielėmis."
+    },
+    "maden-suyu": {
+      "name": "Mineralinis vanduo",
+      "description": "Natūralus mineralinis vanduo, tiekiamas šaltas."
+    },
+    "su": {
+      "name": "Natūralus pavasarinis vanduo",
+      "description": "Natūralus pavasarinis vanduo, pateikiamas šaltas stiklinėje butelyje."
+    },
+    "kola": {
+      "name": "Kola",
+      "description": "Klasiškas gazuotas gėrimas, pateikiamas labai šaltas."
+    },
+    "gazoz": {
+      "name": "Turkiška citrinų soda",
+      "description": "Tradicinė skani, gaivinanti ir pateikiama šalta soda."
+    },
+    "turk-kahvesi": {
+      "name": "Turkiška kava",
+      "description": "Tradicinė turkiška kava su puta, ruošiama ant stiprios kaitros varinėje cezve puodelyje."
+    },
+    "demleme-cay": {
+      "name": "Turkiška arbata",
+      "description": "Šviežiai užplikyta karšta Rize arbata plonos juosmens stiklinėje."
+    },
+    "ev-yapimi-limonata": {
+      "name": "Namų limonadas",
+      "description": "Gaivus limonadas, ruoštas kasdien iš šviežių citrinų, mėtų ir truputėlio cukraus."
+    },
+    "hosaf": {
+      "name": "Kasdienis vaisių kompotas",
+      "description": "Naminis kompotas, verdamas kiekvieną dieną su razinomis, abrikosais ar slyvomis, pagal sezoną."
+    },
+    "iskender-kebabi": {
+      "name": "Bursos İskender kebabas",
+      "description": "Jautiena sukama ant iešmo virš pide, patiekiama su pomidorų padažu, karštu sviestu ir jogurtu."
+    },
+    "kazandibi": {
+      "name": "Karamelizuotas pieno pudingas",
+      "description": "Tradicinis pieno desertas, tinkamai karamelizuotas, šilkinės tekstūros."
+    },
+    "tavuk-gogsu": {
+      "name": "Osmaniškas pieno pudingas",
+      "description": "Lengvas ir pluoštinis pieniškas desertas, paruoštas pagal tradicinį receptą, patiekiamas su cinamonu."
+    },
+    "keskul": {
+      "name": "Migdolų pieniškas pudingas",
+      "description": "Otomanų stiliaus pieniškas desertas, papildytas migdolų skoniu ir kokosu."
+    },
+    "irmik-helvasi": {
+      "name": "Manų halva",
+      "description": "Manų halva, kepta su sviestu ir pušies riešutais, patiekiama karšta ir krakmolinga."
+    },
+    "kabak-tatlisi": {
+      "name": "Moliūgų desertas su tahini",
+      "description": "Moliūgas, lėtai troškintas savo sultyse, patiekiamas su tahini ir graikiniais riešutais."
+    },
+    "ayva-tatlisi": {
+      "name": "Kvečio desertas",
+      "description": "Kvietis, troškintas su gvazdikėliais ir cinamonu, patiekiamas su grietinėle ir graikiniais riešutais."
+    },
+    "revani": {
+      "name": "Kuskuso sirupo keksas",
+      "description": "klasikinis restorano desertas, kuriame minkštas kuskuso keksas susitinka su citrinos kvapo sirupu."
+    },
+    "ekmek-kadayifi": {
+      "name": "Duonos pudingas su riebia grietine",
+      "description": "Duonos pudingas, palaikytas su karamelizuotu sirupu, patiekiamas su buivolo riebią grietine."
+    },
+    "cevizli-baklava": {
+      "name": "Graikinio riešuto baklava",
+      "description": "Sluoksniai, labai plonai išvynioti, traški baklava, pagaminta su daug graikinių riešutų ir paprasto sviesto."
+    }
+  },
+  "allergens": {
+    "Süt ürünleri": "Pieno produktai",
+    "Gluten": "Glitimas",
+    "Yumurta": "Kiaušinis",
+    "Badem": "Migdolas",
+    "Çam fıstığı": "Pušies riešutas",
+    "Susam": "Sezamas",
+    "Ceviz": "Graikas"
+  },
+  "tags": {
+    "Popüler": "Populiarus",
+    "Vejetaryen": "Vegetariškas",
+    "Günün Yemeği": "Dienos patiekalas",
+    "Şefin Önerisi": "Šefų pasirinkimas",
+    "Yeni": "Naujas",
+    "Acılı": "Aštrus",
+    "Ev Yapımı": "Namų gamybos",
+    "Lokanta Klasiği": "Restorano klasika",
+    "Günün Çorbası": "Dienos sriuba",
+    "Vegan": "Veganiškas",
+    "Hafif": "Lengvas",
+    "Yöresel": "Regioninis",
+    "Paylaşmalık": "Paskaninti kartu",
+    "Ev Yemeği": "Namų stiliaus",
+    "Zeytinyağlı": "Alyvuogių aliejus",
+    "Nostaljik": "Nostalginis",
+    "Geleneksel": "Tradicinis",
+    "Bursa Lezzeti": "Bursos skonis",
+    "Sütlü Tatlı": "Pieno desertas",
+    "Sıcak Tatlı": "Šiltas desertas",
+    "Mevsimlik": "Sezoninis",
+    "Şerbetli": "Sirupo desertas"
+  }
+}

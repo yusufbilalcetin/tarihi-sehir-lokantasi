@@ -1,0 +1,349 @@
+{
+  "locale": "id",
+  "ui": {
+    "menu": "Menu",
+    "search": "Cari di menu...",
+    "searchLabel": "Cari di menu",
+    "categories": "Kategori",
+    "categoryIntro": "Pilih rasa untuk meja Anda.",
+    "categoryNavigation": "Kategori menu",
+    "openCategory": "Buka {name}, {count} item",
+    "items": "item",
+    "item": "item",
+    "searchResults": "Hasil Pencarian",
+    "productsFound": "Ditemukan {count} item",
+    "backToCategories": "Kembali ke kategori",
+    "backToCategory": "Kembali ke {name}",
+    "clearSearch": "Bersihkan pencarian",
+    "noResults": "Tidak ada item yang cocok ditemukan",
+    "noResultsDescription": "Coba pencarian lain atau kembali ke kategori.",
+    "order": "Pesanan Saya",
+    "waiter": "Pelayan",
+    "bill": "Tagihan",
+    "addToCart": "Tambahkan ke Pesanan",
+    "addedToCart": "{name} telah ditambahkan ke pesanan Anda.",
+    "removeFromCart": "Hapus {name}",
+    "soldOut": "Habis Hari Ini",
+    "productDetails": "Buka detail untuk {name}",
+    "portion": "Porsi",
+    "standardPortion": "Porsi standar",
+    "allergens": "Alergen",
+    "noAllergens": "Tidak ada alergen yang terdaftar",
+    "productNote": "Catatan item",
+    "productNotePlaceholder": "Misal. tanpa mentega, tolong",
+    "decreaseQuantity": "Kurangi jumlah",
+    "increaseQuantity": "Tambahkan jumlah",
+    "each": "per",
+    "note": "Catatan",
+    "subtotal": "Subtotal",
+    "serviceFee": "Biaya layanan",
+    "total": "Total",
+    "sendOrder": "Kirim Pesanan",
+    "orderSent": "Pesanan Anda telah dikirim ke dapur",
+    "orderTracking": "Lacak pesanan #{number} di sini.",
+    "newItem": "Tambahkan Item Lain",
+    "emptyCart": "Pesanan Anda kosong",
+    "emptyCartDescription": "Item yang Anda pilih dari menu akan muncul di sini.",
+    "browseMenu": "Jelajahi Menu",
+    "orderReceived": "Pesanan Diterima",
+    "waiterConfirmed": "Pelayan Dikonfirmasi",
+    "preparing": "Sedang Disiapkan",
+    "ready": "Siap",
+    "served": "Disajikan",
+    "preparingDescription": "Dapur kami sedang menyiapkan pesanan Anda.",
+    "orderStatus": "Status pesanan",
+    "callWaiter": "Panggil Pelayan",
+    "placeOrder": "Saya ingin memesan",
+    "wantWater": "Saya ingin air",
+    "wantBread": "Saya ingin roti",
+    "wantService": "Layanan tambahan",
+    "other": "Lainnya",
+    "generalRequest": "Saya memiliki permintaan umum",
+    "orderHelp": "Saya membutuhkan bantuan dengan pesanan saya",
+    "waterDescription": "Silakan bawa air ke meja",
+    "breadDescription": "Silakan bawa roti ke meja",
+    "serviceDescription": "Saya perlu alat makan atau piring",
+    "otherDescription": "Saya butuh bantuan dengan hal lain",
+    "waiterHelpTitle": "Bagaimana kami bisa membantu?",
+    "waiterHelpDescription": "Permintaan Anda akan dikirim dengan {table}.",
+    "waiterRequestSent": "Permintaan Anda telah dikirim ke pelayan kami.",
+    "requestBill": "Permintaan Tagihan",
+    "billSent": "Permintaan tagihan Anda telah dikirim",
+    "billConfirm": "Apakah Anda ingin meminta tagihan?",
+    "billSentDescription": "Pelayan kami akan segera datang kepada Anda.",
+    "billConfirmDescription": "Permintaan Anda akan langsung dikirim ke pelayan. Anda dapat membayar di meja atau kasir.",
+    "billToast": "Permintaan tagihan Anda telah dikirim ke pelayan kami.",
+    "backToMenu": "Kembali ke Menu",
+    "back": "Kembali",
+    "close": "Tutup",
+    "yourTable": "MEJA ANDA",
+    "serviceOpen": "Pelayanan dibuka",
+    "slogan": "Rasa Tradisional • Meja Modern",
+    "location": "Bursa, Osmangazi",
+    "languageLabel": "Pilih bahasa",
+    "currencyLabel": "Pilih mata uang",
+    "customerNavigation": "Navigasi menu pelanggan",
+    "approximateCurrency": "Harga dalam mata uang asing adalah perkiraan. Pembayaran diproses dalam Lira Turki.",
+    "orderSuccess": "Pesanan Anda berhasil dikirim.",
+    "languagePickerTitle": "Pilih Bahasa",
+    "languagePickerDescription": "Pilih bahasa yang ingin Anda gunakan untuk menu.",
+    "searchLanguage": "Cari bahasa...",
+    "recommendedLanguages": "Direkomendasikan",
+    "recentLanguages": "Bahasa Terbaru",
+    "allLanguages": "Semua Bahasa",
+    "languageNotFound": "Bahasa tidak ditemukan.",
+    "languageNotFoundDescription": "Coba nama atau kode bahasa lain.",
+    "tableNumber": "Meja {number}",
+    "itemCount": "{count} item",
+    "splashLabel": "Layar pembuka Tarihi Şehir Lokantası",
+    "cancel": "Batal",
+    "confirmOrder": "Konfirmasi Pesanan",
+    "orderSummary": "Ringkasan Pesanan",
+    "payment": "Pembayaran",
+    "tableNotFound": "Meja tidak ditemukan.",
+    "invalidQr": "Kode QR tidak valid.",
+    "menuUnavailable": "Menu saat ini tidak tersedia.",
+    "networkError": "Terjadi kesalahan jaringan.",
+    "productUnavailable": "Item ini saat ini tidak tersedia.",
+    "unableToSendOrder": "Tidak dapat mengirim pesanan.",
+    "tryAgain": "Coba lagi",
+    "somethingWentWrong": "Ada yang salah.",
+    "loadingLanguage": "Memuat bahasa...",
+    "languageLoadError": "Bahasa tidak dapat dimuat. Silakan coba lagi."
+  },
+  "categories": {
+    "soups": "Sup",
+    "grill": "Panggangan",
+    "mains": "Hidangan Utama",
+    "drinks": "Minuman",
+    "kebabs": "Kebab",
+    "dessert": "Makanan Penutup"
+  },
+  "products": {
+    "mercimek": {
+      "name": "Sup Kacang Lentil",
+      "description": "Sup kacang lentil buatan rumah yang disiapkan dengan gaya klasik, dilengkapi dengan saus berbasis mentega."
+    },
+    "tas-kebabi": {
+      "name": "Semur Daging Sapi Turki",
+      "description": "Daging sapi, sayuran musiman, dan saus spesial slow-cooked dari restoran kami."
+    },
+    "kuzu-tandir": {
+      "name": "Domba Panggang Lambat",
+      "description": "Signature lamb tandoori dari restoran kami, dimasak perlahan dengan api kecil."
+    },
+    "pirinc-pilavi": {
+      "name": "Pilaf Nasi",
+      "description": "Pilaf nasi Baldo yang lembut dan berbumbu mentega."
+    },
+    "firin-sutlac": {
+      "name": "Puding Nasi Panggang",
+      "description": "Puding nasi yang dipanggang dengan cara tradisional, disiapkan menggunakan susu kerbau sehari-hari."
+    },
+    "kuru-fasulye": {
+      "name": "Rebus Kacang Putih dengan Daging Sapi",
+      "description": "Kacang İspir, daging sapi cincang, dan pasta tomat restoran biasa."
+    },
+    "izgara-kofte": {
+      "name": "Bakso Panggang",
+      "description": "Bakso daging sapi ala tukang daging dengan paprika panggang dan tomat."
+    },
+    "ayran": {
+      "name": "Ayran Kocok",
+      "description": "Buttermilk tradisional yang dikocok dengan banyak busa, dibuat dengan yogurt sehari-hari."
+    },
+    "ezogelin-corbasi": {
+      "name": "Sup Ezogelin",
+      "description": "Sup restoran tradisional di mana lentil merah, bulgur, dan nasi berpadu dengan mint."
+    },
+    "tarhana-corbasi": {
+      "name": "Sup Tarhana",
+      "description": "Tarhana buatan rumah, klasik Anatolia yang dimasak perlahan dengan tomat dan mint kering."
+    },
+    "yayla-corbasi": {
+      "name": "Sup Yogurt dan Nasi",
+      "description": "Sup yayla yang menyegarkan dan creamy disiapkan dengan yogurt, nasi, dan mint kering."
+    },
+    "iskembe-corbasi": {
+      "name": "Sup Babat",
+      "description": "Sup babat sapi yang sesungguhnya disajikan dengan bumbunya dan cuka bawang putih."
+    },
+    "dugun-corbasi": {
+      "name": "Sup Pernikahan",
+      "description": "Sup pernikahan tradisional yang dibuat dengan daging domba suwir dan dibumbui dengan marinasi lemon."
+    },
+    "tavuk-suyu-corbasi": {
+      "name": "Sup Kaldu Ayam",
+      "description": "Sup penyembuh yang disiapkan dengan mi tipis dimasak dalam kaldu tulang dan daging ayam suwir."
+    },
+    "domates-corbasi": {
+      "name": "Sup Tomat",
+      "description": "Rasa kaya yang dimasak dengan tomat matang, mentega, dan basil, diselesaikan dengan keju."
+    },
+    "sebze-corbasi": {
+      "name": "Sup Sayuran",
+      "description": "Sup ringan restoran yang disiapkan dengan sayuran musiman, minyak zaitun, dan rempah segar."
+    },
+    "beyran-corbasi": {
+      "name": "Sup Kambing Beyran Pedas",
+      "description": "Sup regional yang disiapkan dengan panas tinggi menggunakan daging kambing, nasi, bawang putih, dan cabai panas."
+    },
+    "kelle-paca-corbasi": {
+      "name": "Sup Kepala dan Kaki Sapi",
+      "description": "Sup kaldu kaya yang dibuat dengan kaki sapi dan daging kepala yang direbus selama berjam-jam."
+    },
+    "sehriye-corbasi": {
+      "name": "Sup Vermicelli",
+      "description": "Sup harian yang dibuat dengan kaldu ayam dengan tomat, bihun, dan peterseli."
+    },
+    "tavuk-sis": {
+      "name": "Sate Ayam",
+      "description": "Potongan ayam yang dimarinasi dengan rempah khusus, disajikan dengan paprika dan tomat panggang."
+    },
+    "kasap-sucuk": {
+      "name": "Sucuk Tukang Daging Bakar",
+      "description": "Sosis sapi pedas yang dimasak di atas arang, dengan sayuran panggang dan bawang dengan sumac."
+    },
+    "karisik-izgara": {
+      "name": "Grill Campur",
+      "description": "Piring grill yang lezat dan beragam terdiri dari bakso, sate ayam, iga domba, dan sosis."
+    },
+    "nohut-yemegi": {
+      "name": "Semur Kacang Arab dengan Daging Sapi",
+      "description": "Hidangan rumahan dari kacang chickpea dan daging sapi cincang yang dimasak perlahan dalam panci tembaga."
+    },
+    "patlican-musakka": {
+      "name": "Moussaka Terong",
+      "description": "Terong goreng, daging sapi cincang, dan moussaka dipanggang di oven dengan saus tomat, gaya restoran."
+    },
+    "zeytinyagli-taze-fasulye": {
+      "name": "Kacang Hijau dalam Minyak Zaitun",
+      "description": "Klasik yang dimasak dalam minyak zaitun dengan kacang hijau, tomat, dan bawang, disajikan dingin."
+    },
+    "tavuk-sote": {
+      "name": "Ayam Tumis",
+      "description": "Potongan ayam ditumis dengan panas tinggi bersama paprika berwarna-warni, jamur, dan tomat."
+    },
+    "izmir-kofte": {
+      "name": "Bakso Ala İzmir",
+      "description": "Hidangan utama tradisional berupa bakso sapi, kentang, dan paprika yang dipanggang dalam saus tomat."
+    },
+    "etli-bezelye": {
+      "name": "Kacang Polong dengan Daging Sapi",
+      "description": "Makanan sehari-hari dimasak dalam panci dengan daging sapi yang dipotong dadu, kacang polong, wortel, dan kentang."
+    },
+    "patlican-oturtma": {
+      "name": "Terong Panggang dengan Daging Cincang",
+      "description": "Lidah disiapkan di oven dengan terong, daging cincang pedas, dan saus tomat bawang putih."
+    },
+    "salgam-suyu": {
+      "name": "Jus Lobak Fermentasi",
+      "description": "Jus lobak pedas tradisional yang difermentasi dengan wortel ungu dan ragi bulgur."
+    },
+    "maden-suyu": {
+      "name": "Air Mineral",
+      "description": "Air mineral alami biasa yang disajikan dingin."
+    },
+    "su": {
+      "name": "Air Mata Air Alami",
+      "description": "Air mata air alami disajikan dingin dalam botol kaca."
+    },
+    "kola": {
+      "name": "Cola",
+      "description": "Minuman bersoda klasik disajikan sangat dingin."
+    },
+    "gazoz": {
+      "name": "Soda Lemon Turki",
+      "description": "Soda tradisional yang berperisa, menyegarkan, dan disajikan dingin tanpa tambahan."
+    },
+    "turk-kahvesi": {
+      "name": "Kopi Turki",
+      "description": "Kopi Turki tradisional dengan busa, dimasak dengan panas tinggi dalam cezve tembaga."
+    },
+    "demleme-cay": {
+      "name": "Teh Seduhan Turki",
+      "description": "Teh Rize panas yang baru diseduh disajikan dalam gelas ramping di bagian tengah."
+    },
+    "ev-yapimi-limonata": {
+      "name": "Lemonade Buatan Rumah",
+      "description": "Lemonade menyegarkan yang dibuat setiap hari dengan lemon segar, mint, dan sedikit gula."
+    },
+    "hosaf": {
+      "name": "Kompot Buah Harian",
+      "description": "Kompot buatan rumah yang dimasak setiap hari dengan kismis, aprikot, atau plum sesuai musim."
+    },
+    "iskender-kebabi": {
+      "name": "Bursa İskender Kebab",
+      "description": "Daging diputar pada tusukan di atas pide, disajikan dengan saus tomat, mentega panas, dan yogurt."
+    },
+    "kazandibi": {
+      "name": "Puding Susu Karamel",
+      "description": "Pencuci mulut susu tradisional yang dikaramelisasi dengan baik, dengan tekstur lembut."
+    },
+    "tavuk-gogsu": {
+      "name": "Puding Susu Ottoman",
+      "description": "Hidangan penutup susu yang ringan dan berserat, disiapkan dengan resep tradisional, disajikan dengan kayu manis."
+    },
+    "keskul": {
+      "name": "Puding Susu Almond",
+      "description": "Hidangan penutup susu ala Ottoman yang dilengkapi dengan rasa almond dan kelapa."
+    },
+    "irmik-helvasi": {
+      "name": "Halva Semolina",
+      "description": "Halva semolina, dipanggang dengan mentega dan kacang pinus, disajikan panas dan berbutir."
+    },
+    "kabak-tatlisi": {
+      "name": "Hidangan Labu dengan Tahini",
+      "description": "Labu yang dimasak perlahan dalam jusnya sendiri, disajikan dengan tahini dan kenari."
+    },
+    "ayva-tatlisi": {
+      "name": "Hidangan Quince",
+      "description": "Quince yang dimasak dengan cengkeh dan kayu manis disajikan dengan krim kental dan kenari."
+    },
+    "revani": {
+      "name": "Kue Sirup Semolina",
+      "description": "Pencuci mulut restoran klasik di mana kue semolina yang lembut bertemu dengan sirup beraroma lemon."
+    },
+    "ekmek-kadayifi": {
+      "name": "Puding Roti dengan Krim Kental",
+      "description": "Puding roti yang didiamkan dengan sirup karamel disajikan dengan krim kental kerbau."
+    },
+    "cevizli-baklava": {
+      "name": "Baklava Kenari",
+      "description": "Lapisan yang digulung sangat tipis, baklava renyah dibuat dengan banyak kenari dan mentega polos."
+    }
+  },
+  "allergens": {
+    "Süt ürünleri": "Susu",
+    "Gluten": "Gluten",
+    "Yumurta": "Telur",
+    "Badem": "Almond",
+    "Çam fıstığı": "Biji pinus",
+    "Susam": "Wijen",
+    "Ceviz": "Kacang Walnut"
+  },
+  "tags": {
+    "Popüler": "Populer",
+    "Vejetaryen": "Vegetarian",
+    "Günün Yemeği": "Hidangan Hari Ini",
+    "Şefin Önerisi": "Pilihan Chef",
+    "Yeni": "Baru",
+    "Acılı": "Pedas",
+    "Ev Yapımı": "Buatan Rumah",
+    "Lokanta Klasiği": "Klasik Restoran",
+    "Günün Çorbası": "Sup Hari Ini",
+    "Vegan": "Vegan",
+    "Hafif": "Ringan",
+    "Yöresel": "Regional",
+    "Paylaşmalık": "Untuk Dibagi",
+    "Ev Yemeği": "Gaya Rumahan",
+    "Zeytinyağlı": "Minyak Zaitun",
+    "Nostaljik": "Nostalgia",
+    "Geleneksel": "Tradisional",
+    "Bursa Lezzeti": "Rasa Bursa",
+    "Sütlü Tatlı": "Pencuci Mulut Susu",
+    "Sıcak Tatlı": "Pencuci Mulut Hangat",
+    "Mevsimlik": "Musiman",
+    "Şerbetli": "Pencuci Mulut Sirup"
+  }
+}

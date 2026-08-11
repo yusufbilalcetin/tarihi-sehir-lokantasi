@@ -1,0 +1,349 @@
+{
+  "locale": "fo",
+  "ui": {
+    "menu": "Matseðil",
+    "search": "Leita í matseðlinum...",
+    "searchLabel": "Leita í matseðlinum",
+    "categories": "Bólkar",
+    "categoryIntro": "Vel smakkið til borðið.",
+    "categoryNavigation": "Matseðilbókar bólkar",
+    "openCategory": "Opna {name}, {count} ting",
+    "items": "ting",
+    "item": "ting",
+    "searchResults": "Leitar úrslit",
+    "productsFound": "{count} ting funnin",
+    "backToCategories": "Tilbake til bólkar",
+    "backToCategory": "Tilbake til {name}",
+    "clearSearch": "Strika leit",
+    "noResults": "Ongin samsvarandi ting funnin",
+    "noResultsDescription": "Roys eina aðra leiting ella far aftur til bólkarnar.",
+    "order": "Mín Ordan",
+    "waiter": "Tænari",
+    "bill": "Bill",
+    "addToCart": "Legg afturat bílegging",
+    "addedToCart": "{name} lagt afturat tíni bílegging.",
+    "removeFromCart": "Tak {name}",
+    "soldOut": "Útselt í dag",
+    "productDetails": "Opið fyri {name}",
+    "portion": "Partur",
+    "standardPortion": "Vanligur partur",
+    "allergens": "Allergenar",
+    "noAllergens": "Einki fráboðað allergen",
+    "productNote": "Item note",
+    "productNotePlaceholder": "T.d. einki smør, vinarliga",
+    "decreaseQuantity": "Minni nøgd",
+    "increaseQuantity": "Øk nøgd",
+    "each": "Hvør",
+    "note": "Viðmerking",
+    "subtotal": "Undirtal",
+    "serviceFee": "Tænastugjald",
+    "total": "Tilsamans",
+    "sendOrder": "Send bílegging",
+    "orderSent": "Tín bílegging varð send til køkin",
+    "orderTracking": "Sporrøð #{number} her.",
+    "newItem": "Legg afturat einum øðrum lut",
+    "emptyCart": "Tín bílegging er tóm",
+    "emptyCartDescription": "Lutirnir, tú velur úr valmyndini, síggjast her.",
+    "browseMenu": "Leita í matskránni",
+    "orderReceived": "Boð móttikin",
+    "waiterConfirmed": "Tænari staðfestur",
+    "preparing": "Fyrireiking",
+    "ready": "Klár",
+    "served": "Tænt",
+    "preparingDescription": "Køkurin okkara fyrireikar tína bílegging.",
+    "orderStatus": "Ordans støða",
+    "callWaiter": "Ring til Tænara",
+    "placeOrder": "Eg vil bíleggja",
+    "wantWater": "Eg vil hava vatn",
+    "wantBread": "Eg vil fegin hava breyð",
+    "wantService": "Eyka tænasta",
+    "other": "Annað",
+    "generalRequest": "Eg havi eina almenna áheitan",
+    "orderHelp": "Eg havi brúk fyri hjálp við míni bílegging",
+    "waterDescription": "Vinarliga kom við vatni á borðið",
+    "breadDescription": "Vinarliga tak við breyð til borðið",
+    "serviceDescription": "Eg havi tørv á bestikki ella einum diski",
+    "otherDescription": "Eg havi tørv á hjálp við okkurt annað",
+    "waiterHelpTitle": "Hvussu kunnu vit hjálpa?",
+    "waiterHelpDescription": "Tín fyrispurningur verður sendur við {table}.",
+    "waiterRequestSent": "Tín fyrispurningur varð sendur til okkara tænarans.",
+    "requestBill": "Bid um rað",
+    "billSent": "Tín bøn um rað varð send",
+    "billConfirm": "Vilt tú biðja um rað?",
+    "billSentDescription": "Okkara tænarin kemur skjótt til tín.",
+    "billConfirmDescription": "Tín fyrispurningur fer beinleiðis til tænarans. Tú kanst gjalda á borðinum ella í kassanum.",
+    "billToast": "Tín rykningarbeiðni varð send til okkara tænarar.",
+    "backToMenu": "Tilbaka til matskrá",
+    "back": "Tilbaka",
+    "close": "Lat aftur",
+    "yourTable": "TÍTT BORÐ",
+    "serviceOpen": "Tænastan opin",
+    "slogan": "Siðbundin Smakkur • Nútímans Borð",
+    "location": "Bursa, Osmangazi",
+    "languageLabel": "Vel mál",
+    "currencyLabel": "Vel gjaldoyra",
+    "customerNavigation": "Nøvn á matskránni fyri kundan",
+    "approximateCurrency": "Utlendsk gjaldoyrarprísir eru uml. gjaldandi. Gjald verður granskað í tyrkiskum lira.",
+    "orderSuccess": "Tín bílegging varð send við eydnu.",
+    "languagePickerTitle": "Vel mál",
+    "languagePickerDescription": "Vel tungumálið, tú vilt brúka til menyina.",
+    "searchLanguage": "Leita eftir tungumálum...",
+    "recommendedLanguages": "Mælt til",
+    "recentLanguages": "Nýligu tungumálini",
+    "allLanguages": "Øll tungumál",
+    "languageNotFound": "Tungumál ikki funnið.",
+    "languageNotFoundDescription": "Roknað eftir øðrum tungumálanavni ella kóða.",
+    "tableNumber": "Bórd {number}",
+    "itemCount": "{count} item",
+    "splashLabel": "Tarihi Şehir Lokantası opnandi skíggja",
+    "cancel": "Avbjóða",
+    "confirmOrder": "Staðfesta innbýtið",
+    "orderSummary": "Yvirlit yvir innbýtið",
+    "payment": "Gjalding",
+    "tableNotFound": "Bórd ikki funnið.",
+    "invalidQr": "Ógyldigur QR-kodi.",
+    "menuUnavailable": "Matskráin er í løtuni ikki tøk.",
+    "networkError": "Ein netverksvilla hendi.",
+    "productUnavailable": "Hesin lutur er í løtuni ikki tøkur.",
+    "unableToSendOrder": "Ber ikki til at senda boðini.",
+    "tryAgain": "Royna aftur",
+    "somethingWentWrong": "Okkurt gekk galið.",
+    "loadingLanguage": "Lastar mál...",
+    "languageLoadError": "Málið kundi ikki lastast. Vinarliga royn aftur."
+  },
+  "categories": {
+    "soups": "Súpur",
+    "grill": "Grillar",
+    "mains": "Høvuðsrættir",
+    "drinks": "Drykkir",
+    "kebabs": "Kebabar",
+    "dessert": "Dessertir"
+  },
+  "products": {
+    "mercimek": {
+      "name": "Linsusúpa",
+      "description": "Heimagjørd linsusúpa, tilberedd á klassiskan hátt, við smørsósu."
+    },
+    "tas-kebabi": {
+      "name": "Turkiskt naðursúpa",
+      "description": "Naður, árstíðarskáld, og okkara matsøluskúla langsomma sósu."
+    },
+    "kuzu-tandir": {
+      "name": "Langt steikt lambakjøt",
+      "description": "Okkara matsøluskúla við tygum lambatandoori, langsomma steikt á lágum hita."
+    },
+    "pirinc-pilavi": {
+      "name": "Ris Pilaf",
+      "description": "Smørjandi, ljómandi Baldo-ris pilaf."
+    },
+    "firin-sutlac": {
+      "name": "Bakt risbúðingur",
+      "description": "Risbúðingur bakast á traditsjonellan hátt, tilbereddur við dagliga buffalmjólk."
+    },
+    "kuru-fasulye": {
+      "name": "Hvítbauna stúf við nyama",
+      "description": "İspir-baunir, kenta nyama, og vanligur matstovu tomatpasta."
+    },
+    "izgara-kofte": {
+      "name": "Grillaðar kjøtbollar",
+      "description": "Kjøtbollar á slaktarastíl við rostaðum pipar og tómati."
+    },
+    "ayran": {
+      "name": "Kremjaður Ayran",
+      "description": "Traditionell kremjaður kærnemelk við nógvum skum, gjørdur við vanligum jógurt."
+    },
+    "ezogelin-corbasi": {
+      "name": "Ezogelin-súpan",
+      "description": "Ein traditionell matstovu-súpa har reyðar linser, bulgur og reis møtast við mintu."
+    },
+    "tarhana-corbasi": {
+      "name": "Tarhana-súpan",
+      "description": "Heimatilgjørd tarhana, ein Anatolsk klassikari, stendur leingi við tomati og turrkaðari mintu."
+    },
+    "yayla-corbasi": {
+      "name": "Jógurt- og reisagrýta",
+      "description": "Ein frískandi og kremøt yayla-grýta gjørd við jógurt, reisi og turkaðum mynta."
+    },
+    "iskembe-corbasi": {
+      "name": "Vørru-grýta",
+      "description": "Rætta vørru-grýta av kjøt vørru, borin fram við sínum kryddi og hvítlaukssúri."
+    },
+    "dugun-corbasi": {
+      "name": "Brúðleypagrýta",
+      "description": "Hugnalig brúðleypagrýta gjørd við rivnum lambakjøti og smakkað til við limesósu."
+    },
+    "tavuk-suyu-corbasi": {
+      "name": "Kjúklinga-kraftagrýta",
+      "description": "Ein heilandi grýta gjørd við tynnu núðlum, eldnaðar íbeinagrysti og rivnum kjúklingakjøti."
+    },
+    "domates-corbasi": {
+      "name": "Tomat-grýta",
+      "description": "Ein ríkur smakur, bakaður við reiðum tómötum, smøri og basiliku, liðuggjørdur við osti."
+    },
+    "sebze-corbasi": {
+      "name": "Garnkaðsúpan",
+      "description": "Ein ljós restoran súpa gjørd við sesongsvørum, olivolu og nýggjum urtum."
+    },
+    "beyran-corbasi": {
+      "name": "Krydduð Lamb Beyran súpa",
+      "description": "Ein lokalsúpa, gjørd við hægri hita við lambakjøti, rís, hvítleyki og kryddpipari."
+    },
+    "kelle-paca-corbasi": {
+      "name": "Hovud- og fetisúp",
+      "description": "Ein ríka beinasúpan, gjørt við ostar og høvdakjøt, runnið í fleiri tímar."
+    },
+    "sehriye-corbasi": {
+      "name": "Vermicelli súpa",
+      "description": "Dagsins súpan gjørd við kjúkokssjúpu, tomatum, vermicelli og persilla."
+    },
+    "tavuk-sis": {
+      "name": "Kjúkoksspýttir",
+      "description": "Kjúklingabitar marineraðir við serligum kryddum, borðreiddir við ristaðum piparum og tomatum."
+    },
+    "kasap-sucuk": {
+      "name": "Grillaður Slaktar Sucuk",
+      "description": "Stórt krydrað nautasaussis tilberaður á kolum, við ristaðum grønsakum og lauk við sumak."
+    },
+    "karisik-izgara": {
+      "name": "Blandað Grill",
+      "description": "Ein rímiliga og fjølbroytt grillplattaður við kjøtkøtum, kjúkoksspýttum, lambakótti og sausis."
+    },
+    "nohut-yemegi": {
+      "name": "Kikertabúrr við nautakjøti",
+      "description": "Heimalagað máltíð við kíkærtum og hakkaðum nautakjøti, sum er seinaliga koktað í koparpotti."
+    },
+    "patlican-musakka": {
+      "name": "Aubergine Moussaka",
+      "description": "Steikt aubergine, hakkað nautakjøt og moussaka bakt í ofni við tomatsósu, á restaurationshátt."
+    },
+    "zeytinyagli-taze-fasulye": {
+      "name": "Grønir baunir í olivluovi",
+      "description": "Ein klassikari rættur koktaður í olivluovi við grønum baunum, tomatum og lauk, borðreiddur kaldur."
+    },
+    "tavuk-sote": {
+      "name": "Sauterað Kjúkling",
+      "description": "Kjúklingabitir eru sautereraðir við hægari hita við litríkum piparum, soppum og tomatum."
+    },
+    "izmir-kofte": {
+      "name": "İzmir-stíl Kjøtbollar",
+      "description": "Ein siðbundin høvuðsrættur við oksakjøtsbóllum, kartofflum og piparum bakt í tomatsós."
+    },
+    "etli-bezelye": {
+      "name": "Ertur við oksakjøti",
+      "description": "Dagsins máltíð eldað í potti við turrum oksakjøti, ertum, gularótum og kartofflum."
+    },
+    "patlican-oturtma": {
+      "name": "Bakt aubergine við kjøtsós",
+      "description": "Tungan er tilreiða í ovni við aubergine, krydðaðum turrum kjøti og hvítlauks-tomatsós."
+    },
+    "salgam-suyu": {
+      "name": "Gærað rótar saft",
+      "description": "Siðbundin krydduð rótar saft gærað við purpur gularót og bulgur ger."
+    },
+    "maden-suyu": {
+      "name": "Mineralvatn",
+      "description": "Natúrligt mineralvatn stendur kalt framleitt."
+    },
+    "su": {
+      "name": "Náttúrlig Kelduvatn",
+      "description": "Náttúrligt kelduvatn servað kalt í glerfløsku."
+    },
+    "kola": {
+      "name": "Cola",
+      "description": "Ein klassisk kolsyrehaldandi drekka, servaður iskaldur."
+    },
+    "gazoz": {
+      "name": "Turkisk Lemon Soda",
+      "description": "Siðbundin smakssett, frískandi, og servað kaldur reinur soda."
+    },
+    "turk-kahvesi": {
+      "name": "Turkisk Kaffi",
+      "description": "Siðbundið turkiskt kaffi við skum, eldað við hægri hita í einari kopar cezve."
+    },
+    "demleme-cay": {
+      "name": "Turkisk Bryggjað Te",
+      "description": "Av nýggjum bryggjað heitt Rize te í eini tynnvassari glerkrús."
+    },
+    "ev-yapimi-limonata": {
+      "name": "Heimagjørd Lemonade",
+      "description": "Dagførandi lemonadu gjørd dagliga við ferskum lemon, myntu og eitt sindur av sukuri."
+    },
+    "hosaf": {
+      "name": "Dagligur fruktkompottur",
+      "description": "Heimagjørdur kompottur koyrdur dagliga við rúsínum, aprikosum ella plommum alt eftir árstíð."
+    },
+    "iskender-kebabi": {
+      "name": "Bursa İskender Kebab",
+      "description": "Kjøtið verður snarað á eini spíra yvir pide, borðreitt við tomatsósu, heitum smøri og jógurti."
+    },
+    "kazandibi": {
+      "name": "Karamellusettur mjólkutraðka",
+      "description": "Ein siðbundin mjólkutrøka karamelliserað ordiliga, við eini silkitognu konsistens."
+    },
+    "tavuk-gogsu": {
+      "name": "Osmanska mjólkutrøka",
+      "description": "Ein lætt og toskframur mjólkurskúmi gjørdur eftir einum siðbundnum uppskoti, borin fram við kanil."
+    },
+    "keskul": {
+      "name": "Mandelmjólkurskúmi",
+      "description": "Ottomanskur mjólkurskúmi við mandlu-smakki og kokosnøttum."
+    },
+    "irmik-helvasi": {
+      "name": "Semuljustur Halva",
+      "description": "Semuljustur halva, ristað við smøri og føstum pinjurotum, borin fram heit og grynnað."
+    },
+    "kabak-tatlisi": {
+      "name": "Graskerskúmi við Tahini",
+      "description": "Graskerin, seint kokt í sínum egna safti, er borin fram við tahini og valnøtum."
+    },
+    "ayva-tatlisi": {
+      "name": "Kvæðuskúmi",
+      "description": "Kvæða kokt við kravi og kanil, borin fram við tjørdu rjóma og valnøtum."
+    },
+    "revani": {
+      "name": "Semolinusaltskaka",
+      "description": "Hin klassiska restaurantdessert, har semolina mýka kaku møtt við lemonlyktandi sirup."
+    },
+    "ekmek-kadayifi": {
+      "name": "Breykremur við rørdum rjóma",
+      "description": "Brødpuddingur hvíldur við karamelliseraðari sirup verður borin fram við buffalorjóma."
+    },
+    "cevizli-baklava": {
+      "name": "Valnøtubaklava",
+      "description": "Løg væl útstrika, krispið baklava gjørd við nógvum valnøtum og reinum smøri."
+    }
+  },
+  "allergens": {
+    "Süt ürünleri": "Mjólkurvørur",
+    "Gluten": "Gluten",
+    "Yumurta": "Egg",
+    "Badem": "Mandlur",
+    "Çam fıstığı": "Fyrinøt",
+    "Susam": "Sesam",
+    "Ceviz": "Valnøt"
+  },
+  "tags": {
+    "Popüler": "Væl umtókt",
+    "Vejetaryen": "Grønmetisæta",
+    "Günün Yemeği": "Dagsins rættur",
+    "Şefin Önerisi": "Kokksins val",
+    "Yeni": "Nýggjur",
+    "Acılı": "Sterkt",
+    "Ev Yapımı": "Heimagjørd",
+    "Lokanta Klasiği": "Restaurant Classic",
+    "Günün Çorbası": "Dagsins súpa",
+    "Vegan": "Vegan",
+    "Hafif": "Ljós",
+    "Yöresel": "Øki",
+    "Paylaşmalık": "At deila",
+    "Ev Yemeği": "Heimastílur",
+    "Zeytinyağlı": "Oliviuolja",
+    "Nostaljik": "Nostalgiskur",
+    "Geleneksel": "Siðbundið",
+    "Bursa Lezzeti": "Smakkurin úr Bursa",
+    "Sütlü Tatlı": "Mjølkudessert",
+    "Sıcak Tatlı": "Heitur dessert",
+    "Mevsimlik": "Árstíðarbundin",
+    "Şerbetli": "Sirupdessert"
+  }
+}

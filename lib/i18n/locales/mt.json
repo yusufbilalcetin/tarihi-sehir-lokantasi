@@ -1,0 +1,349 @@
+{
+  "locale": "mt",
+  "ui": {
+    "menu": "Menu",
+    "search": "Fittex fil-menu...",
+    "searchLabel": "Fittex fil-menu",
+    "categories": "Kategoriji",
+    "categoryIntro": "Agħżel it-togħma għat-tapit tiegħek.",
+    "categoryNavigation": "Kategoriji tal-menu",
+    "openCategory": "Iftaħ {name}, {count} items",
+    "items": "items",
+    "item": "item",
+    "searchResults": "Riżultati tat-tfittxija",
+    "productsFound": "{count} items misjuba",
+    "backToCategories": "Zur kategoriji",
+    "backToCategory": "Zur {name}",
+    "clearSearch": "Ċara t-tfittxija",
+    "noResults": "L-ebda item ma jaqbel",
+    "noResultsDescription": "Ippruvaw tfittxija oħra jew ħruġ lejn il-kategoriji.",
+    "order": "L-Ordni Tiegħi",
+    "waiter": "Min Servi",
+    "bill": "Kont",
+    "addToCart": "Żid ma' l-Ordni",
+    "addedToCart": "{name} ġie miżjud ma' l-ordni tiegħek.",
+    "removeFromCart": "Neħħi {name}",
+    "soldOut": "Biċċiet Mitlufa Illum",
+    "productDetails": "Iftaħ id-dettalji għal {name}",
+    "portion": "Porzjon",
+    "standardPortion": "Porzjon standard",
+    "allergens": "Allerġeni",
+    "noAllergens": "L-ebda allerġeni ddikjarati",
+    "productNote": "Nota dwar l-oġġett",
+    "productNotePlaceholder": "Eż. ebda butir, jekk jogħġbok",
+    "decreaseQuantity": "Naqas il-kwantità",
+    "increaseQuantity": "Zid il-kwantità",
+    "each": "wieħed",
+    "note": "Noto",
+    "subtotal": "Subtotali",
+    "serviceFee": "Ħlas tas-servizz",
+    "total": "Totali",
+    "sendOrder": "Ibgħat l-Ordni",
+    "orderSent": "L-ordni tiegħek twaħħlet lill-kċina",
+    "orderTracking": "Segwi l-ordni #{number} hawn.",
+    "newItem": "Żid Oġġett Ieħor",
+    "emptyCart": "L-ordni tiegħek hija vojta",
+    "emptyCartDescription": "Il-ħwejjeġ li tagħżel mill-menu se jidhru hawn.",
+    "browseMenu": "Jħarsu l-Menu",
+    "orderReceived": "Ordni Rċevuta",
+    "waiterConfirmed": "Il-ħaddiem tal-lestikon kkonferma",
+    "preparing": "Qed tipprepara",
+    "ready": "Ħaġa lesta",
+    "served": "Servuta",
+    "preparingDescription": "Il-kċina tagħna qed tipprepara l-ordni tiegħek.",
+    "orderStatus": "Status tal-ordni",
+    "callWaiter": "Sejjaħ il-Ħaddiem",
+    "placeOrder": "Nixtieq nordna",
+    "wantWater": "Nixtieq ilma",
+    "wantBread": "Nixtieq ħobż",
+    "wantService": "Servizz żejjed",
+    "other": "Oħra",
+    "generalRequest": "Għandi talba ġenerali",
+    "orderHelp": "Għandi bżonn għajnuna bil-ordni tiegħi",
+    "waterDescription": "Jekk jogħġbok ġib ilma fuq il-mejda",
+    "breadDescription": "Jekk jogħġbok ġib ħobż fuq it-tapit",
+    "serviceDescription": "Għandi bżonn għodda tal-ikel jew piatto",
+    "otherDescription": "Għandi bżonn għajnuna ma' xi ħaġa oħra",
+    "waiterHelpTitle": "Kif nistgħu ngħinuk?",
+    "waiterHelpDescription": "It-talba tiegħek se tiġi mibgħuta ma' {table}.",
+    "waiterRequestSent": "It-talba tiegħek ġiet mibgħuta lis-saqaf tagħna.",
+    "requestBill": "It-talba tal-Bill",
+    "billSent": "It-talba tal-bill tiegħek ġiet mibgħuta",
+    "billConfirm": "Tixtieq titlob il-bill?",
+    "billSentDescription": "Is-saqaf tagħna se jkun miegħek ftit minuti oħra.",
+    "billConfirmDescription": "It-talba tiegħek se tmur direttament lis-saqaf. Tista' tħallas fuq it-tapit jew fil-kaxxa.",
+    "billToast": "It-talba għall-fattura tiegħek ġiet mibgħuta lill-kamerier tagħna.",
+    "backToMenu": "Ritorn lejn il-Menu",
+    "back": "Retour",
+    "close": "Agħlaq",
+    "yourTable": "IT-TAVOLA TIEGĦEK",
+    "serviceOpen": "Servizz miftuħ",
+    "slogan": "Toqba Tradizzjonali • Tavola Moderna",
+    "location": "Bursa, Osmangazi",
+    "languageLabel": "Agħżel il-lingwa",
+    "currencyLabel": "Agħżel il-munita",
+    "customerNavigation": "Navikazzjoni tal-menu tal-klijent",
+    "approximateCurrency": "Il-prezzijiet f’muniti barranin huma stimi. Il-ħlas jiġi pproċessat fi Lira Tork.",
+    "orderSuccess": "L-ordni tiegħek kienet mibgħuta b’suċċess.",
+    "languagePickerTitle": "Agħżel Lingwa",
+    "languagePickerDescription": "Agħżel il-lingwa li trid tuża għall-menu.",
+    "searchLanguage": "Fittex lingwi...",
+    "recommendedLanguages": "Rakkomandat",
+    "recentLanguages": "Lingwi Riċenti",
+    "allLanguages": "Il-Lingwi kollha",
+    "languageNotFound": "Lingwa ma nstabx.",
+    "languageNotFoundDescription": "Ipprova isem jew kodiċi ieħor ta' lingwa.",
+    "tableNumber": "Mejda {number}",
+    "itemCount": "{count} oġġetti",
+    "splashLabel": "Skreen tat-Tlugħa ta' Tarihi Şehir Lokantası",
+    "cancel": "Ikkanċella",
+    "confirmOrder": "Konferma L-Ordni",
+    "orderSummary": "Sommarju tal-Ordni",
+    "payment": "Ħlas",
+    "tableNotFound": "Mejda ma nstabx.",
+    "invalidQr": "Kod QR invalida.",
+    "menuUnavailable": "Il-menu bħalissa mhux disponibbli.",
+    "networkError": "Saret żball tan-netwerk.",
+    "productUnavailable": "Dan l-oġġett bħalissa mhux disponibbli.",
+    "unableToSendOrder": "Ma setax jibgħat l-ordni.",
+    "tryAgain": "Ipprova mill-ġdid",
+    "somethingWentWrong": "Xi ħaġa marret ħażin.",
+    "loadingLanguage": "Qiegħed jinkarga l-lingwa...",
+    "languageLoadError": "Ma setgħetx tinħażen il-lingwa. Jekk jogħġbok ipprova mill-ġdid."
+  },
+  "categories": {
+    "soups": "Supplimenti",
+    "grill": "Grills",
+    "mains": "Korsijiet ewlenin",
+    "drinks": "Xorb",
+    "kebabs": "Kebab",
+    "dessert": "Desserti"
+  },
+  "products": {
+    "mercimek": {
+      "name": "Sup tat-Taqtiet",
+      "description": "Sup tat-taqtiet id-dar imħejji fil-istil klassiku, imkompletat b'sawr tat-taħlita tal-butir."
+    },
+    "tas-kebabi": {
+      "name": "Stufat ta' Laħam ta' Baqar Tork",
+      "description": "Laħam ta' baqar, ħxejjex staġjonali, u s-sawr speċjali tar-ristorant tagħna moqlij bil-mod."
+    },
+    "kuzu-tandir": {
+      "name": "Ragħaj Moqlij bil-Mod",
+      "description": "Laħam ta' ragħaj tandoori fir-risq tar-ristorant tagħna, moqlij bil-mod fuq nar baxx."
+    },
+    "pirinc-pilavi": {
+      "name": "Pilaf tar-Riħ",
+      "description": "Pilaf tar-riħ Baldo biti, fluffi u tal-butir."
+    },
+    "firin-sutlac": {
+      "name": "Pudding tar-Riħ moħmi",
+      "description": "Pudding tar-riħ moħmi bil-mod tradizzjonali, imħejji bil-ħalib tal-bufala ta' kuljum."
+    },
+    "kuru-fasulye": {
+      "name": "Stufat ta' Fażola Bożża bil-Beef",
+      "description": "Fażola İspir, beef mqatta', u paste tat-tadam sempliċi tal-ristorant."
+    },
+    "izgara-kofte": {
+      "name": "Bluċa tal-Laħam Maħnuna",
+      "description": "Bluċa tal-beef fil-mod tal-lakolaro ma' bżar u tadam imqaxxar."
+    },
+    "ayran": {
+      "name": "Ayran Maħnuna",
+      "description": "Laban tradizzjonali maħnuna b'ħafna foħma, magħmula bi jogurt ta' kuljum."
+    },
+    "ezogelin-corbasi": {
+      "name": "Żupa Ezogelin",
+      "description": "Żupa tradizzjonali tal-ristorant fejn lewnieħ aħmar, bulgur u ross jiltaqgħu mal-mint."
+    },
+    "tarhana-corbasi": {
+      "name": "Żupa Tarhana",
+      "description": "Tarhana homemade, klassiku Anatoljan imkabbad gradwalment mat-tadam u mint niexef."
+    },
+    "yayla-corbasi": {
+      "name": "Sup tal-Yogurt u l-Irkotta",
+      "description": "Sup yayla rinfreskanti u kremuż ippreparat bil-yogurt, ir-ross, u n-nanè niexef."
+    },
+    "iskembe-corbasi": {
+      "name": "Sup tat-Tripe",
+      "description": "Sup tajjeb tat-tripe tal-baqar servut ma’ l-istaġunament tiegħu u inbid ħwawar."
+    },
+    "dugun-corbasi": {
+      "name": "Sup tal-Festa ta’ Żwieġ",
+      "description": "Sup tradizzjonali tal-festa ta’ żwieġ iffurmat bil-laħm tal-mugħta imqatta’ u mogħni b’marinata tal-lumi."
+    },
+    "tavuk-suyu-corbasi": {
+      "name": "Sup tal-Broth tal-Pullets",
+      "description": "Sup li jfejjaq ippreparat b’maċaruni ħfief miklu fin-broth tal-għadam u laħm tal-pullets imqatta’."
+    },
+    "domates-corbasi": {
+      "name": "Sup tat-Tadam",
+      "description": "Toqol rikk moqli mat-tadam mibni, butir, u basil, imlesta biġibna."
+    },
+    "sebze-corbasi": {
+      "name": "Soppa tal-Ħxejjex",
+      "description": "Soppa ħafifa ta’ ristorant ippreparata b’ħxejjex staġjonali, żejt taż-żebbuġa, u ħwawar friski."
+    },
+    "beyran-corbasi": {
+      "name": "Soppa Beyran tal-Fenek b’Ħwawar",
+      "description": "Soppa reġjonali ippreparata fuq nar qawwi bil-fenek, ross, tewm, u bżar hot."
+    },
+    "kelle-paca-corbasi": {
+      "name": "Soppa tal-Madwar u Trotter",
+      "description": "Soppa ta’ broth tal-għadam rikka magħmula bil-trotters tal-baqar u laħam tal-moħħ imqadded għal sigħat twal."
+    },
+    "sehriye-corbasi": {
+      "name": "Soppa Vermicelli",
+      "description": "Sup ta' kuljum ippreparat b'brodu tal-tiġieġ bit-tadam, vermicelli, u petroselin."
+    },
+    "tavuk-sis": {
+      "name": "Skewers tat-Tiġieġ",
+      "description": "Bixxotti tal-tiġieġ imħawwra b'tiġieġ speċjali, servuti ma' bżar u tadam moqlijin."
+    },
+    "kasap-sucuk": {
+      "name": "Sucuk tal-Ħalliel moqni",
+      "description": "Larinġ ta' bawb spicy moqli fuq id-duħħan, ma' ħaxix moqli u basal bis-sumak."
+    },
+    "karisik-izgara": {
+      "name": "Grill Mħallat",
+      "description": "Pjanċa ta' grill mimlija u mħallta li tinkludi frak, skewers tat-tiġieġ, chops ta' nagħaġ, u larinġ."
+    },
+    "nohut-yemegi": {
+      "name": "Stufat tal-Ħelu ma' Beef",
+      "description": "Plaħ magħmul id-dar ta' lewż u laħam niexef maqsum f'biċċiet, imsajjar bil-mod f'platt tal-brazz."
+    },
+    "patlican-musakka": {
+      "name": "Moussaka ta' Bniedem tal-Firda",
+      "description": "Bniedem tal-firda maħlul, laħam niexef maqtugħ, u moussaka imsajjar fil-forn bis-sos tad-dqiq, stil ristorant."
+    },
+    "zeytinyagli-taze-fasulye": {
+      "name": "Faqqiegħi ħodor fi Żejt taż-Żebbuġa",
+      "description": "Karattru klassiku imsajjar fi żejt taż-żebbuġa b'faqqiegħi ħodor, tad-dqiq, u basal, u servut kiesaħ."
+    },
+    "tavuk-sote": {
+      "name": "Tiġieġ imħawwar",
+      "description": "Biċċiet ta' tiġieġ jintgħasru fuq sħana għolja ma' bżarijiet kuluruti, faqqiegħ, u tad-dqiq."
+    },
+    "izmir-kofte": {
+      "name": "Baws ta' Laħam stil İzmir",
+      "description": "Platt prinċipali tradizzjonali ta' kugkudrab ta' lahm ta' baqar, patata, u bżar moqlija fis-salsa tat-tadam."
+    },
+    "etli-bezelye": {
+      "name": "Piżelli mal-Lahm ta' Baqar",
+      "description": "Ikel ta' kuljum moqli f'bojlier b'kubi ta' lahm ta' baqar, piżelli, karrotti, u patata."
+    },
+    "patlican-oturtma": {
+      "name": "Baqal Maqlu bil-Ġobon Maħkuk",
+      "description": "Il-lingwa tiġi ppreparata fil-forn bil-baqal, lahm maħkuk b'speċja, u salsa tat-tadam bil-ġulbiena."
+    },
+    "salgam-suyu": {
+      "name": "Jus ta' Brumbli Fermentat",
+      "description": "Jus tradizzjonali ta' brumbli b'speċja fermentat b'karrotta vjola u ħmira tal-bulgur."
+    },
+    "maden-suyu": {
+      "name": "Likwidu Minerali",
+      "description": "Ilma minerali naturali plain servut kiesaħ."
+    },
+    "su": {
+      "name": "Ilma Natutali tas-Sors",
+      "description": "Ilma naturali tas-sors servut kiesaħ f'botal tal-ħġieġ."
+    },
+    "kola": {
+      "name": "Cola",
+      "description": "Xorb karbonatat klassiku servut kiesaħ ħafna."
+    },
+    "gazoz": {
+      "name": "Soda Taljan tal-Lumi",
+      "description": "Soda tradizzjonali mhuwiex aromatizzat, rinfrescanti u servut kiesaħ bil-mod plain."
+    },
+    "turk-kahvesi": {
+      "name": "Kafè Turku",
+      "description": "Kafè Turku tradizzjonali bil-qoxra, imsajjar fuq sħana għolja f'cezve tal-ħadid kopru."
+    },
+    "demleme-cay": {
+      "name": "Tè Turku Mgħolli",
+      "description": "Tè Rize frisk imħabbab f'koppetta dejqa bil-ħġieġ."
+    },
+    "ev-yapimi-limonata": {
+      "name": "Limoniż Homemade",
+      "description": "Lemonade rinfrescanti ppreparata kuljum bi larinġ frisk, menta, u ftit zokkor."
+    },
+    "hosaf": {
+      "name": "Komposta ta' Frotta Kuljum",
+      "description": "Komposta homemade moqlija kuljum b'granatur, albikokki, jew prummijiet skont l-istaġun."
+    },
+    "iskender-kebabi": {
+      "name": "Bursa İskender Kebab",
+      "description": "Il-laħam jiċċaqlaq fuq skewer fuq pide, jittieħed bis-salasa tat-tadam, butir sħun, u jogurt."
+    },
+    "kazandibi": {
+      "name": "Puding tal-Ħalib Karamellizzat",
+      "description": "Deżerta tradizzjonali tal-ħalib karamellizzata kif suppost, b'tessut seta."
+    },
+    "tavuk-gogsu": {
+      "name": "Puding tal-Ħalib Ottomanu",
+      "description": "Deżerta ħafifa u fibruża tal-ħalib ppreparata bi riċetta tradizzjonali, servuta ma' ċitru."
+    },
+    "keskul": {
+      "name": "Pudina tal-Ħalib tal-Lewz",
+      "description": "Deżerta tal-ħalib stil Ottoman kompluta bil-fwieħa tal-lewz u l-kukkanut."
+    },
+    "irmik-helvasi": {
+      "name": "Halva tas-Semolina",
+      "description": "Halva tas-semolina, miż-żebgħa bil-but u l-ġewż tal-pini, servuta sħuna u graini."
+    },
+    "kabak-tatlisi": {
+      "name": "Deżerta tal-Qara Ma' Tahini",
+      "description": "Il-qara, miġġieled bil-mod fil-meraq tagħha, isserviha mat-tahini u l-ġewż."
+    },
+    "ayva-tatlisi": {
+      "name": "Deżerta tal-Kwince",
+      "description": "Il-kwince miġġielda mal-bżar u ċinnamon isserviha ma' krema mċattla u ġewż."
+    },
+    "revani": {
+      "name": "Kejk tas-Semolina bis-Sirop",
+      "description": "Id-deżerta klassika tar-ristorant fejn il-kejk tas-semolina ħafif jitħallat ma' sirop bil-fwieħa tal-lumi."
+    },
+    "ekmek-kadayifi": {
+      "name": "Puding tal-Ħobż maċ-Ċikkulata Għat-Tkabbir",
+      "description": "Puding tal-ħobż imqabbad mas-sirop karamellizzat jiġi servut ma' kremu tal-bufala mxarrba."
+    },
+    "cevizli-baklava": {
+      "name": "Baklawa tal-Ġewż",
+      "description": "Saffi mqassra ħafna, baklawa friska magħmula b'ħafna ġewż u butir naturali."
+    }
+  },
+  "allergens": {
+    "Süt ürünleri": "Dairy",
+    "Gluten": "Gluten",
+    "Yumurta": "Tfar",
+    "Badem": "Larinġ",
+    "Çam fıstığı": "Larinġ tal-pini",
+    "Susam": "Susam",
+    "Ceviz": "Għackson"
+  },
+  "tags": {
+    "Popüler": "Popolari",
+    "Vejetaryen": "Veġetarjan",
+    "Günün Yemeği": "Platt tal-Jum",
+    "Şefin Önerisi": "Għażla tal-Kokk",
+    "Yeni": "Żejjed",
+    "Acılı": "Speċjali",
+    "Ev Yapımı": "Tagħhom id-Dar",
+    "Lokanta Klasiği": "Klassiċi tar-Ristorante",
+    "Günün Çorbası": "Soppa tal-Jum",
+    "Vegan": "Vegan",
+    "Hafif": "Dawl",
+    "Yöresel": "Reġjonali",
+    "Paylaşmalık": "Għal-Qsim",
+    "Ev Yemeği": "Stil tal-Dar",
+    "Zeytinyağlı": "Zejt taż-Żebbuġa",
+    "Nostaljik": "Storiċi",
+    "Geleneksel": "Tradizzjonali",
+    "Bursa Lezzeti": "Toħlita ta' Bursa",
+    "Sütlü Tatlı": "Deżerta tal-Ħalib",
+    "Sıcak Tatlı": "Deżerta Sħuna",
+    "Mevsimlik": "Staġjonali",
+    "Şerbetli": "Deżerta bil-Sirop"
+  }
+}

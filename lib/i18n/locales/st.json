@@ -1,0 +1,349 @@
+{
+  "locale": "st",
+  "ui": {
+    "menu": "Lethathamo",
+    "search": "Batla lethathamo...",
+    "searchLabel": "Batla lethathamo",
+    "categories": "Likarolo",
+    "categoryIntro": "Khetha tatso bakeng sa tafoleng ea hau.",
+    "categoryNavigation": "Likahare tsa lethathamo",
+    "openCategory": "Bula {name}, lintho tse {count}",
+    "items": "lintho",
+    "item": "ntho",
+    "searchResults": "Diphetho tsa Patlo",
+    "productsFound": "ntho e {count} e fumanoe",
+    "backToCategories": "Khutlela mekgatlong",
+    "backToCategory": "Khutlela ho {name}",
+    "clearSearch": "Hlakola patlo",
+    "noResults": "Ha ho ntho e lumellanang e fumanoe",
+    "noResultsDescription": "Leka ho batla hape kapa khutlela mekhahlelo.",
+    "order": "Iteanye",
+    "waiter": "Mosebeletsi",
+    "bill": "Bili",
+    "addToCart": "Adda ho Iteanye",
+    "addedToCart": "{name} e kentsoe ho ipehelo ea hau.",
+    "removeFromCart": "Qhala {name}",
+    "soldOut": "Lekhetho le Felile Kajeno",
+    "productDetails": "Bula lintlha bakeng sa {name}",
+    "portion": "Khaolo",
+    "standardPortion": "Khaolo e tloaelehileng",
+    "allergens": "Lintho tse bakang allergen",
+    "noAllergens": "Ha ho allergens tse phatlalalitsoeng",
+    "productNote": "Kgopolo ea ntho",
+    "productNotePlaceholder": "Mohlala. ha ho botoro, ka kopo",
+    "decreaseQuantity": "Fokotsa bongata",
+    "increaseQuantity": "Eketsa bongata",
+    "each": "e 'ngoe le e 'ngoe",
+    "note": "Hlokomeliso",
+    "subtotal": "Subtotal",
+    "serviceFee": "Tefo ea tšebeletso",
+    "total": "Ka kakaretso",
+    "sendOrder": "Romella Taelo",
+    "orderSent": "Taelo ea hao e rometsoe kichineng",
+    "orderTracking": "Latela taelo #{number} mona.",
+    "newItem": "Etsa Ntho e 'ngoe",
+    "emptyCart": "Taelo ea hao e se na letho",
+    "emptyCartDescription": "Lintho tseo u li khethang lenaneng la lijo li tla hlaha mona.",
+    "browseMenu": "Batla Lenaneo la Lijo",
+    "orderReceived": "Taelo e Amohetsoe",
+    "waiterConfirmed": "Mojari O-Netefalitsoe",
+    "preparing": "Ho Lokisetsa",
+    "ready": "E Lokile",
+    "served": "E Fanoe",
+    "preparingDescription": "Ntlo ea rona ea ho pheha e ntse e lokisetsa taelo ea hau.",
+    "orderStatus": "Boemo ba taelo",
+    "callWaiter": "Lumela Mojari",
+    "placeOrder": "Ke batla ho odara",
+    "wantWater": "Ke kopa metsi",
+    "wantBread": "Ke kopa bohobe",
+    "wantService": "Tšebeletso e eketsehileng",
+    "other": "Tse ling",
+    "generalRequest": "Ke na le kopo e akaretsang",
+    "orderHelp": "Ke hloka thuso ka taelo ea ka",
+    "waterDescription": "Ka kopo tlisa metsi tafole",
+    "breadDescription": "Ka kopo, tlisa borotho tafoleng",
+    "serviceDescription": "Ke hloka lisebelisoa tsa ho ja kapa poleiti",
+    "otherDescription": "Ke hloka thuso le ntho e nngwe",
+    "waiterHelpTitle": "Re ka thusa joang?",
+    "waiterHelpDescription": "Kopo ea hau e tla romelloa le {table}.",
+    "waiterRequestSent": "Kopo ea hau e rometsoe ho mohela rona.",
+    "requestBill": "Kopa Billi",
+    "billSent": "Kopo ea hau ea bill e rometsoe",
+    "billConfirm": "Na u ka rata ho kopa bill?",
+    "billSentDescription": "Mohela rona o tla fihla ho uena haufinyane.",
+    "billConfirmDescription": "Kopo ea hau e tla ea ka kotloloho ho mohela. U ka lefa tafoleng kapa ka cashier.",
+    "billToast": "Kopo ea bili ea hau e rometsoe ho moithaopi oa rona.",
+    "backToMenu": "Khutlela ho Lethathamo",
+    "back": "Khutlela",
+    "close": "Koala",
+    "yourTable": "TAFOLENG EA HAO",
+    "serviceOpen": "Tšebeletso e bulehileng",
+    "slogan": "Monko oa Setso • Tafole ea Sesebelisoa",
+    "location": "Bursa, Osmangazi",
+    "languageLabel": "Khetha puo",
+    "currencyLabel": "Khetha chelete",
+    "customerNavigation": "Ho etela lethathamo la moreki",
+    "approximateCurrency": "Lintlha tsa chelete tse ling ke tsa tekanyetso. Tefo e sebetsa ka Lira ea Turkey.",
+    "orderSuccess": "Taelo ea hau e rometsoe ka katleho.",
+    "languagePickerTitle": "Khetha Puo",
+    "languagePickerDescription": "Khethang puo eo u batlang ho e sebelisa bakeng sa menyu.",
+    "searchLanguage": "Batla lipuo...",
+    "recommendedLanguages": "Li khothaletsoang",
+    "recentLanguages": "Lipuo tsa Hajoale",
+    "allLanguages": "Lipuo Tsohle",
+    "languageNotFound": "Puo ha e fumanoe.",
+    "languageNotFoundDescription": "Leka lebitso kapa khoutu e 'ngoe ea puo.",
+    "tableNumber": "Tafole {number}",
+    "itemCount": "Lintlha tse {count}",
+    "splashLabel": "Skrine sa ho bula sa Tarihi Şehir Lokantası",
+    "cancel": "Hlakola",
+    "confirmOrder": "Tlatsa Odara",
+    "orderSummary": "Lintlha tsa Odara",
+    "payment": "Tlhatlhobo ea Tefo",
+    "tableNotFound": "Tafole ha e fumanoe.",
+    "invalidQr": "Khoutu ea QR e sa nepahele.",
+    "menuUnavailable": "Lenaneo ha le fumanehe hona joale.",
+    "networkError": "Ho ile ha etsahala phoso ea marang-rang.",
+    "productUnavailable": "Ntho ena ha e fumanehe hona joale.",
+    "unableToSendOrder": "Ha ho khonehe ho romella taelo.",
+    "tryAgain": "Lekola hape",
+    "somethingWentWrong": "Ho na le ntho e sa nepahalang.",
+    "loadingLanguage": "Ho jarisoa puo...",
+    "languageLoadError": "Ha ho khonehe ho kenya puo. Ka kopo leka hape."
+  },
+  "categories": {
+    "soups": "Maro",
+    "grill": "Liphoofolo tse besitsoeng",
+    "mains": "Li-Courses tse ka Sehloohong",
+    "drinks": "Joala",
+    "kebabs": "Likebae",
+    "dessert": "Dessert"
+  },
+  "products": {
+    "mercimek": {
+      "name": "Soupo ea Lentile",
+      "description": "Soupo ea lentile e entsoeng ka tlung e lokiselitsoeng ka mokhoa oa khale, e phethetsoe ka soso ea botoro."
+    },
+    "tas-kebabi": {
+      "name": "Stew ea Nama ea Khomo ea Turkey",
+      "description": "Nama ea khomo, meroho ea nako, le soso ea rona ea reschorente e phehiloeng butle-butle."
+    },
+    "kuzu-tandir": {
+      "name": "Namunu e Butle e Halikiloeng",
+      "description": "Namunu ea tandoori ea reschorente ea rona, e phehiloeng butle-butle ka mocheso o tlase."
+    },
+    "pirinc-pilavi": {
+      "name": "Raese Pilaf",
+      "description": "Pilaf ea raese ea Baldo e nang le botoro le e futhumetseng."
+    },
+    "firin-sutlac": {
+      "name": "Pudding ea Raese e Halikiloeng",
+      "description": "Pudding ea raese e halikiloeng ka mokhoa oa setso, e lokiselitsoeng ka lebese la buffalo la letsatsi le letsatsi."
+    },
+    "kuru-fasulye": {
+      "name": "Stew ea Pebe e Tšoeu le Nama",
+      "description": "Lipeo tsa İspir, nama ea beef e khethiloeng, le pate ea tomato ea reschorente e tloaelehileng."
+    },
+    "izgara-kofte": {
+      "name": "Li-Meatball tse Halikiloeng",
+      "description": "Li-meatball tsa nama ea nama ea nama ea Bakere tse nang le pepere e halikiloeng le tomato."
+    },
+    "ayran": {
+      "name": "Ayran e Tlatsetsweng",
+      "description": "Buttermilk ea setso e tlatsetsweng ka sefate se ngata, e entsoe ka yogurt ea letsatsi le letsatsi."
+    },
+    "ezogelin-corbasi": {
+      "name": "Ezogelin Soup",
+      "description": "Sopo ea setso ea reschorente moo lentils tse khubelu, bulgur, le raese li kopana le mint."
+    },
+    "tarhana-corbasi": {
+      "name": "Tarhana Soup",
+      "description": "Tarhana ea lehae, e leng sehlahiswa sa Anatolian se phehiloeng butle-butle le tomato le mint e omeletseng."
+    },
+    "yayla-corbasi": {
+      "name": "Jusi ea Yoghurt le Raese",
+      "description": "Jusi e pholileng ebile e bosoeu e neng e lokiselitsoe ka yoghurt, raese, le manyolo a omisitsoeng."
+    },
+    "iskembe-corbasi": {
+      "name": "Jusi ea Matšoele",
+      "description": "Jusi ea matšoele a nama ea khomo e loketseng e sebeletswang hammoho le linoko tsa eona le veine ea konofolo."
+    },
+    "dugun-corbasi": {
+      "name": "Jusi ea Lenyalo",
+      "description": "Jusi ea lenyalo ea setso e entsoeng ka nama ea nko e kotsi e halikiloeng le ho latsoa ka marinade ea lemone."
+    },
+    "tavuk-suyu-corbasi": {
+      "name": "Jusi ea Khoho",
+      "description": "Jusi e phekotsoeng e lokiselitsoe ka dinoodle tse tenya tse phehiloeng ka broth ea masapo le nama ea khoho e koroletsoeng."
+    },
+    "domates-corbasi": {
+      "name": "Jusi ea Toma",
+      "description": "Flavour e ngata e bililoeng ka tamati e eletsang, botoro, le basil, e phethetsoeng ka chisi."
+    },
+    "sebze-corbasi": {
+      "name": "Motsoako oa Meroho",
+      "description": "Motsoako o bobebe oa reschorente o lokiselitsoeng ka meroho ea nako, oli ea oliive, le litlama tse ncha."
+    },
+    "beyran-corbasi": {
+      "name": "Motsoako oa Lamb Beyran o Futhumetseng",
+      "description": "Motsoako oa sebakeng o lokiselitsoeng ka mocheso o phahameng ka nama ea rabele, raese, konofolo, le pepere e chesang."
+    },
+    "kelle-paca-corbasi": {
+      "name": "Motsoako oa Hlooho le Mahloho",
+      "description": "Motsoako o ruileng oa moro o entsoeng ka mahe a nama ea kolobe le nama ea hlooho e phehiloeng lihora tse ngata."
+    },
+    "sehriye-corbasi": {
+      "name": "Motsoako oa Vermicelli",
+      "description": "Soup ea letsatsi le letsatsi e lokiselitsoeng ka moro oa hokokho ka tamati, vermicelli, le parsley."
+    },
+    "tavuk-sis": {
+      "name": "Li-Skewer tsa Khoho",
+      "description": "Likhopolo tsa khoho tse tletseng lijo tse ikhethang, li sebeletsoa le pepere le tamati e halikiloeng."
+    },
+    "kasap-sucuk": {
+      "name": "Butcher's Sucuk e Halikiloeng",
+      "description": "Soseji ea nama ea linku e cheselitsoeng ka charcoal, e nang le meroho e halikiloeng le onion ka sumac."
+    },
+    "karisik-izgara": {
+      "name": "Grill e Kopaneng",
+      "description": "Poleiti e ngata le e fapaneng ea grill e nang le meatballs, li-skewer tsa khoho, li-lamb chop, le soseji."
+    },
+    "nohut-yemegi": {
+      "name": "Stoof ea lebele le Nama ea Nku",
+      "description": "Sejana sa lapeng sa li-chickpea le nama ea khomo e khabisitsoeng ka tatellano e apehang ka mokhoa o liehang ka pitseng ea koporo."
+    },
+    "patlican-musakka": {
+      "name": "Moussaka ea Lebese la Eggplant",
+      "description": "Lebese la eggplant le besitsoeng, nama ea khomo e qhibilihisitsoeng, le moussaka e bilikiloeng ka ovens ka moro oa tamati, ka mokhoa oa reschorente."
+    },
+    "zeytinyagli-taze-fasulye": {
+      "name": "Di-Bean Tse Tala ka Oli ea Litholo",
+      "description": "Sejana sa setso se phehiloeng ka oli ea litholo tse tala, tamati, le onion, se sebeletsa se phodile."
+    },
+    "tavuk-sote": {
+      "name": "Khoho e Qhibilihisitsoeng ka Oli",
+      "description": "Likotoana tsa khoho li qhibilihisitsoe ka mocheso o phahameng le diaparo tse mebala e fapaneng, li-mushroom, le tamati."
+    },
+    "izmir-kofte": {
+      "name": "Li-Meatballs tsa Stilse sa İzmir",
+      "description": "Sejana sa setso sa mantlha sa li-meatball tsa nama ea khomo, litapole, le pepere tse halikiloeng ka soseng ea tamati."
+    },
+    "etli-bezelye": {
+      "name": "Ipe le Nama ea Khomo",
+      "description": "Sejana sa letsatsi le letsatsi se phehiloeng ka poto se nang le nama ea khomo e sehiloe ka likotoana, ipe, karote, le litapole."
+    },
+    "patlican-oturtma": {
+      "name": "Beringela e Halikiloeng ka Nama e Sehiloe",
+      "description": "Leleme le lokiselitsoe ka ontong le beringela, nama e nang le linoko e sehiloe, le sosese ea tamati le konofolo."
+    },
+    "salgam-suyu": {
+      "name": "Joala ba Turnip bo Fermented",
+      "description": "Joala ba setso ba turnip bo nang le linoko bo ferment joalo ka karote e putsoa le tlhapi ea bulgur."
+    },
+    "maden-suyu": {
+      "name": "Metsi a Mineral",
+      "description": "Metsi a mineral a tlhaho a hloekileng a sebeletsang a batang."
+    },
+    "su": {
+      "name": "Metsi a Noka a Tlhaho",
+      "description": "Metsi a tlhaho a noka a tšeloa a batang ka botlolo ea khalase."
+    },
+    "kola": {
+      "name": "Cola",
+      "description": "Joala bo tloaelehileng bo nang le khase bo tšeloa bo batang haholo."
+    },
+    "gazoz": {
+      "name": "Soda ea Lemone ea Turkey",
+      "description": "Soda e nang le monko oa setso, e pholileng, 'me e tšeloa e le e sa tsoakiloeng le ho itlosa mofuthu."
+    },
+    "turk-kahvesi": {
+      "name": "Kofi ea Turkey",
+      "description": "Kofi ea setso ea Turkey e nang le foam, e phehiloeng ka mocheso o phahameng ka cezve ea koporo."
+    },
+    "demleme-cay": {
+      "name": "Tee e halikiloeng ea Turkey",
+      "description": "Tee e ncha ea Rize e chesang ka khalase e selelele e tsubang."
+    },
+    "ev-yapimi-limonata": {
+      "name": "Limonade ea lehae",
+      "description": "Limonade e ncha e lokiselitsoeng letsatsi le letsatsi ka lero le lecha la lemone, mints, le tsoekere e nyenyane."
+    },
+    "hosaf": {
+      "name": "Meroho ea Letlalo ea Letsatsi le Letsatsi",
+      "description": "Compote ea lapeng e besitsoeng letsatsi le leng le le leng ka raisini, apricots, kapa plums ho latela nako."
+    },
+    "iskender-kebabi": {
+      "name": "Bursa İskender Kebab",
+      "description": "Nama e potoloha skewer holim'a pide, e fanoang le sauce ea tamati, borouto bo chesang, le yogurt."
+    },
+    "kazandibi": {
+      "name": "Pudding ea Laitse e Entsoeng ka Caramel",
+      "description": "Sejo sa setso sa lebese se entsoeng ka caramel hantle, se na le sebopeho se bonolo."
+    },
+    "tavuk-gogsu": {
+      "name": "Pudding ea Lebese ea Ottoman",
+      "description": "Lijo tsa motswako o bobebe le o khelohileng tsa lebese tse lokiselitsoeng ka risepe ea setso, tse hlahlojoang ka kanele."
+    },
+    "keskul": {
+      "name": "Puding ea Lebese la Almonde",
+      "description": "Lijo tsa motso oa lebese tsa Ottoman tse felisitsoeng ka tatso ea almonde le koko."
+    },
+    "irmik-helvasi": {
+      "name": "Halva ea Semolina",
+      "description": "Halva ea semolina, e besitsoeng ka botoro le litlhapi tsa pine, e sebeletsoang e chesang ebile e na le peo."
+    },
+    "kabak-tatlisi": {
+      "name": "Lijo tsa Lehlaka la Lebese le Tahini",
+      "description": "Lehlaka, le phehiloe butle ka morung oa lona, le sebeletsoang le tahini le walnuts."
+    },
+    "ayva-tatlisi": {
+      "name": "Lijo tsa Quince",
+      "description": "Quince e phehiloe ka cloves le kanele e sebeletsoang e na le kirimi e tiileng le walnuts."
+    },
+    "revani": {
+      "name": "Keikeng ea Semolina e Nang le Syrupu",
+      "description": "Sejo sa setso sa reschorente moo keikeng e bonolo ea semolina e kopanang le syrupu e nang le nko ea lemoene."
+    },
+    "ekmek-kadayifi": {
+      "name": "Phudung ea Bureka ea Bohobe e Nang le Krema e Thutsisang",
+      "description": "Phudung ea bohobe e phomotsitsoeng ka syrupu e khabisitsoeng e beheletsoa hammoho le krema e thutsisang ea phoofolo ea buffalo."
+    },
+    "cevizli-baklava": {
+      "name": "Baklava ea Walnut",
+      "description": "Malebela a lohiloeng ka bophara bo botle, baklava e crispy e entsoeng ka walnuts tse ngata le botoro bo tloaelehileng."
+    }
+  },
+  "allergens": {
+    "Süt ürünleri": "Likhomo",
+    "Gluten": "Gluteni",
+    "Yumurta": "Lehe",
+    "Badem": "Almond",
+    "Çam fıstığı": "Poone ea Pin",
+    "Susam": "Sesame",
+    "Ceviz": "Mokopu"
+  },
+  "tags": {
+    "Popüler": "O Tummeng",
+    "Vejetaryen": "Sejana sa meroho",
+    "Günün Yemeği": "Sejana sa Letsatsi",
+    "Şefin Önerisi": "Khetho ea Setsoalle",
+    "Yeni": "Se se Secha",
+    "Acılı": "Se chesang",
+    "Ev Yapımı": "Se etswang hae",
+    "Lokanta Klasiği": "Sejana sa Setsi sa Lijo",
+    "Günün Çorbası": "Supu ea Letsatsi",
+    "Vegan": "Sejana sa semello",
+    "Hafif": "Se bobebe",
+    "Yöresel": "Sa Mohlomong",
+    "Paylaşmalık": "Ho arolelana",
+    "Ev Yemeği": "Styli ea lehae",
+    "Zeytinyağlı": "Oli ea Oliva",
+    "Nostaljik": "Sehopotso",
+    "Geleneksel": "Tlaleho ea setso",
+    "Bursa Lezzeti": "Monko oa Bursa",
+    "Sütlü Tatlı": "Lijo tse monate tsa lebese",
+    "Sıcak Tatlı": "Lijo tse monate tse chesang",
+    "Mevsimlik": "Ka nako e itseng",
+    "Şerbetli": "Lijo tse monate ka sirope"
+  }
+}

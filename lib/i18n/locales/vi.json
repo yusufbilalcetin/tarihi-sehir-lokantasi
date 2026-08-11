@@ -1,0 +1,349 @@
+{
+  "locale": "vi",
+  "ui": {
+    "menu": "Thực đơn",
+    "search": "Tìm kiếm trong thực đơn...",
+    "searchLabel": "Tìm kiếm trong thực đơn",
+    "categories": "Danh mục",
+    "categoryIntro": "Chọn hương vị cho bàn của bạn.",
+    "categoryNavigation": "Danh mục thực đơn",
+    "openCategory": "Mở {name}, {count} món",
+    "items": "món",
+    "item": "món",
+    "searchResults": "Kết quả tìm kiếm",
+    "productsFound": "Tìm thấy {count} món",
+    "backToCategories": "Quay lại danh mục",
+    "backToCategory": "Quay lại {name}",
+    "clearSearch": "Xóa tìm kiếm",
+    "noResults": "Không tìm thấy món nào phù hợp",
+    "noResultsDescription": "Thử tìm kiếm khác hoặc quay lại các danh mục.",
+    "order": "Đơn hàng của tôi",
+    "waiter": "Phục vụ",
+    "bill": "Hóa đơn",
+    "addToCart": "Thêm vào đơn hàng",
+    "addedToCart": "{name} đã được thêm vào đơn hàng của bạn.",
+    "removeFromCart": "Gỡ {name}",
+    "soldOut": "Hết hàng hôm nay",
+    "productDetails": "Mở chi tiết cho {name}",
+    "portion": "Phần",
+    "standardPortion": "Phần tiêu chuẩn",
+    "allergens": "Chất gây dị ứng",
+    "noAllergens": "Không có chất gây dị ứng được khai báo",
+    "productNote": "Ghi chú món ăn",
+    "productNotePlaceholder": "Ví dụ: xin đừng cho bơ",
+    "decreaseQuantity": "Giảm số lượng",
+    "increaseQuantity": "Tăng số lượng",
+    "each": "mỗi",
+    "note": "Ghi chú",
+    "subtotal": "Tổng phụ",
+    "serviceFee": "Phí dịch vụ",
+    "total": "Tổng cộng",
+    "sendOrder": "Gửi đơn hàng",
+    "orderSent": "Đơn hàng của bạn đã được gửi đến bếp",
+    "orderTracking": "Theo dõi đơn hàng #{number} tại đây.",
+    "newItem": "Thêm mục khác",
+    "emptyCart": "Đơn hàng của bạn trống",
+    "emptyCartDescription": "Các món bạn chọn từ menu sẽ xuất hiện ở đây.",
+    "browseMenu": "Duyệt Menu",
+    "orderReceived": "Đơn hàng đã nhận",
+    "waiterConfirmed": "Nhân viên phục vụ đã xác nhận",
+    "preparing": "Đang chuẩn bị",
+    "ready": "Sẵn sàng",
+    "served": "Đã phục vụ",
+    "preparingDescription": "Nhà bếp của chúng tôi đang chuẩn bị đơn hàng của bạn.",
+    "orderStatus": "Trạng thái đơn hàng",
+    "callWaiter": "Gọi nhân viên phục vụ",
+    "placeOrder": "Tôi muốn gọi món",
+    "wantWater": "Tôi muốn nước",
+    "wantBread": "Tôi muốn bánh mì",
+    "wantService": "Dịch vụ thêm",
+    "other": "Khác",
+    "generalRequest": "Tôi có một yêu cầu chung",
+    "orderHelp": "Tôi cần giúp với đơn hàng của mình",
+    "waterDescription": "Vui lòng mang nước đến bàn",
+    "breadDescription": "Vui lòng mang bánh đến bàn",
+    "serviceDescription": "Tôi cần dao dĩa hoặc một cái đĩa",
+    "otherDescription": "Tôi cần giúp đỡ với việc khác",
+    "waiterHelpTitle": "Chúng tôi có thể giúp gì?",
+    "waiterHelpDescription": "Yêu cầu của bạn sẽ được gửi cùng với {table}.",
+    "waiterRequestSent": "Yêu cầu của bạn đã được gửi tới nhân viên phục vụ.",
+    "requestBill": "Yêu cầu tính tiền",
+    "billSent": "Yêu cầu tính tiền của bạn đã được gửi",
+    "billConfirm": "Bạn có muốn yêu cầu tính tiền không?",
+    "billSentDescription": "Nhân viên phục vụ sẽ đến với bạn ngay.",
+    "billConfirmDescription": "Yêu cầu của bạn sẽ được gửi trực tiếp tới nhân viên phục vụ. Bạn có thể thanh toán tại bàn hoặc quầy thu ngân.",
+    "billToast": "Yêu cầu thanh toán của bạn đã được gửi đến nhân viên phục vụ.",
+    "backToMenu": "Quay lại Thực đơn",
+    "back": "Quay lại",
+    "close": "Đóng",
+    "yourTable": "BÀN CỦA BẠN",
+    "serviceOpen": "Dịch vụ mở",
+    "slogan": "Hương vị truyền thống • Bàn hiện đại",
+    "location": "Bursa, Osmangazi",
+    "languageLabel": "Chọn ngôn ngữ",
+    "currencyLabel": "Chọn loại tiền",
+    "customerNavigation": "Điều hướng thực đơn khách hàng",
+    "approximateCurrency": "Giá ngoại tệ chỉ mang tính tham khảo. Thanh toán được xử lý bằng Lira Thổ Nhĩ Kỳ.",
+    "orderSuccess": "Đơn hàng của bạn đã được gửi thành công.",
+    "languagePickerTitle": "Chọn ngôn ngữ",
+    "languagePickerDescription": "Chọn ngôn ngữ bạn muốn sử dụng cho menu.",
+    "searchLanguage": "Tìm kiếm ngôn ngữ...",
+    "recommendedLanguages": "Đề xuất",
+    "recentLanguages": "Ngôn ngữ gần đây",
+    "allLanguages": "Tất cả ngôn ngữ",
+    "languageNotFound": "Không tìm thấy ngôn ngữ.",
+    "languageNotFoundDescription": "Thử tên hoặc mã ngôn ngữ khác.",
+    "tableNumber": "Bàn {number}",
+    "itemCount": "{count} mục",
+    "splashLabel": "Màn hình mở Tarihi Şehir Lokantası",
+    "cancel": "Hủy",
+    "confirmOrder": "Xác nhận đặt món",
+    "orderSummary": "Tóm tắt đơn hàng",
+    "payment": "Thanh toán",
+    "tableNotFound": "Không tìm thấy bàn.",
+    "invalidQr": "Mã QR không hợp lệ.",
+    "menuUnavailable": "Thực đơn hiện không khả dụng.",
+    "networkError": "Đã xảy ra lỗi mạng.",
+    "productUnavailable": "Món này hiện không khả dụng.",
+    "unableToSendOrder": "Không thể gửi đơn hàng.",
+    "tryAgain": "Thử lại",
+    "somethingWentWrong": "Đã xảy ra sự cố.",
+    "loadingLanguage": "Đang tải ngôn ngữ...",
+    "languageLoadError": "Không thể tải ngôn ngữ. Vui lòng thử lại."
+  },
+  "categories": {
+    "soups": "Súp",
+    "grill": "Thịt nướng",
+    "mains": "Món chính",
+    "drinks": "Đồ uống",
+    "kebabs": "Kebab",
+    "dessert": "Tráng miệng"
+  },
+  "products": {
+    "mercimek": {
+      "name": "Súp đậu lăng",
+      "description": "Súp đậu lăng tự làm theo phong cách cổ điển, hoàn thiện với nước sốt bơ."
+    },
+    "tas-kebabi": {
+      "name": "Món hầm bò kiểu Thổ Nhĩ Kỳ",
+      "description": "Bò, rau củ theo mùa, và nước sốt đặc biệt nấu chậm của nhà hàng chúng tôi."
+    },
+    "kuzu-tandir": {
+      "name": "Cừu quay chậm",
+      "description": "Món cừu tandoori đặc trưng của nhà hàng, nấu chậm trên lửa nhỏ."
+    },
+    "pirinc-pilavi": {
+      "name": "Cơm pilaf",
+      "description": "Cơm Baldo pilaf bơ, tơi xốp."
+    },
+    "firin-sutlac": {
+      "name": "Bánh pudding cơm nướng",
+      "description": "Bánh pudding cơm nướng theo cách truyền thống, chuẩn bị với sữa trâu tươi hàng ngày."
+    },
+    "kuru-fasulye": {
+      "name": "Hầm đậu trắng với Thịt Bò",
+      "description": "Đậu İspir, thịt bò thái hạt lựu, và sốt cà chua nhà hàng thông thường."
+    },
+    "izgara-kofte": {
+      "name": "Thịt viên Nướng",
+      "description": "Thịt viên bò kiểu lò mổ với ớt nướng và cà chua."
+    },
+    "ayran": {
+      "name": "Ayran Đánh Bông",
+      "description": "Sữa tách béo đánh bông truyền thống với nhiều bọt, làm từ sữa chua hàng ngày."
+    },
+    "ezogelin-corbasi": {
+      "name": "Súp Ezogelin",
+      "description": "Một món súp truyền thống của nhà hàng nơi đậu lăng đỏ, bulgur và gạo gặp bạc hà."
+    },
+    "tarhana-corbasi": {
+      "name": "Súp Tarhana",
+      "description": "Tarhana tự làm, một món cổ điển của Anatolia được nấu chậm với cà chua và bạc hà khô."
+    },
+    "yayla-corbasi": {
+      "name": "Súp Sữa Chua và Gạo",
+      "description": "Một món súp yayla mát lạnh và béo ngậy được chuẩn bị với sữa chua, gạo và lá bạc hà khô."
+    },
+    "iskembe-corbasi": {
+      "name": "Súp Bao Tử Bò",
+      "description": "Món súp bao tử bò đúng kiểu được phục vụ kèm gia vị và giấm tỏi."
+    },
+    "dugun-corbasi": {
+      "name": "Súp Đám Cưới",
+      "description": "Món súp đám cưới truyền thống làm từ thịt cừu xé sợi và được nêm nếm với nước chanh ướp."
+    },
+    "tavuk-suyu-corbasi": {
+      "name": "Súp Nước Lòng Gà",
+      "description": "Một món súp chữa bệnh được chuẩn bị với mì sợi nhỏ nấu trong nước dùng xương và thịt gà xé."
+    },
+    "domates-corbasi": {
+      "name": "Súp Cà Chua",
+      "description": "Một hương vị đậm đà nấu với cà chua chín, bơ và húng quế, hoàn thiện với phô mai."
+    },
+    "sebze-corbasi": {
+      "name": "Canh Rau",
+      "description": "Một món canh nhẹ của nhà hàng được chế biến từ rau theo mùa, dầu ô liu và các loại thảo mộc tươi."
+    },
+    "beyran-corbasi": {
+      "name": "Canh Cừu Cay Beyran",
+      "description": "Một món canh vùng miền được nấu trên lửa lớn với thịt cừu, gạo, tỏi và ớt cay."
+    },
+    "kelle-paca-corbasi": {
+      "name": "Canh Đầu và Bàn Chân",
+      "description": "Một món canh nước xương đậm đà làm từ chân và thịt đầu bò nấu trong nhiều giờ."
+    },
+    "sehriye-corbasi": {
+      "name": "Canh Bún",
+      "description": "Canh hàng ngày nấu từ nước dùng gà với cà chua, bún và rau mùi tây."
+    },
+    "tavuk-sis": {
+      "name": "Xiên Gà",
+      "description": "Món gà được tẩm một loại gia vị đặc biệt, ăn kèm với ớt và cà chua nướng."
+    },
+    "kasap-sucuk": {
+      "name": "Xúc xích Thịt Bò Nướng",
+      "description": "Xúc xích bò cay nấu trên than, kèm rau củ nướng và hành với sumac."
+    },
+    "karisik-izgara": {
+      "name": "Đĩa Nướng Hỗn Hợp",
+      "description": "Một đĩa nướng phong phú và đa dạng gồm có viên thịt, xiên gà, sườn cừu và xúc xích."
+    },
+    "nohut-yemegi": {
+      "name": "Hầm Đậu Gà với Thịt Bò",
+      "description": "Một bữa ăn tự nấu gồm đậu gà và thịt bò cắt miếng nấu chậm trong nồi đồng."
+    },
+    "patlican-musakka": {
+      "name": "Moussaka Cà Tím",
+      "description": "Cà tím chiên, thịt bò băm, và moussaka nướng trong lò với sốt cà chua, kiểu nhà hàng."
+    },
+    "zeytinyagli-taze-fasulye": {
+      "name": "Đậu Xanh Xào Dầu Ôliu",
+      "description": "Món ăn cổ điển nấu trong dầu ôliu với đậu xanh, cà chua và hành tây, ăn lạnh."
+    },
+    "tavuk-sote": {
+      "name": "Gà Xào",
+      "description": "Miếng gà được xào trên lửa lớn với ớt nhiều màu, nấm, và cà chua."
+    },
+    "izmir-kofte": {
+      "name": "Thịt Viên Kiểu İzmir",
+      "description": "Món chính truyền thống gồm thịt bò viên, khoai tây và ớt nướng trong sốt cà chua."
+    },
+    "etli-bezelye": {
+      "name": "Đậu Hà Lan với Thịt Bò",
+      "description": "Bữa ăn hàng ngày được nấu trong nồi với thịt bò cắt khối, đậu Hà Lan, cà rốt và khoai tây."
+    },
+    "patlican-oturtma": {
+      "name": "Cà Tím Nướng với Thịt Bằm",
+      "description": "Lưỡi bò được chế biến trong lò nướng cùng cà tím, thịt bằm cay và sốt cà chua tỏi."
+    },
+    "salgam-suyu": {
+      "name": "Nước Cải Chua Lên Men",
+      "description": "Nước cải cay truyền thống lên men với cà rốt tím và men bulgur."
+    },
+    "maden-suyu": {
+      "name": "Nước Khoáng",
+      "description": "Nước khoáng thiên nhiên không ga, phục vụ lạnh."
+    },
+    "su": {
+      "name": "Nước Suối Tự Nhiên",
+      "description": "Nước suối tự nhiên được phục vụ lạnh trong chai thủy tinh."
+    },
+    "kola": {
+      "name": "Cola",
+      "description": "Một loại nước ngọt có ga cổ điển, được phục vụ lạnh."
+    },
+    "gazoz": {
+      "name": "Soda Chanh Thổ Nhĩ Kỳ",
+      "description": "Nước soda truyền thống có hương vị, giải khát và được phục vụ lạnh."
+    },
+    "turk-kahvesi": {
+      "name": "Cà Phê Thổ Nhĩ Kỳ",
+      "description": "Cà phê Thổ Nhĩ Kỳ truyền thống có bọt, nấu trên nhiệt cao trong bình đồng cezve."
+    },
+    "demleme-cay": {
+      "name": "Trà Thổ Nhĩ Kỳ Pha Mới",
+      "description": "Trà Rize mới pha nóng, được phục vụ trong ly eo thon."
+    },
+    "ev-yapimi-limonata": {
+      "name": "Nước Chanh Tự Làm",
+      "description": "Limonade tươi mát được pha chế hàng ngày với chanh tươi, bạc hà và một chút đường."
+    },
+    "hosaf": {
+      "name": "Compote trái cây hàng ngày",
+      "description": "Compote tự làm được nấu hàng ngày với nho khô, mơ hoặc mận tùy theo mùa."
+    },
+    "iskender-kebabi": {
+      "name": "Bursa İskender Kebab",
+      "description": "Thịt được quay trên xiên trên pide, ăn kèm với sốt cà chua, bơ nóng và sữa chua."
+    },
+    "kazandibi": {
+      "name": "Bánh pudding sữa caramel",
+      "description": "Một món tráng miệng sữa truyền thống được caramel hóa đúng cách, với kết cấu mịn màng."
+    },
+    "tavuk-gogsu": {
+      "name": "Bánh pudding sữa Ottoman",
+      "description": "Món tráng miệng sữa nhẹ và xơ, được chế biến theo công thức truyền thống, phục vụ kèm với quế."
+    },
+    "keskul": {
+      "name": "Bánh Pudding Sữa Hạnh Nhân",
+      "description": "Món tráng miệng sữa kiểu Ottoman hoàn thiện với hương vị hạnh nhân và dừa."
+    },
+    "irmik-helvasi": {
+      "name": "Chè Semolina",
+      "description": "Chè semolina, rang với bơ và hạt thông, phục vụ nóng và có kết cấu hạt."
+    },
+    "kabak-tatlisi": {
+      "name": "Món Tráng Miệng Bí Ngô với Tahini",
+      "description": "Bí ngô, nấu chậm trong chính nước ép của nó, được phục vụ với tahini và quả óc chó."
+    },
+    "ayva-tatlisi": {
+      "name": "Món Tráng Miệng Mộc Qua",
+      "description": "Mộc qua nấu với đinh hương và quế được phục vụ với kem đặc và quả óc chó."
+    },
+    "revani": {
+      "name": "Bánh bông lan si rô bột semolina",
+      "description": "Món tráng miệng cổ điển tại nhà hàng với bánh bông lan bột semolina mềm kết hợp si rô có hương chanh."
+    },
+    "ekmek-kadayifi": {
+      "name": "Bánh pudding bánh mì với kem sữa đặc",
+      "description": "Bánh pudding bánh mì được ướp với si rô caramel được phục vụ kèm kem sữa trâu."
+    },
+    "cevizli-baklava": {
+      "name": "Baklava hạt óc chó",
+      "description": "Những lớp mỏng, giòn của baklava được làm với nhiều hạt óc chó và bơ thường."
+    }
+  },
+  "allergens": {
+    "Süt ürünleri": "Sản phẩm từ sữa",
+    "Gluten": "Chứa gluten",
+    "Yumurta": "Trứng",
+    "Badem": "Hạnh nhân",
+    "Çam fıstığı": "Hạt thông",
+    "Susam": "Mè",
+    "Ceviz": "Quả óc chó"
+  },
+  "tags": {
+    "Popüler": "Phổ biến",
+    "Vejetaryen": "Chay",
+    "Günün Yemeği": "Món ăn trong ngày",
+    "Şefin Önerisi": "Lựa chọn của đầu bếp",
+    "Yeni": "Mới",
+    "Acılı": "Cay",
+    "Ev Yapımı": "Nhà làm",
+    "Lokanta Klasiği": "Gạch đầu dòng nhà hàng",
+    "Günün Çorbası": "Súp trong ngày",
+    "Vegan": "Thuần chay",
+    "Hafif": "Nhẹ",
+    "Yöresel": "Theo vùng",
+    "Paylaşmalık": "Chia sẻ",
+    "Ev Yemeği": "Kiểu nhà",
+    "Zeytinyağlı": "Dầu ô liu",
+    "Nostaljik": "Hoài niệm",
+    "Geleneksel": "Truyền thống",
+    "Bursa Lezzeti": "Hương vị Bursa",
+    "Sütlü Tatlı": "Tráng miệng bằng sữa",
+    "Sıcak Tatlı": "Tráng miệng nóng",
+    "Mevsimlik": "Theo mùa",
+    "Şerbetli": "Tráng miệng nước sirô"
+  }
+}

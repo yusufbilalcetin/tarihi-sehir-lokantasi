@@ -1,0 +1,349 @@
+{
+  "locale": "ht",
+  "ui": {
+    "menu": "Manje",
+    "search": "Chèche nan meni an...",
+    "searchLabel": "Chèche nan meni an",
+    "categories": "Kategori",
+    "categoryIntro": "Chwazi gou pou tab ou a.",
+    "categoryNavigation": "Kategori meni",
+    "openCategory": "Ouvir {name}, {count} atik",
+    "items": "atik",
+    "item": "atik",
+    "searchResults": "Rezilta rechèch",
+    "productsFound": "{count} atik jwenn",
+    "backToCategories": "Tounen nan kategori",
+    "backToCategory": "Tounen nan {name}",
+    "clearSearch": "Efase rechèch",
+    "noResults": "Pa gen okenn atik ki matche",
+    "noResultsDescription": "Eseye yon lòt rechèch oswa retounen nan kategori yo.",
+    "order": "Komand mwen",
+    "waiter": "Sèvant",
+    "bill": "Bòdwo",
+    "addToCart": "Ajoute nan Komand",
+    "addedToCart": "{name} ajoute nan komand ou a.",
+    "removeFromCart": "Retire {name}",
+    "soldOut": "Vann fini jodi a",
+    "productDetails": "Ouvri detay pou {name}",
+    "portion": "Pòsyon",
+    "standardPortion": "Pòsyon estanda",
+    "allergens": "Alèji",
+    "noAllergens": "Pa gen alèji deklare",
+    "productNote": "Nòt atik",
+    "productNotePlaceholder": "Egzanp: pa mete bè, tanpri",
+    "decreaseQuantity": "Diminye kantite",
+    "increaseQuantity": "Ogmente kantite",
+    "each": "chak",
+    "note": "Nòt",
+    "subtotal": "Sous-total",
+    "serviceFee": "Frè sèvis",
+    "total": "Total",
+    "sendOrder": "Voye Lòd",
+    "orderSent": "Lòd ou a te voye nan kwizin nan",
+    "orderTracking": "Swiv lòd #{number} isit la.",
+    "newItem": "Ajoute Yon Lòt Atik",
+    "emptyCart": "Lòd ou vid",
+    "emptyCartDescription": "Atik ou chwazi nan meni an pral parèt isit la.",
+    "browseMenu": "Browse Meni",
+    "orderReceived": "Lòd Resevwa",
+    "waiterConfirmed": "Sèvant konfime",
+    "preparing": "Ap prepare",
+    "ready": "Pare",
+    "served": "Sèvi",
+    "preparingDescription": "Kizin nou an ap prepare lòd ou.",
+    "orderStatus": "Estati lòd",
+    "callWaiter": "Rele sèvant",
+    "placeOrder": "Mwen vle fè yon lòd",
+    "wantWater": "Mwen ta renmen dlo",
+    "wantBread": "Mwen ta renmen pen",
+    "wantService": "Sèvis anplis",
+    "other": "Lòt",
+    "generalRequest": "Mwen gen yon demann jeneral",
+    "orderHelp": "Mwen bezwen èd ak lòd mwen",
+    "waterDescription": "Tanpri pote dlo nan tab la",
+    "breadDescription": "Tanpri pote pen nan tab la",
+    "serviceDescription": "Mwen bezwen kouto-fouchèt oswa yon plak",
+    "otherDescription": "Mwen bezwen èd ak yon lòt bagay",
+    "waiterHelpTitle": "Kijan nou ka ede?",
+    "waiterHelpDescription": "Demann ou a pral voye ak {table}.",
+    "waiterRequestSent": "Demann ou a te voye bay sèvant nou an.",
+    "requestBill": "Mande Bòdwo",
+    "billSent": "Demann bòdwo ou a te voye",
+    "billConfirm": "Èske ou ta renmen mande bòdwo a?",
+    "billSentDescription": "Sèvant nou an pral vin jwenn ou byento.",
+    "billConfirmDescription": "Demann ou a pral ale dirèkteman bay sèvant lan. Ou ka peye nan tab la oswa nan kès la.",
+    "billToast": "Demann bòdwo ou a te voye bay sèvè nou an.",
+    "backToMenu": "Tounen nan Menyu",
+    "back": "Tounen",
+    "close": "Fèmen",
+    "yourTable": "TABLA OU",
+    "serviceOpen": "Sèvis ouvè",
+    "slogan": "Gou Tradisyonèl • Tab Modern",
+    "location": "Bursa, Osmangazi",
+    "languageLabel": "Chwazi lang",
+    "currencyLabel": "Chwazi lajan",
+    "customerNavigation": "Navigasyon meni kliyan",
+    "approximateCurrency": "Pri nan lajan etranje yo apeprè. Peman an ap fèt nan Lira Tik.",
+    "orderSuccess": "Kòmand ou a te voye avèk siksè.",
+    "languagePickerTitle": "Chwazi Lang",
+    "languagePickerDescription": "Chwazi lang ou vle itilize pou meni an.",
+    "searchLanguage": "Chèche lang...",
+    "recommendedLanguages": "Rekòmande",
+    "recentLanguages": "Dènye Lang",
+    "allLanguages": "Tout Lang",
+    "languageNotFound": "Lang pa jwenn.",
+    "languageNotFoundDescription": "Eseye yon lòt non oswa kòd lang.",
+    "tableNumber": "Tab {number}",
+    "itemCount": "{count} atik",
+    "splashLabel": "Tarihi Şehir Lokantası ekran ouvèti",
+    "cancel": "Anile",
+    "confirmOrder": "Konfime Kòmand",
+    "orderSummary": "Rezime Kòmand",
+    "payment": "Peman",
+    "tableNotFound": "Tab pa jwenn.",
+    "invalidQr": "Kòd QR pa valab.",
+    "menuUnavailable": "Manje a pa disponib kounye a.",
+    "networkError": "Yon erè rezo te rive.",
+    "productUnavailable": "Atik sa a pa disponib kounye a.",
+    "unableToSendOrder": "Pa kapab voye kòmand la.",
+    "tryAgain": "Eseye ankò",
+    "somethingWentWrong": "Gen yon bagay ki mal.",
+    "loadingLanguage": "Ap chaje lang lan...",
+    "languageLoadError": "Pa t kapab chaje lang lan. Tanpri eseye ankò."
+  },
+  "categories": {
+    "soups": "Soup",
+    "grill": "Griye",
+    "mains": "Plato prensipal",
+    "drinks": "Bwason",
+    "kebabs": "Kebab",
+    "dessert": "Dezè"
+  },
+  "products": {
+    "mercimek": {
+      "name": "Soup Lantil",
+      "description": "Soup lantil lakay prepare nan stil klasik, konplete ak yon sòs bè."
+    },
+    "tas-kebabi": {
+      "name": "Gousto Vyann Bèf Tik",
+      "description": "Vyann bèf, legim sezonye, ak sòs espesyal restoran nou an kwit dousman."
+    },
+    "kuzu-tandir": {
+      "name": "Lam Pèpi Kwit Dousman",
+      "description": "Lam tandoori siyati restoran nou an, kwit dousman sou chalè ba."
+    },
+    "pirinc-pilavi": {
+      "name": "Pilaf Diri",
+      "description": "Pilaf diri Baldo, bè, ak leje."
+    },
+    "firin-sutlac": {
+      "name": "Budin Diri Boukannen",
+      "description": "Budin diri boukannen nan fason tradisyonèl, prepare ak lèt bèf chak jou."
+    },
+    "kuru-fasulye": {
+      "name": "Gulya Pwa Blan ak Vyann Bèf",
+      "description": "Pwa İspir, vyann bèf koupe an kib, ak pasta tomat senp restoran."
+    },
+    "izgara-kofte": {
+      "name": "Boulett Vyann Grille",
+      "description": "Boulett vyann bèf stil boutye ak piman griye ak tomat."
+    },
+    "ayran": {
+      "name": "Ayran Batri",
+      "description": "Bèrmèk tradisyonèl batri ak anpil kim, fèt ak krèm asid òdinè."
+    },
+    "ezogelin-corbasi": {
+      "name": "Soup Ezogelin",
+      "description": "Yon soup tradisyonèl restoran kote lens wouj, bulgur, ak diri rankontre ak mant."
+    },
+    "tarhana-corbasi": {
+      "name": "Soup Tarhana",
+      "description": "Tarhana fè lakay, yon klasik Anatolian kwit dousman ak tomat ak mant sèch."
+    },
+    "yayla-corbasi": {
+      "name": "Soup Yogout ak Diri",
+      "description": "Yon soup yayla fre ak krèmè prepare ak yogout, diri, ak mant sèch."
+    },
+    "iskembe-corbasi": {
+      "name": "Soup Trip",
+      "description": "Soup trip bèf apwopriye sèvi ak epis li yo ak vinèg lay."
+    },
+    "dugun-corbasi": {
+      "name": "Soup Maryaj",
+      "description": "Soup tradisyonèl maryaj prepare ak vyann mouton rache epi bay gou ak yon marinen sitwon."
+    },
+    "tavuk-suyu-corbasi": {
+      "name": "Soup Bwason Poul",
+      "description": "Yon soup geri prepare ak pasta mens kwit nan bouyon zo ak vyann poul rache."
+    },
+    "domates-corbasi": {
+      "name": "Soup Tomat",
+      "description": "Yon gou rich kwit ak tomat mi, bè, ak basil, konplete ak fwomaj."
+    },
+    "sebze-corbasi": {
+      "name": "Soup Legim",
+      "description": "Yon soup limen restoran prepare ak legim sezonye, lwil oliv, ak zèb fre."
+    },
+    "beyran-corbasi": {
+      "name": "Soup Tounin Abriko Piman",
+      "description": "Yon soup rejyonal prepare sou chalè wo ak tounin bouk, diri, lay, ak piman cho."
+    },
+    "kelle-paca-corbasi": {
+      "name": "Soup Tèt ak Pye",
+      "description": "Yon soup bouyon zo rich prepare ak pye vyann bèf ak vyann tèt bouyi pou èdtan lontan."
+    },
+    "sehriye-corbasi": {
+      "name": "Soup Vermiselli",
+      "description": "Soup chak jou prepare ak bouyon poul ak tomat, vermis, ak pèsi."
+    },
+    "tavuk-sis": {
+      "name": "Boukannen Poul",
+      "description": "Moso poul marinen ak epis espesyal, sèvi ak pwav ak tomat boukannen."
+    },
+    "kasap-sucuk": {
+      "name": "Sucuk Boukanen",
+      "description": "Sosis bèf pikant kwit sou chabon, ak legim boukannen ak zonyon ak sumak."
+    },
+    "karisik-izgara": {
+      "name": "Gril Melanje",
+      "description": "Yon plak gril anpil ak divès ki gen boulèt, boukannen poul, kotèl mouton, ak sosis."
+    },
+    "nohut-yemegi": {
+      "name": "Gouyad Pwa Kikor ak Bèf",
+      "description": "Yon repa lakay ak pwa chich ak vyann bèf koupe an ti moso, kwit dousman nan yon chodyè kwiv."
+    },
+    "patlican-musakka": {
+      "name": "Mousaka Zaboka",
+      "description": "Zaboka fri, vyann bèf moulen, ak mousaka kwit nan fou ak sòs tomat, stil restoran."
+    },
+    "zeytinyagli-taze-fasulye": {
+      "name": "Pwa Vèt nan Lwil Oliv",
+      "description": "Yon klasik kwit nan lwil oliv ak pwa vèt, tomat, ak zonyon, sèvi frèt."
+    },
+    "tavuk-sote": {
+      "name": "Poul Sote",
+      "description": "Moso poul yo sote sou chalè fò ak pwav koulè, djondjon, ak tomat."
+    },
+    "izmir-kofte": {
+      "name": "Boulett Vyann Stil Izmir",
+      "description": "Yon plat prensipal tradisyonèl ak boulèt vyann bèf, pòmdetè, ak pwav kwit nan sòs tomat."
+    },
+    "etli-bezelye": {
+      "name": "Pwa ak Vyann Bèf",
+      "description": "Manje chak jou kwit nan yon chodyè ak vyann bèf koupe an kib, pwa, kawòt, ak pòmdetè."
+    },
+    "patlican-oturtma": {
+      "name": "Melongèn Kwit nan Fou ak Vyann Bouyi",
+      "description": "Sous lang lan prepare nan fou a ak melongèn, vyann tè pikant, ak sòs tomat ak lay."
+    },
+    "salgam-suyu": {
+      "name": "Ji Navèt Fermente",
+      "description": "Js navèt pikant tradisyonèl fermenté ak kawòt wouj ak ledven boulgur."
+    },
+    "maden-suyu": {
+      "name": "Dlo Mineral",
+      "description": "Dlo mineral natirèl ki sou avèk frèt."
+    },
+    "su": {
+      "name": "Dlo Sous Natirèl",
+      "description": "Dlo sous natirèl ki sèvi frèt nan yon boutèy vè."
+    },
+    "kola": {
+      "name": "Cola",
+      "description": "Yon bwason gazeuz klasik ki sèvi frèt ak glas."
+    },
+    "gazoz": {
+      "name": "Soda Sitron Tik",
+      "description": "Soda tradisyonèl ak gou, fre, epi sèvi frèt san anyen ladan l."
+    },
+    "turk-kahvesi": {
+      "name": "Kafe Tik",
+      "description": "Kafe Tik tradisyonèl ak kim, kwit sou chalè wo nan yon cezve kwiv."
+    },
+    "demleme-cay": {
+      "name": "Te Bouyi Tik",
+      "description": "Te Rize cho fèk bouyi nan yon vè ak ren mens."
+    },
+    "ev-yapimi-limonata": {
+      "name": "Limonad Fè Lakay",
+      "description": "Limonad fre ki prepare chak jou ak sitwon fre, mant, ak yon ti sik."
+    },
+    "hosaf": {
+      "name": "Konpot Fwi Chak Jou",
+      "description": "Konpot fèt lakay bouyi chak jou ak rezen sèch, abiko, oswa prun selon sezon an."
+    },
+    "iskender-kebabi": {
+      "name": "Bursa İskender Kebab",
+      "description": "Vyann lan vire sou yon eskewè sou pide, sèvi ak sòs tomat, bè cho, ak yogout."
+    },
+    "kazandibi": {
+      "name": "Desè Lèt Karamèlize",
+      "description": "Yon desè lèt tradisyonèl ki byen karamèlize, ak yon teksti swa."
+    },
+    "tavuk-gogsu": {
+      "name": "Desè Lèt Othoman",
+      "description": "Yon desè lèt lejè ak fib, prepare ak yon resèt tradisyonèl, sèvi ak kannèl."
+    },
+    "keskul": {
+      "name": "Poudin Lèt Zanmann",
+      "description": "Desè lèt nan stil Ottoman konplete ak gou zanmann ak kokoye."
+    },
+    "irmik-helvasi": {
+      "name": "Halva Semolina",
+      "description": "Halva semolina, fri ak bè ak nwa pye pye, sèvi cho ak graine."
+    },
+    "kabak-tatlisi": {
+      "name": "Desè Joumou ak Tahini",
+      "description": "Joumou a, kwit dousman nan pwòp ji li, sèvi ak tahini ak nwa."
+    },
+    "ayva-tatlisi": {
+      "name": "Desè Kwen",
+      "description": "Kwen kwit ak clou de girofle ak kannèl, sèvi ak krèm kole ak nwa."
+    },
+    "revani": {
+      "name": "Gato Sèmol",
+      "description": "Desè klasik restoran an kote gato sèmol lan dous rankontre ak siròp sant sitwon."
+    },
+    "ekmek-kadayifi": {
+      "name": "Poudin Pen ak Krèm Boufer",
+      "description": "Poudin pen ki repoze nan siròp karamelize sèvi ak krèm boufer boufalo."
+    },
+    "cevizli-baklava": {
+      "name": "Baklava Nwa",
+      "description": "Plizyè kouch trè mens woule, baklava krispy fèt ak anpil nwa ak bè senp."
+    }
+  },
+  "allergens": {
+    "Süt ürünleri": "Lèt",
+    "Gluten": "Gluten",
+    "Yumurta": "Ze",
+    "Badem": "Amand",
+    "Çam fıstığı": "Piye pye pye pye pye",
+    "Susam": "Sesam",
+    "Ceviz": "Nwa"
+  },
+  "tags": {
+    "Popüler": "Popilè",
+    "Vejetaryen": "Vejetaryen",
+    "Günün Yemeği": "Plat Jou a",
+    "Şefin Önerisi": "Chwa Chef la",
+    "Yeni": "Nèf",
+    "Acılı": "Gou Pike",
+    "Ev Yapımı": "Fè Kay",
+    "Lokanta Klasiği": "Klasik Restoran",
+    "Günün Çorbası": "Soup Jou a",
+    "Vegan": "Vegan",
+    "Hafif": "Leje",
+    "Yöresel": "Rejyonal",
+    "Paylaşmalık": "Pou Pataje",
+    "Ev Yemeği": "Kalite Kay",
+    "Zeytinyağlı": "Lwil Oliv",
+    "Nostaljik": "Nostaljik",
+    "Geleneksel": "Tradisyonèl",
+    "Bursa Lezzeti": "Gou Bursa",
+    "Sütlü Tatlı": "Desè Lèt",
+    "Sıcak Tatlı": "Desè Chofe",
+    "Mevsimlik": "Sezonye",
+    "Şerbetli": "Desè Siwo"
+  }
+}

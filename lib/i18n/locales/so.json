@@ -1,0 +1,349 @@
+{
+  "locale": "so",
+  "ui": {
+    "menu": "Liiska",
+    "search": "Raadi liiska...",
+    "searchLabel": "Raadi liiska",
+    "categories": "Qaybaha",
+    "categoryIntro": "Xulo dhadhanka miiskaaga.",
+    "categoryNavigation": "Qaybaha liiska",
+    "openCategory": "Fur {name}, {count} shey",
+    "items": "shey",
+    "item": "shar",
+    "searchResults": "Natiijooyinka raadinta",
+    "productsFound": "{count} shey la helay",
+    "backToCategories": "Dib ugu noqo qaybaha",
+    "backToCategory": "Dib ugu noqo {name}",
+    "clearSearch": "Nadiifi raadinta",
+    "noResults": "Wax shey ah kama helin",
+    "noResultsDescription": "Isku day raadinta kale ama ku laabo qaybaha.",
+    "order": "Iibsigayga",
+    "waiter": "Saraakiisha",
+    "bill": "Bila",
+    "addToCart": "Kudar Iibsi",
+    "addedToCart": "{name} ayaa lagu daray iibsigaga.",
+    "removeFromCart": "Ka saar {name}",
+    "soldOut": "Maanta waa la iibay",
+    "productDetails": "Fur faahfaahinta {name}",
+    "portion": "Qayb",
+    "standardPortion": "Qayb caadi ah",
+    "allergens": "Cunto xasaasiyad leh",
+    "noAllergens": "Lama shaacinin xasaasiyad",
+    "productNote": "Qoraal sheyga",
+    "productNotePlaceholder": "Tusaale: fadlan subag la'aan",
+    "decreaseQuantity": "Yaree tirada",
+    "increaseQuantity": "Kordhi tirada",
+    "each": "midkiiba",
+    "note": "Ogeysiis",
+    "subtotal": "Wadar-hoosaad",
+    "serviceFee": "Kharashka adeegga",
+    "total": "Wadar",
+    "sendOrder": "Dir Amarka",
+    "orderSent": "Amarkaaga waxaa loo diray jikada",
+    "orderTracking": "Raac amarka #{number} halkan.",
+    "newItem": "Kudar Shay Kale",
+    "emptyCart": "Amarkaaga waa madhan yahay",
+    "emptyCartDescription": "Shayada aad ka doorato menu-ga halkan ayay ka soo muuqan doonaan.",
+    "browseMenu": "Bog Menu",
+    "orderReceived": "Amarka la helay",
+    "waiterConfirmed": "U adeeguhu wuu xaqiijiyay",
+    "preparing": "Waa la diyaarinayaa",
+    "ready": "Waa diyaar",
+    "served": "Waa la adeegay",
+    "preparingDescription": "Jikadayadu waxay diyaarinaysaa dalabkaaga.",
+    "orderStatus": "Xaaladda dalabka",
+    "callWaiter": "Wac adeega",
+    "placeOrder": "Waxaan rabaa inaan dalbado",
+    "wantWater": "Waxaan jeclaan lahaa biyo",
+    "wantBread": "Waxaan jeclaan lahaa rooti",
+    "wantService": "Adeeg dheeraad ah",
+    "other": "Mid kale",
+    "generalRequest": "Waxaan hayaa codsi guud",
+    "orderHelp": "Waxaan u baahanahay caawimaad dalabka",
+    "waterDescription": "Fadlan keen biyo miiska",
+    "breadDescription": "Fadlan keena rooti miiska",
+    "serviceDescription": "Waxaan u baahanahay mindi iyo malqacad ama saxan",
+    "otherDescription": "Waxaan u baahanahay caawimaad wax kale",
+    "waiterHelpTitle": "Sideen ku caawin karnaa?",
+    "waiterHelpDescription": "Codsigaaga waxaa loo diri doonaa {table}.",
+    "waiterRequestSent": "Codsigaaga waxaa loo diray adeegeena.",
+    "requestBill": "Codso Biilka",
+    "billSent": "Codsiga biilkaaga waa la diray",
+    "billConfirm": "Ma jeclaan lahayd inaad codsato biilka?",
+    "billSentDescription": "Adeegaha ayaa dhowaan ku iman doona.",
+    "billConfirmDescription": "Codsigaaga si toos ah ayaa loogu diri doonaa adeega. Waxaad ku bixin kartaa miiska ama kassatada.",
+    "billToast": "Codsigaaga biilka waxaa loo diray adeegahaaga.",
+    "backToMenu": "Ku laabo Menu-ga",
+    "back": "Ku laabo",
+    "close": "Xir",
+    "yourTable": "MIISKAAGA",
+    "serviceOpen": "Adeeg furan",
+    "slogan": "Dhadhanka Dhaqanka • Miiska Casriga",
+    "location": "Bursa, Osmangazi",
+    "languageLabel": "Dooro luuqad",
+    "currencyLabel": "Dooro lacag",
+    "customerNavigation": "La-socodka menu-ga macaamiisha",
+    "approximateCurrency": "Qiimaha lacagaha qalaad waa qiyaas ahaan. Lacag-bixinta waxaa lagu sameeyaa Lira Turkiga.",
+    "orderSuccess": "Dalabkaaga si guul leh ayaa loo diray.",
+    "languagePickerTitle": "Dooro Luuqad",
+    "languagePickerDescription": "Dooro luqadda aad rabto in aad u isticmaasho menu-ga.",
+    "searchLanguage": "Raadi luqadaha...",
+    "recommendedLanguages": "La Talo Bixiyay",
+    "recentLanguages": "Luqadihii Ugu Dambeeyay",
+    "allLanguages": "Dhammaan Luqadaha",
+    "languageNotFound": "Luqad lama helin.",
+    "languageNotFoundDescription": "Isku day magac ama koodh luqad kale.",
+    "tableNumber": "Miiska {number}",
+    "itemCount": "{count} shay",
+    "splashLabel": "Shaashadda furitaanka Tarihi Şehir Lokantası",
+    "cancel": "Jooji",
+    "confirmOrder": "Xaqiiji Dalabka",
+    "orderSummary": "Koooban Dalabka",
+    "payment": "Lacag-bixin",
+    "tableNotFound": "Miis lama helin.",
+    "invalidQr": "Lambarka QR-ga waa qalad.",
+    "menuUnavailable": "Menyada hadda lama heli karo.",
+    "networkError": "Khalad shabakad ayaa dhacay.",
+    "productUnavailable": "Alaabtani hadda lama heli karo.",
+    "unableToSendOrder": "Looma diri karo dalabka.",
+    "tryAgain": "Mar kale isku day",
+    "somethingWentWrong": "Wax baa qaldan.",
+    "loadingLanguage": "Luqiadda ayaa la rarayaa...",
+    "languageLoadError": "Ma la soo rogi karo luqadda. Fadlan mar kale isku day."
+  },
+  "categories": {
+    "soups": "Maraqyo",
+    "grill": "Grills",
+    "mains": "Cuntooyinka ugu waaweyn",
+    "drinks": "Cabitaanno",
+    "kebabs": "Kebabb",
+    "dessert": "Macmacaanka"
+  },
+  "products": {
+    "mercimek": {
+      "name": "Suugada Digirta",
+      "description": "Suugada digirta ee guriga lagu sameeyo oo loo diyaariyey qaabkii caadiga ahaa, iyadoo lagu daray suugo subag leh."
+    },
+    "tas-kebabi": {
+      "name": "Suugada Lo'aanka Turkiga",
+      "description": "Lo'aanka, khudaarta xilliga, iyo suugada gaarka ah ee makhaayaddeena si tartiib ah loo karsaday."
+    },
+    "kuzu-tandir": {
+      "name": "Soonka Ido La Fooxay",
+      "description": "Ido tandoori ah oo astaan u ah makhaayaddeena, si tartiib ah loogu kariyey kulayl hoose."
+    },
+    "pirinc-pilavi": {
+      "name": "Baastada Bariiska",
+      "description": "Baastada Bariiska Baldo ee subag leh oo hawo leh."
+    },
+    "firin-sutlac": {
+      "name": "Kubbadka Bariiska ee la Dubay",
+      "description": "Kubbad bariis ah oo la dubay sida dhaqanka ah, oo loo diyaariyey caano buffalo oo maalinle ah."
+    },
+    "kuru-fasulye": {
+      "name": "Stew Digirta Caddaan ah oo Hilib Lo'aad leh",
+      "description": "Digir İspir, hilib lo'aad la jarjaray, iyo suugo yaanyo oo maqaayad ah."
+    },
+    "izgara-kofte": {
+      "name": "Kubadaha Hilibka La Dubay",
+      "description": "Kubadaha hilibka lo'aad ee qaabka kalluumaysatada oo leh basbaas la dubay iyo yaanyo."
+    },
+    "ayran": {
+      "name": "Ayran La Ruxay",
+      "description": "Karrito dhaqameed oo la ruxay oo leh cajaa'ib badan, laga sameeyay caano farmaajo maalinle ah."
+    },
+    "ezogelin-corbasi": {
+      "name": "Shorba Ezogelin",
+      "description": "Shorba dhaqameed oo maqaayad ah halkaas oo digir cas, bulgur, iyo bariis ay kula kulmaan mint."
+    },
+    "tarhana-corbasi": {
+      "name": "Shorba Tarhana",
+      "description": "Tarhana guri lagu sameeyey, oo klassik Anatolian ah oo si tartiib ah loo kariyey iyadoo lala socdo yaanyo iyo mint qalalan."
+    },
+    "yayla-corbasi": {
+      "name": "Suugada Yogurt iyo Bariis",
+      "description": "Suugo yayla ah oo qabow oo kareemo leh oo lagu diyaariyey yogurt, bariis, iyo dux la qalajiyey."
+    },
+    "iskembe-corbasi": {
+      "name": "Suugada Caloosha Lo'da",
+      "description": "Suugo caloosha lo'da sax ah oo laguugu keenayo dhadhankeeda iyo khal toon ah."
+    },
+    "dugun-corbasi": {
+      "name": "Suugada Arooska",
+      "description": "Suugada arooska dhaqameed oo lagu sameeyey hilib adhiga jeexan oo lagu dhadhansiiyey marinade liin ah."
+    },
+    "tavuk-suyu-corbasi": {
+      "name": "Suugada Maraqa Digaaga",
+      "description": "Suugo bogsiin ah oo lagu diyaariyey baasto dhuuban oo ku jirta maraq lafta iyo hilib digaag jeexan."
+    },
+    "domates-corbasi": {
+      "name": "Suugada Yaanyada",
+      "description": "Dhadhan hodan ah oo lagu kariyey yaanyo bisil, subag, iyo basbaas, laguna dhameystiray farmaajo."
+    },
+    "sebze-corbasi": {
+      "name": "Maraq Khudrad",
+      "description": "Maraq fudud oo maqaayad lagu diyaariyay oo lagu sameeyay khudrado xilliyeed, saliid saytuun, iyo dhir cusub."
+    },
+    "beyran-corbasi": {
+      "name": "Maraq Lo'aad Beyran oo Qadhaadh",
+      "description": "Maraq goboleed oo lagu diyaariyay kulayl aad u sarreeya oo ka kooban lo', bariis, toon, iyo basbaaska kulul."
+    },
+    "kelle-paca-corbasi": {
+      "name": "Maraq Madaxa iyo Lugaha Lo'da",
+      "description": "Maraq hodan ah oo ka samaysan lafaha lugaha lo'da iyo hilibka madaxa oo saacado badan la kariyay."
+    },
+    "sehriye-corbasi": {
+      "name": "Maraq Miiro",
+      "description": "Isku-darka maalinlaha ee maraq digaag oo leh yaanyo, baasto fidsan, iyo basbaas cagaaran."
+    },
+    "tavuk-sis": {
+      "name": "Shish-ka Digaaga",
+      "description": "Qaybo digaag ah oo lagu mariyey xawaash gaar ah, laguugu keenayo basbaas la dubay iyo yaanyo."
+    },
+    "kasap-sucuk": {
+      "name": "Sucukka Doobka la Dubay",
+      "description": "Kalluunka lo'da ee kulul oo lagu kariyey dhuxul, oo leh khudaar la dubay iyo basal oo sumac leh."
+    },
+    "karisik-izgara": {
+      "name": "Grill Isku-dhafan",
+      "description": "Saxan badan oo kala duwan oo ka kooban kubbado hilib ah, shish-ka digaag, laamb farmaajo, iyo kaluunka."
+    },
+    "nohut-yemegi": {
+      "name": "Hilibka Xoolaha ee Isku-dhafan ee Digir",
+      "description": "Cunto guri lagu sameeyo oo ka kooban chickpeas iyo hilib lo'aad oo la jarjaray oo si tartiib ah loogu kariyo digsi naxaas ah."
+    },
+    "patlican-musakka": {
+      "name": "Baasto Moussaka",
+      "description": "Baasto la shiilay, hilib lo'aad la dhulka maray, iyo moussaka oo lagu dubay foornada iyadoo lagu daray suugada yaanyada, qaab maqaayadeed."
+    },
+    "zeytinyagli-taze-fasulye": {
+      "name": "Digir-cagaaran oo saliid saytuun ku jirta",
+      "description": "Qadiimi, lagu kariyey saliid saytuun leh digir-cagaaran, yaanyo, iyo basal, oo si qabow loo bixiyo."
+    },
+    "tavuk-sote": {
+      "name": "Faraanti digaag la shiilay",
+      "description": "Qaybaha digaaga waxaa lagu shiilaa kulayl sare oo leh basbaas midab leh, mushroom, iyo yaanyo."
+    },
+    "izmir-kofte": {
+      "name": "Boorso hilib ah oo qaab İzmir ah",
+      "description": "Weedho dhaqameed oo ka kooban kubbado hilib lo'aad ah, baradho, iyo basbaas lagu dubay maraqa yaanyada."
+    },
+    "etli-bezelye": {
+      "name": "Bariis digir leh iyo Hilib Lo'aad",
+      "description": "Cunto maalinle ah oo lagu kariyo digsi leh hilib lo'aad oo la jarjaray, digir, karootada, iyo baradho."
+    },
+    "patlican-oturtma": {
+      "name": "Berengal la dubay oo leh Hilib la shiiday",
+      "description": "Lafaha afka waxaa lagu diyaariyaa foornada iyadoo lala dubayo berengel, hilib la shiiday oo basbaas leh, iyo maraqa yaanyada toonta leh."
+    },
+    "salgam-suyu": {
+      "name": "Waxaa Shukumaan La hoos geliyey",
+      "description": "Shukumaan kulul oo dhaqameed oo lagu hoos geliyey karootada guduudan iyo khamiirka bulgur."
+    },
+    "maden-suyu": {
+      "name": "Biyaha Macdanta",
+      "description": "Biyo macdan dabiici ah oo la qaboojiyey oo fudud."
+    },
+    "su": {
+      "name": "Biyaha Ilkaha Dabiiciga ah",
+      "description": "Biyo ilaha dabiiciga ah oo lagu qaboojiyey dhalo galaas ah."
+    },
+    "kola": {
+      "name": "Cola",
+      "description": "Cabbitaan karboon leh oo classic ah oo lagu qaboojiyey baraf."
+    },
+    "gazoz": {
+      "name": "Liin Soodha Turkiga",
+      "description": "Soodha dhaqameed oo dhadhan wanaagsan leh, refreshing ah, oo lagu qaboojiyey si fudud."
+    },
+    "turk-kahvesi": {
+      "name": "Kafe Turkiga",
+      "description": "Kafe dhaqameed Turkiga ah oo leh xumbo, oo lagu kariyey kulayl sare gudaha biraha qadaadiicda ah ee copper-ka."
+    },
+    "demleme-cay": {
+      "name": "Shaaha la kariyey ee Turkiga",
+      "description": "Shaah kulul oo cusub oo Rize ah oo lagu shubay galaas dhuuban oo dhexdiisu ciriiri yahay."
+    },
+    "ev-yapimi-limonata": {
+      "name": "Limo qoyan oo guriga lagu sameeyay",
+      "description": "Lemoade cusub oo la diyaariyo maalin kasta iyadoo la isticmaalayo liin cusub, minti, iyo sonkor yar."
+    },
+    "hosaf": {
+      "name": "Kombobka Miraha Maalinlaha ah",
+      "description": "Kombob guriga lagu sameeyo oo la karkariyo maalin kasta iyadoo la isticmaalayo canabka, abrikot, ama muuska iyadoo loo eegayo xilliga."
+    },
+    "iskender-kebabi": {
+      "name": "Bursa İskender Kebab",
+      "description": "Hilibka ayaa lagu rogaa shid la safeeyey oo lagu dul saaraa pide, waxaa lagu adeegaa suugo yaanyo, subag kulul, iyo caano fadhi."
+    },
+    "kazandibi": {
+      "name": "Caano Karamelaysan oo Budin",
+      "description": "Macmacaanka caanaha dhaqameed oo si habboon loo karamelseeyay, leh texture jilicsan."
+    },
+    "tavuk-gogsu": {
+      "name": "Caano Budin Cusmaani",
+      "description": "Macmacaan caano khafiif ah oo fiber leh oo lagu diyaariyey cunto dhaqameed, waxaa lagu soo bandhigay cinnamon."
+    },
+    "keskul": {
+      "name": "Pudding Caano Laws",
+      "description": "Macmacaan caano qaabkii Ottoman-ka oo lagu dhammaystiray dhadhan laws ah iyo loos-buurow."
+    },
+    "irmik-helvasi": {
+      "name": "Halva Semolina",
+      "description": "Halva semolina, la dubay subag iyo lows, waxaa lagu soo bandhigay kulul oo qaro weyn."
+    },
+    "kabak-tatlisi": {
+      "name": "Macmacaan Boorashka leh Tahini",
+      "description": "Boorashka, si tartiib ah loogu kariyey casiirkiisa, waxaa lagu soo bandhigay tahini iyo lows."
+    },
+    "ayva-tatlisi": {
+      "name": "Macmacaan Ilma-Gabow",
+      "description": "Ilma-gabow lagu kariyey xanjeb iyo cinnamon waxaa lagu soo bandhigay kareem cufan iyo lows."
+    },
+    "revani": {
+      "name": "Keki Malaxa Semolina",
+      "description": "Macmacaan caadi ah oo maqaayad lagu cuno halkaasoo keki jilicsan oo semolina ah uu la kulmo malax dhadhan liin leh."
+    },
+    "ekmek-kadayifi": {
+      "name": "Pudding Rooti oo leh Kareem la Clotted gareeyay",
+      "description": "Pudding rooti oo ku nastay malax karameleysan waxaa laguugu adeegi doonaa kareem la Clotted gareeyay oo Buffalo ah."
+    },
+    "cevizli-baklava": {
+      "name": "Baklava Kokob",
+      "description": "Lakabyo aad u dhuuban oo la dulqaday, baklava macdan leh oo dheer oo laga sameeyay kookob badan iyo subag caadi ah."
+    }
+  },
+  "allergens": {
+    "Süt ürünleri": "Caano",
+    "Gluten": "Gluuteen",
+    "Yumurta": "Ukun",
+    "Badem": "Balfar",
+    "Çam fıstığı": "Iniqa Howsha",
+    "Susam": "Sesame",
+    "Ceviz": "Qare"
+  },
+  "tags": {
+    "Popüler": "Caan ah",
+    "Vejetaryen": "Khadar ku nool",
+    "Günün Yemeği": "Cunto Maalinta",
+    "Şefin Önerisi": "Xulashada Chef-ka",
+    "Yeni": "Cusub",
+    "Acılı": "Basbaas leh",
+    "Ev Yapımı": "Guriga lagu sameeyey",
+    "Lokanta Klasiği": "Maqaaxi Classic",
+    "Günün Çorbası": "Suugo Maalinta",
+    "Vegan": "Vegan",
+    "Hafif": "Fudud",
+    "Yöresel": "Goboleed",
+    "Paylaşmalık": "La wadaago",
+    "Ev Yemeği": "Qaabka Guriga",
+    "Zeytinyağlı": "Saliid saytuun",
+    "Nostaljik": "Xusuus leh",
+    "Geleneksel": "Hiddo Dhaqan",
+    "Bursa Lezzeti": "Dhadhanka Bursa",
+    "Sütlü Tatlı": "Macmacaanka Caanaha",
+    "Sıcak Tatlı": "Macmacaanka Kulul",
+    "Mevsimlik": "Xilliyo",
+    "Şerbetli": "Macmacaanka Sharoobada"
+  }
+}

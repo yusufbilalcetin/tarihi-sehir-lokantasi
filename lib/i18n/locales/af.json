@@ -1,0 +1,349 @@
+{
+  "locale": "af",
+  "ui": {
+    "menu": "Spyskaart",
+    "search": "Soek die spyskaart...",
+    "searchLabel": "Soek die spyskaart",
+    "categories": "Kategorieë",
+    "categoryIntro": "Kies die geur vir jou tafel.",
+    "categoryNavigation": "Spyskaartkategorieë",
+    "openCategory": "Maak {name} oop, {count} items",
+    "items": "items",
+    "item": "item",
+    "searchResults": "Soekresultate",
+    "productsFound": "{count} items gevind",
+    "backToCategories": "Terug na kategorieë",
+    "backToCategory": "Terug na {name}",
+    "clearSearch": "Maak soektog skoon",
+    "noResults": "Geen ooreenstemmende items gevind",
+    "noResultsDescription": "Probeer 'n ander soektog of keer terug na die kategorieë.",
+    "order": "My Bestelling",
+    "waiter": "Kelner",
+    "bill": "Rekening",
+    "addToCart": "Voeg by Bestelling",
+    "addedToCart": "{name} by jou bestelling gevoeg.",
+    "removeFromCart": "Verwyder {name}",
+    "soldOut": "Vandag Uitverkoop",
+    "productDetails": "Maak besonderhede vir {name} oop",
+    "portion": "Portie",
+    "standardPortion": "Standaard portie",
+    "allergens": "Allergene",
+    "noAllergens": "Geen verklaarde allergene",
+    "productNote": "Item nota",
+    "productNotePlaceholder": "Byv. geen botter, asseblief",
+    "decreaseQuantity": "Verminder hoeveelheid",
+    "increaseQuantity": "Verhoog hoeveelheid",
+    "each": "elk",
+    "note": "Nota",
+    "subtotal": "Subtotaal",
+    "serviceFee": "Diensfooi",
+    "total": "Totaal",
+    "sendOrder": "Stuur Bestelling",
+    "orderSent": "Jou bestelling is na die kombuis gestuur",
+    "orderTracking": "Volg bestelling #{number} hier.",
+    "newItem": "Voeg Nog 'n Item By",
+    "emptyCart": "Jou bestelling is leeg",
+    "emptyCartDescription": "Items wat jy van die spyskaart kies sal hier verskyn.",
+    "browseMenu": "Blaai deur Spyskaart",
+    "orderReceived": "Bestelling Ontvang",
+    "waiterConfirmed": "Kelner Bevestig",
+    "preparing": "Besig om voor te berei",
+    "ready": "Klaar",
+    "served": "Bedien",
+    "preparingDescription": "Ons kombuis is besig om u bestelling voor te berei.",
+    "orderStatus": "Bestelling status",
+    "callWaiter": "Bel Kelner",
+    "placeOrder": "Ek wil bestel",
+    "wantWater": "Ek sal graag water wil hê",
+    "wantBread": "Ek sal graag brood wil hê",
+    "wantService": "Ekstra diens",
+    "other": "Ander",
+    "generalRequest": "Ek het 'n algemene versoek",
+    "orderHelp": "Ek het hulp nodig met my bestelling",
+    "waterDescription": "Bring asseblief water na die tafel",
+    "breadDescription": "Bring asseblief brood na die tafel",
+    "serviceDescription": "Ek het eetgerei of 'n bord nodig",
+    "otherDescription": "Ek het hulp met iets anders nodig",
+    "waiterHelpTitle": "Hoe kan ons help?",
+    "waiterHelpDescription": "Jou versoek sal saam met {table} gestuur word.",
+    "waiterRequestSent": "Jou versoek is aan ons kelner gestuur.",
+    "requestBill": "Versoek Kontrole",
+    "billSent": "Jou versoek vir die rekening is gestuur",
+    "billConfirm": "Wil jy die rekening versoek?",
+    "billSentDescription": "Ons kelner sal binnekort by jou wees.",
+    "billConfirmDescription": "Jou versoek gaan direk na die kelner. Jy kan by die tafel of by die kassier betaal.",
+    "billToast": "U rekeningversoek is aan ons kelner gestuur.",
+    "backToMenu": "Terug na Spyskaart",
+    "back": "Terug",
+    "close": "Sluit",
+    "yourTable": "JOU TAFEL",
+    "serviceOpen": "Diens oop",
+    "slogan": "Tradisionele Smaak • Moderne Tafel",
+    "location": "Bursa, Osmangazi",
+    "languageLabel": "Kies taal",
+    "currencyLabel": "Kies geldeenheid",
+    "customerNavigation": "Kliënt spyskaart navigasie",
+    "approximateCurrency": "Buitelandse valuta pryse is ongeveer. Betaling word in Turkse Lira verwerk.",
+    "orderSuccess": "U bestelling is suksesvol gestuur.",
+    "languagePickerTitle": "Kies Taal",
+    "languagePickerDescription": "Kies die taal wat jy vir die menu wil gebruik.",
+    "searchLanguage": "Soek tale...",
+    "recommendedLanguages": "Aanbeveel",
+    "recentLanguages": "Onlangse Tale",
+    "allLanguages": "Alle Tale",
+    "languageNotFound": "Taal nie gevind nie.",
+    "languageNotFoundDescription": "Probeer 'n ander taalnaam of kode.",
+    "tableNumber": "Tafel {number}",
+    "itemCount": "{count} items",
+    "splashLabel": "Tarihi Şehir Lokantası opening-skerm",
+    "cancel": "Kanselleer",
+    "confirmOrder": "Bevestig Bestelling",
+    "orderSummary": "Bestelling Opsomming",
+    "payment": "Betaling",
+    "tableNotFound": "Tafel nie gevind nie.",
+    "invalidQr": "Ongeldige QR-kode.",
+    "menuUnavailable": "Die spyskaart is tans nie beskikbaar nie.",
+    "networkError": "Daar het 'n netwerkfout voorgekom.",
+    "productUnavailable": "Hierdie item is tans nie beskikbaar nie.",
+    "unableToSendOrder": "Kon nie die bestelling stuur nie.",
+    "tryAgain": "Probeer weer",
+    "somethingWentWrong": "Daar het iets verkeerd geloop.",
+    "loadingLanguage": "Laai taal...",
+    "languageLoadError": "Die taal kon nie gelaai word nie. Probeer asseblief weer."
+  },
+  "categories": {
+    "soups": "Soupe",
+    "grill": "Grille",
+    "mains": "Hoofgeregte",
+    "drinks": "Drankies",
+    "kebabs": "Kebabs",
+    "dessert": "Nageregte"
+  },
+  "products": {
+    "mercimek": {
+      "name": "Linsiesop",
+      "description": "Huisgemaakte linsiesop voorberei op die klassieke wyse, voltooi met 'n bottersous."
+    },
+    "tas-kebabi": {
+      "name": "Turkse Beesvleisstoof",
+      "description": "Beesvleis, seisoenale groente, en ons restaurant se stadig-gekookte spesiale sous."
+    },
+    "kuzu-tandir": {
+      "name": "Langsaam-Geroosterde Lam",
+      "description": "Ons restaurant se kenmerkende lam-tandoori, stadig oor lae hitte gekook."
+    },
+    "pirinc-pilavi": {
+      "name": "Rys Pilaf",
+      "description": "Botteragtige, sagte Baldo-rys pilaf."
+    },
+    "firin-sutlac": {
+      "name": "Gebakte Ryspoeding",
+      "description": "Ryspoeding gebak op die tradisionele wyse, voorberei met daaglikse buffelmelk."
+    },
+    "kuru-fasulye": {
+      "name": "Witboontjiebredie met Beesvleis",
+      "description": "İspir-boontjies, gekerfde beesvleis en gewone restaurant tamatiepastei."
+    },
+    "izgara-kofte": {
+      "name": "Geroosterde Frikkadel",
+      "description": "Slagterstyl beesfrikkadelle met geroosterde soetrissie en tamatie."
+    },
+    "ayran": {
+      "name": "Geroerde Ayran",
+      "description": "Tradisionele geroerde karringmelk met baie skuim, gemaak met gewone jogurt."
+    },
+    "ezogelin-corbasi": {
+      "name": "Ezogelin-soep",
+      "description": "’n Tradisionele restaurantsoep waar rooi lensies, bulgur en rys ontmoet met mynte."
+    },
+    "tarhana-corbasi": {
+      "name": "Tarhana-soep",
+      "description": "Huisgemaakte tarhana, ’n Anatoliese klassieker stadig gekook met tamaties en gedroogde mynte."
+    },
+    "yayla-corbasi": {
+      "name": "Jogurt en Rys Soep",
+      "description": "'n Verfrissende en romerige yayla-soep voorberei met jogurt, rys en gedroogde kruisement."
+    },
+    "iskembe-corbasi": {
+      "name": "Drif-soep",
+      "description": "Geregte beesdrif-soep bedien met sy speserye en knoffelasyn."
+    },
+    "dugun-corbasi": {
+      "name": "Bruilofsoep",
+      "description": "Tradisionele bruilofsoep gemaak met geskeep lamvleis en gegeur met 'n suurlemoen-marinade."
+    },
+    "tavuk-suyu-corbasi": {
+      "name": "Hoenderaftreksel Soep",
+      "description": "'n Genesende soep voorberei met dun noedels wat in beensop gekook is en geskeep hoendervleis."
+    },
+    "domates-corbasi": {
+      "name": "Tamatiesoep",
+      "description": "'n Ryk geur wat gekook is met ryp tamaties, botter en basiliekruid, voltooi met kaas."
+    },
+    "sebze-corbasi": {
+      "name": "Groentesop",
+      "description": "'n Ligte restaurantsoep voorberei met seisoenale groente, olyfolie en vars kruie."
+    },
+    "beyran-corbasi": {
+      "name": "Gevulde Lams Beyran Sop",
+      "description": "'n Streeksoep voorberei oor hoë hitte met lam, rys, knoffel en warm peper."
+    },
+    "kelle-paca-corbasi": {
+      "name": "Kop- en Foolsersop",
+      "description": "'n Ryk beenaftreksop gemaak met beesfoolse en kopvleis wat vir lang ure gekook word."
+    },
+    "sehriye-corbasi": {
+      "name": "Vermisellisop",
+      "description": "Daaglikse sop voorberei met hoenderaftreksel met tamaties, vermicelli en pietersielie."
+    },
+    "tavuk-sis": {
+      "name": "Hoenderstukke aan Sate",
+      "description": "Hoenderstukke gemarineer met spesiale speserye, bedien met geroosterde soetrissies en tamaties."
+    },
+    "kasap-sucuk": {
+      "name": "Gegrilde Slagter se Sucuk",
+      "description": "Pikante beeswors, gaar gemaak op houtskool, met geroosterde groente en uie met sumak."
+    },
+    "karisik-izgara": {
+      "name": "Geroosterde Mengsel",
+      "description": "'n Ryk en verskeiden roosterbord wat bestaan uit vleisballetjies, hoenderstukke aan sate, lamskotelette en wors."
+    },
+    "nohut-yemegi": {
+      "name": "Kekerertjiesstoof met Beesvleis",
+      "description": "'n Tuisgemaakte maaltyd van kekerertjies en fyngekapte beesvleis wat stadig in 'n koperpot gaar word."
+    },
+    "patlican-musakka": {
+      "name": "Aubergine Moussaka",
+      "description": "Gebraaide aubergine, gemaalde beesvleis en moussaka wat in die oond met tamatiesous gaar gebak word, restaurantstyl."
+    },
+    "zeytinyagli-taze-fasulye": {
+      "name": "Groenbone in Olyfolie",
+      "description": "'n Klassieker gaar gemaak in olyfolie met groenbone, tamaties en uie, koud bedien."
+    },
+    "tavuk-sote": {
+      "name": "Gesoteerde Hoender",
+      "description": "Hoenderstukke word oor hoë hitte gesoteer met kleurvolle soetrissies, sampioene en tamaties."
+    },
+    "izmir-kofte": {
+      "name": "İzmir-Styl Gehaktballe",
+      "description": "'n Tradisionele hoofgereg van beesvleisballetjies, aartappels en soetrissies gebraai in tamatiesous."
+    },
+    "etli-bezelye": {
+      "name": "Erte met Beesvleis",
+      "description": "Daaglikse maaltyd in 'n pot gekook met blokkies beesvleis, ertjies, wortels en aartappels."
+    },
+    "patlican-oturtma": {
+      "name": "Gebakte Aubergine met Maalvleis",
+      "description": "Die tong word in die oond voorberei met aubergine, gekruide maalvleis en knoffel-tamatiesous."
+    },
+    "salgam-suyu": {
+      "name": "Gefermenteerde Raaisap",
+      "description": "Tradisionele gekruide raaisap gefermenteer met pers wortel en bulgurgis."
+    },
+    "maden-suyu": {
+      "name": "Minerale Water",
+      "description": "Natuurlike minerale water sonder koolzuur, koud bedien."
+    },
+    "su": {
+      "name": "Natuurlike Bronwater",
+      "description": "Natuurlike bronwater wat koud in 'n glasbottel bedien word."
+    },
+    "kola": {
+      "name": "Cola",
+      "description": "'n Klassieke koolzuurhoudende drank wat ys koud bedien word."
+    },
+    "gazoz": {
+      "name": "Turkse Lemoensoda",
+      "description": "Tradisionele gegeurde, verfrissende en koud bediende gewone soda."
+    },
+    "turk-kahvesi": {
+      "name": "Turkse Koffie",
+      "description": "Tradisionele Turkse koffie met skuim, op hoë hitte in 'n koper cezve gekook."
+    },
+    "demleme-cay": {
+      "name": "Turkse Gebreide Tee",
+      "description": "Vars gebreide warm Rize-tee in 'n dunmiddellyfglase."
+    },
+    "ev-yapimi-limonata": {
+      "name": "Huisgemaakte Lemoensap",
+      "description": "Verfrissende lemonaad wat daagliks met vars suurlemoen, kruisement en 'n bietjie suiker voorberei word."
+    },
+    "hosaf": {
+      "name": "Daaglikse Vrugtekompote",
+      "description": "Huisgemaakte kompote wat daagliks met rosyne, apelkoos of pruime volgens die seisoen gekook word."
+    },
+    "iskender-kebabi": {
+      "name": "Bursa İskender Kebab",
+      "description": "Die vleis word op 'n spies oor pide gedraai, bedien met tamatiesous, warm botter en jogurt."
+    },
+    "kazandibi": {
+      "name": "Gekaramelliseerde Melkpudding",
+      "description": "‘n Tradisionele melkasliggoeds nagereg, behoorlik gekaramelliseer, met 'n satynagtige tekstuur."
+    },
+    "tavuk-gogsu": {
+      "name": "Ottomaanse Melkpudding",
+      "description": "'n Lig en veselagtige melksnaaksmaak, voorberei volgens 'n tradisionele resep, bedien met kaneel."
+    },
+    "keskul": {
+      "name": "Amandelmelkpoeding",
+      "description": "Otomaanse-styl melksnaaksmaak voltooi met amandelgeur en klapper."
+    },
+    "irmik-helvasi": {
+      "name": "Semolina Halva",
+      "description": "Semolina halva, gerooster met botter en dennepitte, bedien warm en met korrelrige tekstuur."
+    },
+    "kabak-tatlisi": {
+      "name": "Pampoennagereg met Tahini",
+      "description": "Die pampoen, stadig gaar gemaak in sy eie sap, word bedien met tahini en okkerneute."
+    },
+    "ayva-tatlisi": {
+      "name": "Memelooienagereg",
+      "description": "Memelooie gaargemaak met naeltjie en kaneel word bedien met gestolde room en okkerneute."
+    },
+    "revani": {
+      "name": "Semolina Stroopkoek",
+      "description": "Die klassieke restaurantnagereg waar semolina sagte koek op lemoengegeurde stroop ontmoet."
+    },
+    "ekmek-kadayifi": {
+      "name": "Broodpudding met Klitsroom",
+      "description": "Broodpudding wat met gekaramelliseerde stroop gerus het, word bedien met buffelklitsroom."
+    },
+    "cevizli-baklava": {
+      "name": "Okkerneut Baklava",
+      "description": "Lae baie dun uitgerol, bros baklava gemaak met baie okkerneute en gewone botter."
+    }
+  },
+  "allergens": {
+    "Süt ürünleri": "Melkprodukte",
+    "Gluten": "Gluten",
+    "Yumurta": "Eier",
+    "Badem": "Amandel",
+    "Çam fıstığı": "Pienkneut",
+    "Susam": "Sesam",
+    "Ceviz": "Okkerneut"
+  },
+  "tags": {
+    "Popüler": "Gewild",
+    "Vejetaryen": "Vegetaries",
+    "Günün Yemeği": "Gereg van die Dag",
+    "Şefin Önerisi": "Kok se Keuse",
+    "Yeni": "Nuut",
+    "Acılı": "Spesery",
+    "Ev Yapımı": "Huisgemaak",
+    "Lokanta Klasiği": "Restaurant-Klassiek",
+    "Günün Çorbası": "Sop van die Dag",
+    "Vegan": "Vegan",
+    "Hafif": "Lig",
+    "Yöresel": "Streek",
+    "Paylaşmalık": "Om te Deel",
+    "Ev Yemeği": "Huisstyl",
+    "Zeytinyağlı": "Olyfolie",
+    "Nostaljik": "Nostalgies",
+    "Geleneksel": "Tradisioneel",
+    "Bursa Lezzeti": "Smaak van Bursa",
+    "Sütlü Tatlı": "Melk Nagereg",
+    "Sıcak Tatlı": "Warm Nagereg",
+    "Mevsimlik": "Seisoenale",
+    "Şerbetli": "Siroop Nagereg"
+  }
+}

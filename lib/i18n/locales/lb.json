@@ -1,0 +1,349 @@
+{
+  "locale": "lb",
+  "ui": {
+    "menu": "Menu",
+    "search": "Am Menu sichen...",
+    "searchLabel": "Am Menu sichen",
+    "categories": "Kategorien",
+    "categoryIntro": "Wielt de Goût fir ären Dësch.",
+    "categoryNavigation": "Menükategorien",
+    "openCategory": "Opmaachen {name}, {count} Elementer",
+    "items": "Elementer",
+    "item": "Element",
+    "searchResults": "Sichen Resultater",
+    "productsFound": "{count} Elementer fonnt",
+    "backToCategories": "Zréck zu de Kategorien",
+    "backToCategory": "Zréck zu {name}",
+    "clearSearch": "Sich läschen",
+    "noResults": "Gëtt keng entspriechend Elementer fonnt",
+    "noResultsDescription": "Probéier eng aner Sich oder zréck op d'Kategorieen.",
+    "order": "Mäi Kommando",
+    "waiter": "Kellner",
+    "bill": "Rechnung",
+    "addToCart": "Zu Opmierksamkeet derbäisetzen",
+    "addedToCart": "{name} ass zu Ärem Kommando derbäigesat ginn.",
+    "removeFromCart": "Entfern {name}",
+    "soldOut": "Haut ausverkaf",
+    "productDetails": "Maach Detailer fir {name} op",
+    "portion": "Portioun",
+    "standardPortion": "Standard Portioun",
+    "allergens": "Allergien",
+    "noAllergens": "Keng deklaréiert Allergien",
+    "productNote": "Artikel Notiz",
+    "productNotePlaceholder": "Zum Beispill keng Botter, w.e.g.",
+    "decreaseQuantity": "Quantitéit reduzéieren",
+    "increaseQuantity": "Quantitéit erhéijen",
+    "each": "all",
+    "note": "Notiz",
+    "subtotal": "Zwëschesumme",
+    "serviceFee": "Servicekäschten",
+    "total": "Total",
+    "sendOrder": "Bestellung schécken",
+    "orderSent": "Är Bestellung gouf an d'Kichen geschéckt",
+    "orderTracking": "Follegt Bestellung #{number} hei.",
+    "newItem": "Weider Artikel derbäisetzen",
+    "emptyCart": "Är Bestellung ass eidel",
+    "emptyCartDescription": "D'Artikelen déi Dir aus der Menü wielt, ginn hei ugewisen.",
+    "browseMenu": "Menü duerchsichen",
+    "orderReceived": "Bestellung empfaangen",
+    "waiterConfirmed": "Garçon confirméiert",
+    "preparing": "Virbereedung",
+    "ready": "Kloer",
+    "served": "Servéiert",
+    "preparingDescription": "Eis Kichen bereet Äre Kommando vir.",
+    "orderStatus": "Status vum Kommando",
+    "callWaiter": "Garçon uruffen",
+    "placeOrder": "Ech wëll bestellen",
+    "wantWater": "Ech hätt gär Waasser",
+    "wantBread": "Ech hätt gär Brout",
+    "wantService": "Zousätzlech Service",
+    "other": "Anerer",
+    "generalRequest": "Ech hunn eng allgemeng Ufro",
+    "orderHelp": "Ech brauch Hëllef mat menger Bestellung",
+    "waterDescription": "Bréngt w.e.g. Waasser op de Dësch",
+    "breadDescription": "Bréngt w.e.g. Brout op de Dësch",
+    "serviceDescription": "Ech brauch Besteck oder e Plat",
+    "otherDescription": "Ech brauch Hëllef mat eppes anescht",
+    "waiterHelpTitle": "Wéi kënne mir hëllefen?",
+    "waiterHelpDescription": "Äre Ufro gëtt mat {table} geschéckt.",
+    "waiterRequestSent": "Äre Ufro gouf un eisem Serveur geschéckt.",
+    "requestBill": "Rechnungsufro",
+    "billSent": "Däi Rechnungsufro gouf geschéckt",
+    "billConfirm": "Wells du d'Rechnung froen?",
+    "billSentDescription": "Eise Kellner ass geschwënn bei Iech.",
+    "billConfirmDescription": "Äre Uerder geet direkt un de Kellner. Dir kënnt um Dësch oder un der Kees bezuelen.",
+    "billToast": "Äre Rechnen Ufro gouf un eisen Kellner geschéckt.",
+    "backToMenu": "Zréck zum Menü",
+    "back": "Zréck",
+    "close": "Zu",
+    "yourTable": "ÄR DËSCH",
+    "serviceOpen": "Service op",
+    "slogan": "Traditionellen Goût • Modern Dësch",
+    "location": "Bursa, Osmangazi",
+    "languageLabel": "Sprooch wielen",
+    "currencyLabel": "Währung wielen",
+    "customerNavigation": "Client Menü Navigatioun",
+    "approximateCurrency": "Präisser an fremder Währung sinn ongeféier. De Paiement gëtt an Türkesch Lira veraarbecht.",
+    "orderSuccess": "Äre Commande gouf erfollegräich geschéckt.",
+    "languagePickerTitle": "Sprooch wielen",
+    "languagePickerDescription": "Wielt d'Sprooch, déi Dir fir d'Menü benotze wëllt.",
+    "searchLanguage": "Sproochen sichen...",
+    "recommendedLanguages": "Empfuelen",
+    "recentLanguages": "Rezent Sproochen",
+    "allLanguages": "All Sproochen",
+    "languageNotFound": "Sprooch net fonnt.",
+    "languageNotFoundDescription": "Probéiert eist anescht Sproochennumm oder Code.",
+    "tableNumber": "Dësch {number}",
+    "itemCount": "{count} Elementer",
+    "splashLabel": "Tarihi Şehir Lokantası Opmaachbildschierm",
+    "cancel": "Ofbriechen",
+    "confirmOrder": "Bestellung confirméieren",
+    "orderSummary": "Bestëllungsresumé",
+    "payment": "Bezueler",
+    "tableNotFound": "Dësch net fonnt.",
+    "invalidQr": "Ongëlte QR Code.",
+    "menuUnavailable": "D'Menü ass momentan net verfügbar.",
+    "networkError": "E Feeler am Netz ass opgetrueden.",
+    "productUnavailable": "Dëse Produit ass momentan net verfügbar.",
+    "unableToSendOrder": "Fälschlecher Iwwermëttlung vun der Bestellung.",
+    "tryAgain": "Erneit probéieren",
+    "somethingWentWrong": "Eppes ass schief gelaf.",
+    "loadingLanguage": "Lueden vun der Sprooch...",
+    "languageLoadError": "D'Sprooch konnt net gelueden ginn. Probéiert w.e.g. nach eng Kéier."
+  },
+  "categories": {
+    "soups": "Zoppen",
+    "grill": "Grills",
+    "mains": "Haaptgeriichter",
+    "drinks": "Gedrénks",
+    "kebabs": "Kebabs",
+    "dessert": "Nuechteren"
+  },
+  "products": {
+    "mercimek": {
+      "name": "Lënsenzopp",
+      "description": "Selbstgemaachte Lënsenzopp am klassische Stil virbereet, mat enger Bottersoss ofgerënnt."
+    },
+    "tas-kebabi": {
+      "name": "Tierkescht Rëndfleeschstouf",
+      "description": "Rëndfleesch, saisonal Geméis, an eisem Restaurant seng lues gekachte Spezialsoss."
+    },
+    "kuzu-tandir": {
+      "name": "Lues geréischtert Lamm",
+      "description": "Eis Restaurant-Highlight Lamm-Tandoori, lues iwwer niddreg Hëtzt gekacht."
+    },
+    "pirinc-pilavi": {
+      "name": "Reis Pilaf",
+      "description": "Bottereg, fluffeg Baldo Reis Pilaf."
+    },
+    "firin-sutlac": {
+      "name": "Gebackene Reis Pudding",
+      "description": "Reis Pudding op traditionell Manéier gebak, mat deeglechem Buffle-Mëllech virbereet."
+    },
+    "kuru-fasulye": {
+      "name": "Wäiss Bounestëpp mat Rëndfleesch",
+      "description": "İspir Bounen, gewierfelt Rëndfleesch an einfache Restaurant Tomatenpaste."
+    },
+    "izgara-kofte": {
+      "name": "Gegrillt Fleeschkloß",
+      "description": "Metzlerstil Rëndfleeschkloß mat geréischtertem Peffer an Tomat."
+    },
+    "ayran": {
+      "name": "Geréiert Ayran",
+      "description": "Traditionell geréiert Buttermëllech mat vill Schaum, gemaach mat Alldag Jogurt."
+    },
+    "ezogelin-corbasi": {
+      "name": "Ezogelin Zopp",
+      "description": "Eng traditionell Restaurantzopp wou roude Lënsen, Bulgur an Reis mat Minz begéinen."
+    },
+    "tarhana-corbasi": {
+      "name": "Tarhana Zopp",
+      "description": "Hausgemaachte Tarhana, e klasseschen anaolesche Plat lues a lues gekacht mat Tomaten an gedréchent Minz."
+    },
+    "yayla-corbasi": {
+      "name": "Joghurt- a Räiszos",
+      "description": "Eng erfrëschend an cremeg Yayla-Zopp, virbereet mat Joghurt, Räis an getrockneter Minzt."
+    },
+    "iskembe-corbasi": {
+      "name": "Trippezopp",
+      "description": "Richteg Rënds-Trippezopp, servéiert mat senger Gewierzmëschung an Knuewechssaier."
+    },
+    "dugun-corbasi": {
+      "name": "Bestuet-Zopp",
+      "description": "Traditionell Bestuet-Zopp mat gerappelt Lammfleesch an Zitroune-Marinad aromatiséiert."
+    },
+    "tavuk-suyu-corbasi": {
+      "name": "Pouletbrout-Zopp",
+      "description": "Eng heilend Zopp, virbereet mat dënnen Nuddelen, an der Bischt gekacht an zerrapptem Pouletfleesch."
+    },
+    "domates-corbasi": {
+      "name": "Tomatzopp",
+      "description": "Eng räich Goût gekacht mat reife Tomaten, Botter an Basilikum, kompletéiert mat Kéis."
+    },
+    "sebze-corbasi": {
+      "name": "Geméiszooss",
+      "description": "Eng liicht Restaurantzooss virbereet mat saisonalem Geméis, Olivenueleg an frësche Kriid."
+    },
+    "beyran-corbasi": {
+      "name": "Wierzige Lämmchen Beyran Zooss",
+      "description": "Eng regional Zooss virbereet bei héijer Hëtzt mat Lämmchen, Réis, Knuewel an waarmen Peffer."
+    },
+    "kelle-paca-corbasi": {
+      "name": "Kapp an Féissooss",
+      "description": "Eng räich Bouillonzooss gemaach mat Rëndsféiss a Kapp Fleesch laang gekacht."
+    },
+    "sehriye-corbasi": {
+      "name": "Vermicelli Zooss",
+      "description": "Allgemenge Soup mat Pouletbouillon, Tomaten, Vermicelli a Petersilie virbereet."
+    },
+    "tavuk-sis": {
+      "name": "Pouletspiesse",
+      "description": "Pouletstécker mat speziellen Gewierzer marinateéiert, zerwéiert mat gebratene Peffer an Tomaten."
+    },
+    "kasap-sucuk": {
+      "name": "Gegrillte Metzler Sucuk",
+      "description": "Päfferlecht Rëndwurst op Holzkuelen gekacht, mat gebratene Geméis an Zwiebel mam Sumak."
+    },
+    "karisik-izgara": {
+      "name": "Mëschleche Grill",
+      "description": "Eng räich an verschidde Grillplack bestinn aus Fleeschbällchen, Pouletspiesse, Lämbchops, an Wurst."
+    },
+    "nohut-yemegi": {
+      "name": "Kichererbsestéw mat Rëndfleesch",
+      "description": "Eng hausgemaachte Plack mat Kichererbsen a gewierftem Rëndfleesch, lues a lues an enger Kupferkasseroll gekacht."
+    },
+    "patlican-musakka": {
+      "name": "Melanzani Mousaka",
+      "description": "Gebrat Melanzani, gemueltem Rëndfleesch an Mousaka am Uewen gebak mat Tomateszoss, a Restaurantstil."
+    },
+    "zeytinyagli-taze-fasulye": {
+      "name": "Gréng Bounen an Olivenueleg",
+      "description": "Eng Klassik an Olivenueleg gekacht mat grénge Bounen, Tomaten a Zwiebel, kal zerwéiert."
+    },
+    "tavuk-sote": {
+      "name": "Angebrat Poulet",
+      "description": "Pouletstécker ginn iwwer héijer Hëtzt mat faarwege Peffer, Champignonen a Tomaten ugebraten."
+    },
+    "izmir-kofte": {
+      "name": "Izmir-Stil Fleeschbäll",
+      "description": "En traditionelle Haaptplat vun Rëndfleeschbällcher, Kärenkären an Peffer am Tomatensauce gebak."
+    },
+    "etli-bezelye": {
+      "name": "Äerbsen mat Rëndfleesch",
+      "description": "All Dag Iessen am Kasseroll gekacht mat gewierfeltem Rëndfleesch, Äerbsen, Muerten an Kärenkären."
+    },
+    "patlican-oturtma": {
+      "name": "Gebakene Aubergine mat Hackfleesch",
+      "description": "D'Zong gëtt am Uewen mat Aubergine, gewierztem Hackfleesch an Knuewel-Tomaten-Sauce virbereet."
+    },
+    "salgam-suyu": {
+      "name": "Gären Turnejusz",
+      "description": "Traditionelle gewierzte Turmspuerjärschescht, gären mat violettem Muerten an Bulgurhefe."
+    },
+    "maden-suyu": {
+      "name": "Mineralwaasser",
+      "description": "Naturmineralwaasser, kal zerwéiert."
+    },
+    "su": {
+      "name": "Natierlech Quellwaasser",
+      "description": "Natierlech Quellwaasser, kal zerwéiert an enger Glasfläsch."
+    },
+    "kola": {
+      "name": "Cola",
+      "description": "Eng klassesch karboniséiert Gedrénks, eisekal zerwéiert."
+    },
+    "gazoz": {
+      "name": "Tierkesch Zitrounesodawasser",
+      "description": "Traditionell aromatiséiert, erfrëschend a kal zerwéiert eist Soda."
+    },
+    "turk-kahvesi": {
+      "name": "Tierkesch Kaffi",
+      "description": "Traditionell tierkesch Kaffi mat Schaum, op héijer Hëtzt an enger Kopperskanne gekacht."
+    },
+    "demleme-cay": {
+      "name": "Tierkesch gezunn Téin",
+      "description": "Frësch gezunn waarm Rize-Téi an enger dënn-tailéierter Glas."
+    },
+    "ev-yapimi-limonata": {
+      "name": "Héichgemoolte Zitrouneséier",
+      "description": "Erfrëschend Limonade, all Dag mat frëschen Zitrounen, Minz an e bësse Zocker virbereet."
+    },
+    "hosaf": {
+      "name": "Dagleche Friichtekompott",
+      "description": "Hausgemaachte Kompott, all Dag mat Rosinen, Aprikosen oder Pflaumen no der Saison gekacht."
+    },
+    "iskender-kebabi": {
+      "name": "Bursa İskender Kebab",
+      "description": "D'Fleesch gëtt op engem Spieß iwwer Pide dréint, zerwéiert mat Tomateszooss, waarmem Botter a Joghurt."
+    },
+    "kazandibi": {
+      "name": "Karamelliséiert Mëllechpudding",
+      "description": "Eng traditionell Mëllechdessert richteg karamelliséiert, mat enger seideger Textur."
+    },
+    "tavuk-gogsu": {
+      "name": "Osmanesche Mëllechpudding",
+      "description": "En liichte an faserbelaaschte Mielesdessert, virbereet mat engem traditionelle Rezept, zerwéiert mat Zimmet."
+    },
+    "keskul": {
+      "name": "Mandelmëllechpuddings",
+      "description": "Osmantescht Mielesdessert mat Mandelsgeschmaach an Kokos fäerdeg gemaach."
+    },
+    "irmik-helvasi": {
+      "name": "Grieshalva",
+      "description": "Grieshalva, mat Botter an Pinienkären geréischtert, waarm a körneg zerwéiert."
+    },
+    "kabak-tatlisi": {
+      "name": "Kürbisdessert mat Tahini",
+      "description": "De Kürbis, lues am eegene Jus gekacht, gëtt mat Tahini a Walnëss zerwéiert."
+    },
+    "ayva-tatlisi": {
+      "name": "Quitte Dessert",
+      "description": "Quitte mat Nelk an Zimmet gekacht, gëtt mat Crème Frâîche an Walnëss zerwéiert."
+    },
+    "revani": {
+      "name": "Grieskuch mat Sirup",
+      "description": "De klassesche Restaurantdesserwéi wou grieseg mëll Kuch mat Zitrounduft-Sirup zesummekënnt."
+    },
+    "ekmek-kadayifi": {
+      "name": "Brei-Pudding mat gestoterter Crème",
+      "description": "Brei-Pudding, gerëst mat karamelliséiertem Sirup, gëtt mat Büffelgestoterter Crème zerwéiert."
+    },
+    "cevizli-baklava": {
+      "name": "Walnoss-Baklava",
+      "description": "Schichten, ganz dënn ausgerullt, knuspereg Baklava, gemaach mat villen Walnëss a einfachem Botter."
+    }
+  },
+  "allergens": {
+    "Süt ürünleri": "Milchprodukter",
+    "Gluten": "Gluten",
+    "Yumurta": "Eeër",
+    "Badem": "Mandel",
+    "Çam fıstığı": "Kéiënnchen",
+    "Susam": "Sesam",
+    "Ceviz": "Walnoss"
+  },
+  "tags": {
+    "Popüler": "Beléift",
+    "Vejetaryen": "Vegetaresch",
+    "Günün Yemeği": "Plat vum Dag",
+    "Şefin Önerisi": "Choix vum Chef",
+    "Yeni": "Nei",
+    "Acılı": "Gwuertwäerzeg",
+    "Ev Yapımı": "Selwer gemaach",
+    "Lokanta Klasiği": "Restaurant Classic",
+    "Günün Çorbası": "Dagessop",
+    "Vegan": "Vegan",
+    "Hafif": "Léicht",
+    "Yöresel": "Regional",
+    "Paylaşmalık": "Zezemaachen",
+    "Ev Yemeği": "Heem-Stil",
+    "Zeytinyağlı": "Oliw",
+    "Nostaljik": "Nostalgesch",
+    "Geleneksel": "Traditionell",
+    "Bursa Lezzeti": "Geschmaach vu Bursa",
+    "Sütlü Tatlı": "Mëllechdessert",
+    "Sıcak Tatlı": "Wäermt Dessert",
+    "Mevsimlik": "Saisonal",
+    "Şerbetli": "Sirupdesser"
+  }
+}

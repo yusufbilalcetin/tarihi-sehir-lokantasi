@@ -1,0 +1,349 @@
+{
+  "locale": "ha",
+  "ui": {
+    "menu": "Menu",
+    "search": "Bincika menu...",
+    "searchLabel": "Bincika menu",
+    "categories": "Kategoriya",
+    "categoryIntro": "Zaɓi ɗanɗano don teburan ku.",
+    "categoryNavigation": "Rukunin menu",
+    "openCategory": "Bude {name}, abubuwa {count}",
+    "items": "abubuwa",
+    "item": "abu",
+    "searchResults": "Sakamakon Bincike",
+    "productsFound": "An sami abubuwa {count}",
+    "backToCategories": "Komawa rukunai",
+    "backToCategory": "Komawa {name}",
+    "clearSearch": "Share bincike",
+    "noResults": "Babu abubuwan da suka dace da bincikenka",
+    "noResultsDescription": "Gwada wani bincike ko koma zuwa rukunoni.",
+    "order": "Odarka",
+    "waiter": "Mai hidima",
+    "bill": "Takardar Bashi",
+    "addToCart": "Ƙara zuwa Oda",
+    "addedToCart": "{name} an ƙara zuwa odarka.",
+    "removeFromCart": "Ƙara {name}",
+    "soldOut": "An sayar duka yau",
+    "productDetails": "Bude cikakkun bayanai na {name}",
+    "portion": "Sashi",
+    "standardPortion": "Sashin daidaito",
+    "allergens": "Abubuwan da ke haddasa ciki",
+    "noAllergens": "Babu abubuwan da aka bayyana",
+    "productNote": "Bayanan abu",
+    "productNotePlaceholder": "Misali: babu man shanu, don Allah",
+    "decreaseQuantity": "Rage adadi",
+    "increaseQuantity": "Ƙara adadi",
+    "each": "kowanne",
+    "note": "Lura",
+    "subtotal": "Jimillar ƙasa",
+    "serviceFee": "Kudin sabis",
+    "total": "Jimla",
+    "sendOrder": "Aika Umarni",
+    "orderSent": "An aika umarninka zuwa kicin",
+    "orderTracking": "Sauki bin umarni #{number} anan.",
+    "newItem": "Ƙara Wani Abu",
+    "emptyCart": "Umarinka babu komai",
+    "emptyCartDescription": "Abubuwan da ka zaɓa daga menu za su bayyana anan.",
+    "browseMenu": "Bincika Menu",
+    "orderReceived": "An karɓi Umarni",
+    "waiterConfirmed": "Mai kawo abinci ya tabbatar",
+    "preparing": "A shirya",
+    "ready": "Shirye",
+    "served": "An kawo",
+    "preparingDescription": "Dakin girkinmu na shirya odarka.",
+    "orderStatus": "Matsayin oda",
+    "callWaiter": "Kira Mai kawo abinci",
+    "placeOrder": "Ina son yin oda",
+    "wantWater": "Ina son ruwa",
+    "wantBread": "Ina son burodi",
+    "wantService": "Kari na musamman",
+    "other": "Sauran",
+    "generalRequest": "Ina da bukata ta gabaɗaya",
+    "orderHelp": "Ina bukatar taimako da odata",
+    "waterDescription": "Don Allah kawo ruwa zuwa teburi",
+    "breadDescription": "Don Allah ka kawo burodi zuwa tebur",
+    "serviceDescription": "Ina bukatan cokali da forki ko faranti",
+    "otherDescription": "Ina bukatan taimako da wani abu",
+    "waiterHelpTitle": "Ta yaya zamu iya taimakawa?",
+    "waiterHelpDescription": "Bukatarka za a aika ta tare da {table}.",
+    "waiterRequestSent": "Bukatarka ta tura wa mai hidima namu.",
+    "requestBill": "Nemar Baki",
+    "billSent": "Bukatar kudinka an aika",
+    "billConfirm": "Kana so ka nemi lissafin?",
+    "billSentDescription": "Mai hidimanmu zai zo wurinka nan da nan.",
+    "billConfirmDescription": "Bukatarka za ta je kai tsaye ga mai hidima. Kana iya biyan a tebur ko a wurin kudi.",
+    "billToast": "An roƙon billa ɗinka an aika shi ga mai hidimarmu.",
+    "backToMenu": "Komawa Menu",
+    "back": "Komawa",
+    "close": "Rufe",
+    "yourTable": "Teburin KA",
+    "serviceOpen": "Aikin yana buɗewa",
+    "slogan": "ɗanɗanar Gargajiya • Teburin Zamani",
+    "location": "Bursa, Osmangazi",
+    "languageLabel": "Zaɓi harshe",
+    "currencyLabel": "Zaɓi kuɗi",
+    "customerNavigation": "Kewayawa menu na abokin ciniki",
+    "approximateCurrency": "Farashin kuɗi na ƙasashen waje kusan haka ne. Biya yana gudana ne a cikin Lira ta Turkiyya.",
+    "orderSuccess": "Oda ɗinka an tura shi cikin nasara.",
+    "languagePickerTitle": "Zaɓi Harshe",
+    "languagePickerDescription": "Zaɓi yaren da kake son amfani da shi don menu.",
+    "searchLanguage": "Nemo harsuna...",
+    "recommendedLanguages": "Ana bada shawara",
+    "recentLanguages": "Harsunan da aka dade da amfani da su",
+    "allLanguages": "Dukkan Harsuna",
+    "languageNotFound": "Ba a samu yaren ba.",
+    "languageNotFoundDescription": "Gwada wani sunan yare ko lambar yare.",
+    "tableNumber": "Teberi {number}",
+    "itemCount": "{count} abubuwa",
+    "splashLabel": "Allon budewa na Tarihi Şehir Lokantası",
+    "cancel": "Soke",
+    "confirmOrder": "Tabbatar da Umarni",
+    "orderSummary": "Takaitaccen Umarni",
+    "payment": "Biya",
+    "tableNotFound": "Ba a samu tebur ba.",
+    "invalidQr": "Lambar QR ba daidai ba ce.",
+    "menuUnavailable": "Menu ba ta samuwa a yanzu.",
+    "networkError": "An samu kuskuren cibiyar sadarwa.",
+    "productUnavailable": "Wannan abu ba ya samuwa a yanzu.",
+    "unableToSendOrder": "Ba za a iya aikawa da oda ba.",
+    "tryAgain": "Gwada sake",
+    "somethingWentWrong": "Wani abu ya samu matsala.",
+    "loadingLanguage": "Ana lodin harshe...",
+    "languageLoadError": "Ba za a iya lodin harshen ba. Da fatan za a sake gwadawa."
+  },
+  "categories": {
+    "soups": "Miye-miye",
+    "grill": "Gasashen nama",
+    "mains": "Manyan Abinci",
+    "drinks": "Abin sha",
+    "kebabs": "Kebabs",
+    "dessert": "Kayan zaki"
+  },
+  "products": {
+    "mercimek": {
+      "name": "Miya da Lenti",
+      "description": "Miyan lenti da aka yi a gida bisa salon gargajiya, an kammala da miya mai man shanu."
+    },
+    "tas-kebabi": {
+      "name": "Stew na Nama na Ture",
+      "description": "Nama, kayan lambu na kakar, da miya ta musamman da gidan cin abincinmu ya dahu a hankali."
+    },
+    "kuzu-tandir": {
+      "name": "Ragon da Aka Yi Roasted Sannu",
+      "description": "Ragon tandoori na musamman na gidan cin abincinmu, an dafa shi a hankali a kan ƙaramin zafi."
+    },
+    "pirinc-pilavi": {
+      "name": "Shinkafa Pilaf",
+      "description": "Shinkafa pilaf mai laushi da man shanu, iri Baldo."
+    },
+    "firin-sutlac": {
+      "name": "Budadden Pudding na Shinkafa",
+      "description": "Pudding na shinkafa da aka gasa a hanyar gargajiya, an shirya shi da madarar buffalo ta yau da kullum."
+    },
+    "kuru-fasulye": {
+      "name": "Miya Farar Wake da Nama",
+      "description": "Wake irin İspir, naman sa da aka yanka kanana, da man tumatir na gidan cin abinci."
+    },
+    "izgara-kofte": {
+      "name": "Kwadon Nama a Gasa",
+      "description": "Kwadon naman sa irin na dukan nama da barkono da tumatir da aka gasa."
+    },
+    "ayran": {
+      "name": "Ayran da Aka Hura",
+      "description": "Sauki na gargajiya da aka hura mai kumfa, wanda aka yi da yogurt na yau da kullum."
+    },
+    "ezogelin-corbasi": {
+      "name": "Miyan Ezogelin",
+      "description": "Miya ta gargajiya ta gidan cin abinci inda lentils ja, bulgur, da shinkafa suka hadu da minti."
+    },
+    "tarhana-corbasi": {
+      "name": "Miyan Tarhana",
+      "description": "Tarhana na gida, wani tsohon abincin Anatoliya da aka dafa a hankali tare da tumatir da minti busasshe."
+    },
+    "yayla-corbasi": {
+      "name": "Yogurt da Shinkafa Miya",
+      "description": "Miya mai sanyaya jiki da kirim wanda aka shirya da yogurt, shinkafa, da busasshen minti."
+    },
+    "iskembe-corbasi": {
+      "name": "Miyan Tripe",
+      "description": "Miyan naman sa na tripe daidai gwargwado tare da kayan yaji da ruwan tafarnuwa."
+    },
+    "dugun-corbasi": {
+      "name": "Miyan Biki",
+      "description": "Miyan biki na gargajiya wanda aka yi da naman rago da aka yayyanka kuma aka yi masa ɗanɗano da ruwan lemun tsami."
+    },
+    "tavuk-suyu-corbasi": {
+      "name": "Miyan Bulon Kaza",
+      "description": "Miyan warkarwa da aka shirya da tsinken taliya da aka dafa a cikin bulon kasusuwa da naman kaza da aka yayyanka."
+    },
+    "domates-corbasi": {
+      "name": "Miyan Tumatir",
+      "description": "ɗanɗano mai yalwa da aka dafa tare da tumatir da ya yi tsatsa, man shanu, da basil, an kammala shi da cuku."
+    },
+    "sebze-corbasi": {
+      "name": "Miya na kayan lambu",
+      "description": "Miya mai haske ta gidan cin abinci da aka shirya da kayan lambu na kakar, man zaitun, da ganye sabo."
+    },
+    "beyran-corbasi": {
+      "name": "Miya mai zafi na naman rago Beyran",
+      "description": "Miya ta yanki da aka shirya a kan zafi mai yawa da naman rago, shinkafa, tafarnuwa, da barkono mai zafi."
+    },
+    "kelle-paca-corbasi": {
+      "name": "Miya na kai da ƙafa",
+      "description": "Miya mai yalwa da kasusuwa da aka yi da ƙafafen saniya da nama na kai da aka dafa na tsawon sa'o'i."
+    },
+    "sehriye-corbasi": {
+      "name": "Miya na Vermicelli",
+      "description": "Miya ta yau da kullum an shirya ta da ruwan gàjiya na kaza da tumatir, vermiselli, da parsley."
+    },
+    "tavuk-sis": {
+      "name": "Skewers na Kaza",
+      "description": "Sassan kaza da aka jika da kayan yaji na musamman, ana miya da barkono da tumatir da aka soya."
+    },
+    "kasap-sucuk": {
+      "name": "Sucuk na Makin Yankan Nama da aka Gasa",
+      "description": "Chorizo mai yaji na naman sa da aka dafa a kan gawayi, tare da kayan lambu da albasa da sumac."
+    },
+    "karisik-izgara": {
+      "name": "Gasa Haɗi",
+      "description": "Faranti mai yawan abinci da aka haɗa wanda ya ƙunshi kuxin nama, skewers na kaza, ƙasƙar naman rago, da chorizo."
+    },
+    "nohut-yemegi": {
+      "name": "Stew na Chickpea da Naman Sa",
+      "description": "Abincin gida na wake da nama yankakke a hankali a cikin tukunya ta tagulla."
+    },
+    "patlican-musakka": {
+      "name": "Moussaka na Aubergine",
+      "description": "Aubergine mai soyayye, nama ƙasa, da moussaka da aka gasa a cikin murhu tare da miya tumatir, salon gidan abinci."
+    },
+    "zeytinyagli-taze-fasulye": {
+      "name": "Wake Kore a Man Zaitun",
+      "description": "Abincin gargajiya da aka dafa a man zaitun tare da wake kore, tumatir, da albasa, ana miƙa shi sanyi."
+    },
+    "tavuk-sote": {
+      "name": "Kaji Sautéed",
+      "description": "Yankakken ƙananan kaza ana sautéed su a kan zafi mai yawa tare da barkono masu launuka, namomin ƙasa, da tumatir."
+    },
+    "izmir-kofte": {
+      "name": "Kuli-Kuli na Ƙasar İzmir",
+      "description": "Babban abincin gargajiya na ƙwallon naman sa, dankalin turawa, da barkono da aka gasa a cikin miya tumatir."
+    },
+    "etli-bezelye": {
+      "name": "Wake da Naman Sa",
+      "description": "Abincin yau da kullum da ake dafa shi a tukunya tare da yankakken naman sa, wake, karas, da dankalin turawa."
+    },
+    "patlican-oturtma": {
+      "name": "Aubergine da Naman Kasa",
+      "description": "An shirya harshe a cikin tanda tare da aubergine, nama mai yaji da aka nika, da miya tumatir mai tafarnuwa."
+    },
+    "salgam-suyu": {
+      "name": "Ruwan Lalacewar Danya",
+      "description": "Ruwan danye mai yaji na gargajiya da aka lalata tare da karas launin shunayya da yis na bulgur."
+    },
+    "maden-suyu": {
+      "name": "Ruwan Maɗaukaki",
+      "description": "Ruwan maɗaukaki na halitta mara ƙamshi da aka bayar sanyi."
+    },
+    "su": {
+      "name": "Ruwa na Spring na Halitta",
+      "description": "Ruwan spring na halitta da aka yi sanyi an jera shi a cikin kwalban gilashi."
+    },
+    "kola": {
+      "name": "Cola",
+      "description": "Shayin lemu mai ƙwanƙwasa na gargajiya da aka yi sanyi sosai."
+    },
+    "gazoz": {
+      "name": "Ruwan Lemu na Turkiyya",
+      "description": "Ruwan soda na gargajiya mai ɗanɗano, mai sanyaya jiki, da aka yi sanyi ba tare da ƙari ba."
+    },
+    "turk-kahvesi": {
+      "name": "Kofi na Turkiyya",
+      "description": "Kofi na Turkiyya na gargajiya mai kumfa, da aka dafa a kan zafi mai yawa a cikin cezve na tagulla."
+    },
+    "demleme-cay": {
+      "name": "Shayi na Turkiyya da aka dafa",
+      "description": "Shayi mai zafi na Rize da aka dafa kwanan nan a cikin gilashi mai kugu."
+    },
+    "ev-yapimi-limonata": {
+      "name": "Lemonaid na Gida",
+      "description": "Lemun tsami mai daɗi ana haɗa shi a kowace rana da sabbin lemun tsami, minti, da ɗan sukari kaɗan."
+    },
+    "hosaf": {
+      "name": "Kwaron 'Ya'yan itace na Rana",
+      "description": "Kwaron gida da aka tafasa a kowace rana tare da raisins, apricots, ko plums bisa ga yanayin lokaci."
+    },
+    "iskender-kebabi": {
+      "name": "Bursa İskender Kebab",
+      "description": "Namijin yana juyawa a kan skewer a saman pide, ana yi masa hidima da miya tumatir, man zafi, da yogurt."
+    },
+    "kazandibi": {
+      "name": "Puding Madara Mai Kirim",
+      "description": "Na gargajiya pudding madara wanda aka caramelize da kyau, da laushi mai laushi."
+    },
+    "tavuk-gogsu": {
+      "name": "Puding Madaran Ottoman",
+      "description": "Wani kayan zaki mai haske da kumfa wanda ake dafa shi da girke-girke na gargajiya, ana kawo shi tare da kirfa."
+    },
+    "keskul": {
+      "name": "Kwade-kwaden Madarar Almond",
+      "description": "Kayan zaki na madara na salon Ottoman wanda aka kammala da ɗanɗano almond da kwakwa."
+    },
+    "irmik-helvasi": {
+      "name": "Halva na Semolina",
+      "description": "Halva na semolina, wanda aka soya da man shanu da kanwa, ana kawo shi da zafi da tsaba."
+    },
+    "kabak-tatlisi": {
+      "name": "Kayan Zaki na Kabewa tare da Tahini",
+      "description": "Kabewa, wadda aka dafa a hankali a ruwanta, ana kawo ta tare da tahini da gyada."
+    },
+    "ayva-tatlisi": {
+      "name": "Kayan Zaki na Ayaba",
+      "description": "Ayaba da aka dafa tare da ɗanɗano na clove da kirfa ana kawo ta tare da madara mai kauri da gyada."
+    },
+    "revani": {
+      "name": "Kafin Kayan Zaki na Semolina",
+      "description": "Kayan zaki na gargajiya na gidan cin abinci inda kayan cake mai laushi na semolina yake haduwa da syrup mai kamshin lemon."
+    },
+    "ekmek-kadayifi": {
+      "name": "Pudding Na Burodi da Cream Mai Kaushi",
+      "description": "Pudding na burodi da aka ajiye tare da syrup caramelized ana yi masa hidima tare da cream mai kaushi na buffalo."
+    },
+    "cevizli-baklava": {
+      "name": "Baklava na Walnut",
+      "description": "Layer da aka shimfida sosai, baklava mai karko da aka yi da yawa walnuts da man shanu na gargajiya."
+    }
+  },
+  "allergens": {
+    "Süt ürünleri": "Madara",
+    "Gluten": "Gluten",
+    "Yumurta": "Kwai",
+    "Badem": "Almond",
+    "Çam fıstığı": "Pine nut",
+    "Susam": "Sesame",
+    "Ceviz": "Goro"
+  },
+  "tags": {
+    "Popüler": "Shahara",
+    "Vejetaryen": "Mai cin kayan lambu",
+    "Günün Yemeği": "Abincin Rana",
+    "Şefin Önerisi": "Zaben Chef",
+    "Yeni": "Sabo",
+    "Acılı": "Yaji",
+    "Ev Yapımı": "Na gida",
+    "Lokanta Klasiği": "Abincin gidan cin abinci na gargajiya",
+    "Günün Çorbası": "Miyar Rana",
+    "Vegan": "Mai cin tsirrai",
+    "Hafif": "Haske",
+    "Yöresel": "Na yanki",
+    "Paylaşmalık": "Don raba",
+    "Ev Yemeği": "Salon gida",
+    "Zeytinyağlı": "Man zaitun",
+    "Nostaljik": "Tunawa",
+    "Geleneksel": "Na gargajiya",
+    "Bursa Lezzeti": "Dandanon Bursa",
+    "Sütlü Tatlı": "Kwai na Madara",
+    "Sıcak Tatlı": "Dandanon Zafi",
+    "Mevsimlik": "Na Lokaci",
+    "Şerbetli": "Dandanon Syrup"
+  }
+}

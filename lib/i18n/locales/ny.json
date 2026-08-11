@@ -1,0 +1,349 @@
+{
+  "locale": "ny",
+  "ui": {
+    "menu": "Menyu",
+    "search": "Sakani menyu...",
+    "searchLabel": "Sakani menyu",
+    "categories": "Zigawo",
+    "categoryIntro": "Sankhani mnunkhira wa tebulo lanu.",
+    "categoryNavigation": "Zigawo za menyu",
+    "openCategory": "Tsegulani {name}, zinthu {count}",
+    "items": "zinthu",
+    "item": "chinthu",
+    "searchResults": "Zotsatira Zakusaka",
+    "productsFound": "zinthu {count} zapezeka",
+    "backToCategories": "Bwewerani ku zigawo",
+    "backToCategory": "Bwewerani ku {name}",
+    "clearSearch": "Fufuzani kufufuzanso",
+    "noResults": "Palibe zinthu zofanana zomwe zapezeka",
+    "noResultsDescription": "Yesani kufunafuna kwina kapena bwerera ku magulu.",
+    "order": "Lamulo Langa",
+    "waiter": "Wothandizira",
+    "bill": "Mulipiro",
+    "addToCart": "Onjezani ku Lamulo",
+    "addedToCart": "{name} yawonjezedwa ku lamulo lanu.",
+    "removeFromCart": "Bwezeretsani {name}",
+    "soldOut": "Zaperekedwa Lero",
+    "productDetails": "Tsegulani zokhudza {name}",
+    "portion": "Gawo",
+    "standardPortion": "Gawo lofanana ndi wamba",
+    "allergens": "Zowopsa pa Thupi",
+    "noAllergens": "Pali zowopsa zomwe sizinanenedwe",
+    "productNote": "Chidziwitso cha katundu",
+    "productNotePlaceholder": "Mwachitsanzo: palibe batala, chonde",
+    "decreaseQuantity": "Pangani kuchuluka kochepa",
+    "increaseQuantity": "Pangani kuchuluka kopitilira",
+    "each": "iliyonse",
+    "note": "Chidziwitso",
+    "subtotal": "Subotali",
+    "serviceFee": "Malipiro a utumiki",
+    "total": "Onse",
+    "sendOrder": "Tumiza Order",
+    "orderSent": "Order yanu yatumizidwa ku khitchini",
+    "orderTracking": "Tezani order #{number} apa.",
+    "newItem": "Onjezani Chinacho Chinanso",
+    "emptyCart": "Order yanu ndi yopanda kanthu",
+    "emptyCartDescription": "Zinthu zomwe musankha kuchokera pamenyu ziwoneka pano.",
+    "browseMenu": "Sakatulani Menyu",
+    "orderReceived": "Order Yalandiridwa",
+    "waiterConfirmed": "Woyang'anira Wapereka Chitsimikizo",
+    "preparing": "Kukonzekera",
+    "ready": "Wokonzeka",
+    "served": "Waperekedwa",
+    "preparingDescription": "Khitchini yathu ikukonzekera lamulo lanu.",
+    "orderStatus": "Chimodzi cha Lamulo",
+    "callWaiter": "Fufuzani Woyang'anira",
+    "placeOrder": "Ndikufuna kuyika lamulo",
+    "wantWater": "Ndingafune madzi",
+    "wantBread": "Ndingafune mkate",
+    "wantService": "Ntchito Yopezera Zambiri",
+    "other": "Zina",
+    "generalRequest": "Ndinadziwika ndi pempho lonse",
+    "orderHelp": "Ndimafuna thandizo ndi lamulo langa",
+    "waterDescription": "Chonde bweretsani madzi ku tebulo",
+    "breadDescription": "Chonde bweretsani mkate kumtanda",
+    "serviceDescription": "Ndikufunika zida za kudya kapena mbale",
+    "otherDescription": "Ndikufunika thandizo pa china",
+    "waiterHelpTitle": "Kodi tingakuthandizeni bwanji?",
+    "waiterHelpDescription": "Pempho lanu lidatumizidwa ndi {table}.",
+    "waiterRequestSent": "Pempho lanu lidatumizidwa kwa waitala wathu.",
+    "requestBill": "Pempho Lachi Biri",
+    "billSent": "Pempho lanu la bili lidatumizidwa",
+    "billConfirm": "Mungafune kupempha bili?",
+    "billSentDescription": "Waitala wathu adzakhala nanu posachedwa.",
+    "billConfirmDescription": "Pempho lanu lidzapita mwachindunji kwa waitala. Mungalipire pamtanda kapena pa kasitomala.",
+    "billToast": "Pempho lanu la bili latumizidwa kwa m'kuphika wathu.",
+    "backToMenu": "Kubwerera ku Menyu",
+    "back": "Kubwerera",
+    "close": "Yatsa",
+    "yourTable": "TAFALA YANU",
+    "serviceOpen": "Utumiki watsegulidwa",
+    "slogan": "Zakudya Zachikhalidwe • Tafala Yapano",
+    "location": "Bursa, Osmangazi",
+    "languageLabel": "Sankhani chilankhulo",
+    "currencyLabel": "Sankhani ndalama",
+    "customerNavigation": "Njira yogwirira menyu ya makasitomala",
+    "approximateCurrency": "Mitengo ya ndalama zakunja ndi yowoneka bwino. Malipiro amachitika mu Turkish Lira.",
+    "orderSuccess": "Lamulo lanu latumizidwa bwino.",
+    "languagePickerTitle": "Sankhani Chilankhulo",
+    "languagePickerDescription": "Sankhani chilankhulo chomwe mukufuna kugwiritsa ntchito pamenyu.",
+    "searchLanguage": "Fufuza zilankhulo...",
+    "recommendedLanguages": "Amalimbikitsidwa",
+    "recentLanguages": "Zilankhulo Zaposachedwa",
+    "allLanguages": "Zilankhulo Zonse",
+    "languageNotFound": "Chilankhulo sichinapezeke.",
+    "languageNotFoundDescription": "Lembani dzina lina la chilankhulo kapena nambala yake.",
+    "tableNumber": "Table {number}",
+    "itemCount": "Zinthu {count}",
+    "splashLabel": "Chithunzi choyamba cha Tarihi Şehir Lokantası",
+    "cancel": "Siyani",
+    "confirmOrder": "Potseka Lamulo",
+    "orderSummary": "Chidule cha Lamulo",
+    "payment": "Malipiro",
+    "tableNotFound": "Tebulo silinapezeke.",
+    "invalidQr": "QR code siyovomerezeka.",
+    "menuUnavailable": "Menyu pakali pano siyikupezeka.",
+    "networkError": "Chipatala cha intaneti chachitika.",
+    "productUnavailable": "Chinthu ichi pakali pano sichikupezeka.",
+    "unableToSendOrder": "Sikungathe kutumiza dongosolo.",
+    "tryAgain": "Limbirirani",
+    "somethingWentWrong": "Chinthu chinachitika cholakwika.",
+    "loadingLanguage": "Ikani chinenero...",
+    "languageLoadError": "Chinenero sichingathe kukhazikitsidwa. Chonde yesanso."
+  },
+  "categories": {
+    "soups": "Zosobwa",
+    "grill": "Zopaka pa grilli",
+    "mains": "Zakudya zazikulu",
+    "drinks": "Zamadzimadzi",
+    "kebabs": "Zakudya za Kebab",
+    "dessert": "Zakudya zodzitlura"
+  },
+  "products": {
+    "mercimek": {
+      "name": "Suphu ya Nthochi",
+      "description": "Suphu ya nthochi yopangidwa kunyumba mu njira ya chikhalidwe, yomalizidwa ndi msuzi wa batala."
+    },
+    "tas-kebabi": {
+      "name": "Stiyuu ya Ng'ombe ya ku Turkey",
+      "description": "Ng'ombe, masamba a nthawiyo, ndi msuzi wapadera wa m'nyumba yathu womwe umaphikidwa pang'onopang'ono."
+    },
+    "kuzu-tandir": {
+      "name": "Ng'ombe Kokhowa Yopondera Mozungulira",
+      "description": "Lamb tandoori yapadera ya m'nyumba yathu, imaphikidwa pang'ono ndi moto wotsika."
+    },
+    "pirinc-pilavi": {
+      "name": "Mpunga Pilau",
+      "description": "Pilau ya mpunga wa Baldo yokazinga ndi batala, yofewa."
+    },
+    "firin-sutlac": {
+      "name": "Mapulu a Mpunga Ofiira mu Oveni",
+      "description": "Mapulu a mpunga ofiira mu njira ya chikhalidwe, okonzedwa ndi mkaka wa nyankhula wa tsiku ndi tsiku."
+    },
+    "kuru-fasulye": {
+      "name": "Mjira wa Nkhama ndi Mbewa Zoyera",
+      "description": "Mbewa za İspir, nyama ya ng'ombe yodulidwa, ndi pasta ya nyanya yatsopano yasitolo."
+    },
+    "izgara-kofte": {
+      "name": "Nyama Zophika pa Grill",
+      "description": "Nyama za ng'ombe zopangidwa ngati ziwiri zogwira ntchito ndi tsabola wophikidwa ndi nyanya."
+    },
+    "ayran": {
+      "name": "Ayran Wosanjidwa",
+      "description": "Buttermilk wosanjidwa wodziwika, wokhala ndi mpweya wambiri, wopangidwa ndi yogurt watsiku ndi tsiku."
+    },
+    "ezogelin-corbasi": {
+      "name": "Suphu ya Ezogelin",
+      "description": "Suphu yachikhalidwe yasitolo yomwe nyemba zobiriwira, bulgur, ndi mpunga zimakumana ndi minti."
+    },
+    "tarhana-corbasi": {
+      "name": "Suphu ya Tarhana",
+      "description": "Tarhana yapakhomo, chinthu chachikhalidwe cha Anatolian chimaphikika pang'onopang'ono ndi nyanya ndi minti yowuma."
+    },
+    "yayla-corbasi": {
+      "name": "Suphu ya Yogati ndi Mpunga",
+      "description": "Suphu yosangalatsa komanso yowuma yopangidwa ndi yogati, mpunga, ndi m'boga woomatidwa."
+    },
+    "iskembe-corbasi": {
+      "name": "Suphu ya Mimba ya Ng'ombe",
+      "description": "Suphu yoyenera ya mimba ya ng'ombe imatumikidwa ndi zonunkhira zake ndi viniga wa adyo."
+    },
+    "dugun-corbasi": {
+      "name": "Suphu ya Chikondwerero cha Moyo Wokhazikika",
+      "description": "Suphu ya chikondwerero cha mabanja yopangidwa ndi nyama ya nkhumba yomwe yatsala ndikuikidwamo ndi marinade ya limesi."
+    },
+    "tavuk-suyu-corbasi": {
+      "name": "Suphu ya Nkhuku",
+      "description": "Suphu yopulika yopangidwa ndi ndiyo yopepuka yopikidwa mu msuzi wa mafupa ndi nyama ya nkhuku yomwe yatsala."
+    },
+    "domates-corbasi": {
+      "name": "Suphu ya Tomato",
+      "description": "Chakudya chokoma chokonzedwa ndi madomasi okwanira, batala, ndi basil, chokwaniritsidwa ndi tchizi."
+    },
+    "sebze-corbasi": {
+      "name": "Soup ya Mbeu",
+      "description": "Soup yofewa yophika m'nyumba yosangalatsa yopangidwa ndi ndiwo za nyengo, mafuta a maolivi, ndi zipatso zazatsopano."
+    },
+    "beyran-corbasi": {
+      "name": "Soup ya Ng'ombe Yopatsa Mpweya Wotentha",
+      "description": "Soup ya dera yopangidwa pa moto wapamwamba ndi nyama ya ng'ombe, mpunga, adyo, ndi tsabola wotentha."
+    },
+    "kelle-paca-corbasi": {
+      "name": "Soup ya Mutu ndi Mphuno za Ng'ombe",
+      "description": "Soup yolimba ya m'bone yopangidwa ndi mipando ya ng'ombe ndi nyama ya mutu yoponderedwa maola ambiri."
+    },
+    "sehriye-corbasi": {
+      "name": "Soup ya Vermicelli",
+      "description": "Mzira wamakolo wokonzedwa ndi msuzi wa nkhuku wokhala ndi madomasi, vermicelli, ndi parsley."
+    },
+    "tavuk-sis": {
+      "name": "Masikewa a Nkhuku",
+      "description": "Zidutswa za nkhuku zomwe zapangidwa ndi masamba apadera, kuperekedwa ndi tsabola wophika ndi madomasi."
+    },
+    "kasap-sucuk": {
+      "name": "Sucuk ya Wogulitsa Ng'ombe Yogawidwa pa Moto",
+      "description": "Sausage ya nkhumba yopatsa moto yomwe idaphikidwa pa charaki, ndi ndiwo zophika ndi anyezi ndi sumac."
+    },
+    "karisik-izgara": {
+      "name": "Grill Zosiyanasiyana",
+      "description": "Chakudya chachikhalidwe ndi chosiyanasiyana chopangidwa ndi mabola a nyama, masikewa a nkhuku, ma lamb chop, ndi sausage."
+    },
+    "nohut-yemegi": {
+      "name": "Stew ya Chickpea ndi Nkhumba",
+      "description": "Chakudya cham'manja cha nyemba za chickpeas ndi nyama ya ng'ombe yodulidwa kupsinjika m'madzi mkuwa pang'onopang'ono."
+    },
+    "patlican-musakka": {
+      "name": "Eggplant Moussaka",
+      "description": "Melanzane yozazidwa, nyama ya ng'ombe yowuma, ndi moussaka wophikidwa mu uvuni ndi msuzi wa mandimu, ngati m'malo odyera."
+    },
+    "zeytinyagli-taze-fasulye": {
+      "name": "Green Beans in Olive Oil",
+      "description": "Zoweta ndi mafuta a maolivi pamodzi ndi mbewa zamasamba, madomasi, ndi anyezi, zidakonzedwa kuzizira."
+    },
+    "tavuk-sote": {
+      "name": "Sautéed Chicken",
+      "description": "Magawo a nkhuku amaphikidwa ndi moto wochuluka pamwe ndi tsabola zonunkhira, nyama ya champignon, ndi madomasi."
+    },
+    "izmir-kofte": {
+      "name": "İzmir-Style Meatballs",
+      "description": "Chakudya chamakhalidwe cha nyama ya ng'ombe yomwe imagwidwa, mbatata, ndi tsabola zokazinga mu msuzi wa tomato."
+    },
+    "etli-bezelye": {
+      "name": "Nkhungu ndi Ng'ombe",
+      "description": "Chakudya cha tsiku ndi tsiku chimaphikidwa m'phika ndi nyama ya ng'ombe yokokedwa, nkhungu, karoti, ndi mbatata."
+    },
+    "patlican-oturtma": {
+      "name": "Eggplant Yophikidwa ndi Mince",
+      "description": "Umu umaphikidwa mu uvuni ndi eggplant, nyama yophwanyidwa yodzaza ndi tsabola, ndi msuzi wa gariki tomato."
+    },
+    "salgam-suyu": {
+      "name": "Juisi wa Turnip Wophikidwa",
+      "description": "Juisi wamba wa turnip wokometsera womwe ndi wophikidwa ndi karoti wofiira ndi yisiti ya bulgur."
+    },
+    "maden-suyu": {
+      "name": "Madzi a Mineral",
+      "description": "Madzi amdima a mineral okha a chitetezo amatumizidwa ozizira."
+    },
+    "su": {
+      "name": "Madzi a M'Nyanja",
+      "description": "Madzi a m'nyanja apangidwa achisewu mu galasi."
+    },
+    "kola": {
+      "name": "Kola",
+      "description": "Chakumwa chakale chokoma cha fizzi ochiritsidwa ndi ice."
+    },
+    "gazoz": {
+      "name": "Soda ya Lemon ya ku Turkey",
+      "description": "Soda wamba wokoma, wokoma komanso wokonzedwa achisewu."
+    },
+    "turk-kahvesi": {
+      "name": "Kofi ya ku Turkey",
+      "description": "Kofi wamba wa ku Turkey wokhala ndi mpweya, wapangidwa pa moto waukulu mu chitsulo cha mkuwa."
+    },
+    "demleme-cay": {
+      "name": "Ti yokazinga ya ku Turkey",
+      "description": "Ti ya Rize yatsopano yokazinga motentha mu galasi lowala lalitali."
+    },
+    "ev-yapimi-limonata": {
+      "name": "Lemonade Yapakhomo",
+      "description": "Lemonade yokoma yopangidwa tsiku lililonse ndi lemoni yatsopano, miyintsi, ndi shuga pang'ono."
+    },
+    "hosaf": {
+      "name": "Nyemba Zadzina Zakudya za Phunziro",
+      "description": "Compote yapakhomo yopangidwa tsiku lililonse ndi ma raisins, apricots, kapena ma plums malinga ndi nthawi ya chaka."
+    },
+    "iskender-kebabi": {
+      "name": "Bursa İskender Kebab",
+      "description": "Mkaka umakokedwa pa skewer pamwamba pa pide, ukatumikiridwa ndi msuzi wa tomato, batala wotentha, ndi yogurt."
+    },
+    "kazandibi": {
+      "name": "Pudingi ya Mkaka Yogawanika",
+      "description": "Chikondamoyo cha mkaka wamtundu wa chikhalidwe, chokwiyika bwino, chokhala ndi mkate wofewa."
+    },
+    "tavuk-gogsu": {
+      "name": "Pudingi wa Mkaka wa Ottoman",
+      "description": "Chiberekero chabwino komanso chofewa cha mkaka chophika ndi njira zachikhalidwe, choperekedwa ndi sinamoni."
+    },
+    "keskul": {
+      "name": "Chiberekero cha Mkaka wa Almond",
+      "description": "Chiberekero cha mkaka cha kalembedwe ka Ottoman chokwaniritsidwa ndi kukoma kwa almond ndi kokonati."
+    },
+    "irmik-helvasi": {
+      "name": "Halva ya Semolina",
+      "description": "Halva ya semolina, yophikidwa ndi batala komanso ma pine nuts, imaperekedwa yotentha komanso yowuma."
+    },
+    "kabak-tatlisi": {
+      "name": "Chiberekero cha Pumpkin ndi Tahini",
+      "description": "Pumpkin, imaphikidwa pang'onopang'ono mumadzi ake, imaperekedwa ndi tahini ndi walnuts."
+    },
+    "ayva-tatlisi": {
+      "name": "Chiberekero cha Quince",
+      "description": "Quince imaphikidwa ndi clove ndi sinamoni, imaperekedwa ndi kirimu woyeretsedwa ndi walnuts."
+    },
+    "revani": {
+      "name": "Mkate wa Semolina ndi Syrupu",
+      "description": "Chikondwerero cha macksonzi chakumalo opikira chakomwe mkate wosalala wa semolina umakumana ndi syrupu yokoma yodzaza ndi kununkhira kwa lemoni."
+    },
+    "ekmek-kadayifi": {
+      "name": "Pudding wa Mkate ndi Kirimu Wa Clotted",
+      "description": "Pudding wa mkate wokonzedwa ndi syrupu yokoma umaperekedwa ndi kirimu wa clotted wa nyani."
+    },
+    "cevizli-baklava": {
+      "name": "Baklava ya Ma walnut",
+      "description": "Zinga zosanjikizidwa komanso zotetezeka, baklava yozizira yopangidwa ndi ma walnut ambiri ndi batala wochita bwino."
+    }
+  },
+  "allergens": {
+    "Süt ürünleri": "Zam'mmwamba",
+    "Gluten": "Gluteni",
+    "Yumurta": "Mazai",
+    "Badem": "Maini",
+    "Çam fıstığı": "Ndiwo za pine",
+    "Susam": "Sesame",
+    "Ceviz": "Walnut"
+  },
+  "tags": {
+    "Popüler": "Otchuka",
+    "Vejetaryen": "Zakudya Zachomera",
+    "Günün Yemeği": "Chakudya cha Tsiku",
+    "Şefin Önerisi": "Chakudya cha Chef",
+    "Yeni": "Chatsopano",
+    "Acılı": "Chilungamo",
+    "Ev Yapımı": "Chopangidwa Kokha",
+    "Lokanta Klasiği": "Chakudya Chachikhalidwe cha Restaurant",
+    "Günün Çorbası": "Suphu ya Tsiku",
+    "Vegan": "Vegan",
+    "Hafif": "Light",
+    "Yöresel": "Chadera M'madera",
+    "Paylaşmalık": "Kugawana",
+    "Ev Yemeği": "Njira za Pakhomo",
+    "Zeytinyağlı": "Oli wa Mtedza wa Mtsuko",
+    "Nostaljik": "Zoyambirira",
+    "Geleneksel": "Chikhalidwe",
+    "Bursa Lezzeti": "Chakumverera cha Bursa",
+    "Sütlü Tatlı": "Chokoleti cha Mkaka",
+    "Sıcak Tatlı": "Chokoleti Chotentha",
+    "Mevsimlik": "Chakumwamba",
+    "Şerbetli": "Chokoleti cha Syrupu"
+  }
+}

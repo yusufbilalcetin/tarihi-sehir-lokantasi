@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useState, type CSSProperties } from "react";
 import { INTRO_SESSION_KEY } from "@/lib/intro-constants";
+import { useMenuPreferences } from "./menu-preferences-provider";
 
 export const INTRO_TIMING = {
   logoDelayMs: 300,
@@ -29,6 +30,7 @@ const splashStyle: SplashStyle = {
 };
 
 export function SplashIntro({ onComplete }: { onComplete: () => void }) {
+  const { t } = useMenuPreferences();
   const [visible, setVisible] = useState(true);
 
   useEffect(() => {
@@ -73,7 +75,7 @@ export function SplashIntro({ onComplete }: { onComplete: () => void }) {
   if (!visible) return null;
 
   return (
-    <div className="menu-splash" style={splashStyle} aria-label="Tarihi Şehir Lokantası açılış ekranı">
+    <div className="menu-splash" style={splashStyle} aria-label={t("splashLabel")}>
       <Image
         src="/images/brand/wordmark-transparent.png"
         alt="Tarihi Şehir Lokantası"

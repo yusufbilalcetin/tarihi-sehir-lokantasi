@@ -1,0 +1,349 @@
+{
+  "locale": "ig",
+  "ui": {
+    "menu": "Menu",
+    "search": "Chọọ n'usoro nri...",
+    "searchLabel": "Chọọ n'usoro nri",
+    "categories": "Otu ndị",
+    "categoryIntro": "Họrọ ụtọ maka tebụl gị.",
+    "categoryNavigation": "Otu n'ime menu",
+    "openCategory": "Meghee {name}, ihe {count}",
+    "items": "ihe",
+    "item": "ihe",
+    "searchResults": "Nsonaazụ Chọpụtara",
+    "productsFound": "Ihe {count} achọtara",
+    "backToCategories": "Laghachi na otu",
+    "backToCategory": "Laghachi na {name}",
+    "clearSearch": "Hichapụ ọchụchọ",
+    "noResults": "Enweghị ihe kwekọrọ",
+    "noResultsDescription": "Gbalịa ịchọ ọzọ ma ọ bụ laghachi na ihe ndị e kewara.",
+    "order": "Iwu m",
+    "waiter": "Onye na-eje ozi",
+    "bill": "Akwụkwọ ụgwọ",
+    "addToCart": "Tinye na Iwu",
+    "addedToCart": "{name} etinyela na iwu gị.",
+    "removeFromCart": "Wepu {name}",
+    "soldOut": "E rere nke a Taa",
+    "productDetails": "Meghee nkọwa maka {name}",
+    "portion": "Akụkụ",
+    "standardPortion": "Akụkụ ọkọlọtọ",
+    "allergens": "Ihe na-akpata mgbakasị ahụ",
+    "noAllergens": "Enweghị ihe na-akpata mgbakasị ahụ e kwuru",
+    "productNote": "Ihe ndekọ ngwaahịa",
+    "productNotePlaceholder": "Dịka ọmụmaatụ, enweela mmanụ aṅụ, biko",
+    "decreaseQuantity": "Belata ọnụọgụ",
+    "increaseQuantity": "Tinye ọnụọgụ",
+    "each": "ọ bụla",
+    "note": "Ntụle",
+    "subtotal": "Nchịkọta",
+    "serviceFee": "Ụgwọ ọrụ",
+    "total": "Ngụkọta",
+    "sendOrder": "Zipu Ọrụ",
+    "orderSent": "E zigara nri gị na kichin",
+    "orderTracking": "Soro ihe ịtụrụ #{number} ebe a.",
+    "newItem": "Tinye Ihe Ọzọ",
+    "emptyCart": "Nri gị nọghị na ihe ọ bụla",
+    "emptyCartDescription": "Ihe ị họọrọ site na menu ga-apụta ebe a.",
+    "browseMenu": "Gaa na Menu",
+    "orderReceived": "Nri e natara",
+    "waiterConfirmed": "Onye ozi kwadoro",
+    "preparing": "Na-eme",
+    "ready": "Kwadebere",
+    "served": "E nyere",
+    "preparingDescription": "Ụlọ nri anyị na-eme nke gị.",
+    "orderStatus": "Ọnọdụ iwu",
+    "callWaiter": "Kpọọ Onye ozi",
+    "placeOrder": "Achọrọ m ịtinye iwu",
+    "wantWater": "Achọrọ m mmiri",
+    "wantBread": "Achọrọ m achịcha",
+    "wantService": "Ọrụ ọzọ",
+    "other": "Ọzọ",
+    "generalRequest": "Enwere m arịrịọ izugbe",
+    "orderHelp": "Achọrọ m enyemaka na iwu m",
+    "waterDescription": "Biko wetara mmiri na tebụl",
+    "breadDescription": "Biko wetara achịcha n'oche",
+    "serviceDescription": "Achọrọ m ngaji ma ọ bụ efere",
+    "otherDescription": "Achọrọ m enyemaka na ihe ọzọ",
+    "waiterHelpTitle": "Kedu ka anyị nwere ike isi nyere gị aka?",
+    "waiterHelpDescription": "A ga-eziga arịrịọ gị na {table}.",
+    "waiterRequestSent": "A kpọrọ arịrịọ gị nye onye na-ere nri anyị.",
+    "requestBill": "Arịrịọ ego nri",
+    "billSent": "A kpọrọ arịrịọ gị ego nri",
+    "billConfirm": "Ị ga-achọ ịrịọ ego nri?",
+    "billSentDescription": "Onye na-ere nri anyị ga-abịa gị nso n’otu a.",
+    "billConfirmDescription": "A ga-eziga arịrịọ gị kpọm kwem nye onye na-ere nri. Ị nwere ike ịkwụ ụgwọ n’oche ma ọ bụ n’ọfịs ego.",
+    "billToast": "Arịrịọ ịkwụ ụgwọ gị ezitere onye na-elekọta anyị.",
+    "backToMenu": "Laghachi na Ntụrụndụ",
+    "back": "Laghachi",
+    "close": "Mechie",
+    "yourTable": "ỤLỌ TABLE GI",
+    "serviceOpen": "Ọrụ mepere emepe",
+    "slogan": "Ụtọ ọdịnala • Table Ọgbara ọhụrụ",
+    "location": "Bursa, Osmangazi",
+    "languageLabel": "Họrọ asụsụ",
+    "currencyLabel": "Họrọ ego",
+    "customerNavigation": "Nnyefe menu onye ahịa",
+    "approximateCurrency": "Ahịrị ọnụ ego mba ọzọ bụ nke atụakasịrị. A na-akwụ ụgwọ na Turkish Lira.",
+    "orderSuccess": "Iwu gị ezitere nke ọma.",
+    "languagePickerTitle": "Họrọ Asụsụ",
+    "languagePickerDescription": "Họrọ asụsụ ịchọrọ iji maka menu.",
+    "searchLanguage": "Chọọ asụsụ...",
+    "recommendedLanguages": "A na-atụ aro",
+    "recentLanguages": "Asụsụ ndị e jiri nso",
+    "allLanguages": "Asụsụ niile",
+    "languageNotFound": "Enweghị asụsụ a.",
+    "languageNotFoundDescription": "Gbalịa aha asụsụ ọzọ ma ọ bụ koodu.",
+    "tableNumber": "Ụlọ {number}",
+    "itemCount": "Ihe {count}",
+    "splashLabel": "Window mmeghe Tarihi Şehir Lokantası",
+    "cancel": "Kagbuo",
+    "confirmOrder": "Kwadoro Iwu",
+    "orderSummary": "Nkọwa Iwu",
+    "payment": "Ịkwụ ụgwọ",
+    "tableNotFound": "Enweghị tebụl.",
+    "invalidQr": "QR koodu adịghị mma.",
+    "menuUnavailable": "Enweghị menu ugbu a.",
+    "networkError": "Njehie netwọk mere.",
+    "productUnavailable": "Ihe a adịghị ugbu a.",
+    "unableToSendOrder": "Amaghị izipu iwu ahụ.",
+    "tryAgain": "Gbalịa ọzọ",
+    "somethingWentWrong": "Ihe kpọrọ nsogbu.",
+    "loadingLanguage": "Na-ebufe asụsụ...",
+    "languageLoadError": "E nweghị ike ibufe asụsụ ahụ. Biko gbalịa ọzọ."
+  },
+  "categories": {
+    "soups": "Ọkụkọ",
+    "grill": "Grills",
+    "mains": "Nri ndị bụ isi",
+    "drinks": "Mmanya",
+    "kebabs": "Kebabs",
+    "dessert": "Achịcha ụtọ"
+  },
+  "products": {
+    "mercimek": {
+      "name": "Ọsịsọ Lentil",
+      "description": "Ọsịsọ lentil nke e si n'ụlọ, kwadebere n'ụdị omenala, zuru oke na mmanya mmiri ara ehi."
+    },
+    "tas-kebabi": {
+      "name": "Stew Ebeef nke Turkey",
+      "description": "Ebeef, akwụkwọ nri nke oge, na mmanụ pụrụ iche nke ụlọ oriri anyị na-esi nwayọ nwayọ."
+    },
+    "kuzu-tandir": {
+      "name": "Atụrụ a kụrụ nwayọ nwayọ",
+      "description": "Atụrụ tandoori nke ụlọ oriri anyị na-esi nwayọ nwayọ na ọkụ dị ala."
+    },
+    "pirinc-pilavi": {
+      "name": "Osikapa Pilaf",
+      "description": "Osikapa pilaf Baldo nke e sere na mmanya ara ehi, dị nro."
+    },
+    "firin-sutlac": {
+      "name": "Puding Osikapa E jiri oka mma esi ya",
+      "description": "Puding osikapa e sere n'ụzọ omenala, kwadebere na mmiri ara ehi búffulo kwa ụbọchị."
+    },
+    "kuru-fasulye": {
+      "name": "Stew Akpụkpọ Ocha na Efu",
+      "description": "Akpụkpọ İspir, efu tụrụ n'ime obere ibe, na pasta tomati dị mfe nke ụlọ oriri na ọṅụṅụ."
+    },
+    "izgara-kofte": {
+      "name": "Ụgbọ Efu Grilled",
+      "description": "Ụgbọ efu ụdị onye na-ere anụ na ose roasted na tomati."
+    },
+    "ayran": {
+      "name": "Ayran Churned",
+      "description": "Ayran churned ọdịnala nwere nnukwu mmanụ, si na yogọt kwa ụbọchị."
+    },
+    "ezogelin-corbasi": {
+      "name": "Ọsikapa Ezogelin",
+      "description": "Ọsikapa ụlọ oriri na ọṅụṅụ ọdịnala ebe lentil uhie, bulgur, na osikapa zukọtara na mint."
+    },
+    "tarhana-corbasi": {
+      "name": "Ọsikapa Tarhana",
+      "description": "Tarhana nke a na-eme n’ụlọ, otu klasik Anatolia nke na-esi nwayọ na tomati na mint akọrọ."
+    },
+    "yayla-corbasi": {
+      "name": "Nnyocha Yogọt na Osikapa",
+      "description": "Ose pụrụ iche na nke creamy nke yayla, e kwadebere ya na yogurt, osikapa, na mint akọrọ."
+    },
+    "iskembe-corbasi": {
+      "name": "Ose Ahụ Ehi",
+      "description": "Ọse anụ ehi nke ọma e ji ya na ose ya na vinega garlic."
+    },
+    "dugun-corbasi": {
+      "name": "Ose Alụmdi na Nwunye",
+      "description": "Ọse alụmdi na nwunye ọdịnala e kwadebere ya na ehi ewepụkpụ ma jiri lemon tinye ụtọ."
+    },
+    "tavuk-suyu-corbasi": {
+      "name": "Ọse Nkụ azụ ọkụkọ",
+      "description": "Ọse mgbake e kwadebere ya na noodle dị ọkụ na anụ ọkụkọ ewepụkpụ."
+    },
+    "domates-corbasi": {
+      "name": "Ose Tomato",
+      "description": "Nri ụtọ bara ụba esi na tomati a ghere ọkụ, mmanụ aṅụ, na basil, kpochapụwo ya na chiz."
+    },
+    "sebze-corbasi": {
+      "name": "Ụtaba akwụkwọ nri",
+      "description": "Ụtaba ọkara ụlọ oriri esiri na akwụkwọ nri oge, mmanụ oliv, na ahịhịa ọhụrụ."
+    },
+    "beyran-corbasi": {
+      "name": "Ụtaba Ewu Beyran na-atọ ụtọ",
+      "description": "Ụtaba mpaghara esiri na ọkụ dị elu na ewu, osikapa, yabasị, na ose ọjọọ."
+    },
+    "kelle-paca-corbasi": {
+      "name": "Ụtaba Isi na Ụkwụ",
+      "description": "Ụtaba mmiri ọkpụkpụ bara ụba nke esiri na ụkwụ anụ ezi na anụ isi esi ọtụtụ awa."
+    },
+    "sehriye-corbasi": {
+      "name": "Ụtaba Vermicelli",
+      "description": "Ụtụtụ mmiri ofe esi na mmanụ anụ ọhịa ọkụkọ, tomates, vermicelli, na parsley."
+    },
+    "tavuk-sis": {
+      "name": "Ụzọkọ Ọkụkọ",
+      "description": "Mpempe anụ ọkụkọ e jiri ngwa nri pụrụ iche mee ka esi ya, na-eje ozi na ose na tomates esere."
+    },
+    "kasap-sucuk": {
+      "name": "Sucuk Onye Ahịa Esi Na Grill",
+      "description": "Sosis anụ ezi dị ụtọ esi na charbon, na akwụkwọ nri esere na yabasị nwere sumac."
+    },
+    "karisik-izgara": {
+      "name": "Grill Ntụgharị",
+      "description": "Efere grill jupụtara na nke dị iche iche nke nwere meatballs, ụzọkọ anụ ọkụkọ, chops atụrụ, na sosis."
+    },
+    "nohut-yemegi": {
+      "name": "Ofe Chickpea na Anụ Ezi",
+      "description": "Nri esi n'ụlọ nke chickpeas na anụ ezi e bee obere nke a na esi nwayọ n'ime ite ígwè."
+    },
+    "patlican-musakka": {
+      "name": "Moussaka Eggplant",
+      "description": "Eggplant a gbara ọkụ, anụ ezi e juru eze, na moussaka a tiere n’ọfịs na ose tomatọ, n'ụdị ụlọ oriri na ọṅụṅụ."
+    },
+    "zeytinyagli-taze-fasulye": {
+      "name": "Akwụkwọ ndụ akwụkwọ ndụ n’Mmanụ Oliv",
+      "description": "Ọ bụ ụdị nri esi na mmanụ olivụ na beans akwụkwọ ndụ, tomatọ, na yabasị, a na-ejikwa jụọ oyi."
+    },
+    "tavuk-sote": {
+      "name": "Ntụrụ anụ ọkụkọ",
+      "description": "A na-etinye akụkụ anụ ọkụkọ n'elu ọkụ dị elu na ose agba, mushrooms, na tomatọ."
+    },
+    "izmir-kofte": {
+      "name": "Ube Anụ N'ụzọ İzmir",
+      "description": "Efere isi nri ọdịnala nke bọọlụ ehi, mkpụrụ ịgba, na ose e siere na mmanụ tomato."
+    },
+    "etli-bezelye": {
+      "name": "Awụ mmiri na Ehi",
+      "description": "Nri ụbọchị kwa ụbọchị esi na ite na ehi akpụkụ, awụ mmiri, karọt, na mkpụrụ ịgba."
+    },
+    "patlican-oturtma": {
+      "name": "Akwụkwọ aubergine esi na Ntụrụ Mince",
+      "description": "Asịrị ehi esi na oven na aubergine, anụ minsi na-atọ ụtọ, na mmanụ tomato garlic."
+    },
+    "salgam-suyu": {
+      "name": "Mmanya Turnip Fermented",
+      "description": "Mmanya turnip ọdịnala na-atọ ụtọ, nke fermented na karọt aja aja na yisị bulgur."
+    },
+    "maden-suyu": {
+      "name": "Mmiri Mineral",
+      "description": "Mmiri mineral eke dị ọcha e ji sụọ oyi."
+    },
+    "su": {
+      "name": "Mmiri Mmiri Ọhụụ",
+      "description": "Mmiri mmiri sitere n'ọhụụ na-eju oyi n'ime karama iko."
+    },
+    "kola": {
+      "name": "Kola",
+      "description": "Mmanya carbonated nke ndị mmadụ maara nke ọma na-eju oyi."
+    },
+    "gazoz": {
+      "name": "Soda Lemon Turkish",
+      "description": "Soda ọdịnala nwere ụtọ, na-eme ka ahụ dị ọhụrụ, na-eju oyi."
+    },
+    "turk-kahvesi": {
+      "name": "Kọfị Turkish",
+      "description": "Kọfị ọdịnala Turkish nwere iwe, esiri na okpomọkụ dị elu n'ime cezve ọla kọpa."
+    },
+    "demleme-cay": {
+      "name": "Ti Turkish Brewed",
+      "description": "Ti Rize ọhụrụ e biri ebi na-ekpo ọkụ n'ime iko nwere mgbakwunye dịtụ."
+    },
+    "ev-yapimi-limonata": {
+      "name": "Lemonade N'ụlọ",
+      "description": "Mmanya lemon nke na-enye ume ọhụrụ a na-eme kwa ụbọchị site na lemon ọhụrụ, mint, na obere shuga."
+    },
+    "hosaf": {
+      "name": "Compote mkpụrụ osisi kwa ụbọchị",
+      "description": "Compote ndị e mere n'ụlọ a na-esi kwa ụbọchị site na raisins, apricot, ma ọ bụ plum dabere na oge."
+    },
+    "iskender-kebabi": {
+      "name": "Bursa İskender Kebab",
+      "description": "Anụ a na-eji ụdọ na-atụgharị n'elu pide, a na-eje ya na ose tomatọ, mmanụ ọkụ na-esi ísì ụtọ, na ihe ọṅụṅụ mmiri ara ehi."
+    },
+    "kazandibi": {
+      "name": "Pudding Mmiri Ara Ehi Caramel",
+      "description": "Ịhe mmanya mmiri ara ehi nke ọdịnala dị mma caramelized nke ọma, nwere akpụkpọ anụ dị nro."
+    },
+    "tavuk-gogsu": {
+      "name": "Pudding Mmiri Ara Ehi Ottoman",
+      "description": "Ube mmiri ara ehi dị mfe ma dịkwa nro, a na-eme ya site na nkuzi omenala, e jiri ọrịa okwụrụ ya."
+    },
+    "keskul": {
+      "name": "Pudding Mmiri Ara Ehi Almond",
+      "description": "Nri mmiri ara ehi ụdị Ottoman, e mechara ya site n'ịgbakwunye ụtọ almond na nkịtị."
+    },
+    "irmik-helvasi": {
+      "name": "Halva Semolina",
+      "description": "Halva semolina, e jidere ya na mmanụ aṅụ na mkpụrụ pine, a na-enye ya ọkụ na ntụ ọka."
+    },
+    "kabak-tatlisi": {
+      "name": "Nri Akwụkwọ Nkọkọ na Tahini",
+      "description": "Akwụkwọ ahụ na-esi na mmiri nke ya dị ọkụ nwayọ, a na-enye ya na tahini na mkpụrụ oliv."
+    },
+    "ayva-tatlisi": {
+      "name": "Nri Quince",
+      "description": "Quince a na-esi na cloves na cinnamon, a na-enye ya na mmanụ anụ ehi sie ọkụ na mkpụrụ oliv."
+    },
+    "revani": {
+      "name": "Achịcha Nsị Semolina",
+      "description": "Nri ụtọ ụlọ oriri ochie ebe achịcha semolina dị nro na-ezukọta na sirop nke na-afụ ụtọ lemon."
+    },
+    "ekmek-kadayifi": {
+      "name": "Pudịn Bread na Clotted Cream",
+      "description": "Pudịn bread e zuo ike na sirop caramelized na ewetara ya na clotted cream ewu bufalo."
+    },
+    "cevizli-baklava": {
+      "name": "Baklava Walnut",
+      "description": "Cácpụ dị warara nke ọma, baklava dị mkpụmkpụ nke eji ọtụtụ walnut na mmanụ aṅụ dị ọcha mee."
+    }
+  },
+  "allergens": {
+    "Süt ürünleri": "Ngwurugwu",
+    "Gluten": "Gluten",
+    "Yumurta": "Akwụkwọ nri",
+    "Badem": "Almond",
+    "Çam fıstığı": "Achịcha Pine",
+    "Susam": "Sesame",
+    "Ceviz": "Walnut"
+  },
+  "tags": {
+    "Popüler": "Ama ama",
+    "Vejetaryen": "Na-eji akwụkwọ nri.",
+    "Günün Yemeği": "Efere nke Ubochi",
+    "Şefin Önerisi": "Nhọrọ Onye Nri",
+    "Yeni": "Ọhụrụ",
+    "Acılı": "Ose",
+    "Ev Yapımı": "Emere n'ụlọ",
+    "Lokanta Klasiği": "Nkà nke ụlọ oriri na ọṅụṅụ",
+    "Günün Çorbası": "Omi Ose nke Ubochi",
+    "Vegan": "Na-atụghị anụmanụ",
+    "Hafif": "Ife dị mfe",
+    "Yöresel": "Mpaghara",
+    "Paylaşmalık": "Iji Kekọrịta",
+    "Ev Yemeği": "Ụdị Ụlọ",
+    "Zeytinyağlı": "Mmanụ Oliv",
+    "Nostaljik": "Cheta Oge Gaa",
+    "Geleneksel": "Omenala",
+    "Bursa Lezzeti": "Uto nke Bursa",
+    "Sütlü Tatlı": "Nchi mmiri ara ehi",
+    "Sıcak Tatlı": "Nchi ọkụ",
+    "Mevsimlik": "Oge",
+    "Şerbetli": "Nchi sirop"
+  }
+}

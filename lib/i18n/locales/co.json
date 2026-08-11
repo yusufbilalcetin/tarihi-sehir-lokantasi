@@ -1,0 +1,349 @@
+{
+  "locale": "co",
+  "ui": {
+    "menu": "Menù",
+    "search": "Cerca in u menù...",
+    "searchLabel": "Cerca in u menù",
+    "categories": "Categorie",
+    "categoryIntro": "Sceglite u gustu per a vostra tavula.",
+    "categoryNavigation": "Categorie di u menù",
+    "openCategory": "Aprite {name}, {count} articuli",
+    "items": "articuli",
+    "item": "articulu",
+    "searchResults": "Risultati di a ricerca",
+    "productsFound": "{count} articuli trovati",
+    "backToCategories": "Torna à e categorie",
+    "backToCategory": "Torna à {name}",
+    "clearSearch": "Chjarisce a ricerca",
+    "noResults": "Nisun articulu currispundenti trovu",
+    "noResultsDescription": "Prufitteghja un altru circà o vultà à e categurie.",
+    "order": "U mo ordine",
+    "waiter": "Cameriere",
+    "bill": "Cuntu",
+    "addToCart": "Aghjunghje à l'Ordine",
+    "addedToCart": "{name} aghjuntu à u to ordine.",
+    "removeFromCart": "Rimuovere {name}",
+    "soldOut": "Tuttu vendutu oghje",
+    "productDetails": "Apri i dettagli per {name}",
+    "portion": "Portione",
+    "standardPortion": "Portione standard",
+    "allergens": "Allergini",
+    "noAllergens": "Nisun allergenu dichjaratu",
+    "productNote": "Nota di l'elementu",
+    "productNotePlaceholder": "Per esempiu. senza burru, per piacè",
+    "decreaseQuantity": "Diminuite a quantità",
+    "increaseQuantity": "Ingrandisce a quantità",
+    "each": "cadunu",
+    "note": "Nota",
+    "subtotal": "Suttotale",
+    "serviceFee": "Spirale di serviziu",
+    "total": "Totale",
+    "sendOrder": "Mandà l'ordine",
+    "orderSent": "U vostru ordine hè statu mandatu in cucina",
+    "orderTracking": "Segui l'ordine #{number} quì.",
+    "newItem": "Aghjunghje un altru articulu",
+    "emptyCart": "U vostru ordine hè vacante",
+    "emptyCartDescription": "L'articuli chì sceglite da u menù appareranu quì.",
+    "browseMenu": "Sfoglia u Menù",
+    "orderReceived": "Ordine Ricevutu",
+    "waiterConfirmed": "Cameriere cunfirmatu",
+    "preparing": "Priparendu",
+    "ready": "Prontu",
+    "served": "Servitu",
+    "preparingDescription": "A nostra cucina hè in preparazione di u vostru ordine.",
+    "orderStatus": "Statu di l'ordine",
+    "callWaiter": "Chjama Cameriere",
+    "placeOrder": "Vogliu fà un ordine",
+    "wantWater": "Vogliu acqua",
+    "wantBread": "Vogliu pane",
+    "wantService": "Serviziu supplementariu",
+    "other": "Altru",
+    "generalRequest": "Aghju una richiesta generale",
+    "orderHelp": "Aghju bisognu d'aiutu cù u mo ordine",
+    "waterDescription": "Per piacè purtate acqua à u tavulinu",
+    "breadDescription": "Per piacè purtate u pane à a tavula",
+    "serviceDescription": "Aghju bisognu di posate o un piattu",
+    "otherDescription": "Aghju bisognu d'aiutu cun qualcosa altru",
+    "waiterHelpTitle": "Cumu pudemu aiutà?",
+    "waiterHelpDescription": "A vostra richiesta serà mandata cun {table}.",
+    "waiterRequestSent": "A vostra richiesta hè stata inviata à u nostru cameriere.",
+    "requestBill": "Richiesta di Fattura",
+    "billSent": "A vostra richiesta di fattura hè stata inviata",
+    "billConfirm": "Vulete dumandà a fattura?",
+    "billSentDescription": "U nostru cameriere serà cun voi subitu.",
+    "billConfirmDescription": "A vostra dumanda andrà direttamente à u cameriere. Pudete pagà à u tavulinu o à a cassa.",
+    "billToast": "U vostru dumanda di fattura hè stata inviata à u nostru cameriere.",
+    "backToMenu": "Torna à u Menu",
+    "back": "Torna",
+    "close": "Chjude",
+    "yourTable": "A VOSTRA TAVULA",
+    "serviceOpen": "Serviziu aperta",
+    "slogan": "Gustu Tradiziunale • Tavula Moderna",
+    "location": "Bursa, Osmangazi",
+    "languageLabel": "Selezziunà lingua",
+    "currencyLabel": "Selezziunà valuta",
+    "customerNavigation": "Navigazione menu cliente",
+    "approximateCurrency": "I prezzi in valuta straniera sò approssimativi. U pagamentu hè processatu in Lira Turca.",
+    "orderSuccess": "U vostru ordine hè statu inviata cù successu.",
+    "languagePickerTitle": "Selezziunà lingua",
+    "languagePickerDescription": "Sceglite a lingua chì vulete aduprà per u menù.",
+    "searchLanguage": "Cerca lingue...",
+    "recommendedLanguages": "Raccomandatu",
+    "recentLanguages": "Lingue Recenti",
+    "allLanguages": "Tutte e lingue",
+    "languageNotFound": "Lingua micca trovu.",
+    "languageNotFoundDescription": "Pruvate un altru nome di lingua o codice.",
+    "tableNumber": "Tavula {number}",
+    "itemCount": "{count} elementi",
+    "splashLabel": "Schermu d'apertura di Tarihi Şehir Lokantası",
+    "cancel": "Annulla",
+    "confirmOrder": "Cunfirma Ode",
+    "orderSummary": "Riassuntu di l'ordine",
+    "payment": "Pagamentu",
+    "tableNotFound": "Tavula micca trovu.",
+    "invalidQr": "Codice QR invalidu.",
+    "menuUnavailable": "U menù ùn hè attualmente dispunibule.",
+    "networkError": "S'hè verificatu un errore di rete.",
+    "productUnavailable": "Questu articulu ùn hè attualmente dispunibule.",
+    "unableToSendOrder": "Impossibile mandà l'ordine.",
+    "tryAgain": "Pruvate torna",
+    "somethingWentWrong": "Qualcosa hè andatu stortu.",
+    "loadingLanguage": "Caricamentu di a lingua...",
+    "languageLoadError": "A lingua ùn pò esse caricata. Pruvate torna per piacè."
+  },
+  "categories": {
+    "soups": "Zuppe",
+    "grill": "Grigliate",
+    "mains": "Piatti principali",
+    "drinks": "Bevande",
+    "kebabs": "Kebab",
+    "dessert": "Desserts"
+  },
+  "products": {
+    "mercimek": {
+      "name": "Zuppa di Lenticchie",
+      "description": "Zuppa di lenticchie fatta in casa preparata in stile classicu, cumplettata cun una salsa burrosa."
+    },
+    "tas-kebabi": {
+      "name": "Spezzatino Turche di Carnu",
+      "description": "Carne di vitellu, verdure di stagione, è a salsa speciale di u nostru risturante cuncucata lentamente."
+    },
+    "kuzu-tandir": {
+      "name": "Agneau Lentamente Tostatu",
+      "description": "U nostru signature l'agnellu tandoori di u risturante, lentu cociu à calore bassu."
+    },
+    "pirinc-pilavi": {
+      "name": "Pilaf di Risu",
+      "description": "Pilaf di risu Baldo burrosu è soffice."
+    },
+    "firin-sutlac": {
+      "name": "Budinu di Risu Cuppiatu",
+      "description": "Budinu di risu cuccatu in modu tradiziunale, preparatu cù latte di bufala di ogni ghjornu."
+    },
+    "kuru-fasulye": {
+      "name": "Stufatu di Fazoli Bianchi cù Carne Bovina",
+      "description": "Fasgioli İspir, carne bovina tagliata à cubetti, è pasta di tomate hàli ristorante."
+    },
+    "izgara-kofte": {
+      "name": "Polpette a u grillu",
+      "description": "Polpette di carne di bovinu à u stilu di macellaru cù peperone arrostitu è pumadoru."
+    },
+    "ayran": {
+      "name": "Ayran chjappatu",
+      "description": "Buttermilk tradiziunale sbattutu cun assai schiuma, fattu cù u iogurt di ogni ghjornu."
+    },
+    "ezogelin-corbasi": {
+      "name": "Zuppa Ezogelin",
+      "description": "Una zuppa tradiziunale di ristorante induve e lenticchie rosse, bulgur, è riso si incontranu cù a menta."
+    },
+    "tarhana-corbasi": {
+      "name": "Zuppa Tarhana",
+      "description": "Tarhana fatta in casa, un classicu Anatolian cottu lentamente cù pumate è menta secca."
+    },
+    "yayla-corbasi": {
+      "name": "Uogurt è Zuppa di Risu",
+      "description": "Una zuppa yayla rinfrescante è cremosa preparata cù u iogurt, risu è menta siccata."
+    },
+    "iskembe-corbasi": {
+      "name": "Zuppa di Trippa",
+      "description": "Zuppa di trippa di carne bona servita cù u so seasoning è acetu d'agliu."
+    },
+    "dugun-corbasi": {
+      "name": "Zuppa di Matrimonio",
+      "description": "Zuppa di mariage tradiziunale fatta cù agnellu stracciatu è sapurita cù una marinata di limone."
+    },
+    "tavuk-suyu-corbasi": {
+      "name": "Zuppa di brodu di pollu",
+      "description": "Una zuppa curativa preparata cù nudelli fini cotti in brodu di ossu è carni di pollu strappatu."
+    },
+    "domates-corbasi": {
+      "name": "Zuppa di pumadoru",
+      "description": "Un gustu riccu cusinatu cù pumaroli maturi, burru, è basilicu, cumpletu cù furmagliu."
+    },
+    "sebze-corbasi": {
+      "name": "Zuppa di Verdura",
+      "description": "Una zuppa ligera di ristorante preparata cù verdure di stagione, oliu d'aliva, è erbe fresche."
+    },
+    "beyran-corbasi": {
+      "name": "Zuppa di Agnellu Piccante Beyran",
+      "description": "Una zuppa riggiunale preparata à focu altu cù agnellu, risu, agliu è pimentu piccante."
+    },
+    "kelle-paca-corbasi": {
+      "name": "Zuppa di Testa è Piedi",
+      "description": "Una zuppa ricca di brodu d&#39;ossa fatta cù i piedi è a carne di testa di bovinu coccia per ore."
+    },
+    "sehriye-corbasi": {
+      "name": "Zuppa di Vermicelli",
+      "description": "Zuppa cutidiana preparata cun brodu di pollu cù pumate, vermicelli, è prezzemulu."
+    },
+    "tavuk-sis": {
+      "name": "Spiedini di Pollu",
+      "description": "Pezzi di pollu marinati cù speziale speziali, serviti cù pimenti arrostiti è pumate."
+    },
+    "kasap-sucuk": {
+      "name": "Sucuk di macellaru à a griglia",
+      "description": "Salsiccia di carne bovina piccante cusinata nantu à u carbone, cù verdura arrostita è cipolla cù sumac."
+    },
+    "karisik-izgara": {
+      "name": "Griglia Mista",
+      "description": "Un piattu di griglia riccu è variatu cumpostu di polpette, spiedini di pollu, costine di agnellu, è salsiccia."
+    },
+    "nohut-yemegi": {
+      "name": "Spezzatu di cece cù carne bovina",
+      "description": "Un pastu fattu in casa di cece è carne bovina tagliata cotta lentamente in un pignattu di rame."
+    },
+    "patlican-musakka": {
+      "name": "Moussaka di Melanzane",
+      "description": "Melanzane fritte, carne bovina macinata è moussaka cotta in u fornu cù salsa di pume, stile ristorante."
+    },
+    "zeytinyagli-taze-fasulye": {
+      "name": "Fasgioli Verdi in Oliu d'Uliva",
+      "description": "Un classicu cucinatu in ogliu d'oliva cun fagioli verdi, pumati è cipolle, sirvutu friddu."
+    },
+    "tavuk-sote": {
+      "name": "Puletta saltata",
+      "description": "I pezzi di pollu sò saltati à alta calore cun papparelli culuriti, funghi è pomodori."
+    },
+    "izmir-kofte": {
+      "name": "Polpette à u Stile di İzmir",
+      "description": "Un piattu principale tradiziunale di pulpetti di carne di vacca, patate, è piparetti cotti in salsa di tomata."
+    },
+    "etli-bezelye": {
+      "name": "Piselli cù carne",
+      "description": "Piatto cutidianu cusinatu in una pignatta cù carne hà tagliatu à cubetti, piselli, carote è patate."
+    },
+    "patlican-oturtma": {
+      "name": "Melanzana arrostita cun carne macinata",
+      "description": "A lingua hè preparata in u furnu cù melanzana, carne macinata sicca è salsa di pomodori cù agliu."
+    },
+    "salgam-suyu": {
+      "name": "Sucu di Rave Furmintatu",
+      "description": "Succo tradiziunale piccante di rapa fermentatu cù carota viola è lievitu di bulgur."
+    },
+    "maden-suyu": {
+      "name": "Acqua Minerale",
+      "description": "Acqua minerale naturale servita fredda."
+    },
+    "su": {
+      "name": "Acqua di Spring Naturale",
+      "description": "Acqua di spring naturale servita fredda in una buttiglia di vetru."
+    },
+    "kola": {
+      "name": "Cola",
+      "description": "Una bevanda gassata classica servita ghiacciata."
+    },
+    "gazoz": {
+      "name": "Soda Limone Turcha",
+      "description": "Soda tradiziunale aromatizata, rinfrescante, è servita fredda semplice."
+    },
+    "turk-kahvesi": {
+      "name": "Caffè Turcu",
+      "description": "Caffè turcu tradiziunale cun schiuma, cucinatu à calore alta in un cezve di rame."
+    },
+    "demleme-cay": {
+      "name": "Tè Turcu Infiltratu",
+      "description": "Tè Rize caldu frescamente infiltratu in un biccheru à vita fina."
+    },
+    "ev-yapimi-limonata": {
+      "name": "Limonata fatta in casa",
+      "description": "Limonata rinfrescante preparata ogni ghjornu cù limone frescu, menta è un pocu di zuccaru."
+    },
+    "hosaf": {
+      "name": "Compotata di Frutta Quotidiana",
+      "description": "Compota fatta in casa bollita ogni ghjornu cù raisini, albicocche, o prugne secondu a stagione."
+    },
+    "iskender-kebabi": {
+      "name": "Bursa Iskender Kebab",
+      "description": "A carne hè girata nantu à un spiedu sopra hà pide, servita cù salsa di pomodoru, burru caldu, è yogurt."
+    },
+    "kazandibi": {
+      "name": "Budinu di Latte Caramellizatu",
+      "description": "Un dessert tradiziunale di latte caramellizatu bè, cun una textura setosa."
+    },
+    "tavuk-gogsu": {
+      "name": "Pudda di Latte Ottomanu",
+      "description": "Un dessert di latte ligeru è fibrosu preparatu cun una ricetta tradiziunale, sirvutu cun cannella."
+    },
+    "keskul": {
+      "name": "Pudding di Latte di Mandorla",
+      "description": "Dessert di latte à u stilu ottomanu cumplitu cun u gustu di mandorla è coccu."
+    },
+    "irmik-helvasi": {
+      "name": "Halva di Semulina",
+      "description": "Halva di semulina, arrustita cun burru è pignoli, sirvuta calda è granulosa."
+    },
+    "kabak-tatlisi": {
+      "name": "Dessert di Cucurbita cù Tahini",
+      "description": "A cucurbita, lenta cotta in u so propiu ghjusu, hè sirvuta cù tahini è noci."
+    },
+    "ayva-tatlisi": {
+      "name": "Dessert di Cotogne",
+      "description": "Cotogne cucinatu cù chjodu è cannella hè sirvutu cù crema coagulata è noci."
+    },
+    "revani": {
+      "name": "Torta di Surnella",
+      "description": "U dessert classicu di u ristorante induve a torta morbida di semulina scontra u sciroppu profumatu di limone."
+    },
+    "ekmek-kadayifi": {
+      "name": "Pudina di Pane cù Panna Coagulata",
+      "description": "U pudina di pane ripusatu cù sciroppu caramellatu hè servitu cù panna coagulata di bufala."
+    },
+    "cevizli-baklava": {
+      "name": "Baklava à e Noce",
+      "description": "Strati stesi assai sottili, baklava croccante fatta cun parechje nuci è burru simplici."
+    }
+  },
+  "allergens": {
+    "Süt ürünleri": "Latticini",
+    "Gluten": "Glutine",
+    "Yumurta": "Ovu",
+    "Badem": "Mandorla",
+    "Çam fıstığı": "Pinoli",
+    "Susam": "Sesamu",
+    "Ceviz": "Nucalu"
+  },
+  "tags": {
+    "Popüler": "Pupulare",
+    "Vejetaryen": "Vegetarianu",
+    "Günün Yemeği": "Piatto di u ghjornu",
+    "Şefin Önerisi": "Scelta di u Chef",
+    "Yeni": "Novu",
+    "Acılı": "Piccante",
+    "Ev Yapımı": "Fattu in casa",
+    "Lokanta Klasiği": "Risturante Classic",
+    "Günün Çorbası": "Zuppa di u ghjornu",
+    "Vegan": "Veganu",
+    "Hafif": "Ligera",
+    "Yöresel": "Rigurale",
+    "Paylaşmalık": "Per sparte",
+    "Ev Yemeği": "Stile casalingu",
+    "Zeytinyağlı": "Oliu d'aliva",
+    "Nostaljik": "Nostalgicu",
+    "Geleneksel": "Tradiziunale",
+    "Bursa Lezzeti": "Gustu di Bursa",
+    "Sütlü Tatlı": "Dessertu di Latti",
+    "Sıcak Tatlı": "Dolce Caldu",
+    "Mevsimlik": "Stagionale",
+    "Şerbetli": "Desseru cù Sciroppu"
+  }
+}

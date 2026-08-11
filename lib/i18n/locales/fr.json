@@ -1,0 +1,349 @@
+{
+  "locale": "fr",
+  "ui": {
+    "menu": "Menu",
+    "search": "Rechercher dans le menu...",
+    "searchLabel": "Rechercher dans le menu",
+    "categories": "Catégories",
+    "categoryIntro": "Choisissez la saveur pour votre table.",
+    "categoryNavigation": "Catégories du menu",
+    "openCategory": "Ouvrir {name}, {count} articles",
+    "items": "articles",
+    "item": "article",
+    "searchResults": "Résultats de la recherche",
+    "productsFound": "{count} articles trouvés",
+    "backToCategories": "Retour aux catégories",
+    "backToCategory": "Retour à {name}",
+    "clearSearch": "Effacer la recherche",
+    "noResults": "Aucun article correspondant trouvé",
+    "noResultsDescription": "Essayez une autre recherche ou retournez aux catégories.",
+    "order": "Ma commande",
+    "waiter": "Serveur",
+    "bill": "Facture",
+    "addToCart": "Ajouter à la commande",
+    "addedToCart": "{name} ajouté à votre commande.",
+    "removeFromCart": "Supprimer {name}",
+    "soldOut": "Épuisé aujourd'hui",
+    "productDetails": "Ouvrir les détails de {name}",
+    "portion": "Portion",
+    "standardPortion": "Portion standard",
+    "allergens": "Allergènes",
+    "noAllergens": "Aucun allergène déclaré",
+    "productNote": "Note sur l'article",
+    "productNotePlaceholder": "Ex. pas de beurre, s'il vous plaît",
+    "decreaseQuantity": "Diminuer la quantité",
+    "increaseQuantity": "Augmenter la quantité",
+    "each": "chacun",
+    "note": "Note",
+    "subtotal": "Sous-total",
+    "serviceFee": "Frais de service",
+    "total": "Total",
+    "sendOrder": "Envoyer la commande",
+    "orderSent": "Votre commande a été envoyée à la cuisine",
+    "orderTracking": "Suivez la commande n°{number} ici.",
+    "newItem": "Ajouter un autre article",
+    "emptyCart": "Votre commande est vide",
+    "emptyCartDescription": "Les articles que vous choisissez dans le menu apparaîtront ici.",
+    "browseMenu": "Parcourir le menu",
+    "orderReceived": "Commande reçue",
+    "waiterConfirmed": "Serveur confirmé",
+    "preparing": "En préparation",
+    "ready": "Prêt",
+    "served": "Servi",
+    "preparingDescription": "Notre cuisine prépare votre commande.",
+    "orderStatus": "Statut de la commande",
+    "callWaiter": "Appeler le serveur",
+    "placeOrder": "Je veux commander",
+    "wantWater": "Je voudrais de l'eau",
+    "wantBread": "Je voudrais du pain",
+    "wantService": "Service supplémentaire",
+    "other": "Autre",
+    "generalRequest": "J'ai une demande générale",
+    "orderHelp": "J'ai besoin d'aide avec ma commande",
+    "waterDescription": "Veuillez apporter de l'eau à la table",
+    "breadDescription": "Veuillez apporter du pain à la table",
+    "serviceDescription": "J'ai besoin de couverts ou d'une assiette",
+    "otherDescription": "J'ai besoin d'aide pour autre chose",
+    "waiterHelpTitle": "Comment pouvons-nous aider ?",
+    "waiterHelpDescription": "Votre demande sera envoyée avec {table}.",
+    "waiterRequestSent": "Votre demande a été envoyée à notre serveur.",
+    "requestBill": "Demander l'addition",
+    "billSent": "Votre demande d'addition a été envoyée",
+    "billConfirm": "Voulez-vous demander l'addition ?",
+    "billSentDescription": "Notre serveur sera bientôt avec vous.",
+    "billConfirmDescription": "Votre demande ira directement au serveur. Vous pouvez payer à la table ou à la caisse.",
+    "billToast": "Votre demande d'addition a été envoyée à notre serveur.",
+    "backToMenu": "Retour au menu",
+    "back": "Retour",
+    "close": "Fermer",
+    "yourTable": "VOTRE TABLE",
+    "serviceOpen": "Service ouvert",
+    "slogan": "Goût traditionnel • Table moderne",
+    "location": "Bursa, Osmangazi",
+    "languageLabel": "Sélectionner la langue",
+    "currencyLabel": "Sélectionner la devise",
+    "customerNavigation": "Navigation du menu client",
+    "approximateCurrency": "Les prix en devises étrangères sont approximatifs. Le paiement est effectué en livre turque.",
+    "orderSuccess": "Votre commande a été envoyée avec succès.",
+    "languagePickerTitle": "Sélectionner la langue",
+    "languagePickerDescription": "Choisissez la langue que vous souhaitez utiliser pour le menu.",
+    "searchLanguage": "Rechercher des langues...",
+    "recommendedLanguages": "Recommandé",
+    "recentLanguages": "Langues récentes",
+    "allLanguages": "Toutes les langues",
+    "languageNotFound": "Langue introuvable.",
+    "languageNotFoundDescription": "Essayez un autre nom ou code de langue.",
+    "tableNumber": "Table {number}",
+    "itemCount": "{count} articles",
+    "splashLabel": "Écran d'accueil Tarihi Şehir Lokantası",
+    "cancel": "Annuler",
+    "confirmOrder": "Confirmer la commande",
+    "orderSummary": "Résumé de la commande",
+    "payment": "Paiement",
+    "tableNotFound": "Table introuvable.",
+    "invalidQr": "Code QR invalide.",
+    "menuUnavailable": "Le menu n'est actuellement pas disponible.",
+    "networkError": "Une erreur réseau s'est produite.",
+    "productUnavailable": "Cet article n'est actuellement pas disponible.",
+    "unableToSendOrder": "Impossible d'envoyer la commande.",
+    "tryAgain": "Réessayer",
+    "somethingWentWrong": "Quelque chose a mal tourné.",
+    "loadingLanguage": "Chargement de la langue...",
+    "languageLoadError": "La langue n'a pas pu être chargée. Veuillez réessayer."
+  },
+  "categories": {
+    "soups": "Soupes",
+    "grill": "Grillades",
+    "mains": "Plats principaux",
+    "drinks": "Boissons",
+    "kebabs": "Kebabs",
+    "dessert": "Desserts"
+  },
+  "products": {
+    "mercimek": {
+      "name": "Soupe de lentilles",
+      "description": "Soupe de lentilles maison préparée dans le style classique, accompagnée d'une sauce au beurre."
+    },
+    "tas-kebabi": {
+      "name": "Ragoût de boeuf turc",
+      "description": "Boeuf, légumes de saison, et la sauce spéciale mijotée de notre restaurant."
+    },
+    "kuzu-tandir": {
+      "name": "Agneau rôti lentement",
+      "description": "Le tandoori d'agneau signature de notre restaurant, cuit lentement à feu doux."
+    },
+    "pirinc-pilavi": {
+      "name": "Pilaf de riz",
+      "description": "Pilaf de riz Baldo beurré et moelleux."
+    },
+    "firin-sutlac": {
+      "name": "Pouding de riz au four",
+      "description": "Pouding de riz cuit au four de manière traditionnelle, préparé avec du lait de bufflonne frais quotidiennement."
+    },
+    "kuru-fasulye": {
+      "name": "Ragoût de haricots blancs au bœuf",
+      "description": "Haricots İspir, bœuf en dés, et pâte de tomate de restaurant simple."
+    },
+    "izgara-kofte": {
+      "name": "Boulettes de viande grillées",
+      "description": "Boulettes de bœuf façon boucher avec poivron et tomate rôtis."
+    },
+    "ayran": {
+      "name": "Ayran baratté",
+      "description": "Petit-lait battu traditionnel avec beaucoup de mousse, préparé avec du yaourt ordinaire."
+    },
+    "ezogelin-corbasi": {
+      "name": "Soupe Ezogelin",
+      "description": "Une soupe de restaurant traditionnelle où les lentilles rouges, le boulgour et le riz se rencontrent avec de la menthe."
+    },
+    "tarhana-corbasi": {
+      "name": "Soupe Tarhana",
+      "description": "Tarhana fait maison, un classique anatolien cuit lentement avec des tomates et de la menthe séchée."
+    },
+    "yayla-corbasi": {
+      "name": "Soupe de yaourt et de riz",
+      "description": "Une soupe yayla rafraîchissante et crémeuse préparée avec du yaourt, du riz et de la menthe séchée."
+    },
+    "iskembe-corbasi": {
+      "name": "Soupe de tripes",
+      "description": "Soupe de tripes de bœuf traditionnelle servie avec son assaisonnement et du vinaigre à l'ail."
+    },
+    "dugun-corbasi": {
+      "name": "Soupe de mariage",
+      "description": "Soupe de mariage traditionnelle préparée avec de l'agneau effiloché et aromatisée avec une marinade au citron."
+    },
+    "tavuk-suyu-corbasi": {
+      "name": "Soupe au bouillon de poulet",
+      "description": "Une soupe réparatrice préparée avec de fines nouilles cuites dans un bouillon d'os et de la viande de poulet effilochée."
+    },
+    "domates-corbasi": {
+      "name": "Soupe de tomates",
+      "description": "Une saveur riche cuisinée avec des tomates mûres, du beurre et du basilic, complétée par du fromage."
+    },
+    "sebze-corbasi": {
+      "name": "Soupe de légumes",
+      "description": "Une soupe légère de restaurant préparée avec des légumes de saison, de l'huile d'olive et des herbes fraîches."
+    },
+    "beyran-corbasi": {
+      "name": "Soupe épicée d'agneau Beyran",
+      "description": "Une soupe régionale préparée à feu vif avec de l'agneau, du riz, de l'ail et du piment fort."
+    },
+    "kelle-paca-corbasi": {
+      "name": "Soupe de tête et de pieds",
+      "description": "Une soupe riche en bouillon d'os faite avec des pieds et de la viande de tête de bœuf bouillis pendant de longues heures."
+    },
+    "sehriye-corbasi": {
+      "name": "Soupe de vermicelles",
+      "description": "Soupe du jour préparée avec du bouillon de poulet, des tomates, des vermicelles et du persil."
+    },
+    "tavuk-sis": {
+      "name": "Brochettes de poulet",
+      "description": "Morceaux de poulet marinés avec des épices spéciales, servis avec des poivrons et tomates rôtis."
+    },
+    "kasap-sucuk": {
+      "name": "Sucuk de boucher grillé",
+      "description": "Saucisse de bœuf épicée cuite au charbon, avec légumes rôtis et oignon au sumac."
+    },
+    "karisik-izgara": {
+      "name": "Grillade mixte",
+      "description": "Assiette de grillades abondante et variée composée de boulettes de viande, brochettes de poulet, côtelettes d'agneau et saucisse."
+    },
+    "nohut-yemegi": {
+      "name": "Ragoût de pois chiches au bœuf",
+      "description": "Un repas fait maison de pois chiches et de bœuf en dés lentement cuits dans une casserole en cuivre."
+    },
+    "patlican-musakka": {
+      "name": "Moussaka à l'aubergine",
+      "description": "Aubergine frite, bœuf haché et moussaka cuits au four avec sauce tomate, façon restaurant."
+    },
+    "zeytinyagli-taze-fasulye": {
+      "name": "Haricots verts à l'huile d'olive",
+      "description": "Un classique cuit à l'huile d'olive avec haricots verts, tomates et oignons, servi froid."
+    },
+    "tavuk-sote": {
+      "name": "Poulet sauté",
+      "description": "Des morceaux de poulet sont sautés à feu vif avec des poivrons colorés, des champignons et des tomates."
+    },
+    "izmir-kofte": {
+      "name": "Boulettes de viande à la manière d'İzmir",
+      "description": "Un plat principal traditionnel de boulettes de viande de bœuf, pommes de terre et poivrons cuits au four dans une sauce tomate."
+    },
+    "etli-bezelye": {
+      "name": "Petits pois au bœuf",
+      "description": "Repas quotidien cuisiné dans une casserole avec du bœuf en cubes, des petits pois, des carottes et des pommes de terre."
+    },
+    "patlican-oturtma": {
+      "name": "Aubergine au four avec viande hachée",
+      "description": "La langue est préparée au four avec de l'aubergine, de la viande hachée épicée et une sauce tomate à l'ail."
+    },
+    "salgam-suyu": {
+      "name": "Jus de navet fermenté",
+      "description": "Jus de navet épicé traditionnel fermenté avec de la carotte violette et de la levure de boulgour."
+    },
+    "maden-suyu": {
+      "name": "Eau minérale",
+      "description": "Eau minérale naturelle plate servie froide."
+    },
+    "su": {
+      "name": "Eau de source naturelle",
+      "description": "Eau de source naturelle servie froide dans une bouteille en verre."
+    },
+    "kola": {
+      "name": "Cola",
+      "description": "Une boisson gazeuse classique servie très froide."
+    },
+    "gazoz": {
+      "name": "Soda au citron turc",
+      "description": "Soda traditionnel aromatisé, rafraîchissant et servi froid nature."
+    },
+    "turk-kahvesi": {
+      "name": "Café turc",
+      "description": "Café turc traditionnel avec mousse, préparé à feu vif dans un cezve en cuivre."
+    },
+    "demleme-cay": {
+      "name": "Thé turc infusé",
+      "description": "Thé Rize frais infusé, servi chaud dans un verre à taille fine."
+    },
+    "ev-yapimi-limonata": {
+      "name": "Limonade maison",
+      "description": "Limonade rafraîchissante préparée chaque jour avec du citron frais, de la menthe et un peu de sucre."
+    },
+    "hosaf": {
+      "name": "Compote de fruits quotidienne",
+      "description": "Compote maison bouillie chaque jour avec des raisins, des abricots ou des prunes selon la saison."
+    },
+    "iskender-kebabi": {
+      "name": "Kebab İskender de Bursa",
+      "description": "La viande est tournée sur une broche au-dessus du pide, servie avec de la sauce tomate, du beurre chaud et du yaourt."
+    },
+    "kazandibi": {
+      "name": "Pudding de lait caramélisé",
+      "description": "Un dessert laitier traditionnel correctement caramélisé, avec une texture soyeuse."
+    },
+    "tavuk-gogsu": {
+      "name": "Pudding de lait Ottoman",
+      "description": "Un dessert lacté léger et fibreux préparé selon une recette traditionnelle, servi avec de la cannelle."
+    },
+    "keskul": {
+      "name": "Pudding au lait d'amande",
+      "description": "Dessert lacté à la manière ottomane, complété avec de la saveur d'amande et de la noix de coco."
+    },
+    "irmik-helvasi": {
+      "name": "Halva de semoule",
+      "description": "Halva de semoule, rôtie avec du beurre et des pignons, servie chaude et granuleuse."
+    },
+    "kabak-tatlisi": {
+      "name": "Dessert de citrouille au tahini",
+      "description": "La citrouille, lentement cuite dans son propre jus, est servie avec du tahini et des noix."
+    },
+    "ayva-tatlisi": {
+      "name": "Dessert de coing",
+      "description": "Le coing cuit avec des clous de girofle et de la cannelle est servi avec de la crème épaisse et des noix."
+    },
+    "revani": {
+      "name": "Gâteau au Sirop de Semoule",
+      "description": "Le dessert classique de restaurant où un gâteau moelleux de semoule rencontre un sirop parfumé au citron."
+    },
+    "ekmek-kadayifi": {
+      "name": "Pouding au Pain avec Crème Épaissie",
+      "description": "Pouding au pain reposé avec du sirop caramélisé, servi avec de la crème épaissie de bufflonne."
+    },
+    "cevizli-baklava": {
+      "name": "Baklava aux Noix",
+      "description": "Des couches étalées très finement, un baklava croustillant fait avec beaucoup de noix et du beurre nature."
+    }
+  },
+  "allergens": {
+    "Süt ürünleri": "Produits Laitiers",
+    "Gluten": "Gluten",
+    "Yumurta": "Œuf",
+    "Badem": "Amande",
+    "Çam fıstığı": "Pignon de Pin",
+    "Susam": "Sésame",
+    "Ceviz": "Noix"
+  },
+  "tags": {
+    "Popüler": "Populaire",
+    "Vejetaryen": "Végétarien",
+    "Günün Yemeği": "Plat du Jour",
+    "Şefin Önerisi": "Choix du Chef",
+    "Yeni": "Nouveau",
+    "Acılı": "Épicé",
+    "Ev Yapımı": "Fait Maison",
+    "Lokanta Klasiği": "Classique du Restaurant",
+    "Günün Çorbası": "Soupe du Jour",
+    "Vegan": "Végan",
+    "Hafif": "Léger",
+    "Yöresel": "Régional",
+    "Paylaşmalık": "À Partager",
+    "Ev Yemeği": "Maison",
+    "Zeytinyağlı": "Huile d'Olive",
+    "Nostaljik": "Nostalgique",
+    "Geleneksel": "Traditionnel",
+    "Bursa Lezzeti": "Goût de Bursa",
+    "Sütlü Tatlı": "Dessert au lait",
+    "Sıcak Tatlı": "Dessert chaud",
+    "Mevsimlik": "Saisonnier",
+    "Şerbetli": "Dessert au sirop"
+  }
+}

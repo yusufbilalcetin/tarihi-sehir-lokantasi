@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "generate:i18n": "node scripts/generate-menu-locales.mjs",
+    "validate:i18n": "node scripts/validate-menu-i18n.mjs"
   },
   "dependencies": {
     "@base-ui/react": "^1.7.0",
@@ -29,6 +31,7 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "bing-translate-api": "^4.2.1",
     "eslint": "^9",
     "eslint-config-next": "16.3.0",
     "tailwindcss": "^4",

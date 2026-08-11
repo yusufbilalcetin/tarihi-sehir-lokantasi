@@ -4,8 +4,10 @@ import {
   type LocalizedText,
   type MenuLanguage,
 } from "./menu-translations";
+import { getLoadedMenuCatalog } from "./menu-catalog";
+import { getMenuLanguage } from "./languages";
 
-const categoryNames: Record<string, LocalizedText> = {
+export const categoryNames: Record<string, LocalizedText> = {
   soups: { tr: "Çorbalar", en: "Soups", de: "Suppen", ar: "الشوربات" },
   grill: { tr: "Izgaralar", en: "Grills", de: "Grillgerichte", ar: "المشويات" },
   mains: { tr: "Ana Yemekler", en: "Main Courses", de: "Hauptgerichte", ar: "الأطباق الرئيسية" },
@@ -14,7 +16,7 @@ const categoryNames: Record<string, LocalizedText> = {
   dessert: { tr: "Tatlılar", en: "Desserts", de: "Desserts", ar: "الحلويات" },
 };
 
-const productNames: Record<string, LocalizedText> = {
+export const productNames: Record<string, LocalizedText> = {
   mercimek: { tr: "Mercimek Çorbası", en: "Lentil Soup", de: "Linsensuppe", ar: "شوربة العدس" },
   "tas-kebabi": { tr: "Tas Kebabı", en: "Turkish Beef Stew", de: "Türkischer Rinderschmortopf", ar: "طاجن لحم تركي" },
   "kuzu-tandir": { tr: "Kuzu Tandır", en: "Slow-Roasted Lamb", de: "Langsam gegartes Lamm", ar: "لحم ضأن مطهو ببطء" },
@@ -65,13 +67,13 @@ const productNames: Record<string, LocalizedText> = {
   "cevizli-baklava": { tr: "Cevizli Baklava", en: "Walnut Baklava", de: "Walnuss-Baklava", ar: "بقلاوة بالجوز" },
 };
 
-const descriptionTemplates: Record<Exclude<MenuLanguage, "tr">, string> = {
+const descriptionTemplates: Record<string, string> = {
   en: "{name}, prepared daily in our traditional Turkish restaurant style.",
   de: "{name}, täglich nach traditioneller türkischer Art zubereitet.",
   ar: "{name}، يُحضّر يوميًا على الطريقة التركية التقليدية.",
 };
 
-const tagTranslations: Record<string, LocalizedText> = {
+export const tagTranslations: Record<string, LocalizedText> = {
   "Popüler": { tr: "Popüler", en: "Popular", de: "Beliebt", ar: "شائع" },
   "Vejetaryen": { tr: "Vejetaryen", en: "Vegetarian", de: "Vegetarisch", ar: "نباتي" },
   "Günün Yemeği": { tr: "Günün Yemeği", en: "Dish of the Day", de: "Tagesgericht", ar: "طبق اليوم" },
@@ -96,7 +98,7 @@ const tagTranslations: Record<string, LocalizedText> = {
   "Şerbetli": { tr: "Şerbetli", en: "Syrup Dessert", de: "Sirupdessert", ar: "حلوى بالقطر" },
 };
 
-const allergenTranslations: Record<string, LocalizedText> = {
+export const allergenTranslations: Record<string, LocalizedText> = {
   "Süt ürünleri": { tr: "Süt ürünleri", en: "Dairy", de: "Milchprodukte", ar: "منتجات الألبان" },
   Gluten: { tr: "Gluten", en: "Gluten", de: "Gluten", ar: "الغلوتين" },
   Yumurta: { tr: "Yumurta", en: "Egg", de: "Ei", ar: "البيض" },
@@ -107,33 +109,50 @@ const allergenTranslations: Record<string, LocalizedText> = {
 };
 
 export function getMenuCategoryName(category: Category, language: MenuLanguage) {
+  const catalogName = getLoadedMenuCatalog(language)?.categories[category.id];
+  if (catalogName) return catalogName;
   return getLocalizedText(categoryNames[category.id] ?? category.name, language);
 }
 
 export function getMenuProductName(product: Product, language: MenuLanguage) {
+  const catalogName = getLoadedMenuCatalog(language)?.products[product.id]?.name;
+  if (catalogName) return catalogName;
   return getLocalizedText(productNames[product.id] ?? product.name, language);
 }
 
 export function getMenuProductDescription(product: Product, language: MenuLanguage) {
+  const catalogDescription = getLoadedMenuCatalog(language)?.products[product.id]?.description;
+  if (catalogDescription) return catalogDescription;
   if (language === "tr") return product.description;
-  return descriptionTemplates[language].replace(
+  const baseLanguage = language.split("-")[0] ?? language;
+  const template = descriptionTemplates[language] ?? descriptionTemplates[baseLanguage] ?? descriptionTemplates.en;
+  return template.replace(
     "{name}",
     getMenuProductName(product, language),
   );
 }
 
 export function getMenuTag(tag: string, language: MenuLanguage) {
+  const catalogTag = getLoadedMenuCatalog(language)?.tags[tag];
+  if (catalogTag) return catalogTag;
   return getLocalizedText(tagTranslations[tag] ?? tag, language);
 }
 
 export function getMenuAllergen(allergen: string, language: MenuLanguage) {
+  const catalogAllergen = getLoadedMenuCatalog(language)?.allergens[allergen];
+  if (catalogAllergen) return catalogAllergen;
   return getLocalizedText(allergenTranslations[allergen] ?? allergen, language);
 }
 
 export function getMenuWeight(weight: string, language: MenuLanguage) {
-  if (language === "tr") return weight;
-  if (language === "ar") {
-    return weight.replace(/\bgr\b/gi, "غ").replace(/\bml\b/gi, "مل");
-  }
-  return weight.replace(/\bgr\b/gi, "g");
+  const match = weight.trim().match(/^(\d+(?:[.,]\d+)?)\s*(gr|g|ml)$/i);
+  if (!match) return weight;
+  const value = Number(match[1].replace(",", "."));
+  const unit = match[2].toLocaleLowerCase("en-US") === "ml" ? "milliliter" : "gram";
+  return new Intl.NumberFormat(getMenuLanguage(language)?.locale ?? "tr-TR", {
+    style: "unit",
+    unit,
+    unitDisplay: "short",
+    maximumFractionDigits: 2,
+  }).format(value);
 }

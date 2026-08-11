@@ -12,7 +12,7 @@ import { getMenuAllergen, getMenuProductDescription, getMenuProductName, getMenu
 import type { Product } from "@/types";
 
 export function ProductDetailSheet({ product, open, onOpenChange, onAdd }: { product: Product | null; open: boolean; onOpenChange: (open: boolean) => void; onAdd: (product: Product, quantity: number, note: string) => void }) {
-  const { direction, formatPrice, language, t } = useMenuPreferences();
+  const { direction, formatNumber, formatPrice, language, t } = useMenuPreferences();
   const [quantity, setQuantity] = useState(1);
   const [note, setNote] = useState("");
 
@@ -29,7 +29,7 @@ export function ProductDetailSheet({ product, open, onOpenChange, onAdd }: { pro
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent dir={direction} side="bottom" showCloseButton={false} className="mx-auto max-h-[92dvh] w-full overflow-y-auto rounded-t-3xl border-border p-0 sm:max-w-2xl">
-        <SheetClose className="absolute right-3 top-3 z-10 inline-flex size-9 items-center justify-center rounded-lg bg-black/35 text-white backdrop-blur-sm transition-colors hover:bg-black/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-copper">
+        <SheetClose className="absolute end-3 top-3 z-10 inline-flex size-9 items-center justify-center rounded-lg bg-black/35 text-white backdrop-blur-sm transition-colors hover:bg-black/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-copper">
           <X className="size-4" aria-hidden="true" />
           <span className="sr-only">{t("close")}</span>
         </SheetClose>
@@ -60,7 +60,7 @@ export function ProductDetailSheet({ product, open, onOpenChange, onAdd }: { pro
           <div className="flex items-center justify-between gap-4">
             <div className="flex h-12 items-center rounded-xl border bg-background">
               <button type="button" className="touch-target flex items-center justify-center px-3" aria-label={t("decreaseQuantity")} onClick={() => setQuantity((value) => Math.max(1, value - 1))}><Minus className="size-4" /></button>
-              <span className="min-w-8 text-center font-bold tabular-nums">{quantity}</span>
+              <span className="min-w-8 text-center font-bold tabular-nums">{formatNumber(quantity)}</span>
               <button type="button" className="touch-target flex items-center justify-center px-3" aria-label={t("increaseQuantity")} onClick={() => setQuantity((value) => value + 1)}><Plus className="size-4" /></button>
             </div>
             <Button type="button" onClick={handleAdd} disabled={soldOut} className="h-12 flex-1 rounded-xl px-5 text-sm font-bold">

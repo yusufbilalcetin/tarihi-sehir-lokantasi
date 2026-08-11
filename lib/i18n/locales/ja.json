@@ -1,0 +1,349 @@
+{
+  "locale": "ja",
+  "ui": {
+    "menu": "メニュー",
+    "search": "メニューを検索...",
+    "searchLabel": "メニューを検索",
+    "categories": "カテゴリー",
+    "categoryIntro": "テーブルのフレーバーを選択してください。",
+    "categoryNavigation": "メニューカテゴリー",
+    "openCategory": "{name} を開く、{count} アイテム",
+    "items": "アイテム",
+    "item": "アイテム",
+    "searchResults": "検索結果",
+    "productsFound": "{count} 件見つかりました",
+    "backToCategories": "カテゴリーに戻る",
+    "backToCategory": "{name} に戻る",
+    "clearSearch": "検索をクリア",
+    "noResults": "一致するアイテムが見つかりませんでした",
+    "noResultsDescription": "別の検索を試すか、カテゴリに戻ってください。",
+    "order": "私の注文",
+    "waiter": "ウェイター",
+    "bill": "請求書",
+    "addToCart": "注文に追加",
+    "addedToCart": "{name} を注文に追加しました。",
+    "removeFromCart": "{name} を削除",
+    "soldOut": "本日売り切れ",
+    "productDetails": "{name} の詳細を開く",
+    "portion": "分量",
+    "standardPortion": "標準の分量",
+    "allergens": "アレルゲン",
+    "noAllergens": "申告されたアレルゲンはありません",
+    "productNote": "商品メモ",
+    "productNotePlaceholder": "例：バター抜きでお願いします",
+    "decreaseQuantity": "数量を減らす",
+    "increaseQuantity": "数量を増やす",
+    "each": "各",
+    "note": "メモ",
+    "subtotal": "小計",
+    "serviceFee": "サービス料",
+    "total": "合計",
+    "sendOrder": "注文を送信",
+    "orderSent": "あなたの注文がキッチンに送信されました",
+    "orderTracking": "ここで注文 #{number} を追跡できます。",
+    "newItem": "別のアイテムを追加",
+    "emptyCart": "注文は空です",
+    "emptyCartDescription": "メニューから選択したアイテムがここに表示されます。",
+    "browseMenu": "メニューを見る",
+    "orderReceived": "注文を受け付けました",
+    "waiterConfirmed": "ウェイター確認済み",
+    "preparing": "準備中",
+    "ready": "準備完了",
+    "served": "提供済み",
+    "preparingDescription": "当店のキッチンがご注文を準備しています。",
+    "orderStatus": "注文状況",
+    "callWaiter": "ウェイターを呼ぶ",
+    "placeOrder": "注文したい",
+    "wantWater": "水をください",
+    "wantBread": "パンをください",
+    "wantService": "追加サービス",
+    "other": "その他",
+    "generalRequest": "一般的なお願いがあります",
+    "orderHelp": "注文について助けが必要です",
+    "waterDescription": "テーブルに水を持ってきてください",
+    "breadDescription": "テーブルにパンを持ってきてください",
+    "serviceDescription": "カトラリーかお皿が必要です",
+    "otherDescription": "他のことについて助けが必要です",
+    "waiterHelpTitle": "どのようにお手伝いできますか？",
+    "waiterHelpDescription": "あなたのリクエストは {table} と一緒に送信されます。",
+    "waiterRequestSent": "あなたのリクエストはウェイターに送信されました。",
+    "requestBill": "お会計をお願いする",
+    "billSent": "お会計のリクエストが送信されました",
+    "billConfirm": "お会計をリクエストしますか？",
+    "billSentDescription": "ウェイターがすぐに対応します。",
+    "billConfirmDescription": "あなたのリクエストは直接ウェイターに送られます。テーブルまたはレジでお支払いいただけます。",
+    "billToast": "お会計のリクエストはウェイターに送信されました。",
+    "backToMenu": "メニューに戻る",
+    "back": "戻る",
+    "close": "閉じる",
+    "yourTable": "あなたのテーブル",
+    "serviceOpen": "サービス開始",
+    "slogan": "伝統的な味・現代的なテーブル",
+    "location": "ブルサ、オスマンガジ",
+    "languageLabel": "言語を選択",
+    "currencyLabel": "通貨を選択",
+    "customerNavigation": "顧客メニューナビゲーション",
+    "approximateCurrency": "外国通貨の価格は概算です。支払いはトルコリラで処理されます。",
+    "orderSuccess": "注文は正常に送信されました。",
+    "languagePickerTitle": "言語を選択",
+    "languagePickerDescription": "メニューで使用する言語を選択してください。",
+    "searchLanguage": "言語を検索...",
+    "recommendedLanguages": "おすすめ",
+    "recentLanguages": "最近使用した言語",
+    "allLanguages": "すべての言語",
+    "languageNotFound": "言語が見つかりません。",
+    "languageNotFoundDescription": "別の言語名またはコードを試してください。",
+    "tableNumber": "テーブル {number}",
+    "itemCount": "{count} 件",
+    "splashLabel": "Tarihi Şehir Lokantası オープニング画面",
+    "cancel": "キャンセル",
+    "confirmOrder": "注文を確認",
+    "orderSummary": "注文概要",
+    "payment": "支払い",
+    "tableNotFound": "テーブルが見つかりません。",
+    "invalidQr": "無効なQRコードです。",
+    "menuUnavailable": "現在、メニューは利用できません。",
+    "networkError": "ネットワークエラーが発生しました。",
+    "productUnavailable": "この商品は現在利用できません。",
+    "unableToSendOrder": "注文を送信できません。",
+    "tryAgain": "もう一度試してください",
+    "somethingWentWrong": "問題が発生しました。",
+    "loadingLanguage": "言語を読み込み中...",
+    "languageLoadError": "言語を読み込めませんでした。もう一度お試しください。"
+  },
+  "categories": {
+    "soups": "スープ",
+    "grill": "グリル",
+    "mains": "メインコース",
+    "drinks": "ドリンク",
+    "kebabs": "ケバブ",
+    "dessert": "デザート"
+  },
+  "products": {
+    "mercimek": {
+      "name": "レンズ豆のスープ",
+      "description": "クラシックスタイルで作った自家製レンズ豆のスープに、バターソースを添えて。"
+    },
+    "tas-kebabi": {
+      "name": "トルコ風ビーフシチュー",
+      "description": "牛肉、季節の野菜、そして当店特製のじっくり煮込んだソース。"
+    },
+    "kuzu-tandir": {
+      "name": "スローローストラム",
+      "description": "当店自慢のラムタンドリを、低温でじっくり焼き上げました。"
+    },
+    "pirinc-pilavi": {
+      "name": "ライスピラフ",
+      "description": "バター風味でふっくらとしたバルド米のピラフ。"
+    },
+    "firin-sutlac": {
+      "name": "ベイクドライスプディング",
+      "description": "伝統的な方法で焼き上げたライスプディングに、毎日搾る水牛のミルクを使用。"
+    },
+    "kuru-fasulye": {
+      "name": "牛肉入り白いんげん豆のシチュー",
+      "description": "イスピル豆、角切り牛肉、そしてレストランで使う普通のトマトペースト。"
+    },
+    "izgara-kofte": {
+      "name": "グリルミートボール",
+      "description": "ローストしたピーマンとトマトを使った、肉屋風の牛肉ミートボール。"
+    },
+    "ayran": {
+      "name": "かき混ぜたアイラン",
+      "description": "日常のヨーグルトで作った、泡たっぷりの伝統的かき混ぜバターミルク。"
+    },
+    "ezogelin-corbasi": {
+      "name": "エゾゲリン・スープ",
+      "description": "赤レンズ豆、ブルグル、小米がミントと出会う伝統的なレストランスープ。"
+    },
+    "tarhana-corbasi": {
+      "name": "タルハナ・スープ",
+      "description": "トマトと乾燥ミントでゆっくり煮込んだ、アナトリアの定番自家製タルハナ。"
+    },
+    "yayla-corbasi": {
+      "name": "ヨーグルトとライスのスープ",
+      "description": "ヨーグルト、米、乾燥ミントで作ったさわやかでクリーミーなヤイラ・スープ。"
+    },
+    "iskembe-corbasi": {
+      "name": "トライプスープ（もつスープ）",
+      "description": "適切な牛のもつスープで、調味料とにんにく酢と共に提供されます。"
+    },
+    "dugun-corbasi": {
+      "name": "ウェディングスープ",
+      "description": "ほぐしたラム肉で作られ、レモンマリネで風味付けした伝統的な結婚式のスープ。"
+    },
+    "tavuk-suyu-corbasi": {
+      "name": "チキンブロススープ",
+      "description": "骨スープで煮た細い麺とほぐした鶏肉で作る癒しのスープ。"
+    },
+    "domates-corbasi": {
+      "name": "トマトスープ",
+      "description": "熟したトマト、バター、バジルで煮込んだ濃厚な味わいに、チーズを添えて。"
+    },
+    "sebze-corbasi": {
+      "name": "野菜スープ",
+      "description": "季節の野菜、オリーブオイル、新鮮なハーブで作ったあっさりとしたレストラン風スープ。"
+    },
+    "beyran-corbasi": {
+      "name": "スパイシーラムベイランスープ",
+      "description": "羊肉、米、ニンニク、唐辛子を強火で調理した地方のスープ。"
+    },
+    "kelle-paca-corbasi": {
+      "name": "頭肉と蹄のスープ",
+      "description": "牛の蹄と頭肉を長時間煮込んで作った濃厚な骨スープ。"
+    },
+    "sehriye-corbasi": {
+      "name": "ビーフンのスープ",
+      "description": "鶏のブロスにトマト、ビーフン、パセリを加えて作った日替わりスープ。"
+    },
+    "tavuk-sis": {
+      "name": "チキン串",
+      "description": "特製スパイスでマリネした鶏肉の一口サイズ、ローストしたピーマンとトマトと一緒に提供。"
+    },
+    "kasap-sucuk": {
+      "name": "グリルしたブッチャーズ・スジュク",
+      "description": "炭火で焼いたスパイシーな牛肉ソーセージ、ロースト野菜とスマック入りの玉ねぎ添え。"
+    },
+    "karisik-izgara": {
+      "name": "ミックスグリル",
+      "description": "ミートボール、チキン串、ラムチョップ、ソーセージを盛り合わせたボリュームたっぷりのグリルプレート。"
+    },
+    "nohut-yemegi": {
+      "name": "ひよこ豆と牛肉のシチュー",
+      "description": "銅鍋でゆっくりと煮込んだひよこ豆と角切り牛肉の家庭料理。"
+    },
+    "patlican-musakka": {
+      "name": "ナスのムサカ",
+      "description": "揚げたナス、ひき肉、ムサカをオーブンでトマトソースとともに焼いた、レストラン風の料理。"
+    },
+    "zeytinyagli-taze-fasulye": {
+      "name": "オリーブオイルのさやいんげん",
+      "description": "オリーブオイルで定番の味付けをしたさやいんげん、トマト、玉ねぎを使い、冷たくして提供。"
+    },
+    "tavuk-sote": {
+      "name": "チキンソテー",
+      "description": "鶏肉の切り身を、カラフルなピーマン、きのこ、トマトとともに強火でソテー。"
+    },
+    "izmir-kofte": {
+      "name": "イズミル風ミートボール",
+      "description": "トマトソースで焼いた牛肉のミートボール、ジャガイモ、ピーマンの伝統的な主菜。"
+    },
+    "etli-bezelye": {
+      "name": "牛肉入りエンドウ豆",
+      "description": "角切り牛肉、エンドウ豆、ニンジン、ジャガイモを鍋で調理した日替わり料理。"
+    },
+    "patlican-oturtma": {
+      "name": "ミンチ入り焼きナス",
+      "description": "舌肉をオーブンでナス、スパイシーなミンチ、ニンニクトマトソースと一緒に調理。"
+    },
+    "salgam-suyu": {
+      "name": "発酵カブジュース",
+      "description": "紫ニンジンとブルグル酵母で発酵させた伝統的なスパイシーカブジュース。"
+    },
+    "maden-suyu": {
+      "name": "ミネラルウォーター",
+      "description": "冷たくして提供される天然のミネラルウォーター。"
+    },
+    "su": {
+      "name": "天然の湧き水",
+      "description": "ガラスボトルで冷やして提供される天然の湧き水。"
+    },
+    "kola": {
+      "name": "コーラ",
+      "description": "氷で冷やして提供される定番の炭酸飲料。"
+    },
+    "gazoz": {
+      "name": "トルコレモンソーダ",
+      "description": "伝統的なフレーバーの、さっぱりして冷やして提供されるプレーンサイダー。"
+    },
+    "turk-kahvesi": {
+      "name": "トルココーヒー",
+      "description": "銅製のジェズヴェで強火で淹れた泡立つ伝統的なトルココーヒー。"
+    },
+    "demleme-cay": {
+      "name": "トルコの抽出紅茶",
+      "description": "細腰グラスで提供される新鮮に抽出された熱いリゼ茶。"
+    },
+    "ev-yapimi-limonata": {
+      "name": "自家製レモネード",
+      "description": "毎日新鮮なレモン、ミント、少しの砂糖で作るさわやかなレモネード。"
+    },
+    "hosaf": {
+      "name": "毎日のフルーツコンポート",
+      "description": "レーズン、アプリコット、または季節に応じたプラムを使って毎日煮込む自家製コンポート。"
+    },
+    "iskender-kebabi": {
+      "name": "ブルサ・イスケンデルケバブ",
+      "description": "肉を串に刺してピデの上で回転させ、トマトソース、熱いバター、ヨーグルトと一緒に提供。"
+    },
+    "kazandibi": {
+      "name": "カラメルミルクプリン",
+      "description": "伝統的なミルクデザートを丁寧にカラメル化し、滑らかな食感に。"
+    },
+    "tavuk-gogsu": {
+      "name": "オスマンミルクプリン",
+      "description": "シナモンと一緒に提供される、伝統的なレシピで作られた軽く繊維質のミルクデザート。"
+    },
+    "keskul": {
+      "name": "アーモンドミルクプリン",
+      "description": "アーモンド風味とココナッツを加えたオスマン風ミルクデザート。"
+    },
+    "irmik-helvasi": {
+      "name": "セモリナハルヴァ",
+      "description": "バターと松の実で炒めたセモリナハルヴァを、熱くて粒々のまま提供。"
+    },
+    "kabak-tatlisi": {
+      "name": "タヒニ入りカボチャデザート",
+      "description": "自身のジュースでゆっくりと煮込んだカボチャを、タヒニとクルミと一緒に提供。"
+    },
+    "ayva-tatlisi": {
+      "name": "マルメロのデザート",
+      "description": "クローブとシナモンで煮たマルメロを、クロテッドクリームとクルミと一緒に提供。"
+    },
+    "revani": {
+      "name": "セモリナシロップケーキ",
+      "description": "セモリナの柔らかいケーキとレモン風味のシロップが出会う、クラシックなレストランデザート。"
+    },
+    "ekmek-kadayifi": {
+      "name": "ブレッドプディングとクロテッドクリーム",
+      "description": "キャラメルシロップで休ませたブレッドプディングに、バッファロークロテッドクリームを添えて。"
+    },
+    "cevizli-baklava": {
+      "name": "クルミのバクラヴァ",
+      "description": "非常に薄く伸ばした層にたっぷりのクルミと無塩バターを使ったサクサクのバクラヴァ。"
+    }
+  },
+  "allergens": {
+    "Süt ürünleri": "乳製品",
+    "Gluten": "グルテン",
+    "Yumurta": "卵",
+    "Badem": "アーモンド",
+    "Çam fıstığı": "松の実",
+    "Susam": "ごま",
+    "Ceviz": "くるみ"
+  },
+  "tags": {
+    "Popüler": "人気",
+    "Vejetaryen": "ベジタリアン",
+    "Günün Yemeği": "本日の日替わり",
+    "Şefin Önerisi": "シェフのおすすめ",
+    "Yeni": "新しい",
+    "Acılı": "辛い",
+    "Ev Yapımı": "自家製",
+    "Lokanta Klasiği": "レストランの定番",
+    "Günün Çorbası": "本日のスープ",
+    "Vegan": "ヴィーガン",
+    "Hafif": "ライト",
+    "Yöresel": "地域の",
+    "Paylaşmalık": "シェア用",
+    "Ev Yemeği": "家庭風",
+    "Zeytinyağlı": "オリーブオイル",
+    "Nostaljik": "懐かしい",
+    "Geleneksel": "伝統的",
+    "Bursa Lezzeti": "ブルサの味",
+    "Sütlü Tatlı": "ミルクデザート",
+    "Sıcak Tatlı": "温かいデザート",
+    "Mevsimlik": "季節のデザート",
+    "Şerbetli": "シロップデザート"
+  }
+}

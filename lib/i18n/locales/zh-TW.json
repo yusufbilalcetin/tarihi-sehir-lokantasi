@@ -1,0 +1,349 @@
+{
+  "locale": "zh-TW",
+  "ui": {
+    "menu": "菜單",
+    "search": "搜尋菜單...",
+    "searchLabel": "搜尋菜單",
+    "categories": "分類",
+    "categoryIntro": "為您的餐桌選擇口味。",
+    "categoryNavigation": "菜單分類",
+    "openCategory": "打開 {name}，共 {count} 項",
+    "items": "項目",
+    "item": "項目",
+    "searchResults": "搜尋結果",
+    "productsFound": "找到 {count} 項目",
+    "backToCategories": "返回分類",
+    "backToCategory": "返回 {name}",
+    "clearSearch": "清除搜尋",
+    "noResults": "未找到符合的項目",
+    "noResultsDescription": "嘗試其他搜尋或返回分類。",
+    "order": "我的訂單",
+    "waiter": "服務員",
+    "bill": "帳單",
+    "addToCart": "加入訂單",
+    "addedToCart": "{name} 已加入您的訂單。",
+    "removeFromCart": "移除 {name}",
+    "soldOut": "今日已售完",
+    "productDetails": "開啟 {name} 的詳細資訊",
+    "portion": "份量",
+    "standardPortion": "標準份量",
+    "allergens": "過敏原",
+    "noAllergens": "無宣告過敏原",
+    "productNote": "餐點備註",
+    "productNotePlaceholder": "例如：請不要加奶油",
+    "decreaseQuantity": "減少數量",
+    "increaseQuantity": "增加數量",
+    "each": "每個",
+    "note": "備註",
+    "subtotal": "小計",
+    "serviceFee": "服務費",
+    "total": "總計",
+    "sendOrder": "送出訂單",
+    "orderSent": "您的訂單已送到廚房",
+    "orderTracking": "在此追蹤訂單 #{number}。",
+    "newItem": "新增其他商品",
+    "emptyCart": "您的訂單為空",
+    "emptyCartDescription": "您從菜單選擇的商品將顯示在此處。",
+    "browseMenu": "瀏覽菜單",
+    "orderReceived": "訂單已收到",
+    "waiterConfirmed": "服務員已確認",
+    "preparing": "準備中",
+    "ready": "已準備好",
+    "served": "已上菜",
+    "preparingDescription": "我們的廚房正在準備您的訂單。",
+    "orderStatus": "訂單狀態",
+    "callWaiter": "呼叫服務員",
+    "placeOrder": "我想點餐",
+    "wantWater": "我想要水",
+    "wantBread": "我想要麵包",
+    "wantService": "額外服務",
+    "other": "其他",
+    "generalRequest": "我有一般請求",
+    "orderHelp": "我需要訂單方面的幫助",
+    "waterDescription": "請把水送到桌上",
+    "breadDescription": "請將麵包送到餐桌上",
+    "serviceDescription": "我需要餐具或一個盤子",
+    "otherDescription": "我需要其他方面的幫助",
+    "waiterHelpTitle": "我們可以如何幫忙？",
+    "waiterHelpDescription": "您的請求將會與 {table} 一同發送。",
+    "waiterRequestSent": "您的請求已發送給服務員。",
+    "requestBill": "請求帳單",
+    "billSent": "您的帳單請求已發送",
+    "billConfirm": "您想要請求帳單嗎？",
+    "billSentDescription": "我們的服務員很快會來到您這裡。",
+    "billConfirmDescription": "您的請求將直接發送給服務員。您可以在餐桌或收銀處付款。",
+    "billToast": "您的帳單請求已送給我們的服務生。",
+    "backToMenu": "返回菜單",
+    "back": "返回",
+    "close": "關閉",
+    "yourTable": "您的桌位",
+    "serviceOpen": "服務已開啟",
+    "slogan": "傳統風味 • 現代餐桌",
+    "location": "布爾薩，奧斯曼加齊",
+    "languageLabel": "選擇語言",
+    "currencyLabel": "選擇貨幣",
+    "customerNavigation": "顧客菜單導航",
+    "approximateCurrency": "外幣價格僅供參考。付款將以土耳其里拉處理。",
+    "orderSuccess": "您的訂單已成功送出。",
+    "languagePickerTitle": "選擇語言",
+    "languagePickerDescription": "選擇您想在選單中使用的語言。",
+    "searchLanguage": "搜尋語言...",
+    "recommendedLanguages": "推薦",
+    "recentLanguages": "最近使用的語言",
+    "allLanguages": "所有語言",
+    "languageNotFound": "找不到語言。",
+    "languageNotFoundDescription": "請嘗試其他語言名稱或代碼。",
+    "tableNumber": "桌號 {number}",
+    "itemCount": "{count} 項",
+    "splashLabel": "Tarihi Şehir Lokantası 啟動畫面",
+    "cancel": "取消",
+    "confirmOrder": "確認訂單",
+    "orderSummary": "訂單摘要",
+    "payment": "付款",
+    "tableNotFound": "找不到桌號。",
+    "invalidQr": "無效的 QR 碼。",
+    "menuUnavailable": "菜單目前無法使用。",
+    "networkError": "發生網路錯誤。",
+    "productUnavailable": "此商品目前無法使用。",
+    "unableToSendOrder": "無法送出訂單。",
+    "tryAgain": "請再試一次",
+    "somethingWentWrong": "發生錯誤。",
+    "loadingLanguage": "正在載入語言...",
+    "languageLoadError": "無法載入語言。請再試一次。"
+  },
+  "categories": {
+    "soups": "湯類",
+    "grill": "烤肉",
+    "mains": "主菜",
+    "drinks": "飲料",
+    "kebabs": "烤肉串",
+    "dessert": "甜點"
+  },
+  "products": {
+    "mercimek": {
+      "name": "扁豆湯",
+      "description": "自製扁豆湯，採經典作法，搭配奶油醬汁。"
+    },
+    "tas-kebabi": {
+      "name": "土耳其燉牛肉",
+      "description": "牛肉、時令蔬菜，以及本餐廳慢燉特製醬汁。"
+    },
+    "kuzu-tandir": {
+      "name": "慢烤羊肉",
+      "description": "本餐廳招牌塔多里羊肉，低溫慢烤。"
+    },
+    "pirinc-pilavi": {
+      "name": "什錦飯",
+      "description": "奶油濃郁、鬆軟的巴爾多什錦飯。"
+    },
+    "firin-sutlac": {
+      "name": "烤米布丁",
+      "description": "傳統方式烘烤米布丁，以每日水牛奶製作。"
+    },
+    "kuru-fasulye": {
+      "name": "白豆燉牛肉",
+      "description": "伊斯皮爾豆、切丁牛肉和普通餐廳番茄醬。"
+    },
+    "izgara-kofte": {
+      "name": "烤肉丸",
+      "description": "屠夫風格牛肉丸配烤甜椒和番茄。"
+    },
+    "ayran": {
+      "name": "搖製酸乳",
+      "description": "傳統搖製酪乳，泡沫豐富，使用日常酸奶製作。"
+    },
+    "ezogelin-corbasi": {
+      "name": "埃佐格林湯",
+      "description": "傳統餐廳湯，紅扁豆、碎小麥和米飯與薄荷結合。"
+    },
+    "tarhana-corbasi": {
+      "name": "塔爾哈納湯",
+      "description": "自製塔爾哈納，一道安納托利亞經典菜，與番茄和乾薄荷慢慢烹煮。"
+    },
+    "yayla-corbasi": {
+      "name": "優格米湯",
+      "description": "一款清爽且綿密的鄉村湯，由優格、米和乾薄荷製成。"
+    },
+    "iskembe-corbasi": {
+      "name": "牛肚湯",
+      "description": "正宗的牛肚湯，搭配調味料和蒜味醋享用。"
+    },
+    "dugun-corbasi": {
+      "name": "婚宴湯",
+      "description": "傳統婚宴湯，由切絲羊肉製成，並以檸檬醃料調味。"
+    },
+    "tavuk-suyu-corbasi": {
+      "name": "雞肉高湯湯",
+      "description": "一款療癒湯品，由在骨頭高湯中煮的細麵條和雞絲製成。"
+    },
+    "domates-corbasi": {
+      "name": "番茄湯",
+      "description": "用熟番茄、奶油和羅勒烹調而成的濃郁風味，最後加入起司。"
+    },
+    "sebze-corbasi": {
+      "name": "蔬菜湯",
+      "description": "以季節蔬菜、橄欖油和新鮮香草製作的清淡餐廳湯品。"
+    },
+    "beyran-corbasi": {
+      "name": "辣羊肉Beyran湯",
+      "description": "以羊肉、米、蒜和辣椒高溫烹製的地方湯品。"
+    },
+    "kelle-paca-corbasi": {
+      "name": "牛頭與豬蹄湯",
+      "description": "以牛蹄和頭肉長時間熬煮的濃骨湯。"
+    },
+    "sehriye-corbasi": {
+      "name": "細麵湯",
+      "description": "每日湯品，使用雞高湯、番茄、細麵條和歐芹製作。"
+    },
+    "tavuk-sis": {
+      "name": "雞肉串",
+      "description": "雞肉塊以特製香料醃製，搭配烤甜椒與番茄。"
+    },
+    "kasap-sucuk": {
+      "name": "烤屠夫香腸",
+      "description": "辣味牛肉香腸炭烤，搭配烤蔬菜及加檸檬酸的洋蔥。"
+    },
+    "karisik-izgara": {
+      "name": "綜合烤肉",
+      "description": "豐富多樣的烤肉拼盤，包括肉丸、雞肉串、羊排和香腸。"
+    },
+    "nohut-yemegi": {
+      "name": "牛肉鷹嘴豆燉菜",
+      "description": "自製的鷹嘴豆和切丁牛肉慢慢在銅鍋中烹煮的餐點。"
+    },
+    "patlican-musakka": {
+      "name": "茄子焗肉",
+      "description": "炸茄子、絞牛肉和焗茄子，搭配番茄醬在烤箱中烘烤，餐廳風格。"
+    },
+    "zeytinyagli-taze-fasulye": {
+      "name": "橄欖油四季豆",
+      "description": "經典做法：四季豆、番茄和洋蔥用橄欖油烹煮，冷食享用。"
+    },
+    "tavuk-sote": {
+      "name": "快炒雞肉",
+      "description": "雞肉塊在高溫下快炒，加入彩色甜椒、蘑菇和番茄。"
+    },
+    "izmir-kofte": {
+      "name": "伊茲密爾風格肉丸",
+      "description": "傳統的主菜，由牛肉丸、馬鈴薯和甜椒，佐以烤番茄醬烘烤而成。"
+    },
+    "etli-bezelye": {
+      "name": "豌豆燉牛肉",
+      "description": "每日餐點，使用牛肉塊、豌豆、胡蘿蔔和馬鈴薯在鍋中烹煮而成。"
+    },
+    "patlican-oturtma": {
+      "name": "焗茄子肉末",
+      "description": "舌頭與茄子、香辣絞肉和蒜味番茄醬一起烤製而成。"
+    },
+    "salgam-suyu": {
+      "name": "醃蘿蔔汁",
+      "description": "傳統香辣蘿蔔汁，使用紫胡蘿蔔與粗粒麥芽酵母發酵而成。"
+    },
+    "maden-suyu": {
+      "name": "礦泉水",
+      "description": "冰鎮提供的天然礦泉水。"
+    },
+    "su": {
+      "name": "天然泉水",
+      "description": "以玻璃瓶冷藏供應的天然泉水。"
+    },
+    "kola": {
+      "name": "可樂",
+      "description": "經典碳酸飲料，冰鎮供應。"
+    },
+    "gazoz": {
+      "name": "土耳其檸檬汽水",
+      "description": "傳統風味，清爽，冷飲的原味汽水。"
+    },
+    "turk-kahvesi": {
+      "name": "土耳其咖啡",
+      "description": "傳統土耳其咖啡，帶泡沫，用銅製咖啡壺高溫煮製。"
+    },
+    "demleme-cay": {
+      "name": "土耳其紅茶",
+      "description": "現煮熱里茲茶，盛在細腰玻璃杯中。"
+    },
+    "ev-yapimi-limonata": {
+      "name": "自製檸檬水",
+      "description": "每日用新鮮檸檬、薄荷和少許糖製作的清爽檸檬水。"
+    },
+    "hosaf": {
+      "name": "每日水果炖菜",
+      "description": "根據季節用葡萄乾、杏子或李子每日自製炖煮的水果炖菜。"
+    },
+    "iskender-kebabi": {
+      "name": "Bursa 伊斯肯德爾烤肉",
+      "description": "肉在烤串上翻轉放在皮塔餅上，搭配番茄醬、熱奶油和優格一起食用。"
+    },
+    "kazandibi": {
+      "name": "焦糖牛奶布丁",
+      "description": "傳統的牛奶甜點，適當焦糖化，口感絲滑。"
+    },
+    "tavuk-gogsu": {
+      "name": "奧斯曼牛奶布丁",
+      "description": "用傳統食譜製作的輕盈纖維狀牛奶甜點，搭配肉桂食用。"
+    },
+    "keskul": {
+      "name": "杏仁牛奶布丁",
+      "description": "奧斯曼風格的牛奶甜點，加入杏仁風味和椰子。"
+    },
+    "irmik-helvasi": {
+      "name": "粗麥粉哈瓦甜點",
+      "description": "粗麥粉哈瓦甜點，用奶油和松子烘烤，熱食且口感顆粒分明。"
+    },
+    "kabak-tatlisi": {
+      "name": "芝麻醬南瓜甜點",
+      "description": "南瓜在自身汁液中慢慢煮熟，搭配芝麻醬和核桃食用。"
+    },
+    "ayva-tatlisi": {
+      "name": "榅桲甜點",
+      "description": "榅桲與丁香和肉桂一起烹煮，搭配凝乳和核桃食用。"
+    },
+    "revani": {
+      "name": "粗麵粉糖漿蛋糕",
+      "description": "經典餐廳甜點，粗麵粉柔軟蛋糕搭配檸檬香糖漿。"
+    },
+    "ekmek-kadayifi": {
+      "name": "麵包布丁配凝固奶油",
+      "description": "麵包布丁與焦糖糖漿靜置後，搭配水牛凝固奶油享用。"
+    },
+    "cevizli-baklava": {
+      "name": "核桃巴克拉瓦",
+      "description": "層層薄捲，酥脆巴克拉瓦，加入大量核桃與普通奶油製作。"
+    }
+  },
+  "allergens": {
+    "Süt ürünleri": "乳製品",
+    "Gluten": "麩質",
+    "Yumurta": "蛋",
+    "Badem": "杏仁",
+    "Çam fıstığı": "松子",
+    "Susam": "芝麻",
+    "Ceviz": "核桃"
+  },
+  "tags": {
+    "Popüler": "熱門",
+    "Vejetaryen": "素食",
+    "Günün Yemeği": "今日主菜",
+    "Şefin Önerisi": "主廚推薦",
+    "Yeni": "新",
+    "Acılı": "辣",
+    "Ev Yapımı": "自家製",
+    "Lokanta Klasiği": "餐廳經典",
+    "Günün Çorbası": "今日湯品",
+    "Vegan": "純素",
+    "Hafif": "清淡",
+    "Yöresel": "地區特色",
+    "Paylaşmalık": "分享用",
+    "Ev Yemeği": "家常風味",
+    "Zeytinyağlı": "橄欖油",
+    "Nostaljik": "懷舊",
+    "Geleneksel": "傳統",
+    "Bursa Lezzeti": "布爾薩的味道",
+    "Sütlü Tatlı": "牛奶甜點",
+    "Sıcak Tatlı": "熱甜點",
+    "Mevsimlik": "季節性",
+    "Şerbetli": "糖漿甜點"
+  }
+}

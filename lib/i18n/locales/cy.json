@@ -1,0 +1,349 @@
+{
+  "locale": "cy",
+  "ui": {
+    "menu": "Dewislen",
+    "search": "Chwilio'r ddewislen...",
+    "searchLabel": "Chwilio'r ddewislen",
+    "categories": "Categori",
+    "categoryIntro": "Dewiswch y blas ar gyfer eich bwrdd.",
+    "categoryNavigation": "Categoriau'r ddewislen",
+    "openCategory": "Agor {name}, {count} eitem",
+    "items": "eitemau",
+    "item": "eitem",
+    "searchResults": "Canlyniadau Chwilio",
+    "productsFound": "{count} o eitemau wedi'u canfod",
+    "backToCategories": "Yn ôl i'r categorïau",
+    "backToCategory": "Yn ôl i {name}",
+    "clearSearch": "Clirio chwilio",
+    "noResults": "Heb ddod o hyd i eitemau sy'n cyfateb",
+    "noResultsDescription": "Rhowch gynnig ar chwiliad arall neu dychwelyd i'r categorïau.",
+    "order": "Fy Nghomisiwn",
+    "waiter": "Gwas y bwyty",
+    "bill": "Bil",
+    "addToCart": "Ychwanegu at y Gorchymyn",
+    "addedToCart": "Ychwanegwyd {name} at eich gorchymyn.",
+    "removeFromCart": "Tynnu {name}",
+    "soldOut": "Allweddol Heddiw",
+    "productDetails": "Agor manylion ar gyfer {name}",
+    "portion": "Rhan",
+    "standardPortion": "Rhan safonol",
+    "allergens": "Allergenau",
+    "noAllergens": "Dim allergenau a gyhoeddwyd",
+    "productNote": "Nodyn eitem",
+    "productNotePlaceholder": "Er enghraifft, dim menyn, os gwelwch yn dda",
+    "decreaseQuantity": "Lleihau maint",
+    "increaseQuantity": "Cynyddu maint",
+    "each": "pob un",
+    "note": "Nodyn",
+    "subtotal": "Is-gyfanswm",
+    "serviceFee": "Ffi gwasanaeth",
+    "total": "Cyfanswm",
+    "sendOrder": "Anfon Gorchymyn",
+    "orderSent": "Cafodd eich archeb ei hanfon i'r gegin",
+    "orderTracking": "Olwch archeb #{number} yma.",
+    "newItem": "Ychwanegu Eitem Wedi'i Leoli",
+    "emptyCart": "Mae eich archeb yn wag",
+    "emptyCartDescription": "Bydd eitemau a ddewiswch o'r ddeiet yn ymddangos yma.",
+    "browseMenu": "Pori'r Ddeiet",
+    "orderReceived": "Archeb Wedi'i Derbyn",
+    "waiterConfirmed": "Gydberthwyd Gwasgarwr",
+    "preparing": "Yn Paratoi",
+    "ready": "Yn Barod",
+    "served": "Wedi'i Wasanaethu",
+    "preparingDescription": "Mae ein cegin yn paratoi eich archeb.",
+    "orderStatus": "Statws archeb",
+    "callWaiter": "Galw Gwasgarwr",
+    "placeOrder": "Rwyf am archebu",
+    "wantWater": "Hoffwn ddŵr",
+    "wantBread": "Hoffwn fara",
+    "wantService": "Gwasanaeth ychwanegol",
+    "other": "Arall",
+    "generalRequest": "Mae gennyf gais cyffredinol",
+    "orderHelp": "Rwyf angen cymorth gyda fy archeb",
+    "waterDescription": "Dylech ddod â dŵr i'r bwrdd os gwelwch yn dda",
+    "breadDescription": "Os gwelwch yn dda, deuwch â bara i'r bwrdd",
+    "serviceDescription": "Rwyf angen llygoden neu blat",
+    "otherDescription": "Rwyf angen cymorth gyda rhywbeth arall",
+    "waiterHelpTitle": "Sut allwn ni helpu?",
+    "waiterHelpDescription": "Bydd eich cais yn cael ei anfon gyda {table}.",
+    "waiterRequestSent": "Anfonwyd eich cais at ein gweinyddwr.",
+    "requestBill": "Gofyn am y Bil",
+    "billSent": "Anfonwyd eich cais am y bil",
+    "billConfirm": "Hoffech chi ofyn am y bil?",
+    "billSentDescription": "Bydd ein gweinyddwr gyda chi cyn bo hir.",
+    "billConfirmDescription": "Bydd eich cais yn mynd yn syth at y gweinyddwr. Gallwch dalu wrth y bwrdd neu'r cwestis.",
+    "billToast": "Anfonwyd eich cais bil at ein gweinydd.",
+    "backToMenu": "Yn ôl i'r Ddewislen",
+    "back": "Yn ôl",
+    "close": "Cau",
+    "yourTable": "EICH BYRLFYDD",
+    "serviceOpen": "Gwasanaeth ar agor",
+    "slogan": "Blas Traddodiadol • Bwrdd Modern",
+    "location": "Bursa, Osmangazi",
+    "languageLabel": "Dewis iaith",
+    "currencyLabel": "Dewis arian",
+    "customerNavigation": "Llywio dewislen cwsmer",
+    "approximateCurrency": "Mae prisiau arian tramor yn bras. Mae taliad yn cael ei brosesu yn Lira Twrcaidd.",
+    "orderSuccess": "Anfonwyd eich archeb yn llwyddiannus.",
+    "languagePickerTitle": "Dewis Iaith",
+    "languagePickerDescription": "Dewiswch y iaith rydych chi am ei defnyddio ar gyfer y ddewislen.",
+    "searchLanguage": "Chwilio ieithoedd...",
+    "recommendedLanguages": "Argymelledig",
+    "recentLanguages": "Ieithoedd Diwethaf",
+    "allLanguages": "Pob Iaith",
+    "languageNotFound": "Ni cheir yr iaith.",
+    "languageNotFoundDescription": "Rhowch gynnig ar enw neu god iaith arall.",
+    "tableNumber": "Bwrdd {number}",
+    "itemCount": "{count} eitemau",
+    "splashLabel": "Sgrin agoriadol Tarihi Şehir Lokantası",
+    "cancel": "Canslo",
+    "confirmOrder": "Cadarnhau Gorchymyn",
+    "orderSummary": "Crynodeb Gorchymyn",
+    "payment": "Taliad",
+    "tableNotFound": "Ni cheir y Bwrdd.",
+    "invalidQr": "Cod QR annilys.",
+    "menuUnavailable": "Mae'r ddeiet ar hyn o bryd ar gael.",
+    "networkError": "Digwyddodd camgymeriad rhwydwaith.",
+    "productUnavailable": "Mae'r eitem hon ar hyn o bryd ar gael.",
+    "unableToSendOrder": "Methu anfon y gorchymyn.",
+    "tryAgain": "Ceisiwch eto",
+    "somethingWentWrong": "Aeth rhywbeth o'i le.",
+    "loadingLanguage": "Yn llwytho iaith...",
+    "languageLoadError": "Methwyd llwytho'r iaith. Ceisiwch eto."
+  },
+  "categories": {
+    "soups": "Cawsiau",
+    "grill": "Griliau",
+    "mains": "Prif Gyrsiau",
+    "drinks": "Yfed",
+    "kebabs": "Cebaps",
+    "dessert": "Hidiau"
+  },
+  "products": {
+    "mercimek": {
+      "name": "Cawl Lentil",
+      "description": "Cawl lentil cartref wedi'i baratoi yn y ffordd glasurol, wedi'i gwblhau gyda saws menyn."
+    },
+    "tas-kebabi": {
+      "name": "Stiw Cig Eidion Twrci",
+      "description": "Cig eidion, llysiau tymhorol, a saws arbennig ein bwytai wedi'i goginio'n araf."
+    },
+    "kuzu-tandir": {
+      "name": "Oen Rhost Araf",
+      "description": "Tandoori oen nodweddiadol ein bwytai, wedi'i goginio'n araf dros wres isel."
+    },
+    "pirinc-pilavi": {
+      "name": "Pilaf Reis",
+      "description": "Pilaf reis Baldo menynog a chwff."
+    },
+    "firin-sutlac": {
+      "name": "Pudín Reis Pobog",
+      "description": "Pudín reis wedi'i fobi yn y ffordd draddodiadol, wedi'i baratoi gyda llaeth bwffalod dyddiol."
+    },
+    "kuru-fasulye": {
+      "name": "Stiw Ffa Gwyn gyda Chig Eidion",
+      "description": "Ffa İspir, cig eidion wedi ei dorri'n ddarnau, a phaste tomato breswyl y bwyty."
+    },
+    "izgara-kofte": {
+      "name": "Cepsi Cnau Cig",
+      "description": "Cnau cig eidion ar steil y cigydd gyda phupur wedi'i rostio a thymbl."
+    },
+    "ayran": {
+      "name": "Ayran Cymysg",
+      "description": "Bara gwreiddiol cymysg â llawer o ffroen, wedi'i wneud gyda chnydau iogwrt bob dydd."
+    },
+    "ezogelin-corbasi": {
+      "name": "Cawl Ezogelin",
+      "description": "Cawl traddodiadol bwyty lle mae lentil coch, bulgur, a reis yn cyfarfod â menyn."
+    },
+    "tarhana-corbasi": {
+      "name": "Cawl Tarhana",
+      "description": "Tarhana cartref, clasurol Anatoliaidd wedi'i goginio'n araf gyda thymbl a mintys sych.}"
+    },
+    "yayla-corbasi": {
+      "name": "Cawl Iogwrt a Rhys",
+      "description": "Cawl yayla ffres a hufennog wedi'i baratoi gyda iogwrt, rhys, a menyn sych."
+    },
+    "iskembe-corbasi": {
+      "name": "Cawl Trip",
+      "description": "Cawl trip buchesol go iawn wedi'i weini gyda'i fân a gwinêd garlleg."
+    },
+    "dugun-corbasi": {
+      "name": "Cawl Priodas",
+      "description": "Cawl priodas traddodiadol wedi'i wneud gyda chig o eneitsh wedi'i dorri ac wedi'i flasu gyda menyn lemwn."
+    },
+    "tavuk-suyu-corbasi": {
+      "name": "Cawl Broth Cici",
+      "description": "Cawl iacháu wedi'i baratoi gyda nwdls tenau wedi'u coginio mewn broth esgyrn a chig cici wedi'i dorri'n gron."
+    },
+    "domates-corbasi": {
+      "name": "Cawl Tomenydd",
+      "description": "Blas cyfoethog wedi’i goginio gyda thomatos aeddfed, menyn, a basil, wedi’i gwblhau gyda chaws."
+    },
+    "sebze-corbasi": {
+      "name": "Cawl Llysiau",
+      "description": "Cawl ysgafn cynhwysol a baratowyd gyda llysiau tymhorol, olew olewydd, a dail helyg ffres."
+    },
+    "beyran-corbasi": {
+      "name": "Cawl Cig Oen Sbeislyd Beyran",
+      "description": "Cawl rhanbarthol a baratowyd dros wres uchel gyda chig oen, reis, garlleg, a phupur poeth."
+    },
+    "kelle-paca-corbasi": {
+      "name": "Cawl Pen a Chraig",
+      "description": "Cawl stoc esgyrn cryf a wneir gyda chraig a chig pen buwch wedi’i berwi am oriau hir."
+    },
+    "sehriye-corbasi": {
+      "name": "Cawl Vermicelli",
+      "description": "Cawl dyddiol wedi'i baratoi gyda stoc cyw iâr gyda thomatos, vermicelli, a pharsli."
+    },
+    "tavuk-sis": {
+      "name": "Sgweris Cyw Iâr",
+      "description": "Darnau cyw iâr wedi'u marinado gyda sbeisys arbennig, wedi'u gwasanaethu gyda pypers a thomatos wedi'u rostio."
+    },
+    "kasap-sucuk": {
+      "name": "Sucuk Pysgotwr Grilio",
+      "description": "Selsig oen sbeislyd wedi'i goginio ar charcaol, gyda llysiau wedi'u rostio a nionyn gyda sumac."
+    },
+    "karisik-izgara": {
+      "name": "Grilio Cymysg",
+      "description": "Plât grilio helaeth a amrywiol sy'n cynnwys cêlbydau, sgweris cyw iâr, clwpun oen, a selsig."
+    },
+    "nohut-yemegi": {
+      "name": "Stew cicer gyda chig oen",
+      "description": "Bwyd cartref o faenog a chig eidion wedi'i dorri'n fân wedi'i goginio'n araf mewn pot coper."
+    },
+    "patlican-musakka": {
+      "name": "Moussaka Aubergine",
+      "description": "Aubergine wedi'i ffrio, cig eidion wedi'u torri'n fân, a moussaka wedi'i fwrw yn y popty gyda saws tomatos, ar steil y bwyty."
+    },
+    "zeytinyagli-taze-fasulye": {
+      "name": "Pysau Gwyrdd mewn Olew Olewydd",
+      "description": "Clasurol wedi'i goginio mewn olew olewydd gyda physau gwyrdd, tomatos, a nionod, wedi'i weini'n oer."
+    },
+    "tavuk-sote": {
+      "name": "Cyw Iâr Wedi'i Ffrio'n Ysgafn",
+      "description": "Mae darnau o gyw iâr yn cael eu ffrio'n ysgafn dros wres uchel gyda phiperau lliwgar, madarch, a thomatos."
+    },
+    "izmir-kofte": {
+      "name": "Baws Cig Ffordd İzmir",
+      "description": "Dysgl draddodiadol o bêlau cig eidion, tatws, a phupur wedi'u pobi mewn saws tomato."
+    },
+    "etli-bezelye": {
+      "name": "Pys gyda Chig Eidion",
+      "description": "Bwyd dyddiol wedi'i goginio mewn pot gyda chig eidion wedi'i dorri'n doriadau, pys, moron, a thatws."
+    },
+    "patlican-oturtma": {
+      "name": "Berwr Eirin Melyn gyda Mince",
+      "description": "Mae'r tafod wedi'i baratoi yn y ffwrn gyda beren, cig minc sbeislyd, a saws tomato garlleg."
+    },
+    "salgam-suyu": {
+      "name": "Sudd Troen Fermentiedig",
+      "description": "Sud droen sbeislyd traddodiadol wedi'i fermentio gyda moron porffor a gwenithydd bulgur."
+    },
+    "maden-suyu": {
+      "name": "Dŵr Mwynol",
+      "description": "Dŵr mwynol naturiol syml wedi'i weini'n oer."
+    },
+    "su": {
+      "name": "Dŵr Ffynnon Naturiol",
+      "description": "Dŵr ffynnon naturiol wedi'i weini'n oer mewn potel wydr."
+    },
+    "kola": {
+      "name": "Cola",
+      "description": "Yfed carbonedig clasurol wedi'i weini'n oer iawn."
+    },
+    "gazoz": {
+      "name": "Soda Limon Twrcaidd",
+      "description": "Soda traddodiadol wedi'i flasu, adfywiol, ac wedi'i weini'n oer a syml."
+    },
+    "turk-kahvesi": {
+      "name": "Coffi Twrcaidd",
+      "description": "Coffi Twrcaidd traddodiadol gyda swigen, wedi'i goginio ar wres uchel mewn cezve coper."
+    },
+    "demleme-cay": {
+      "name": "Te Twrcaidd wedi'i Ferwi",
+      "description": "Te Rize poeth wedi'i ferwi'n ffres mewn gwydr cul-faen."
+    },
+    "ev-yapimi-limonata": {
+      "name": "Lemonad Cartref",
+      "description": "Lemonêid ffres a baratowyd bob dydd gyda lemwn ffres, mein mint, a bach o siwgr."
+    },
+    "hosaf": {
+      "name": "Cwmwl Ffrwythau Bob Dydd",
+      "description": "Cwmwl cartref a berwi bob dydd gyda raisins, bricyllen, neu gloÿnnod yn ôl y tymor."
+    },
+    "iskender-kebabi": {
+      "name": "Kebab İskender Bursa",
+      "description": "Torrodd y cig ar ysblander dros pide, a gweini gyda saws tomatos, men poeth, a iogwrt."
+    },
+    "kazandibi": {
+      "name": "Pwdin Llaeth Carameledig",
+      "description": "Pwdin llaeth traddodiadol wedi'i garameleiddio'n iawn, gyda gwead llyfn."
+    },
+    "tavuk-gogsu": {
+      "name": "Pwdin Llaeth Otoman",
+      "description": "Dyfrhad llaith a ffibrog o laeth wedi'i baratoi gyda rysáit draddodiadol, wedi'i weini gyda sinsir."
+    },
+    "keskul": {
+      "name": "Pwdin Llaeth Almond",
+      "description": "Dyfrhad llaeth arddull Ottoman wedi'i gwblhau gyda blas almond a cnau coco."
+    },
+    "irmik-helvasi": {
+      "name": "Helfa Semolina",
+      "description": "Helfa semolina, wedi'i rostio gyda menyn a cnau pinen, wedi'i weini'n boeth ac yn gronynnog."
+    },
+    "kabak-tatlisi": {
+      "name": "Dyfrhad Pumkin gyda Tahini",
+      "description": "Mae'r pwmpen, wedi'i goginio'n araf yn ei sudd ei hun, yn cael ei weini gyda tahini a chwningod."
+    },
+    "ayva-tatlisi": {
+      "name": "Dyfrhad Quince",
+      "description": "Mae'r quince wedi'i goginio gyda clinci a sinsir ac yn cael ei weini gyda hufen wedi'i gloi a chwningod."
+    },
+    "revani": {
+      "name": "Cacen Syrup Semolina",
+      "description": "Y pwdin restaurant clasurol lle mae cacen feddal semolina yn cwrdd â syrup â arogl lemwn."
+    },
+    "ekmek-kadayifi": {
+      "name": "Pawd Pwdin Bara gyda Hufen Clwtiedig",
+      "description": "Mae pwdin bara wedi gorffwys gyda syrup caramelized yn cael ei weini gyda hufen clwtiedig bufal."
+    },
+    "cevizli-baklava": {
+      "name": "Baklava Cnau Ffeunydd",
+      "description": "Haenau wedi eu rolio'n denau iawn, baklava crensianog wedi ei wneud gyda llawer o gnau ffeunydd a menyn syml."
+    }
+  },
+  "allergens": {
+    "Süt ürünleri": "Llaeth",
+    "Gluten": "Glwten",
+    "Yumurta": "Wy",
+    "Badem": "Almond",
+    "Çam fıstığı": "Cnau Pinen",
+    "Susam": "Sesame",
+    "Ceviz": "Cnau Ffrengig"
+  },
+  "tags": {
+    "Popüler": "Poblogaidd",
+    "Vejetaryen": "Llysieuwr",
+    "Günün Yemeği": "Dysgl y Diwrnod",
+    "Şefin Önerisi": "Dewis y Cogydd",
+    "Yeni": "Newydd",
+    "Acılı": "Sbeislyd",
+    "Ev Yapımı": "Cartref",
+    "Lokanta Klasiği": "Clasurol Gwesty",
+    "Günün Çorbası": "Cawl y Diwrnod",
+    "Vegan": "Fegan",
+    "Hafif": "Ysgafn",
+    "Yöresel": "Rhanbarthol",
+    "Paylaşmalık": "I Rannu",
+    "Ev Yemeği": "Ardderchog Cartref",
+    "Zeytinyağlı": "Olew Olewydd",
+    "Nostaljik": "Nostalgaidd",
+    "Geleneksel": "Traddodiadol",
+    "Bursa Lezzeti": "Blas Bursa",
+    "Sütlü Tatlı": "Cacen Llaeth",
+    "Sıcak Tatlı": "Cacen Wresog",
+    "Mevsimlik": "Ym mronir y Tymor",
+    "Şerbetli": "Cacen Syrup"
+  }
+}

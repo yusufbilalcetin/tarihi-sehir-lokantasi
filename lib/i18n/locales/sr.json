@@ -1,0 +1,349 @@
+{
+  "locale": "sr",
+  "ui": {
+    "menu": "Мени",
+    "search": "Претраги мени...",
+    "searchLabel": "Претрага менија",
+    "categories": "Категорије",
+    "categoryIntro": "Изаберите укус за свој сто.",
+    "categoryNavigation": "Категорије менија",
+    "openCategory": "Отвори {name}, {count} ставки",
+    "items": "ставке",
+    "item": "ставка",
+    "searchResults": "Резултати претраге",
+    "productsFound": "Надјено {count} ставки",
+    "backToCategories": "Назад на категорије",
+    "backToCategory": "Назад на {name}",
+    "clearSearch": "Очисти претрагу",
+    "noResults": "Ниједна ставка не одговара",
+    "noResultsDescription": "Пробајте другу претрагу или се вратите на категорије.",
+    "order": "Моја наруџбина",
+    "waiter": "Конобар",
+    "bill": "Рачун",
+    "addToCart": "Додај у наруџбину",
+    "addedToCart": "{name} додато вашој наруџбини.",
+    "removeFromCart": "Уклони {name}",
+    "soldOut": "Данас распродато",
+    "productDetails": "Отвори детаље за {name}",
+    "portion": "Порција",
+    "standardPortion": "Стандардна порција",
+    "allergens": "Алергени",
+    "noAllergens": "Нема пријављених алергена",
+    "productNote": "Напомена за ставку",
+    "productNotePlaceholder": "Нпр. без маслаца, молим",
+    "decreaseQuantity": "Смањи количину",
+    "increaseQuantity": "Пoveћај количину",
+    "each": "свако",
+    "note": "Напомена",
+    "subtotal": "Међузбир",
+    "serviceFee": "Накнада за услугу",
+    "total": "Укупно",
+    "sendOrder": "Пошаљи поруџбину",
+    "orderSent": "Ваша поруџбина је послата у кухињу",
+    "orderTracking": "Пратите поруџбину #{number} овде.",
+    "newItem": "Додај још једну ставку",
+    "emptyCart": "Ваша поруџбина је празна",
+    "emptyCartDescription": "Ставке које изаберете са менија ће се појавити овде.",
+    "browseMenu": "Прегледајте мени",
+    "orderReceived": "Поруџбина примљена",
+    "waiterConfirmed": "Konobar je potvrdio",
+    "preparing": "Priprema se",
+    "ready": "Spremno",
+    "served": "Posluženo",
+    "preparingDescription": "Naša kuhinja priprema vašu narudžbinu.",
+    "orderStatus": "Status porudžbine",
+    "callWaiter": "Pozovi konobara",
+    "placeOrder": "Želim da naručim",
+    "wantWater": "Hteo/la bih vodu",
+    "wantBread": "Hteo/la bih hleb",
+    "wantService": "Dodatna usluga",
+    "other": "Ostalo",
+    "generalRequest": "Imam opšti zahtev",
+    "orderHelp": "Potreban mi je pomoć sa narudžbinom",
+    "waterDescription": "Molim vas donesite vodu za sto",
+    "breadDescription": "Молим донесите хлеб на сто",
+    "serviceDescription": "Требају ми прибора за јело или тањир",
+    "otherDescription": "Треба ми помоћ за нешто друго",
+    "waiterHelpTitle": "Како можемо помоћи?",
+    "waiterHelpDescription": "Ваш захтев ће бити послат са {table}.",
+    "waiterRequestSent": "Ваш захтев је послат нашем конобару.",
+    "requestBill": "Захтевајте рачун",
+    "billSent": "Ваш захтев за рачун је послат",
+    "billConfirm": "Да ли желите да затражите рачун?",
+    "billSentDescription": "Наш конобар ће ускоро доћи до вас.",
+    "billConfirmDescription": "Ваш захтев ће бити послат директно конобару. Можете платити за столом или на каси.",
+    "billToast": "Vaš zahtev za račun je poslat našem konobaru.",
+    "backToMenu": "Nazad na meni",
+    "back": "Nazad",
+    "close": "Zatvori",
+    "yourTable": "VAŠ STO",
+    "serviceOpen": "Usluga otvorena",
+    "slogan": "Tradicionalni ukus • Moderni sto",
+    "location": "Bursa, Osmangazi",
+    "languageLabel": "Izaberite jezik",
+    "currencyLabel": "Izaberite valutu",
+    "customerNavigation": "Navigacija menija za kupce",
+    "approximateCurrency": "Cene u stranoj valuti su približne. Plaćanje se vrši u turskim lirama.",
+    "orderSuccess": "Vaša porudžbina je uspešno poslata.",
+    "languagePickerTitle": "Izaberite jezik",
+    "languagePickerDescription": "Izaberite jezik koji želite da koristite za meni.",
+    "searchLanguage": "Pretraži jezike...",
+    "recommendedLanguages": "Preporučeno",
+    "recentLanguages": "Nedavni jezici",
+    "allLanguages": "Svi jezici",
+    "languageNotFound": "Jezik nije pronađen.",
+    "languageNotFoundDescription": "Pokušajte sa drugim imenom ili kodom jezika.",
+    "tableNumber": "Sto {number}",
+    "itemCount": "{count} stavki",
+    "splashLabel": "Početni ekran Tarihi Şehir Lokantası",
+    "cancel": "Otkaži",
+    "confirmOrder": "Potvrdi porudžbinu",
+    "orderSummary": "Pregled porudžbine",
+    "payment": "Plaćanje",
+    "tableNotFound": "Sto nije pronađen.",
+    "invalidQr": "Неправилан QR код.",
+    "menuUnavailable": "Мени тренутно није доступан.",
+    "networkError": "Дошло је до мреžne грешке.",
+    "productUnavailable": "Ова ставка тренутно није доступна.",
+    "unableToSendOrder": "Није могуће послати поруџбину.",
+    "tryAgain": "Покушајте поново",
+    "somethingWentWrong": "Нешто је пошло по злу.",
+    "loadingLanguage": "Учитавање језика...",
+    "languageLoadError": "Није могуће учитати језик. Покушајте поново."
+  },
+  "categories": {
+    "soups": "Супе",
+    "grill": "Роштиљ",
+    "mains": "Главна јела",
+    "drinks": "Пића",
+    "kebabs": "Кебаби",
+    "dessert": "Десерти"
+  },
+  "products": {
+    "mercimek": {
+      "name": "Супа од леће",
+      "description": "Домаћа супа од леће припремљена у класичном стилу, допуњена маслачним сосом."
+    },
+    "tas-kebabi": {
+      "name": "Турска гулаш од говетине",
+      "description": "Говедина, сезонско поврће и наш спори сос који припремамо у ресторану."
+    },
+    "kuzu-tandir": {
+      "name": "Спори печени јагње",
+      "description": "Јагње по рецепту нашег ресторана, тандаури, споро кувано на ниској температури."
+    },
+    "pirinc-pilavi": {
+      "name": "Пилaф од пиринча",
+      "description": "Маслачни, пухасти балдо пиринач пилaф."
+    },
+    "firin-sutlac": {
+      "name": "Печени пудинг од пиринча",
+      "description": "Пудинг од пиринча печен на традиционалан начин, припремљен са дневним биволским млеком."
+    },
+    "kuru-fasulye": {
+      "name": "Чорба од белог пасуља са говедином",
+      "description": "Пасуљ Испир, комадићи говедине и обичан рестораниски парадајз паста."
+    },
+    "izgara-kofte": {
+      "name": "Пљескавице са роштиља",
+      "description": "Говедине пљескавице у месарском стилу са печеном паприком и парадајзом."
+    },
+    "ayran": {
+      "name": "Убијени Ајран",
+      "description": "Традиционални изботрени млеко са пуно пене, направљено од свакодневног јогурта."
+    },
+    "ezogelin-corbasi": {
+      "name": "Супа Езогелин",
+      "description": "Традиционална ресторанска супа где се црвена сочива, булгур и пиринач састају са ментом."
+    },
+    "tarhana-corbasi": {
+      "name": "Супа Тархана",
+      "description": "Домаћа тархана, анадолијски класик полако куван са парадајзом и сушеном ментом."
+    },
+    "yayla-corbasi": {
+      "name": "Јогурт и пиринач чорба",
+      "description": "Освежавајућа и кремаста јала чорба припремљена са јогуртом, пиринчем и сувом ментом."
+    },
+    "iskembe-corbasi": {
+      "name": "Старц чорба",
+      "description": "Правилна говеђа старц чорба служена са својим зачинима и сирћетом са белим луком."
+    },
+    "dugun-corbasi": {
+      "name": "Весељачка чорба",
+      "description": "Традиционална весељачка чорба припремљена са исецканим јагњећим месом и ароматизована маринадом од лимуна."
+    },
+    "tavuk-suyu-corbasi": {
+      "name": "Пилећа бујон чорба",
+      "description": "Лековита чорба припремљена са танким резанцима куваним у бујону од костију и исецканим пилећим месом."
+    },
+    "domates-corbasi": {
+      "name": "Чорба од парадајза",
+      "description": "Богат укус куван са зрелим парадајзом, путером и босиљком, допуњен сиром."
+    },
+    "sebze-corbasi": {
+      "name": "Пасуљ супа",
+      "description": "Лака ресторанска супа припремљена са сезонским поврћем, маслиновим уљем и свежим зачинима."
+    },
+    "beyran-corbasi": {
+      "name": "Зачињена супа од јагњетине Бејран",
+      "description": "Регионална супа припремљена на јакој ватри са јагњетином, пиринчем, белим луком и љутом паприком."
+    },
+    "kelle-paca-corbasi": {
+      "name": "Супа од главе и свињских опанка",
+      "description": "Богата супа од костију направљена са говеђим опанцима и месом са главе кувана дуго времена."
+    },
+    "sehriye-corbasi": {
+      "name": "Супа од вермичелија",
+      "description": "Дневна супа припремљена са пилетином чорбом, парадајзом, вермицелом и першуном."
+    },
+    "tavuk-sis": {
+      "name": "Пилетина на ражњу",
+      "description": "Комади пилетине маринирани са специјалним зачином, послужени са печеном паприком и парадајзом."
+    },
+    "kasap-sucuk": {
+      "name": "Печена месна ћуфука",
+      "description": "Зачинска говеђа кобасица печена на жару, са печеним поврћем и луком са сумаком."
+    },
+    "karisik-izgara": {
+      "name": "Мешани роштиљ",
+      "description": "Обилан и разнолик роштиљ који се састоји од ћюфте, пилетине на ражњу, јагњећих котлета и кобасице."
+    },
+    "nohut-yemegi": {
+      "name": "Гулаш од леблебије са говедином",
+      "description": "Домаћи оброк од нахута и индувљене говедине полако куван у бакарном лонцу."
+    },
+    "patlican-musakka": {
+      "name": "Мусака од патлиџана",
+      "description": "Пржени патлиџан, млевена говедина и мусака печена у рерни са парадајз сосом, у ресторанском стилу."
+    },
+    "zeytinyagli-taze-fasulye": {
+      "name": "Зелене пасуље у маслиновом уљу",
+      "description": "Класик куван у маслиновом уљу са зеленим пасуљем, парадајзом и луком, служи се хладно."
+    },
+    "tavuk-sote": {
+      "name": "Пилеће паприкаш",
+      "description": "Комадићи пилетине се прже на јакој ватри са шареним паприкама, печуркама и парадајзом."
+    },
+    "izmir-kofte": {
+      "name": "Љубљанске кебапи",
+      "description": "Традиционално главно јело од говедјих куглица, кромпира и паприке печени у парадајз сосу."
+    },
+    "etli-bezelye": {
+      "name": "Грашак са говеђим месом",
+      "description": "Свакодневно јело кувано у шерпи са говеђим месом исеченим на коцкице, грашком, шаргарепом и кромпиром."
+    },
+    "patlican-oturtma": {
+      "name": "Печени патлиџан са млевеним месом",
+      "description": "Језик се припрема у рерни са патлиџаном, љутим млевеним месом и парадајз сосом са белим луком."
+    },
+    "salgam-suyu": {
+      "name": "Сок од квашеног ротквице",
+      "description": "Традиционални љути сок од квашеног ротквица ферментисан са љубичастом шаргарепом и квасцем од булгура."
+    },
+    "maden-suyu": {
+      "name": "Минерална вода",
+      "description": "Природна минерална вода сервирана хладна."
+    },
+    "su": {
+      "name": "Природна изворска вода",
+      "description": "Природна изворска вода послужена хладна у стакленој боци."
+    },
+    "kola": {
+      "name": "Кола",
+      "description": "Класично газирано пиће послужено ледено хладно."
+    },
+    "gazoz": {
+      "name": "Турска лимунска сода",
+      "description": "Традиционална ароматизована, освежавајућа и хладна обична сода."
+    },
+    "turk-kahvesi": {
+      "name": "Турска кафа",
+      "description": "Традиционална турска кафа са пеном, кувана на високој температури у бакарном џезви."
+    },
+    "demleme-cay": {
+      "name": "Турски црни чај",
+      "description": "Свеже куван врућ чај из Ризеа у чаши танког струка."
+    },
+    "ev-yapimi-limonata": {
+      "name": "Домаћи лимонад",
+      "description": "Освежавајућа лимонада припремана сваки дан са свежом лимуном, ментом и мало шећера."
+    },
+    "hosaf": {
+      "name": "Свежи воћни компот",
+      "description": "Домаћи компот куван сваки дан са сувим грожђем, кајсијама или шљивама у зависности од сезоне."
+    },
+    "iskender-kebabi": {
+      "name": "Бурса Искендер Кебаб",
+      "description": "Месо се ротира на ражњу преко пидеа, сервира се са парадајз сосом, топлим маслацем и јогуртом."
+    },
+    "kazandibi": {
+      "name": "Карамелизовани пудинг од млека",
+      "description": "Традиционални млечни десерт правилно карамелизован, са свиленкастом текстуром."
+    },
+    "tavuk-gogsu": {
+      "name": "Османлијски пудинг од млека",
+      "description": "Лак и влакнасти млечни десерт припремљен по традиционалном рецепту, служи се са циметом."
+    },
+    "keskul": {
+      "name": "Пудинг од бадемовог млека",
+      "description": "Млечни десерт на османски начин, допуњен укусом бадема и кокосом."
+    },
+    "irmik-helvasi": {
+      "name": "Семолина халва",
+      "description": "Семолина халва, пржена на путеру и са боровим орашчићима, служи се топла и зрнаста."
+    },
+    "kabak-tatlisi": {
+      "name": "Десерт од бундеве са тахинијем",
+      "description": "Бундевa, полако кувана у свом соку, служи се са тахинијем и орасима."
+    },
+    "ayva-tatlisi": {
+      "name": "Десерт од дуње",
+      "description": "Дуња кувана са каранфилићем и циметом служи се са павлаком и орасима."
+    },
+    "revani": {
+      "name": "Колач од гриза у сирупу",
+      "description": "Класични ресторански десерт где се нежни колач од гриза сусреће са сирупом у мирису лимуна."
+    },
+    "ekmek-kadayifi": {
+      "name": "Пудинг од хлеба са згушћеном кремом",
+      "description": "Пудинг од хлеба одмара у карамелизованом сирупу и служи се са биволјом згушћеном кремом."
+    },
+    "cevizli-baklava": {
+      "name": "Орахова баклава",
+      "description": "Слојеви развучени веома танко, хрскава баклава направљена са пуно ораха и обичног путера."
+    }
+  },
+  "allergens": {
+    "Süt ürünleri": "Млечни производи",
+    "Gluten": "Глутен",
+    "Yumurta": "Јаје",
+    "Badem": "Бадем",
+    "Çam fıstığı": "Борови ораси",
+    "Susam": "Сусам",
+    "Ceviz": "Орах"
+  },
+  "tags": {
+    "Popüler": "Популаран",
+    "Vejetaryen": "Вегетаријански",
+    "Günün Yemeği": "Јело дана",
+    "Şefin Önerisi": "Шефов избор",
+    "Yeni": "Ново",
+    "Acılı": "Зачинљиво",
+    "Ev Yapımı": "Домаће",
+    "Lokanta Klasiği": "Ресторански класиk",
+    "Günün Çorbası": "Супа дана",
+    "Vegan": "Вегански",
+    "Hafif": "Лагано",
+    "Yöresel": "Регионално",
+    "Paylaşmalık": "За поделу",
+    "Ev Yemeği": "Домаћи стил",
+    "Zeytinyağlı": "Маслиново уље",
+    "Nostaljik": "Носталгично",
+    "Geleneksel": "Традиционално",
+    "Bursa Lezzeti": "Укус Бурсе",
+    "Sütlü Tatlı": "Млечно посластица",
+    "Sıcak Tatlı": "Топла посластица",
+    "Mevsimlik": "Сезонско",
+    "Şerbetli": "Сирупаста посластица"
+  }
+}

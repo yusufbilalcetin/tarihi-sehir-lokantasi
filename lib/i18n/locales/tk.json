@@ -1,0 +1,349 @@
+{
+  "locale": "tk",
+  "ui": {
+    "menu": "Meniý",
+    "search": "Meniýde gözleg...",
+    "searchLabel": "Meniýde gözleg",
+    "categories": "Kategoriýalar",
+    "categoryIntro": "Siziň stoluňyz üçin tagam saýlaň.",
+    "categoryNavigation": "Meniý kategoriýalary",
+    "openCategory": "{name} açyň, {count} haryt",
+    "items": "harytlar",
+    "item": "haryt",
+    "searchResults": "Gözleg netijeleri",
+    "productsFound": "{count} haryt tapyldy",
+    "backToCategories": "Kategoriýalara gaýt",
+    "backToCategory": "{name} gaýt",
+    "clearSearch": "Gözlegi arassala",
+    "noResults": "Uýgun haryt tapylmady",
+    "noResultsDescription": "Ýene bir gözleg synap görüň ýa-da kategoriýalara dolanyň.",
+    "order": "Meniň Sargydym",
+    "waiter": "Kärdeş",
+    "bill": "Hasap",
+    "addToCart": "Sargyda goş",
+    "addedToCart": "{name} sargydyňyza goşuldy.",
+    "removeFromCart": "{name} aýyr",
+    "soldOut": "Bu gün satyldy",
+    "productDetails": "{name} üçin jikme-jiklikleri aç",
+    "portion": "Bölük",
+    "standardPortion": "Standart bölüm",
+    "allergens": "Alergenler",
+    "noAllergens": "Beýan edilen allergen ýok",
+    "productNote": "Haryt belligi",
+    "productNotePlaceholder": "Mysal üçin, maýa ýok, haýyş edýärin",
+    "decreaseQuantity": "Mukdaryny azaldyň",
+    "increaseQuantity": "Mukdaryny köpeldiň",
+    "each": "her biri",
+    "note": "Bellik",
+    "subtotal": "Jemi",
+    "serviceFee": "Hyzmat haky",
+    "total": "Jemi",
+    "sendOrder": "Sargydy iberiň",
+    "orderSent": "Siziň sargydyňyz aşhana ugrundan iberildi",
+    "orderTracking": "Sargydy bu ýere #{number} bilen yzarlap bilersiňiz.",
+    "newItem": "Başga haryt goşuň",
+    "emptyCart": "Siziň sargydyňyz boş",
+    "emptyCartDescription": "Meniýden saýlan harytlar şu ýerde görkeziler.",
+    "browseMenu": "Meniýi gözin geçiriň",
+    "orderReceived": "Sargyd kabul edildi",
+    "waiterConfirmed": "Garson tassyk etdi",
+    "preparing": "Öndürilýär",
+    "ready": "Taýýar",
+    "served": "Daýarlandy",
+    "preparingDescription": "Metbähimiz siziň sargydyňyzy taýýarlaýar.",
+    "orderStatus": "Sargydyň ýagdaýy",
+    "callWaiter": "Garsony çagyrmak",
+    "placeOrder": "Meniň sargym gelýär",
+    "wantWater": "Meniň suw islegim bar",
+    "wantBread": "Meniň çörek islegim bar",
+    "wantService": "Goşmaça hyzmat",
+    "other": "Başga",
+    "generalRequest": "Meniň umumy haýyşym bar",
+    "orderHelp": "Sargydym bilen kömek gerek",
+    "waterDescription": "Sutu stoluň üstüne getirmegiňizi haýyş edýärin",
+    "breadDescription": "Çörek stoluň üstüne getiriň",
+    "serviceDescription": "Meni duz-gaçlar ýa-da tagam üçin tabak gerek",
+    "otherDescription": "Meniň başga bir zada kömek gerek",
+    "waiterHelpTitle": "Biz nähili kömek edip bileris?",
+    "waiterHelpDescription": "Siziň haýyşyňyz {table} bilen iberiler.",
+    "waiterRequestSent": "Siziň haýyşyňyz garsonumyza gowşuryldy.",
+    "requestBill": "Hasap soramak",
+    "billSent": "Siziň hasap soragyňyz iberildi",
+    "billConfirm": "Hasap soramagy isleyarsyňyzmy?",
+    "billSentDescription": "Bizim garson gysga wagtyň içinde geljekdir.",
+    "billConfirmDescription": "Siziň haýyşyňyz göni garsonyň eline geçer. Tölegi stoluň ýanynda ýa-da kassada edip bilersiňiz.",
+    "billToast": "Hasap haýlaşygyňyz garawulymyza ugradyldy.",
+    "backToMenu": "Meniýä gaýt",
+    "back": "Yza",
+    "close": "Ýap",
+    "yourTable": "SIZIŇ STOLYŇYZ",
+    "serviceOpen": "Hyzmat açyk",
+    "slogan": "Ädyply Daýyp • Zamançylyk Stoly",
+    "location": "Bursa, Osmangazi",
+    "languageLabel": "Dili saýlaň",
+    "currencyLabel": "Nagt pulu saýlaň",
+    "customerNavigation": "Haryt menyusyny dolandyrmak",
+    "approximateCurrency": "Daşary ýurt walýutasyndaky bahalar çaklanyş. Töleg Türkiýe lirasynda amala aşyrylýar.",
+    "orderSuccess": "Siziň sargydyňyz üstünlikli iberildi.",
+    "languagePickerTitle": "Dili saýlaň",
+    "languagePickerDescription": "Menu üçin ulanmak isleýän dili saýlaň.",
+    "searchLanguage": "Dilleri gözläň...",
+    "recommendedLanguages": "Sugestirlenen",
+    "recentLanguages": "Iň soňky ulanylýan diller",
+    "allLanguages": "Ähli diller",
+    "languageNotFound": "Dil tapylmady.",
+    "languageNotFoundDescription": "Başga dil adyny ýa-da koduny synap görüň.",
+    "tableNumber": "Stol {number}",
+    "itemCount": "{count} sany haryt",
+    "splashLabel": "Tarihi Şehir Lokantası açylyş ekrany",
+    "cancel": "Hakykat",
+    "confirmOrder": "Sargyşy tassyklamak",
+    "orderSummary": "Sargyşyň jemi",
+    "payment": "Töleg",
+    "tableNotFound": "Stol tapylmady.",
+    "invalidQr": "Nädogry QR kody.",
+    "menuUnavailable": "Meniý häzirlikçe elýeterli däl.",
+    "networkError": "Tor ýalňyşlygy boldy.",
+    "productUnavailable": "Bu haryt häzirlikçe elýeterli däl.",
+    "unableToSendOrder": "Sargydy iberip bolmady.",
+    "tryAgain": "Taýdan synanyşyň",
+    "somethingWentWrong": "Bir zat säwlik boldy.",
+    "loadingLanguage": "Dil ýüklenýär...",
+    "languageLoadError": "Dili ýüklemek bolmady. Täzeden synanyşyň."
+  },
+  "categories": {
+    "soups": "Şorbalaryň",
+    "grill": "Grill önümleri",
+    "mains": "Esasy naharlar",
+    "drinks": "Içgiler",
+    "kebabs": "Kebaplar",
+    "dessert": "Şirinlikler"
+  },
+  "products": {
+    "mercimek": {
+      "name": "Müňük Soupy",
+      "description": "Öý şertlerinde taýýarlanan klassiki görnüşli müňük soup, sary ýagly sos bilen tamamlanan."
+    },
+    "tas-kebabi": {
+      "name": "Türk Goýunlygy Guly",
+      "description": "Goýunlygy, möwsümleýin gök önümler we restoranymyzyň haýal bişirilen ýörite sosy."
+    },
+    "kuzu-tandir": {
+      "name": "Haýal Bişen Goýunlygy",
+      "description": "Restoranymyzyň aýratyn goýunlygy tandoori, pes ýanyp duran gyzgynlykda haýal bişirilen."
+    },
+    "pirinc-pilavi": {
+      "name": "Ýary Pilaw",
+      "description": "Sary ýagly, ýeňil Baldo tagamlaýyn pilaw."
+    },
+    "firin-sutlac": {
+      "name": "Pisirilen Ýary Pudding",
+      "description": "Günsaýyn buffalö südi bilen taýýarlanan, däp boýunça bişirilen ýary pudding."
+    },
+    "kuru-fasulye": {
+      "name": "Etli Ak Fasulye",
+      "description": "İspir noýutlary, dogralan et we ýumşak restoranyň pomidor pastasy."
+    },
+    "izgara-kofte": {
+      "name": "Qowurylan Köfte",
+      "description": "Sotulýan et köftesi, gowrulan burç we pomidor bilen."
+    },
+    "ayran": {
+      "name": "Çalandyrma Ayran",
+      "description": "Gündelik süýtden taýýarlanan köpukly däp bolan çalandyrma süýt."
+    },
+    "ezogelin-corbasi": {
+      "name": "Ezogelin Şorbasy",
+      "description": "Gyzykly noýut, buýrulmuş bugdaý we tüwi mämiş bilen utgaşdyrylýan däp bolan restoranyň şorbasy."
+    },
+    "tarhana-corbasi": {
+      "name": "Tarhana Şorbasy",
+      "description": "Öýde taýýarlaýan tarhana, pomidor we guradylan mämiş bilen haýal-haýal bişirilýän Anadolu klasiği."
+    },
+    "yayla-corbasi": {
+      "name": "Ýogurt we Taryk Çorbası",
+      "description": "Ýogurt, taryk we guradylan nan tohumlary bilen taýýarlanylan çalt we köpükli taýla çorbasy."
+    },
+    "iskembe-corbasi": {
+      "name": "Içgöw Çorbası",
+      "description": "Dogry goýun içgöwi çorbasy, öz çemesi we sarymsak sirkesi bilen hyzmat edilýär."
+    },
+    "dugun-corbasi": {
+      "name": "Töwenek Çorbasy",
+      "description": "Doňuz eti parçalary bilen taýýarlanylan däp bolan toý çorbasy we limon marinaty bilen süýjüli tagamlandyrylan."
+    },
+    "tavuk-suyu-corbasi": {
+      "name": "Towuk Bujony Çorbası",
+      "description": "Sümük bujonynda bişirilip, towuk etiniň parçalary bilen taýýarlanylan lukmançylyk çorbasy."
+    },
+    "domates-corbasi": {
+      "name": "Pomidor Çorbasy",
+      "description": "Tomatlaryň, ýagyň we reyhanlaryň goşulmagy bilen bişirilip, soňundan pendir bilen tamamlanýan baý tagam."
+    },
+    "sebze-corbasi": {
+      "name": "Ýer Ýeget Süyümi",
+      "description": "Möwsümleýin gök önümler, zeytun ýagy we ýoga otlary bilen taýýarlaýan ýeňil restoran şorbasydyr."
+    },
+    "beyran-corbasi": {
+      "name": "Çaýlağan Goýun Beyran Şorbasy",
+      "description": "Goýun, ýarym tüwi, sarymsak we gyzylan buzgar bilen ýokary temperatura arkaly taýýarlaýan sebit şorbasydyr."
+    },
+    "kelle-paca-corbasi": {
+      "name": "Baş we Aýak Şorbasy",
+      "description": "Uzyn sagatlap gaýnadylan sygyr aýaklary we baş etleri bilen taýýarlanylýan baý sümük şorbasydyr."
+    },
+    "sehriye-corbasi": {
+      "name": "Ýer Şorbasynyň Vermiselli",
+      "description": "Tomatly, vermiselli we petrusil bilen taýýarlanan gündelik towuk şorbasy."
+    },
+    "tavuk-sis": {
+      "name": "Towuk Şişleri",
+      "description": "Hususy ýaglymyz bilen marinad edilen towuk bölekleri, gowrulan burç we pomidor bilen berilýär."
+    },
+    "kasap-sucuk": {
+      "name": "Gowrulan Butcher’s Sucuk",
+      "description": "Harytly goýun etinden taýýarlanan çöp sosis, gowrulan gök önümler we sumakly sogan bilen."
+    },
+    "karisik-izgara": {
+      "name": "Ara Kok",
+      "description": "Köplerden ybarat we dürli-grilli tagam tabak, içinde köfte, towuk şişleri, goýun çoplary we sosis bar."
+    },
+    "nohut-yemegi": {
+      "name": "Etli Noýhut Tagamy",
+      "description": "Mercimek we dana etinden taýýarlanan öý nahary, mis gabda haýal-haýal bişirilýär."
+    },
+    "patlican-musakka": {
+      "name": "Badymjan Mubaraka",
+      "description": "Tänze, dana eti we badymjan, pomidor sousy bilen peçde bişirilýär, restoran usulynda."
+    },
+    "zeytinyagli-taze-fasulye": {
+      "name": "Zeytun ýagynda gök nohut",
+      "description": "Zeytun ýagynda gök nohut, pomidor we sogan bilen bişirilip, sowuklygy bilen hyzmat edilýär."
+    },
+    "tavuk-sote": {
+      "name": "Qovrulan towuk",
+      "description": "Towuk bölekleri, reňkli burçak, göbädi we pomidor bilen ýokary temperaturaýda qovrulýar."
+    },
+    "izmir-kofte": {
+      "name": "Izmir usulynda et köftesi",
+      "description": "Pomidor sousynda bişirilen toýun gojasyndan, kartoşkadan we burçlardan taýýarlanylýan däp-dessur esasynda esasy nahar."
+    },
+    "etli-bezelye": {
+      "name": "Irişli toýun etli nohut",
+      "description": "Kubik kesilen toýun eti, nohut, gök çemçe we kartoşkadan gowşakly gapda bişirilen gündelik nahar."
+    },
+    "patlican-oturtma": {
+      "name": "Gözel soganly bişirilen badam",
+      "description": "Diň gojasy badam, ysly minç et we sarmysakly pomidor sousy bilen peçde taýýarlanylýar."
+    },
+    "salgam-suyu": {
+      "name": "Fermentlenen keşni suw",
+      "description": "Däp-dessurly ysly keşni suw, gök kök we bugur joğury bilen fermentlenen."
+    },
+    "maden-suyu": {
+      "name": "Mineral suw",
+      "description": "Suwuk görnüşindäki tebigy mineral sowuk mineral suw hödürlenýär."
+    },
+    "su": {
+      "name": "Tejribeli Çeşme Suwy",
+      "description": "Şüşe bölejikde sowuk ulanylan tebigy çeşme suwy."
+    },
+    "kola": {
+      "name": "Kola",
+      "description": "Suwa goýulyp sowuk berilýän klassik gazly içgi."
+    },
+    "gazoz": {
+      "name": "Türk Limon Sodasy",
+      "description": "Däp bolan tagamly, täsirli we sowuklygy bilen berilýän düz sodasy."
+    },
+    "turk-kahvesi": {
+      "name": "Türk Kofesi",
+      "description": "Göpük bilen taýýarlan, mis cezwede ýokary ýylylykda bişirilýän däp bolan Türk kofesi."
+    },
+    "demleme-cay": {
+      "name": "Türk Çayi",
+      "description": "Inçe belli stakanda täze bişirilen gyzmak Rize çaýy."
+    },
+    "ev-yapimi-limonata": {
+      "name": "Öý Limonadasy",
+      "description": "Her gün täze limon, narpyz we biraz şeker bilen taýýarlanylýan limonad."
+    },
+    "hosaf": {
+      "name": "Gündelik miwe kompoty Öýde",
+      "description": "taýýarlanan kompot möwsümine görä her gün kişmiş, erik ýa-da erik bilen gaýnadylýar."
+    },
+    "iskender-kebabi": {
+      "name": "Bursa İskender Kebap",
+      "description": "üstünde şişiň üstünde öwrülip, pomidor sosu, gyzgyn ýag we yogurt bilen hyzmat edilýär."
+    },
+    "kazandibi": {
+      "name": "Karamelize süýt pudingi",
+      "description": "Dogry karamelize edilen we ipeksi teksti bolan däp bolan süýt süýji."
+    },
+    "tavuk-gogsu": {
+      "name": "Osmanly süýt pudingi",
+      "description": "Tarçın bilen hyzmat edilýän däp bolan taýýarlanyş usuly bilen taýýarlanan ýeňil we lifli süýt süýji."
+    },
+    "keskul": {
+      "name": "Badam süýtli puding",
+      "description": ": Badam tagamly we kokos bilen tamamlanan osmanly usulynda süýt süýji."
+    },
+    "irmik-helvasi": {
+      "name": "Semolina Halva",
+      "description": "Semolina helwasy, ýag we sos bilen bişirilip, gyzgyn we däneli hyzmat edilýär."
+    },
+    "kabak-tatlisi": {
+      "name": "Tahinli balkabak süýji",
+      "description": "iýmiti Öz şiresinde ýuwaş-ýuwaşdan bişirilen kabak tahin we walnut bilen hyzmat edilýär."
+    },
+    "ayva-tatlisi": {
+      "name": "Aýwa süýji",
+      "description": "Karanfil we tarçın bilen bişirilen aýwa krem we walnut bilen hyzmat edilýär."
+    },
+    "revani": {
+      "name": "Şöhratlak Keýk Sýrupy",
+      "description": "Sümlekli ýumşak keýk limon ysyly sýrup bilen duşuşýan klassik restoran deserti."
+    },
+    "ekmek-kadayifi": {
+      "name": "Çörek Pudingi, Bugdaý Ýagly",
+      "description": "Karamelizasiýa edilen sýrup bilen ýerleşdirilen çörek pudingi guýumyň bugdaý ýagy bilen berilýär."
+    },
+    "cevizli-baklava": {
+      "name": "Ýeralma Baklawasy",
+      "description": "Gaty ýalpyldawuk, köp ýeralma we ýönekeý ýag bilen taýýarlanylan gatlaklar bilen baklawa."
+    }
+  },
+  "allergens": {
+    "Süt ürünleri": "Süýt",
+    "Gluten": "Gluten",
+    "Yumurta": "Ýumurtga",
+    "Badem": "Badam",
+    "Çam fıstığı": "Pine",
+    "Susam": "Susam",
+    "Ceviz": "Ýerkökli"
+  },
+  "tags": {
+    "Popüler": "Meşhur",
+    "Vejetaryen": "Ýagsyz iýmit",
+    "Günün Yemeği": "Günün Taýyarlan Taýmagy",
+    "Şefin Önerisi": "Aşpeziň Saýlamasy",
+    "Yeni": "Täze",
+    "Acılı": "Gapyr",
+    "Ev Yapımı": "Öýde taýýarlanan",
+    "Lokanta Klasiği": "Restoran Klassygy",
+    "Günün Çorbası": "Günün şorbasy",
+    "Vegan": "Wegan",
+    "Hafif": "Yşyk",
+    "Yöresel": "Sebitleýin",
+    "Paylaşmalık": "Paýlaşmak",
+    "Ev Yemeği": "Öý usuly",
+    "Zeytinyağlı": "Zitun ýagy",
+    "Nostaljik": "Nostaljik",
+    "Geleneksel": "Adaty",
+    "Bursa Lezzeti": "Bursanyň Tagamy",
+    "Sütlü Tatlı": "Süýtli Süýji",
+    "Sıcak Tatlı": "Iýsylan Süýji",
+    "Mevsimlik": "Möwsümi",
+    "Şerbetli": "Şerbetli Süýji"
+  }
+}

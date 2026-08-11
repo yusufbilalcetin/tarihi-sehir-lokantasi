@@ -1,0 +1,349 @@
+{
+  "locale": "lv",
+  "ui": {
+    "menu": "Ņemums",
+    "search": "Meklēt ēdienkartē...",
+    "searchLabel": "Meklēt ēdienkartē",
+    "categories": "Kategorijas",
+    "categoryIntro": "Izvēlieties garšu savai galdam.",
+    "categoryNavigation": "Ēdienkartes kategorijas",
+    "openCategory": "Atvērt {name}, {count} vienības",
+    "items": "vienības",
+    "item": "vienība",
+    "searchResults": "Meklēšanas rezultāti",
+    "productsFound": "Atrastas {count} vienības",
+    "backToCategories": "Atpakaļ uz kategorijām",
+    "backToCategory": "Atpakaļ uz {name}",
+    "clearSearch": "Notīrīt meklēšanu",
+    "noResults": "Atbilstošu vienību nav",
+    "noResultsDescription": "Mēģiniet citu meklēšanu vai atgriezieties kategorijās.",
+    "order": "Mana pasūtījums",
+    "waiter": "Kalps",
+    "bill": "Rēķins",
+    "addToCart": "Pievienot pasūtījumam",
+    "addedToCart": "{name} pievienots jūsu pasūtījumam.",
+    "removeFromCart": "Noņemt {name}",
+    "soldOut": "Šodien izpārdots",
+    "productDetails": "Atvērt detaļas par {name}",
+    "portion": "Porcija",
+    "standardPortion": "Standarta porcija",
+    "allergens": "Alergēni",
+    "noAllergens": "Nav deklarētu alergēnu",
+    "productNote": "Preces piezīme",
+    "productNotePlaceholder": "Piem., bez sviesta, lūdzu",
+    "decreaseQuantity": "Samazināt daudzumu",
+    "increaseQuantity": "Palielināt daudzumu",
+    "each": "katrs",
+    "note": "Piezīme",
+    "subtotal": "Starpsumma",
+    "serviceFee": "Pakalpojuma maksa",
+    "total": "Kopā",
+    "sendOrder": "Nosūtīt pasūtījumu",
+    "orderSent": "Jūsu pasūtījums tika nosūtīts uz virtuvi",
+    "orderTracking": "Sekojiet pasūtījumam #{number} šeit.",
+    "newItem": "Pievienot citu preci",
+    "emptyCart": "Jūsu pasūtījums ir tukšs",
+    "emptyCartDescription": "Preces, ko izvēlaties no ēdienkartes, parādīsies šeit.",
+    "browseMenu": "Pārlūkot ēdienkarti",
+    "orderReceived": "Pasūtījums saņemts",
+    "waiterConfirmed": "Pasniedzējs apstiprināja",
+    "preparing": "Gatavo",
+    "ready": "Gatavs",
+    "served": "Pasniegts",
+    "preparingDescription": "Mūsu virtuvē tiek gatavots jūsu pasūtījums.",
+    "orderStatus": "Pasūtījuma statuss",
+    "callWaiter": "Sauciet pasniedzēju",
+    "placeOrder": "Es vēlos pasūtīt",
+    "wantWater": "Es vēlētos ūdeni",
+    "wantBread": "Es vēlētos maizi",
+    "wantService": "Papildu serviss",
+    "other": "Cits",
+    "generalRequest": "Man ir vispārīgs lūgums",
+    "orderHelp": "Man nepieciešama palīdzība ar pasūtījumu",
+    "waterDescription": "Lūdzu, atsauciet ūdeni pie galda",
+    "breadDescription": "Lūdzu, atnesiet maizi uz galda",
+    "serviceDescription": "Man nepieciešams galda piederums vai šķīvis",
+    "otherDescription": "Man nepieciešama palīdzība ar kaut ko citu",
+    "waiterHelpTitle": "Kā mēs varam palīdzēt?",
+    "waiterHelpDescription": "Jūsu pieprasījums tiks nosūtīts kopā ar {table}.",
+    "waiterRequestSent": "Jūsu pieprasījums tika nosūtīts mūsu viesmīlim.",
+    "requestBill": "Pieprasīt rēķinu",
+    "billSent": "Jūsu rēķina pieprasījums tika nosūtīts",
+    "billConfirm": "Vai vēlaties pieprasīt rēķinu?",
+    "billSentDescription": "Mūsu viesmīlis drīz būs pie jums.",
+    "billConfirmDescription": "Jūsu pieprasījums tiks nosūtīts tieši viesmīlim. Jūs varat samaksāt pie galda vai pie kases.",
+    "billToast": "Jūsu rēķina pieprasījums tika nosūtīts mūsu viesmīlim.",
+    "backToMenu": "Atpakaļ uz izvēlni",
+    "back": "Atpakaļ",
+    "close": "Aizvērt",
+    "yourTable": "JŪSU GALDIŅŠ",
+    "serviceOpen": "Pakalpojums atvērts",
+    "slogan": "Tradicionālā garša • Mūsdienīgs galds",
+    "location": "Bursa, Osmangazi",
+    "languageLabel": "Izvēlēties valodu",
+    "currencyLabel": "Izvēlēties valūtu",
+    "customerNavigation": "Klienta izvēlnes navigācija",
+    "approximateCurrency": "Ārvalstu valūtas cenas ir aptuvenas. Maksājums tiek veikts Turku lirās.",
+    "orderSuccess": "Jūsu pasūtījums tika veiksmīgi nosūtīts.",
+    "languagePickerTitle": "Izvēlēties valodu",
+    "languagePickerDescription": "Izvēlieties valodu, ko vēlaties izmantot izvēlnē.",
+    "searchLanguage": "Meklēt valodas...",
+    "recommendedLanguages": "Ieteicams",
+    "recentLanguages": "Pēdējās valodas",
+    "allLanguages": "Visas valodas",
+    "languageNotFound": "Valoda nav atrasta.",
+    "languageNotFoundDescription": "Mēģiniet citu valodas nosaukumu vai kodu.",
+    "tableNumber": "Galds {number}",
+    "itemCount": "{count} vienības",
+    "splashLabel": "Tarihi Şehir Lokantası sākuma ekrāns",
+    "cancel": "Atcelt",
+    "confirmOrder": "Apstiprināt pasūtījumu",
+    "orderSummary": "Pasūtījuma kopsavilkums",
+    "payment": "Maksājums",
+    "tableNotFound": "Galds nav atrasts.",
+    "invalidQr": "Nederīgs QR kods.",
+    "menuUnavailable": "Ēdienkarte pašlaik nav pieejama.",
+    "networkError": "Radās tīkla kļūda.",
+    "productUnavailable": "Šis priekšmets pašlaik nav pieejams.",
+    "unableToSendOrder": "Nepieciešams nosūtīt pasūtījumu.",
+    "tryAgain": "Mēģiniet vēlreiz",
+    "somethingWentWrong": "Radās kļūda.",
+    "loadingLanguage": "Valodas ielāde...",
+    "languageLoadError": "Valodu nevarēja ielādēt. Lūdzu, mēģiniet vēlreiz."
+  },
+  "categories": {
+    "soups": "Zupas",
+    "grill": "Grili",
+    "mains": "Pamatēdieni",
+    "drinks": "Dzeramie",
+    "kebabs": "Kebabi",
+    "dessert": "Deserti"
+  },
+  "products": {
+    "mercimek": {
+      "name": "Lēcu zupa",
+      "description": "Mājas lēcu zupa, gatavota klasiskajā stilā, papildināta ar sviesta mērci."
+    },
+    "tas-kebabi": {
+      "name": "Turku liellopa sautējums",
+      "description": "Liellops, sezonas dārzeņi un mūsu restorāna lēni gatavotā īpašā mērce."
+    },
+    "kuzu-tandir": {
+      "name": "Lēni cepts jērs",
+      "description": "Mūsu restorāna īpašais jērs tandoori, lēni gatavots zemā temperatūrā."
+    },
+    "pirinc-pilavi": {
+      "name": "Rīsu plovs",
+      "description": "Sviestā, pūkainā Baldo rīsu plovs."
+    },
+    "firin-sutlac": {
+      "name": "Cepts rīsu pudiņš",
+      "description": "Rīsu pudiņš, cepts tradicionālajā veidā, gatavots no ikdienas buļļa piena."
+    },
+    "kuru-fasulye": {
+      "name": "Baltās pupiņu zupa ar liellopu gaļu",
+      "description": "İspiras pupiņas, sagriezta liellopu gaļa un vienkāršs restorāna tomātu pasta."
+    },
+    "izgara-kofte": {
+      "name": "Grilēti gaļas bumbiņas",
+      "description": "Butchera stila liellopu gaļas bumbiņas ar ceptu papriku un tomātu."
+    },
+    "ayran": {
+      "name": "Maisītā Ayran",
+      "description": "Tradicionāls maisītais biezpiens ar daudz putām, gatavots no ikdienas jogurta."
+    },
+    "ezogelin-corbasi": {
+      "name": "Ezogelinas zupa",
+      "description": "Tradicionāla restorāna zupa, kur sarkanās lēcas, bulgurs un rīsi sastopas ar piparmētru."
+    },
+    "tarhana-corbasi": {
+      "name": "Tarhana zupa",
+      "description": "Mājas tarhana, Anatolijas klasika, lēnām vārīta ar tomātiem un kaltētu piparmētru."
+    },
+    "yayla-corbasi": {
+      "name": "Jogurta un rīsu zupa",
+      "description": "Atsvaidzinoša un krēmīga yayla zupa, pagatavota no jogurta, rīsiem un kaltētas piparmētras."
+    },
+    "iskembe-corbasi": {
+      "name": "Nieres zupa",
+      "description": "Pareiza liellopu niere zupa, pasniegta ar to garšvielām un ķiploku etiķi."
+    },
+    "dugun-corbasi": {
+      "name": "Kāzu zupa",
+      "description": "Tradicionālā kāzu zupa, gatavota no rīvētas jēra gaļas un aromatizēta ar citronu marinādi."
+    },
+    "tavuk-suyu-corbasi": {
+      "name": "Vistas buljona zupa",
+      "description": "Dziedinoša zupa, gatavota no plānām nūdelēm, vārītām kaulu buljonā un rīvētas vistas gaļas."
+    },
+    "domates-corbasi": {
+      "name": "Tomātu zupa",
+      "description": "Bags garšas ēdiens, pagatavots ar nogatavojušiem tomātiem, sviestu un baziliku, pabeigts ar sieru."
+    },
+    "sebze-corbasi": {
+      "name": "Dārzeņu zupa",
+      "description": "Vieglā restorāna zupa, pagatavota no sezonas dārzeņiem, olīveļļas un svaigiem garšaugiem."
+    },
+    "beyran-corbasi": {
+      "name": "Asā jēra Beyran zupa",
+      "description": "Reģionālā zupa, gatavota uz augstas uguns ar jēru, rīsiem, ķiplokiem un asajiem pipariem."
+    },
+    "kelle-paca-corbasi": {
+      "name": "Galvas un kāju zupa",
+      "description": "Bāgta kaulu buljona zupa, gatavota no liellopu kājām un galvas gaļas, vārīta ilgas stundas."
+    },
+    "sehriye-corbasi": {
+      "name": "Vermicelli zupa",
+      "description": "Dienas zupa, gatavota no vistas buljona ar tomātiem, vermicelli un pētersīļiem."
+    },
+    "tavuk-sis": {
+      "name": "Vistas šašliks",
+      "description": "Vistas gabaliņi marinēti ar īpašām garšvielām, pasniegti ar ceptiem pipariem un tomātiem."
+    },
+    "kasap-sucuk": {
+      "name": "Grilēta mesnieka sucuk",
+      "description": "Asa liellopa desa, gatavota uz oglēm, ar ceptiem dārzeņiem un sīpolu ar sumaču."
+    },
+    "karisik-izgara": {
+      "name": "Jauktais grils",
+      "description": "Liels un dažāds grila šķīvis, kas sastāv no kotletēm, vistas šašlika, jēra karbonādēm un desas."
+    },
+    "nohut-yemegi": {
+      "name": "Turku zirņu sautējums ar liellopu gaļu",
+      "description": "Mājas ēdiens no turku zirņiem un kubiņos sagrieztas liellopa gaļas, lēni gatavots vara katlā."
+    },
+    "patlican-musakka": {
+      "name": "Baklažānu Musaka",
+      "description": "Cepti baklažāni, maltā liellopa gaļa un musaka cepta cepeškrāsnī ar tomātu mērci, restorāna stilā."
+    },
+    "zeytinyagli-taze-fasulye": {
+      "name": "Zaļie pupiņi olīveļļā",
+      "description": "Klasiķis, gatavots olīveļļā ar zaļajiem pupiņiem, tomātiem un sīpoliem, pasniegts auksts."
+    },
+    "tavuk-sote": {
+      "name": "Cepta vistas gaļa",
+      "description": "Vistas gabali tiek cepti augstā temperatūrā ar krāsainiem pipariem, sēnēm un tomātiem."
+    },
+    "izmir-kofte": {
+      "name": "Īzmires stilā kotletes",
+      "description": "Tradicionālā galvenā ēdiena biezpiena gaļas bumbiņas, kartupeļi un pipari cepti tomātu mērcē."
+    },
+    "etli-bezelye": {
+      "name": "Zaļie zirnīši ar liellopa gaļu",
+      "description": "Dienas ēdiens, kas gatavots katlā ar kubiņos sagrieztiem liellopa gaļas gabaliņiem, zirņiem, burkāniem un kartupeļiem."
+    },
+    "patlican-oturtma": {
+      "name": "Cepta baklažāna ar maltu gaļu",
+      "description": "Mēle tiek pagatavota krāsnī ar baklažānu, pikantu maltās gaļas un ķiploku tomātu mērci."
+    },
+    "salgam-suyu": {
+      "name": "Fermentētas rāceņu sulas",
+      "description": "Tradicionāla pikanta rāceņu sula, fermentēta ar violetajiem burkāniem un bulgura raugu."
+    },
+    "maden-suyu": {
+      "name": "Minerālūdens",
+      "description": "Dabisks minerālūdens, pasniegts auksts."
+    },
+    "su": {
+      "name": "Dabīgais avota ūdens",
+      "description": "Dabīgais avota ūdens, pasniegts auksts stikla pudelē."
+    },
+    "kola": {
+      "name": "Kola",
+      "description": "Klasisks gāzēts dzēriens, pasniegts ļoti auksts."
+    },
+    "gazoz": {
+      "name": "Turku citronu soda",
+      "description": "Tradicionāls aromatizēts, atsvaidzinošs un pasniegts auksts soda dzēriens."
+    },
+    "turk-kahvesi": {
+      "name": "Turku kafija",
+      "description": "Tradicionālā turku kafija ar putu, pagatavota uz lielas uguns vara džezvē."
+    },
+    "demleme-cay": {
+      "name": "Turku tēja",
+      "description": "Svaigi uzvārīta karsta Rizes tēja plānā vidukļa glāzē."
+    },
+    "ev-yapimi-limonata": {
+      "name": "Mājas limonāde",
+      "description": "Atsvaidzinoša limonāde, kas katru dienu tiek pagatavota no svaiga citrona, piparmētras un nedaudz cukura."
+    },
+    "hosaf": {
+      "name": "Dienas Augļu Kompots",
+      "description": "Mājas kompots, kas katru dienu tiek vārīts ar rozīnēm, aprikozēm vai plūmēm atbilstoši sezonai."
+    },
+    "iskender-kebabi": {
+      "name": "Bursa Iskender Kebabs",
+      "description": "Gaļa tiek pagriezta uz iesma virs pides, pasniegta ar tomātu mērci, karstu sviestu un jogurtu."
+    },
+    "kazandibi": {
+      "name": "Karamelizēts Piena Pudding",
+      "description": "Tradicionāls piena deserts, pareizi karamelizēts, ar zīdainu tekstūru."
+    },
+    "tavuk-gogsu": {
+      "name": "Osmaņu Piena Pudding",
+      "description": "Viegls un šķiedrains piena deserts, pagatavots pēc tradicionālas receptes, pasniegts ar kanēli."
+    },
+    "keskul": {
+      "name": "Mandeļu piena pudiņš",
+      "description": "Osmaņu stila piena deserts, pabeigts ar mandeļu garšu un kokosriekstu."
+    },
+    "irmik-helvasi": {
+      "name": "Semolīnas halva",
+      "description": "Semolīnas halva, cepta ar sviestu un priežu riekstiem, pasniegta karsta un graudaina."
+    },
+    "kabak-tatlisi": {
+      "name": "Ķirbju deserts ar tahini",
+      "description": "Ķirbis, lēni gatavots savā sulā, tiek pasniegts ar tahini un valriekstiem."
+    },
+    "ayva-tatlisi": {
+      "name": "Cidoniju deserts",
+      "description": "Cidonija, gatavota ar krustnagliņu un kanēli, tiek pasniegta ar saldēto krējumu un valriekstiem."
+    },
+    "revani": {
+      "name": "Semolīna sīrupa kūka",
+      "description": "Klasisks restorāna deserts, kur semolīnas mīkstā kūka satiekas ar citrona smaržīgu sīrupu."
+    },
+    "ekmek-kadayifi": {
+      "name": "Maizes pudiņš ar kreņķi",
+      "description": "Maizes pudiņš, kas atdzesēts ar karamelizētu sīrupu, tiek pasniegts ar ūdeļa ragu krēmu."
+    },
+    "cevizli-baklava": {
+      "name": "Riekstu baklava",
+      "description": "Ļoti plānas kārtas, kraukšķīga baklava, gatavota ar daudz riekstiem un parastu sviestu."
+    }
+  },
+  "allergens": {
+    "Süt ürünleri": "Piena produkti",
+    "Gluten": "Glutēns",
+    "Yumurta": "Olas",
+    "Badem": "Mandele",
+    "Çam fıstığı": "Čiekuri",
+    "Susam": "Sezams",
+    "Ceviz": "Rieksts"
+  },
+  "tags": {
+    "Popüler": "Populārs",
+    "Vejetaryen": "Veģetārs",
+    "Günün Yemeği": "Dienas ēdiens",
+    "Şefin Önerisi": "Šefpavāra izvēle",
+    "Yeni": "Jauns",
+    "Acılı": "Asi",
+    "Ev Yapımı": "Mājas gatavots",
+    "Lokanta Klasiği": "Restorāna klasika",
+    "Günün Çorbası": "Dienas zupa",
+    "Vegan": "Vegānisks",
+    "Hafif": "Viegls",
+    "Yöresel": "Reģionāls",
+    "Paylaşmalık": "Lai dalītos",
+    "Ev Yemeği": "Mājas stila",
+    "Zeytinyağlı": "Olīveļļa",
+    "Nostaljik": "Nostalgisks",
+    "Geleneksel": "Tradicionāls",
+    "Bursa Lezzeti": "Bursas garša",
+    "Sütlü Tatlı": "Piena deserts",
+    "Sıcak Tatlı": "Silts deserts",
+    "Mevsimlik": "Sezonāls",
+    "Şerbetli": "Sirupa deserts"
+  }
+}

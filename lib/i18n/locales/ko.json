@@ -1,0 +1,349 @@
+{
+  "locale": "ko",
+  "ui": {
+    "menu": "메뉴",
+    "search": "메뉴 검색...",
+    "searchLabel": "메뉴 검색",
+    "categories": "카테고리",
+    "categoryIntro": "테이블에 맞는 맛을 선택하세요.",
+    "categoryNavigation": "메뉴 카테고리",
+    "openCategory": "{name} 열기, {count}개 항목",
+    "items": "항목들",
+    "item": "항목",
+    "searchResults": "검색 결과",
+    "productsFound": "{count}개 항목이 발견되었습니다",
+    "backToCategories": "카테고리로 돌아가기",
+    "backToCategory": "{name}로 돌아가기",
+    "clearSearch": "검색 지우기",
+    "noResults": "일치하는 항목이 없습니다",
+    "noResultsDescription": "다른 검색을 시도하거나 카테고리로 돌아가세요.",
+    "order": "내 주문",
+    "waiter": "웨이터",
+    "bill": "계산서",
+    "addToCart": "주문에 추가",
+    "addedToCart": "{name} 가(이) 주문에 추가되었습니다.",
+    "removeFromCart": "{name} 제거",
+    "soldOut": "오늘 품절",
+    "productDetails": "{name} 의 세부 정보 열기",
+    "portion": "양",
+    "standardPortion": "표준 양",
+    "allergens": "알레르기 유발 성분",
+    "noAllergens": "신고된 알레르기 성분 없음",
+    "productNote": "항목 메모",
+    "productNotePlaceholder": "예: 버터는 빼주세요",
+    "decreaseQuantity": "수량 감소",
+    "increaseQuantity": "수량 증가",
+    "each": "개당",
+    "note": "메모",
+    "subtotal": "소계",
+    "serviceFee": "서비스 요금",
+    "total": "총계",
+    "sendOrder": "주문 보내기",
+    "orderSent": "주문이 주방으로 전송되었습니다",
+    "orderTracking": "여기에서 주문 번호 #{number} 추적",
+    "newItem": "다른 항목 추가",
+    "emptyCart": "주문이 비어 있습니다",
+    "emptyCartDescription": "메뉴에서 선택한 항목이 여기에 표시됩니다",
+    "browseMenu": "메뉴 보기",
+    "orderReceived": "주문 접수",
+    "waiterConfirmed": "웨이터 확인됨",
+    "preparing": "준비 중",
+    "ready": "준비 완료",
+    "served": "서빙됨",
+    "preparingDescription": "주문하신 요리를 주방에서 준비하고 있습니다.",
+    "orderStatus": "주문 상태",
+    "callWaiter": "웨이터 호출",
+    "placeOrder": "주문하고 싶습니다",
+    "wantWater": "물을 부탁드립니다",
+    "wantBread": "빵을 부탁드립니다",
+    "wantService": "추가 서비스",
+    "other": "기타",
+    "generalRequest": "일반 요청이 있습니다",
+    "orderHelp": "주문에 도움이 필요합니다",
+    "waterDescription": "테이블로 물을 가져다 주세요",
+    "breadDescription": "빵을 테이블로 가져다 주세요",
+    "serviceDescription": "식기나 접시가 필요합니다",
+    "otherDescription": "다른 일에 도움이 필요합니다",
+    "waiterHelpTitle": "어떻게 도와드릴까요?",
+    "waiterHelpDescription": "귀하의 요청은 {table}와 함께 전송됩니다.",
+    "waiterRequestSent": "귀하의 요청이 우리 웨이터에게 전송되었습니다.",
+    "requestBill": "계산서 요청",
+    "billSent": "귀하의 계산서 요청이 전송되었습니다",
+    "billConfirm": "계산서를 요청하시겠습니까?",
+    "billSentDescription": "우리 웨이터가 곧 찾아뵐 것입니다.",
+    "billConfirmDescription": "귀하의 요청은 웨이터에게 직접 전달됩니다. 테이블이나 계산대에서 결제하실 수 있습니다.",
+    "billToast": "청구 요청이 웨이터에게 전달되었습니다.",
+    "backToMenu": "메뉴로 돌아가기",
+    "back": "뒤로",
+    "close": "닫기",
+    "yourTable": "귀하의 테이블",
+    "serviceOpen": "서비스 시작",
+    "slogan": "전통의 맛 • 현대의 테이블",
+    "location": "부르사, 오스만가지",
+    "languageLabel": "언어 선택",
+    "currencyLabel": "통화 선택",
+    "customerNavigation": "고객 메뉴 탐색",
+    "approximateCurrency": "외국 통화 가격은 대략적인 금액입니다. 결제는 터키 리라로 처리됩니다.",
+    "orderSuccess": "주문이 성공적으로 전송되었습니다.",
+    "languagePickerTitle": "언어 선택",
+    "languagePickerDescription": "메뉴에 사용할 언어를 선택하세요.",
+    "searchLanguage": "언어 검색...",
+    "recommendedLanguages": "추천",
+    "recentLanguages": "최근 사용한 언어",
+    "allLanguages": "모든 언어",
+    "languageNotFound": "언어를 찾을 수 없습니다.",
+    "languageNotFoundDescription": "다른 언어 이름이나 코드를 시도해 보세요.",
+    "tableNumber": "테이블 {number}",
+    "itemCount": "{count}개 항목",
+    "splashLabel": "Tarihi Şehir Lokantası 시작 화면",
+    "cancel": "취소",
+    "confirmOrder": "주문 확인",
+    "orderSummary": "주문 요약",
+    "payment": "결제",
+    "tableNotFound": "테이블을 찾을 수 없습니다.",
+    "invalidQr": "잘못된 QR 코드입니다.",
+    "menuUnavailable": "메뉴를 현재 이용할 수 없습니다.",
+    "networkError": "네트워크 오류가 발생했습니다.",
+    "productUnavailable": "이 상품은 현재 이용할 수 없습니다.",
+    "unableToSendOrder": "주문을 전송할 수 없습니다.",
+    "tryAgain": "다시 시도",
+    "somethingWentWrong": "문제가 발생했습니다.",
+    "loadingLanguage": "언어 로드 중...",
+    "languageLoadError": "언어를 로드할 수 없습니다. 다시 시도해주세요."
+  },
+  "categories": {
+    "soups": "수프",
+    "grill": "그릴 요리",
+    "mains": "메인 코스",
+    "drinks": "음료",
+    "kebabs": "케밥",
+    "dessert": "디저트"
+  },
+  "products": {
+    "mercimek": {
+      "name": "렌틸 수프",
+      "description": "클래식 스타일로 만든 홈메이드 렌틸 수프, 버터 소스로 마무리했습니다."
+    },
+    "tas-kebabi": {
+      "name": "터키식 소고기 스튜",
+      "description": "소고기, 제철 채소, 그리고 저희 레스토랑의 천천히 조리한 특제 소스."
+    },
+    "kuzu-tandir": {
+      "name": "슬로우 로스트 양고기",
+      "description": "저희 레스토랑의 시그니처 양고기 탄두리, 낮은 열에서 천천히 조리했습니다."
+    },
+    "pirinc-pilavi": {
+      "name": "라이스 필라프",
+      "description": "버터 향이 풍부하고 폭신한 발도 쌀 필라프."
+    },
+    "firin-sutlac": {
+      "name": "구운 라이스 푸딩",
+      "description": "전통 방식으로 구운 라이스 푸딩으로, 매일 제공되는 물소 우유로 준비했습니다."
+    },
+    "kuru-fasulye": {
+      "name": "소고기 백콩 스튜",
+      "description": "이스피르 콩, 깍둑썰기한 소고기, 일반 식당 토마토 페이스트."
+    },
+    "izgara-kofte": {
+      "name": "구운 미트볼",
+      "description": "정육점 스타일 소고기 미트볼과 구운 고추, 토마토."
+    },
+    "ayran": {
+      "name": "휘젓은 아이란",
+      "description": "일상적인 요거트로 만든, 거품이 많은 전통 휘젓은 버터밀크."
+    },
+    "ezogelin-corbasi": {
+      "name": "에조겔린 수프",
+      "description": "붉은 렌틸콩, 불구르, 쌀과 민트가 만나는 전통 식당 수프."
+    },
+    "tarhana-corbasi": {
+      "name": "타르하나 수프",
+      "description": "토마토와 말린 민트와 함께 천천히 요리한 아나톨리아 전통 수제 타르하나."
+    },
+    "yayla-corbasi": {
+      "name": "요거트와 쌀 수프",
+      "description": "요거트, 쌀, 건조 민트로 만든 상쾌하고 크리미한 야일라 수프."
+    },
+    "iskembe-corbasi": {
+      "name": "양 곱창 수프",
+      "description": "양념과 마늘 식초와 함께 제공되는 제대로 된 소 곱창 수프."
+    },
+    "dugun-corbasi": {
+      "name": "결혼식 수프",
+      "description": "잘게 썬 양고기로 만들고 레몬 마리네이드로 맛을 낸 전통적인 결혼식 수프."
+    },
+    "tavuk-suyu-corbasi": {
+      "name": "치킨 육수 수프",
+      "description": "뼈 육수에 삶은 얇은 국수와 잘게 찢은 닭고기로 만든 치유 수프."
+    },
+    "domates-corbasi": {
+      "name": "토마토 수프",
+      "description": "익은 토마토, 버터, 바질로 조리한 풍부한 맛에 치즈를 얹은 요리."
+    },
+    "sebze-corbasi": {
+      "name": "야채 수프",
+      "description": "제철 야채, 올리브오일, 신선한 허브로 만든 가벼운 레스토랑 수프."
+    },
+    "beyran-corbasi": {
+      "name": "매운 양고기 베이란 수프",
+      "description": "양고기, 쌀, 마늘, 고추를 넣고 센 불에서 조리한 지역 수프."
+    },
+    "kelle-paca-corbasi": {
+      "name": "머리와 발 수프",
+      "description": "소 발과 머리 고기를 오랫동안 끓여 만든 진한 뼈 육수 수프."
+    },
+    "sehriye-corbasi": {
+      "name": "버미첼리 수프",
+      "description": "토마토, 버미첼리, 파슬리를 넣어 닭 육수로 준비한 일일 수프."
+    },
+    "tavuk-sis": {
+      "name": "치킨 꼬치",
+      "description": "특별한 향신료에 재운 닭고기 조각으로 구운 피망과 토마토와 함께 제공됩니다."
+    },
+    "kasap-sucuk": {
+      "name": "그릴드 부처의 수죽",
+      "description": "숯불에 구운 매운 소고기 소시지, 구운 채소와 수마트를 곁들인 양파와 함께 제공됩니다."
+    },
+    "karisik-izgara": {
+      "name": "믹스 그릴",
+      "description": "미트볼, 치킨 꼬치, 양갈비, 소시지로 구성된 풍성하고 다양한 그릴 플레이트."
+    },
+    "nohut-yemegi": {
+      "name": "쇠고기 병아리콩 스튜",
+      "description": "구리 냄비에서 천천히 요리한 병아리콩과 깍둑썰기한 소고기 집밥 요리."
+    },
+    "patlican-musakka": {
+      "name": "가지 무사카",
+      "description": "튀긴 가지, 다진 소고기, 토마토 소스와 함께 오븐에서 구운 무사카, 레스토랑 스타일."
+    },
+    "zeytinyagli-taze-fasulye": {
+      "name": "올리브 오일에 조리한 그린빈",
+      "description": "올리브 오일, 그린빈, 토마토, 양파로 조리한 클래식 요리, 차갑게 제공됨."
+    },
+    "tavuk-sote": {
+      "name": "볶은 치킨",
+      "description": "치킨 조각을 고온에서 채소, 버섯, 토마토와 함께 볶음."
+    },
+    "izmir-kofte": {
+      "name": "이즈미르 스타일 미트볼",
+      "description": "토마토 소스에 구운 소고기 미트볼, 감자, 고추로 만든 전통 메인 요리입니다."
+    },
+    "etli-bezelye": {
+      "name": "완두콩과 소고기",
+      "description": "깍둑썰기한 소고기, 완두콩, 당근, 감자를 냄비에 넣고 요리한 일상 식사입니다."
+    },
+    "patlican-oturtma": {
+      "name": "다진 고기를 넣은 구운 가지",
+      "description": "혀(소혀)는 가지, 매운 다진 고기, 마늘 토마토 소스와 함께 오븐에서 준비됩니다."
+    },
+    "salgam-suyu": {
+      "name": "발효 순무 주스",
+      "description": "보라색 당근과 불거 효모로 발효시킨 전통 매운 순무 주스입니다."
+    },
+    "maden-suyu": {
+      "name": "광천수",
+      "description": "차게 제공되는 천연 광천수입니다."
+    },
+    "su": {
+      "name": "천연 샘물",
+      "description": "얼음처럼 차게 제공되는 글라스 병에 담긴 천연 샘물입니다."
+    },
+    "kola": {
+      "name": "콜라",
+      "description": "클래식 탄산 음료로, 얼음처럼 차게 제공됩니다."
+    },
+    "gazoz": {
+      "name": "터키 레몬 소다",
+      "description": "전통적인 맛의 상쾌하고 차게 제공되는 플레인 소다입니다."
+    },
+    "turk-kahvesi": {
+      "name": "터키 커피",
+      "description": "거품이 있는 전통 터키 커피로, 구리 세즈베에 강한 열로 조리됩니다."
+    },
+    "demleme-cay": {
+      "name": "터키 브루드 차",
+      "description": "얇은 허리 모양의 컵에 신선하게 끓인 뜨거운 리제 차입니다."
+    },
+    "ev-yapimi-limonata": {
+      "name": "수제 레모네이드",
+      "description": "신선한 레몬, 민트, 약간의 설탕으로 매일 준비되는 상큼한 레모네이드."
+    },
+    "hosaf": {
+      "name": "데일리 과일 콩포트",
+      "description": "제철 건포도, 살구 또는 자두로 매일 끓여 만든 수제 콩포트."
+    },
+    "iskender-kebabi": {
+      "name": "부르사 이스켄데르 케밥",
+      "description": "고기를 피데 위에서 꼬치에 돌리며 구워 토마토 소스, 뜨거운 버터, 요거트와 함께 제공."
+    },
+    "kazandibi": {
+      "name": "카라멜 밀크 푸딩",
+      "description": "전통적인 밀크 디저트로, 적절히 캐러멜화되어 부드러운 질감을 가진 푸딩."
+    },
+    "tavuk-gogsu": {
+      "name": "오스만 밀크 푸딩",
+      "description": "전통 레시피로 만든 가볍고 섬유질이 있는 우유 디저트로, 시나몬과 함께 제공됩니다."
+    },
+    "keskul": {
+      "name": "아몬드 밀크 푸딩",
+      "description": "아몬드 향과 코코넛으로 완성된 오스만식 우유 디저트."
+    },
+    "irmik-helvasi": {
+      "name": "세몰리나 할바",
+      "description": "버터와 잣으로 볶은 세몰리나 할바로, 뜨겁고 알갱이가 있는 상태로 제공됩니다."
+    },
+    "kabak-tatlisi": {
+      "name": "타히니 호박 디저트",
+      "description": "호박을 자체 즙으로 천천히 요리한 후 타히니와 호두와 함께 제공합니다."
+    },
+    "ayva-tatlisi": {
+      "name": "모과 디저트",
+      "description": "정향과 시나몬과 함께 요리한 모과를 클로티드 크림과 호두와 함께 제공합니다."
+    },
+    "revani": {
+      "name": "세몰리나 시럽 케이크",
+      "description": "세몰리나 부드러운 케이크에 레몬 향 시럽이 어우러진 클래식 레스토랑 디저트."
+    },
+    "ekmek-kadayifi": {
+      "name": "클로티드 크림 브레드 푸딩",
+      "description": "카라멜화된 시럽에 잠시 둔 브레드 푸딩을 버팔로 클로티드 크림과 함께 제공합니다."
+    },
+    "cevizli-baklava": {
+      "name": "호두 바클라바",
+      "description": "매우 얇게 펼쳐 구운, 많은 호두와 일반 버터로 만든 바삭한 바클라바 층."
+    }
+  },
+  "allergens": {
+    "Süt ürünleri": "유제품",
+    "Gluten": "글루텐",
+    "Yumurta": "계란",
+    "Badem": "아몬드",
+    "Çam fıstığı": "잣",
+    "Susam": "참깨",
+    "Ceviz": "호두"
+  },
+  "tags": {
+    "Popüler": "인기 있는",
+    "Vejetaryen": "채식주의자",
+    "Günün Yemeği": "오늘의 요리",
+    "Şefin Önerisi": "셰프 추천",
+    "Yeni": "신제품",
+    "Acılı": "매운",
+    "Ev Yapımı": "집에서 만든",
+    "Lokanta Klasiği": "레스토랑 클래식",
+    "Günün Çorbası": "오늘의 수프",
+    "Vegan": "비건",
+    "Hafif": "가벼운",
+    "Yöresel": "지역 특산",
+    "Paylaşmalık": "공유용",
+    "Ev Yemeği": "가정식",
+    "Zeytinyağlı": "올리브 오일",
+    "Nostaljik": "향수를 불러일으키는",
+    "Geleneksel": "전통적인",
+    "Bursa Lezzeti": "부르사의 맛",
+    "Sütlü Tatlı": "우유 디저트",
+    "Sıcak Tatlı": "따뜻한 디저트",
+    "Mevsimlik": "계절별",
+    "Şerbetli": "시럽 디저트"
+  }
+}

@@ -1,0 +1,349 @@
+{
+  "locale": "az",
+  "ui": {
+    "menu": "Menyu",
+    "search": "Menyuda axtar...",
+    "searchLabel": "Menyuda axtar",
+    "categories": "Kateqoriyalar",
+    "categoryIntro": "Masanız üçün dad seçin.",
+    "categoryNavigation": "Menyu kateqoriyaları",
+    "openCategory": "{name} aç, {count} maddə",
+    "items": "maddələr",
+    "item": "maddə",
+    "searchResults": "Axtarış nəticələri",
+    "productsFound": "{count} maddə tapıldı",
+    "backToCategories": "Kateqoriyalara geri dön",
+    "backToCategory": "{name}-ə geri dön",
+    "clearSearch": "Axtarışı təmizlə",
+    "noResults": "Uyğun maddə tapılmadı",
+    "noResultsDescription": "Başqa axtarış edin və ya kateqoriyalara qayıdın.",
+    "order": "Sifşim",
+    "waiter": "Ofisiant",
+    "bill": "Qəbz",
+    "addToCart": "Sifarişə əlavə et",
+    "addedToCart": "{name} sifarişinizə əlavə olundu.",
+    "removeFromCart": "{name} sil",
+    "soldOut": "Bu gün satılıb",
+    "productDetails": "{name} üçün detalları aç",
+    "portion": "Hissə",
+    "standardPortion": "Standart hissə",
+    "allergens": "Allergenlər",
+    "noAllergens": "Bəyannamə olunan allergen yoxdur",
+    "productNote": "Məhsul qeydi",
+    "productNotePlaceholder": "Məsələn: yağsiz, zəhmət olmasa",
+    "decreaseQuantity": "Miqdarını azaldın",
+    "increaseQuantity": "Miqdarını artırın",
+    "each": "hər biri",
+    "note": "Qeyd",
+    "subtotal": "Yekun məbləğ",
+    "serviceFee": "Xidmət haqqı",
+    "total": "Cəmi",
+    "sendOrder": "Sifarişi Göndərin",
+    "orderSent": "Sifarişiniz mətbəxə göndərildi",
+    "orderTracking": "Sifariş #{number} buradan izləyin.",
+    "newItem": "Başqa Məhsul Əlavə Et",
+    "emptyCart": "Sifarişiniz boşdur",
+    "emptyCartDescription": "Menyudan seçdiyiniz məhsullar burada görünəcək.",
+    "browseMenu": "Menyuya Baxın",
+    "orderReceived": "Sifariş Qəbul Edildi",
+    "waiterConfirmed": "Ofisiant Təsdiqlədi",
+    "preparing": "Hazırlanır",
+    "ready": "Hazır",
+    "served": "Xidmət Edildi",
+    "preparingDescription": "Mətbəximiz sifarişinizi hazırlayır.",
+    "orderStatus": "Sifariş vəziyyəti",
+    "callWaiter": "Ofisianti Çağır",
+    "placeOrder": "Qeydiyyat etmək istəyirəm",
+    "wantWater": "Suy istəyirəm",
+    "wantBread": "Nan istəyirəm",
+    "wantService": "Əlavə xidmət",
+    "other": "Digər",
+    "generalRequest": "Ümumi bir istəyi var",
+    "orderHelp": "Sifarişimlə bağlı köməyə ehtiyacım var",
+    "waterDescription": "Zəhmət olmasa masaya su gətirin",
+    "breadDescription": "Zəhmət olmasa çörəyi masaya gətirin",
+    "serviceDescription": "Mənə çəngəl-bıçaq və ya boşqab lazımdır",
+    "otherDescription": "Mənə başqa bir şeydə kömək lazımdır",
+    "waiterHelpTitle": "Necə kömək edə bilərik?",
+    "waiterHelpDescription": "Sizin sorğunuz {table} ilə göndəriləcək.",
+    "waiterRequestSent": "Sizin sorğunuz ofisiantımıza göndərildi.",
+    "requestBill": "Hesabı tələb et",
+    "billSent": "Sizin hesab tələbiyiniz göndərildi",
+    "billConfirm": "Hesabı tələb etmək istəyirsiniz?",
+    "billSentDescription": "Ofisiantımız qısa müddətə yanınızda olacaq.",
+    "billConfirmDescription": "Sizin sorğunuz birbaşa ofisianta gedəcək. Sizi masada və ya kassada ödəyə bilərsiniz.",
+    "billToast": "Sizin hesab sorğunuz garsonumuza göndərildi.",
+    "backToMenu": "Menyuya Qayıt",
+    "back": "Geri",
+    "close": "Bağla",
+    "yourTable": "SİZİN MASANIZ",
+    "serviceOpen": "Xidmət açıqdır",
+    "slogan": "Ənənəvi Dad • Müasir Masa",
+    "location": "Bursa, Osmangazi",
+    "languageLabel": "Dil seçin",
+    "currencyLabel": "Valyuta seçin",
+    "customerNavigation": "Müştəri menyusu naviqasiyası",
+    "approximateCurrency": "Xarici valyuta qiymətləri təxmini göstərilir. Ödəniş Türkiyə lirəsi ilə həyata keçirilir.",
+    "orderSuccess": "Sifarişiniz uğurla göndərildi.",
+    "languagePickerTitle": "Dil Seçin",
+    "languagePickerDescription": "Menyu üçün istifadə etmək istədiyiniz dili seçin.",
+    "searchLanguage": "Dilləri axtarın...",
+    "recommendedLanguages": "Tövsiyə olunan",
+    "recentLanguages": "Son Dillər",
+    "allLanguages": "Bütün Dillər",
+    "languageNotFound": "Dil tapılmadı.",
+    "languageNotFoundDescription": "Başqa bir dil adı və ya kodunu sınayın.",
+    "tableNumber": "Cədvəl {number}",
+    "itemCount": "{count} əşyalar",
+    "splashLabel": "Tarihi Şehir Lokantası açılış ekranı",
+    "cancel": "Ləğv et",
+    "confirmOrder": "Sifarişi Təsdiq et",
+    "orderSummary": "Sifariş Xülasəsi",
+    "payment": "Ödəmə",
+    "tableNotFound": "Cədvəl tapılmadı.",
+    "invalidQr": "Yanlış QR kodu.",
+    "menuUnavailable": "Menyu hazırda mövcud deyil.",
+    "networkError": "Şəbəkə xətası baş verdi.",
+    "productUnavailable": "Bu məhsul hazırda mövcud deyil.",
+    "unableToSendOrder": "Sifarişi göndərmək mümkün olmadı.",
+    "tryAgain": "Yenidən cəhd edin",
+    "somethingWentWrong": "Bir şey səhv getdi.",
+    "loadingLanguage": "Dil yüklənir...",
+    "languageLoadError": "Dili yükləmək mümkün olmadı. Zəhmət olmasa yenidən cəhd edin."
+  },
+  "categories": {
+    "soups": "Şorbalar",
+    "grill": "Qril məhsulları",
+    "mains": "Əsas Yeməklər",
+    "drinks": "İçkilər",
+    "kebabs": "Kebablər",
+    "dessert": "Şirniyyatlar"
+  },
+  "products": {
+    "mercimek": {
+      "name": "Qırmızı Mərcimək Şorbası",
+      "description": "Klassik üslubda hazırlanmış ev yapımı mərcimək şorbası, kərə yağı sousu ilə tamamlanmış."
+    },
+    "tas-kebabi": {
+      "name": "Türk Mal Əti Güveci",
+      "description": "Mal əti, mövsümi tərəvəzlər və restoranımızın yavaş bişirilmiş xüsusi sousu."
+    },
+    "kuzu-tandir": {
+      "name": "Yavaş Bişirilmiş Qoyun Əti",
+      "description": "Restoranımızın imza qoyun tandoori yeməyi, aşağı istilikdə yavaş bişirilmiş."
+    },
+    "pirinc-pilavi": {
+      "name": "Düyü Plovu",
+      "description": "Kərə yağlı, yumşaq Baldo düyü plovu."
+    },
+    "firin-sutlac": {
+      "name": "Sobada Bişirilmiş Düyü Puddinqi",
+      "description": "Gündəlik bufalo südü ilə hazırlanmış, ənənəvi üsulla sobada bişirilmiş düyü puddinqi."
+    },
+    "kuru-fasulye": {
+      "name": "Ət ilə Ağ Paxlalı Yemək",
+      "description": "İspanaq paxlası, doğranmış mal əti və sadə restoran pomidor pastası."
+    },
+    "izgara-kofte": {
+      "name": "Qril Ət Kürələri",
+      "description": "Qovrulmuş bibər və pomidor ilə ətçi üsulunda mal əti kürələri."
+    },
+    "ayran": {
+      "name": "Çırpılmış Ayran",
+      "description": "Gündəlik qatıqla hazırlanmış bol köpüklü ənənəvi çırpılmış yağlı süd."
+    },
+    "ezogelin-corbasi": {
+      "name": "Ezogelin Şorbası",
+      "description": "Qırmızı mərci, bulqur və düyü nanə ilə birləşən ənənəvi restoran şorbası."
+    },
+    "tarhana-corbasi": {
+      "name": "Tarhana Şorbası",
+      "description": "Pomidor və quru nanə ilə yavaş bişirilmiş ev istehsalı tarhana, Anadolu klassikası."
+    },
+    "yayla-corbasi": {
+      "name": "Yoğurt və Düyü Şorbası",
+      "description": "Yoğurt, düyü və qurudulmuş nanə ilə hazırlanan sərinləşdirici və kremli yayla şorbası."
+    },
+    "iskembe-corbasi": {
+      "name": "Südü Şorbası",
+      "description": "Öz ədviyyatı və sarımsaq sirkəsi ilə təqdim edilən düzgün mal əti südlü şorba."
+    },
+    "dugun-corbasi": {
+      "name": "Toy Şorbası",
+      "description": "Doğranmış qoyun əti ilə hazırlanmış və limon marinadı ilə dadlandırılmış ənənəvi toy şorbası."
+    },
+    "tavuk-suyu-corbasi": {
+      "name": "Toyuq Bulyonu Şorbası",
+      "description": "Əzələ sümüklərindən hazırlanmış bulyonda bişirilmiş nazik əriştə və əzilmiş toyuq əti ilə hazırlanan şəfa verici şorba."
+    },
+    "domates-corbasi": {
+      "name": "Pomidor Şorbası",
+      "description": "Yetkin pomidor, kərə yağı və reyhan ilə bişirilmiş zəngin ləzzət, pendirlə tamamlanmış."
+    },
+    "sebze-corbasi": {
+      "name": "Göyərti Şorbası",
+      "description": "Mövsümi tərəvəzlər, zeytun yağı və təzə otlarla hazırlanmış yüngül restoran şorbası."
+    },
+    "beyran-corbasi": {
+      "name": "Acılı Qoyun Beyran Şorbası",
+      "description": "Qoyun əti, düyü, sarımsaq və acı bibər ilə yüksək istidə hazırlanmış regional şorba."
+    },
+    "kelle-paca-corbasi": {
+      "name": "Baş və Ayaq Şorbası",
+      "description": "Uzun saatlar bişirilmiş mal ayaqları və baş əti ilə hazırlanmış zəngin sümük bulyonu şorbası."
+    },
+    "sehriye-corbasi": {
+      "name": "Şehriyə Şorbası",
+      "description": "Gündəlik şorba, toyuq bulyonu ilə, pomidor, vermiselli və cəfəri əlavə edilərək hazırlanır."
+    },
+    "tavuk-sis": {
+      "name": "Toyuq Şişləri",
+      "description": "Xüsusi ədviyyatlarla marinə olunmuş toyuq parçaları, qızardılmış bibər və pomidor ilə verilir."
+    },
+    "kasap-sucuk": {
+      "name": "Qril Qatıq Sucuk",
+      "description": "Kömür üzərində bişirilmiş ədviyyatlı mal əti kolbasası, qızardılmış tərəvəzlər və sumax ilə soğan ilə birlikdə."
+    },
+    "karisik-izgara": {
+      "name": "Qarışıq Qril",
+      "description": "Kələm, toyuq şişləri, quzu kotletləri və kolbasa daxil olmaqla bol və müxtəlif ızgara tabağı."
+    },
+    "nohut-yemegi": {
+      "name": "Ətli Noxud Yahnisi",
+      "description": "Nohut və doğranmış mal əti ilə evdə hazırlanmış yemək, mis qazanda yavaş-yavaş bişirilir."
+    },
+    "patlican-musakka": {
+      "name": "Bade Şam Moussaka",
+      "description": "Qızardılmış badımcan, mal əti və souslu moussaka sobada bişirilir, restoran üslubunda."
+    },
+    "zeytinyagli-taze-fasulye": {
+      "name": "Zeytun Yağlı Yaşıl Lobya",
+      "description": "Yaşıl lobya, pomidor və soğanla zeytun yağında bişirilmiş klassik yemək, soyuq şəkildə təqdim olunur."
+    },
+    "tavuk-sote": {
+      "name": "Sote Toyuq",
+      "description": "Toyuq parçaları yüksək odda rəngli bibərlər, göbələklər və pomidormlarla sotelenir."
+    },
+    "izmir-kofte": {
+      "name": "İzmir Üslubunda Köftə",
+      "description": "Ənənəvi əsas yemək: ət köftəsi, kartof və bibər pomidor sousunda bişirilir."
+    },
+    "etli-bezelye": {
+      "name": "Ət ilə noxud",
+      "description": "Küp doğranmış ət, noxud, yerkökü və kartof ilə qazanda hazırlanmış gündəlik yemək."
+    },
+    "patlican-oturtma": {
+      "name": "Ət ilə Qızardılmış Badımcan",
+      "description": "Dil sobada badımcan, ədviyyəli qiymə ət və sarımsaq pomidor sousu ilə hazırlanır."
+    },
+    "salgam-suyu": {
+      "name": "Fermentlənmiş Turp Şirəsi",
+      "description": "Bənövşəyi yerkökü və bulqur mayası ilə fermentlənmiş ənənəvi ədviyyəli turp şirəsi."
+    },
+    "maden-suyu": {
+      "name": "Mineral Su",
+      "description": "Sərin şəkildə təqdim olunan təbii çoxəməlli minerallı su."
+    },
+    "su": {
+      "name": "Təbii Mənbə Suyu",
+      "description": "Təbii mənbə suyu soyuq şəkildə stəkan şüşəsində təqdim olunur."
+    },
+    "kola": {
+      "name": "Kola",
+      "description": "Buz kimi soyudulmuş klassik qazlı içki."
+    },
+    "gazoz": {
+      "name": "Türk Limonadası",
+      "description": "Ənənəvi dadlı, təravət verən və soyuq şəkildə sadə təqdim olunan limonad."
+    },
+    "turk-kahvesi": {
+      "name": "Türk Qəhvəsi",
+      "description": "Pıçıltı ilə ənənəvi Türk qəhvəsi, mis cezvə ilə yüksək istilikdə bişirilir."
+    },
+    "demleme-cay": {
+      "name": "Türk Dəmlənmiş Çayı",
+      "description": "İncə belində stəkanda təzə dəmlənmiş isti Rize çayı."
+    },
+    "ev-yapimi-limonata": {
+      "name": "Ev Yapımı Limonad",
+      "description": "Hər gün təzə limon, nanə və bir qədər şəkərlə hazırlanmış sərinləşdirici limonad."
+    },
+    "hosaf": {
+      "name": "Gündəlik Meyvə Kompotu",
+      "description": "Sezonuna görə kişmiş, ərik və ya gavalı ilə hər gün bişirilən ev üsulu kompot."
+    },
+    "iskender-kebabi": {
+      "name": "Bursa İskəndər Kebabı",
+      "description": "Ət şişdə pide üzərində dönərək bişirilir, pomidor sousu, isti kərə yağı və qatıq ilə təqdim olunur."
+    },
+    "kazandibi": {
+      "name": "Karamelləşdirilmiş Süd Puddinqi",
+      "description": "Ənənəvi süd deserti düzgün şəkildə karamelizə edilmiş, hamar teksturaya malikdir."
+    },
+    "tavuk-gogsu": {
+      "name": "Osmanlı Süd Puddinqi",
+      "description": "Ənənəvi reseptlə hazırlanmış yüngül və lifli süd deserti, darçın ilə təqdim olunur."
+    },
+    "keskul": {
+      "name": "Badem Südü Puddinqi",
+      "description": "Badem ləzzəti və kokos ilə tamamlanmış Osmanlı üslubunda süd deserti."
+    },
+    "irmik-helvasi": {
+      "name": "İrmik Halvası",
+      "description": "İrmik halvası, kərə yağı və qoz-fındıq ilə qovrulmuş, isti və dənəli şəkildə təqdim olunur."
+    },
+    "kabak-tatlisi": {
+      "name": "Şirin Balqabaq Tatlısı (Tahinli)",
+      "description": "Öz şirəsində yavaş-yavaş bişirilmiş balqabaq, təhini və qoz ilə təqdim olunur."
+    },
+    "ayva-tatlisi": {
+      "name": "Adakasım Tatlısı",
+      "description": "Darçın və mixəklə bişirilmiş adakasım, qaymaqlı krem və qoz ilə təqdim olunur."
+    },
+    "revani": {
+      "name": "İrmikli Şirəli Keks",
+      "description": "İrmikli yumşaq kekin limon qoxulu şirə ilə birləşdiyi klassik restoran deserti."
+    },
+    "ekmek-kadayifi": {
+      "name": "Kremli Çörək Puding",
+      "description": "Karamelləşdirilmiş şirə ilə dinlənmiş çörək pudingi bufalo kremi ilə təqdim olunur."
+    },
+    "cevizli-baklava": {
+      "name": "Qozlu Baklava",
+      "description": "Çox nazik yayılmış təbəqələrdən hazırlanan, bol qoz və adi kərə yağı ilə hazırlanmış xırtıldayan baklava."
+    }
+  },
+  "allergens": {
+    "Süt ürünleri": "Süd məhsulları",
+    "Gluten": "Gluten",
+    "Yumurta": "Yumurta",
+    "Badem": "Badam",
+    "Çam fıstığı": "Qoz ləpəsi",
+    "Susam": "Susam",
+    "Ceviz": "Qoz"
+  },
+  "tags": {
+    "Popüler": "Populyar",
+    "Vejetaryen": "Vejetaryen",
+    "Günün Yemeği": "Günün Gümanı",
+    "Şefin Önerisi": "Aşpazın Seçimi",
+    "Yeni": "Yeni",
+    "Acılı": "Ədviyyatlı",
+    "Ev Yapımı": "Ev Hazırlığı",
+    "Lokanta Klasiği": "Restoran Klassikası",
+    "Günün Çorbası": "Günün Şorbası",
+    "Vegan": "Veqan",
+    "Hafif": "Ağırlığı Yüngül",
+    "Yöresel": "Regional",
+    "Paylaşmalık": "Paylaşmaq Üçün",
+    "Ev Yemeği": "Ev üslubu",
+    "Zeytinyağlı": "Zeytun Yağı",
+    "Nostaljik": "Nostalji",
+    "Geleneksel": "Ənənəvi",
+    "Bursa Lezzeti": "Bursanın Dadı",
+    "Sütlü Tatlı": "Süd Tatlısı",
+    "Sıcak Tatlı": "İsti Tatlı",
+    "Mevsimlik": "Mövsümi",
+    "Şerbetli": "Şərbətli Tatlı"
+  }
+}

@@ -5,7 +5,7 @@ import { getMenuProductName } from "@/lib/i18n/menu-content";
 import type { CartItem as CartItemType } from "@/types";
 
 export function CartItem({ item, onDecrease, onIncrease, onRemove }: { item: CartItemType; onDecrease: () => void; onIncrease: () => void; onRemove: () => void }) {
-  const { formatPrice, language, t } = useMenuPreferences();
+  const { formatNumber, formatPrice, language, t } = useMenuPreferences();
   const name = getMenuProductName(item.product, language);
 
   return (
@@ -20,7 +20,7 @@ export function CartItem({ item, onDecrease, onIncrease, onRemove }: { item: Car
         <div className="mt-3 flex items-center justify-between gap-3">
           <div className="flex h-10 items-center rounded-xl border bg-background">
             <button type="button" onClick={onDecrease} className="touch-target flex items-center justify-center px-2.5" aria-label={t("decreaseQuantity")}><Minus className="size-3.5" /></button>
-            <span className="min-w-6 text-center text-sm font-bold tabular-nums">{item.quantity}</span>
+            <span className="min-w-6 text-center text-sm font-bold tabular-nums">{formatNumber(item.quantity)}</span>
             <button type="button" onClick={onIncrease} className="touch-target flex items-center justify-center px-2.5" aria-label={t("increaseQuantity")}><Plus className="size-3.5" /></button>
           </div>
           <strong dir="ltr" className="text-sm tabular-nums text-burgundy">{formatPrice(item.unitPrice * item.quantity)}</strong>

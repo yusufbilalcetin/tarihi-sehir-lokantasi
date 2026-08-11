@@ -1,0 +1,349 @@
+{
+  "locale": "la",
+  "ui": {
+    "menu": "Menu",
+    "search": "Quaere in menu...",
+    "searchLabel": "Quaere in menu",
+    "categories": "Categoriae",
+    "categoryIntro": "Elige gustum pro tua mensa.",
+    "categoryNavigation": "Categoriae menu",
+    "openCategory": "Aperi {name}, {count} res",
+    "items": "res",
+    "item": "res",
+    "searchResults": "Eventus Quaerendi",
+    "productsFound": "{count} res inventae",
+    "backToCategories": "Redi ad categorias",
+    "backToCategory": "Redi ad {name}",
+    "clearSearch": "Vacua quaerere",
+    "noResults": "Nullae res congruentes inventae",
+    "noResultsDescription": "Conare aliam quaerere vel redire ad categorias.",
+    "order": "Mea Ordinatio",
+    "waiter": "Cenator",
+    "bill": "Bill",
+    "addToCart": "Addere ad Ordinem",
+    "addedToCart": "{name} additum est ad ordinem tuum.",
+    "removeFromCart": "Tolle {name}",
+    "soldOut": "Hodie Expleti Venditione",
+    "productDetails": "Aperire singula pro {name}",
+    "portion": "Pars",
+    "standardPortion": "Portio standard",
+    "allergens": "Allergeni",
+    "noAllergens": "Nullae allergicae declaratae",
+    "productNote": "Nota item",
+    "productNotePlaceholder": "Exempli gratia, sine butyro, quaeso",
+    "decreaseQuantity": "Quantitatem minue",
+    "increaseQuantity": "Quantitatem auge",
+    "each": "quoque",
+    "note": "Nota",
+    "subtotal": "Subtotale",
+    "serviceFee": "Merces officii",
+    "total": "Totalis",
+    "sendOrder": "Mitte Ordinem",
+    "orderSent": "Ordinatio tua ad culinam missa est",
+    "orderTracking": "Sequere ordinem #{number} hic.",
+    "newItem": "Addere Alium Item",
+    "emptyCart": "Ordinatio tua vacua est",
+    "emptyCartDescription": "Items quos eligis ex menu hic apparebunt.",
+    "browseMenu": "Perlege Menu",
+    "orderReceived": "Ordinatio Accepta",
+    "waiterConfirmed": "Minister Confessus",
+    "preparing": "Parans",
+    "ready": "Paratus",
+    "served": "Servitus",
+    "preparingDescription": "Culina nostra praeparat tui iussum.",
+    "orderStatus": "Status ordinis",
+    "callWaiter": "Vocare Ministrum",
+    "placeOrder": "Volo ordinare",
+    "wantWater": "Aquam velim",
+    "wantBread": "Panem velim",
+    "wantService": "Ministerium extra",
+    "other": "Aliud",
+    "generalRequest": "Petitionem generalem habeo",
+    "orderHelp": "Auxilio de ordine meo opus est",
+    "waterDescription": "Aquam ad mensam, quaeso, affer",
+    "breadDescription": "Quaeso affer panem ad mensam",
+    "serviceDescription": "Mihi necessaria sunt utensilia vel patina",
+    "otherDescription": "Auxilium mihi opus est cum aliud aliquid",
+    "waiterHelpTitle": "Quomodo possumus auxilio esse?",
+    "waiterHelpDescription": "Petitio tua mitetur cum {table}.",
+    "waiterRequestSent": "Petitio tua missa est ad ministrum nostrum.",
+    "requestBill": "Rogare Rationem",
+    "billSent": "Rogatium tuae rationis missum est",
+    "billConfirm": "Visne rogare rationem?",
+    "billSentDescription": "Minister noster mox te visitabit.",
+    "billConfirmDescription": "Rogatio tua directe ad ministerium perveniet. Potes solvere ad mensam aut ad censorem.",
+    "billToast": "Petitio tua villicatio missa est ad nostrum minister.",
+    "backToMenu": "Redi ad Menu",
+    "back": "Retro",
+    "close": "Close",
+    "yourTable": "MENSAM TUAM",
+    "serviceOpen": "Officium apertum",
+    "slogan": "Gustus Traditus • Mensa Moderna",
+    "location": "Bursa,Osmangazi",
+    "languageLabel": "Linguam selige",
+    "currencyLabel": "Eligere monetam",
+    "customerNavigation": "Navigationem menu emptoris",
+    "approximateCurrency": "Pretium alienarum nummorum appropinquatum est. Solutio in Lira Turcica processa est.",
+    "orderSuccess": "Ordo tuus feliciter missus est.",
+    "languagePickerTitle": "Linguam Elige",
+    "languagePickerDescription": "Elige linguam quam vis uti pro menu.",
+    "searchLanguage": "Quaere linguas...",
+    "recommendedLanguages": "Commendatum",
+    "recentLanguages": "Linguas Recentes",
+    "allLanguages": "Omnes Linguae",
+    "languageNotFound": "Lingua non inventa est.",
+    "languageNotFoundDescription": "Conare aliam linguam nomen vel codicem.",
+    "tableNumber": "Tabula {number}",
+    "itemCount": "{count} res",
+    "splashLabel": "Tela initium Tarihi Şehir Lokantası",
+    "cancel": "Abrogare",
+    "confirmOrder": "Confirmare Ordinem",
+    "orderSummary": "Ordinis Summarium",
+    "payment": "Solutio",
+    "tableNotFound": "Mensam non inventa est.",
+    "invalidQr": "Codex QR invalidus.",
+    "menuUnavailable": "Menu nunc non praesto est.",
+    "networkError": "Error retis occurrit.",
+    "productUnavailable": "Hoc item nunc non est praesto.",
+    "unableToSendOrder": "Ordinem mittere non potest.",
+    "tryAgain": "Iterum tenta",
+    "somethingWentWrong": "Aliquid male evenit.",
+    "loadingLanguage": "Linguam onerans...",
+    "languageLoadError": "Lingua non potuit oneri. Quaeso iterum conare."
+  },
+  "categories": {
+    "soups": "Sapores",
+    "grill": "Assae",
+    "mains": "Princypalia Cibaria",
+    "drinks": "Potiones",
+    "kebabs": "Kebabia",
+    "dessert": "Secundae mensae"
+  },
+  "products": {
+    "mercimek": {
+      "name": "Liquamen Lenticulum",
+      "description": "Liquamen lenticulum domi factum in stylo classico, perficiendo cum butyro salsa."
+    },
+    "tas-kebabi": {
+      "name": "Assum Bubulum Turcicum",
+      "description": "Bubula, legumina temporaria, et nostri cauponae lente coctum peculiare condimento."
+    },
+    "kuzu-tandir": {
+      "name": "Ovis Lente Torrefacta",
+      "description": "Ovis nostrae cauponae tandoori insigne, lente cocta in parva calore."
+    },
+    "pirinc-pilavi": {
+      "name": "Oriza Pilaf",
+      "description": "Butyrosus, leviter fluffi Oriza Pilaf Baldo."
+    },
+    "firin-sutlac": {
+      "name": "Oriza Placenta Assa",
+      "description": "Placenta oriza assa in modo tradito, praeparata cum lac bubula quotidiana."
+    },
+    "kuru-fasulye": {
+      "name": "Ius Fabam Album cum Bovino",
+      "description": "Fabae İspir, bubulae concisae, et simplicem cauponae lycopersici pastam."
+    },
+    "izgara-kofte": {
+      "name": "Globuli carnis assae",
+      "description": "Sicarus-stylus bubulae carnis globuli cum torrefacta piperis et lycopersici."
+    },
+    "ayran": {
+      "name": "Ayran micatus",
+      "description": "Traditionale lactis acidi agitatum cum multo spuma, factum cum yogurti cotidiano."
+    },
+    "ezogelin-corbasi": {
+      "name": "Ius Ezogelin",
+      "description": "Sapor mangiarum traditionale ubi lenticla rubra, bulgur et oryza conveniunt cum mentha."
+    },
+    "tarhana-corbasi": {
+      "name": "Ius Tarhana",
+      "description": "Tarhana domestica, classicum Anatolicum lente coctum cum lycopersicis et mentha seca."
+    },
+    "yayla-corbasi": {
+      "name": "Iogurtem et Orzii Ius",
+      "description": "Sapor refreshens et cremosus yayla ius paratum cum yogurt, oryza, et mentha seca."
+    },
+    "iskembe-corbasi": {
+      "name": "Ius Tripes",
+      "description": "Securus bubulae mangonelam ius servivit cum suo condimentum et aceto allii."
+    },
+    "dugun-corbasi": {
+      "name": "Ius Nuptiale",
+      "description": "Traditionalis nuptialis ius factum cum lacerto ovino scisso et sapore cum citrei marinatione."
+    },
+    "tavuk-suyu-corbasi": {
+      "name": "Ius Pulli",
+      "description": "Ius sanativum paratum cum tenuibus vermiculis in osse decoctis et carnem pulli scissam."
+    },
+    "domates-corbasi": {
+      "name": "Ius Lycopersici",
+      "description": "Sapida divitiis coquitur cum maturis lycopersicis, butyro, et basili, completum cum caseo."
+    },
+    "sebze-corbasi": {
+      "name": "Olla holerum",
+      "description": "Levis popina ius paratum cum vegetabilibus temporarii, oleo olivae, et herbis recentibus."
+    },
+    "beyran-corbasi": {
+      "name": "Ius aridum agni Beyran",
+      "description": "Ius regionalis paratum super calorem altum cum agno, oryza, allio, et piper calido."
+    },
+    "kelle-paca-corbasi": {
+      "name": "Ius capitis et ungulae",
+      "description": "Divitum ius osseum factum cum ungulis bubulis et carne capitis diuturno bullita."
+    },
+    "sehriye-corbasi": {
+      "name": "Ius vermicelli",
+      "description": "Sapor cotidie paratus cum pulli ius cum lycopersicis, vermicellis, et petroseli."
+    },
+    "tavuk-sis": {
+      "name": "Spiculis Pullum",
+      "description": "Partes pulli in condimento speciali marinate, cum piperibus assatis et lycopersicis servitae."
+    },
+    "kasap-sucuk": {
+      "name": "Sucuk Macellarius Assus",
+      "description": "Salsicia bovis acris super carbonem cocta, cum holeribus assatis et cepa cum sumaco."
+    },
+    "karisik-izgara": {
+      "name": "Assortita Esca",
+      "description": "Plena et diversa patella tormentorum consistens ex globulis carnium, asinis pulli, costis agninis, et botulis."
+    },
+    "nohut-yemegi": {
+      "name": "Faba Guisata cum Carne Bovina",
+      "description": "Cena domestica ex ciceribus et bubula concisa lente in olla aenea cocta."
+    },
+    "patlican-musakka": {
+      "name": "Moussaka Melongenae",
+      "description": "Melongena frigida, carnem tritam, et moussaka in furno cocta cum holera lycopersici, more popinae."
+    },
+    "zeytinyagli-taze-fasulye": {
+      "name": "Phaseoli Virides in Oleum Olivarum",
+      "description": "Classica coquitur in oleo olivarum cum phaseolis viridibus, lycopersicis et cepis, frigida servitur."
+    },
+    "tavuk-sote": {
+      "name": "Pullus Assus",
+      "description": "Frustra pulli super alta calorem cum piperibus coloratis, fungis, et lycopersicis sautee fiunt."
+    },
+    "izmir-kofte": {
+      "name": "Izkmir-Forma Sphinges",
+      "description": "Dish traditionalis principali ex bubulae globulis, tuberibus et piperibus in salsa lycopersici coctis."
+    },
+    "etli-bezelye": {
+      "name": "Pisum cum Buboala",
+      "description": "Cena cotidiana in olla cocta cum bubula in cubos, pisi, carotae, et tubera."
+    },
+    "patlican-oturtma": {
+      "name": "Melongena Assa cum Salsamentum",
+      "description": "Lingua parata est in fornace cum melongena, carnem concisam piperatam, et allium lycopersici condimentum."
+    },
+    "salgam-suyu": {
+      "name": "Sucus Convolvuli Fermentatus",
+      "description": "Sucus convolvuli traditionalis acutus fermentatus cum carota purpurea et fermento bulgur."
+    },
+    "maden-suyu": {
+      "name": "Aqua Mineralis",
+      "description": "Aqua naturalis mineralis simplex frigida servata."
+    },
+    "su": {
+      "name": "Aqua fontis naturalis",
+      "description": "Aqua fontis naturalis frigida in vitreo lagenam servita."
+    },
+    "kola": {
+      "name": "Cola",
+      "description": "Potio carbonata classica glacie frigida servita."
+    },
+    "gazoz": {
+      "name": "Lemon Soda Turcica",
+      "description": "Soda traditionalis saporis, reficiens, et frigida sine addito servita."
+    },
+    "turk-kahvesi": {
+      "name": "Coffea Turcica",
+      "description": "Coffea Turcica tradita cum spuma, in alto calore in cyatho aeneae cocta."
+    },
+    "demleme-cay": {
+      "name": "Tea Turcicum Infusum",
+      "description": "Recenti infusum calidum tea Rize in vitro angusto."
+    },
+    "ev-yapimi-limonata": {
+      "name": "Limonata Domestica",
+      "description": "Limonata reficiens cotidie parata cum recenti citreo, menta, et paulum sacchari."
+    },
+    "hosaf": {
+      "name": "Cotidianus Fructus Compotus",
+      "description": "Compotum domestica cotidianum coctum cum racemis, abricotis, vel prunis secundum tempus."
+    },
+    "iskender-kebabi": {
+      "name": "Bursa İskender Kebab",
+      "description": "Carnis vertitur super fusum supra pide, servitur cum liquamine lycopersici, calido butyro, et iogurte."
+    },
+    "kazandibi": {
+      "name": "Pulticula Lac Caramelizata",
+      "description": "Traditionalis lac dulcis proprie carmelizatus, cum textura serica."
+    },
+    "tavuk-gogsu": {
+      "name": "Ottoman Lac Pudendum",
+      "description": "Dulcis lactis levis et fibrae paratus cum more tradito, cum cinnamomo servitus."
+    },
+    "keskul": {
+      "name": "Latte Amygdalinum Pultes",
+      "description": "Dulcis lactis Ottomanicae modi cum sapore amygdalae et coco completus."
+    },
+    "irmik-helvasi": {
+      "name": "Halva Semolinae",
+      "description": "Halva semolinae, cum butyro et nuces pinnae tosta, calida et granulosa servita."
+    },
+    "kabak-tatlisi": {
+      "name": "Dessert Cucurbita cum Tahini",
+      "description": "Cucurbita lente in suo succo cocta, cum tahini et nuces ministratur."
+    },
+    "ayva-tatlisi": {
+      "name": "Dulcis Cydonia",
+      "description": "Cydonia cum clavum et cinnamomum cocta servitur cum crema coagulata et nuces."
+    },
+    "revani": {
+      "name": "Semolina Syrup Cake",
+      "description": "The classic restaurant dessert where semolina soft cake meets lemon-scented syrup."
+    },
+    "ekmek-kadayifi": {
+      "name": "Bread Pudding with Clotted Cream",
+      "description": "Bread pudding rested with caramelized syrup is served with buffalo clotted cream."
+    },
+    "cevizli-baklava": {
+      "name": "Walnut Baklava",
+      "description": "Layers rolled out very thin, crispy baklava made with plenty of walnuts and plain butter."
+    }
+  },
+  "allergens": {
+    "Süt ürünleri": "Dairy",
+    "Gluten": "Gluten",
+    "Yumurta": "Egg",
+    "Badem": "Almond",
+    "Çam fıstığı": "Pine nut",
+    "Susam": "Sesame",
+    "Ceviz": "Juglans"
+  },
+  "tags": {
+    "Popüler": "Populares",
+    "Vejetaryen": "Vegetarius",
+    "Günün Yemeği": "CenaDiei",
+    "Şefin Önerisi": "Optio Coqui",
+    "Yeni": "Novus",
+    "Acılı": "Acidulus",
+    "Ev Yapımı": "Domestica",
+    "Lokanta Klasiği": "Caupona Classica",
+    "Günün Çorbası": "Ius Diei",
+    "Vegan": "Vegetarius",
+    "Hafif": "Lux",
+    "Yöresel": "Regionalis",
+    "Paylaşmalık": "Communicare",
+    "Ev Yemeği": "Domestica",
+    "Zeytinyağlı": "Oleum Olivarum",
+    "Nostaljik": "Nostalgicus",
+    "Geleneksel": "Traditum",
+    "Bursa Lezzeti": "Sapor Bursae",
+    "Sütlü Tatlı": "Dulcis Lacteus",
+    "Sıcak Tatlı": "Calidum Dulce",
+    "Mevsimlik": "Temporalis",
+    "Şerbetli": "Syrupum Dessertum"
+  }
+}

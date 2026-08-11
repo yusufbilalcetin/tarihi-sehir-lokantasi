@@ -20,7 +20,14 @@ export default function Home() {
         </div>
         <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
           {portals.map(({ href, title, description, icon: Icon }) => (
-            <Link key={href} href={href} className="group flex min-h-44 flex-col justify-between rounded-2xl border border-white/10 bg-white/[0.055] p-5 transition-colors hover:border-copper/60 hover:bg-white/[0.09] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-copper">
+            <Link
+              key={href}
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`${title} (yeni sekmede açılır)`}
+              className="group flex min-h-44 flex-col justify-between rounded-2xl border border-white/10 bg-white/[0.055] p-5 transition-colors hover:border-copper/60 hover:bg-white/[0.09] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-copper"
+            >
               <Icon className="size-6 text-copper" strokeWidth={1.6} />
               <div>
                 <h2 className="font-heading text-xl font-semibold">{title}</h2>

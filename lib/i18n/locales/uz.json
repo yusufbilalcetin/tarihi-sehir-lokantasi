@@ -1,0 +1,349 @@
+{
+  "locale": "uz",
+  "ui": {
+    "menu": "Menyu",
+    "search": "Menu bo'yicha qidirish...",
+    "searchLabel": "Menu bo'yicha qidirish",
+    "categories": "Kategoriyalar",
+    "categoryIntro": "Stolingiz uchun ta'mni tanlang.",
+    "categoryNavigation": "Menyu kategoriyalari",
+    "openCategory": "{name} ni ochish, {count} ta mahsulot",
+    "items": "mahsulotlar",
+    "item": "mahsulot",
+    "searchResults": "Qidiruv natijalari",
+    "productsFound": "{count} ta mahsulot topildi",
+    "backToCategories": "Kategoriyalarga qaytish",
+    "backToCategory": "{name} ga qaytish",
+    "clearSearch": "Qidiruvni tozalash",
+    "noResults": "Hech qanday mos keladigan mahsulot topilmadi",
+    "noResultsDescription": "Boshqa qidiruvni sinab ko'ring yoki kategoriyalarga qayting.",
+    "order": "Mening Buyurtmam",
+    "waiter": "Xizmatchi",
+    "bill": "Hisob",
+    "addToCart": "Buyurtmaga qo'shish",
+    "addedToCart": "{name} sizning buyurtmangizga qo'shildi.",
+    "removeFromCart": "{name} ni olib tashlash",
+    "soldOut": "Bugun sotilgan",
+    "productDetails": "{name} uchun tafsilotlarni ochish",
+    "portion": "Portsiya",
+    "standardPortion": "Standart porsiya",
+    "allergens": "Allergenlar",
+    "noAllergens": "Hech qanday bildirib o'tilgan allergen yo'q",
+    "productNote": "Mahsulot eslatmasi",
+    "productNotePlaceholder": "Masalan: iltimos, sariyog'siz",
+    "decreaseQuantity": "Miqdorini kamaytirish",
+    "increaseQuantity": "Miqdorini oshirish",
+    "each": "har biri",
+    "note": "Eslatma",
+    "subtotal": "Jami",
+    "serviceFee": "Xizmat haqi",
+    "total": "Umumiy",
+    "sendOrder": "Buyurtmani yuborish",
+    "orderSent": "Buyurtmangiz oshxonaga yuborildi",
+    "orderTracking": "Buyurtma #{number} ni shu yerdan kuzatishingiz mumkin.",
+    "newItem": "Yana bir mahsulot qo'shish",
+    "emptyCart": "Buyurtmangiz bo'sh",
+    "emptyCartDescription": "Menu-dan tanlagan mahsulotlaringiz shu yerda paydo bo'ladi.",
+    "browseMenu": "Menu-ga qarash",
+    "orderReceived": "Buyurtma qabul qilindi",
+    "waiterConfirmed": "Ofitsiant tasdiqladi",
+    "preparing": "Tayyorlanmoqda",
+    "ready": "Tayyor",
+    "served": "Xizmat qilindi",
+    "preparingDescription": "Oshxonamiz sizning buyurtmangizni tayyorlamoqda.",
+    "orderStatus": "Buyurtma holati",
+    "callWaiter": "Ofitsiantni chaqirish",
+    "placeOrder": "Buyurtma bermoqchiman",
+    "wantWater": "Men suv xohlardim",
+    "wantBread": "Men non xohlardim",
+    "wantService": "Qo'shimcha xizmat",
+    "other": "Boshqa",
+    "generalRequest": "Menda umumiy so'rov bor",
+    "orderHelp": "Buyurtmam bilan yordam kerak",
+    "waterDescription": "Iltimos, stolga suv olib keling",
+    "breadDescription": "Iltimos, nonni stolga olib keling",
+    "serviceDescription": "Menga ovqat pichog‘i yoki likopchasi kerak",
+    "otherDescription": "Menga boshqa biror narsa bilan yordam kerak",
+    "waiterHelpTitle": "Qanday yordam bera olamiz?",
+    "waiterHelpDescription": "Sizning so‘rovingiz {table} bilan yuboriladi.",
+    "waiterRequestSent": "Sizning so‘rovingiz vazirimizga yuborildi.",
+    "requestBill": "Hisob so‘rash",
+    "billSent": "Sizning hisob so‘rov­ingiz yuborildi",
+    "billConfirm": "Hisob so‘rashni xohlaysizmi?",
+    "billSentDescription": "Vazirimiz tez orada siz bilan bo‘ladi.",
+    "billConfirmDescription": "Sizning so‘rovingiz bevosita vazirga yuboriladi. Siz stolda yoki kassada to‘lashingiz mumkin.",
+    "billToast": "Hisob so‘rovingiz ofitsiantimizga yuborildi.",
+    "backToMenu": "Menyuga qaytish",
+    "back": "Orqaga",
+    "close": "Yopish",
+    "yourTable": "SIZNING STOLINGIZ",
+    "serviceOpen": "Xizmat ochiq",
+    "slogan": "An’anaviy Ta’m • Zamonaviy Stol",
+    "location": "Bursa, Osmangazi",
+    "languageLabel": "Tilni tanlang",
+    "currencyLabel": "Valyutani tanlang",
+    "customerNavigation": "Mijoz menyusi navigatsiyasi",
+    "approximateCurrency": "Chet el valyutasi narxlari taxminiy. To‘lov Turkiya lirasi bilan amalga oshiriladi.",
+    "orderSuccess": "Buyurtmangiz muvaffaqiyatli yuborildi.",
+    "languagePickerTitle": "Tilni tanlang",
+    "languagePickerDescription": "Menyu uchun ishlatmoqchi bo'lgan tilni tanlang.",
+    "searchLanguage": "Tillarni qidiring...",
+    "recommendedLanguages": "Tavsiya etilgan",
+    "recentLanguages": "So‘nggi tillar",
+    "allLanguages": "Barcha tillar",
+    "languageNotFound": "Til topilmadi.",
+    "languageNotFoundDescription": "Qandaydir boshqa til nomi yoki kodini sinab ko‘ring.",
+    "tableNumber": "Jadval {number}",
+    "itemCount": "{count} elementlar",
+    "splashLabel": "Tarihi Şehir Lokantası boshlang‘ich ekrani",
+    "cancel": "Bekor qilish",
+    "confirmOrder": "Buyurtmani Tasdiqlash",
+    "orderSummary": "Buyurtma Tafsilotlari",
+    "payment": "To‘lov",
+    "tableNotFound": "Jadval topilmadi.",
+    "invalidQr": "Noto'g'ri QR kod.",
+    "menuUnavailable": "Menu hozirda mavjud emas.",
+    "networkError": "Tarmoq xatosi yuz berdi.",
+    "productUnavailable": "Ushbu mahsulot hozirda mavjud emas.",
+    "unableToSendOrder": "Buyurtmani yuborib bo'lmadi.",
+    "tryAgain": "Qayta urinib ko'ring",
+    "somethingWentWrong": "Biror narsa noto'g'ri ketdi.",
+    "loadingLanguage": "Til yuklanmoqda...",
+    "languageLoadError": "Tilni yuklab bo'lmadi. Iltimos, qayta urinib ko'ring."
+  },
+  "categories": {
+    "soups": "Shurvalar",
+    "grill": "Grill mahsulotlari",
+    "mains": "Asosiy taomlar",
+    "drinks": "Ichimliklar",
+    "kebabs": "Kebablar",
+    "dessert": "Shirinliklar"
+  },
+  "products": {
+    "mercimek": {
+      "name": "Mashhur Sho'rva",
+      "description": "Uy sharoitida tayyorlangan klassik uslubdagi no'xat sho'rvasi, sariyog'li sous bilan yakunlangan."
+    },
+    "tas-kebabi": {
+      "name": "Turk Mol Go'shti Qovurmasi",
+      "description": "Mol go'shti, mavsumiy sabzavotlar va restoranimizning sekin pishirilgan maxsus sousi."
+    },
+    "kuzu-tandir": {
+      "name": "Sekin Pishirilgan Qo'y Go'shti",
+      "description": "Restoranimizning imzo qo'yilgan qo'y tandoori, past olovda sekin pishiriladi."
+    },
+    "pirinc-pilavi": {
+      "name": "Guruchli Pilov",
+      "description": "Sariyog'li, pufakchali Baldo guruchli pilov."
+    },
+    "firin-sutlac": {
+      "name": "Pishirilgan Guruchli Puding",
+      "description": "An'anaviy usulda pishirilgan guruchli puding, kundalik bufalo suti bilan tayyorlangan."
+    },
+    "kuru-fasulye": {
+      "name": "Mol go'shti bilan oq loviya sho'rvasi",
+      "description": "İspir loviyalari, kubik kesilgan mol go'shti va oddiy restoran pomidor pastasi."
+    },
+    "izgara-kofte": {
+      "name": "Grill qilingan go'shtli kefta",
+      "description": "Qovurilgan qalampir va pomidor bilan o'choqqa go'shtli kefta."
+    },
+    "ayran": {
+      "name": "Qaltirab tayyorlangan ayran",
+      "description": "Har kunlik yogurt bilan tayyorlangan, ko'pik bilan an'anaviy qaltirab tayyorlangan sut mahsuloti."
+    },
+    "ezogelin-corbasi": {
+      "name": "Ezogelin sho'rvasi",
+      "description": "Qizil loviya, bulgur va guruchni yalpiz bilan birlashtirgan an'anaviy restoran sho'rvasi."
+    },
+    "tarhana-corbasi": {
+      "name": "Tarhana sho'rvasi",
+      "description": "Uyda tayyorlangan tarhana, pomidor va quritilgan yalpiz bilan sekin pishiriladigan Anatoliya klassikasi."
+    },
+    "yayla-corbasi": {
+      "name": "Yog'urt va Guruch Shurvasi",
+      "description": "Yog'urt, guruch va quritilgan yalpiz bilan tayyorlangan tetiklashtiruvchi va qaymoqli yayla shurvasi."
+    },
+    "iskembe-corbasi": {
+      "name": "Ichak Shurvasi",
+      "description": "O'zining ziravorlari va sarimsoq sirkasi bilan beriladigan mos mol ichagidan tayyorlangan shurva."
+    },
+    "dugun-corbasi": {
+      "name": "To'y Shurvasi",
+      "description": "Tarkibida maydalangan qo'zichoq go'shti ishlatilgan va limonli marinad bilan ta'm berilgan an'anaviy to'y shurvasi."
+    },
+    "tavuk-suyu-corbasi": {
+      "name": "Tovuq Bulyonli Shurva",
+      "description": "Suyak bulyonida pishirilgan nozik makaron va maydalangan tovuq go'shti bilan tayyorlangan davolovchi shurva."
+    },
+    "domates-corbasi": {
+      "name": "Pomidor Shurvasi",
+      "description": "Pishgan pomidor, sariyog‘ va reyhan bilan pishirilgan boy ta’m, ustiga pishloq qo‘shilgan."
+    },
+    "sebze-corbasi": {
+      "name": "Sabzavot sho‘rvasi",
+      "description": "Mavsumiy sabzavotlar, zaytun moyi va yangi ko‘katlar bilan tayyorlangan yengil restoran sho‘rvasi."
+    },
+    "beyran-corbasi": {
+      "name": "Achchiq qo‘y go‘shti Beyran sho‘rvasi",
+      "description": "Yuqori olovda qo‘y go‘shti, guruch, sarimsoq va achchiq qalampir bilan tayyorlangan mintaqaviy sho‘rva."
+    },
+    "kelle-paca-corbasi": {
+      "name": "Bosh va oyoqcha sho‘rvasi",
+      "description": "Muzdatilgan sig‘ir oyoqchalari va bosh go‘shti bilan uzoq vaqt qaynatilgan boy suyak sho‘rvasi."
+    },
+    "sehriye-corbasi": {
+      "name": "Vermishel sho‘rvasi",
+      "description": "Tomat, vermishel va petrushka bilan tayyorlangan tovuq bulyonida kundalik sho'rva."
+    },
+    "tavuk-sis": {
+      "name": "Tovuq Shashlik",
+      "description": "Maxsus ziravorlar bilan marinadlangan tovuq bo'laklari, qovurilgan bulg'or qalampiri va pomidor bilan xizmat qilinadi."
+    },
+    "kasap-sucuk": {
+      "name": "Grildagi Qassob Sucuk",
+      "description": "Yong'oq ustida pishirilgan achchiq mol go'shti kolbasa, qovurilgan sabzavotlar va sumak qo'shilgan piyoz bilan."
+    },
+    "karisik-izgara": {
+      "name": "Aralash Grill",
+      "description": "Go'shtli, tovuq shashlik, qo'y kotleti va kolbasa bilan boy va aralash grill likta."
+    },
+    "nohut-yemegi": {
+      "name": "Mol go'shti bilan Nohut Tag'i",
+      "description": "Uy sharoitida tayyorlangan no'xat va maydalanib kesilgan mol go'shti, mis qozonda sekin pishiriladi."
+    },
+    "patlican-musakka": {
+      "name": "Badanjan Musakka",
+      "description": "Qovurilgan badanjan, mol go'shti va musakka, tomat sousi bilan tovuqxonada pishiriladi."
+    },
+    "zeytinyagli-taze-fasulye": {
+      "name": "Zaytun yog'ida yashil loviya",
+      "description": "Zaytun yog'ida pishirilgan klassik taom, yashil loviya, pomidor va piyoz bilan, sovuq holda xizmat qilinadi."
+    },
+    "tavuk-sote": {
+      "name": "Qovurilgan tovuq",
+      "description": "Tovuq bo'laklari rangli qalampir, qo'ziqorin va pomidor bilan yuqori olovda qovuriladi."
+    },
+    "izmir-kofte": {
+      "name": "Izmir uslubidagi kotletlar",
+      "description": "Mol go‘shti, kartoshka va bulg‘or qalampiri bilan tayyorlangan an'anaviy asosiy taom."
+    },
+    "etli-bezelye": {
+      "name": "Mol go‘shtli no‘xat",
+      "description": "Kubik shaklida kesilgan mol go‘shti, no‘xat, sabzi va kartoshka bilan idishda tayyorlanadigan kundalik taom."
+    },
+    "patlican-oturtma": {
+      "name": "Go‘shtli pishgan badrijon",
+      "description": "Til ovqatini pechda badrijon, ziravorli mol go‘shti va sarimsoqli pomidor sousi bilan tayyorlanadi."
+    },
+    "salgam-suyu": {
+      "name": "Fermentlangan sholg‘om sharbati",
+      "description": "An'anaviy ziravorli sholg‘om sharbati, binafsha sabzi va bulgur xamiri bilan fermentlangan."
+    },
+    "maden-suyu": {
+      "name": "Mineral suv",
+      "description": "Sovuq holda xizmat qilinadigan tabiiy oddiy mineral suv."
+    },
+    "su": {
+      "name": "Tabiiy Buloq Suyu",
+      "description": "Shisha idishda sovutilgan tabiiy buloq suyu."
+    },
+    "kola": {
+      "name": "Kola",
+      "description": "Sovutilgan an'anaviy gazlangan ichimlik."
+    },
+    "gazoz": {
+      "name": "Turk Limon Sodasi",
+      "description": "An'anaviy ta'mli, tetiklik beruvchi va sovutilgan oddiy soda."
+    },
+    "turk-kahvesi": {
+      "name": "Turk Qahvasi",
+      "description": "Mis cezvede yuqori olovda tayyorlangan ko'pikli an'anaviy turk qahvasi."
+    },
+    "demleme-cay": {
+      "name": "Turk Choyi",
+      "description": "Nazamga solingan yupqa qornli stakanda yangi quyilgan issiq Rize choyi."
+    },
+    "ev-yapimi-limonata": {
+      "name": "Uy Sharoitida Tayyorlangan Limonad",
+      "description": "Har kuni yangi limon, yalpiz va ozgina shakar bilan tayyorlangan tetikovchi limonad."
+    },
+    "hosaf": {
+      "name": "Har kuni mevali kompot",
+      "description": "Mavsumga ko'ra kurutulgan uzum, olxo'ri yoki o'rik bilan har kuni pishirilgan uy kompoti."
+    },
+    "iskender-kebabi": {
+      "name": "Bursa Iskender Kabob",
+      "description": "Go'sht pide ustida shishka aylantirib pishiriladi, tomat sousi, issiq sariyog' va qatiq bilan beriladi."
+    },
+    "kazandibi": {
+      "name": "Karamelizlangan Sutli Pirog",
+      "description": "An'anaviy sutli desert to'g'ri karamelizatsiya qilingan, ipakdek tuzilishga ega."
+    },
+    "tavuk-gogsu": {
+      "name": "Usmonli Sutli Pirog",
+      "description": "Yengil va tolali sutli desert an'anaviy retsept bilan tayyorlanadi, dolchin bilan xizmat qilinadi."
+    },
+    "keskul": {
+      "name": "Bodom suti pudingi",
+      "description": "uslubdagi sutli desert."
+    },
+    "irmik-helvasi": {
+      "name": "Semolina Halva",
+      "description": "Semolina halvasi, sariyog' va qarag'ay yong'og'i bilan qovurilgan, issiq va donli tarzda taqdim etiladi."
+    },
+    "kabak-tatlisi": {
+      "name": "Tahini bilan qovoq deserti",
+      "description": "sharbatida sekin pishirilib, tahini va yong'oq bilan beriladi."
+    },
+    "ayva-tatlisi": {
+      "name": "Quince deserti",
+      "description": "Chinnigul va dolchin bilan pishirilgan Quince qaymoq va yong'oq bilan beriladi."
+    },
+    "revani": {
+      "name": "Semolina Shirinligi",
+      "description": "Semolina yumshoq torti va limon hidli sirop bilan uchrashadigan klassik restoran shirinligi."
+    },
+    "ekmek-kadayifi": {
+      "name": "Qaymoqli Non Puding",
+      "description": "Karamellangan siropda dam olingan non pudingi bufalo qaymog‘i bilan beriladi."
+    },
+    "cevizli-baklava": {
+      "name": "Yong‘oq Baklavası",
+      "description": "Juda yupqa yoyilgan qatlamlar, ko‘p yong‘oq va oddiy sariyog‘ bilan tayyorlangan xiralashgan baklava."
+    }
+  },
+  "allergens": {
+    "Süt ürünleri": "Sut mahsulotlari",
+    "Gluten": "Gluten",
+    "Yumurta": "Tuxum",
+    "Badem": "Bodom",
+    "Çam fıstığı": "Qayin yong‘oqlari",
+    "Susam": "Sezam",
+    "Ceviz": "Yong'oq"
+  },
+  "tags": {
+    "Popüler": "Ommabop",
+    "Vejetaryen": "Vegetarian",
+    "Günün Yemeği": "Kunning Taomlari",
+    "Şefin Önerisi": "Oshpaz Tanlovi",
+    "Yeni": "Yangi",
+    "Acılı": "Achchiq",
+    "Ev Yapımı": "Uyda Tayyorlangan",
+    "Lokanta Klasiği": "Restoran Klassikasi",
+    "Günün Çorbası": "Kunning Sho'rvasi",
+    "Vegan": "Vegan",
+    "Hafif": "Yengil",
+    "Yöresel": "Mahalliy",
+    "Paylaşmalık": "Bahamlashish Uchun",
+    "Ev Yemeği": "Uy Stili",
+    "Zeytinyağlı": "Zaytun Yog'i",
+    "Nostaljik": "Noshtalgik",
+    "Geleneksel": "An'anaviy",
+    "Bursa Lezzeti": "Bursa Ta'mi",
+    "Sütlü Tatlı": "Sutli Shirinlik",
+    "Sıcak Tatlı": "Iliq Shirinlik",
+    "Mevsimlik": "Mavsumiy",
+    "Şerbetli": "Siropli Shirinlik"
+  }
+}

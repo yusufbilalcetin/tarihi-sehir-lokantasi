@@ -1,0 +1,349 @@
+{
+  "locale": "mg",
+  "ui": {
+    "menu": "Sakafo",
+    "search": "Mitadiava ao amin'ny sakafo...",
+    "searchLabel": "Mitadiava ao amin'ny sakafo",
+    "categories": "Sokajy",
+    "categoryIntro": "Safidio ny tsiron'ny latabatrao.",
+    "categoryNavigation": "Sokajin'ny sakafo",
+    "openCategory": "Hiditra {name}, zavatra {count}",
+    "items": "zavatra",
+    "item": "zavatra iray",
+    "searchResults": "Valin'ny fikarohana",
+    "productsFound": "{count} zavatra hita",
+    "backToCategories": "Miverina amin'ny sokajy",
+    "backToCategory": "Miverina amin'ny {name}",
+    "clearSearch": "Fafao ny fikarohana",
+    "noResults": "Tsy misy zavatra mifanaraka hita",
+    "noResultsDescription": "Andramo fikarohana hafa na miverina amin'ny sokajy.",
+    "order": "Ny Kaomandiko",
+    "waiter": "Mpisoratra",
+    "bill": "Faktiora",
+    "addToCart": "Manampy amin'ny Kaomandy",
+    "addedToCart": "{name} nampiana tamin'ny kaomandinao.",
+    "removeFromCart": "Esory {name}",
+    "soldOut": "Faran'izay Lany Ampihoriana",
+    "productDetails": "Hampiseho antsipiriany ho an'ny {name}",
+    "portion": "Fizarana",
+    "standardPortion": "Fizarana mahazatra",
+    "allergens": "Zavatra mampiakatra allergie",
+    "noAllergens": "Tsy misy zavatra mampiakatra allergie voambolana",
+    "productNote": "Fanamarihana ny entana",
+    "productNotePlaceholder": "Ohatra: tsy misy dibera, azafady",
+    "decreaseQuantity": "Ahena ny habetsahana",
+    "increaseQuantity": "Omeo betsaka ny habetsahana",
+    "each": "isaky ny",
+    "note": "Fanamarihana",
+    "subtotal": "Subtotal",
+    "serviceFee": "Saram-panompoana",
+    "total": "Totaly",
+    "sendOrder": "Alefaso ny Filaminana",
+    "orderSent": "Nalefanao tany amin'ny lakozia ny filaminanao",
+    "orderTracking": "Araho ny filaminana #{number} eto.",
+    "newItem": "Omano Zavatra Hafa",
+    "emptyCart": "Tsy misy ao ny filaminanao",
+    "emptyCartDescription": "Ny zavatra fidinao amin'ny menio dia hiseho eto.",
+    "browseMenu": "Tongava mijery ny Menio",
+    "orderReceived": "Voaray ny Filaminana",
+    "waiterConfirmed": "Nohamafisin'ny Mpiasan-tsakafo",
+    "preparing": "Manomana",
+    "ready": "Vonona",
+    "served": "Natolotra",
+    "preparingDescription": "Manomana ny baikonao ny lakozianay.",
+    "orderStatus": "Toetran'ny baiko",
+    "callWaiter": "Antsoy ny Mpiasan-tsakafo",
+    "placeOrder": "Te-hamandrika aho",
+    "wantWater": "Te-hisotro rano aho",
+    "wantBread": "Te-hihinana mofo aho",
+    "wantService": "Fanompoana fanampiny",
+    "other": "Hafa",
+    "generalRequest": "Manana fangatahana ankapobeny aho",
+    "orderHelp": "Mila fanampiana amin'ny baikoko aho",
+    "waterDescription": "Aza hadino ny mitondra rano eo amin'ny latabatra",
+    "breadDescription": "Azafady, ento mofo eo amin'ny latabatra",
+    "serviceDescription": "Ilaina amiko ny fitaovana fisakafoana na lovia",
+    "otherDescription": "Ilaina amiko ny fanampiana amin'ny zavatra hafa",
+    "waiterHelpTitle": "Ahoana no ahafahantsika manampy?",
+    "waiterHelpDescription": "Hafatra amin'ny {table} ny fangatahanao.",
+    "waiterRequestSent": "Ny fangatahanao dia nalefa tamin'ny mpanomponay.",
+    "requestBill": "Mangataha faktiora",
+    "billSent": "Ny fangatahanao faktiora dia nalefa",
+    "billConfirm": "Te hangataka faktiora ve ianao?",
+    "billSentDescription": "Ho avy eo akaiky ny mpanomponay.",
+    "billConfirmDescription": "Ny fangatahanao dia handeha mivantana any amin'ny mpanompo. Azonao atao ny mandoa any amin'ny latabatra na amin'ny mpanara-bola.",
+    "billToast": "Nandefa ny fangatahana faktiorinao tany amin'ny mpanompo anay ianao.",
+    "backToMenu": "Miverina amin'ny Menio",
+    "back": "Miverina",
+    "close": "Haka",
+    "yourTable": "LATABATY ANAO",
+    "serviceOpen": "Serivisy misokatra",
+    "slogan": "Tsiro Nentim-paharazana • Latabatra Maoderina",
+    "location": "Bursa, Osmangazi",
+    "languageLabel": "Fidio ny fiteny",
+    "currencyLabel": "Fidio ny vola",
+    "customerNavigation": "Navigasiona amin'ny menio ho an'ny mpanjifa",
+    "approximateCurrency": "Ny vidin'ny vola vahiny dia ampahany eo amin'ny tokony ho izy. Ny fandoavana dia atao amin'ny Lira Tiorka.",
+    "orderSuccess": "Nandefa ny baikonao soa aman-tsara ianao.",
+    "languagePickerTitle": "Fidio ny Fiteny",
+    "languagePickerDescription": "Safidio ny fiteny tianao ampiasaina amin'ny menio.",
+    "searchLanguage": "Mitadiava fiteny...",
+    "recommendedLanguages": "Natolotra",
+    "recentLanguages": "Fiteny farany nampiasaina",
+    "allLanguages": "Fiteny rehetra",
+    "languageNotFound": "Tsy hita ny fiteny.",
+    "languageNotFoundDescription": "Andramo anarana na kaody fiteny hafa.",
+    "tableNumber": "Latabatra {number}",
+    "itemCount": "Entana {count}",
+    "splashLabel": "Ekran fanokafana Tarihi Şehir Lokantası",
+    "cancel": "Hanafoana",
+    "confirmOrder": "Hamarino ny baiko",
+    "orderSummary": "Famintinana ny baiko",
+    "payment": "Fandoavam-bola",
+    "tableNotFound": "Tsy hita ny latabatra.",
+    "invalidQr": "Kaody QR tsy manankery.",
+    "menuUnavailable": "Tsy misy amin'izao fotoana izao ny sakafo.",
+    "networkError": "Nisy hadisoana tamin'ny tambajotra.",
+    "productUnavailable": "Tsy misy amin'izao fotoana izao ity entana ity.",
+    "unableToSendOrder": "Tsy afaka mandefa ny baikon'ny.",
+    "tryAgain": "Miezaha indray",
+    "somethingWentWrong": "Nisy zavatra tsy nety.",
+    "loadingLanguage": "Mampakatra fiteny...",
+    "languageLoadError": "Tsy afaka nampakatra ny fiteny. Azafady miezaha indray."
+  },
+  "categories": {
+    "soups": "Lasopy",
+    "grill": "Grily",
+    "mains": "Sakafo Lehibe",
+    "drinks": "Zava-pisotro",
+    "kebabs": "Kebab",
+    "dessert": "Tantely sy tsindrin-tsakafo"
+  },
+  "products": {
+    "mercimek": {
+      "name": "Soup Lentille",
+      "description": "Soup lentille vita an-trano amin'ny fomba nentim-paharazana, feno saosy dibera."
+    },
+    "tas-kebabi": {
+      "name": "Henan'omby Tiorka",
+      "description": "Henan'omby, legioma araka ny vanim-potoana, ary saosy manokana nendasin'ny trano fisakafoanay moramora."
+    },
+    "kuzu-tandir": {
+      "name": "Ondry Nendasina Moramora",
+      "description": "Ondry tandoori manokana avy amin'ny trano fisakafoanay, nendasina moramora tamin'ny hafanana ambany."
+    },
+    "pirinc-pilavi": {
+      "name": "Vary Pilaf",
+      "description": "Vary Baldo pilaf malefaka sy misy dibera."
+    },
+    "firin-sutlac": {
+      "name": "Puding Vary Nofanaina",
+      "description": "Puding vary nendasina tamin'ny fomba nentim-paharazana, vita amin'ny ronono bibilava isan'andro."
+    },
+    "kuru-fasulye": {
+      "name": "Lasopy tsaramaso fotsy miaraka amin'ny Hena",
+      "description": "Tsaramaso İspir, hena voatetika, ary pateoma tranainy amin'ny trano fisakafoanana."
+    },
+    "izgara-kofte": {
+      "name": "Boulettes Hena Nofonoina",
+      "description": "Boulettes hena vita amin'ny fomba mpivaro-bokatra miaraka amin'ny poivron sy voatabia nofafana."
+    },
+    "ayran": {
+      "name": "Ayran Notosika",
+      "description": "Rano amam-borona nentim-paharazana amin'ny yaourt andavanandro, miaraka amin'ny fofona be."
+    },
+    "ezogelin-corbasi": {
+      "name": "Lasopy Ezogelin",
+      "description": "Lasopy nentim-paharazana ampiasaina amin'ny trano fisakafoanana izay mihaona amin'ny tsaramaso mena, bulgur, sy vary miaraka amin'ny mint."
+    },
+    "tarhana-corbasi": {
+      "name": "Lasopy Tarhana",
+      "description": "Tarhana vita an-trano, klasika anatolianina hita amin'ny fomba mitokana miaraka amin'ny voatabia sy mint maina."
+    },
+    "yayla-corbasi": {
+      "name": "Supa Yaourt sy Vary",
+      "description": "Supa yayla manaitra sy malefaka, vita amin'ny yaourt, vary, ary mint maina."
+    },
+    "iskembe-corbasi": {
+      "name": "Supa Tripe",
+      "description": "Supa omby tena izy miaraka amin'ny hanitra sy vinaingitra tongolo gasy."
+    },
+    "dugun-corbasi": {
+      "name": "Supa Fampakaram-bady",
+      "description": "Supa fampakaram-bady nentin-drazana vita amin'ny hena ondry voatetika ary natokana amin'ny ranom-boasary manome tsiro."
+    },
+    "tavuk-suyu-corbasi": {
+      "name": "Supa Rano Akoho",
+      "description": "Supa manasitrana vita amin'ny paty manify masaka ao anaty rano hara-batana sy hena akoho voatetika."
+    },
+    "domates-corbasi": {
+      "name": "Supa Voatabia",
+      "description": "Sakafo matsiro mahandro miaraka amin'ny voatabia masaka, dibera, ary basilika, fenoina amin'ny fromazy."
+    },
+    "sebze-corbasi": {
+      "name": "Soupe legioma",
+      "description": "Soupe maivana amin'ny trano fisakafoanana voaomana amin'ny legioma ara-potoana, menaka oliva, ary zava-manitra vaovao."
+    },
+    "beyran-corbasi": {
+      "name": "Soupe Lamb Beyran masiaka",
+      "description": "Soupe avy amin'ny faritra iray voaomana amin'ny hafanana avo miaraka amin'ny lamb, vary, tongolo gasy, ary dipoavatra mafana."
+    },
+    "kelle-paca-corbasi": {
+      "name": "Soupe loha sy tongotra",
+      "description": "Soupe matanjaka amin'ny taolana vita amin'ny tongotry ny omby sy hena loha nandrahoina nandritra ny ora maro."
+    },
+    "sehriye-corbasi": {
+      "name": "Soupe Vermicelli",
+      "description": "Lasopy andavanandro voaomana amin'ny ranon'akoho misy voatabia, vermicelli, ary persily."
+    },
+    "tavuk-sis": {
+      "name": "Hena Akoho amin'ny tsatotsato",
+      "description": "Sakatry ny akoho nokitikitihina tamin'ny zava-manitra manokana, atolotra miaraka amin'ny dipoavatra sy voatabia nandrahoina."
+    },
+    "kasap-sucuk": {
+      "name": "Sucuk-n'ny Mpanapaka Hena Notetehina",
+      "description": "Sosisy hen'omby misy hafanana notetehina tamin'ny arina, miaraka amin'ny legioma sy tongolo nandrahoina misy sumac."
+    },
+    "karisik-izgara": {
+      "name": "Grilla Miampy Karazana",
+      "description": "Lovia grilla be sy isan-karazany misy kitapo hena, sakatry ny akoho, hena ondry ampahany, ary sosisy."
+    },
+    "nohut-yemegi": {
+      "name": "Tsaramaso Mamy amin'ny Hen'omby",
+      "description": "Sakafo an-trano misy tsaramaso sy henan'omby voatetika izay endasina tsikelikely ao anaty vilany varahina."
+    },
+    "patlican-musakka": {
+      "name": "Moussaka amin'ny aubergine",
+      "description": "Aubergine voatono, henan'omby voatoto, ary moussaka lafaoro miaraka amin'ny saosy voatabia, fomba fisakafoanana an-dàlam-pisakafoanana."
+    },
+    "zeytinyagli-taze-fasulye": {
+      "name": "Tsaramaso maitso amin'ny menaka oliva",
+      "description": "Sakafo nentim-paharazana endasina amin'ny menaka oliva misy tsaramaso maitso, voatabia, ary tongolo, arotsaka mangatsiaka."
+    },
+    "tavuk-sote": {
+      "name": "Ovy akoho voatono",
+      "description": "Ny ampahan'akoho dia endasina amin'ny hafanana ambony miaraka amin'ny dipoavatra miloko, holatra, ary voatabia."
+    },
+    "izmir-kofte": {
+      "name": "Bola-mena amin'ny fomba İzmir",
+      "description": "Sakafo lehibe nentim-paharazana misy bolongam-biby kisoa, ovy, ary dipoavatra endasina amin'ny saosy voatabia."
+    },
+    "etli-bezelye": {
+      "name": "Nahandroa Eran-petroka miaraka amin'ny Hena",
+      "description": "Sakafo andavanandro izay masaka ao anaty vilany miaraka amin'ny hena voatetika, tsaramaso, karaoty, ary ovy."
+    },
+    "patlican-oturtma": {
+      "name": "Voatabia endasina miaraka amin'ny Hena voatetika",
+      "description": "Ny lela dia endasina ao anaty lafaoro miaraka amin'ny voatabia, hena voakiky mafana, ary saosy voatabia misy tongolo gasy."
+    },
+    "salgam-suyu": {
+      "name": "Ranon'Anakazo Voan'ny Vasaka",
+      "description": "Ranon-kena masiaka nentim-paharazana novakelezina tamin'ny karaoty volomparasy sy lalivay bulgur."
+    },
+    "maden-suyu": {
+      "name": "Rano Tsy misy Poizina",
+      "description": "Rano mineraly voajanahary, mangatsiaka, tsy misy tsiro."
+    },
+    "su": {
+      "name": "Rano fantsakana voajanahary",
+      "description": "Rano fantsakana voajanahary atolotra mangatsiaka ao anaty tavoahangy fitaratra."
+    },
+    "kola": {
+      "name": "Cola",
+      "description": "Zava-pisotro misy gazy nentim-paharazana atolotra tena mangatsiaka miaraka amin'ny ranomandry."
+    },
+    "gazoz": {
+      "name": "Soda voasary mampangatsiaka Tiorka",
+      "description": "Soda nentim-paharazana misy tsiro, mampangatsiaka, sy atolotra tsotra."
+    },
+    "turk-kahvesi": {
+      "name": "Kafe Tiorka",
+      "description": "Kafe Tiorka nentim-paharazana misy fahamashirehana, endasina amin'ny hafanana ambony ao anaty cezve varahina."
+    },
+    "demleme-cay": {
+      "name": "Ranon-tsakafo Tiorka",
+      "description": "Ranon-tsakafo Rize vao masaka, mafana, atolotra ao anaty vera tiana manify."
+    },
+    "ev-yapimi-limonata": {
+      "name": "Lemonady vita an-trano",
+      "description": "Lemonade mamerina aina atao isan'andro miaraka amin'ny voasarimakirana vaovao, mint, ary siramamy kely."
+    },
+    "hosaf": {
+      "name": "Compote Voankazo Isan'andro",
+      "description": "Compote vita an-trano masaka isan'andro miaraka amin'ny voankazo maina, apricot, na plum arakaraka ny vanim-potoana."
+    },
+    "iskender-kebabi": {
+      "name": "Bursa İskender Kebab",
+      "description": "Ny hena dia ahodina amin'ny skewer eo ambonin'ny pide, atolotra miaraka amin'ny saosy voatabia, dibera mafana, ary yaourt."
+    },
+    "kazandibi": {
+      "name": "Puding Lait Caramelisé",
+      "description": "Tsindrin-tsakafo nentim-paharazana amin'ny ronono voakarakara tsara, misy hakitroky malama."
+    },
+    "tavuk-gogsu": {
+      "name": "Puding Lait Ottoman",
+      "description": "Fangaron-tsakafo maivana sy manify vita amin'ny ronono, namboarina tamin'ny fomba nentim-paharazana, aroso miaraka amin'ny kanelina."
+    },
+    "keskul": {
+      "name": "Pudingy Ronono Almond",
+      "description": "Fangaron-tsakafo amin'ny ronono amin'ny fomba Ottoman, vita amin'ny tsiron'ny almond sy voanio."
+    },
+    "irmik-helvasi": {
+      "name": "Halva Semolina",
+      "description": "Halva semolina, nandrahoina tamin'ny menaka sy voan-pine, aroso mafana sy misosa."
+    },
+    "kabak-tatlisi": {
+      "name": "Sakafo Mamy Ampongam-bary sy Tahini",
+      "description": "Ny ampongam-bary, lafaingana amin'ny ranony manokana, aroso miaraka amin'ny tahini sy voanjo."
+    },
+    "ayva-tatlisi": {
+      "name": "Sakafo Mamy Quince",
+      "description": "Quince nandrahoina miaraka amin'ny clou de girofle sy kanelina, aroso miaraka amin'ny crème napetraka sy voanjo."
+    },
+    "revani": {
+      "name": "Keky Siramamy Semolina",
+      "description": "Ny dessert klasika amin'ny trano fisakafoanana izay mihaona ny keky malefaka semolina sy ny siramamy misy fofon'ny voasary makirana."
+    },
+    "ekmek-kadayifi": {
+      "name": "Mofo Puding miaraka amin'ny Ranom-boasary Masira",
+      "description": "Mofo puding izay nitoetra tamin'ny siramamy karamela no atolotra miaraka amin'ny ranom-boasary masira avy amin'ny omby buffalo."
+    },
+    "cevizli-baklava": {
+      "name": "Baklava Voanjo",
+      "description": "Lainga manify be dia be, baklava manara-penitra miaraka amin'ny voanjo betsaka sy dibera tsotra."
+    }
+  },
+  "allergens": {
+    "Süt ürünleri": "Vokatra avy amin'ny ronono",
+    "Gluten": "Glutena",
+    "Yumurta": "Atody",
+    "Badem": "Almond",
+    "Çam fıstığı": "Voan-kazo Pine",
+    "Susam": "Sésame",
+    "Ceviz": "Voanjo"
+  },
+  "tags": {
+    "Popüler": "Malaza",
+    "Vejetaryen": "Veganina",
+    "Günün Yemeği": "Sakafo Androany",
+    "Şefin Önerisi": "Safidin'ny Chef",
+    "Yeni": "Vaovao",
+    "Acılı": "Mangotraka",
+    "Ev Yapımı": "Trano",
+    "Lokanta Klasiği": "Klasika ao amin'ny trano fisakafoanana",
+    "Günün Çorbası": "Soupa Androany",
+    "Vegan": "Vegan",
+    "Hafif": "Maivana",
+    "Yöresel": "Faritra",
+    "Paylaşmalık": "Ho Zaraina",
+    "Ev Yemeği": "Fomba an-trano",
+    "Zeytinyağlı": "Menaka Oliva",
+    "Nostaljik": "Mahatsiaro lasa",
+    "Geleneksel": "Mahazatra",
+    "Bursa Lezzeti": "Tsiron'i Bursa",
+    "Sütlü Tatlı": "Sakafo mamy avy amin'ny ronono",
+    "Sıcak Tatlı": "Sakafo mamy mafana",
+    "Mevsimlik": "Fampifanarahana amin'ny vanim-potoana",
+    "Şerbetli": "Sakafo mamy amin'ny ranom-boankazo mamy"
+  }
+}

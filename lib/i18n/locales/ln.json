@@ -1,0 +1,349 @@
+{
+  "locale": "ln",
+  "ui": {
+    "menu": "Menu",
+    "search": "Kokota na menu...",
+    "searchLabel": "Kokota na menu",
+    "categories": "Bandeko",
+    "categoryIntro": "Fanda eloko ya kolia pona talo na yo.",
+    "categoryNavigation": "Bandeko ya menu",
+    "openCategory": "Fungola {name}, eloko {count}",
+    "items": "eloko",
+    "item": "eloko moko",
+    "searchResults": "Matokeo ya kokota",
+    "productsFound": "Eloko {count} elimwé",
+    "backToCategories": "Tika na bandeko",
+    "backToCategory": "Tika na {name}",
+    "clearSearch": "Pona kokota",
+    "noResults": "Eloko moko te ekozali ndenge oyo",
+    "noResultsDescription": "Kobakisa koluka mosusu to komema na makategori.",
+    "order": "Komanda na ngai",
+    "waiter": "Mokonzi ya kotia lisusu",
+    "bill": "Fakturi",
+    "addToCart": "Kokakisa na Komanda",
+    "addedToCart": "{name} eteyamaki na komanda na yo.",
+    "removeFromCart": "Futuka {name}",
+    "soldOut": "Ereki lelo",
+    "productDetails": "Fungola bisika ya mayele mpo na {name}",
+    "portion": "Portioni",
+    "standardPortion": "Portioni ya standard",
+    "allergens": "Mitindo ya bilei ya kosangisa",
+    "noAllergens": "Ezali na bilei oyo ekomamaki te",
+    "productNote": "Lokuta ya eloko",
+    "productNotePlaceholder": "Nsango: kozala na beurre te, s'il vous plaît",
+    "decreaseQuantity": "Kobeba biloko",
+    "increaseQuantity": "Kokola biloko",
+    "each": "mwa",
+    "note": "Nsango",
+    "subtotal": "Mbongo oyo ezalaki",
+    "serviceFee": "Mbongo ya mosala",
+    "total": "Mbote mobimba",
+    "sendOrder": "Tomisa Mokano",
+    "orderSent": "Mokano na yo esimbaki na cuisine",
+    "orderTracking": "Landa mokano #{number} awa.",
+    "newItem": "Kokokisa Lingombo Mosusu",
+    "emptyCart": "Mokano na yo ezali pɛtɛ",
+    "emptyCartDescription": "Biloko oyo olingi na menu ekoki komonana awa.",
+    "browseMenu": "Kokota na Menu",
+    "orderReceived": "Mokano Esimbaki",
+    "waiterConfirmed": "Mosali ya lofisi amemaki yango",
+    "preparing": "Koyekola",
+    "ready": "Etaleli",
+    "served": "Epesi",
+    "preparingDescription": "Kombo na biso ezali kokoma na bokebi mpo na biloko oyo obengi.",
+    "orderStatus": "Esika ya biloko obengi",
+    "callWaiter": "Fundisa Mosali ya lofisi",
+    "placeOrder": "Nalingi kobenga biloko",
+    "wantWater": "Nalingi mayi",
+    "wantBread": "Nalingi biso",
+    "wantService": "Mosala ya ekolo",
+    "other": "Mosusu",
+    "generalRequest": "Nazali na elakisi nyonso",
+    "orderHelp": "Nazali na posa ya lisalisi na biloko na ngai",
+    "waterDescription": "Bolimbisi, leki mayi na etuka",
+    "breadDescription": "Ndakisa, leki mo lalo mpo na tafel",
+    "serviceDescription": "Nalingi biloko ya kolya to plate",
+    "otherDescription": "Nalingi lisalisi na mosala mosusu",
+    "waiterHelpTitle": "Tolinga kosalisa ndenge nini?",
+    "waiterHelpDescription": "Lokumu na yo ekomi kozwa na {table}.",
+    "waiterRequestSent": "Lokumu na yo ezwaki na moboti na biso.",
+    "requestBill": "Komela bil",
+    "billSent": "Lokumu na bil na yo ezwaki",
+    "billConfirm": "Olingi kosolola bil?",
+    "billSentDescription": "Moboti na biso akoma na yo ntango oyo te.",
+    "billConfirmDescription": "Lokumu na yo ekoma lisusu na moboti. Olingi kofuta na tafel to na kassier.",
+    "billToast": "Motáli ya bilanga na yo esalelaki moninga na biso.",
+    "backToMenu": "Yinda na Menu",
+    "back": "Yinda",
+    "close": "Pesa",
+    "yourTable": "TAFA YA YO",
+    "serviceOpen": "Misala esalemaka",
+    "slogan": "Bolingo ya Mosala • Meza ya Sika",
+    "location": "Bursa, Osmangazi",
+    "languageLabel": "Fungola lokota",
+    "currencyLabel": "Fungola mbongo",
+    "customerNavigation": "Ndakisa ya menu ya mokili",
+    "approximateCurrency": "Mbongo ya minene ezali ya kopesa motuya maye. Kolipela ezali na Lira ya Thai.",
+    "orderSuccess": "Oda na yo esalelaki malamu.",
+    "languagePickerTitle": "Fungola Lokota",
+    "languagePickerDescription": "Kalálo elateli oyo olingi kosalela mpo na menu.",
+    "searchLanguage": "Kanisa langi...",
+    "recommendedLanguages": "Esalisami",
+    "recentLanguages": "Langi ya nsima",
+    "allLanguages": "Langi nyonso",
+    "languageNotFound": "Langi ezali te.",
+    "languageNotFoundDescription": "Kanisa kombo mosusu ya langi to code.",
+    "tableNumber": "Meza {number}",
+    "itemCount": "Biloko {count}",
+    "splashLabel": "Ekrani ya koboma Tarihi Şehir Lokantası",
+    "cancel": "Yeba te",
+    "confirmOrder": "Selekela Mokɔngɔ",
+    "orderSummary": "Likambo longobani ya mokɔngɔ",
+    "payment": "Mbongo",
+    "tableNotFound": "Meza ezali te.",
+    "invalidQr": "QR code ezangi boboto.",
+    "menuUnavailable": "Menu ezali kaka te sikoyo.",
+    "networkError": "Mpangisano na réseau ememaki likambo moko mabe.",
+    "productUnavailable": "Eloko yango ezali kaka te sikoyo.",
+    "unableToSendOrder": "Ekoki te ko tinda ba commande.",
+    "tryAgain": "Lingá lisusu",
+    "somethingWentWrong": "Likambo moko embekaki malamu.",
+    "loadingLanguage": "Ko telekela lingomba...",
+    "languageLoadError": "Ekoki te ko telekela lingomba. S'il vous plaît, lingá lisusu."
+  },
+  "categories": {
+    "soups": "Soupe",
+    "grill": "Grill",
+    "mains": "Mokanda Mibale",
+    "drinks": "Bwany",
+    "kebabs": "Kebab",
+    "dessert": "Dessert"
+  },
+  "products": {
+    "mercimek": {
+      "name": "Soupi ya Lentille",
+      "description": "Soupi ya lentille oyo ezali na ndako, elakisami na ndenge ya kala, esili na sauce ya botoro."
+    },
+    "tas-kebabi": {
+      "name": "Stewu ya Mbega ya Abric",
+      "description": "Mbega, biloko ya mbula, mpe sauce ya esika na resto na biso oyo etikali kokweya bule."
+    },
+    "kuzu-tandir": {
+      "name": "Mbala ya Moka ya Bwaya",
+      "description": "Mbala ya bwaya oyo ezali ememami na tandoori ya resto na biso, etikali kokweya na motuya ya moke."
+    },
+    "pirinc-pilavi": {
+      "name": "Risi Pilafi",
+      "description": "Risi Baldo ya botoro mpe maye-maye pilafi."
+    },
+    "firin-sutlac": {
+      "name": "Pudding ya Risi oyo Ebentami",
+      "description": "Pudding ya risi ebentami na ndenge ya kala, esalemi na mawa ya mbwa ya mokolo nyonso."
+    },
+    "kuru-fasulye": {
+      "name": "Mbisi ya Bino na Boboyi",
+      "description": "Bino ya İspir, boboyi ya mbisi ebimi mpe tomate paste ya restaurant ya solo."
+    },
+    "izgara-kofte": {
+      "name": "Mbisi ya Boboyi na Moto",
+      "description": "Boboyi ya mbisi ndenge ya bûche na poivre mpe tomate ebimisi na moto."
+    },
+    "ayran": {
+      "name": "Ayran Ebimisi",
+      "description": "Mbisi ya bama mabe ya kala oyo ezali na mbu mingi, elakisami na yogourt ya mokolo na mokolo."
+    },
+    "ezogelin-corbasi": {
+      "name": "Supu Ezogelin",
+      "description": "Supu ya ntembe ya bistro oyo lentile ya monyama, bulgur, mpe mbisi ya lizi, ekutana na moni."
+    },
+    "tarhana-corbasi": {
+      "name": "Supu Tarhana",
+      "description": "Tarhana ya libota, likambo ya Anatolia, epesamaka na mbuma ya tomate mpe moni ya kokanga, ekolamwa mpamba-pamba."
+    },
+    "yayla-corbasi": {
+      "name": "Yaourt mpe Supu ya Madesu",
+      "description": "Supu ya yayla, ya komema limemya mpe ya kosemola oyo ezali kosalema na yaourt, madesu, mpe minti ya kokela."
+    },
+    "iskembe-corbasi": {
+      "name": "Supu ya Mofo ya Mpanga",
+      "description": "Supu ya mofo ya mpanga ya malamu oyo ezali kolamela na biloko na yango mpe vinɛga ya piasi."
+    },
+    "dugun-corbasi": {
+      "name": "Supu ya Lobi ya Kokɔta",
+      "description": "Supu ya lobi ya kokɔta ya kitoko oyo ezali kosalema na ngulu ya mpɔnga mpe komemwa na marinade ya limɔngi."
+    },
+    "tavuk-suyu-corbasi": {
+      "name": "Supu ya Mbisi ya Pɔlɔ",
+      "description": "Supu ya kopesa bongundeki oyo ezali kosalema na mabanzo minene ya bilei mpo na kolya mpe nyama ya pɔlɔ ya kokabola."
+    },
+    "domates-corbasi": {
+      "name": "Supu ya Tomate",
+      "description": "Nkama ya monene oyo ebikami na tomate ya kimatiki, mbisi ya mbuma, mpe basil, esukami na fromaji."
+    },
+    "sebze-corbasi": {
+      "name": "Mbisi ya biloko ya mbuma",
+      "description": "Mbisi ya kati ya resitora ebikami na biloko ya mbuma ya mikolo oyo, mafuta ya olivi, mpe biloko ya sika ya mindu."
+    },
+    "beyran-corbasi": {
+      "name": "Mbisi ya Beyran ya Ngui ya Mosala",
+      "description": "Mbisi ya kanda ya etuka oyo ebikami na moto monene na ngui, rice, layi, mpe pepe monene."
+    },
+    "kelle-paca-corbasi": {
+      "name": "Mbisi ya Mpepe mpe Misu",
+      "description": "Mbisi ya nkama ya minyama oyo ebikami na mpepe ya ngui mpe nyama ya misu ekakomile na mayi mpo na ntango monene."
+    },
+    "sehriye-corbasi": {
+      "name": "Mbisi ya Vermicelli",
+      "description": "Biloko ya mokolo nyonso ya supu elakisami na bouyon ya koko na tomate, vermicelli, mpe parsley."
+    },
+    "tavuk-sis": {
+      "name": "Mbika ya Koko",
+      "description": "Biloko ya koko eye mariné na mbuma ya kokoma esika moko, epesami na pimanaka oyo ebengami na moto mpe tomate."
+    },
+    "kasap-sucuk": {
+      "name": "Sucuk ya Mpotaki ya Kiki",
+      "description": "Sosisi ya nyama ya ngombe oyo ebatelami na mboka, elakisami na biloko ya mboka mpe seli na sumac."
+    },
+    "karisik-izgara": {
+      "name": "Grill Mpasi",
+      "description": "Plate ya grill mingi mpe esalisami na biloko ya mbeka, mbika ya koko, chop ya mbuzi, mpe sosisi."
+    },
+    "nohut-yemegi": {
+      "name": "Mbisi ya Mpunga ya Nhemba na Ngombe",
+      "description": "Biloko ya ndobo ya mbuma ya soko mpe ngulu ebambamaki piano na poto ya sima."
+    },
+    "patlican-musakka": {
+      "name": "Moussaka ya Aubergine",
+      "description": "Aubergine ebangwemi na lelo, ngulu ya mbuma, mpe moussaka ebangwamaki na folu na sauce ya tomate, ndenge ya resitora."
+    },
+    "zeytinyagli-taze-fasulye": {
+      "name": "Mbuma ya liboke na Mayi ya Olive",
+      "description": "Eltango ya kosekwa na mayi ya olive na mbuma ya liboke, tomate, mpe oignon, epesami na etingaka eloko ya kokokisa."
+    },
+    "tavuk-sote": {
+      "name": "La poulet esalisami",
+      "description": "Bokende ya poulet esalisami na moto ya mingi na pili, mayi, mpe tomate ya lokola."
+    },
+    "izmir-kofte": {
+      "name": "Mbuma ya Izmir",
+      "description": "Moko ya kokanisa, nyama ya mbuzi, bitoke, mpe pimanzi oyo ezali kosalema na soso ya tomate."
+    },
+    "etli-bezelye": {
+      "name": "Pwa na Nyama ya mbuzi",
+      "description": "Eloko ya mposo oyo esalemi na poto na nyama ya mbuzi oyo esalaki biteki, pwa, karoti, mpe bitoke."
+    },
+    "patlican-oturtma": {
+      "name": "Aubergine ya Bakel na Nyama ebatelami",
+      "description": "Molomo esalemi na ifuru na aubergine, nyama oyo ebongwanami mpe soso ya tomate na layi."
+    },
+    "salgam-suyu": {
+      "name": "Mayi ya Ngolo Ekumamaki",
+      "description": "Mayi ya Ngolo ya kokangama na mayi ya karoti ya motuya mpe mayi ya bilembo ya bulgur."
+    },
+    "maden-suyu": {
+      "name": "Mayi ya Minerale",
+      "description": "Mayi ya minerale ya solo oyo ekomamaki na pɛtɛɛlɛ mpe epesamaka na esika ya poli."
+    },
+    "su": {
+      "name": "Mai ya sika ya mobembo",
+      "description": "Mai ya sika ya mobembo emonani na nguya na bokebisi ya glasi."
+    },
+    "kola": {
+      "name": "Cola",
+      "description": "Mayi ya cola oyo ebongwanani, emonani na bokebisi ya ice."
+    },
+    "gazoz": {
+      "name": "Soda ya Lemoni ya Turkey",
+      "description": "Soda ya eloko ya malamu, oyo eboli motema mpe emonani na bokebisi ya kokangama te."
+    },
+    "turk-kahvesi": {
+      "name": "Kafe ya Toke",
+      "description": "Kafe ya kokota ya Tokee na mabele, ebimi na mosala makasi na cezve ya libali."
+    },
+    "demleme-cay": {
+      "name": "Ti ya Toke",
+      "description": "Ti ya Rize ekobetama sika ya kokokisa na glasi ya mibale moke."
+    },
+    "ev-yapimi-limonata": {
+      "name": "Limonadi ya ndako",
+      "description": "Limonade ya kokanisa oyo ebongwanami na mokolo nyonso na limon ya sika, minti, mpe sikali moke."
+    },
+    "hosaf": {
+      "name": "Compote ya Mbuma na Mokolo",
+      "description": "Compote ya mboka oyo ebengami na mongongo na mokolo nyonso na raison, abrikot, to plum na ndenge ya ntango ya mobu."
+    },
+    "iskender-kebabi": {
+      "name": "Bursa İskender Kebab",
+      "description": "Nyama eyebanami na fork na nse ya pide, epesami na sosi ya tomate, beurre ya mingi, mpe yogourt."
+    },
+    "kazandibi": {
+      "name": "Pudingu ya Mbisi ya Caramel",
+      "description": "Dessert ya mbisi ya kala oyo ebongwanami na caramel malamu, na monopole ya siliki."
+    },
+    "tavuk-gogsu": {
+      "name": "Pudingu ya Mbisi ya Ottoman",
+      "description": "Mbisi ya madesi ya mai oyo ezalaka mpashi mpe ezali elobeli na nzelá ya kala, epesamaka na sinamoni."
+    },
+    "keskul": {
+      "name": "Mbisi ya Mai ya Almond",
+      "description": "Mbisi ya mai ya ndenge ya Otomani oyo ezali na monene ya almond mpe kokonut."
+    },
+    "irmik-helvasi": {
+      "name": "Halva ya Semolina",
+      "description": "Halva ya semolina, etongwaki na buta mpe nzimbu ya pine, epesamaka mpo na kolia elobeli mpe krasi."
+    },
+    "kabak-tatlisi": {
+      "name": "Mbisi ya Dongo na Tahini",
+      "description": "Dongo, etonanelami na mayi na ye moko, epesamaka na tahini mpe nzimbu ya mbuma ya motuka."
+    },
+    "ayva-tatlisi": {
+      "name": "Mbisi ya Quit",
+      "description": "Quit etonanelami na clou na sinamoni epesamaka na soso oyo ebimi mpe nzimbu ya mbuma ya motuka."
+    },
+    "revani": {
+      "name": "Gateau ya Semolina na Siro",
+      "description": "Moateli ya biloko ya resitora oyo esengelaki, epangisaka gateau ya semolina esika siro oyo ezali na monungwi ya limon."
+    },
+    "ekmek-kadayifi": {
+      "name": "Pudingi ya Mbano na Lamu ya Kwa",
+      "description": "Pudingi ya mbano oyo epusami na siro caramelized epesami na lamu ya bufalo."
+    },
+    "cevizli-baklava": {
+      "name": "Baklava ya Lomoka",
+      "description": "Ebongisami ya bikebisi malamu pole, baklava oyo eza na kolo mpe esalemaki na loboko ya lokumu mpe bisi ya sembo."
+    }
+  },
+  "allergens": {
+    "Süt ürünleri": "Biloko ya mibali ya mabe",
+    "Gluten": "Gluteni",
+    "Yumurta": "Ngai",
+    "Badem": "Alimondi",
+    "Çam fıstığı": "Mbuma ya pinu",
+    "Susam": "Sésame",
+    "Ceviz": "Mwandu ya Ngongo"
+  },
+  "tags": {
+    "Popüler": "Minene",
+    "Vejetaryen": "Ya biloko oyo ezalaka lisusu te na nyama",
+    "Günün Yemeği": "Biloko ya mosala ya mokolo",
+    "Şefin Önerisi": "Boluki ya Chef",
+    "Yeni": "Ya sika",
+    "Acılı": "Ya puli",
+    "Ev Yapımı": "Ya ndako",
+    "Lokanta Klasiği": "Likambo ya Restaurant",
+    "Günün Çorbası": "Sup ya Mokolo",
+    "Vegan": "Ya sembo te na biteni ya nyama",
+    "Hafif": "Ya mayi te makasi",
+    "Yöresel": "Ya esika",
+    "Paylaşmalık": "Ya kosangisa",
+    "Ev Yemeği": "Ya ndenge ya ndako",
+    "Zeytinyağlı": "Mbuma ya Olive",
+    "Nostaljik": "Ya nsango ya kala",
+    "Geleneksel": "Ya ndelo ya kala",
+    "Bursa Lezzeti": "Ntina ya Bursa",
+    "Sütlü Tatlı": "Mbusu ya Madesa",
+    "Sıcak Tatlı": "Madesa ya Malamu",
+    "Mevsimlik": "Ya Ntango",
+    "Şerbetli": "Madesa ya Syrupu"
+  }
+}

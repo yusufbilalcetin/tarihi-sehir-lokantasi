@@ -1,0 +1,349 @@
+{
+  "locale": "ga",
+  "ui": {
+    "menu": "Roghchlár",
+    "search": "Cuardaigh sa roghchlár...",
+    "searchLabel": "Cuardaigh sa roghchlár",
+    "categories": "Catagóirí",
+    "categoryIntro": "Roghnigh an blas do do bhord.",
+    "categoryNavigation": "Catagóirí roghchláir",
+    "openCategory": "Oscail {name}, {count} mír",
+    "items": "míreanna",
+    "item": "mír",
+    "searchResults": "Torthaí Cuardaigh",
+    "productsFound": "{count} míreanna aimsithe",
+    "backToCategories": "Ar ais chuig catagóirí",
+    "backToCategory": "Ar ais chuig {name}",
+    "clearSearch": "Glan cuardach",
+    "noResults": "Níl aon mhír chomhionann le fáil",
+    "noResultsDescription": "Déan cuardach eile nó fill ar na catagóirí.",
+    "order": "Mo Ordú",
+    "waiter": "Freastalaí",
+    "bill": "Bille",
+    "addToCart": "Cuir le hOrdú",
+    "addedToCart": "Cuireadh {name} le do ordú.",
+    "removeFromCart": "Bain {name}",
+    "soldOut": "Díb bán inniu",
+    "productDetails": "Oscail sonraí do {name}",
+    "portion": "Codán",
+    "standardPortion": "Codán caighdeánach",
+    "allergens": "Allaróidí",
+    "noAllergens": "Níl allaróidí foilsithe",
+    "productNote": "Nóta mhír",
+    "productNotePlaceholder": "M.sh. gan im, le do thoil",
+    "decreaseQuantity": "Laghdaigh méid",
+    "increaseQuantity": "Méadaigh méid",
+    "each": "gach",
+    "note": "Nóta",
+    "subtotal": "Fo-iomlán",
+    "serviceFee": "Táille seirbhíse",
+    "total": "Iomlán",
+    "sendOrder": "Seol Ordú",
+    "orderSent": "Seoladh d’ordú chuig an gcistin",
+    "orderTracking": "Rian do ordú #{number} anseo.",
+    "newItem": "Cuir Mír Eile Leis",
+    "emptyCart": "Níl aon rud sa d’ordú",
+    "emptyCartDescription": "Tiocfaidh na míreanna a roghnaíonn tú ón mbiachlár anseo.",
+    "browseMenu": "Brabhsáil an Biachlár",
+    "orderReceived": "Ordú Faighte",
+    "waiterConfirmed": "D'inarbh an Freastalaí",
+    "preparing": "Ag Ullmhú",
+    "ready": "Réidh",
+    "served": "Freastaithe",
+    "preparingDescription": "Tá ár gcistin ag ullmhú do ordaithe.",
+    "orderStatus": "Stádas an ordaithe",
+    "callWaiter": "Glaoigh ar an bhFreastalaí",
+    "placeOrder": "Ba mhaith liom ordú a dhéanamh",
+    "wantWater": "Ba mhaith liom uisce",
+    "wantBread": "Ba mhaith liom arán",
+    "wantService": "Seirbhís bhreise",
+    "other": "Eile",
+    "generalRequest": "Tá iarraidh ginearálta agam",
+    "orderHelp": "Tá cabhair uaim le mo ordú",
+    "waterDescription": "Le do thoil tabhair uisce chuig an mbord",
+    "breadDescription": "Le do thoil, tabhair arán chuig an mbord",
+    "serviceDescription": "Tá gá agam le cutlery nó pláta",
+    "otherDescription": "Tá gá agam le cabhair le rud éigin eile",
+    "waiterHelpTitle": "Cén chaoi ar féidir linn cabhrú?",
+    "waiterHelpDescription": "Seolfar d'iarratas le {table}.",
+    "waiterRequestSent": "Seolfar d'iarratas chuig ár bhfreastalaí.",
+    "requestBill": "Iarr Bille",
+    "billSent": "Seolfar d’iarratas bille",
+    "billConfirm": "An maith leat an bille a iarradh?",
+    "billSentDescription": "Beidh ár bhfreastalaí leat go luath.",
+    "billConfirmDescription": "Rachaidh d’iarratas go díreach chuig an bhfreastalaí. Is féidir leat íoc ag an mbord nó ag an gcuntasair.",
+    "billToast": "Cuireadh d'iarratas bille chuig ár bhfreastalaí.",
+    "backToMenu": "Ar ais chuig an Roghchlár",
+    "back": "Ar ais",
+    "close": "Dún",
+    "yourTable": "DO BORD",
+    "serviceOpen": "Aifreann oscailte",
+    "slogan": "Blaiseadh Traidisiúnta • Bord Nua-Aimseartha",
+    "location": "Bursa, Osmangazi",
+    "languageLabel": "Roghnaigh teanga",
+    "currencyLabel": "Roghnaigh airgeadra",
+    "customerNavigation": "Nascleanúint roghchlár do chustaiméara",
+    "approximateCurrency": "Tá praghsanna airgeadra eachtrach thart ar mheánluach. Déantar íocaíocht i Lira Thuircis.",
+    "orderSuccess": "Cuireadh d’ordú go rathúil.",
+    "languagePickerTitle": "Roghnaigh Teanga",
+    "languagePickerDescription": "Roghnaigh an teanga ar mhaith leat a úsáid don roghchlár.",
+    "searchLanguage": "Cuardaigh teangacha...",
+    "recommendedLanguages": "Molta",
+    "recentLanguages": "Teangacha Le Déanaí",
+    "allLanguages": "Gach Teanga",
+    "languageNotFound": "Níor aimsíodh teanga.",
+    "languageNotFoundDescription": "Déan iarracht ainm teanga eile nó cód eile.",
+    "tableNumber": "Tábla {number}",
+    "itemCount": "{count} earraí",
+    "splashLabel": "Scáileán tosaigh Tarihi Şehir Lokantası",
+    "cancel": "Cealaigh",
+    "confirmOrder": "Deimhní an Ordú",
+    "orderSummary": "Achoimre Ordaithe",
+    "payment": "Íocaíocht",
+    "tableNotFound": "Níor aimsíodh bord.",
+    "invalidQr": "Uimhir QR neamhbhailí.",
+    "menuUnavailable": "Níl an roghchlár ar fáil faoi láthair.",
+    "networkError": "Tharla earráid líonra.",
+    "productUnavailable": "Níl an t-earra seo ar fáil faoi láthair.",
+    "unableToSendOrder": "Níorbh fhéidir an t-ord a sheoladh.",
+    "tryAgain": "Déan iarracht arís",
+    "somethingWentWrong": "Tharla rud éigin mícheart.",
+    "loadingLanguage": "Á đangáil teanga...",
+    "languageLoadError": "Níorbh fhéidir an teanga a luchtú. Déan iarracht arís le do thoil."
+  },
+  "categories": {
+    "soups": "Anraithí",
+    "grill": "Grills",
+    "mains": "Príomhchúrsaí",
+    "drinks": "Deochanna",
+    "kebabs": "Ceapaí",
+    "dessert": "Milséana"
+  },
+  "products": {
+    "mercimek": {
+      "name": "Anraith Lentil",
+      "description": "Anraith lentil baile ullmhaithe ar an stíl chlasaiceach, le anlann immhéadaithe."
+    },
+    "tas-kebabi": {
+      "name": "Stobhach Mairteola Tuircis",
+      "description": "Feoil mhairteola, glasraí séasúracha, agus anlann speisialta ár mbialainne a chócaráiltear go mall."
+    },
+    "kuzu-tandir": {
+      "name": "Uain Mhall-Rósta",
+      "description": "Tandoori uain shainmhínte ár mbialainne, cócaráilte go mall thar teas íseal."
+    },
+    "pirinc-pilavi": {
+      "name": "Pilaf Rís",
+      "description": "Pilaf rís Baldo mín, le h-iamh."
+    },
+    "firin-sutlac": {
+      "name": "Pudding Rís Fuaraithe",
+      "description": "Pudding rís bácáilte ar an mbealach traidisiúnta, ullmhaithe le bainne búfála laethúil."
+    },
+    "kuru-fasulye": {
+      "name": "Stobhach Póna Báin le Mairteoil",
+      "description": "Póna íspir, mairteoil scafa, agus imirt tráiteach ó bhialann."
+    },
+    "izgara-kofte": {
+      "name": "Liathróidí Feola Grilleáilte",
+      "description": "Liathróidí feola mairteola stíl mhéasair le piobar rósta agus trátaí."
+    },
+    "ayran": {
+      "name": "Ayran Meascaithe",
+      "description": "Bainne géar traidisiúnta le go leor fionna, déanta le cáis ghinearálta."
+    },
+    "ezogelin-corbasi": {
+      "name": "Anraith Ezogelin",
+      "description": "Anraith bhialainne traidisiúnta ina mbuaileann lentil dearg, bulgur, agus rís le mint."
+    },
+    "tarhana-corbasi": {
+      "name": "Anraith Tarhana",
+      "description": "Tarhana abhaile, clasaiceach Anatólach cócaráilte go mall le trátaí agus mint triomaithe."
+    },
+    "yayla-corbasi": {
+      "name": "Anraith Iógart agus Rís",
+      "description": "Anraith yayla úr agus uachtarúil ullmhaithe le iógart, rís, agus mint thriomaithe."
+    },
+    "iskembe-corbasi": {
+      "name": "Anraith Trífí",
+      "description": "Anraith trifí bó fíor-dhéanach arna sheirbheáil lena shéasúir agus fínéagar gairleoige."
+    },
+    "dugun-corbasi": {
+      "name": "Anraith Bainise",
+      "description": "Anraith bainise traidisiúnta déanta le lamb sciathánaithe agus blasaithe le léasóg líomóide."
+    },
+    "tavuk-suyu-corbasi": {
+      "name": "Anraith Broth Sicín",
+      "description": "Anraith leigheasach ullmhaithe le núdail tanaí cócaráilte i bhroth cnámh agus feoil sicín sciathánaithe."
+    },
+    "domates-corbasi": {
+      "name": "Anraith Trátaí",
+      "description": "Blaise saibhir cócaráilte le trátaí aibí, im, agus basil, críochnaithe le cáis."
+    },
+    "sebze-corbasi": {
+      "name": "Anraith Glasraí",
+      "description": "Anraith éadrom bhialainne ullmhaithe le glasraí séasúracha, ola olóige, agus luibheanna úra."
+    },
+    "beyran-corbasi": {
+      "name": "Anraith Lao Spíosrach Beyran",
+      "description": "Anraith réigiúnach ullmhaithe ar theas ard le lao, rís, gairleog, agus piobar te."
+    },
+    "kelle-paca-corbasi": {
+      "name": "Anraith Ceann agus Trotair",
+      "description": "Anraith broth cnámh saibhir déanta le trotair agus feoil cheann bó bruite ar feadh uaireanta fada."
+    },
+    "sehriye-corbasi": {
+      "name": "Anraith Fheirmicíní",
+      "description": "Anraith laethúil ullmhaithe le friochán sicín le trátaí, vermicelli, agus pearsli."
+    },
+    "tavuk-sis": {
+      "name": "Spíosraí Sicín",
+      "description": "Piocáin sicín i measctha le spíosraí speisialta, freastalaithe le piobair rósta agus trátaí."
+    },
+    "kasap-sucuk": {
+      "name": "Sucuk an Bhúitéara Grillé",
+      "description": "Isíosach mairteola spíosrach cócaráilte ar charbón, le glasraí rósta agus oinniún le súmaic."
+    },
+    "karisik-izgara": {
+      "name": "Grill Meascán",
+      "description": "Pláta grill saibhir agus éagsúil a bhfuil mairteoil, spíosraí sicín, chopaí caorach, agus isíosach ann."
+    },
+    "nohut-yemegi": {
+      "name": "Stobhach Síoróip le Mairteoil",
+      "description": "Béile baile de chickpeas agus mairteoil diced a cócaráil go mall i bpota copair."
+    },
+    "patlican-musakka": {
+      "name": "Moussaka Eggplant",
+      "description": "Bróga leacán, mairteoil thoir, agus moussaka bácáilte san oigheann le anlann trátaí, stíl bialainne."
+    },
+    "zeytinyagli-taze-fasulye": {
+      "name": "Pónairí Glas in Ola Olóige",
+      "description": "Rogha clasaiceach cócaráilte in ola olóige le pónairí glas, trátaí, agus oinniúin, arna sheirbheáil fuar."
+    },
+    "tavuk-sote": {
+      "name": "Circe Sautéed",
+      "description": "Píosaí circe a bhfuil sautéed thar teas ard le piobair dhathúil, muisiriúin, agus trátaí."
+    },
+    "izmir-kofte": {
+      "name": "Liathróidí Feola Stíl İzmir",
+      "description": "Príomhchúrsa traidisiúnta de liamhás feola bó, prátaí, agus piobair bácáilte i anlann trátaí."
+    },
+    "etli-bezelye": {
+      "name": "Pónairí le Feoil Bó",
+      "description": "Béile laethúil cócaráilte i bpota le feoil bhó nua-críochna, pónairí, cairéid, agus prátaí."
+    },
+    "patlican-oturtma": {
+      "name": "Úbhar Bácáilte le Mionghlas Feola",
+      "description": "Réitítear an teanga sa oigheann le úbh, feoil mhionta spíosrach, agus anlann trátaí gairleog."
+    },
+    "salgam-suyu": {
+      "name": "Sú Turnip Leachtach",
+      "description": "Sú traidisiúnta spíosrach turnip leachtach le carbhat corcra agus géastach bulgur."
+    },
+    "maden-suyu": {
+      "name": "Uisce Mhiotail",
+      "description": "Uisce mianraí nádúrtha shimplí ar fáil fuar."
+    },
+    "su": {
+      "name": "Uisce Tine Nádúrtha",
+      "description": "Uisce tine nádúrtha freastail fuar i mbuidéal gloine."
+    },
+    "kola": {
+      "name": "Cola",
+      "description": "Deoch charbónáitithe clasaiceach freastail fuar an-oighir."
+    },
+    "gazoz": {
+      "name": "Sóid Líomóide Tuircis",
+      "description": "Sóid bhreathnaithe traidisiúnta, athnuachánach, agus freastail fuar glan."
+    },
+    "turk-kahvesi": {
+      "name": "Caife Tuircis",
+      "description": "Caife traidisiúnta Tuircis le scuma, cócaráilte ar teas ard i cezve copair."
+    },
+    "demleme-cay": {
+      "name": "Tá Caife Déanta Tuircis",
+      "description": "Ta caife hot nua-bhrabhsáilte Rize i ngloine caol-waisted."
+    },
+    "ev-yapimi-limonata": {
+      "name": "Léimóid Déanta sa Bhaile",
+      "description": "Léiméad athnuacháin ullmhaithe go laethúil le líomóid úr, mint, agus beagán siúcra."
+    },
+    "hosaf": {
+      "name": "Compóid Torthaí Laethúil",
+      "description": "Compóid baile boilte go laethúil le ríseáin, apracóidí, nó plumaí de réir na séasúr."
+    },
+    "iskender-kebabi": {
+      "name": "Bursa İskender Kebab",
+      "description": "Casann an feoil ar shjustar os cionn pide, freastalaítear léi le anlann trátaí, im te, agus iógart."
+    },
+    "kazandibi": {
+      "name": "Pudín Bainne Caramelaithe",
+      "description": "Mias milseáin traidisiúnta bainne caramelaithe i gceart, le uigeacht shilicíneach."
+    },
+    "tavuk-gogsu": {
+      "name": "Pudín Bainne Uthmánaigh",
+      "description": "Milseog bainne éadrom agus snáithíneach ullmhaithe le oidis thraidisiúnta, freastail le cinnamon."
+    },
+    "keskul": {
+      "name": "Pudding Bainne Almond",
+      "description": "Milseog bainne stíl Ottoman críochnaithe le blas almóin agus cnó cócó."
+    },
+    "irmik-helvasi": {
+      "name": "Halva Semolina",
+      "description": "Halva semolina, rósta le im agus cnónna pín, freastail te agus gránach."
+    },
+    "kabak-tatlisi": {
+      "name": "Milseog Puimcin le Tahini",
+      "description": "Tá an puimcin, cócaráilte go mall ina sú féin, freastail le tahini agus cnónna crann síorghlas."
+    },
+    "ayva-tatlisi": {
+      "name": "Milseog Quince",
+      "description": "Quince cócaráilte le clóibh agus cinnamon, freastail le uachtar clotted agus cnónna."
+    },
+    "revani": {
+      "name": "Cáca Síoróp Semóin",
+      "description": "An milseog bialainne clasaiceach ina mbuaileann cáca bog síleála semóin le síoróp cumhra líomóide."
+    },
+    "ekmek-kadayifi": {
+      "name": "Púding Aráin le Uachtar Tiubh",
+      "description": "Púding aráin a scíorthar le síoróp caramalaithe ar fáil le uachtar tiubh buiscíní buffalo."
+    },
+    "cevizli-baklava": {
+      "name": "Baklava Cnó",
+      "description": "Ciseáin an-thanaí fillte, baklava crúbach déanta le go leor cnónna agus im simplí."
+    }
+  },
+  "allergens": {
+    "Süt ürünleri": "Déiríochta",
+    "Gluten": "Glútan",
+    "Yumurta": "Uibhe",
+    "Badem": "Almón",
+    "Çam fıstığı": "Planda cnó péine",
+    "Susam": "Seiséam",
+    "Ceviz": "Coll"
+  },
+  "tags": {
+    "Popüler": "Tóir",
+    "Vejetaryen": "Glasaéir",
+    "Günün Yemeği": "Pláta an Lae",
+    "Şefin Önerisi": "Rogha an Chef",
+    "Yeni": "Nua",
+    "Acılı": "Spíosrach",
+    "Ev Yapımı": "Déanta sa Bhaile",
+    "Lokanta Klasiği": "Clasaiceach Bialainne",
+    "Günün Çorbası": "Anraith an Lae",
+    "Vegan": "Vegan",
+    "Hafif": "Éadrom",
+    "Yöresel": "Réigiúnach",
+    "Paylaşmalık": "Le Muiteanas",
+    "Ev Yemeği": "Stíl Bhaile",
+    "Zeytinyağlı": "Ola Olóige",
+    "Nostaljik": "Neamhchinnteachas",
+    "Geleneksel": "Traidisiúnta",
+    "Bursa Lezzeti": "Blaiseadh Bursa",
+    "Sütlü Tatlı": "Milseog Bhainne",
+    "Sıcak Tatlı": "Milseog The",
+    "Mevsimlik": "Séasúrach",
+    "Şerbetli": "Milseog Sirob"
+  }
+}

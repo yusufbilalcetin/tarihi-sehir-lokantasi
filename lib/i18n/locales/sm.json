@@ -1,0 +1,349 @@
+{
+  "locale": "sm",
+  "ui": {
+    "menu": "Lisi",
+    "search": "Suʻe le lisi...",
+    "searchLabel": "Suʻe le lisi",
+    "categories": "Vaega",
+    "categoryIntro": "Filifili le tofo mo lau laulau.",
+    "categoryNavigation": "Vaega o lisi",
+    "openCategory": "Matala {name}, {count} items",
+    "items": "meaʻai",
+    "item": "meaʻai",
+    "searchResults": "Iʻuga o Suʻega",
+    "productsFound": "{count} meaʻai na maua",
+    "backToCategories": "Toe foʻi i vaega",
+    "backToCategory": "Toe foʻi i {name}",
+    "clearSearch": "Faʻamama le suʻega",
+    "noResults": "Leai ni meaʻai e fetaui",
+    "noResultsDescription": "Suʻe se isi mea pe toe foʻi i vaega.",
+    "order": "Laʻu Poloaiga",
+    "waiter": "Tagata Tautua",
+    "bill": "Pisi",
+    "addToCart": "Faʻaopoopo i le Poloaiga",
+    "addedToCart": "Ua faʻaopoopo {name} i lau poloaiga.",
+    "removeFromCart": "Tuʻuese {name}",
+    "soldOut": "Ua uma le faʻatau i le Aso Nei",
+    "productDetails": "Tatala auiliiliga mo {name}",
+    "portion": "Vaega",
+    "standardPortion": "Vaega masani",
+    "allergens": "Faʻamau",
+    "noAllergens": "Leai ni faʻalauiloaina o meaʻai faigata",
+    "productNote": "Faʻamatalaga aitema",
+    "productNotePlaceholder": "Mo se faʻataʻitaʻiga, aua le pata, fa'amolemole",
+    "decreaseQuantity": "Faʻaititia le aofaʻi",
+    "increaseQuantity": "Faʻalautele le aofaʻi",
+    "each": "tagata taʻitasi",
+    "note": "Faʻamatalaga",
+    "subtotal": "Oloa aofaʻi",
+    "serviceFee": "Totogi tautua",
+    "total": "Aofaʻiga Telefoni",
+    "sendOrder": "Auina le Poloaʻiga",
+    "orderSent": "Ua auina lau poloaʻiga i le umukuka",
+    "orderTracking": "Siaki le poloaʻiga #{number} iinei.",
+    "newItem": "Faʻaofi Se Mea Fou",
+    "emptyCart": "Ua leai se mea i lau poloaʻiga",
+    "emptyCartDescription": "O mea o le a e filifilia mai le lisi o le a faʻaalia iinei.",
+    "browseMenu": "Vei Te Lisi",
+    "orderReceived": "Ua Maua le Poloaʻiga",
+    "waiterConfirmed": "Ua faamaonia e le tagatanuu",
+    "preparing": "O lo'o sauniuni",
+    "ready": "Ua sauni",
+    "served": "Ua tautua",
+    "preparingDescription": "O lo'o sauniuni la matou umukuka lau oka.",
+    "orderStatus": "Tulaga o le oka",
+    "callWaiter": "Vala'au le tagatanuu",
+    "placeOrder": "Ou te mana'o e oka",
+    "wantWater": "Ou te mana'o i le vai",
+    "wantBread": "Ou te mana'o i le falaoa",
+    "wantService": "Au'aunaga faaopoopo",
+    "other": "Isi",
+    "generalRequest": "Ou te i ai se talosaga lautele",
+    "orderHelp": "Ou te mana'o i se fesoasoani i lo'u oka",
+    "waterDescription": "Fa'amolemole aumai le vai i le laulau",
+    "breadDescription": "Faamolemole aumai falaoa i luga o le laulau",
+    "serviceDescription": "Ou te manaomia ipu meaʻai po o se ipu",
+    "otherDescription": "Ou te manaʻomia se fesoasoani i se isi mea",
+    "waiterHelpTitle": "O le ā le auala e mafai ai ona matou fesoasoani?",
+    "waiterHelpDescription": "O lau talosaga o le a lafoina ma {table}.",
+    "waiterRequestSent": "O lau talosaga na lafoina i le tautua a le matou tamāloa tautua.",
+    "requestBill": "Faitau Pese",
+    "billSent": "O lau talosaga mo le pili na lafoina",
+    "billConfirm": "E te manaʻo e talosaga mo le pili?",
+    "billSentDescription": "O le a omai le matou tautua iā te oe i se taimi puupuu.",
+    "billConfirmDescription": "O lau talosaga o le a alu tuusaʻo i le tautua. E mafai ona e totogia i luga o le laulau po o le kasa.",
+    "billToast": "Ua lafoina lau talosaga pili i le matou tagata tautua.",
+    "backToMenu": "Toe Foi i le Lisi",
+    "back": "Toe",
+    "close": "Tapuni",
+    "yourTable": "LAU LAVA MEA AI",
+    "serviceOpen": "Auaunaga tatala",
+    "slogan": "Tofo Faaleaganuu • La'au Muamua Malu",
+    "location": "Bursa, Osmangazi",
+    "languageLabel": "Filifili le gagana",
+    "currencyLabel": "Filifili tupe",
+    "customerNavigation": "Fa'atonu lisi tagata faʻatau",
+    "approximateCurrency": "O tau i isi tupe o tau fa'atusatusa. O le totogi o lo'o faia i le Turkish Lira.",
+    "orderSuccess": "Ua lafoina lau poloaiga ma le manuia.",
+    "languagePickerTitle": "Filifili Gagana",
+    "languagePickerDescription": "Filifili le gagana e te manaʻo e faʻaaoga mo le lisi.",
+    "searchLanguage": "Suʻe gagana...",
+    "recommendedLanguages": "Fautuaina",
+    "recentLanguages": "Gagana lata mai",
+    "allLanguages": "Gagana uma",
+    "languageNotFound": "Lei maua le gagana.",
+    "languageNotFoundDescription": "Faʻalogo i se isi igoa poʻo le code o le gagana.",
+    "tableNumber": "Laulau {number}",
+    "itemCount": "{count} mea",
+    "splashLabel": "Faʻaali le lau tatala o Tarihi Şehir Lokantası",
+    "cancel": "Faʻamuta",
+    "confirmOrder": "Faamaonia Le Poloaiga",
+    "orderSummary": "Aotelega o le Poloaiga",
+    "payment": "Totogi",
+    "tableNotFound": "Lei maua le laulau.",
+    "invalidQr": "QR code le talafeagai.",
+    "menuUnavailable": "O le lisi e le maua i le taimi nei.",
+    "networkError": "Na iai se faafitauli i le upega tafaʻilagi.",
+    "productUnavailable": "O lenei mea e le maua i le taimi nei.",
+    "unableToSendOrder": "Le mafai ona lafo le oka.",
+    "tryAgain": "Toe taumafai",
+    "somethingWentWrong": "Na tupu se mea sese.",
+    "loadingLanguage": "O lo'o la'uina le gagana...",
+    "languageLoadError": "Le mafai ona la'uina le gagana. Faamolemole toe taumafai."
+  },
+  "categories": {
+    "soups": "Soup",
+    "grill": "Umu",
+    "mains": "Meaai Autu",
+    "drinks": "Vaiʻai",
+    "kebabs": "Kebabs",
+    "dessert": "Faasamoa"
+  },
+  "products": {
+    "mercimek": {
+      "name": "Supū Lini",
+      "description": "Supū lini na faia i le fale i le auala masani, ua uma i se sosū pata."
+    },
+    "tas-kebabi": {
+      "name": "Stew Povi Turuki",
+      "description": "Povi, fualaʻau o taimi eseese, ma le sosu fa'apitoa ua fa'auma malie i le matou fale'aiga."
+    },
+    "kuzu-tandir": {
+      "name": "Mamoe Faʻaumu Faʻaai",
+      "description": "O le tandoori mamalu a la matou faleʻaiga, fai māmā i le vevela maualalo mo se taimi umi."
+    },
+    "pirinc-pilavi": {
+      "name": "Pilaf araisa",
+      "description": "Pilaf araisa Baldo mago ma mama."
+    },
+    "firin-sutlac": {
+      "name": "Pudding araisa falai",
+      "description": "Pudding araisa falai i le auala masani, sauni ma le susu povi i aso uma."
+    },
+    "kuru-fasulye": {
+      "name": "Stew Pipi Paʻepaʻe ma Povi",
+      "description": "Fasimea İspir, povi ʻapipiʻi, ma paste tamato faleʻaiga masani."
+    },
+    "izgara-kofte": {
+      "name": "Meatballs Grill",
+      "description": "Meatballs povi i le sitaili fagu ma pepa roast ma tamato."
+    },
+    "ayran": {
+      "name": "Ayran Churned",
+      "description": "Buttermilk masani churned ma tele foam, faia mai i yogurt i aso uma."
+    },
+    "ezogelin-corbasi": {
+      "name": "Ezogelin Soup",
+      "description": "Soup faleʻaiga masani lea e feiloaʻi lentils mumu, bulgur, ma araisa ma minti."
+    },
+    "tarhana-corbasi": {
+      "name": "Tarhana Soup",
+      "description": "Tarhana fai i le fale, se klasika Anatolian e ulaula malu ma tamato ma minti mago."
+    },
+    "yayla-corbasi": {
+      "name": "Supoa Yogurt ma Reis",
+      "description": "O se supoa malulu ma mago lalo saunia ma yogurt, reis, ma minti mago."
+    },
+    "iskembe-corbasi": {
+      "name": "Supoa Tripe",
+      "description": "O se supoa tripe povi saʻo ua tautaua ma ona tofo ma vinega solo."
+    },
+    "dugun-corbasi": {
+      "name": "Supoa Fiafia",
+      "description": "O se supoa faa-taua ua faia ma mamoe ua tipi i ni fasi ma tofoina ma le marinade lemona."
+    },
+    "tavuk-suyu-corbasi": {
+      "name": "Supoa Lalaga Moa",
+      "description": "O se supoa faamalolo ua saunia ma noodles manifinifi kuka i le tulimatua ma fasi moa tipi."
+    },
+    "domates-corbasi": {
+      "name": "Supoa Tamato",
+      "description": "O se tofo mauoa kuka ma tamato maua, pata, ma basil, fa'amae'a i lalo o sisi."
+    },
+    "sebze-corbasi": {
+      "name": "Supō Fua Manu",
+      "description": "O se supō malamalama i fale taumafai na saunia ma fuala'au i le vaitau, suau'u olive, ma la'au fou."
+    },
+    "beyran-corbasi": {
+      "name": "Supō Lamu Beyran Fa'asu'asu",
+      "description": "O se supō i le itulagi na saunia i luga o le vevela maualuga ma lamu, araisa, sina, ma pepa vevela."
+    },
+    "kelle-paca-corbasi": {
+      "name": "Supō Ulu ma Va'e",
+      "description": "O se supō māmā manu'i ua kuka i vae povi ma ponaivi o le ulu mo itula tele."
+    },
+    "sehriye-corbasi": {
+      "name": "Supō Vermicelli",
+      "description": "Soup i aso uma saunia ma brotini moa ma tamato, vermicelli, ma lalo."
+    },
+    "tavuk-sis": {
+      "name": "Sulugooni Moa",
+      "description": "Vaega moa fa'afefiloi ma taumafaina fa'apitoa, 'ai fa'atasi ma pepa ula ma tamato tao."
+    },
+    "kasap-sucuk": {
+      "name": "Sucuk Fuala'au i le sua he'i",
+      "description": "Sausage povi pi'i i mea'ai, kuka i luga o koale, fa'apipi'i ma fuala'au tao ma aniana ma sumaki."
+    },
+    "karisik-izgara": {
+      "name": "Grill Su'afa",
+      "description": "Se ipu grill tele ma lami e aofia ai meatballs, sulugooni moa, lamb chops, ma sausage."
+    },
+    "nohut-yemegi": {
+      "name": "Stew Pepepi ma Povi",
+      "description": "O se taumafataga a le fale na sauni ai ni praati fualaau ma povi tipi e tolu i luga o le vai uʻamea lafo."
+    },
+    "patlican-musakka": {
+      "name": "Mousaka Fualaʻau ʻAva",
+      "description": "Fualaʻau ʻava faʻapapa, povi solo, ma le mousaka kuka i le ogaumu ma sosi tamato, i le sitaili faletalimalo."
+    },
+    "zeytinyagli-taze-fasulye": {
+      "name": "Papaya Lanu Meamata i le Suʻauʻu Oliva",
+      "description": "O se auala masani e kuka ai i le suauʻu oliva ma fualaʻau lanumeamata, tamato, ma aniani, sauni mo le 'aʻai malulu."
+    },
+    "tavuk-sote": {
+      "name": "Moʻa Sautéed",
+      "description": "O fasi moa e sauté i luga o le vevela maualuga ma pepa lanu eseese, mātūtū, ma tamato."
+    },
+    "izmir-kofte": {
+      "name": "Papa Moa Stil Izmir",
+      "description": "O se ipu autu masani o tamaʻi povi, pateta, ma pepa e tao i le sauce tamato."
+    },
+    "etli-bezelye": {
+      "name": "Pi ma Povi",
+      "description": "O se taumafataga i aso uma e kuka i totonu o se ipu ma povi tipi, pi, karoti, ma pateta."
+    },
+    "patlican-oturtma": {
+      "name": "Oni Tao ma Fasi Povi",
+      "description": "O le tino o le ulu tausi i le ogaumu faatasi ma oni, fasi povi pipi, ma le sauce tamato lauu."
+    },
+    "salgam-suyu": {
+      "name": "Su Turnip Fa'asūsū",
+      "description": "Su turnip pipi masani fa'asūsū faatasi ma karoti viole ma sisi bulgur."
+    },
+    "maden-suyu": {
+      "name": "Suavai Mineral",
+      "description": "Suavai mama ma natura mineral e taumafai i le mālūlū."
+    },
+    "su": {
+      "name": "Vai Punavai Faʻanatura",
+      "description": "Vai punavai masani e tautatolu i le malulu i totonu o le fagu tioata."
+    },
+    "kola": {
+      "name": "Cola",
+      "description": "O se isi meainu kasa masani e tautatolu i le malulu ma le aisa."
+    },
+    "gazoz": {
+      "name": "Soda Lēmōni Turuki",
+      "description": "Soda masani e iai le tofo, māfanafana, ma tautatolu i le malulu leai se mea faʻaopoopo."
+    },
+    "turk-kahvesi": {
+      "name": "Kofi Turuki",
+      "description": "Kofi Turuki masani ma le paʻu, kuka i le vevela maualuga i le cezve uʻamea kopera."
+    },
+    "demleme-cay": {
+      "name": "Laʻau Uō Turuki",
+      "description": "Laʻau Rize fou e vevela i totonu o se ipu tioata manifinifi i le taliga."
+    },
+    "ev-yapimi-limonata": {
+      "name": "Līmōne Lausi Fai i le Fale",
+      "description": "Leimonade fou e saunia i aso uma ma le leimona fou, mīti, ma se sila suka."
+    },
+    "hosaf": {
+      "name": "Fua Fua Iaso",
+      "description": "Compote fale e kuka i aso uma ma raisins, apricots, po o plums e tusa ai ma le vaitau."
+    },
+    "iskender-kebabi": {
+      "name": "Bursa İskender Kebab",
+      "description": "O le meaʻai e liua i luga o se skewer i luga o pide, tautua ma sosi tamato, pata vevela, ma yogurt."
+    },
+    "kazandibi": {
+      "name": "Pudding Suāu Karamela",
+      "description": "Se meaʻai suāu masani na karamela lelei, ma se paʻu silk."
+    },
+    "tavuk-gogsu": {
+      "name": "Pudding Suāu Ottoman",
+      "description": "O se meainuai susu mama ma filo e saunia i se fua masani, tautua fa'atasi ma sisi cinnamon."
+    },
+    "keskul": {
+      "name": "Pudding Suauu 'Alamona",
+      "description": "Mea'ai susu sitaili Ottoman ua mae'a ma tofo 'alamona ma sinasina talo."
+    },
+    "irmik-helvasi": {
+      "name": "Halva Semolina",
+      "description": "Halva semolina, sasaa ma pata ma nati pine, tautua māfanafana ma fasi saito."
+    },
+    "kabak-tatlisi": {
+      "name": "Meainu'ai Puipui ma Tahini",
+      "description": "O le puipui, e fa'ata'amilo malu i lona sua, e tautua fa'atasi ma tahini ma walnuts."
+    },
+    "ayva-tatlisi": {
+      "name": "Meainu'ai Quince",
+      "description": "O le quince ua kuka fa'atasi ma cloves ma cinnamon e tautua fa'atasi ma kirimu faigata ma walnuts."
+    },
+    "revani": {
+      "name": "Keke Salu Semolina",
+      "description": "O le suamalie masani i faletalimalo lea e feiloaʻi ai le keke malamalama semolina ma suacepipi manogi lemu."
+    },
+    "ekmek-kadayifi": {
+      "name": "Pudding Apa ma Kirimu Ga'o",
+      "description": "O le pudding apa na malologa ma suacepipi caramelized e tuʻuina ma le kirimu gaʻo povi."
+    },
+    "cevizli-baklava": {
+      "name": "Baklava Wanut",
+      "description": "Faigamea laupapa manifinifi, baklava faʻalelei faia i le tele o wanut ma pata masani."
+    }
+  },
+  "allergens": {
+    "Süt ürünleri": "Fataiao",
+    "Gluten": "Gluten",
+    "Yumurta": "Fuamoa",
+    "Badem": "Alamoni",
+    "Çam fıstığı": "Laʻau paini",
+    "Susam": "Seseamu",
+    "Ceviz": "Walnut"
+  },
+  "tags": {
+    "Popüler": "Lautele le fiafia",
+    "Vejetaryen": "Fesoasoani fualaʻau",
+    "Günün Yemeği": "Meaʻai o le Aso",
+    "Şefin Önerisi": "Filifiliga a le Sefu",
+    "Yeni": "Fou",
+    "Acılı": "Manogi",
+    "Ev Yapımı": "Fale faia",
+    "Lokanta Klasiği": "Meaʻai masani a le Faleʻai",
+    "Günün Çorbası": "Soup o le Aso",
+    "Vegan": "Vegan",
+    "Hafif": "Malamalama",
+    "Yöresel": "Itumalo",
+    "Paylaşmalık": "Mo Faasoa",
+    "Ev Yemeği": "Faleaiga",
+    "Zeytinyağlı": "Suauʻu Olivia",
+    "Nostaljik": "Manatua anamua",
+    "Geleneksel": "Tu ma aga masani",
+    "Bursa Lezzeti": "Suʻega o Bursa",
+    "Sütlü Tatlı": "Fiaʻai Paʻepaʻe",
+    "Sıcak Tatlı": "Fiaʻai Vevela",
+    "Mevsimlik": "Vaitau",
+    "Şerbetli": "Fiaʻai Suasami"
+  }
+}

@@ -1,0 +1,349 @@
+{
+  "locale": "sq",
+  "ui": {
+    "menu": "Menu",
+    "search": "Kërko në menu...",
+    "searchLabel": "Kërko në menu",
+    "categories": "Kategoritë",
+    "categoryIntro": "Zgjidh shijen për tavolinën tënde.",
+    "categoryNavigation": "Kategoritë e menusë",
+    "openCategory": "Hap {name}, {count} artikuj",
+    "items": "artikuj",
+    "item": "artikull",
+    "searchResults": "Rezultatet e kërkimit",
+    "productsFound": "U gjetën {count} artikuj",
+    "backToCategories": "Kthehu te kategoritë",
+    "backToCategory": "Kthehu te {name}",
+    "clearSearch": "Pastro kërkimin",
+    "noResults": "Nuk u gjetën artikuj përkatës",
+    "noResultsDescription": "Provo një kërkim tjetër ose kthehu te kategoritë.",
+    "order": "Porosia Ime",
+    "waiter": "Kamarier",
+    "bill": "Fatura",
+    "addToCart": "Shto në Porosi",
+    "addedToCart": "{name} u shtua në porosinë tuaj.",
+    "removeFromCart": "Hiq {name}",
+    "soldOut": "Shitur Sot",
+    "productDetails": "Hap detajet për {name}",
+    "portion": "Pjesë",
+    "standardPortion": "Pjesë standarde",
+    "allergens": "Alergjenët",
+    "noAllergens": "Nuk ka alergjenë të deklaruar",
+    "productNote": "Shënim artikulli",
+    "productNotePlaceholder": "P.sh. pa gjalpë, ju lutem",
+    "decreaseQuantity": "Ul sasinë",
+    "increaseQuantity": "Rrit sasinë",
+    "each": "secili",
+    "note": "Shënim",
+    "subtotal": "Nëntotali",
+    "serviceFee": "Tarifa e shërbimit",
+    "total": "Totali",
+    "sendOrder": "Dërgo Porosinë",
+    "orderSent": "Porosia juaj u dërgua në kuzhinë",
+    "orderTracking": "Ndjekni porosinë #{number} këtu.",
+    "newItem": "Shto Një Artikull Tjetër",
+    "emptyCart": "Porosia juaj është e zbrazët",
+    "emptyCartDescription": "Artikujt që zgjidhni nga menyja do të shfaqen këtu.",
+    "browseMenu": "Shfleto Menynë",
+    "orderReceived": "Porosia U Pranuar",
+    "waiterConfirmed": "Konfirmuar nga kamarieri",
+    "preparing": "Po përgatitet",
+    "ready": "Gati",
+    "served": "Shërbyer",
+    "preparingDescription": "Kuzhina jonë po përgatit porosinë tuaj.",
+    "orderStatus": "Gjendja e porosisë",
+    "callWaiter": "Thirr kamarierin",
+    "placeOrder": "Dua të porosis",
+    "wantWater": "Dua ujë",
+    "wantBread": "Dua bukë",
+    "wantService": "Shërbim ekstra",
+    "other": "Tjetër",
+    "generalRequest": "Kam një kërkesë të përgjithshme",
+    "orderHelp": "Më duhet ndihmë me porosinë time",
+    "waterDescription": "Ju lutem sillni ujë në tavolinë",
+    "breadDescription": "Ju lutem sillni bukë në tryezë",
+    "serviceDescription": "Më duhen pirunë ose një pjatë",
+    "otherDescription": "Më duhet ndihmë me diçka tjetër",
+    "waiterHelpTitle": "Si mund të ndihmojmë?",
+    "waiterHelpDescription": "Kërkesa juaj do të dërgohet me {table}.",
+    "waiterRequestSent": "Kërkesa juaj u dërgua tek kamarieri ynë.",
+    "requestBill": "Kërkoni faturën",
+    "billSent": "Kërkesa juaj për faturë u dërgua",
+    "billConfirm": "Dëshironi të kërkoni faturën?",
+    "billSentDescription": "Kamarieri ynë do të jetë me ju së shpejti.",
+    "billConfirmDescription": "Kërkesa juaj do të shkojë direkt tek kamarieri. Mund të paguani në tryezë ose tek kasieri.",
+    "billToast": "Kërkesa juaj për faturë u dërgua te kamarieri ynë.",
+    "backToMenu": "Kthehu tek Menuja",
+    "back": "Kthehu",
+    "close": "Mbyll",
+    "yourTable": "TAVOLINA JUAJ",
+    "serviceOpen": "Shërbimi hapur",
+    "slogan": "Shije Tradicionale • Tavolinë Moderne",
+    "location": "Bursa, Osmangazi",
+    "languageLabel": "Zgjidh gjuhën",
+    "currencyLabel": "Zgjidh monedhën",
+    "customerNavigation": "Navigimi i menysë për klientë",
+    "approximateCurrency": "Çmimet në monedha të huaj janë të përafërta. Pagesa bëhet në Lira Turke.",
+    "orderSuccess": "Porosia juaj u dërgua me sukses.",
+    "languagePickerTitle": "Zgjidh Gjuhën",
+    "languagePickerDescription": "Zgjidhni gjuhën që dëshironi të përdorni për menyunë.",
+    "searchLanguage": "Kërko gjuhët...",
+    "recommendedLanguages": "Rekomanduar",
+    "recentLanguages": "Gjuhët e fundit",
+    "allLanguages": "Gjithë gjuhët",
+    "languageNotFound": "Gjuha nuk u gjet.",
+    "languageNotFoundDescription": "Provoni një emër ose kod tjetër të gjuhës.",
+    "tableNumber": "Tavolina {number}",
+    "itemCount": "{count} artikuj",
+    "splashLabel": "Ekrani hapës i Tarihi Şehir Lokantası",
+    "cancel": "Anulo",
+    "confirmOrder": "Konfirmo Porosinë",
+    "orderSummary": "Përmbledhje e Porosisë",
+    "payment": "Pagesa",
+    "tableNotFound": "Tavolina nuk u gjet.",
+    "invalidQr": "Kodi QR i pavlefshëm.",
+    "menuUnavailable": "Menuja aktualisht nuk është në dispozicion.",
+    "networkError": "Në rrjet ka ndodhur një gabim.",
+    "productUnavailable": "Kjo artikull aktualisht nuk është në dispozicion.",
+    "unableToSendOrder": "Nuk mund të dërgohet porosia.",
+    "tryAgain": "Provo përsëri",
+    "somethingWentWrong": "Diçka shkoi keq.",
+    "loadingLanguage": "Ngarkimi i gjuhës...",
+    "languageLoadError": "Gjuha nuk mund të ngarkohet. Ju lutemi provoni përsëri."
+  },
+  "categories": {
+    "soups": "Supat",
+    "grill": "Grytat",
+    "mains": "Vaktet kryesore",
+    "drinks": "Pijet",
+    "kebabs": "Kebabet",
+    "dessert": "Ëmbëlsirat"
+  },
+  "products": {
+    "mercimek": {
+      "name": "Supë me thjerrëza",
+      "description": "Supë shtëpie me thjerrëza e përgatitur në stilin klasik, e përfunduar me një salcë me gjalpë."
+    },
+    "tas-kebabi": {
+      "name": "Gulaç turk me mish viçi",
+      "description": "Mish viçi, perime sezonale dhe salca speciale e ngadalësuar e restorantit tonë."
+    },
+    "kuzu-tandir": {
+      "name": "Derri i pjekur ngadalë",
+      "description": "Lambani tipik i restorantit tonë, i gatuar ngadalë në temperaturë të ulët."
+    },
+    "pirinc-pilavi": {
+      "name": "Pilaf orizi",
+      "description": "Pilaf orizi Baldo me gjalpë, i butë dhe i lehtë."
+    },
+    "firin-sutlac": {
+      "name": "Puding orizi i pjekur",
+      "description": "Puding orizi i pjekur në mënyrën tradicionale, i përgatitur me qumësht bufaloje të freskët çdo ditë."
+    },
+    "kuru-fasulye": {
+      "name": "Gjellë fasulash të bardha me mish viçi",
+      "description": "Fasule İspir, mish viçi i prerë në copa, dhe pastë domatesh e thjeshtë restoranti."
+    },
+    "izgara-kofte": {
+      "name": "Kërcime të pjekura mishi",
+      "description": "Kërcime mishi viçi në stil kasapi me spec e pjekur dhe domate."
+    },
+    "ayran": {
+      "name": "Ayran i rrahur",
+      "description": "Lëng tradicional i rrahur i qumështit të thartë me shumë shkumë, bërë me kos të përditshëm."
+    },
+    "ezogelin-corbasi": {
+      "name": "Supë Ezogelin",
+      "description": "Një supë tradicionale restoranti ku thjerrëzat e kuqe, bulguri dhe orizi takohen me mente."
+    },
+    "tarhana-corbasi": {
+      "name": "Supë Tarhana",
+      "description": "Tarhana shtëpiake, një klasik anatolian i gatuar ngadalë me domate dhe mente të thatë."
+    },
+    "yayla-corbasi": {
+      "name": "Supë me Kos dhe Oriz",
+      "description": "Një supë freskuese dhe kremoze yayla e përgatitur me kos, oriz dhe mente të tharë."
+    },
+    "iskembe-corbasi": {
+      "name": "Supë me Zorrë Kafshe",
+      "description": "Supë e vërtetë me zorra mishi viçi e shërbyer me erëza dhe uthull hudhre."
+    },
+    "dugun-corbasi": {
+      "name": "Supë Nusërie",
+      "description": "Supë tradicionale nusërie e bërë me mish qengji të copëtuar dhe e shijuar me vaj limoni."
+    },
+    "tavuk-suyu-corbasi": {
+      "name": "Supë me Lëng Pule",
+      "description": "Një supë shëruese e përgatitur me makarona të holla të gatuara në lëng kockash dhe mish pule të copëtuar."
+    },
+    "domates-corbasi": {
+      "name": "Supë me Domate",
+      "description": "Një shije e pasur e gatuar me domate të pjekura, gjalp, dhe borzilok, e kompletuar me djathë."
+    },
+    "sebze-corbasi": {
+      "name": "Supë perimesh",
+      "description": "Një supë e lehtë restoranti e përgatitur me perime të stinës, vaj ulliri, dhe barishte të freskëta."
+    },
+    "beyran-corbasi": {
+      "name": "Supë e nxehtë me qingj Beyran",
+      "description": "Një supë rajonale e përgatitur në zjarr të lartë me qingj, oriz, hudhër, dhe piper të nxehtë."
+    },
+    "kelle-paca-corbasi": {
+      "name": "Supë me kokë dhe kembe",
+      "description": "Një supë e pasur me lëng kockash e bërë me këmbë dhe mish koke viçi të zier për orë të gjata."
+    },
+    "sehriye-corbasi": {
+      "name": "Supë me vermiceli",
+      "description": "Supë ditore e përgatitur me lëng pule me domate, vermicelli dhe majdanoz."
+    },
+    "tavuk-sis": {
+      "name": "Shishqebap Pule",
+      "description": "Copëza pule të marinuara me erëza speciale, shërbyer me speca dhe domate të pjekura."
+    },
+    "kasap-sucuk": {
+      "name": "Sucuk i Pjekur i Kasapit",
+      "description": "Suçuk viçi i djegshëm i gatuar mbi qymyr, me perime të pjekura dhe qepë me sumak."
+    },
+    "karisik-izgara": {
+      "name": "Grill i Përzier",
+      "description": "Një pjatë e bollshme dhe e përzier grill që përmban qofte, shishqebap pule, kofsha qengji dhe suxhuk."
+    },
+    "nohut-yemegi": {
+      "name": "Gullash me Mërël dhe Viç",
+      "description": "Një vakt i bërë në shtëpi me qiqra dhe mish viçi të prerë në kubikë, gatuar ngadalë në një tenxhere prej bakri."
+    },
+    "patlican-musakka": {
+      "name": "Mousaka me patëllxhan",
+      "description": "Patëllxhan i skuqur, mish viçi i bluajtur dhe mousaka e pjekur në furrë me salcë domate, në stil restoranti."
+    },
+    "zeytinyagli-taze-fasulye": {
+      "name": "Fasule jeshile në vaj ulliri",
+      "description": "Një klasik i gatuar në vaj ulliri me fasule jeshile, domate dhe qepë, shërbyer i ftohtë."
+    },
+    "tavuk-sote": {
+      "name": "Pule e kavaluar",
+      "description": "Copëzat e pulës kavalen në zjarr të lartë me speca shumëngjyrësh, kërpudha dhe domate."
+    },
+    "izmir-kofte": {
+      "name": "Kuftëra në stil İzmir",
+      "description": "Një pjatë tradicionale kryesore me qofte mishi viçi, patate dhe speca të pjekura në salcë domateje."
+    },
+    "etli-bezelye": {
+      "name": "Groshe me Viç",
+      "description": "Ushqim ditor i gatuar në tenxhere me mish viçi të prerë në kubikë, groshe, karota dhe patate."
+    },
+    "patlican-oturtma": {
+      "name": "Patëllxhan i Pjekur me Mish të Grirë",
+      "description": "Gjuhët janë të përgatitura në furrë me patëllxhan, mish të grirë dhe të djegur dhe salcë domate me hudhër."
+    },
+    "salgam-suyu": {
+      "name": "Lëng i Fermentuar Rrepkash",
+      "description": "Lëng tradicional i djegur rrepke i fermentuar me karota violet dhe maja bulgur."
+    },
+    "maden-suyu": {
+      "name": "Ujë Mineral",
+      "description": "Ujë mineral natyral i shijshëm i shërbyer i ftohtë."
+    },
+    "su": {
+      "name": "Ujë Natyral Burimor",
+      "description": "Ujë natyral burimor shërbyer i ftohtë në një shishe qelqi."
+    },
+    "kola": {
+      "name": "Cola",
+      "description": "Një pije klasike me gaz shërbyer shumë e ftohtë."
+    },
+    "gazoz": {
+      "name": "Soda e Limoni Turke",
+      "description": "Soda tradicionale me shije, freskuese dhe e shërbyer ftohtë thjesht."
+    },
+    "turk-kahvesi": {
+      "name": "Kafe Turke",
+      "description": "Kafe tradicionale turke me shkumë, gatuar në temperaturë të lartë në një cezve bakri."
+    },
+    "demleme-cay": {
+      "name": "Çaj i Gatuar Turke",
+      "description": "Çaj i nxehtë Rize i sapogatuar në një gotë me bel të hollë."
+    },
+    "ev-yapimi-limonata": {
+      "name": "Limonatë shtëpiake",
+      "description": "Limonadë freskuese e përgatitur çdo ditë me limon të freskët, mente dhe pak sheqer."
+    },
+    "hosaf": {
+      "name": "Komposto Frutash Ditore",
+      "description": "Komposto shtëpie e zier çdo ditë me rrush të thatë, kajsi ose kumbulla sipas stinës."
+    },
+    "iskender-kebabi": {
+      "name": "Bursa İskender Kebab",
+      "description": "Mishi rrotullohet mbi shkop mbi pide, shërbehet me salcë domateje, gjalpë të nxehtë dhe jogurt."
+    },
+    "kazandibi": {
+      "name": "Puding Mishi Karamelizuar",
+      "description": "Një ëmbëlsirë tradicionale qumështi e karamelizuar si duhet, me teksturë të butë dhe të lëmuar."
+    },
+    "tavuk-gogsu": {
+      "name": "Puding Otoman Qumështi",
+      "description": "Një ëmbëlsirë e lehtë dhe fibrorë e përgatitur me një recetë tradicionale të qumështit, e shërbyer me kanellë."
+    },
+    "keskul": {
+      "name": "Puding me Qumësht Bajame",
+      "description": "Ëmbëlsirë qumështi në stil osman, e përfunduar me shije bajamesh dhe kokos."
+    },
+    "irmik-helvasi": {
+      "name": "Halva me Misër",
+      "description": "Halva me misër, e pjekur me gjalpë dhe fara pini, e shërbyer e ngrohtë dhe me teksturë të grimcuar."
+    },
+    "kabak-tatlisi": {
+      "name": "Ëmbëlsirë me Kungull dhe Tahini",
+      "description": "Kungulli, i gatuar ngadalë në lëngun e vet, shërbehet me tahini dhe arrë."
+    },
+    "ayva-tatlisi": {
+      "name": "Ëmbëlsirë me Rrëznik",
+      "description": "Rrëzniku i gatuar me karafil dhe kanellë shërbehet me krem të trashur dhe arra."
+    },
+    "revani": {
+      "name": "Tortë me Bajame të Lëngshme",
+      "description": "Embëlsira klasike e restorantit ku torta e butë me niseshte takon shurupin me aromë limoni."
+    },
+    "ekmek-kadayifi": {
+      "name": "Puding Buke me Krem të Dendur",
+      "description": "Puding buka e pushuar me shurup të karamelizuar shërbehet me krem të dendur të buallit."
+    },
+    "cevizli-baklava": {
+      "name": "Bakllava me Arra",
+      "description": "Shtresa shumë të holla, bakllava krokante e bërë me shumë arra dhe gjalp të thjeshtë."
+    }
+  },
+  "allergens": {
+    "Süt ürünleri": "Produktet e qumështit",
+    "Gluten": "Gluten",
+    "Yumurta": "Ve",
+    "Badem": "Arrë bajame",
+    "Çam fıstığı": "Arrë pishë",
+    "Susam": "Susam",
+    "Ceviz": "Arra"
+  },
+  "tags": {
+    "Popüler": "Popullore",
+    "Vejetaryen": "Ushqim vegetar",
+    "Günün Yemeği": "Gjellë e ditës",
+    "Şefin Önerisi": "Zgjedhja e kuzhinit",
+    "Yeni": "Risi",
+    "Acılı": "Të nxehtë",
+    "Ev Yapımı": "Shtëpiake",
+    "Lokanta Klasiği": "Klasik restoranti",
+    "Günün Çorbası": "Supe e ditës",
+    "Vegan": "Vegan",
+    "Hafif": "e lehtë",
+    "Yöresel": "Rajonal",
+    "Paylaşmalık": "për të ndarë",
+    "Ev Yemeği": "Stil shtëpie",
+    "Zeytinyağlı": "Vaj ulliri",
+    "Nostaljik": "Nostalgjike",
+    "Geleneksel": "Tradicional",
+    "Bursa Lezzeti": "Shija e Bursa",
+    "Sütlü Tatlı": "Ëmbëlsirë me qumësht",
+    "Sıcak Tatlı": "Ëmbëlsirë e ngrohtë",
+    "Mevsimlik": "Sezonale",
+    "Şerbetli": "Ëmbëlsirë me sherbet"
+  }
+}

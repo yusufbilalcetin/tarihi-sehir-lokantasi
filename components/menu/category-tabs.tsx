@@ -2,10 +2,13 @@
 
 import type { Category } from "@/types";
 import { cn } from "@/lib/utils";
+import { useMenuPreferences } from "./menu-preferences-provider";
+import { getMenuCategoryName } from "@/lib/i18n/menu-content";
 
 export function CategoryTabs({ categories, activeId, onChange }: { categories: Category[]; activeId: string; onChange: (id: string) => void }) {
+  const { language, t } = useMenuPreferences();
   return (
-    <nav aria-label="Menü kategorileri" className="-mx-4 overflow-x-auto px-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:-mx-6 sm:px-6">
+    <nav aria-label={t("categoryNavigation")} className="-mx-4 overflow-x-auto px-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:-mx-6 sm:px-6">
       <div className="flex w-max gap-2 pb-1">
         {categories.map((category) => (
           <button
@@ -20,7 +23,7 @@ export function CategoryTabs({ categories, activeId, onChange }: { categories: C
                 : "border-border bg-card text-muted-foreground hover:border-copper/70 hover:text-foreground",
             )}
           >
-            {category.name}
+            {getMenuCategoryName(category, language)}
           </button>
         ))}
       </div>

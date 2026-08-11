@@ -1,0 +1,349 @@
+{
+  "locale": "sv",
+  "ui": {
+    "menu": "Meny",
+    "search": "Sök i menyn...",
+    "searchLabel": "Sök i menyn",
+    "categories": "Kategorier",
+    "categoryIntro": "Välj smak för ditt bord.",
+    "categoryNavigation": "Meny kategorier",
+    "openCategory": "Öppna {name}, {count} artiklar",
+    "items": "artiklar",
+    "item": "artikel",
+    "searchResults": "Sökresultat",
+    "productsFound": "{count} artiklar hittades",
+    "backToCategories": "Tillbaka till kategorier",
+    "backToCategory": "Tillbaka till {name}",
+    "clearSearch": "Rensa sökning",
+    "noResults": "Inga matchande artiklar hittades",
+    "noResultsDescription": "Försök en annan sökning eller gå tillbaka till kategorierna.",
+    "order": "Min beställning",
+    "waiter": "Servitör",
+    "bill": "Notan",
+    "addToCart": "Lägg till i beställning",
+    "addedToCart": "{name} har lagts till i din beställning.",
+    "removeFromCart": "Ta bort {name}",
+    "soldOut": "Slutsåld idag",
+    "productDetails": "Öppna detaljer för {name}",
+    "portion": "Portion",
+    "standardPortion": "Standardportion",
+    "allergens": "Allergener",
+    "noAllergens": "Inga deklarerade allergener",
+    "productNote": "Artikelanteckning",
+    "productNotePlaceholder": "T.ex. ingen smör, tack",
+    "decreaseQuantity": "Minska mängd",
+    "increaseQuantity": "Öka mängd",
+    "each": "var",
+    "note": "Notering",
+    "subtotal": "Delsumma",
+    "serviceFee": "Tjänsteavgift",
+    "total": "Totalt",
+    "sendOrder": "Skicka beställning",
+    "orderSent": "Din beställning skickades till köket",
+    "orderTracking": "Spåra beställning #{number} här.",
+    "newItem": "Lägg till en annan vara",
+    "emptyCart": "Din beställning är tom",
+    "emptyCartDescription": "Varor du väljer från menyn kommer att visas här.",
+    "browseMenu": "Bläddra i menyn",
+    "orderReceived": "Beställning mottagen",
+    "waiterConfirmed": "Servitör bekräftad",
+    "preparing": "Förbereder",
+    "ready": "Redo",
+    "served": "Serverad",
+    "preparingDescription": "Vårt kök förbereder din beställning.",
+    "orderStatus": "Beställningsstatus",
+    "callWaiter": "Ring på servitören",
+    "placeOrder": "Jag vill beställa",
+    "wantWater": "Jag skulle vilja ha vatten",
+    "wantBread": "Jag skulle vilja ha bröd",
+    "wantService": "Extra service",
+    "other": "Annat",
+    "generalRequest": "Jag har en allmän begäran",
+    "orderHelp": "Jag behöver hjälp med min beställning",
+    "waterDescription": "Vänligen ta med vatten till bordet",
+    "breadDescription": "Vänligen ta med bröd till bordet",
+    "serviceDescription": "Jag behöver bestick eller en tallrik",
+    "otherDescription": "Jag behöver hjälp med något annat",
+    "waiterHelpTitle": "Hur kan vi hjälpa till?",
+    "waiterHelpDescription": "Din begäran kommer att skickas med {table}.",
+    "waiterRequestSent": "Din begäran skickades till vår servitör.",
+    "requestBill": "Begär notan",
+    "billSent": "Din begäran om nota skickades",
+    "billConfirm": "Vill du begära notan?",
+    "billSentDescription": "Vår servitör kommer snart till dig.",
+    "billConfirmDescription": "Din begäran skickas direkt till servitören. Du kan betala vid bordet eller i kassan.",
+    "billToast": "Din räkning begärdes skickades till vår servitör.",
+    "backToMenu": "Tillbaka till menyn",
+    "back": "Tillbaka",
+    "close": "Stäng",
+    "yourTable": "DITT BORD",
+    "serviceOpen": "Service öppen",
+    "slogan": "Traditionell smak • Modernt bord",
+    "location": "Bursa, Osmangazi",
+    "languageLabel": "Välj språk",
+    "currencyLabel": "Välj valuta",
+    "customerNavigation": "Kundmenynavigation",
+    "approximateCurrency": "Priser i utländsk valuta är ungefärliga. Betalning sker i turkiska lira.",
+    "orderSuccess": "Din beställning skickades framgångsrikt.",
+    "languagePickerTitle": "Välj språk",
+    "languagePickerDescription": "Välj det språk du vill använda för menyn.",
+    "searchLanguage": "Sök språk...",
+    "recommendedLanguages": "Rekommenderat",
+    "recentLanguages": "Senaste språken",
+    "allLanguages": "Alla språk",
+    "languageNotFound": "Språk hittades inte.",
+    "languageNotFoundDescription": "Försök med ett annat språk eller kod.",
+    "tableNumber": "Bord {number}",
+    "itemCount": "{count} artiklar",
+    "splashLabel": "Tarihi Şehir Lokantası startskärm",
+    "cancel": "Avbryt",
+    "confirmOrder": "Bekräfta beställning",
+    "orderSummary": "Beställningsöversikt",
+    "payment": "Betalning",
+    "tableNotFound": "Bordet hittades inte.",
+    "invalidQr": "Ogiltig QR-kod.",
+    "menuUnavailable": "Menyen är för närvarande otillgänglig.",
+    "networkError": "Ett nätverksfel uppstod.",
+    "productUnavailable": "Denna vara är för närvarande otillgänglig.",
+    "unableToSendOrder": "Kan inte skicka beställningen.",
+    "tryAgain": "Försök igen",
+    "somethingWentWrong": "Något gick fel.",
+    "loadingLanguage": "Läser in språk...",
+    "languageLoadError": "Språket kunde inte laddas. Vänligen försök igen."
+  },
+  "categories": {
+    "soups": "Soppor",
+    "grill": "Grillar",
+    "mains": "Huvudrätter",
+    "drinks": "Drycker",
+    "kebabs": "Kebaber",
+    "dessert": "Desserter"
+  },
+  "products": {
+    "mercimek": {
+      "name": "Linsoppa",
+      "description": "Hemlagad linsoppa tillagad på det klassiska sättet, kompletterad med en smörig sås."
+    },
+    "tas-kebabi": {
+      "name": "Turkisk Biffgryta",
+      "description": "Exempel, säsongsbetonade grönsaker och vår restaurangs långkokta specialsås."
+    },
+    "kuzu-tandir": {
+      "name": "Långsamt Rostad Lamm",
+      "description": "Vår restaurangs signaturlamm tandoori, långsamt tillagat på låg värme."
+    },
+    "pirinc-pilavi": {
+      "name": "Ris Pilaff",
+      "description": "Smörig, fluffig Baldo rispilaff."
+    },
+    "firin-sutlac": {
+      "name": "Ugnsbakad Risgrynsgröt",
+      "description": "Risgrynsgröt bakad på traditionellt sätt, tillagad med färsk buffelmjölk."
+    },
+    "kuru-fasulye": {
+      "name": "Vitt bönstuvning med nötkött",
+      "description": "İspir-bönor, tärnat nötkött och vanlig restaurangtompapast."
+    },
+    "izgara-kofte": {
+      "name": "Grillade Köttbullar",
+      "description": "Slaktarstilekt nötköttsbullar med rostad paprika och tomat."
+    },
+    "ayran": {
+      "name": "Vispad Ayran",
+      "description": "Traditionell vispad kärnmjölk med mycket skum, gjord på vanlig yoghurt."
+    },
+    "ezogelin-corbasi": {
+      "name": "Ezogelin-soppa",
+      "description": "En traditionell restaurangsoppa där röda linser, bulgur och ris möts med mynta."
+    },
+    "tarhana-corbasi": {
+      "name": "Tarhanna-soppa",
+      "description": "Hemlagad tarhanna, en anatolisk klassiker långsamt tillagad med tomater och torkad mynta."
+    },
+    "yayla-corbasi": {
+      "name": "Yoghurt- och ris Soppa",
+      "description": "En uppfriskande och krämig yayla-soppa gjord med yoghurt, ris och torkad mynta."
+    },
+    "iskembe-corbasi": {
+      "name": "Nötkött Tripe Soppa",
+      "description": "Riktig nötkött tripe soppa serverad med sin kryddning och vitlökssirap."
+    },
+    "dugun-corbasi": {
+      "name": "Bröllopssoppa",
+      "description": "Traditionell bröllopssoppa gjord med strimlat lamm och smaksatt med en citronsås."
+    },
+    "tavuk-suyu-corbasi": {
+      "name": "Kycklingbuljong Soppa",
+      "description": "En läkande soppa gjord med tunna nudlar kokta i benbuljong och strimlat kycklingkött."
+    },
+    "domates-corbasi": {
+      "name": "Tomatsoppa",
+      "description": "En rik smak kokt med mogna tomater, smör och basilika, kompletterad med ost."
+    },
+    "sebze-corbasi": {
+      "name": "Grönsakssoppa",
+      "description": "En lätt restaurangsoppa förberedd med säsongsgrönsaker, olivolja och färska örter."
+    },
+    "beyran-corbasi": {
+      "name": "Het lamm Beyran-soppa",
+      "description": "En regional soppa förberedd på hög värme med lamm, ris, vitlök och stark peppar."
+    },
+    "kelle-paca-corbasi": {
+      "name": "Huvud- och fotsoppa",
+      "description": "En rik buljongsoppa gjord med nötfötter och huvudkött som kokats i många timmar."
+    },
+    "sehriye-corbasi": {
+      "name": "Vermicellisoppa",
+      "description": "Dagens soppa tillagad med kycklingbuljong med tomater, vermicelli och persilja."
+    },
+    "tavuk-sis": {
+      "name": "Kycklingspett",
+      "description": "Kycklingbitar marinerade med speciella kryddor, serveras med rostade paprikor och tomater."
+    },
+    "kasap-sucuk": {
+      "name": "Grillad slaktarsucuk",
+      "description": "Stark nötkorv tillagad på kol, med rostade grönsaker och lök med sumak."
+    },
+    "karisik-izgara": {
+      "name": "Mixgrill",
+      "description": "En riklig och blandad grilltallrik bestående av köttbullar, kycklingspett, lammkotletter och korv."
+    },
+    "nohut-yemegi": {
+      "name": "Kikärtsgryta med nötkött",
+      "description": "En hemlagad måltid med kikärter och tärnat nötkött långsamt tillagat i en koppargryta."
+    },
+    "patlican-musakka": {
+      "name": "Aubergine Moussaka",
+      "description": "Stekt aubergine, köttfärs och moussaka bakad i ugnen med tomatsås, restaurangstil."
+    },
+    "zeytinyagli-taze-fasulye": {
+      "name": "Gröna Bönor i Olivolja",
+      "description": "En klassiker tillagad i olivolja med gröna bönor, tomater och lök, serverad kall."
+    },
+    "tavuk-sote": {
+      "name": "Fräst Kyckling",
+      "description": "Kycklingbitar fräses på hög värme med färgglada paprikor, svamp och tomater."
+    },
+    "izmir-kofte": {
+      "name": "İzmir-Stil Köttbullar",
+      "description": "En traditionell huvudrätt med köttbullar av nötkött, potatis och paprikor bakade i tomatsås."
+    },
+    "etli-bezelye": {
+      "name": "Ärter med nötkött",
+      "description": "Daglig måltid tillagad i en gryta med tärnat nötkött, ärter, morötter och potatis."
+    },
+    "patlican-oturtma": {
+      "name": "Bakad aubergine med köttfärs",
+      "description": "Tungan tillagas i ugnen med aubergine, kryddig köttfärs och vitlökstomatsås."
+    },
+    "salgam-suyu": {
+      "name": "Fermenterad kålrotsjuice",
+      "description": "Traditionell kryddig kålrotsjuice fermenterad med lila morot och bulgurjäst."
+    },
+    "maden-suyu": {
+      "name": "Mineralvatten",
+      "description": "Naturligt stilla mineralvatten serverat kallt."
+    },
+    "su": {
+      "name": "Naturligt källvatten",
+      "description": "Naturligt källvatten serverat kallt i glasflaska."
+    },
+    "kola": {
+      "name": "Cola",
+      "description": "En klassisk kolsyrad dryck serverad iskall."
+    },
+    "gazoz": {
+      "name": "Turkisk citronsoda",
+      "description": "Traditionell smaksatt, uppfriskande och serverad kall naturell soda."
+    },
+    "turk-kahvesi": {
+      "name": "Turkiskt kaffe",
+      "description": "Traditionellt turkiskt kaffe med skum, tillagat på hög värme i en kopparkanna (cezve)."
+    },
+    "demleme-cay": {
+      "name": "Turkiskt bryggt te",
+      "description": "Nybryggt varmt Rize-te i ett tunnmidjat glas."
+    },
+    "ev-yapimi-limonata": {
+      "name": "Hemlagad lemonad",
+      "description": "Uppfriskande lemonad som förbereds dagligen med färsk citron, mynta och lite socker."
+    },
+    "hosaf": {
+      "name": "Daglig fruktkompott",
+      "description": "Hemlagad kompott kokad dagligen med russin, aprikoser eller plommon beroende på säsong."
+    },
+    "iskender-kebabi": {
+      "name": "Bursa İskender Kebab",
+      "description": "Köttet roteras på ett spett över pide, serveras med tomatsås, het smör och yoghurt."
+    },
+    "kazandibi": {
+      "name": "Karamelliserad mjölkpudding",
+      "description": "En traditionell mjölkdessert karamelliserad på rätt sätt, med en silkeslen konsistens."
+    },
+    "tavuk-gogsu": {
+      "name": "Osmansk mjölkpudding",
+      "description": "En lätt och fibrös mjöldessert tillagad med ett traditionellt recept, serverad med kanel."
+    },
+    "keskul": {
+      "name": "Mandelmjölkpudding",
+      "description": "Osmansk mjöldessert kompletterad med mandelsmak och kokos."
+    },
+    "irmik-helvasi": {
+      "name": "Semolinahalva",
+      "description": "Semolinahalva, rostad med smör och pinjenötter, serverad varm och grynig."
+    },
+    "kabak-tatlisi": {
+      "name": "Pumpadessert med tahini",
+      "description": "Pumpan, långsamt tillagad i sin egen juice, serveras med tahini och valnötter."
+    },
+    "ayva-tatlisi": {
+      "name": "Kvittenpudding",
+      "description": "Kvittens tillagad med kryddnejlika och kanel serveras med skånsk grädde och valnötter."
+    },
+    "revani": {
+      "name": "Semolin Sirapskaka",
+      "description": "Den klassiska restaurangdesser­ten där mjuk semolinkaka möter citronsmakande sirap."
+    },
+    "ekmek-kadayifi": {
+      "name": "Brödpudding med Grädde",
+      "description": "Brödpudding som vilat med karamelliserad sirap serveras med buffelgrädde."
+    },
+    "cevizli-baklava": {
+      "name": "Valnötsbaklava",
+      "description": "Skikten kavlas mycket tunna, krispig baklava gjord med rikligt med valnötter och vanlig smör."
+    }
+  },
+  "allergens": {
+    "Süt ürünleri": "Mejeri",
+    "Gluten": "Gluten",
+    "Yumurta": "Ägg",
+    "Badem": "Mandel",
+    "Çam fıstığı": "Pinjenöt",
+    "Susam": "Sesam",
+    "Ceviz": "Valnöt"
+  },
+  "tags": {
+    "Popüler": "Populär",
+    "Vejetaryen": "Vegetarisk",
+    "Günün Yemeği": "Dagens rätt",
+    "Şefin Önerisi": "Kockens val",
+    "Yeni": "Ny",
+    "Acılı": "Stark",
+    "Ev Yapımı": "Hemlagad",
+    "Lokanta Klasiği": "Restaurangklassiker",
+    "Günün Çorbası": "Dagens soppa",
+    "Vegan": "Vegan",
+    "Hafif": "Lätt",
+    "Yöresel": "Regional",
+    "Paylaşmalık": "Att dela",
+    "Ev Yemeği": "Hemmastil",
+    "Zeytinyağlı": "Olivolja",
+    "Nostaljik": "Nostalgisk",
+    "Geleneksel": "Traditionell",
+    "Bursa Lezzeti": "Smak av Bursa",
+    "Sütlü Tatlı": "Mjöldessert",
+    "Sıcak Tatlı": "Varm dessert",
+    "Mevsimlik": "Säsongsbetonad",
+    "Şerbetli": "Spritsdessert"
+  }
+}

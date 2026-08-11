@@ -47,7 +47,7 @@ export function CategoryGrid({ categories, onSelect }: CategoryGridProps) {
                   {categoryName}
                 </span>
                 <span className="mt-1 block text-xs font-medium tabular-nums text-muted-foreground sm:text-sm">
-                  {category.productCount} {t("items")}
+                  {t("itemCount", { count: category.productCount })}
                 </span>
               </span>
             </button>

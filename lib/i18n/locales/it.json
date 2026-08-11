@@ -1,0 +1,349 @@
+{
+  "locale": "it",
+  "ui": {
+    "menu": "Menu",
+    "search": "Cerca nel menu...",
+    "searchLabel": "Cerca nel menu",
+    "categories": "Categorie",
+    "categoryIntro": "Scegli il gusto per il tuo tavolo.",
+    "categoryNavigation": "Categorie del menu",
+    "openCategory": "Apri {name}, {count} articoli",
+    "items": "articoli",
+    "item": "articolo",
+    "searchResults": "Risultati della ricerca",
+    "productsFound": "{count} articoli trovati",
+    "backToCategories": "Torna alle categorie",
+    "backToCategory": "Torna a {name}",
+    "clearSearch": "Cancella ricerca",
+    "noResults": "Nessun articolo corrispondente trovato",
+    "noResultsDescription": "Prova un'altra ricerca o torna alle categorie.",
+    "order": "Il mio ordine",
+    "waiter": "Cameriere",
+    "bill": "Conto",
+    "addToCart": "Aggiungi all'ordine",
+    "addedToCart": "{name} aggiunto al tuo ordine.",
+    "removeFromCart": "Rimuovi {name}",
+    "soldOut": "Esaurito oggi",
+    "productDetails": "Apri dettagli per {name}",
+    "portion": "Porzione",
+    "standardPortion": "Porzione standard",
+    "allergens": "Allergeni",
+    "noAllergens": "Nessun allergene dichiarato",
+    "productNote": "Nota sull'articolo",
+    "productNotePlaceholder": "Es. niente burro, per favore",
+    "decreaseQuantity": "Diminuire quantità",
+    "increaseQuantity": "Aumentare quantità",
+    "each": "ciascuno",
+    "note": "Nota",
+    "subtotal": "Subtotale",
+    "serviceFee": "Costo del servizio",
+    "total": "Totale",
+    "sendOrder": "Invia ordine",
+    "orderSent": "Il tuo ordine è stato inviato in cucina",
+    "orderTracking": "Traccia l'ordine #{number} qui.",
+    "newItem": "Aggiungi un altro articolo",
+    "emptyCart": "Il tuo ordine è vuoto",
+    "emptyCartDescription": "Gli articoli scelti dal menu appariranno qui.",
+    "browseMenu": "Sfoglia menu",
+    "orderReceived": "Ordine ricevuto",
+    "waiterConfirmed": "Cameriere confermato",
+    "preparing": "In preparazione",
+    "ready": "Pronto",
+    "served": "Servito",
+    "preparingDescription": "La nostra cucina sta preparando il tuo ordine.",
+    "orderStatus": "Stato dell'ordine",
+    "callWaiter": "Chiama il cameriere",
+    "placeOrder": "Voglio ordinare",
+    "wantWater": "Vorrei dell'acqua",
+    "wantBread": "Vorrei del pane",
+    "wantService": "Servizio extra",
+    "other": "Altro",
+    "generalRequest": "Ho una richiesta generale",
+    "orderHelp": "Ho bisogno di aiuto con il mio ordine",
+    "waterDescription": "Per favore porta dell'acqua al tavolo",
+    "breadDescription": "Per favore porta il pane al tavolo",
+    "serviceDescription": "Ho bisogno di posate o di un piatto",
+    "otherDescription": "Ho bisogno di aiuto con qualcos'altro",
+    "waiterHelpTitle": "Come possiamo aiutare?",
+    "waiterHelpDescription": "La tua richiesta sarà inviata con {table}.",
+    "waiterRequestSent": "La tua richiesta è stata inviata al nostro cameriere.",
+    "requestBill": "Richiedi il conto",
+    "billSent": "La tua richiesta di conto è stata inviata",
+    "billConfirm": "Vuoi richiedere il conto?",
+    "billSentDescription": "Il nostro cameriere sarà da te a breve.",
+    "billConfirmDescription": "La tua richiesta andrà direttamente al cameriere. Puoi pagare al tavolo o alla cassa.",
+    "billToast": "La tua richiesta del conto è stata inviata al nostro cameriere.",
+    "backToMenu": "Torna al Menù",
+    "back": "Indietro",
+    "close": "Chiudi",
+    "yourTable": "IL TUO TAVOLO",
+    "serviceOpen": "Servizio aperto",
+    "slogan": "Gusto Tradizionale • Tavola Moderna",
+    "location": "Bursa, Osmangazi",
+    "languageLabel": "Seleziona lingua",
+    "currencyLabel": "Seleziona valuta",
+    "customerNavigation": "Navigazione menù cliente",
+    "approximateCurrency": "I prezzi in valuta estera sono approssimativi. Il pagamento viene effettuato in Lira Turca.",
+    "orderSuccess": "Il tuo ordine è stato inviato con successo.",
+    "languagePickerTitle": "Seleziona Lingua",
+    "languagePickerDescription": "Scegli la lingua che vuoi usare per il menu.",
+    "searchLanguage": "Cerca lingue...",
+    "recommendedLanguages": "Consigliato",
+    "recentLanguages": "Lingue recenti",
+    "allLanguages": "Tutte le lingue",
+    "languageNotFound": "Lingua non trovata.",
+    "languageNotFoundDescription": "Prova un altro nome o codice della lingua.",
+    "tableNumber": "Tavolo {number}",
+    "itemCount": "{count} articoli",
+    "splashLabel": "Schermo di apertura Tarihi Şehir Lokantası",
+    "cancel": "Annulla",
+    "confirmOrder": "Conferma ordine",
+    "orderSummary": "Riepilogo ordine",
+    "payment": "Pagamento",
+    "tableNotFound": "Tavolo non trovato.",
+    "invalidQr": "Codice QR non valido.",
+    "menuUnavailable": "Il menu non è attualmente disponibile.",
+    "networkError": "Si è verificato un errore di rete.",
+    "productUnavailable": "Questo articolo non è attualmente disponibile.",
+    "unableToSendOrder": "Impossibile inviare l'ordine.",
+    "tryAgain": "Riprova",
+    "somethingWentWrong": "Qualcosa è andato storto.",
+    "loadingLanguage": "Caricamento lingua...",
+    "languageLoadError": "Impossibile caricare la lingua. Per favore riprova."
+  },
+  "categories": {
+    "soups": "Zuppe",
+    "grill": "Griglia",
+    "mains": "Piatti principali",
+    "drinks": "Bevande",
+    "kebabs": "Kebab",
+    "dessert": "Dessert"
+  },
+  "products": {
+    "mercimek": {
+      "name": "Zuppa di Lenticchie",
+      "description": "Zuppa di lenticchie fatta in casa preparata nello stile classico, completata con una salsa al burro."
+    },
+    "tas-kebabi": {
+      "name": "Stufato di Manzo alla Turca",
+      "description": "Manzo, verdure di stagione e la salsa speciale a cottura lenta del nostro ristorante."
+    },
+    "kuzu-tandir": {
+      "name": "Agnello Arrosto a Lenta Cottura",
+      "description": "Il tandoori di agnello speciale del nostro ristorante, cotto lentamente a fuoco basso."
+    },
+    "pirinc-pilavi": {
+      "name": "Pilaf di Riso",
+      "description": "Pilaf di riso Baldo burroso e soffice."
+    },
+    "firin-sutlac": {
+      "name": "Budino di Riso al Forno",
+      "description": "Budino di riso cotto al forno nel modo tradizionale, preparato con latte di bufala fresco quotidiano."
+    },
+    "kuru-fasulye": {
+      "name": "Stufato di Fagioli Bianchi con Manzo",
+      "description": "Fagioli İspir, manzo a dadini e pasta di pomodoro semplice da ristorante."
+    },
+    "izgara-kofte": {
+      "name": "Polpette alla Griglia",
+      "description": "Polpette di manzo in stile macellaio con peperone arrosto e pomodoro."
+    },
+    "ayran": {
+      "name": "Ayran Montato",
+      "description": "Buttermilk tradizionale montato con molta schiuma, fatto con yogurt comune."
+    },
+    "ezogelin-corbasi": {
+      "name": "Zuppa Ezogelin",
+      "description": "Una zuppa tradizionale da ristorante dove lenticchie rosse, bulgur e riso incontrano la menta."
+    },
+    "tarhana-corbasi": {
+      "name": "Zuppa di Tarhana",
+      "description": "Tarhana fatta in casa, un classico anatolico cucinato lentamente con pomodori e menta secca."
+    },
+    "yayla-corbasi": {
+      "name": "Zuppa di Yogurt e Riso",
+      "description": "Una zuppa yayla rinfrescante e cremosa preparata con yogurt, riso e menta secca."
+    },
+    "iskembe-corbasi": {
+      "name": "Zuppa di Trippa",
+      "description": "Zuppa di trippa di manzo servita con il suo condimento e aceto all'aglio."
+    },
+    "dugun-corbasi": {
+      "name": "Zuppa di Matrimonio",
+      "description": "Zuppa tradizionale di matrimonio fatta con agnello sminuzzato e aromatizzata con una marinata al limone."
+    },
+    "tavuk-suyu-corbasi": {
+      "name": "Zuppa di Brodo di Pollo",
+      "description": "Una zuppa curativa preparata con sottili tagliatelle cotte nel brodo di ossa e carne di pollo sminuzzata."
+    },
+    "domates-corbasi": {
+      "name": "Zuppa di Pomodoro",
+      "description": "Un sapore ricco cucinato con pomodori maturi, burro e basilico, completato con formaggio."
+    },
+    "sebze-corbasi": {
+      "name": "Zuppa di Verdure",
+      "description": "Una zuppa leggera da ristorante preparata con verdure di stagione, olio d'oliva ed erbe fresche."
+    },
+    "beyran-corbasi": {
+      "name": "Zuppa Piccante di Agnello Beyran",
+      "description": "Una zuppa regionale preparata a fuoco vivo con agnello, riso, aglio e peperoncino."
+    },
+    "kelle-paca-corbasi": {
+      "name": "Zuppa di Testa e Zampone",
+      "description": "Una ricca zuppa di brodo di ossa fatta con zampini e carne di testa di manzo bolliti per molte ore."
+    },
+    "sehriye-corbasi": {
+      "name": "Zuppa di Vermicelli",
+      "description": "Zuppa giornaliera preparata con brodo di pollo con pomodori, vermicelli e prezzemolo."
+    },
+    "tavuk-sis": {
+      "name": "Spiedini di pollo",
+      "description": "Pezzetti di pollo marinati con spezie speciali, serviti con peperoni e pomodori arrostiti."
+    },
+    "kasap-sucuk": {
+      "name": "Sucuk del macellaio alla griglia",
+      "description": "Salsiccia di manzo piccante cotta alla brace, con verdure arrostite e cipolla con sommacco."
+    },
+    "karisik-izgara": {
+      "name": "Grigliata mista",
+      "description": "Un piatto abbondante e assortito di grigliata composto da polpette, spiedini di pollo, costolette di agnello e salsiccia."
+    },
+    "nohut-yemegi": {
+      "name": "Stufato di ceci con manzo",
+      "description": "Un pasto casalingo di ceci e carne di manzo a cubetti cotta lentamente in una pentola di rame."
+    },
+    "patlican-musakka": {
+      "name": "Moussaka di Melanzane",
+      "description": "Melanzane fritte, carne di manzo macinata e moussaka cotta al forno con salsa di pomodoro, in stile ristorante."
+    },
+    "zeytinyagli-taze-fasulye": {
+      "name": "Fagiolini in Olio d'Oliva",
+      "description": "Un classico cotto in olio d'oliva con fagiolini, pomodori e cipolle, servito freddo."
+    },
+    "tavuk-sote": {
+      "name": "Pollo Saltato",
+      "description": "I pezzi di pollo sono saltati a fuoco vivo con peperoni colorati, funghi e pomodori."
+    },
+    "izmir-kofte": {
+      "name": "Polpette alla Izmir",
+      "description": "Un piatto principale tradizionale di polpette di manzo, patate e peperoni cotti al forno in salsa di pomodoro."
+    },
+    "etli-bezelye": {
+      "name": "Piselli con manzo",
+      "description": "Pasto quotidiano cucinato in pentola con cubetti di manzo, piselli, carote e patate."
+    },
+    "patlican-oturtma": {
+      "name": "Melanzane al forno con carne macinata",
+      "description": "La lingua viene preparata al forno con melanzane, carne macinata piccante e salsa di pomodoro all'aglio."
+    },
+    "salgam-suyu": {
+      "name": "Succo di rapa fermentato",
+      "description": "Succo di rapa piccante tradizionale fermentato con carota viola e lievito di bulgur."
+    },
+    "maden-suyu": {
+      "name": "Acqua minerale",
+      "description": "Acqua minerale naturale servita fredda."
+    },
+    "su": {
+      "name": "Acqua di sorgente naturale",
+      "description": "Acqua di sorgente naturale servita fredda in una bottiglia di vetro."
+    },
+    "kola": {
+      "name": "Cola",
+      "description": "Una classica bevanda gassata servita ghiacciata."
+    },
+    "gazoz": {
+      "name": "Soda al limone turca",
+      "description": "Soda tradizionale aromatizzata, rinfrescante e servita fredda semplice."
+    },
+    "turk-kahvesi": {
+      "name": "Caffè turco",
+      "description": "Caffè turco tradizionale con schiuma, cotto ad alta temperatura in un cezve di rame."
+    },
+    "demleme-cay": {
+      "name": "Tè turco",
+      "description": "Tè Rize appena preparato servito caldo in un bicchiere a vita sottile."
+    },
+    "ev-yapimi-limonata": {
+      "name": "Limonata fatta in casa",
+      "description": "Limonata rinfrescante preparata quotidianamente con limone fresco, menta e un po' di zucchero."
+    },
+    "hosaf": {
+      "name": "Composta di frutta giornaliera",
+      "description": "Composta fatta in casa bollita ogni giorno con uvetta, albicocche o prugne a seconda della stagione."
+    },
+    "iskender-kebabi": {
+      "name": "Bursa İskender Kebab",
+      "description": "La carne viene arrotolata su uno spiedo sopra il pide, servita con salsa di pomodoro, burro caldo e yogurt."
+    },
+    "kazandibi": {
+      "name": "Budino di latte caramellato",
+      "description": "Un tradizionale dessert al latte caramellato correttamente, con una consistenza setosa."
+    },
+    "tavuk-gogsu": {
+      "name": "Budino di latte ottomano",
+      "description": "Un dessert al latte leggero e fibroso preparato con una ricetta tradizionale, servito con cannella."
+    },
+    "keskul": {
+      "name": "Budino di latte di mandorla",
+      "description": "Dessert al latte in stile ottomano completato con gusto di mandorla e cocco."
+    },
+    "irmik-helvasi": {
+      "name": "Halva di semolino",
+      "description": "Halva di semolino, tostato con burro e pinoli, servito caldo e granuloso."
+    },
+    "kabak-tatlisi": {
+      "name": "Dessert di zucca con tahina",
+      "description": "La zucca, cotta lentamente nel proprio succo, è servita con tahina e noci."
+    },
+    "ayva-tatlisi": {
+      "name": "Dessert di mela cotogna",
+      "description": "La mela cotogna cotta con chiodi di garofano e cannella è servita con panna coagulata e noci."
+    },
+    "revani": {
+      "name": "Torta di Semolino al Sciroppo",
+      "description": "Il classico dessert da ristorante dove la soffice torta di semolino incontra uno sciroppo profumato al limone."
+    },
+    "ekmek-kadayifi": {
+      "name": "Budino di Pane con Panna Cotta",
+      "description": "Il budino di pane riposato con sciroppo caramellato viene servito con panna cassetta di bufala."
+    },
+    "cevizli-baklava": {
+      "name": "Baklava alle Noci",
+      "description": "Strati stesi molto sottili, croccante baklava fatta con tante noci e burro semplice."
+    }
+  },
+  "allergens": {
+    "Süt ürünleri": "Latticini",
+    "Gluten": "Glutine",
+    "Yumurta": "Uovo",
+    "Badem": "Mandorla",
+    "Çam fıstığı": "Pigna",
+    "Susam": "Sesamo",
+    "Ceviz": "Noce"
+  },
+  "tags": {
+    "Popüler": "Popolare",
+    "Vejetaryen": "Vegetariano",
+    "Günün Yemeği": "Piatto del Giorno",
+    "Şefin Önerisi": "Scelta dello Chef",
+    "Yeni": "Nuovo",
+    "Acılı": "Piccante",
+    "Ev Yapımı": "Fatto in Casa",
+    "Lokanta Klasiği": "Classico del Ristorante",
+    "Günün Çorbası": "Zuppa del Giorno",
+    "Vegan": "Vegano",
+    "Hafif": "Leggero",
+    "Yöresel": "Regionale",
+    "Paylaşmalık": "Da Condividere",
+    "Ev Yemeği": "Casalingo",
+    "Zeytinyağlı": "Olio d'Oliva",
+    "Nostaljik": "Nostalgico",
+    "Geleneksel": "Tradizionale",
+    "Bursa Lezzeti": "Gusto di Bursa",
+    "Sütlü Tatlı": "Dolce al latte",
+    "Sıcak Tatlı": "Dolce caldo",
+    "Mevsimlik": "Stagionale",
+    "Şerbetli": "Dolce sciroppato"
+  }
+}

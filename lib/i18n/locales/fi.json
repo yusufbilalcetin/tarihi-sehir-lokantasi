@@ -1,0 +1,349 @@
+{
+  "locale": "fi",
+  "ui": {
+    "menu": "Valikko",
+    "search": "Hae valikosta...",
+    "searchLabel": "Hae valikosta",
+    "categories": "Kategoriat",
+    "categoryIntro": "Valitse maku pöydällesi.",
+    "categoryNavigation": "Valikon kategoriat",
+    "openCategory": "Avaa {name}, {count} kohdetta",
+    "items": "kohteet",
+    "item": "kohde",
+    "searchResults": "Hakutulokset",
+    "productsFound": "Löytyi {count} kohdetta",
+    "backToCategories": "Takaisin kategorioihin",
+    "backToCategory": "Takaisin {name}",
+    "clearSearch": "Tyhjennä haku",
+    "noResults": "Yhtään vastaavaa kohdetta ei löytynyt",
+    "noResultsDescription": "Kokeile toista hakua tai palaa kategorioihin.",
+    "order": "Oma tilaukseni",
+    "waiter": "Tarjoilija",
+    "bill": "Lasku",
+    "addToCart": "Lisää tilaukseen",
+    "addedToCart": "{name} lisätty tilaukseesi.",
+    "removeFromCart": "Poista {name}",
+    "soldOut": "Tänään loppuunmyyty",
+    "productDetails": "Avaa tiedot: {name}",
+    "portion": "Annos",
+    "standardPortion": "Normaali annos",
+    "allergens": "Allergeenit",
+    "noAllergens": "Ei ilmoitettuja allergeeneja",
+    "productNote": "Tuotemuistiinpano",
+    "productNotePlaceholder": "Esim. ei voita, kiitos",
+    "decreaseQuantity": "Vähennä määrää",
+    "increaseQuantity": "Lisää määrää",
+    "each": "kappale",
+    "note": "Huomautus",
+    "subtotal": "Välisumma",
+    "serviceFee": "Palvelumaksu",
+    "total": "Yhteensä",
+    "sendOrder": "Lähetä tilaus",
+    "orderSent": "Tilaus on lähetetty keittiöön",
+    "orderTracking": "Seuraa tilaustasi #{number} täältä.",
+    "newItem": "Lisää toinen tuote",
+    "emptyCart": "Tilauksesi on tyhjä",
+    "emptyCartDescription": "Valitsemasi tuotteet ilmestyvät tänne.",
+    "browseMenu": "Selaa menu",
+    "orderReceived": "Tilaus vastaanotettu",
+    "waiterConfirmed": "Tarjoilija vahvisti",
+    "preparing": "Valmistellaan",
+    "ready": "Valmis",
+    "served": "Tarjoiltu",
+    "preparingDescription": "Keittiömme valmistaa tilaustasi.",
+    "orderStatus": "Tilauksen tila",
+    "callWaiter": "Kutsu tarjoilija",
+    "placeOrder": "Haluan tilata",
+    "wantWater": "Haluaisin vettä",
+    "wantBread": "Haluaisin leipää",
+    "wantService": "Lisäpalvelu",
+    "other": "Muu",
+    "generalRequest": "Minulla on yleinen pyyntö",
+    "orderHelp": "Tarvitsen apua tilaukseni kanssa",
+    "waterDescription": "Olkaa hyvä ja tuokaa vettä pöytään",
+    "breadDescription": "Ole hyvä ja tuo leipä pöytään",
+    "serviceDescription": "Tarvitsen aterimia tai lautasen",
+    "otherDescription": "Tarvitsen apua jonkin muun asian kanssa",
+    "waiterHelpTitle": "Miten voimme auttaa?",
+    "waiterHelpDescription": "Pyyntösi lähetetään {table} kanssa.",
+    "waiterRequestSent": "Pyyntösi lähetettiin tarjoilijallemme.",
+    "requestBill": "Pyydä lasku",
+    "billSent": "Laskupyyntösi lähetettiin",
+    "billConfirm": "Haluatko pyytää laskua?",
+    "billSentDescription": "Tarjoilijamme tulee luoksesi pian.",
+    "billConfirmDescription": "Pyyntösi menee suoraan tarjoilijalle. Voit maksaa pöydässä tai kassalla.",
+    "billToast": "Laskupyyntösi lähetettiin tarjoilijallemme.",
+    "backToMenu": "Takaisin valikkoon",
+    "back": "Takaisin",
+    "close": "Sulje",
+    "yourTable": "PÖYTÄSI",
+    "serviceOpen": "Palvelu avoinna",
+    "slogan": "Perinteinen maku • moderni pöytä",
+    "location": "Bursa, Osmangazi",
+    "languageLabel": "Valitse kieli",
+    "currencyLabel": "Valitse valuutta",
+    "customerNavigation": "Asiakasvalikon navigointi",
+    "approximateCurrency": "Ulkomaisten valuuttojen hinnat ovat suuntaa-antavia. Maksu suoritetaan Turkin liirassa.",
+    "orderSuccess": "Tilauksesi lähetettiin onnistuneesti.",
+    "languagePickerTitle": "Valitse kieli",
+    "languagePickerDescription": "Valitse kieli, jota haluat käyttää valikossa.",
+    "searchLanguage": "Hae kieliä...",
+    "recommendedLanguages": "Suositellut",
+    "recentLanguages": "Äskettäiset kielet",
+    "allLanguages": "Kaikki kielet",
+    "languageNotFound": "Kieltä ei löydy.",
+    "languageNotFoundDescription": "Kokeile toista kielennimeä tai koodia.",
+    "tableNumber": "Pöytä {number}",
+    "itemCount": "{count} kohdetta",
+    "splashLabel": "Tarihi Şehir Lokantası avaussivu",
+    "cancel": "Peruuta",
+    "confirmOrder": "Vahvista tilaus",
+    "orderSummary": "Tilausyhteenveto",
+    "payment": "Maksu",
+    "tableNotFound": "Pöytää ei löydy.",
+    "invalidQr": "Virheellinen QR-koodi.",
+    "menuUnavailable": "Ruokalista ei ole tällä hetkellä saatavilla.",
+    "networkError": "Verkkovirhe tapahtui.",
+    "productUnavailable": "Tätä tuotetta ei ole tällä hetkellä saatavilla.",
+    "unableToSendOrder": "Tilauksen lähettäminen epäonnistui.",
+    "tryAgain": "Yritä uudelleen",
+    "somethingWentWrong": "Jokin meni pieleen.",
+    "loadingLanguage": "Kieli ladataan...",
+    "languageLoadError": "Kieltä ei voitu ladata. Yritä uudelleen."
+  },
+  "categories": {
+    "soups": "Keitot",
+    "grill": "Grillit",
+    "mains": "Pääruoat",
+    "drinks": "Juomat",
+    "kebabs": "Kebabit",
+    "dessert": "Jälkiruoat"
+  },
+  "products": {
+    "mercimek": {
+      "name": "Linssikeitto",
+      "description": "Kotitekoinen linssikeitto valmistettuna klassiseen tyyliin, viimeistelty voikastikkeella."
+    },
+    "tas-kebabi": {
+      "name": "Turkkilainen lihapata",
+      "description": "Naudanlihaa, kauden vihanneksia ja ravintolamme hitaasti kypsennettyä erityiskastiketta."
+    },
+    "kuzu-tandir": {
+      "name": "Hitaasti paahdettu lammas",
+      "description": "Ravintolamme tunnuslammas tandoori, hitaasti kypsennetty miedolla lämmöllä."
+    },
+    "pirinc-pilavi": {
+      "name": "Riisipilaffi",
+      "description": "Voilla maustettu, kuohkea Baldo-riisipilaffi."
+    },
+    "firin-sutlac": {
+      "name": "Uunissa paistettu riisivanukas",
+      "description": "Riisivanukas, paistettu perinteisellä tavalla, valmistettu päivittäisestä vesipuhvelinmaidosta."
+    },
+    "kuru-fasulye": {
+      "name": "Valkopapupata naudanlihalla",
+      "description": "İspir-pavut, kuutioitu naudanliha ja tavallinen ravintolan tomaattipyree."
+    },
+    "izgara-kofte": {
+      "name": "Grillatut lihapullat",
+      "description": "Teurastajatyyppiset naudanlihapullat paahdetun paprikan ja tomaatin kanssa."
+    },
+    "ayran": {
+      "name": "Täristetty Ayran",
+      "description": "Perinteinen täristetty piimä runsaalla vaahdolla, valmistettu tavallisesta jogurtista."
+    },
+    "ezogelin-corbasi": {
+      "name": "Ezogelin keitto",
+      "description": "Perinteinen ravintolakeitto, jossa punaiset linssit, bulgur ja riisi kohtaavat mintun."
+    },
+    "tarhana-corbasi": {
+      "name": "Tarhana-keitto",
+      "description": "Kotitekoinen tarhana, ankkalainen klassikko, joka kypsennetään hitaasti tomaattien ja kuivamintun kanssa."
+    },
+    "yayla-corbasi": {
+      "name": "Jogurtti- ja riisikeitto",
+      "description": "Raikas ja kermaisa yayla-keitto, joka on valmistettu jogurtista, riisistä ja kuivatuista mintun lehdistä."
+    },
+    "iskembe-corbasi": {
+      "name": "Sisäkeittokeitto",
+      "description": "Oikea naudan sisäkeittokeitto tarjoillaan mausteineen ja valkosipuli-etikan kanssa."
+    },
+    "dugun-corbasi": {
+      "name": "Hääkeitto",
+      "description": "Perinteinen hääkeitto, joka on valmistettu revitystä lampaanlihasta ja maustettu sitruunamarinadilla."
+    },
+    "tavuk-suyu-corbasi": {
+      "name": "Kanasoppakeitto",
+      "description": "Parantava keitto, joka on valmistettu ohueksi leikatuista nuudeleista, jotka kypsennetään luuliemessä ja sekoitetaan revityn kananlihan kanssa."
+    },
+    "domates-corbasi": {
+      "name": "Tomaattikeitto",
+      "description": "Rikas maku kypsistä tomaateista, voista ja basilikasta, viimeistelty juustolla."
+    },
+    "sebze-corbasi": {
+      "name": "Vihanneskeitto",
+      "description": "Kevyt ravintolakeitto, valmistettu kauden vihanneksista, oliiviöljystä ja tuoreista yrteistä."
+    },
+    "beyran-corbasi": {
+      "name": "Mausteinen lammas Beyran-keitto",
+      "description": "Alueellinen keitto, valmistettu korkealla lämmöllä lampaan, riisin, valkosipulin ja tulisen paprikan kanssa."
+    },
+    "kelle-paca-corbasi": {
+      "name": "Pää- ja sorkakeitto",
+      "description": "Rikas luuliemikeitto, valmistettu naudan sorkista ja päälihasta pitkään keitettynä."
+    },
+    "sehriye-corbasi": {
+      "name": "Spagettikeitto",
+      "description": "Päivittäinen keitto, valmistettu kanaliemestä, tomaateista, vermicellistä ja persiljasta."
+    },
+    "tavuk-sis": {
+      "name": "Kanavartaat",
+      "description": "Kananpalat, marinoitu erikoismausteilla, tarjoillaan paahdettujen paprikoiden ja tomaattien kanssa."
+    },
+    "kasap-sucuk": {
+      "name": "Grillattu Lihakauppiaan Sucuk",
+      "description": "Tulinen naudanmakkara, kypsennetty hiiligrillissä, paahdettujen vihannesten ja sumakkiparsakaalin kanssa."
+    },
+    "karisik-izgara": {
+      "name": "Sekagrilli",
+      "description": "Runsas ja monipuolinen grillilautanen, sisältäen lihapullia, kanavartaita, lammaspihvejä ja makkaraa."
+    },
+    "nohut-yemegi": {
+      "name": "Kikhernepata naudanlihalla",
+      "description": "Kikherneistä ja kuutioidusta naudanlihasta valmistettu kotitekoinen ateria, joka haudutetaan hitaasti kuparikattilassa."
+    },
+    "patlican-musakka": {
+      "name": "Munakoisomoussaka",
+      "description": "Paistettu munakoiso, jauheliha ja moussaka, joka paistetaan uunissa tomaattikastikkeen kanssa, ravintolatyylisesti."
+    },
+    "zeytinyagli-taze-fasulye": {
+      "name": "Vihreät pavut oliiviöljyssä",
+      "description": "Klassikko, joka on kypsennetty oliiviöljyssä vihreiden papujen, tomaattien ja sipulien kanssa, tarjotaan kylmänä."
+    },
+    "tavuk-sote": {
+      "name": "Paistettua kanaa",
+      "description": "Kananpalat paistetaan korkealla lämmöllä värikkäiden paprikoiden, sienten ja tomaattien kanssa."
+    },
+    "izmir-kofte": {
+      "name": "İzmir-tyyliset lihapullat",
+      "description": "Perinteinen pääruoka, jossa on naudanlihapullia, perunoita ja paprikoita, jotka on paistettu tomaattikastikkeessa."
+    },
+    "etli-bezelye": {
+      "name": "Herneet ja Naudanliha",
+      "description": "Päivittäinen ruoka, joka on keitetty kattilassa kuutioidun naudanlihan, herneiden, porkkanoiden ja perunoiden kanssa."
+    },
+    "patlican-oturtma": {
+      "name": "Paahdettu munakoiso jauhelihalla",
+      "description": "Kieli valmistetaan uunissa munakoison, mausteisen jauhelihan ja valkosipuli-tomaattikastikkeen kanssa."
+    },
+    "salgam-suyu": {
+      "name": "Hapatettu naurismehu",
+      "description": "Perinteinen mausteinen naurismehu, joka on hapannettu violetin porkkanan ja bulgur-hiivan kanssa."
+    },
+    "maden-suyu": {
+      "name": "Mineraalivesi",
+      "description": "Luonnollinen kivennäisvesi tarjoillaan kylmänä."
+    },
+    "su": {
+      "name": "Luonnonlähdevesi",
+      "description": "Luonnonlähdevettä tarjoillaan kylmänä lasipullossa."
+    },
+    "kola": {
+      "name": "Cola",
+      "description": "Klassinen hiilihapotettu juoma tarjoillaan jäähdytettynä."
+    },
+    "gazoz": {
+      "name": "Turkkilainen sitruunasooda",
+      "description": "Perinteinen maustettu, virkistävä ja kylmänä tarjottava sooda."
+    },
+    "turk-kahvesi": {
+      "name": "Turkkilainen kahvi",
+      "description": "Perinteinen turkkilainen kahvi vaahdolla, keitetty kuumalla kuparikeittimellä (cezve)."
+    },
+    "demleme-cay": {
+      "name": "Turkkilainen haudutettu tee",
+      "description": "Vastakeitetty kuuma Rize-tee kapeassa lasissa."
+    },
+    "ev-yapimi-limonata": {
+      "name": "Kotitekoinen sitruunalimonadi",
+      "description": "Päivittäin valmistettu virkistävä sitruunalimonadi, jossa on tuoretta sitruunaa, minttua ja vähän sokeria."
+    },
+    "hosaf": {
+      "name": "Päivittäinen hedelmäkompotti",
+      "description": "Kotitekoinen kompotti keitetään päivittäin viinirypäleillä, aprikooseilla tai luumuilla sesongin mukaan."
+    },
+    "iskender-kebabi": {
+      "name": "Bursa İskender Kebab",
+      "description": "Liha pyörii vartaan päällä pidessä, tarjoillaan tomaattikastikkeen, kuuman voin ja jogurtin kanssa."
+    },
+    "kazandibi": {
+      "name": "Karamellisoitu maitovanukas",
+      "description": "Perinteinen maitovanukas, joka on karamellisoitu oikein, silkinpehmeällä koostumuksella."
+    },
+    "tavuk-gogsu": {
+      "name": "Ottomaanien maitovanukas",
+      "description": "Kevyt ja kuituinen maitomakeinen perinteisen reseptin mukaan valmistettuna, tarjoillaan kanelin kanssa."
+    },
+    "keskul": {
+      "name": "Mantelimaitokiisseli",
+      "description": "Ottomaanityylinen maitomakeinen, viimeistelty mantelilla ja kookoksella."
+    },
+    "irmik-helvasi": {
+      "name": "Mannapuurohalva",
+      "description": "Mannapuurohalva, paahdettu voissa ja pinjansiemenissä, tarjoillaan kuumana ja jyväisenä."
+    },
+    "kabak-tatlisi": {
+      "name": "Kurpitsamakeinen seesamitahnalla",
+      "description": "Kurpitsa, hitaasti kypsennetty omassa mehussaan, tarjoillaan seesamitahnan ja saksanpähkinöiden kanssa."
+    },
+    "ayva-tatlisi": {
+      "name": "Kvittenimakeinen",
+      "description": "Kvitteni, kypsennetty mausteneilikassa ja kanelissa, tarjoillaan kermavaahdon ja saksanpähkinöiden kanssa."
+    },
+    "revani": {
+      "name": "Semolinisiirappikakku",
+      "description": "Klassinen ravintolajälkiruoka, jossa semolininen pehmeä kakku kohtaa sitruunantuoksuisen siirapin."
+    },
+    "ekmek-kadayifi": {
+      "name": "Leipävanukas kermavaahdolla",
+      "description": "Karamellisoidulla siirapilla lepotettu leipävanukas tarjoillaan puhvelin kermavaahdon kanssa."
+    },
+    "cevizli-baklava": {
+      "name": "Pähkinä-baklava",
+      "description": "Erittäin ohuesti kaulitut kerrokset, rapea baklava, jossa on runsaasti saksanpähkinöitä ja tavallista voita."
+    }
+  },
+  "allergens": {
+    "Süt ürünleri": "Maitotuotteet",
+    "Gluten": "Gluteeni",
+    "Yumurta": "Kananmuna",
+    "Badem": "Manteli",
+    "Çam fıstığı": "Pinhene",
+    "Susam": "Seesami",
+    "Ceviz": "Saksanpähkinä"
+  },
+  "tags": {
+    "Popüler": "Suosittu",
+    "Vejetaryen": "Kasviperäinen",
+    "Günün Yemeği": "Päivän annos",
+    "Şefin Önerisi": "Kokin valinta",
+    "Yeni": "Uusi",
+    "Acılı": "Mausteinen",
+    "Ev Yapımı": "Itsetehty",
+    "Lokanta Klasiği": "Ravintolan klassikko",
+    "Günün Çorbası": "Päivän keitto",
+    "Vegan": "Vegaaninen",
+    "Hafif": "Kevyt",
+    "Yöresel": "Alueellinen",
+    "Paylaşmalık": "Jaettavaksi",
+    "Ev Yemeği": "Kotityylinen",
+    "Zeytinyağlı": "Oliiviöljy",
+    "Nostaljik": "Nostalginen",
+    "Geleneksel": "Perinteinen",
+    "Bursa Lezzeti": "Bursa-maku",
+    "Sütlü Tatlı": "Maitojälkiruoka",
+    "Sıcak Tatlı": "Lämmin jälkiruoka",
+    "Mevsimlik": "Kausittainen",
+    "Şerbetli": "Siirappijälkiruoka"
+  }
+}

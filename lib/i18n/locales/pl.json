@@ -1,0 +1,349 @@
+{
+  "locale": "pl",
+  "ui": {
+    "menu": "Menu",
+    "search": "Szukaj w menu...",
+    "searchLabel": "Szukaj w menu",
+    "categories": "Kategorie",
+    "categoryIntro": "Wybierz smak dla swojego stolika.",
+    "categoryNavigation": "Kategorie menu",
+    "openCategory": "Otwórz {name}, {count} przedmiotów",
+    "items": "przedmioty",
+    "item": "przedmiot",
+    "searchResults": "Wyniki wyszukiwania",
+    "productsFound": "Znaleziono {count} przedmiotów",
+    "backToCategories": "Powrót do kategorii",
+    "backToCategory": "Powrót do {name}",
+    "clearSearch": "Wyczyść wyszukiwanie",
+    "noResults": "Nie znaleziono pasujących pozycji",
+    "noResultsDescription": "Spróbuj innego wyszukiwania lub wróć do kategorii.",
+    "order": "Moje zamówienie",
+    "waiter": "Kelner",
+    "bill": "Rachunek",
+    "addToCart": "Dodaj do zamówienia",
+    "addedToCart": "{name} dodano do Twojego zamówienia.",
+    "removeFromCart": "Usuń {name}",
+    "soldOut": "Wyprzedane dzisiaj",
+    "productDetails": "Otwórz szczegóły {name}",
+    "portion": "Porcja",
+    "standardPortion": "Standardowa porcja",
+    "allergens": "Alergeny",
+    "noAllergens": "Brak deklarowanych alergenów",
+    "productNote": "Uwagi do pozycji",
+    "productNotePlaceholder": "Np. proszę bez masła",
+    "decreaseQuantity": "Zmniejsz ilość",
+    "increaseQuantity": "Zwiększ ilość",
+    "each": "za sztukę",
+    "note": "Notatka",
+    "subtotal": "Podsumowanie",
+    "serviceFee": "Opłata serwisowa",
+    "total": "Łącznie",
+    "sendOrder": "Wyślij zamówienie",
+    "orderSent": "Twoje zamówienie zostało wysłane do kuchni",
+    "orderTracking": "Śledź zamówienie #{number} tutaj.",
+    "newItem": "Dodaj kolejny produkt",
+    "emptyCart": "Twoje zamówienie jest puste",
+    "emptyCartDescription": "Produkty wybrane z menu pojawią się tutaj.",
+    "browseMenu": "Przeglądaj menu",
+    "orderReceived": "Zamówienie otrzymane",
+    "waiterConfirmed": "Kelner potwierdził",
+    "preparing": "W przygotowaniu",
+    "ready": "Gotowe",
+    "served": "Podano",
+    "preparingDescription": "Nasza kuchnia przygotowuje Twoje zamówienie.",
+    "orderStatus": "Status zamówienia",
+    "callWaiter": "Zawołaj kelnera",
+    "placeOrder": "Chcę zamówić",
+    "wantWater": "Chciałbym wodę",
+    "wantBread": "Chciałbym chleb",
+    "wantService": "Dodatkowa obsługa",
+    "other": "Inne",
+    "generalRequest": "Mam ogólne życzenie",
+    "orderHelp": "Potrzebuję pomocy z moim zamówieniem",
+    "waterDescription": "Proszę przynieść wodę do stołu",
+    "breadDescription": "Proszę przynieść chleb na stół",
+    "serviceDescription": "Potrzebuję sztućców lub talerza",
+    "otherDescription": "Potrzebuję pomocy w czymś innym",
+    "waiterHelpTitle": "Jak możemy pomóc?",
+    "waiterHelpDescription": "Twoje żądanie zostanie wysłane z {table}.",
+    "waiterRequestSent": "Twoje żądanie zostało wysłane do naszego kelnera.",
+    "requestBill": "Poproś o rachunek",
+    "billSent": "Twoja prośba o rachunek została wysłana",
+    "billConfirm": "Czy chcesz poprosić o rachunek?",
+    "billSentDescription": "Nasz kelner zaraz do ciebie podejdzie.",
+    "billConfirmDescription": "Twoje żądanie zostanie wysłane bezpośrednio do kelnera. Możesz zapłacić przy stole lub przy kasie.",
+    "billToast": "Twoja prośba o rachunek została wysłana do naszego kelnera.",
+    "backToMenu": "Powrót do menu",
+    "back": "Wstecz",
+    "close": "Zamknij",
+    "yourTable": "TWÓJ STÓŁ",
+    "serviceOpen": "Obsługa otwarta",
+    "slogan": "Tradycyjny smak • Nowoczesny stół",
+    "location": "Bursa, Osmangazi",
+    "languageLabel": "Wybierz język",
+    "currencyLabel": "Wybierz walutę",
+    "customerNavigation": "Nawigacja menu klienta",
+    "approximateCurrency": "Ceny w obcej walucie są przybliżone. Płatność jest realizowana w tureckiej lirze.",
+    "orderSuccess": "Twoje zamówienie zostało wysłane pomyślnie.",
+    "languagePickerTitle": "Wybierz język",
+    "languagePickerDescription": "Wybierz język, którego chcesz używać w menu.",
+    "searchLanguage": "Wyszukaj języki...",
+    "recommendedLanguages": "Polecane",
+    "recentLanguages": "Ostatnio używane języki",
+    "allLanguages": "Wszystkie języki",
+    "languageNotFound": "Nie znaleziono języka.",
+    "languageNotFoundDescription": "Spróbuj innej nazwy języka lub kodu.",
+    "tableNumber": "Stolik {number}",
+    "itemCount": "{count} przedmioty",
+    "splashLabel": "Ekran powitalny Tarihi Şehir Lokantası",
+    "cancel": "Anuluj",
+    "confirmOrder": "Potwierdź zamówienie",
+    "orderSummary": "Podsumowanie zamówienia",
+    "payment": "Płatność",
+    "tableNotFound": "Nie znaleziono stolika.",
+    "invalidQr": "Nieprawidłowy kod QR.",
+    "menuUnavailable": "Menu jest obecnie niedostępne.",
+    "networkError": "Wystąpił błąd sieci.",
+    "productUnavailable": "Ten produkt jest obecnie niedostępny.",
+    "unableToSendOrder": "Nie można wysłać zamówienia.",
+    "tryAgain": "Spróbuj ponownie",
+    "somethingWentWrong": "Coś poszło nie tak.",
+    "loadingLanguage": "Ładowanie języka...",
+    "languageLoadError": "Nie można załadować języka. Proszę spróbować ponownie."
+  },
+  "categories": {
+    "soups": "Zupy",
+    "grill": "Grille",
+    "mains": "Dania główne",
+    "drinks": "Napoje",
+    "kebabs": "Kebaby",
+    "dessert": "Desery"
+  },
+  "products": {
+    "mercimek": {
+      "name": "Zupa z Soczewicy",
+      "description": "Domowa zupa z soczewicy przygotowana w klasycznym stylu, podana z maślaną sosem."
+    },
+    "tas-kebabi": {
+      "name": "Turecka Gulasz Wołowy",
+      "description": "Wołowina, sezonowe warzywa i specjalny sos naszego restauracyjnego powolnego gotowania."
+    },
+    "kuzu-tandir": {
+      "name": "Wolno Pieczona Jagnięcina",
+      "description": "Podpisana jagnięcina tandoori naszego restauracyjnego, powoli gotowana na małym ogniu."
+    },
+    "pirinc-pilavi": {
+      "name": "Pilaw Ryżowy",
+      "description": "Maślany, puszysty pilaw z ryżu Baldo."
+    },
+    "firin-sutlac": {
+      "name": "Pieczeń Mleczna z Ryżu",
+      "description": "Kaszka ryżowa pieczona w tradycyjny sposób, przygotowana z codziennego mleka bawolego."
+    },
+    "kuru-fasulye": {
+      "name": "Gulasz z białej fasoli z wołowiną",
+      "description": "Fasola İspir, pokrojona w kostkę wołowina i zwykły restauracyjny koncentrat pomidorowy."
+    },
+    "izgara-kofte": {
+      "name": "Grillowane klopsiki",
+      "description": "Klopsiki wołowe w stylu rzeźniczym z pieczoną papryką i pomidorem."
+    },
+    "ayran": {
+      "name": "Ubity Ayran",
+      "description": "Tradycyjny ubity maślany napój z mnóstwem piany, przygotowany z codziennego jogurtu."
+    },
+    "ezogelin-corbasi": {
+      "name": "Zupa Ezogelin",
+      "description": "Tradycyjna restauracyjna zupa, w której czerwone soczewica, bulgur i ryż spotykają się z miętą."
+    },
+    "tarhana-corbasi": {
+      "name": "Zupa Tarhana",
+      "description": "Domowa tarhana, anatolijska klasyka powoli gotowana z pomidorami i suszoną miętą."
+    },
+    "yayla-corbasi": {
+      "name": "Zupa jogurtowa z ryżem",
+      "description": "Orzeźwiająca i kremowa zupa yayla przygotowana z jogurtu, ryżu i suszonej mięty."
+    },
+    "iskembe-corbasi": {
+      "name": "Zupa z flaków",
+      "description": "Prawdziwa zupa z wołowych flaków podawana z przyprawami i octem czosnkowym."
+    },
+    "dugun-corbasi": {
+      "name": "Zupa weselna",
+      "description": "Tradycyjna zupa weselna przygotowana z posiekanego jagnięcia i przyprawiona marynatą cytrynową."
+    },
+    "tavuk-suyu-corbasi": {
+      "name": "Zupa rosołowa z kurczaka",
+      "description": "Lecznicza zupa przygotowana z cienkiego makaronu gotowanego w rosole i poszarpanego mięsa kurczaka."
+    },
+    "domates-corbasi": {
+      "name": "Zupa pomidorowa",
+      "description": "Bogaty smak gotowany z dojrzałych pomidorów, masła i bazylii, wykończony serem."
+    },
+    "sebze-corbasi": {
+      "name": "Zupa warzywna",
+      "description": "Lekka zupa restauracyjna przygotowana z sezonowych warzyw, oliwy z oliwek i świeżych ziół."
+    },
+    "beyran-corbasi": {
+      "name": "Pikantna zupa jagnięca Beyran",
+      "description": "Regionalna zupa przygotowana w wysokiej temperaturze z jagnięciny, ryżu, czosnku i ostrej papryki."
+    },
+    "kelle-paca-corbasi": {
+      "name": "Zupa z głowy i racic",
+      "description": "Bogata zupa na wywarze kostnym przygotowana z racic i mięsa z głowy wołowej, gotowana przez wiele godzin."
+    },
+    "sehriye-corbasi": {
+      "name": "Zupa z nitką makaronową",
+      "description": "Zupa dnia przygotowana na bulionie drobiowym z pomidorami, włoskim makaronem i pietruszką."
+    },
+    "tavuk-sis": {
+      "name": "Szaszłyki z kurczaka",
+      "description": "Kawałki kurczaka marynowane w specjalnych przyprawach, podawane z pieczonymi paprykami i pomidorami."
+    },
+    "kasap-sucuk": {
+      "name": "Grillowana kiełbasa rzeźnika (Sucuk)",
+      "description": "Pikantna kiełbasa wołowa gotowana na węglu drzewnym, podawana z pieczonymi warzywami i cebulą z sumakiem."
+    },
+    "karisik-izgara": {
+      "name": "Mieszany grill",
+      "description": "Obfita i różnorodna porcja z grilla składająca się z klopsików, szaszłyków z kurczaka, kotletów jagnięcych i kiełbasy."
+    },
+    "nohut-yemegi": {
+      "name": "Gulasz z ciecierzycy z wołowiną",
+      "description": "Domowy posiłek z ciecierzycy i pokrojonej wołowiny, wolno gotowany w miedzianym garnku."
+    },
+    "patlican-musakka": {
+      "name": "Moussaka z bakłażana",
+      "description": "Smażony bakłażan, mielona wołowina i moussaka zapiekana w piekarniku z sosem pomidorowym, w stylu restauracyjnym."
+    },
+    "zeytinyagli-taze-fasulye": {
+      "name": "Zielona fasolka w oliwie",
+      "description": "Klasyczne danie gotowane w oliwie z zieloną fasolką, pomidorami i cebulą, podawane na zimno."
+    },
+    "tavuk-sote": {
+      "name": "Smażony kurczak",
+      "description": "Kawałki kurczaka smażone na dużym ogniu z kolorową papryką, grzybami i pomidorami."
+    },
+    "izmir-kofte": {
+      "name": "Klopsiki w stylu İzmir",
+      "description": "Tradycyjne danie główne z klopsików wołowych, ziemniaków i papryki pieczonych w sosie pomidorowym."
+    },
+    "etli-bezelye": {
+      "name": "Groch z wołowiną",
+      "description": "Codzienny posiłek gotowany w garnku z pokrojoną w kostkę wołowiną, groszkiem, marchewką i ziemniakami."
+    },
+    "patlican-oturtma": {
+      "name": "Pieczony bakłażan z mięsem mielonym",
+      "description": "Język przygotowywany w piekarniku z bakłażanem, pikantnym mięsem mielonym i sosem pomidorowo-czosnkowym."
+    },
+    "salgam-suyu": {
+      "name": "Sok z kiszonego rzodkiewki",
+      "description": "Tradycyjny pikantny sok z rzodkiewki fermentowany z fioletową marchewką i drożdżami bulgur."
+    },
+    "maden-suyu": {
+      "name": "Woda mineralna",
+      "description": "Naturalna woda mineralna podawana schłodzona."
+    },
+    "su": {
+      "name": "Naturalna woda źródlana",
+      "description": "Naturalna woda źródlana podawana schłodzona w szklanej butelce."
+    },
+    "kola": {
+      "name": "Cola",
+      "description": "Klasyczny napój gazowany podawany bardzo zimny."
+    },
+    "gazoz": {
+      "name": "Turecka lemoniada gazowana",
+      "description": "Tradycyjny smakowy, orzeźwiający i podawany zimny zwykły napój gazowany."
+    },
+    "turk-kahvesi": {
+      "name": "Kawa turecka",
+      "description": "Tradycyjna turecka kawa z pianą, gotowana na dużym ogniu w miedzianym tygielku."
+    },
+    "demleme-cay": {
+      "name": "Turecka herbata parzona",
+      "description": "Świeżo parzona gorąca herbata Rize w szkle z wąską talią."
+    },
+    "ev-yapimi-limonata": {
+      "name": "Domowa lemoniada",
+      "description": "Orzeźwiająca lemoniada przygotowywana codziennie ze świeżej cytryny, mięty i odrobiną cukru."
+    },
+    "hosaf": {
+      "name": "Codzienny kompot owocowy",
+      "description": "Domowy kompot gotowany codziennie z rodzynkami, morelami lub śliwkami w zależności od sezonu."
+    },
+    "iskender-kebabi": {
+      "name": "Bursa İskender Kebab",
+      "description": "Mięso jest obracane na szpikulcu nad pide, podawane z sosem pomidorowym, gorącym masłem i jogurtem."
+    },
+    "kazandibi": {
+      "name": "Karmelizowany pudding mleczny",
+      "description": "Tradycyjny deser mleczny odpowiednio skarmelizowany, o jedwabistej konsystencji."
+    },
+    "tavuk-gogsu": {
+      "name": "Puding mleczny otomański",
+      "description": "Lekki, włóknisty deser mleczny przygotowany według tradycyjnego przepisu, podawany z cynamonem."
+    },
+    "keskul": {
+      "name": "Deser z migdałowego mleka",
+      "description": "Deser mleczny w stylu osmańskim, uzupełniony smakiem migdałów i kokosem."
+    },
+    "irmik-helvasi": {
+      "name": "Halwa z kaszy manny",
+      "description": "Halwa z kaszy manny, prażona na maśle i z dodatkiem orzeszków piniowych, podawana gorąca i ziarnista."
+    },
+    "kabak-tatlisi": {
+      "name": "Dynia w deserze z tahini",
+      "description": "Dynia, powoli gotowana we własnym soku, podawana z tahini i orzechami włoskimi."
+    },
+    "ayva-tatlisi": {
+      "name": "Deser z pigwy",
+      "description": "Pigwa gotowana z goździkiem i cynamonem, podawana ze śmietaną kremówką i orzechami włoskimi."
+    },
+    "revani": {
+      "name": "Ciasto semolinowe z syropem",
+      "description": "Klasyczny deser restauracyjny, w którym miękkie ciasto semolinowe spotyka się z syropem o zapachu cytryny."
+    },
+    "ekmek-kadayifi": {
+      "name": "Pudding chlebowy ze śmietaną zagęszczoną",
+      "description": "Pudding chlebowy podany z karmelizowanym syropem serwowany jest z bawolicą śmietaną zagęszczoną."
+    },
+    "cevizli-baklava": {
+      "name": "Baklawa z orzechami włoskimi",
+      "description": "Warstwy rozwałkowane bardzo cienko, chrupiąca baklawa z dużą ilością orzechów włoskich i zwykłego masła."
+    }
+  },
+  "allergens": {
+    "Süt ürünleri": "Mleko",
+    "Gluten": "Gluten",
+    "Yumurta": "Jajko",
+    "Badem": "Migdał",
+    "Çam fıstığı": "Orzeszek piniowy",
+    "Susam": "Sezam",
+    "Ceviz": "Orzech włoski"
+  },
+  "tags": {
+    "Popüler": "Popularne",
+    "Vejetaryen": "Wegetariańskie",
+    "Günün Yemeği": "Danie dnia",
+    "Şefin Önerisi": "Wybór szefa",
+    "Yeni": "Nowe",
+    "Acılı": "Pikantne",
+    "Ev Yapımı": "Domowe",
+    "Lokanta Klasiği": "Klasyka restauracyjna",
+    "Günün Çorbası": "Zupa dnia",
+    "Vegan": "Wegańskie",
+    "Hafif": "Lekkie",
+    "Yöresel": "Regionalne",
+    "Paylaşmalık": "Do dzielenia",
+    "Ev Yemeği": "W stylu domowym",
+    "Zeytinyağlı": "Oliwa z oliwek",
+    "Nostaljik": "Nostalgiczne",
+    "Geleneksel": "Tradycyjne",
+    "Bursa Lezzeti": "Smak Bursy",
+    "Sütlü Tatlı": "Deser mleczny",
+    "Sıcak Tatlı": "Ciepły deser",
+    "Mevsimlik": "Sezonowy",
+    "Şerbetli": "Deser syropowy"
+  }
+}

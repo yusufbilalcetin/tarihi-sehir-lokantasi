@@ -1,0 +1,349 @@
+{
+  "locale": "fj",
+  "ui": {
+    "menu": "Menu",
+    "search": "Vakasaqara na menu...",
+    "searchLabel": "Vakasaqaqara ena menu",
+    "categories": "iWasewase",
+    "categoryIntro": "Digitaka na flavor me baleta na nomu teveli.",
+    "categoryNavigation": "Iwasewase ni menu",
+    "openCategory": "Dolava na {name}, {count} na iyaya",
+    "items": "iyaya",
+    "item": "ka",
+    "searchResults": "macala ni vakasaqaqara",
+    "productsFound": "{count} na iyaya e kunei",
+    "backToCategories": "Lesu ki na iwasewase",
+    "backToCategory": "Lesu ki na {name}",
+    "clearSearch": "Vagalalataka na vakasaqaqara",
+    "noResults": "Sega ni kune e dua na iyaya veisotari",
+    "noResultsDescription": "Tovolea tale e dua na vakasaqaqara se lesu tale ki na iwasewase.",
+    "order": "Noqu Ota",
+    "waiter": "dauveiqaravi",
+    "bill": "Bill",
+    "addToCart": "Kuria ki na Ota",
+    "addedToCart": "{name} vakuri ki na nomu ota.",
+    "removeFromCart": "kauta tani {name}",
+    "soldOut": "volitaki oti nikua",
+    "productDetails": "Dolava na kena matailalai me baleta na {name}",
+    "portion": "wase",
+    "standardPortion": "iWasewase tudei",
+    "allergens": "veika e vakavuna",
+    "noAllergens": "Sega ni vakaraitaki na allergens",
+    "productNote": "iDusidusi ni iyaya",
+    "productNotePlaceholder": "E.g. sega na pata, yalovinaka",
+    "decreaseQuantity": "Laikama na iwiliwili",
+    "increaseQuantity": "Vakalevuya na iwiliwili",
+    "each": "ese",
+    "note": "Nota",
+    "subtotal": "Vuna taucoko",
+    "serviceFee": "Isau ni veiqaravi",
+    "total": "Totolo",
+    "sendOrder": "Tukuna na Iwiliwili",
+    "orderSent": "Sa tukuni oti na nomu iwiliwili ki na vale ni kakana",
+    "orderTracking": "Raica na iwiliwili #{number} eke.",
+    "newItem": "Vakayacora Tale e Dua na Matau",
+    "emptyCart": "Sa vakawawa na nomu iwiliwili",
+    "emptyCartDescription": "Na iyaya o digitaka mai na menyu ena yaco eke.",
+    "browseMenu": "Raica na Menyu",
+    "orderReceived": "Sa ciqoma na Iwiliwili",
+    "waiterConfirmed": "Waiter E vakadeitaki",
+    "preparing": "Vakavinakataki",
+    "ready": "E sa tiko",
+    "served": "Sa vakarautaki",
+    "preparingDescription": "Na nodatou vale ni kakana e sa vakarautaka na nomu oda.",
+    "orderStatus": "Ituvaki ni oda",
+    "callWaiter": "Vuli Waiter",
+    "placeOrder": "Au via oda",
+    "wantWater": "Au via gunu wai",
+    "wantBread": "Au via kana roti",
+    "wantService": "Vuli eso tale",
+    "other": "Eso tale",
+    "generalRequest": "Au tiko na taro taucoko",
+    "orderHelp": "Au gadreva na veiqaravi ena noqu oda",
+    "waterDescription": "Kerekere mo kauti wai ki teburaga",
+    "breadDescription": "Yalovinaka solia roti ki na teveli",
+    "serviceDescription": "Au gadreva na isulu ni kana se leitoa",
+    "otherDescription": "Au gadreva na veivuke ena dua tale na ka",
+    "waiterHelpTitle": "Eda rawa vakacava vei iko?",
+    "waiterHelpDescription": "Na nomu kerekere ena kauta sara ki {table}.",
+    "waiterRequestSent": "A kauta sara na nomu kerekere vei keda na waiter.",
+    "requestBill": "Kerekere na Bilisi",
+    "billSent": "A kauta sara na nomu kerekere ni bilisi",
+    "billConfirm": "O vinakata mo kerekere na bilisi?",
+    "billSentDescription": "Na keda waiter ena tiko vata kei iko ena loma ni siga.",
+    "billConfirmDescription": "Na nomu kerekere ena lako vakadodonu vei na waiter. O rawa ni saumi ena teveli se ena kabani ni lisi.",
+    "billToast": "A vakarautaki toka na nomu kerekere ni bili vei keda dauvakarautaka na kakana.",
+    "backToMenu": "Vakasamataka tale na Lisi ni Kakana",
+    "back": "Vakasamataka tale",
+    "close": "Vakatotomuri",
+    "yourTable": "NA NOQU TEVELAI",
+    "serviceOpen": "Na veiqaravi e ganita",
+    "slogan": "Dau Vakalougatataki na Drau • Teveli Vou",
+    "location": "Bursa, Osmangazi",
+    "languageLabel": "Digitaka na vosa",
+    "currencyLabel": "Digitaka na ilavo",
+    "customerNavigation": "Na veitalanoa ni menu ni dauvolivoli",
+    "approximateCurrency": "Na isau ni ilavo mai tuba e rauta. Na volivoli e vakayacori ena Lira Turkish.",
+    "orderSuccess": "Sa vakauta vinaka na nomu odoro.",
+    "languagePickerTitle": "Digitaka na Vosa",
+    "languagePickerDescription": "Digia na vosa o gadreva mo vakayagataka ena menu.",
+    "searchLanguage": "Vakaivei na vosa...",
+    "recommendedLanguages": "Vakayagataki",
+    "recentLanguages": "Vosa vakarairai",
+    "allLanguages": "Vosa kece",
+    "languageNotFound": "Sega ni kunea na vosa.",
+    "languageNotFoundDescription": "Dau vakayagataka eso tale na yaca ni vosa se tusitusiga.",
+    "tableNumber": "Teveli {number}",
+    "itemCount": "{count} iyaya",
+    "splashLabel": "Matamata bulabula Tarihi Şehir Lokantası",
+    "cancel": "Sega",
+    "confirmOrder": "Vakayacora na oda",
+    "orderSummary": "Vakarautaka na Oda",
+    "payment": "Vuli ni ilavo",
+    "tableNotFound": "Sega ni kunea na teveli.",
+    "invalidQr": "QR code e cala.",
+    "menuUnavailable": "Na menu e sega ni tu ena gauna qo.",
+    "networkError": "E yaco e dua na cala ni mataveilawa.",
+    "productUnavailable": "Na iyaya oqo e sega ni available ena gauna qo.",
+    "unableToSendOrder": "Sega ni rawa ni vakarautaka na oda.",
+    "tryAgain": "Vakayagataka tale",
+    "somethingWentWrong": "E yaco e dua na cala.",
+    "loadingLanguage": "Vakakina na vosa...",
+    "languageLoadError": "E sega ni rawa ni vakarautaki na vosa. Kerekere vakayagataka tale."
+  },
+  "categories": {
+    "soups": "Kaukauwa",
+    "grill": "Grills",
+    "mains": "Kakubou Levuilavo",
+    "drinks": "Ika",
+    "kebabs": "Kebabs",
+    "dessert": "Kakano veivale"
+  },
+  "products": {
+    "mercimek": {
+      "name": "Supu ni Leni",
+      "description": "Supu ni leni vakadodonu, a qaravi ena sala lelevu, vakacokotaki ena misini ni pata."
+    },
+    "tas-kebabi": {
+      "name": "Bif Stewu ni Tuki",
+      "description": "Bif, ka ni kakana ni gauna, kei na misini ni wase ni kakana ni koro ni kalou ni vakalailaitaka."
+    },
+    "kuzu-tandir": {
+      "name": "Viuti Roqoqoqo",
+      "description": "Viuti tandoori ni wase ni kakana ni koro, vakalailaitaka ena catabu ni ula."
+    },
+    "pirinc-pilavi": {
+      "name": "Raiti Pilafi",
+      "description": "Raiti Baldo pilafi, volakasere, me ra vakaitavi."
+    },
+    "firin-sutlac": {
+      "name": "Vunikau ni Raiti",
+      "description": "Vunikau ni raiti vakatekivu ena sala vakavanua, qaravi ena wai vula ni bivalu ena siga yadua."
+    },
+    "kuru-fasulye": {
+      "name": "Sivi-lolo ni Bini ena Siki ni Veisewu",
+      "description": "Bini İspir, siki ni luvi, kei na pasite ni tomati ena vale ni kana."
+    },
+    "izgara-kofte": {
+      "name": "Kolikoli ni Luvi",
+      "description": "Luvi ni lakaqaqa ni qoli ena iotioti ni pepa kei na tomati."
+    },
+    "ayran": {
+      "name": "Ayran Lomavakarau",
+      "description": "Bikarubati buttermilk vakavanua e rui levu na foam, cakacakataka ena yogurt ena siga."
+    },
+    "ezogelin-corbasi": {
+      "name": "Esoqeli Ezogelin",
+      "description": "Esoqeli vakavanua ena vale ni kana ka tiko kina na lentile lomadonu, bulgur, kei na rai ena mere."
+    },
+    "tarhana-corbasi": {
+      "name": "Esoqeli Tarhana",
+      "description": "Tarhana e cakacakataka e vale, vula ni Anatolian ka vakasakiti buli vata kei na tomati kei na rai bibi e dra."
+    },
+    "yayla-corbasi": {
+      "name": "Vakalolo ni Yogati kei na Laisi",
+      "description": "Vakalolo bulabula ka batabata me vaka na yayla soup e sa tuatuitaki kina na yogati, laisi, kei na miti lalai."
+    },
+    "iskembe-corbasi": {
+      "name": "Vakalolo ni Laka ni Tiko Vakalailai",
+      "description": "Vakalolo dina ni laka ni tiko vakalailai e vakatuburui ena kena vakasakiti kei na vinaika ni suki."
+    },
+    "dugun-corbasi": {
+      "name": "Vakalolo ni Tovolea",
+      "description": "Vakalolo vakavanua ni votoli e dausautaki ena mamu ni lamu ka vakaraitaki ena vusini ni laki lemonsi."
+    },
+    "tavuk-suyu-corbasi": {
+      "name": "Vakalolo ni Kiki",
+      "description": "Vakalolo ni vukea bula e sa vakatuitaki ena noodles lalai e vakasautake ena lailai ni kacivaki ni wasawasa kei na kikis lalai."
+    },
+    "domates-corbasi": {
+      "name": "Vakalolo ni Tomato",
+      "description": "E dua na kena kakana totoka ka sa vakakina na tomati, bata, kei basil, qai tosoya ena sisi."
+    },
+    "sebze-corbasi": {
+      "name": "Kisoso ni Veika Kana Ni Veisemati",
+      "description": "E dua na kisoso malumu ni restorani ka a vakavurea ena veika kanakana ena gauna ni vuli, waini olifi, kei na weni vei vakarairai."
+    },
+    "beyran-corbasi": {
+      "name": "Kisoso ni Lamu Vakarautaki Veiuya",
+      "description": "E dua na kisoso vaka-iqele ka vakavurei ena ulu ni tolu ka a vakalutumaki ena lamu, rai, wainika, kei na pepa veisosomitaki."
+    },
+    "kelle-paca-corbasi": {
+      "name": "Kisoso ni Ulu kei na Sici",
+      "description": "E dua na kisoso bibi ni kabani lomadonu ka a vakavurea ena sici lamu kei na ulu ni manumanu a vakakina ena gauna e levu."
+    },
+    "sehriye-corbasi": {
+      "name": "Kisoso Vermicelli",
+      "description": "Moso ni siga a vakadewataki ena draki ni kuwaka ni koli kei na tomati, vermicelli, kei na pariseli."
+    },
+    "tavuk-sis": {
+      "name": "Sikewa ni Koli",
+      "description": "Tikina ni koli era vakalailaitaka ena iyaya vakatabakidua, a solia ena pepa ni ata ni kena talaki kei na tomati."
+    },
+    "kasap-sucuk": {
+      "name": "Sucuk ni Bakale ni Kata",
+      "description": "Sosisi ni bulu e vakasisila, a kania ena charcoala, kei na veika ni vosa ni kakana era talevoni kei na domo veisumā."
+    },
+    "karisik-izgara": {
+      "name": "Gril Iruvinaka",
+      "description": "Plate ni gril e levu ka vakaikoya e okati kina na bulu, sikewa ni koli, chop ni luve ni olivaliva, kei na sosisi."
+    },
+    "nohut-yemegi": {
+      "name": "Vakalolo ni Biliwai kei na Bulculusi",
+      "description": "E kakana nona qai vakayacori vakaloma na chickpeas kei na tovo ni bee me vakalutuma vakadodonu ena ipu kopere."
+    },
+    "patlican-musakka": {
+      "name": "Eggplant Moussaka",
+      "description": "Eggplant vakasoso, tovo ni bee, kei na moussaka a volivolitaki ena oven vata kei na sawasawa ni tomati, vakakauta ena sala ni resitara."
+    },
+    "zeytinyagli-taze-fasulye": {
+      "name": "Veika ni Lomea ena Oli Oli Oli Oli Oli",
+      "description": "E kauwaitaki ena oli oli vata kei na veika ni lomea, tomato, kei na yanuyanu, a vakarautaki vakayaca."
+    },
+    "tavuk-sote": {
+      "name": "Kikeki ni Kuli",
+      "description": "E vakacurumi na tikina ni kuli ena isitaki levu vata kei na pepa taucake, miso, kei na tomati."
+    },
+    "izmir-kofte": {
+      "name": "Meatballs ni i sala İzmir",
+      "description": "E kakana makawa e tovolevu me baleta na mumu lahi ni bera, pateta, kei na pepa ena lolo tomato."
+    },
+    "etli-bezelye": {
+      "name": "Bisi kei na Baka",
+      "description": "Kakana ena veivakurabuitaki ena mata ni talanoa e vakakina na baka, bisi, karoti, kei na pateta."
+    },
+    "patlican-oturtma": {
+      "name": "Bani Wakawaka Ena Mumu Laa",
+      "description": "Na yagona e vakavinakataki ena uwani vata kei na bani wakawaka, mumu bulabula, kei na lolo tomato kai garlic."
+    },
+    "salgam-suyu": {
+      "name": "Yala ni Tani",
+      "description": "Yala makawa ni tani bulabula e vakavutuya vata kei na karoti valu kei na yeasti bulgur."
+    },
+    "maden-suyu": {
+      "name": "Wai Mineral",
+      "description": "Wai mineral dina e sega ni tiko na manumanu e soli rawarawa e cauravou."
+    },
+    "su": {
+      "name": "Wai Vatu Ni Vanua",
+      "description": "Wai vatu ni vanua e vakarautaki vakasalusalu ena kati botolo."
+    },
+    "kola": {
+      "name": "Kola",
+      "description": "Yakavi vakabisinisi ni wainisamaki e vakarautaki vakasalusalu."
+    },
+    "gazoz": {
+      "name": "Soda ni Lamuni Toke",
+      "description": "Soda vakavanua, marautaka, ka vakarautaki vakasalusalu."
+    },
+    "turk-kahvesi": {
+      "name": "Kofi Toke",
+      "description": "Kofi Toke vakavanua kei na qaqa, vakatovotovo ena veiyacovi veika bibi ena cezve vakaapa."
+    },
+    "demleme-cay": {
+      "name": "Ti Brewu Toke",
+      "description": "Ti Rize vou e cecere ena igalasi lailai."
+    },
+    "ev-yapimi-limonata": {
+      "name": "Limoni Ti Vuinani",
+      "description": "Lemonade vou e vakadewataki ena siga yadua ena lemoni vou, mint, kei na suka lailai."
+    },
+    "hosaf": {
+      "name": "Vakalewa ni Fruit ena siga yadua",
+      "description": "Compote era vakadewataka ena vale, a vakavuna ena siga yadua kei na raisini, aprikoti, se plamu me salavata kei na gauna."
+    },
+    "iskender-kebabi": {
+      "name": "Bursa İskender Kebab",
+      "description": "Na mata ena vakataka ena skewer ena vua ni pide, vakarautaki vata kei na sosi tomato, pata wera, kei na yogati."
+    },
+    "kazandibi": {
+      "name": "Pudding ni Laitini Caramelized",
+      "description": "Vakalewai vakavanua na yasa ni laitini properly, ena rairai silky."
+    },
+    "tavuk-gogsu": {
+      "name": "Ottoman Milk Pudding",
+      "description": "E sila ni keke wai ni kaukauwa ka duidui, vakatotoloa ena vanua e vakaitavi kina na kena isau, vakauta vata kei na cinnamon."
+    },
+    "keskul": {
+      "name": "Keke Wai Almond",
+      "description": "Keke wai ena iwalewale Ottoman e vakarautaki vakavinaka kei na isau ni almond kei na qoli."
+    },
+    "irmik-helvasi": {
+      "name": "Semolina Halva",
+      "description": "Semolina halva, cevata kei na pata kei na nuta ni pine, vakauta veivakadeitaki ka uciuci."
+    },
+    "kabak-tatlisi": {
+      "name": "Keke ni Bulu Vatu kei Tahini",
+      "description": "Na bulu vatu, vakatovoa vakatotolo ena kena wai, vakauta vata kei na tahini kei na walwe."
+    },
+    "ayva-tatlisi": {
+      "name": "Keke ni Quince",
+      "description": "Na quince vakatovoa kei na clove kei na cinnamon e vakauta vata kei na kirimi uciuci kei na walwe."
+    },
+    "revani": {
+      "name": "Keke ni Semolina Syrup",
+      "description": "Na keke lelevu ni sitoa taumada ka tiko vata kei na syrup e cagi ni lemoni."
+    },
+    "ekmek-kadayifi": {
+      "name": "Pudding Bred ena Kiri Leba",
+      "description": "Na pudding bred e vakarautaki vata kei na syrup caramelized ka vakarautaki vata kei na kiri lebaleba ni buffulo."
+    },
+    "cevizli-baklava": {
+      "name": "Baklava ni Wanut",
+      "description": "Ivurevure e vakadaboi rawarawa ka lailai, baklava crispy e buli vata kei na wanut levu kei na bati lailai."
+    }
+  },
+  "allergens": {
+    "Süt ürünleri": "Kiri Leka",
+    "Gluten": "Gluten",
+    "Yumurta": "Vua",
+    "Badem": "Almond",
+    "Çam fıstığı": "Vua ni Pine",
+    "Susam": "Sesame",
+    "Ceviz": "walnut"
+  },
+  "tags": {
+    "Popüler": "kilai levu",
+    "Vejetaryen": "kakana kakana kakana",
+    "Günün Yemeği": "kakana ni siga",
+    "Şefin Önerisi": "digidigi ni chef",
+    "Yeni": "Vou",
+    "Acılı": "kakana",
+    "Ev Yapımı": "vakavakarau e vale",
+    "Lokanta Klasiği": "vale ni kana kilai levu",
+    "Günün Çorbası": "sopi ni siga",
+    "Vegan": "vegan",
+    "Hafif": "rarama",
+    "Yöresel": "yasana",
+    "Paylaşmalık": "me wasea",
+    "Ev Yemeği": "ivakarau ni vale",
+    "Zeytinyağlı": "waiwai ni olive",
+    "Nostaljik": "nanuma vinaka",
+    "Geleneksel": "vakavanua",
+    "Bursa Lezzeti": "Yasa ni Bursa",
+    "Sütlü Tatlı": "Sosoya ni Kiri",
+    "Sıcak Tatlı": "Sosoya ni Veibula",
+    "Mevsimlik": "Vuli ni Isausau",
+    "Şerbetli": "Sosoya ni Siro"
+  }
+}

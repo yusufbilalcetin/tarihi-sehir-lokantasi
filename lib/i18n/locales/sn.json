@@ -1,0 +1,349 @@
+{
+  "locale": "sn",
+  "ui": {
+    "menu": "Menyu",
+    "search": "Tsvaga pamenu...",
+    "searchLabel": "Tsvaga pamenu",
+    "categories": "Zvikamu",
+    "categoryIntro": "Sarudza flavour yetafura yako.",
+    "categoryNavigation": "Zvikamu zvemenu",
+    "openCategory": "Vhura {name}, zvinhu {count}",
+    "items": "zvinhu",
+    "item": "chinhu",
+    "searchResults": "Mhedzisiro Yekutsvaga",
+    "productsFound": "{count} zvinhu zvakawanikwa",
+    "backToCategories": "Kudzokera kuzvikamu",
+    "backToCategory": "Kudzokera ku {name}",
+    "clearSearch": "Bvisa kutsvaga",
+    "noResults": "Hapana zvinhu zvakafanana zvakawanikwa",
+    "noResultsDescription": "Edzazve kutsvaga kana kudzokera kumapoka.",
+    "order": "Odha Yangu",
+    "waiter": "Mushandi",
+    "bill": "Bhiri",
+    "addToCart": "Wedzera kuOdha",
+    "addedToCart": "{name} yawedzerwa kuodha yako.",
+    "removeFromCart": "Bvisa {name}",
+    "soldOut": "Zvapera Nhasi",
+    "productDetails": "Vhura ruzivo rwe {name}",
+    "portion": "Chikamu",
+    "standardPortion": "Chikamu chakajairika",
+    "allergens": "Zvinokonzera Allergies",
+    "noAllergens": "Hapana zvinokonzerwa neallergies zvakataurwa",
+    "productNote": "Ongororo yechigadzirwa",
+    "productNotePlaceholder": "Semuenzaniso, pasina bhata, ndapota",
+    "decreaseQuantity": "Deredza huwandu",
+    "increaseQuantity": "Kuwedzera huwandu",
+    "each": "yega yega",
+    "note": "Cherekedza",
+    "subtotal": "Chikwama chidiki",
+    "serviceFee": "Mubhadharo webasa",
+    "total": "Zvose",
+    "sendOrder": "Tumira Odha",
+    "orderSent": "Odha yako yatumirwa kukicheni",
+    "orderTracking": "Tevera odha #{number} pano.",
+    "newItem": "Wedzera Chimwe Chigadzirwa",
+    "emptyCart": "Odha yako haina chinhu",
+    "emptyCartDescription": "Zvinhu zvaunosarudza kubva pamenu zvicharatidzwa pano.",
+    "browseMenu": "Tsvaga Menu",
+    "orderReceived": "Odha Yagamuchirwa",
+    "waiterConfirmed": "Mushandi Asimbisirwa",
+    "preparing": "Kugadzirira",
+    "ready": "Yakagadzirira",
+    "served": "Yakapiwa",
+    "preparingDescription": "Imba yedu yekubikira iri kugadzirira odha yako.",
+    "orderStatus": "Chimiro cheodha",
+    "callWaiter": "Fona Mushandi",
+    "placeOrder": "Ndinoda kuodha",
+    "wantWater": "Ndinoda mvura",
+    "wantBread": "Ndinoda chingwa",
+    "wantService": "Basa rekuwedzera",
+    "other": "Zvimwe",
+    "generalRequest": "Ndine chikumbiro chakajairika",
+    "orderHelp": "Ndoda rubatsiro neodha yangu",
+    "waterDescription": "Ndapota uuye nemvura patafura",
+    "breadDescription": "Ndapota uuye nechingwa patafura",
+    "serviceDescription": "Ndiri kuda zvokudya kana ndiro",
+    "otherDescription": "Ndiri kuda rubatsiro pane chimwe chinhu",
+    "waiterHelpTitle": "Tingabatsira sei?",
+    "waiterHelpDescription": "Kukumbira kwako kuchatumirwa ne{table}.",
+    "waiterRequestSent": "Kukumbira kwako kwatumirwa kumushandi wedu.",
+    "requestBill": "Kukumbira Bhiri",
+    "billSent": "Kukumbira kwako kwebhiri kwatumirwa",
+    "billConfirm": "Ungade here kukumbira bhiri?",
+    "billSentDescription": "Mushandi wedu achauya kwamuri munguva pfupi.",
+    "billConfirmDescription": "Kukumbira kwako kuchaenda zvakananga kumushandi. Unogona kubhadhara patafura kana kusheya.",
+    "billToast": "Chikumbiro chako chebhiri chakatumirwa kumushandi wedu.",
+    "backToMenu": "Kudzokera kuMenyu",
+    "back": "Kudzokera",
+    "close": "Pedzisa",
+    "yourTable": "PARUTIVI RWAKO",
+    "serviceOpen": "Basa rakavhurika",
+    "slogan": "Kunakirwa kweTsika • Tafura Yanhasi",
+    "location": "Bursa, Osmangazi",
+    "languageLabel": "Sarudza mutauro",
+    "currencyLabel": "Sarudza mari",
+    "customerNavigation": "Kutungamira kwevatengi pamenyu",
+    "approximateCurrency": "Mitengo yemari dzemhiri inoenderana chete. Kubhadhara kunoitwa muTurkish Lira.",
+    "orderSuccess": "Chirongwa chako chatumirwa zvinobudirira.",
+    "languagePickerTitle": "Sarudza Mutauro",
+    "languagePickerDescription": "Sarudza mutauro waunoda kushandisa kumenu.",
+    "searchLanguage": "Tsvaga mitauro...",
+    "recommendedLanguages": "Yakakurudzirwa",
+    "recentLanguages": "Mitauro Yapfuura",
+    "allLanguages": "Mitauro Yese",
+    "languageNotFound": "Mutauro hautsanangurwe.",
+    "languageNotFoundDescription": "Edza rimwe zita remutauro kana kodhi.",
+    "tableNumber": "Ratafura {number}",
+    "itemCount": "Zvinhu {count}",
+    "splashLabel": "Tarihi Şehir Lokantası peji yekutanga",
+    "cancel": "Bvisa",
+    "confirmOrder": "Simbisa Odha",
+    "orderSummary": "Pfupiso yeOdha",
+    "payment": "Kubhadhara",
+    "tableNotFound": "Ratafura haana kuwanikwa.",
+    "invalidQr": "QR code isiri kushanda.",
+    "menuUnavailable": "Menyu parizvino haina kuwanikwa.",
+    "networkError": "Paive nedambudziko renetiweki.",
+    "productUnavailable": "Chinhu ichi parizvino hachiwanikwi.",
+    "unableToSendOrder": "Hatigone kutumira odha.",
+    "tryAgain": "Edza zvakare",
+    "somethingWentWrong": "Pane chakanganisika.",
+    "loadingLanguage": "Kurodha mutauro...",
+    "languageLoadError": "Hatina kukwanisa kurodha mutauro. Ndokumbira uedze zvakare."
+  },
+  "categories": {
+    "soups": "Muto",
+    "grill": "Grills",
+    "mains": "Zvikafu Zvikuru",
+    "drinks": "Zvinwiwa",
+    "kebabs": "Kebabs",
+    "dessert": "Zvidyarwa Zvinotapira"
+  },
+  "products": {
+    "mercimek": {
+      "name": "Soup yeLentil",
+      "description": "Soup yeLentil yakagadzirwa kumba nenzira yechinyakare, yakapedzwa nesosi yebhotoro."
+    },
+    "tas-kebabi": {
+      "name": "Stew yeNyama yeMombe yeTurkey",
+      "description": "Nyama yemombe, miriwo yemwaka, uye sosi yedu yekubikisa zvishoma nezvishoma resitorendi yedu."
+    },
+    "kuzu-tandir": {
+      "name": "Gwayana Rakabikwa Zvishoma",
+      "description": "Gwayana repamusoro resitorendi yedu, rakabikwa zvishoma nezvishoma pamusoro pemoto wakadzikama."
+    },
+    "pirinc-pilavi": {
+      "name": "Rice Pilaf",
+      "description": "Rice pilaf yeBaldo ine bhotoro, yakapfava."
+    },
+    "firin-sutlac": {
+      "name": "Pudding yeRice Yakabikwa",
+      "description": "Pudding yerayisi yakabikwa nenzira yechinyakare, yakagadzirwa nemukaka webuffalo wemazuva ose."
+    },
+    "kuru-fasulye": {
+      "name": "Stew yeBhinzi Chena neNyama Yembudzi",
+      "description": "Bhinzi dzeİspir, nyama yembudzi yakachekwa, uye paste yetomato isina kusvibiswa yeresitorendi."
+    },
+    "izgara-kofte": {
+      "name": "Nyama dzemabhero Dzakagochwa",
+      "description": "Mabhero en nyama yembudzi ayo anogadzirwa semucheka wembudzi pamwe nepepuru rakagochwa uye tomato."
+    },
+    "ayran": {
+      "name": "Ayran Yakakanyiwa",
+      "description": "Buttermilk yechinyakare yakakanyiwa ine foam yakawanda, inogadzirwa neyogati yokushandisa zuva nezuva."
+    },
+    "ezogelin-corbasi": {
+      "name": "Soup yeEzogelin",
+      "description": "Soup yechinyakare yeresitorendi panosangana lentils tsvuku, bulgur, nerice pamwe nepeppermint."
+    },
+    "tarhana-corbasi": {
+      "name": "Soup yeTarhana",
+      "description": "Tarhana yakagadzirwa kumba, chikafu cheAnatolia chinobikwa zvishoma nezvishoma pamwe nematomati uye peppermint yakaoma."
+    },
+    "yayla-corbasi": {
+      "name": "Yogati neMupunga Soup",
+      "description": "Soup inotonhorera uye ine mukaka wakagadzirwa neyogati, mupunga, uye minti yakaoma."
+    },
+    "iskembe-corbasi": {
+      "name": "Soup yeTripe",
+      "description": "Soup yechokwadi yemombe tripe inopihwa pamwe chete nezvinonhuwira zvayo uye waini yegariki."
+    },
+    "dugun-corbasi": {
+      "name": "Wedding Soup",
+      "description": "Soup yechinyakare yemuchato yakagadzirwa nemhuka yakachekwa uye inonhuhwirirwa nemuto welimon."
+    },
+    "tavuk-suyu-corbasi": {
+      "name": "Chicken Broth Soup",
+      "description": "Soup inoporesa yakagadzirwa nemakapena madiki akabikwa mubroth yebhonzo uye nyama yehuku yakachekwa."
+    },
+    "domates-corbasi": {
+      "name": "Tomato Soup",
+      "description": "Rimwe bhurawu rakapfuma rakabikwa nematomatisi akakora, bhata, uye basil, rakapedzwa nechingwa cheburi."
+    },
+    "sebze-corbasi": {
+      "name": "Soup yemiriwo",
+      "description": "Soup yakareruka yeparesitauro yakagadzirwa nemiriwo yemwaka, mafuta eolivi, uye miriwo mitsva."
+    },
+    "beyran-corbasi": {
+      "name": "Spicy Lamb Beyran Soup",
+      "description": "Soup yenzvimbo yakagadzirwa pamusoro pemoto wakakwira nemhuru yemakwikwi, mupunga, gariki, uye mhiripiri inopisa."
+    },
+    "kelle-paca-corbasi": {
+      "name": "Soup yemusoro netsoka",
+      "description": "Soup yakapfuma yemabones yakagadzirwa netsoka dzemombe nemusoro wemhuka zvakabikwa kwemaawa akareba."
+    },
+    "sehriye-corbasi": {
+      "name": "Soup yeVermicelli",
+      "description": "Soup yemazuva ose yakagadzirwa nehwahwa h huku ine matomatisi, vermicelli, uye parsley."
+    },
+    "tavuk-sis": {
+      "name": "Huku Dzenyama Pamhando",
+      "description": "Zvidimbu zvehuku zvakanyikwa nemaspice akakosha, zvinopihwa pamwe chete nemapepuru akagochwa nematomatisi."
+    },
+    "kasap-sucuk": {
+      "name": "Sucuk Yegwayana Yakagochwa",
+      "description": "Nyama yesausage ine zvinonhuwira yakabikwa pamusoro pemarasha, nemiriwo yakagochwa uye hanyanisi nesumac."
+    },
+    "karisik-izgara": {
+      "name": "Grill Musanganiswa",
+      "description": "Puranga yakazara uye yakasanganiswa yesarudzo dzemagrill inosanganisira mabhora enyama, huku dzakasungirirwa, mapapu emakwai, nesausage."
+    },
+    "nohut-yemegi": {
+      "name": "Stew yeChickpea ne Nyama Yegwayana",
+      "description": "Chikafu chakagadzirwa pamba chine nyemba uye nyama yehuku yakachekwa zvishoma nezvishoma mubhodhoro rebrass."
+    },
+    "patlican-musakka": {
+      "name": "Moussaka yeMatemera",
+      "description": "Matemera akagochwa, nyama yenyama yakapwanyika, uye moussaka yakabikwa muhovheni ine muto wetamatisi, maitiro erezinesi."
+    },
+    "zeytinyagli-taze-fasulye": {
+      "name": "Bhinzi Dziri muOiri yeOlive",
+      "description": "Chikafu chakajairika chakabikwa muoiri yeolive chine bhinzi dzakagadzirwa, matomatisi, nemanyowa, chishumirwa chakatonhorera."
+    },
+    "tavuk-sote": {
+      "name": "Huku Yakabikwa muFrying Pan",
+      "description": "Zvidimbu zve huku zvinobikwa pamusoro pekupisa kwakanyanya nemapepuru ane ruvara, ma mushroom, uye matomatisi."
+    },
+    "izmir-kofte": {
+      "name": "Maputi eNyama eMazhairi eİzmir",
+      "description": "Chikafu chechinyakare chine mabhora enyama yehuku, mapatatisi, uye mhiripiri yakabikwa mu sosi yematomati."
+    },
+    "etli-bezelye": {
+      "name": "Nyemba neNyama",
+      "description": "Chikafu chemazuva ose chinobikwa mupoto chine nyama yaka chekwa, nyemba, karoti, uye mapatatisi."
+    },
+    "patlican-oturtma": {
+      "name": "Bhinzi Rakabikwa neNyama Yakachekwa",
+      "description": "Rurimi runogadzirwa muhovheni nebhinzi, nyama yakachekwa ine munyu wakasviba, uye sosi yatomati ine gariki."
+    },
+    "salgam-suyu": {
+      "name": "Juice Yematombo Inotsva",
+      "description": "Juice yechivanhu inopisa yematombo inotsva inotukwa nekaroti yepepuru uye dovi rebhurughu."
+    },
+    "maden-suyu": {
+      "name": "Mvura Yezvicherwa",
+      "description": "Mvura yezvicherwa chisina chinhu inoiswa inotonhora."
+    },
+    "su": {
+      "name": "Mvura yeChisikirwo",
+      "description": "Mvura yechisikirwo inopihwa inotonhorera muhwahwa yegirazi."
+    },
+    "kola": {
+      "name": "Cola",
+      "description": "Chinwiwa checarbonated chechivanhu chinopihwa chinotonhorera."
+    },
+    "gazoz": {
+      "name": "Turkish Lemon Soda",
+      "description": "Soda yechivanhu ine hwema hwakasiyana, inodziya uye inopihwa ichitonhorera."
+    },
+    "turk-kahvesi": {
+      "name": "Turkish Coffee",
+      "description": "Kofi yechivanhu yeTurkey ine foam, inobikwa pakupisa kwakanyanya muCopper cezve."
+    },
+    "demleme-cay": {
+      "name": "Turkish Brewed Tea",
+      "description": "Tii itsva yakabikwa yeRize inopihwa inopisa mugirazi rakatetepa pahudyu."
+    },
+    "ev-yapimi-limonata": {
+      "name": "Lemonade Yakagadzirwa Pamba",
+      "description": "Lemonade inonwiwa ichigadzirwa zuva rega rega nemalemon matsva, minti, uye shuga shoma."
+    },
+    "hosaf": {
+      "name": "Daily Fruit Compote",
+      "description": "Compote yemumba inobikwa zuva rega rega neraisini, maapuro kana plum zvinoenderana nenguva."
+    },
+    "iskender-kebabi": {
+      "name": "Bursa İskender Kebab",
+      "description": "Nyama inotenderedzwa pachikero pamusoro pepide, ichipihwa nesosi yetamati, bhata inopisa, uye yogati."
+    },
+    "kazandibi": {
+      "name": "Caramelised Milk Pudding",
+      "description": "Chikafu chekugadzira mukaka chechinyakare chakakarameliziswa zvakanaka, chine chimiro chakatsetseka."
+    },
+    "tavuk-gogsu": {
+      "name": "Ottoman Milk Pudding",
+      "description": "Chinwiwa chemukaka chakareruka uye chine fiber chakagadzirwa neimwe nzira yechinyakare, chinopihwa chine sinamoni."
+    },
+    "keskul": {
+      "name": "Pudingi reMukaka weAlmond",
+      "description": "Chinwiwa chemukaka chemuOttoman chakapedziswa neflavour ye almond uye coconut."
+    },
+    "irmik-helvasi": {
+      "name": "Semolina Halva",
+      "description": "Semolina halva, yakagochwa nebutter uye nzungu dze pine, inopihwa inopisa uye ine mhodzi."
+    },
+    "kabak-tatlisi": {
+      "name": "Chinwiwa cheMatango neTahini",
+      "description": "Matango, akabikwa zvishoma nezvishoma mumuto waro, anopihwa ne tahini uye walnuts."
+    },
+    "ayva-tatlisi": {
+      "name": "Chinwiwa cheQuince",
+      "description": "Quince yakabikwa neclove uye sinamoni inopihwa ne clotted cream uye walnuts."
+    },
+    "revani": {
+      "name": "Ukapu Hwakasvava hweSemolina",
+      "description": "Chikafu chinowanzowanikwa maresitorendi uko kapu kasinganyanyi kuoma kwesemolina kusangana nesirasi ine hwema hwelemoni."
+    },
+    "ekmek-kadayifi": {
+      "name": "Pudingi yechingwa neKirimu Yakakora",
+      "description": "Pudingi yechingwa inozorodzwa nesirasi yakakangwa inopihwa nekirimu yakakora yebhiza."
+    },
+    "cevizli-baklava": {
+      "name": "Baklava yeKaravhu",
+      "description": "Mapepa akatetepa zvakanyanya, baklava inonhuhwira uye inopisa yakagadzirwa nezviuru zvekaravhu uye bhotela rakachena."
+    }
+  },
+  "allergens": {
+    "Süt ürünleri": "Zvimedu zvedzidzo",
+    "Gluten": "Gurume",
+    "Yumurta": "Zai",
+    "Badem": "Almondi",
+    "Çam fıstığı": "Paini nati",
+    "Susam": "Sesame",
+    "Ceviz": "Mhando yeWalnut"
+  },
+  "tags": {
+    "Popüler": "Iinonyanya kufarirwa",
+    "Vejetaryen": "Zvekudya zvisina nyama",
+    "Günün Yemeği": "Chikafu cheZuvaranhasi",
+    "Şefin Önerisi": "Chakasarudzwa neChef",
+    "Yeni": "Itsva",
+    "Acılı": "Yakanyungudika",
+    "Ev Yapımı": "Yakagadzirwa kumba",
+    "Lokanta Klasiği": "Chikafu cheRestaurant chakajairika",
+    "Günün Çorbası": "Soup yeZuvaranhasi",
+    "Vegan": "Zvekudya zvisina zvipfuyo",
+    "Hafif": "Chakareruka",
+    "Yöresel": "Chenzvimbo",
+    "Paylaşmalık": "Kugovera",
+    "Ev Yemeği": "Yemumba",
+    "Zeytinyağlı": "Oiri yeOlive",
+    "Nostaljik": "Yechinyakare",
+    "Geleneksel": "Tsika",
+    "Bursa Lezzeti": "Rinearwo reBursa",
+    "Sütlü Tatlı": "Chikafu Chemukaka",
+    "Sıcak Tatlı": "Chikafu Chinopisa",
+    "Mevsimlik": "Chenguva",
+    "Şerbetli": "Chikafu Chinoshizha neSyrup"
+  }
+}

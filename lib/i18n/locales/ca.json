@@ -1,0 +1,349 @@
+{
+  "locale": "ca",
+  "ui": {
+    "menu": "Menú",
+    "search": "Cerca al menú...",
+    "searchLabel": "Cerca al menú",
+    "categories": "Categories",
+    "categoryIntro": "Tria el sabor per a la teva taula.",
+    "categoryNavigation": "Categories del menú",
+    "openCategory": "Obrir {name}, {count} articles",
+    "items": "articles",
+    "item": "article",
+    "searchResults": "Resultats de la cerca",
+    "productsFound": "{count} articles trobats",
+    "backToCategories": "Torna a les categories",
+    "backToCategory": "Torna a {name}",
+    "clearSearch": "Netejar cerca",
+    "noResults": "No s'han trobat articles coincidents",
+    "noResultsDescription": "Prova una altra cerca o torna a les categories.",
+    "order": "El meu comanda",
+    "waiter": "Cambrer",
+    "bill": "Compte",
+    "addToCart": "Afegeix a la comanda",
+    "addedToCart": "{name} afegit a la teva comanda.",
+    "removeFromCart": "Elimina {name}",
+    "soldOut": "Esgota avui",
+    "productDetails": "Obre detalls de {name}",
+    "portion": "Ració",
+    "standardPortion": "Ració estàndard",
+    "allergens": "Al·lèrgens",
+    "noAllergens": "Cap al·lergen declarat",
+    "productNote": "Nota de l'article",
+    "productNotePlaceholder": "Ex. sense mantega, si us plau",
+    "decreaseQuantity": "Disminuir quantitat",
+    "increaseQuantity": "Augmentar quantitat",
+    "each": "cada",
+    "note": "Nota",
+    "subtotal": "Subtotal",
+    "serviceFee": "Comissió de servei",
+    "total": "Total",
+    "sendOrder": "Enviar comanda",
+    "orderSent": "La teva comanda s'ha enviat a la cuina",
+    "orderTracking": "Segueix la comanda #{number} aquí.",
+    "newItem": "Afegeix un altre article",
+    "emptyCart": "La teva comanda està buida",
+    "emptyCartDescription": "Els articles que triïs del menú apareixeran aquí.",
+    "browseMenu": "Explora el menú",
+    "orderReceived": "Comanda rebuda",
+    "waiterConfirmed": "Cambrer confirmat",
+    "preparing": "Preparant",
+    "ready": "Llista",
+    "served": "Servit",
+    "preparingDescription": "La nostra cuina està preparant la vostra comanda.",
+    "orderStatus": "Estat de la comanda",
+    "callWaiter": "Cridar al cambrer",
+    "placeOrder": "Vull demanar",
+    "wantWater": "Voldria aigua",
+    "wantBread": "Voldria pa",
+    "wantService": "Servei extra",
+    "other": "Altres",
+    "generalRequest": "Tinc una sol·licitud general",
+    "orderHelp": "Necessito ajuda amb la meva comanda",
+    "waterDescription": "Si us plau, porti aigua a la taula",
+    "breadDescription": "Si us plau, porta pa a la taula",
+    "serviceDescription": "Necessito coberts o un plat",
+    "otherDescription": "Necessito ajuda amb alguna altra cosa",
+    "waiterHelpTitle": "Com podem ajudar?",
+    "waiterHelpDescription": "La teva sol·licitud s'enviarà amb {table}.",
+    "waiterRequestSent": "La teva sol·licitud s'ha enviat al nostre cambrer.",
+    "requestBill": "Sol·licitar compte",
+    "billSent": "La teva sol·licitud de compte s'ha enviat",
+    "billConfirm": "Vols sol·licitar el compte?",
+    "billSentDescription": "El nostre cambrer serà amb tu aviat.",
+    "billConfirmDescription": "La teva sol·licitud anirà directament al cambrer. Pots pagar a la taula o a la caixa.",
+    "billToast": "La vostra petició del compte s'ha enviat al nostre cambrer.",
+    "backToMenu": "Tornar al menú",
+    "back": "Tornar",
+    "close": "Tancar",
+    "yourTable": "LA VOSTRA TAULA",
+    "serviceOpen": "Servei obert",
+    "slogan": "Gust Tradicional • Taula Moderna",
+    "location": "Bursa, Osmangazi",
+    "languageLabel": "Seleccioneu l'idioma",
+    "currencyLabel": "Seleccioneu la moneda",
+    "customerNavigation": "Navegació del menú del client",
+    "approximateCurrency": "Els preus en moneda estrangera són aproximats. El pagament es processa en Lira turca.",
+    "orderSuccess": "La vostra comanda s'ha enviat correctament.",
+    "languagePickerTitle": "Seleccioneu l'idioma",
+    "languagePickerDescription": "Tria l'idioma que vols utilitzar per al menú.",
+    "searchLanguage": "Cerca idiomes...",
+    "recommendedLanguages": "Recomanat",
+    "recentLanguages": "Idiomes recents",
+    "allLanguages": "Tots els idiomes",
+    "languageNotFound": "Idioma no trobat.",
+    "languageNotFoundDescription": "Prova un altre nom o codi d'idioma.",
+    "tableNumber": "Taula {number}",
+    "itemCount": "{count} elements",
+    "splashLabel": "Pantalla d'inici de Tarihi Şehir Lokantası",
+    "cancel": "Cancel·lar",
+    "confirmOrder": "Confirmar la comanda",
+    "orderSummary": "Resum de la comanda",
+    "payment": "Pagament",
+    "tableNotFound": "Taula no trobada.",
+    "invalidQr": "Codi QR invàlid.",
+    "menuUnavailable": "El menú no està disponible actualment.",
+    "networkError": "S'ha produït un error de xarxa.",
+    "productUnavailable": "Aquest article no està disponible actualment.",
+    "unableToSendOrder": "No s'ha pogut enviar la comanda.",
+    "tryAgain": "Torna-ho a intentar",
+    "somethingWentWrong": "Alguna cosa ha fallat.",
+    "loadingLanguage": "Carregant idioma...",
+    "languageLoadError": "No s'ha pogut carregar l'idioma. Si us plau, torna-ho a intentar."
+  },
+  "categories": {
+    "soups": "Sopes",
+    "grill": "Graelles",
+    "mains": "Plats principals",
+    "drinks": "Begudes",
+    "kebabs": "Kebabs",
+    "dessert": "Postres"
+  },
+  "products": {
+    "mercimek": {
+      "name": "Sopa de llenties",
+      "description": "Sopa casolana de llenties preparada a l'estil clàssic, acabada amb una salsa mantegosa."
+    },
+    "tas-kebabi": {
+      "name": "Estofat de vedella turc",
+      "description": "Vedella, verdures de temporada i la salsa especial cuinada a foc lent del nostre restaurant."
+    },
+    "kuzu-tandir": {
+      "name": "Xai rostit a foc lent",
+      "description": "El tandoori de xai característic del nostre restaurant, cuinat lentament a foc lent."
+    },
+    "pirinc-pilavi": {
+      "name": "Pilaf d'arròs",
+      "description": "Pilaf d'arròs Baldo mantegós i esponjós."
+    },
+    "firin-sutlac": {
+      "name": "Arròs amb llet al forn",
+      "description": "Arròs amb llet al forn a la manera tradicional, preparat amb llet de búfala diària."
+    },
+    "kuru-fasulye": {
+      "name": "Estofat de mongetes blanques amb vedella",
+      "description": "Mongetes d'İspir, vedella a daus i concentrat de tomàquet de restaurant."
+    },
+    "izgara-kofte": {
+      "name": "Mandonguilles a la graella",
+      "description": "Mandonguilles de vedella estil carnisser amb pebrot rostit i tomàquet."
+    },
+    "ayran": {
+      "name": "Ayran batut",
+      "description": "Buttermilk tradicional batut amb molta escuma, fet amb iogurt de cada dia."
+    },
+    "ezogelin-corbasi": {
+      "name": "Sopa Ezogelin",
+      "description": "Una sopa tradicional de restaurant on les llenties vermelles, el bulgur i l'arròs es combinen amb menta."
+    },
+    "tarhana-corbasi": {
+      "name": "Sopa Tarhana",
+      "description": "Tarhana casolana, un clàssic anatolià cuinat lentament amb tomàquets i menta seca."
+    },
+    "yayla-corbasi": {
+      "name": "Sopa de Iogurt i Arròs",
+      "description": "Una sopa refrescant i cremosa de yayla preparada amb iogurt, arròs i menta seca."
+    },
+    "iskembe-corbasi": {
+      "name": "Sopa de Tripa",
+      "description": "Sopa de tripa de vedella servida amb el seu condiment i vinagre d'all."
+    },
+    "dugun-corbasi": {
+      "name": "Sopa de Casament",
+      "description": "Sopa tradicional de casament feta amb xai desfilat i condimentada amb una marinada de llimona."
+    },
+    "tavuk-suyu-corbasi": {
+      "name": "Sopa de Caldo de Pollastre",
+      "description": "Una sopa curativa preparada amb fideus fins cuinats en brou d'os i carn de pollastre desfilada."
+    },
+    "domates-corbasi": {
+      "name": "Sopa de Tomàquet",
+      "description": "Un sabor ric cuinat amb tomàquets madurs, mantega i alfàbrega, completat amb formatge."
+    },
+    "sebze-corbasi": {
+      "name": "Sopa de verdures",
+      "description": "Una sopa lleugera de restaurant preparada amb verdures de temporada, oli d'oliva i herbes fresques."
+    },
+    "beyran-corbasi": {
+      "name": "Sopa de xai picant Beyran",
+      "description": "Una sopa regional preparada a foc alt amb xai, arròs, all i pebre picant."
+    },
+    "kelle-paca-corbasi": {
+      "name": "Sopa de cap i peülles",
+      "description": "Una sopa rica de brou d'os feta amb peülles i carn de cap de vedella bullida durant moltes hores."
+    },
+    "sehriye-corbasi": {
+      "name": "Sopa de vermicelli",
+      "description": "Sopa diària preparada amb brou de pollastre amb tomàquets, vermicelli i julivert."
+    },
+    "tavuk-sis": {
+      "name": "Broquetes de pollastre",
+      "description": "Trossos de pollastre marinats amb espècies especials, servits amb pebrots i tomàquets rostits."
+    },
+    "kasap-sucuk": {
+      "name": "Sucuk de carnisser a la graella",
+      "description": "Salsitxa de vedella picant cuinada a la brasa, amb verdures rostides i ceba amb sumac."
+    },
+    "karisik-izgara": {
+      "name": "Graellada mixta",
+      "description": "Un plat abundós i variat de graella que consisteix en mandonguilles, broquetes de pollastre, costelles de xai i salsitxa."
+    },
+    "nohut-yemegi": {
+      "name": "Estofat de cigrons amb vedella",
+      "description": "Un àpat casolà de cigrons i vedella a daus cuinats a poc a poc en una olla de coure."
+    },
+    "patlican-musakka": {
+      "name": "Moussaka d'albergínia",
+      "description": "Albergínia fregida, vedella picada i moussaka al forn amb salsa de tomàquet, al estil de restaurant."
+    },
+    "zeytinyagli-taze-fasulye": {
+      "name": "Mongetes verdes en oli d'oliva",
+      "description": "Un clàssic cuit en oli d'oliva amb mongetes verdes, tomàquets i cebes, servit fred."
+    },
+    "tavuk-sote": {
+      "name": "Pollastre saltejat",
+      "description": "Trossos de pollastre saltejats a foc fort amb pebrots de colors, bolets i tomàquets."
+    },
+    "izmir-kofte": {
+      "name": "Mandonguilles a l'estil d'Izmir",
+      "description": "Un plat principal tradicional de mandonguilles de vedella, patates i pebrots al forn amb salsa de tomàquet."
+    },
+    "etli-bezelye": {
+      "name": "Pèsols amb vedella",
+      "description": "Menjar diari cuit en una olla amb vedella tallada a daus, pèsols, pastanagues i patates."
+    },
+    "patlican-oturtma": {
+      "name": "Albergínia al forn amb carn picada",
+      "description": "La llengua es prepara al forn amb albergínia, carn picada picant i salsa de tomàquet amb all."
+    },
+    "salgam-suyu": {
+      "name": "Suc de nap fermentat",
+      "description": "Suc tradicional picant de nap fermentat amb pastanaga lila i llevat de bulgur."
+    },
+    "maden-suyu": {
+      "name": "Aigua mineral",
+      "description": "Aigua mineral natural sense gas servida freda."
+    },
+    "su": {
+      "name": "Aigua de Font Natural",
+      "description": "Aigua de font natural servida freda en ampolla de vidre."
+    },
+    "kola": {
+      "name": "Cola",
+      "description": "Una beguda carbònica clàssica servida ben freda amb gel."
+    },
+    "gazoz": {
+      "name": "Soda de Llimona Turca",
+      "description": "Soda tradicional, saboritzada, refrescant i servida freda."
+    },
+    "turk-kahvesi": {
+      "name": "Cafè Turc",
+      "description": "Cafè turc tradicional amb escuma, cuit a foc alt en un cezve de coure."
+    },
+    "demleme-cay": {
+      "name": "Té Turc Infós",
+      "description": "Té de Rize acabat d’infusió, calent, servit en un got estret a la cintura."
+    },
+    "ev-yapimi-limonata": {
+      "name": "Llimonada Casolana",
+      "description": "Llimonada refrescant preparada diàriament amb llimona fresca, menta i una mica de sucre."
+    },
+    "hosaf": {
+      "name": "Compota de fruita diària",
+      "description": "Compota casolana bullida diàriament amb panses, albercocs o prunes segons la temporada."
+    },
+    "iskender-kebabi": {
+      "name": "Bursa İskender Kebab",
+      "description": "La carn es gira en un escuradents sobre pide, servida amb salsa de tomàquet, mantega calenta i iogurt."
+    },
+    "kazandibi": {
+      "name": "Crema de llet caramel·litzada",
+      "description": "Un postre tradicional de llet caramel·litzat correctament, amb una textura sedosa."
+    },
+    "tavuk-gogsu": {
+      "name": "Crema de llet otomana",
+      "description": "Un postre làctic lleuger i fibrós preparat amb una recepta tradicional, servit amb canyella."
+    },
+    "keskul": {
+      "name": "Pudim de llet d'ametlla",
+      "description": "Postre làctic d'estil otomà, completat amb sabor d'ametlla i coco."
+    },
+    "irmik-helvasi": {
+      "name": "Halva de sèmola",
+      "description": "Halva de sèmola, torrada amb mantega i pinyons, servida calenta i amb textura grumosa."
+    },
+    "kabak-tatlisi": {
+      "name": "Postre de carbassa amb tahina",
+      "description": "La carbassa, cuinada lentament en el seu propi suc, es serveix amb tahina i nous."
+    },
+    "ayva-tatlisi": {
+      "name": "Postre de codony",
+      "description": "Codony cuit amb clau i canyella, servit amb crema coagulada i nous."
+    },
+    "revani": {
+      "name": "Pastís de sèmola amb xarop",
+      "description": "El clàssic postres de restaurant on el pastís suau de sèmola es troba amb xarop amb aroma de llimona."
+    },
+    "ekmek-kadayifi": {
+      "name": "Púding de pa amb crema coagulada",
+      "description": "El púding de pa reposat amb xarop caramel·litzat es serveix amb crema coagulada de búfala."
+    },
+    "cevizli-baklava": {
+      "name": "Baclava de nous",
+      "description": "Capes estirades molt fines, baclava cruixent feta amb moltes nous i mantega natural."
+    }
+  },
+  "allergens": {
+    "Süt ürünleri": "Làctics",
+    "Gluten": "Gluten",
+    "Yumurta": "Ou",
+    "Badem": "Ametlla",
+    "Çam fıstığı": "Pinyó",
+    "Susam": "Sèsam",
+    "Ceviz": "Noguera"
+  },
+  "tags": {
+    "Popüler": "Popular",
+    "Vejetaryen": "Vegetarià",
+    "Günün Yemeği": "Plat del dia",
+    "Şefin Önerisi": "Elecció del xef",
+    "Yeni": "Nou",
+    "Acılı": "Picant",
+    "Ev Yapımı": "Fet a casa",
+    "Lokanta Klasiği": "Restaurant Classic",
+    "Günün Çorbası": "Sopa del dia",
+    "Vegan": "Vegà",
+    "Hafif": "Llum",
+    "Yöresel": "Regional",
+    "Paylaşmalık": "Per compartir-ho",
+    "Ev Yemeği": "Estil casolà",
+    "Zeytinyağlı": "Oli d'oliva",
+    "Nostaljik": "Nostàlgic",
+    "Geleneksel": "Tradicional",
+    "Bursa Lezzeti": "Sabors de Bursa",
+    "Sütlü Tatlı": "Postres de llet",
+    "Sıcak Tatlı": "Postres calentes",
+    "Mevsimlik": "Estacional",
+    "Şerbetli": "Postres amb xarop"
+  }
+}

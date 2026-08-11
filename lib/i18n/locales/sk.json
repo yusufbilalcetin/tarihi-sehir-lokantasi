@@ -1,0 +1,349 @@
+{
+  "locale": "sk",
+  "ui": {
+    "menu": "Menu",
+    "search": "Vyhľadajte v menu...",
+    "searchLabel": "Vyhľadať v menu",
+    "categories": "Kategórie",
+    "categoryIntro": "Vyberte príchuť pre váš stôl.",
+    "categoryNavigation": "Kategórie menu",
+    "openCategory": "Otvoriť {name}, {count} položiek",
+    "items": "položky",
+    "item": "položka",
+    "searchResults": "Výsledky vyhľadávania",
+    "productsFound": "Nájdených {count} položiek",
+    "backToCategories": "Späť na kategórie",
+    "backToCategory": "Späť na {name}",
+    "clearSearch": "Vymazať vyhľadávanie",
+    "noResults": "Nenašli sa žiadne zodpovedajúce položky",
+    "noResultsDescription": "Skúste iné vyhľadávanie alebo sa vráťte do kategórií.",
+    "order": "Moja objednávka",
+    "waiter": "Servír",
+    "bill": "Účet",
+    "addToCart": "Pridať do objednávky",
+    "addedToCart": "{name} pridané do vašej objednávky.",
+    "removeFromCart": "Odstrániť {name}",
+    "soldOut": "Dnes vypredané",
+    "productDetails": "Otvoriť detaily pre {name}",
+    "portion": "Porcia",
+    "standardPortion": "Štandardná porcia",
+    "allergens": "Alergény",
+    "noAllergens": "Neuvádzajú sa žiadne alergény",
+    "productNote": "Poznámka k položke",
+    "productNotePlaceholder": "Např. bez masla, prosím",
+    "decreaseQuantity": "Znížiť množstvo",
+    "increaseQuantity": "Zvýšiť množstvo",
+    "each": "každý",
+    "note": "Poznámka",
+    "subtotal": "Medzisúčet",
+    "serviceFee": "Poplatok za služby",
+    "total": "Spolu",
+    "sendOrder": "Odoslať objednávku",
+    "orderSent": "Vaša objednávka bola odoslaná do kuchyne",
+    "orderTracking": "Sledujte objednávku č. {number} tu.",
+    "newItem": "Pridať ďalšiu položku",
+    "emptyCart": "Vaša objednávka je prázdna",
+    "emptyCartDescription": "Položky, ktoré si vyberiete z menu, sa tu zobrazia.",
+    "browseMenu": "Prezrieť menu",
+    "orderReceived": "Objednávka prijatá",
+    "waiterConfirmed": "Čašník potvrdil",
+    "preparing": "Príprava",
+    "ready": "Pripravené",
+    "served": "Podávané",
+    "preparingDescription": "Naša kuchyňa pripravuje vašu objednávku.",
+    "orderStatus": "Stav objednávky",
+    "callWaiter": "Privolať čašníka",
+    "placeOrder": "Chcem objednať",
+    "wantWater": "Chcel by som vodu",
+    "wantBread": "Chcel by som chlieb",
+    "wantService": "Extra služba",
+    "other": "Iné",
+    "generalRequest": "Mám všeobecnú požiadavku",
+    "orderHelp": "Potrebujem pomoc s mojou objednávkou",
+    "waterDescription": "Prosím, prineste vodu k stolu",
+    "breadDescription": "Prosím, prineste chlieb na stôl",
+    "serviceDescription": "Potrebujem príbory alebo tanier",
+    "otherDescription": "Potrebujem pomoc s niečím iným",
+    "waiterHelpTitle": "Ako vám môžeme pomôcť?",
+    "waiterHelpDescription": "Vaša požiadavka bude odoslaná s {table}.",
+    "waiterRequestSent": "Vaša požiadavka bola odoslaná nášmu čašníkovi.",
+    "requestBill": "Požiadať o účet",
+    "billSent": "Vaša požiadavka na účet bola odoslaná",
+    "billConfirm": "Chcete požiadať o účet?",
+    "billSentDescription": "Náš čašník bude čoskoro pri vás.",
+    "billConfirmDescription": "Vaša požiadavka pôjde priamo k čašníkovi. Môžete zaplatiť pri stole alebo na pokladni.",
+    "billToast": "Vaša žiadosť o účet bola odoslaná nášmu čašníkovi.",
+    "backToMenu": "Späť na menu",
+    "back": "Späť",
+    "close": "Zavrieť",
+    "yourTable": "VAŠA STOLIČKA",
+    "serviceOpen": "Obsluhovanie otvorené",
+    "slogan": "Tradičná chuť • Moderný stôl",
+    "location": "Bursa, Osmangazi",
+    "languageLabel": "Vyberte jazyk",
+    "currencyLabel": "Vyberte menu",
+    "customerNavigation": "Navigácia zákazníckeho menu",
+    "approximateCurrency": "Ceny v cudzej mene sú približné. Platba sa spracováva v tureckej lire.",
+    "orderSuccess": "Vaša objednávka bola úspešne odoslaná.",
+    "languagePickerTitle": "Vybrať jazyk",
+    "languagePickerDescription": "Vyberte jazyk, ktorý chcete používať v ponuke.",
+    "searchLanguage": "Vyhľadávať jazyky...",
+    "recommendedLanguages": "Odporúčané",
+    "recentLanguages": "Nedávne jazyky",
+    "allLanguages": "Všetky jazyky",
+    "languageNotFound": "Jazyk nenájdený.",
+    "languageNotFoundDescription": "Skúste iný názov jazyka alebo kód.",
+    "tableNumber": "Stôl {number}",
+    "itemCount": "{count} položky",
+    "splashLabel": "Úvodná obrazovka Tarihi Şehir Lokantası",
+    "cancel": "Zrušiť",
+    "confirmOrder": "Potvrdiť objednávku",
+    "orderSummary": "Prehľad objednávky",
+    "payment": "Platba",
+    "tableNotFound": "Stôl nenájdený.",
+    "invalidQr": "Neplatný QR kód.",
+    "menuUnavailable": "Menu momentálne nie je k dispozícii.",
+    "networkError": "Nastala sieťová chyba.",
+    "productUnavailable": "Tento produkt momentálne nie je k dispozícii.",
+    "unableToSendOrder": "Nepodarilo sa odoslať objednávku.",
+    "tryAgain": "Skúste znova",
+    "somethingWentWrong": "Niečo sa pokazilo.",
+    "loadingLanguage": "Nahráva sa jazyk...",
+    "languageLoadError": "Jazyk sa nedá načítať. Skúste to prosím znova."
+  },
+  "categories": {
+    "soups": "Polievky",
+    "grill": "Grily",
+    "mains": "Hlavné jedlá",
+    "drinks": "Nápoje",
+    "kebabs": "Kebaby",
+    "dessert": "Dezerty"
+  },
+  "products": {
+    "mercimek": {
+      "name": "Šošovicová polievka",
+      "description": "Domáca šošovicová polievka pripravená v klasickom štýle, doplnená maslovou omáčkou."
+    },
+    "tas-kebabi": {
+      "name": "Turecký hovädzí guláš",
+      "description": "Hovädzie mäso, sezónna zelenina a špeciálna pomaly varená omáčka našej reštaurácie."
+    },
+    "kuzu-tandir": {
+      "name": "Pomaly pečená jahňacina",
+      "description": "Jahňacie tandoori, špecialita našej reštaurácie, pomaly varené pri nízkej teplote."
+    },
+    "pirinc-pilavi": {
+      "name": "Ryžový pilaf",
+      "description": "Maslový, nadýchaný ryžový pilaf Baldo."
+    },
+    "firin-sutlac": {
+      "name": "Pekaný ryžový puding",
+      "description": "Ryžový puding pečený tradičným spôsobom, pripravený z čerstvého byvolieho mlieka."
+    },
+    "kuru-fasulye": {
+      "name": "Fazuľový guláš s hovädzím",
+      "description": "Fazuľa İspir, nakrájané hovädzie a obyčajná reštauračná paradajková pasta."
+    },
+    "izgara-kofte": {
+      "name": "Grilované fašírky",
+      "description": "Hovädzie fašírky po mäsiarsky s pečenou paprikou a paradajkou."
+    },
+    "ayran": {
+      "name": "Šľahaný Ayran",
+      "description": "Tradičný šľahaný kyslý mliečny nápoj s množstvom peny, vyrobený z bežného jogurtu."
+    },
+    "ezogelin-corbasi": {
+      "name": "Polievka Ezogelin",
+      "description": "Tradičná reštauračná polievka, kde sa stretávajú červená šošovica, bulgur a ryža s mätou."
+    },
+    "tarhana-corbasi": {
+      "name": "Polievka Tarhana",
+      "description": "Domáca tarhana, anatolský klasik pomaly varený s paradajkami a sušenou mätou."
+    },
+    "yayla-corbasi": {
+      "name": "Jogurtová a ryžová polievka",
+      "description": "Osviežujúca a krémová polievka yayla pripravená z jogurtu, ryže a sušenej mäty."
+    },
+    "iskembe-corbasi": {
+      "name": "Drôtenková polievka",
+      "description": "Správna hovädzia drôtenková polievka podávaná so svojím korením a cesnakovým octom."
+    },
+    "dugun-corbasi": {
+      "name": "Svadobná polievka",
+      "description": "Tradičná svadobná polievka pripravená z natrhaného jahňacieho mäsa a ochutená citrónovou marinádou."
+    },
+    "tavuk-suyu-corbasi": {
+      "name": "Kuracia vývarová polievka",
+      "description": "Liečivá polievka pripravená s tenkými rezancami varenými v kostnom vývare a natrhaným kuracím mäsom."
+    },
+    "domates-corbasi": {
+      "name": "Paradajková polievka",
+      "description": "Bohatá chuť varená s dozretými paradajkami, maslom a bazalkou, dokončená syrom."
+    },
+    "sebze-corbasi": {
+      "name": "Zeleninová polievka",
+      "description": "Ľahká reštauračná polievka pripravená zo sezónnej zeleniny, olivového oleja a čerstvých bylín."
+    },
+    "beyran-corbasi": {
+      "name": "Štipľavá jahňacia polievka Beyran",
+      "description": "Regionálna polievka pripravená pri vysokom teple z jahňacieho mäsa, ryže, cesnaku a pálivej papriky."
+    },
+    "kelle-paca-corbasi": {
+      "name": "Polievka z hlavy a nožičiek",
+      "description": "Bohatá vývarová polievka z hovädzích nožičiek a mäsa z hlavy varená dlhé hodiny."
+    },
+    "sehriye-corbasi": {
+      "name": "Polievka z rezancov",
+      "description": "Denná polievka pripravená z kuracieho vývaru s paradajkami, rezancami a petržlenovou vňaťou."
+    },
+    "tavuk-sis": {
+      "name": "Kuracie špízy",
+      "description": "Kusky kuracieho mäsa marinované so špeciálnymi koreninami, podávané s pečenou paprikou a paradajkami."
+    },
+    "kasap-sucuk": {
+      "name": "Grilovaná mäsiarska sucuk",
+      "description": "Pikantná hovädzia klobása varená na uhlí, s pečenou zeleninou a cibuľou s sumakom."
+    },
+    "karisik-izgara": {
+      "name": "Miešaný gril",
+      "description": "Bohatý a rôznorodý grilovaný tanier pozostávajúci z mäsových guľôčok, kuracích špízov, jahňacích kotletiek a klobásy."
+    },
+    "nohut-yemegi": {
+      "name": "Cícerový guláš s hovädzinou",
+      "description": "Domáci pokrm z cíceru a nakrájanej hovädziny pomaly varenej v medenom hrnci."
+    },
+    "patlican-musakka": {
+      "name": "Baklažánová Moussaka",
+      "description": "Vyprážaný baklažán, mleté hovädzie mäso a moussaka pečená v rúre s paradajkovou omáčkou, ako v reštaurácii."
+    },
+    "zeytinyagli-taze-fasulye": {
+      "name": "Zelené fazuľky v olivovom oleji",
+      "description": "Klasika varená v olivovom oleji so zelenými fazuľkami, paradajkami a cibuľou, podávaná studená."
+    },
+    "tavuk-sote": {
+      "name": "Restované kuracie",
+      "description": "Kusky kuracieho mäsa restované na vysokom ohni s farebnou paprikou, hubami a paradajkami."
+    },
+    "izmir-kofte": {
+      "name": "Izmirske mäsové guľky",
+      "description": "Tradičné hlavné jedlo z hovädzích guľôčok, zemiakov a paprík pečených v paradajkovej omáčke."
+    },
+    "etli-bezelye": {
+      "name": "Hrach s hovädzinou",
+      "description": "Denné jedlo varené v hrnci s kockami hovädzieho mäsa, hrášku, mrkvy a zemiakov."
+    },
+    "patlican-oturtma": {
+      "name": "Pečený baklažán s mletým mäsom",
+      "description": "Jazyk je pripravený v rúre s baklažánom, pikantným mletým mäsom a cesnakovo-paradajkovou omáčkou."
+    },
+    "salgam-suyu": {
+      "name": "Kyslá šťava z repy",
+      "description": "Tradičná pikantná repová šťava fermentovaná so živou droždovou z fialovej mrkvy a bulguru."
+    },
+    "maden-suyu": {
+      "name": "Minerálna voda",
+      "description": "Prírodná minerálna voda podávaná studená."
+    },
+    "su": {
+      "name": "Pramenitá voda",
+      "description": "Pramenitá voda podávaná studená v sklenenej fľaši."
+    },
+    "kola": {
+      "name": "Cola",
+      "description": "Klasický sýtený nápoj podávaný ľadovo studený."
+    },
+    "gazoz": {
+      "name": "Turecká citrónová sóda",
+      "description": "Tradičná ochutená, osviežujúca sóda podávaná studená."
+    },
+    "turk-kahvesi": {
+      "name": "Turecká káva",
+      "description": "Tradičná turecká káva s penou, varená na vysokom ohni v medi cezve."
+    },
+    "demleme-cay": {
+      "name": "Turecký varený čaj",
+      "description": "Čerstvo varený horúci čaj Rize v tenkostennom pohári."
+    },
+    "ev-yapimi-limonata": {
+      "name": "Doma vyrobená limonáda",
+      "description": "Osviežujúca limonáda pripravovaná denne z čerstvého citróna, mäty a trošky cukru."
+    },
+    "hosaf": {
+      "name": "Denný ovocný kompót",
+      "description": "Doma pripravený kompót varený denne s hrozienkami, marhuľami alebo slivkami podľa sezóny."
+    },
+    "iskender-kebabi": {
+      "name": "Bursa İskender Kebab",
+      "description": "Mäso sa otáča na špíze nad pide, podáva sa s paradajkovou omáčkou, horúcim maslom a jogurtom."
+    },
+    "kazandibi": {
+      "name": "Karamelizovaný mliečny puding",
+      "description": "Tradičný mliečny dezert správne karamelizovaný, s hodvábnou textúrou."
+    },
+    "tavuk-gogsu": {
+      "name": "Osmanský mliečny puding",
+      "description": "Ľahký a vláknitý mliečny dezert pripravený podľa tradičného receptu, podávaný so škoricou."
+    },
+    "keskul": {
+      "name": "Mandľový mliečny puding",
+      "description": "Mliečny dezert osmanského štýlu doplnený mandľovou arómou a kokosom."
+    },
+    "irmik-helvasi": {
+      "name": "Halva z krupice",
+      "description": "Halva z krupice, opečená na masle a s píniovými orieškami, podávaná horúca a hrubozrnná."
+    },
+    "kabak-tatlisi": {
+      "name": "Dýňový dezert s tahini",
+      "description": "Dýňa, pomaly varená vo vlastnej šťave, podávaná s tahini a vlašskými orechmi."
+    },
+    "ayva-tatlisi": {
+      "name": "Jesenný dezert s jablkami:",
+      "description": "Jablko varené s klinčekom a škoricou, podávané s hustou smotanou a vlašskými orechmi."
+    },
+    "revani": {
+      "name": "Kukuričná torta s mrkvovým sirupom",
+      "description": "Klasický reštauračný dezert, kde sa mäkká kukuričná torta stretáva s citrónovo voniacim sirupom."
+    },
+    "ekmek-kadayifi": {
+      "name": "Chlebový puding s hustou smotanou",
+      "description": "Chlebový puding odležený s karamelizovaným sirupom sa podáva s byvolou hustou smotanou."
+    },
+    "cevizli-baklava": {
+      "name": "Orechová baklava",
+      "description": "Vrstvy rozváľané veľmi tenké, chrumkavá baklava pripravená s množstvom orechov a obyčajného masla."
+    }
+  },
+  "allergens": {
+    "Süt ürünleri": "Mliečne",
+    "Gluten": "Glutén",
+    "Yumurta": "Vajce",
+    "Badem": "Mandle",
+    "Çam fıstığı": "Pixové orechy",
+    "Susam": "Sezam",
+    "Ceviz": "Vlašský orech"
+  },
+  "tags": {
+    "Popüler": "Populárne",
+    "Vejetaryen": "Vegetariánske",
+    "Günün Yemeği": "Denné jedlo",
+    "Şefin Önerisi": "Výber šéfkuchára",
+    "Yeni": "Nové",
+    "Acılı": "Štipľavé",
+    "Ev Yapımı": "Doma vyrábané",
+    "Lokanta Klasiği": "Klasika reštaurácie",
+    "Günün Çorbası": "Polievka dňa",
+    "Vegan": "Vegánske",
+    "Hafif": "Ľahké",
+    "Yöresel": "Regionálne",
+    "Paylaşmalık": "Na zdieľanie",
+    "Ev Yemeği": "Domácky štýl",
+    "Zeytinyağlı": "Olivový olej",
+    "Nostaljik": "Nostalgické",
+    "Geleneksel": "Tradičné",
+    "Bursa Lezzeti": "Chuť Bursy",
+    "Sütlü Tatlı": "Mliečny dezert",
+    "Sıcak Tatlı": "Teplý dezert",
+    "Mevsimlik": "Sezónne",
+    "Şerbetli": "Sirupový dezert"
+  }
+}

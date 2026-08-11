@@ -1,0 +1,349 @@
+{
+  "locale": "eu",
+  "ui": {
+    "menu": "Menua",
+    "search": "Bilatu menuan...",
+    "searchLabel": "Bilatu menuan",
+    "categories": "Kategoriak",
+    "categoryIntro": "Hautatu zure mahairako zaporea.",
+    "categoryNavigation": "Menuaren kategoriak",
+    "openCategory": "Ireki {name}, {count} artikulu",
+    "items": "artikuluak",
+    "item": "artikulua",
+    "searchResults": "Bilaketa emaitzak",
+    "productsFound": "{count} artikulu aurkitu dira",
+    "backToCategories": "Itzuli kategorietara",
+    "backToCategory": "Itzuli {name}-ra",
+    "clearSearch": "Garbitu bilaketa",
+    "noResults": "Ez da artikulu egokirik aurkitu",
+    "noResultsDescription": "Saiatu bilaketa bat gehiago edo itzuli kategorietara.",
+    "order": "Nire eskaera",
+    "waiter": "Zerbitzaria",
+    "bill": "Kontua",
+    "addToCart": "Gehitu eskaerara",
+    "addedToCart": "{name} zure eskaeran gehitu da.",
+    "removeFromCart": "Kendu {name}",
+    "soldOut": "Gaur Saldu Da",
+    "productDetails": "Ireki xehetasunak {name}-rako",
+    "portion": "Zatia",
+    "standardPortion": "Zatia estandarra",
+    "allergens": "Alérgenoak",
+    "noAllergens": "Ez dago adierazitako alérgenorik",
+    "productNote": "Elementuaren oharra",
+    "productNotePlaceholder": "Adibidez, gurina gabe, mesedez",
+    "decreaseQuantity": "Kantitatea murriztu",
+    "increaseQuantity": "Kantitatea handitu",
+    "each": "bakoitza",
+    "note": "Oharrak",
+    "subtotal": "Azpijematea",
+    "serviceFee": "Zerbitzu-tasa",
+    "total": "Guztira",
+    "sendOrder": "Bidali eskaera",
+    "orderSent": "Zure eskaera sukaldera bidali da",
+    "orderTracking": "Jarraitu #{number} eskaera hemen.",
+    "newItem": "Gehitu beste elementu bat",
+    "emptyCart": "Zure eskaera hutsik dago",
+    "emptyCartDescription": "Menutik aukeratzen dituzun elementuak hemen agertuko dira.",
+    "browseMenu": "Arakatu menuan",
+    "orderReceived": "Eskaera jaso da",
+    "waiterConfirmed": "Zerbitzaria Berretsi Du",
+    "preparing": "Prestaketa",
+    "ready": "Prest",
+    "served": "Zerbitzatua",
+    "preparingDescription": "Gure sukaldea zure eskaera prestatzen ari da.",
+    "orderStatus": "Eskaeraren egoera",
+    "callWaiter": "Deitu Zerbitzaria",
+    "placeOrder": "Eskaera egin nahi dut",
+    "wantWater": "Ura nahi nuke",
+    "wantBread": "Ogia nahi nuke",
+    "wantService": "Zerbitzu gehigarria",
+    "other": "Bestea",
+    "generalRequest": "Eskari orokorra daukat",
+    "orderHelp": "Laguntza behar dut nire eskaerarekin",
+    "waterDescription": "Mesedez ekarri ura mahaira",
+    "breadDescription": "Mesedez ekarri ogia mahaira",
+    "serviceDescription": "Zartagina edo platera behar dut",
+    "otherDescription": "Beste zerbaitetan laguntza behar dut",
+    "waiterHelpTitle": "Nola lagundu dezakegu?",
+    "waiterHelpDescription": "Zure eskaera {table}-rekin bidaliko da.",
+    "waiterRequestSent": "Zure eskaera gure zerbitzariari bidali zitzaion.",
+    "requestBill": "Kontua eskatzea",
+    "billSent": "Zure kontu eskaera bidali zen",
+    "billConfirm": "Kontua eskatu nahi zenuke?",
+    "billSentDescription": "Gure zerbitzaria laster zurekin egongo da.",
+    "billConfirmDescription": "Zure eskaera zuzeneko zerbitzariari joango zaio. Mahaiaren gainean edo kutxan ordaindu dezakezu.",
+    "billToast": "Zure kontu eskaera gure zerbitzariari bidali zitzaion.",
+    "backToMenu": "Itzuli Menuara",
+    "back": "Itzuli",
+    "close": "Itxi",
+    "yourTable": "ZURE MAHAIA",
+    "serviceOpen": "Zerbitzua irekita",
+    "slogan": "Gozo Tradizionala • Mahaia Modernoa",
+    "location": "Bursa, Osmangazi",
+    "languageLabel": "Hizkuntza hautatu",
+    "currencyLabel": "Moneta hautatu",
+    "customerNavigation": "Bezeroen menu nabigazioa",
+    "approximateCurrency": "Kanpo moneta prezioak gutxi gorabeherakoak dira. Ordainketa Lira Turkiarrean prozesatzen da.",
+    "orderSuccess": "Zure eskaera arrakastaz bidali da.",
+    "languagePickerTitle": "Hizkuntza hautatu",
+    "languagePickerDescription": "Hautatu menurako erabili nahi duzun hizkuntza.",
+    "searchLanguage": "Bilatu hizkuntzak...",
+    "recommendedLanguages": "Gomendatua",
+    "recentLanguages": "Hizkuntza Berrienak",
+    "allLanguages": "Hizkuntza guztiak",
+    "languageNotFound": "Hizkuntza ez da aurkitu.",
+    "languageNotFoundDescription": "Saiatu beste hizkuntza izen edo kode batekin.",
+    "tableNumber": "Mahaia {number}",
+    "itemCount": "{count} elementu",
+    "splashLabel": "Tarihi Şehir Lokantası hasierako pantaila",
+    "cancel": "Utzi",
+    "confirmOrder": "Egin Eskaera",
+    "orderSummary": "Eskaeraren Laburpena",
+    "payment": "Ordainketa",
+    "tableNotFound": "Mahai ez da aurkitu.",
+    "invalidQr": "QR kode baliogabea.",
+    "menuUnavailable": "Menua oraindik ez eskuragarri.",
+    "networkError": "Sareko errore bat gertatu zen.",
+    "productUnavailable": "Elementu hau une honetan ez eskuragarri.",
+    "unableToSendOrder": "Ezin izan dut agindua bidali.",
+    "tryAgain": "Saiatu berriro",
+    "somethingWentWrong": "Zerbait gaizki joan zen.",
+    "loadingLanguage": "Hizkuntza kargatzen...",
+    "languageLoadError": "Hizkuntza ezin zen kargatu. Mesedez, saiatu berriro."
+  },
+  "categories": {
+    "soups": "Zopak",
+    "grill": "Grillak",
+    "mains": "Ikastaro nagusiak",
+    "drinks": "Edariak",
+    "kebabs": "Kebabak",
+    "dessert": "Postreak"
+  },
+  "products": {
+    "mercimek": {
+      "name": "Lenteja Zopa",
+      "description": "Etxean prestatutako lenteja-zopa estilo klasikoan, gurin saltsa batekin osatua."
+    },
+    "tas-kebabi": {
+      "name": "Turkiar Behi Estofatua",
+      "description": "Behi-haragia, denboraldi barazkiak, eta gure jatetxeko saltsa berezia, su motelean eginda."
+    },
+    "kuzu-tandir": {
+      "name": "Arrautz Kabrita Poliki Kokatua",
+      "description": "Gure jatetxeko ikur den ardien tandoori, su baxuan poliki eginda."
+    },
+    "pirinc-pilavi": {
+      "name": "Arroz Pilafa",
+      "description": "Gurinarekin egindako, fluffa Baldo arroz pilafa."
+    },
+    "firin-sutlac": {
+      "name": "Arroz-esnea Labean",
+      "description": "Arroz-puding tradizional moduan labean egina, eguneroko bufalo esnearekin prestatua."
+    },
+    "kuru-fasulye": {
+      "name": "Haragi-berdeak dituen Babarrun Zopa",
+      "description": "İspir babarrunak, haragi moztuak eta jatetxeetako tomate pastaren oinarrizko zaporea."
+    },
+    "izgara-kofte": {
+      "name": "Haragi-bolateak Parrillan",
+      "description": "Okindegi estiloeko haragi-bolateak, piperraren eta tomatea egosiarekin."
+    },
+    "ayran": {
+      "name": "Ayran Nahastua",
+      "description": "Eguneroko jogurtez egindako esne-gain ondutako buttermilk tradizionala, askozko aparrarekin."
+    },
+    "ezogelin-corbasi": {
+      "name": "Ezogelin Zopa",
+      "description": "Jatetxe tradizionaleko zopa, non belar urdina, bulgur eta arrozak mintarekin elkartzen diren."
+    },
+    "tarhana-corbasi": {
+      "name": "Tarhana Zopa",
+      "description": "Etxean egindako tarhana, Anatoliako klasiko bat, tomatea eta menta lehorrakin su motelean eginda."
+    },
+    "yayla-corbasi": {
+      "name": "Jogurta eta Arroza Zopa",
+      "description": "Jogurt, arroz eta menda lehorrarekin prestatutako freskagarria eta krematsua den yayla zopa."
+    },
+    "iskembe-corbasi": {
+      "name": "Tripazko Zopa",
+      "description": "Behi tripazko zopa egokia, hornigai eta baratxuri azetarekin zerbitzatua."
+    },
+    "dugun-corbasi": {
+      "name": "Eztei Zopa",
+      "description": "Ardi-xerratuekin egindako tradizional eztei zopa, limoi marinatzaile batez zaporeztatua."
+    },
+    "tavuk-suyu-corbasi": {
+      "name": "Olibo Zopa",
+      "description": "Hezur-otorboko saldan egindako zartagin meheetan eta xehatutako oilasko haragiarekin prestatutako sendagai zopa."
+    },
+    "domates-corbasi": {
+      "name": "Tomate Zopa",
+      "description": "Tomate helduekin, gurinarekin eta alapaztarekin egindako zapore aberatsa, gazta batekin osatua."
+    },
+    "sebze-corbasi": {
+      "name": "Barazki Zopa",
+      "description": "Negu sasiko barazkiekin, olibazpiarekin eta belar freskoekin prestatutako jatetxe-zopa arina."
+    },
+    "beyran-corbasi": {
+      "name": "Ardi Beyran Piperrtsua Zopa",
+      "description": "Eskualdeko zopa bero altuan egina, ardia, arroz, baratxuri eta piperr berdekoarekin."
+    },
+    "kelle-paca-corbasi": {
+      "name": "Burua eta Hankako Zopa",
+      "description": "Behi hankan eta buru haragiarekin ordutan egindako hezur-zopa aberatsa."
+    },
+    "sehriye-corbasi": {
+      "name": "Vermicelli Zopa",
+      "description": "Tomateak, vermikeliak eta perejilarekin egindako oilasko-brotharekin egindako eguneroko zopa."
+    },
+    "tavuk-sis": {
+      "name": "Oilasko Broiletak",
+      "description": "Espezia bereziekin marinatutako oilasko piezak, tipula eta tomatea erretarekin zerbitzatuta."
+    },
+    "kasap-sucuk": {
+      "name": "Astekulariaren Sucuk Grilleatua",
+      "description": "Karburoan egindako haragi txerri pikantea, barazki erreak eta sumaguekin tipula."
+    },
+    "karisik-izgara": {
+      "name": "Grill Nahasketak",
+      "description": "Haragi-bolak, oilasko broiletak, arkume-txerrikak eta saltxitxak osatzen duten plater grill aberatsa eta anitza."
+    },
+    "nohut-yemegi": {
+      "name": "Txixirio Estofatua Haragiarekin",
+      "description": "Etxeko platera, garbantzuak eta haragi bidezko txikitua kobrezko kazolan pixkanaka egindakoa."
+    },
+    "patlican-musakka": {
+      "name": "Berenjena Moussaka",
+      "description": "Berenjena frijitua, haragi gehiatua eta moussaka labean eginda, tomatea saltsarekin, jatetxe estiloan."
+    },
+    "zeytinyagli-taze-fasulye": {
+      "name": "Babarrun Berdeak Olioarekin",
+      "description": "Klaseko platera, olioan egindako babarrun berdeak, tomatea eta tipula, hotz zerbitzatua."
+    },
+    "tavuk-sote": {
+      "name": "Ondiagaipuzko Oilasko",
+      "description": "Oilasko zatiak berotze handian salteatuak, piper koloretsuak, onddoak eta tomatea barne."
+    },
+    "izmir-kofte": {
+      "name": "İzmir-Style Albondigak",
+      "description": "Behi-bolak, patata eta piperrez egindako plater nagusi tradizionala, tomatea saltsan labean egina."
+    },
+    "etli-bezelye": {
+      "name": "Pisuekin Behi",
+      "description": "Eguneroko platera, potoan egina, kuboetan moztutako behi, ilarrak, azenarioak eta patatak dituena."
+    },
+    "patlican-oturtma": {
+      "name": "Berenjena Labean Minarekin",
+      "description": "Mihia labean prestatzen da berenjena, minarekin egindako haragi xehatua eta baratxuri-tomatak saltsarekin."
+    },
+    "salgam-suyu": {
+      "name": "Erramu Jala Fermentatua",
+      "description": "Erramu zuringo tradizionala, azenario morea eta bulgur-azetarekin fermentatua."
+    },
+    "maden-suyu": {
+      "name": "Ura Mineral",
+      "description": "Ura mineral naturala hotz zerbitzatzen dena."
+    },
+    "su": {
+      "name": "Ure naturala",
+      "description": "Ure naturala, hotzetan zerbitzatua beira botila batean."
+    },
+    "kola": {
+      "name": "Kola",
+      "description": "Izotzez hotzetan zerbitzatzen den edari karbonatatu klasikoa."
+    },
+    "gazoz": {
+      "name": "Turkiar Limoi Sodalina",
+      "description": "Tradizionala, zaporetsua, freskagarria eta hotzetan zerbitzatzen den sodala."
+    },
+    "turk-kahvesi": {
+      "name": "Turkiar Kafea",
+      "description": "Turkiar kafe tradizionala, txapakarekin, su handian kobrezko cezve batean egina."
+    },
+    "demleme-cay": {
+      "name": "Turkiar Tea Prestatu",
+      "description": "Rize tea berotua, botilaz fin batean zerbitzatua."
+    },
+    "ev-yapimi-limonata": {
+      "name": "Etxeko Limoi Limonada",
+      "description": "Limonada freskagarri egunean behin prestatua, limoi freskoarekin, mintzarekin eta azukre pixka batekin."
+    },
+    "hosaf": {
+      "name": "Egunean behin frutekin egindako konpota",
+      "description": "Etxeko konpota egunean behin eginda, sasoiaren arabera arrozeko, meloia edo gerezi lehorrak erabiliz."
+    },
+    "iskender-kebabi": {
+      "name": "Bursa İskender Kebab",
+      "description": "Haragia skewerren gainean biratzen da pidearen gainean, tipula saltsa, gurin beroa eta jogurtarekin zerbitzatua."
+    },
+    "kazandibi": {
+      "name": "Esne-karamelatua pudding",
+      "description": "Tradizionalki prestatutako esne-desserta, karamelizatua eta testura leunez."
+    },
+    "tavuk-gogsu": {
+      "name": "Otomandar esne-puddinga",
+      "description": "Errezeta tradizional batekin prestatutako esne-likido argi eta fibrosu bat, kanella-rekin zerbitzatua."
+    },
+    "keskul": {
+      "name": "Bainilla esne pudina",
+      "description": "Esne-dessert otomandarra, almendra usainarekin eta kokosarekin osatua."
+    },
+    "irmik-helvasi": {
+      "name": "Arto-irina halba",
+      "description": "Arto-irina halba, ganbarrarekin eta pinazkinarekin errea, bero eta grumoztaturik zerbitzatua."
+    },
+    "kabak-tatlisi": {
+      "name": "Patata-kremadun desserra tahiniarekin",
+      "description": "Bere zukuan poliki egositako patata, tahini eta intxaurrekin zerbitzatua."
+    },
+    "ayva-tatlisi": {
+      "name": "Idiazabal-desserra",
+      "description": "Klodaturiko krema eta intxaurrekin zerbitzatzen den, kata eta kanellaz egindako idiazabal egosia."
+    },
+    "revani": {
+      "name": "Arroz-irina Sirortutako Pastela",
+      "description": "Arroz-irina bigunaren pastel klasikoa, limoi-usain duen siropearekin."
+    },
+    "ekmek-kadayifi": {
+      "name": "Ogi-pastea Krema Pringarriarekin",
+      "description": "Karamelizatutako siropearekin atseden hartu duen ogi-pastea bufalo krema pringarriarekin zerbitzatzen da."
+    },
+    "cevizli-baklava": {
+      "name": "Intxaurren Baklava",
+      "description": "Geruza oso finak zabalduta, intxaurru askorekin eta gurin hutsekin egindako baklava kurruskaria."
+    }
+  },
+  "allergens": {
+    "Süt ürünleri": "Esnekiak",
+    "Gluten": "Glutena",
+    "Yumurta": "Arrautza",
+    "Badem": "Almendra",
+    "Çam fıstığı": "Pinua",
+    "Susam": "Sesamo",
+    "Ceviz": "Intxaur"
+  },
+  "tags": {
+    "Popüler": "Ospetsua",
+    "Vejetaryen": "Begetarianoa",
+    "Günün Yemeği": "Eguneko Platerra",
+    "Şefin Önerisi": "Sukaldariaren Aukera",
+    "Yeni": "Berria",
+    "Acılı": "Gogorra/Espiziatua",
+    "Ev Yapımı": "Etxeko",
+    "Lokanta Klasiği": "Jatetxe Klasikoa",
+    "Günün Çorbası": "Eguneko Zopa",
+    "Vegan": "Beganak",
+    "Hafif": "Arina",
+    "Yöresel": "Eskualdekoa",
+    "Paylaşmalık": "Partekatzeko",
+    "Ev Yemeği": "Etxeko Modura",
+    "Zeytinyağlı": "Oliba Olioa",
+    "Nostaljik": "Nostaljikoa",
+    "Geleneksel": "Tradizionala",
+    "Bursa Lezzeti": "Bursako zaporea",
+    "Sütlü Tatlı": "Esne goxokia",
+    "Sıcak Tatlı": "Goxo beroa",
+    "Mevsimlik": "Denboraldikoa",
+    "Şerbetli": "Almibareko goxokia"
+  }
+}

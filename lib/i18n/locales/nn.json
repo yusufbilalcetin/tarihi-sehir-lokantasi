@@ -1,0 +1,349 @@
+{
+  "locale": "nn",
+  "ui": {
+    "menu": "Meny",
+    "search": "Søk i menyen...",
+    "searchLabel": "Søk i menyen",
+    "categories": "Kategoriar",
+    "categoryIntro": "Vel smaken for bordet ditt.",
+    "categoryNavigation": "Menykategoriar",
+    "openCategory": "Opna {name}, {count} element",
+    "items": "element",
+    "item": "element",
+    "searchResults": "Søkeresultat",
+    "productsFound": "{count} element funne",
+    "backToCategories": "Tilbake til kategoriar",
+    "backToCategory": "Tilbake til {name}",
+    "clearSearch": "Tøm søket",
+    "noResults": "Ingen matchande element funne",
+    "noResultsDescription": "Prøv eit anna søk eller gå tilbake til kategoriane.",
+    "order": "Bestillinga mi",
+    "waiter": "Servitør",
+    "bill": "Rekninga",
+    "addToCart": "Legg til i bestillinga",
+    "addedToCart": "{name} er lagd til i bestillinga di.",
+    "removeFromCart": "Fjern {name}",
+    "soldOut": "Utselt i dag",
+    "productDetails": "Opne detaljar for {name}",
+    "portion": "Del",
+    "standardPortion": "Standard del",
+    "allergens": "Allergiar",
+    "noAllergens": "Ingen oppgjevne allergiar",
+    "productNote": "Varemerknad",
+    "productNotePlaceholder": "Døme: ingen smør, takk",
+    "decreaseQuantity": "Minske mengde",
+    "increaseQuantity": "Øke mengde",
+    "each": "kvar",
+    "note": "Merk",
+    "subtotal": "Delsum",
+    "serviceFee": "Tenestegebyr",
+    "total": "Total",
+    "sendOrder": "Send bestilling",
+    "orderSent": "Bestillinga di vart sendt til kjøkkenet",
+    "orderTracking": "Følg bestilling #{number} her.",
+    "newItem": "Legg til eit anna produkt",
+    "emptyCart": "Bestillinga di er tom",
+    "emptyCartDescription": "Produkt du vel frå menyen vil visast her.",
+    "browseMenu": "Bla gjennom meny",
+    "orderReceived": "Bestilling motteken",
+    "waiterConfirmed": "Servitør bekrefta",
+    "preparing": "Under tilbereding",
+    "ready": "Klar",
+    "served": "Tjenad",
+    "preparingDescription": "Kjøkenet vårt held på å tilberede bestillinga di.",
+    "orderStatus": "Status på bestilling",
+    "callWaiter": "Ring servitør",
+    "placeOrder": "Eg vil bestille",
+    "wantWater": "Eg vil gjerne ha vatn",
+    "wantBread": "Eg vil gjerne ha brød",
+    "wantService": "Ekstra service",
+    "other": "Annan",
+    "generalRequest": "Eg har ei generell førespurnad",
+    "orderHelp": "Eg treng hjelp med bestillinga mi",
+    "waterDescription": "Ver venleg å bringe vatn til bordet",
+    "breadDescription": "Ver venleg å bringe brød til bordet",
+    "serviceDescription": "Eg treng bestikk eller ein tallerken",
+    "otherDescription": "Eg treng hjelp med noko anna",
+    "waiterHelpTitle": "Kva kan vi hjelpe med?",
+    "waiterHelpDescription": "Forespørselen din vil bli sendt med {table}.",
+    "waiterRequestSent": "Forespørselen din vart sendt til servitøren vår.",
+    "requestBill": "Be om rekning",
+    "billSent": "Forespørselen om rekning vart sendt",
+    "billConfirm": "Vil du be om rekninga?",
+    "billSentDescription": "Servitøren vår kjem til deg snart.",
+    "billConfirmDescription": "Forespørselen din vil gå direkte til servitøren. Du kan betale ved bordet eller kassa.",
+    "billToast": "Rekninga di vart sende til kelneren vår.",
+    "backToMenu": "Tilbake til meny",
+    "back": "Tilbake",
+    "close": "Lukk",
+    "yourTable": "BORDET DITT",
+    "serviceOpen": "Opent servering",
+    "slogan": "Tradisjonell smak • Moderne bord",
+    "location": "Bursa, Osmangazi",
+    "languageLabel": "Vel språk",
+    "currencyLabel": "Vel valuta",
+    "customerNavigation": "Kundemeny navigasjon",
+    "approximateCurrency": "Prisar i utanlandsk valuta er omtrentlege. Betaling vert handsama i tyrkisk lira.",
+    "orderSuccess": "Bestillinga di vart sendt vellykka.",
+    "languagePickerTitle": "Vel språk",
+    "languagePickerDescription": "Vel språket du vil bruke for menyen.",
+    "searchLanguage": "Søk etter språk...",
+    "recommendedLanguages": "Anbefalt",
+    "recentLanguages": "Nyleg brukte språk",
+    "allLanguages": "Alle språk",
+    "languageNotFound": "Språket vart ikkje funne.",
+    "languageNotFoundDescription": "Prøv eit anna språk eller kode.",
+    "tableNumber": "Bord {number}",
+    "itemCount": "{count} element",
+    "splashLabel": "Tarihi Şehir Lokantası opningsskjerm",
+    "cancel": "Avbryt",
+    "confirmOrder": "Bekreft bestilling",
+    "orderSummary": "Oppsummering av bestilling",
+    "payment": "Betaling",
+    "tableNotFound": "Bordet vart ikkje funne.",
+    "invalidQr": "Ugyldig QR-kode.",
+    "menuUnavailable": "Menyen er ikkje tilgjengeleg for augneblinken.",
+    "networkError": "Det oppstod ein nettverksfeil.",
+    "productUnavailable": "Denne varen er ikkje tilgjengeleg for augneblinken.",
+    "unableToSendOrder": "Kan ikkje sende bestillinga.",
+    "tryAgain": "Prøv på nytt",
+    "somethingWentWrong": "Noko gjekk galt.",
+    "loadingLanguage": "Laster språk...",
+    "languageLoadError": "Språket kunne ikkje lastast. Venlegst prøv igjen."
+  },
+  "categories": {
+    "soups": "Supper",
+    "grill": "Grillar",
+    "mains": "Hovudrettar",
+    "drinks": "Drikkar",
+    "kebabs": "Kebabar",
+    "dessert": "Dessertar"
+  },
+  "products": {
+    "mercimek": {
+      "name": "Linseuppe",
+      "description": "Heimelaga linseuppe laga på den klassiske måten, fullført med ein smørsaus."
+    },
+    "tas-kebabi": {
+      "name": "Tyrkisk Kjøttgryte",
+      "description": "Oksekjøtt, sesongbaserte grønsaker og restaurantens saktekokte spesialsaus."
+    },
+    "kuzu-tandir": {
+      "name": "Saktebaka Lam",
+      "description": "Restaurantens signatur tandoori-lam, saktekokt på låg varme."
+    },
+    "pirinc-pilavi": {
+      "name": "Ris Pilaf",
+      "description": "Smørfylt, luftig Baldo rispilaf."
+    },
+    "firin-sutlac": {
+      "name": "Bakt Riskrem",
+      "description": "Riskrem bakt på tradisjonelt vis, laga med dagleg bøffelmjølk."
+    },
+    "kuru-fasulye": {
+      "name": "White Bean Stew with Beef",
+      "description": "İspir beans, diced beef, and plain restaurant tomato paste."
+    },
+    "izgara-kofte": {
+      "name": "Grilled Meatballs",
+      "description": "Butcher-style beef meatballs with roasted pepper and tomato."
+    },
+    "ayran": {
+      "name": "Churned Ayran",
+      "description": "Traditional churned buttermilk with plenty of foam, made with everyday yogurt."
+    },
+    "ezogelin-corbasi": {
+      "name": "Ezogelin Soup",
+      "description": "A traditional restaurant soup where red lentils, bulgur, and rice meet with mint."
+    },
+    "tarhana-corbasi": {
+      "name": "Tarhana Soup",
+      "description": "Homemade tarhana, an Anatolian classic slowly cooked with tomatoes and dried mint."
+    },
+    "yayla-corbasi": {
+      "name": "Yoghurt- og risuppe",
+      "description": "Ei forfriskande og kremete yayla-suppe laga med yoghurt, ris og tørka mynte."
+    },
+    "iskembe-corbasi": {
+      "name": "Magesuppe",
+      "description": "Ordentleg suppe av storfemage servert med krydder og kvitlaukseddik."
+    },
+    "dugun-corbasi": {
+      "name": "Bryllaupssuppe",
+      "description": "Tradisjonell bryllaupssuppe laga med strimla lam og aroma av sitronmarinade."
+    },
+    "tavuk-suyu-corbasi": {
+      "name": "Kyllingkraftsuppe",
+      "description": "Ein heilande suppe laga med tynne nudlar kokt i benkraft og strimla kyllingkjøt."
+    },
+    "domates-corbasi": {
+      "name": "Tomatsuppe",
+      "description": "Ein rik smak laga med modne tomatar, smør og basilikum, fullført med ost."
+    },
+    "sebze-corbasi": {
+      "name": "Grønnsakssuppe",
+      "description": "Ein lett restaurantssuppe laga med sesongbetinga grønnsaker, olivenolje og friske urter."
+    },
+    "beyran-corbasi": {
+      "name": "Krydra lamm Beyran-suppe",
+      "description": "Ein regional suppe laga på høg varme med lam, ris, kvitlauk og sterk pepar."
+    },
+    "kelle-paca-corbasi": {
+      "name": "Hovud- og fot-suppe",
+      "description": "Ein rik kraftsuppe laga med okseføter og hovudkjøt kokt i mange timar."
+    },
+    "sehriye-corbasi": {
+      "name": "Vermicellissuppe",
+      "description": "Dagens suppe laga med kyllingkraft, tomatar, vermicelli og persille."
+    },
+    "tavuk-sis": {
+      "name": "Kyllingspett",
+      "description": "Kyllingbitar marinert med spesielle krydder, servert med steikte paprika og tomatar."
+    },
+    "kasap-sucuk": {
+      "name": "Grilla slaktar-sucuk",
+      "description": "Krydra oksepølse steikt på kol, med steikte grønsaker og løk med sumak."
+    },
+    "karisik-izgara": {
+      "name": "Blandingsgrill",
+      "description": "Ei rikeleg og variert grilltallerken med kjøtkaker, kyllingspett, lammekotelettar og pølse."
+    },
+    "nohut-yemegi": {
+      "name": "Garbanzestuing med storfe",
+      "description": "Heimelaga måltid med kikerter og terningar av storfekjøt sakte kokt i ei kobbergryte."
+    },
+    "patlican-musakka": {
+      "name": "Miniasjebak Moussaka",
+      "description": "Steikt miniasebakt, kjøttdeig og moussaka bakt i ovnen med tomatsaus, restaurantstil."
+    },
+    "zeytinyagli-taze-fasulye": {
+      "name": "Grøne bønner i olivenolje",
+      "description": "Ein klassikar kokt i olivenolje med grøne bønner, tomatar og løk, servert kald."
+    },
+    "tavuk-sote": {
+      "name": "Steikt kylling",
+      "description": "Kyllingbitane vert steikte på høg varme med fargerike paprika, sopp og tomatar."
+    },
+    "izmir-kofte": {
+      "name": "Kjøtkaker i İzmir-stil",
+      "description": "Ein tradisjonell hovudrett med kjøtkaker av storfe, poteter og paprika bakte i tomatsaus."
+    },
+    "etli-bezelye": {
+      "name": "Erter med storfekjøt",
+      "description": "Dagsmåltid laga i ein gryte med terningar av storfekjøt, erter, gulrøter og poteter."
+    },
+    "patlican-oturtma": {
+      "name": "Bakt aubergine med kjøttdeig",
+      "description": "Tunga vert tilberedt i omnen med aubergine, krydra kjøttdeig og kvitlaukstomatsaus."
+    },
+    "salgam-suyu": {
+      "name": "Gjæra kålrotjuice",
+      "description": "Tradisjonell krydra kålrotjuice gjæra med lilla gulrot og bulgurgjær."
+    },
+    "maden-suyu": {
+      "name": "Mineralvatn",
+      "description": "Naturlig mineralvatn servert kaldt."
+    },
+    "su": {
+      "name": "Naturlig kjeldevatn",
+      "description": "Naturlig kjeldevatn servert kaldt i ei glasflaske."
+    },
+    "kola": {
+      "name": "Cola",
+      "description": "Ein klassisk brus med kullsyre servert iskald."
+    },
+    "gazoz": {
+      "name": "Turkisk sitronsoda",
+      "description": "Tradisjonell smakssett, forfriskande og servert kald, rein soda."
+    },
+    "turk-kahvesi": {
+      "name": "Turkisk kaffi",
+      "description": "Tradisjonell tyrkisk kaffi med skum, kokt på høg varme i ein kobber cezve."
+    },
+    "demleme-cay": {
+      "name": "Turkisk brygga te",
+      "description": "Fersk, nybrygga Rize-te servert varm i eit tynnvaksla glas."
+    },
+    "ev-yapimi-limonata": {
+      "name": "Heimelaga lemonade",
+      "description": "Friskande lemonade laga kvar dag med fersk sitron, mynte og litt sukker."
+    },
+    "hosaf": {
+      "name": "Kvar dags fruktkompott",
+      "description": "Heimelaga kompott koka dagleg med rosiner, aprikoser eller plommer etter årstida."
+    },
+    "iskender-kebabi": {
+      "name": "Bursa İskender Kebab",
+      "description": "Kjøtet roterer på ei spyd over pide, servert med tomatsaus, varm smør og yoghurt."
+    },
+    "kazandibi": {
+      "name": "Karamellisert melkepudding",
+      "description": "Ein tradisjonell mjølke dessert karamellisert på rett måte, med silkemyk konsistens."
+    },
+    "tavuk-gogsu": {
+      "name": "Osmansk melkepudding",
+      "description": "Ei lett og fiberrik melkedessert laga etter ei tradisjonell oppskrift, servert med kanel."
+    },
+    "keskul": {
+      "name": "Mandelmelkpudding",
+      "description": "Melkedessert i osmansk stil med mandelsmak og kokos."
+    },
+    "irmik-helvasi": {
+      "name": "Semulehalva",
+      "description": "Semulehalva, rista med smør og pinjekjerner, servert varm og kornete."
+    },
+    "kabak-tatlisi": {
+      "name": "Gresskardessert med tahini",
+      "description": "Gresskaret, sakte kokt i si eiga juice, blir servert med tahini og valnøtter."
+    },
+    "ayva-tatlisi": {
+      "name": "Kvede-dessert",
+      "description": "Kvede kokt med nellik og kanel blir servert med tjukkmjølk og valnøtter."
+    },
+    "revani": {
+      "name": "Semolina Syrup Cake",
+      "description": "The classic restaurant dessert where semolina soft cake meets lemon-scented syrup."
+    },
+    "ekmek-kadayifi": {
+      "name": "Bread Pudding with Clotted Cream",
+      "description": "Bread pudding rested with caramelized syrup is served with buffalo clotted cream."
+    },
+    "cevizli-baklava": {
+      "name": "Walnut Baklava",
+      "description": "Layers rolled out very thin, crispy baklava made with plenty of walnuts and plain butter."
+    }
+  },
+  "allergens": {
+    "Süt ürünleri": "Dairy",
+    "Gluten": "Gluten",
+    "Yumurta": "Egg",
+    "Badem": "Almond",
+    "Çam fıstığı": "Pine nut",
+    "Susam": "Sesame",
+    "Ceviz": "Valnøtt"
+  },
+  "tags": {
+    "Popüler": "Poppulær",
+    "Vejetaryen": "Vegetar",
+    "Günün Yemeği": "Dagens Rett",
+    "Şefin Önerisi": "Kokkens Val",
+    "Yeni": "Ny",
+    "Acılı": "Krydra",
+    "Ev Yapımı": "Heimebaka",
+    "Lokanta Klasiği": "Restaurantklassikar",
+    "Günün Çorbası": "Dagens Suppe",
+    "Vegan": "Vegan",
+    "Hafif": "Lett",
+    "Yöresel": "Regional",
+    "Paylaşmalık": "Til å Dele",
+    "Ev Yemeği": "Heimagjord",
+    "Zeytinyağlı": "Olivolje",
+    "Nostaljik": "Nostalgi",
+    "Geleneksel": "Tradisjonell",
+    "Bursa Lezzeti": "Smak av Bursa",
+    "Sütlü Tatlı": "Mjølkkake",
+    "Sıcak Tatlı": "Varm dessert",
+    "Mevsimlik": "Sesongbasert",
+    "Şerbetli": "Sirupdessert"
+  }
+}

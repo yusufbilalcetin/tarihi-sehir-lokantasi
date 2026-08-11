@@ -1,0 +1,349 @@
+{
+  "locale": "tr",
+  "ui": {
+    "menu": "Menü",
+    "search": "Menüde ara...",
+    "searchLabel": "Menüde ara",
+    "categories": "Kategoriler",
+    "categoryIntro": "Sofranıza yakışan lezzeti seçin.",
+    "categoryNavigation": "Menü kategorileri",
+    "openCategory": "{name} kategorisini aç, {count} ürün",
+    "items": "ürün",
+    "item": "ürün",
+    "searchResults": "Arama Sonuçları",
+    "productsFound": "{count} ürün bulundu",
+    "backToCategories": "Kategorilere dön",
+    "backToCategory": "{name} listesine dön",
+    "clearSearch": "Aramayı temizle",
+    "noResults": "Eşleşen ürün bulunamadı",
+    "noResultsDescription": "Arama kelimenizi değiştirin veya kategorilere dönün.",
+    "order": "Siparişim",
+    "waiter": "Garson",
+    "bill": "Hesap",
+    "addToCart": "Sepete Ekle",
+    "addedToCart": "{name} sepete eklendi.",
+    "removeFromCart": "{name} ürününü kaldır",
+    "soldOut": "Bugün Tükendi",
+    "productDetails": "{name} detayını aç",
+    "portion": "Porsiyon",
+    "standardPortion": "Standart porsiyon",
+    "allergens": "Alerjenler",
+    "noAllergens": "Bildirilmiş alerjen yok",
+    "productNote": "Ürün notu",
+    "productNotePlaceholder": "Örn. tereyağsız olsun",
+    "decreaseQuantity": "Adedi azalt",
+    "increaseQuantity": "Adedi artır",
+    "each": "adet",
+    "note": "Not",
+    "subtotal": "Ara toplam",
+    "serviceFee": "Servis ücreti",
+    "total": "Genel toplam",
+    "sendOrder": "Siparişi Gönder",
+    "orderSent": "Siparişiniz mutfağa iletildi",
+    "orderTracking": "#{number} numaralı siparişinizi buradan takip edebilirsiniz.",
+    "newItem": "Yeni Ürün Ekle",
+    "emptyCart": "Sepetiniz henüz boş",
+    "emptyCartDescription": "Menüden seçtiğiniz ürünler burada görünecek.",
+    "browseMenu": "Menüyü İncele",
+    "orderReceived": "Sipariş Alındı",
+    "waiterConfirmed": "Garson Onayladı",
+    "preparing": "Hazırlanıyor",
+    "ready": "Hazır",
+    "served": "Servis Edildi",
+    "preparingDescription": "Mutfağımız siparişinizi hazırlıyor.",
+    "orderStatus": "Sipariş durumu",
+    "callWaiter": "Garson çağır",
+    "placeOrder": "Sipariş vereceğim",
+    "wantWater": "Su istiyorum",
+    "wantBread": "Ekmek istiyorum",
+    "wantService": "Ek servis istiyorum",
+    "other": "Diğer",
+    "generalRequest": "Genel bir talebim var",
+    "orderHelp": "Siparişim için yardım istiyorum",
+    "waterDescription": "Masaya su rica ediyorum",
+    "breadDescription": "Ekmek servisi rica ediyorum",
+    "serviceDescription": "Çatal, kaşık veya tabak istiyorum",
+    "otherDescription": "Farklı bir konuda yardıma ihtiyacım var",
+    "waiterHelpTitle": "Size nasıl yardımcı olabiliriz?",
+    "waiterHelpDescription": "Talebiniz {table} bilgisiyle garson ekranına iletilir.",
+    "waiterRequestSent": "Talebiniz garsonumuza iletildi.",
+    "requestBill": "Hesabı İste",
+    "billSent": "Hesap talebiniz iletildi",
+    "billConfirm": "Hesabı istemek istediğinize emin misiniz?",
+    "billSentDescription": "Garsonumuz kısa süre içinde masanızla ilgilenecek.",
+    "billConfirmDescription": "Talebiniz doğrudan garson ekranına düşecek. Ödemeyi kasada veya masada yapabilirsiniz.",
+    "billToast": "Hesap talebiniz garsonumuza iletildi.",
+    "backToMenu": "Menüye Dön",
+    "back": "Geri",
+    "close": "Kapat",
+    "yourTable": "MASANIZ",
+    "serviceOpen": "Servis açık",
+    "slogan": "Eski Usul • Yeni Nesil Lezzetler",
+    "location": "Bursa, Osmangazi",
+    "languageLabel": "Dil seç",
+    "currencyLabel": "Para birimi seç",
+    "customerNavigation": "Müşteri menü navigasyonu",
+    "approximateCurrency": "Döviz fiyatları bilgi amaçlı yaklaşık karşılıklardır. Ödeme Türk Lirası üzerinden yapılır.",
+    "orderSuccess": "Siparişiniz başarıyla gönderildi.",
+    "languagePickerTitle": "Dil Seç",
+    "languagePickerDescription": "Menüyü görüntülemek istediğiniz dili seçin.",
+    "searchLanguage": "Dil ara...",
+    "recommendedLanguages": "Önerilen",
+    "recentLanguages": "Son Kullanılanlar",
+    "allLanguages": "Tüm Diller",
+    "languageNotFound": "Dil bulunamadı.",
+    "languageNotFoundDescription": "Farklı bir dil adı veya kodu deneyin.",
+    "tableNumber": "Masa {number}",
+    "itemCount": "{count} ürün",
+    "splashLabel": "Tarihi Şehir Lokantası açılış ekranı",
+    "cancel": "İptal",
+    "confirmOrder": "Siparişi Onayla",
+    "orderSummary": "Sipariş Özeti",
+    "payment": "Ödeme",
+    "tableNotFound": "Masa bulunamadı.",
+    "invalidQr": "QR kodu geçersiz.",
+    "menuUnavailable": "Menü şu anda kullanılamıyor.",
+    "networkError": "Bağlantı hatası oluştu.",
+    "productUnavailable": "Bu ürün şu anda kullanılamıyor.",
+    "unableToSendOrder": "Sipariş gönderilemedi.",
+    "tryAgain": "Tekrar deneyin",
+    "somethingWentWrong": "Bir sorun oluştu.",
+    "loadingLanguage": "Dil yükleniyor...",
+    "languageLoadError": "Dil yüklenemedi. Lütfen tekrar deneyin."
+  },
+  "categories": {
+    "soups": "Çorbalar",
+    "grill": "Izgaralar",
+    "mains": "Ana Yemekler",
+    "drinks": "İçecekler",
+    "kebabs": "Kebaplar",
+    "dessert": "Tatlılar"
+  },
+  "products": {
+    "mercimek": {
+      "name": "Mercimek Çorbası",
+      "description": "Klasik usulde hazırlanan, tereyağlı sosla tamamlanan ev yapımı mercimek çorbası."
+    },
+    "tas-kebabi": {
+      "name": "Tas Kebabı",
+      "description": "Dana eti, mevsim sebzeleri ve lokantamızın ağır pişmiş özel sosu."
+    },
+    "kuzu-tandir": {
+      "name": "Kuzu Tandır",
+      "description": "Ağır ateşte uzun süre pişirilmiş, lokantamızın imza kuzu tandırı."
+    },
+    "pirinc-pilavi": {
+      "name": "Pirinç Pilavı",
+      "description": "Tereyağlı, tane tane Baldo pirinç pilavı."
+    },
+    "firin-sutlac": {
+      "name": "Fırın Sütlaç",
+      "description": "Geleneksel usulde fırınlanmış, günlük manda sütüyle hazırlanan sütlaç."
+    },
+    "kuru-fasulye": {
+      "name": "Etli Kuru Fasulye",
+      "description": "İspir fasulyesi, kuşbaşı dana eti ve sade lokanta salçasıyla."
+    },
+    "izgara-kofte": {
+      "name": "Izgara Köfte",
+      "description": "Kasap usulü dana köfte, közlenmiş biber ve domates ile."
+    },
+    "ayran": {
+      "name": "Yayık Ayranı",
+      "description": "Bol köpüklü, günlük yoğurtla hazırlanan geleneksel yayık ayranı."
+    },
+    "ezogelin-corbasi": {
+      "name": "Ezogelin Çorbası",
+      "description": "Kırmızı mercimek, bulgur ve pirincin nane ile buluştuğu geleneksel lokanta çorbası."
+    },
+    "tarhana-corbasi": {
+      "name": "Tarhana Çorbası",
+      "description": "Ev yapımı tarhana, domates ve kuru nane ile ağır ağır pişirilen Anadolu klasiği."
+    },
+    "yayla-corbasi": {
+      "name": "Yayla Çorbası",
+      "description": "Yoğurt, pirinç ve kuru naneyle hazırlanan ferah ve kıvamlı yayla çorbası."
+    },
+    "iskembe-corbasi": {
+      "name": "İşkembe Çorbası",
+      "description": "Terbiyesi ve sarımsaklı sirkesiyle servis edilen usulüne uygun dana işkembe çorbası."
+    },
+    "dugun-corbasi": {
+      "name": "Düğün Çorbası",
+      "description": "Didiklenmiş kuzu eti ve limonlu terbiyeyle hazırlanan geleneksel düğün çorbası."
+    },
+    "tavuk-suyu-corbasi": {
+      "name": "Tavuk Suyu Çorbası",
+      "description": "Kemik suyunda pişen tel şehriye ve didik tavuk etiyle hazırlanan şifalı çorba."
+    },
+    "domates-corbasi": {
+      "name": "Domates Çorbası",
+      "description": "Olgun domates, tereyağı ve fesleğenle pişirilip kaşarla tamamlanan yoğun lezzet."
+    },
+    "sebze-corbasi": {
+      "name": "Sebze Çorbası",
+      "description": "Mevsim sebzeleri, zeytinyağı ve taze otlarla hazırlanan hafif lokanta çorbası."
+    },
+    "beyran-corbasi": {
+      "name": "Beyran Çorbası",
+      "description": "Kuzu eti, pirinç, sarımsak ve acı biberle yüksek ateşte hazırlanan yöresel çorba."
+    },
+    "kelle-paca-corbasi": {
+      "name": "Kelle Paça Çorbası",
+      "description": "Uzun saatler kaynatılan dana paça ve kelle etiyle hazırlanan yoğun kemik suyu çorbası."
+    },
+    "sehriye-corbasi": {
+      "name": "Şehriye Çorbası",
+      "description": "Domatesli tavuk suyunda tel şehriye ve maydanozla hazırlanan günlük çorba."
+    },
+    "tavuk-sis": {
+      "name": "Tavuk Şiş",
+      "description": "Özel baharatlarla marine edilmiş tavuk parçaları, köz biber ve domates eşliğinde."
+    },
+    "kasap-sucuk": {
+      "name": "Kasap Sucuk",
+      "description": "Odun kömüründe pişirilen baharatlı dana sucuk, közlenmiş sebzeler ve sumaklı soğanla."
+    },
+    "karisik-izgara": {
+      "name": "Karışık Izgara",
+      "description": "Köfte, tavuk şiş, kuzu pirzola ve sucuktan oluşan bol çeşitli ızgara tabağı."
+    },
+    "nohut-yemegi": {
+      "name": "Etli Nohut Yemeği",
+      "description": "Koçbaşı nohut ve kuşbaşı dana etiyle bakır tencerede ağır ağır pişirilen ev yemeği."
+    },
+    "patlican-musakka": {
+      "name": "Patlıcan Musakka",
+      "description": "Kızarmış patlıcan, dana kıyma ve domates sosla fırında pişirilen lokanta usulü musakka."
+    },
+    "zeytinyagli-taze-fasulye": {
+      "name": "Zeytinyağlı Taze Fasulye",
+      "description": "Taze fasulye, domates ve soğanla zeytinyağında pişirilen serin servis edilen klasik."
+    },
+    "tavuk-sote": {
+      "name": "Tavuk Sote",
+      "description": "Tavuk parçaları, renkli biberler, mantar ve domatesle yüksek ateşte sotelenir."
+    },
+    "izmir-kofte": {
+      "name": "İzmir Köfte",
+      "description": "Dana köfte, patates ve biberin domates sosunda fırınlandığı geleneksel ana yemek."
+    },
+    "etli-bezelye": {
+      "name": "Etli Bezelye",
+      "description": "Kuşbaşı dana eti, bezelye, havuç ve patatesle tencere usulü pişirilen günlük yemek."
+    },
+    "patlican-oturtma": {
+      "name": "Patlıcan Oturtma",
+      "description": "Dilim patlıcan, baharatlı kıyma ve sarımsaklı domates sosla fırında hazırlanır."
+    },
+    "salgam-suyu": {
+      "name": "Şalgam Suyu",
+      "description": "Mor havuç ve bulgur mayasıyla fermente edilmiş geleneksel acılı şalgam suyu."
+    },
+    "maden-suyu": {
+      "name": "Maden Suyu",
+      "description": "Soğuk servis edilen doğal mineralli sade maden suyu."
+    },
+    "su": {
+      "name": "Doğal Kaynak Suyu",
+      "description": "Cam şişede soğuk servis edilen doğal kaynak suyu."
+    },
+    "kola": {
+      "name": "Kola",
+      "description": "Buz gibi servis edilen klasik gazlı içecek."
+    },
+    "gazoz": {
+      "name": "Sade Gazoz",
+      "description": "Geleneksel aromalı, ferahlatıcı ve soğuk servis edilen sade gazoz."
+    },
+    "turk-kahvesi": {
+      "name": "Türk Kahvesi",
+      "description": "Bakır cezvede ağır ateşte pişirilen köpüklü geleneksel Türk kahvesi."
+    },
+    "demleme-cay": {
+      "name": "Demleme Çay",
+      "description": "İnce belli bardakta taze demlenmiş sıcak Rize çayı."
+    },
+    "ev-yapimi-limonata": {
+      "name": "Ev Yapımı Limonata",
+      "description": "Taze limon, nane ve az şekerle günlük hazırlanan ferahlatıcı limonata."
+    },
+    "hosaf": {
+      "name": "Günlük Hoşaf",
+      "description": "Mevsimine göre kuru üzüm, kayısı veya erikle günlük kaynatılan ev hoşafı."
+    },
+    "iskender-kebabi": {
+      "name": "Bursa İskender Kebabı",
+      "description": "Tırnak pide üzerinde döner, domates sosu, kızgın tereyağı ve yoğurtla servis edilir."
+    },
+    "kazandibi": {
+      "name": "Kazandibi",
+      "description": "Altı usulünce karamelize edilmiş, ipeksi kıvamlı geleneksel sütlü tatlı."
+    },
+    "tavuk-gogsu": {
+      "name": "Tavuk Göğsü",
+      "description": "Geleneksel reçeteyle hazırlanan, tarçınla servis edilen hafif ve lifli sütlü tatlı."
+    },
+    "keskul": {
+      "name": "Keşkül",
+      "description": "Badem aroması ve Hindistan ceviziyle tamamlanan Osmanlı usulü sütlü tatlı."
+    },
+    "irmik-helvasi": {
+      "name": "İrmik Helvası",
+      "description": "Tereyağı ve çam fıstığıyla kavrulan, sıcak servis edilen tane tane irmik helvası."
+    },
+    "kabak-tatlisi": {
+      "name": "Tahinli Kabak Tatlısı",
+      "description": "Kendi suyunda ağır ağır pişen bal kabağı, tahin ve cevizle servis edilir."
+    },
+    "ayva-tatlisi": {
+      "name": "Ayva Tatlısı",
+      "description": "Karanfil ve tarçınla pişirilen ayva, kaymak ve ceviz eşliğinde servis edilir."
+    },
+    "revani": {
+      "name": "Revani",
+      "description": "İrmikli yumuşak kekin limon kokulu şerbetle buluştuğu klasik lokanta tatlısı."
+    },
+    "ekmek-kadayifi": {
+      "name": "Kaymaklı Ekmek Kadayıfı",
+      "description": "Karamelize şerbetle dinlendirilen ekmek kadayıfı, manda kaymağıyla servis edilir."
+    },
+    "cevizli-baklava": {
+      "name": "Cevizli Baklava",
+      "description": "İncecik açılmış katlar, bol ceviz ve sade yağla hazırlanan çıtır baklava."
+    }
+  },
+  "allergens": {
+    "Süt ürünleri": "Süt ürünleri",
+    "Gluten": "Gluten",
+    "Yumurta": "Yumurta",
+    "Badem": "Badem",
+    "Çam fıstığı": "Çam fıstığı",
+    "Susam": "Susam",
+    "Ceviz": "Ceviz"
+  },
+  "tags": {
+    "Popüler": "Popüler",
+    "Vejetaryen": "Vejetaryen",
+    "Günün Yemeği": "Günün Yemeği",
+    "Şefin Önerisi": "Şefin Önerisi",
+    "Yeni": "Yeni",
+    "Acılı": "Acılı",
+    "Ev Yapımı": "Ev Yapımı",
+    "Lokanta Klasiği": "Lokanta Klasiği",
+    "Günün Çorbası": "Günün Çorbası",
+    "Vegan": "Vegan",
+    "Hafif": "Hafif",
+    "Yöresel": "Yöresel",
+    "Paylaşmalık": "Paylaşmalık",
+    "Ev Yemeği": "Ev Yemeği",
+    "Zeytinyağlı": "Zeytinyağlı",
+    "Nostaljik": "Nostaljik",
+    "Geleneksel": "Geleneksel",
+    "Bursa Lezzeti": "Bursa Lezzeti",
+    "Sütlü Tatlı": "Sütlü Tatlı",
+    "Sıcak Tatlı": "Sıcak Tatlı",
+    "Mevsimlik": "Mevsimlik",
+    "Şerbetli": "Şerbetli"
+  }
+}

@@ -1,0 +1,349 @@
+{
+  "locale": "hu",
+  "ui": {
+    "menu": "Menü",
+    "search": "Keresés a menüben...",
+    "searchLabel": "Keresés a menüben",
+    "categories": "Kategóriák",
+    "categoryIntro": "Válassza ki az ízt az asztalához.",
+    "categoryNavigation": "Menükategóriák",
+    "openCategory": "Megnyitás: {name}, {count} tétel",
+    "items": "tétel",
+    "item": "tétel",
+    "searchResults": "Keresési eredmények",
+    "productsFound": "{count} találat",
+    "backToCategories": "Vissza a kategóriákhoz",
+    "backToCategory": "Vissza: {name}",
+    "clearSearch": "Keresés törlése",
+    "noResults": "Nem találhatók megfelelő tételek",
+    "noResultsDescription": "Próbáljon egy másik keresést, vagy térjen vissza a kategóriákhoz.",
+    "order": "Rendelésem",
+    "waiter": "Felszolgáló",
+    "bill": "Számla",
+    "addToCart": "Hozzáadás a rendeléshez",
+    "addedToCart": "{name} hozzáadva a rendeléséhez.",
+    "removeFromCart": "{name} eltávolítása",
+    "soldOut": "Ma elfogyott",
+    "productDetails": "Részletek megnyitása: {name}",
+    "portion": "Adag",
+    "standardPortion": "Normál adag",
+    "allergens": "Allergének",
+    "noAllergens": "Nincs bejelentett allergén",
+    "productNote": "Tétel megjegyzés",
+    "productNotePlaceholder": "Pl. ne legyen vaj, kérem",
+    "decreaseQuantity": "Mennyiség csökkentése",
+    "increaseQuantity": "Mennyiség növelése",
+    "each": "darab",
+    "note": "Megjegyzés",
+    "subtotal": "Részösszeg",
+    "serviceFee": "Szolgáltatási díj",
+    "total": "Összesen",
+    "sendOrder": "Megrendelés elküldése",
+    "orderSent": "A rendelésed elküldve a konyhába",
+    "orderTracking": "Kövessék a #{number} rendelést itt.",
+    "newItem": "Másik tétel hozzáadása",
+    "emptyCart": "A rendelésed üres",
+    "emptyCartDescription": "A menüből választott tételek itt fognak megjelenni.",
+    "browseMenu": "Menü böngészése",
+    "orderReceived": "Rendelés beérkezett",
+    "waiterConfirmed": "Felszolgáló megerősítette",
+    "preparing": "Előkészítés alatt",
+    "ready": "Kész",
+    "served": "Felszolgálva",
+    "preparingDescription": "Konyhánk elkészíti a rendelését.",
+    "orderStatus": "Rendelés állapota",
+    "callWaiter": "Hívja a felszolgálót",
+    "placeOrder": "Rendelni szeretnék",
+    "wantWater": "Vizet szeretnék",
+    "wantBread": "Kenyérre van szükségem",
+    "wantService": "Extra szolgáltatás",
+    "other": "Egyéb",
+    "generalRequest": "Általános kérésem van",
+    "orderHelp": "Segítségre van szükségem a rendeléssel",
+    "waterDescription": "Kérem, hozzon vizet az asztalhoz",
+    "breadDescription": "Kérlek, hozd a kenyeret az asztalhoz",
+    "serviceDescription": "Szükségem van evőeszközre vagy egy tányérra",
+    "otherDescription": "Szükségem van segítségre máshoz",
+    "waiterHelpTitle": "Hogyan segíthetünk?",
+    "waiterHelpDescription": "Kérésed a következővel kerül elküldésre: {table}.",
+    "waiterRequestSent": "Kérést elküldtük a pincérünknek.",
+    "requestBill": "Számla kérése",
+    "billSent": "A számlakérés elküldve",
+    "billConfirm": "Szeretnéd kérni a számlát?",
+    "billSentDescription": "A pincérünk hamarosan az asztalodhoz ér.",
+    "billConfirmDescription": "Kérésed közvetlenül a pincérhez kerül. Fizethetsz az asztalnál vagy a pénztárnál.",
+    "billToast": "A számlakérést elküldtük a pincérünknek.",
+    "backToMenu": "Vissza a menübe",
+    "back": "Vissza",
+    "close": "Bezárás",
+    "yourTable": "AZ ASZTALOD",
+    "serviceOpen": "Szolgáltatás nyitva",
+    "slogan": "Hagyományos Ízek • Modern Asztal",
+    "location": "Bursa, Osmangazi",
+    "languageLabel": "Válasszon nyelvet",
+    "currencyLabel": "Válasszon pénznemet",
+    "customerNavigation": "Vevői menü navigáció",
+    "approximateCurrency": "A külföldi pénznem árak hozzávetőlegesek. A fizetés török lírában történik.",
+    "orderSuccess": "A rendelését sikeresen elküldtük.",
+    "languagePickerTitle": "Válasszon nyelvet",
+    "languagePickerDescription": "Válaszd ki a menü nyelvét.",
+    "searchLanguage": "Nyelvek keresése...",
+    "recommendedLanguages": "Ajánlott",
+    "recentLanguages": "Legutóbbi nyelvek",
+    "allLanguages": "Összes nyelv",
+    "languageNotFound": "Nyelv nem található.",
+    "languageNotFoundDescription": "Próbálj meg másik nyelvnevet vagy kódot.",
+    "tableNumber": "Asztal {number}",
+    "itemCount": "{count} tétel",
+    "splashLabel": "Tarihi Şehir Lokantası nyitóképernyő",
+    "cancel": "Mégse",
+    "confirmOrder": "Rendelés megerősítése",
+    "orderSummary": "Rendelés összegzése",
+    "payment": "Fizetés",
+    "tableNotFound": "Asztal nem található.",
+    "invalidQr": "Érvénytelen QR-kód.",
+    "menuUnavailable": "Az étlap jelenleg nem elérhető.",
+    "networkError": "Hálózati hiba történt.",
+    "productUnavailable": "Ez az étel jelenleg nem elérhető.",
+    "unableToSendOrder": "Nem sikerült elküldeni a rendelést.",
+    "tryAgain": "Próbáld újra",
+    "somethingWentWrong": "Valami hiba történt.",
+    "loadingLanguage": "Nyelv betöltése...",
+    "languageLoadError": "A nyelvet nem sikerült betölteni. Kérlek, próbáld újra."
+  },
+  "categories": {
+    "soups": "Levesek",
+    "grill": "Grillek",
+    "mains": "Főételek",
+    "drinks": "Italok",
+    "kebabs": "Kebabak",
+    "dessert": "Desszertek"
+  },
+  "products": {
+    "mercimek": {
+      "name": "Lencse leves",
+      "description": "Házi készítésű lencse leves klasszikus stílusban, vajas szósszal kiegészítve."
+    },
+    "tas-kebabi": {
+      "name": "Török marhapörkölt",
+      "description": "Marhahús, szezonális zöldségek és az éttermünk lassan főzött különleges mártása."
+    },
+    "kuzu-tandir": {
+      "name": "Lassan sült bárány",
+      "description": "Az éttermünk jellegzetes bárány tandoori-ja, lassan, alacsony hőmérsékleten sütve."
+    },
+    "pirinc-pilavi": {
+      "name": "Rizs pilaf",
+      "description": "Vajas, puha Baldo rizs pilaf."
+    },
+    "firin-sutlac": {
+      "name": "Sült rizspuding",
+      "description": "Tradicionális módon sütött rizspuding, napi bivaly tejjel készítve."
+    },
+    "kuru-fasulye": {
+      "name": "Fehérbab pörkölt marhahússal",
+      "description": "İspir bab, felkockázott marhahús és egyszerű éttermi paradicsompüré."
+    },
+    "izgara-kofte": {
+      "name": "Grillezett húsgolyók",
+      "description": "Hentes stílusú marhahúsgolyók sült paprikával és paradicsommal."
+    },
+    "ayran": {
+      "name": "Kavart Ayran",
+      "description": "Hagyományos, kavart író sok habbal, mindennapi joghurtból készítve."
+    },
+    "ezogelin-corbasi": {
+      "name": "Ezogelin leves",
+      "description": "Egy hagyományos éttermi leves, ahol a vöröslencse, bulgur és rizs találkozik a mentával."
+    },
+    "tarhana-corbasi": {
+      "name": "Tarhana leves",
+      "description": "Házi tarhana, egy anatóliai klasszikus lassan főzve paradicsommal és szárított mentával."
+    },
+    "yayla-corbasi": {
+      "name": "Joghurtos és Rizsleves",
+      "description": "Frissítő és krémes yayla leves, joghurttal, rizzsel és szárított mentával készítve."
+    },
+    "iskembe-corbasi": {
+      "name": "Pacalleves",
+      "description": "Hagyományos marhapacal leves a hozzá való fűszerezéssel és fokhagymás ecettel tálalva."
+    },
+    "dugun-corbasi": {
+      "name": "Esküvői leves",
+      "description": "Hagyományos esküvői leves reszelt bárányhússal, citromos pác ízesítéssel."
+    },
+    "tavuk-suyu-corbasi": {
+      "name": "Csirkehúsleves",
+      "description": "Gyógyító leves vékony tésztával, csontlevesben főzve és reszelt csirkehússal."
+    },
+    "domates-corbasi": {
+      "name": "Paradicsomleves",
+      "description": "Gazdag íz, mely érett paradicsommal, vajjal és bazsalikommal főzve, sajttal kiegészítve készül."
+    },
+    "sebze-corbasi": {
+      "name": "Zöldségleves",
+      "description": "Enyhe éttermi leves, szezonális zöldségekkel, olívaolajjal és friss fűszernövényekkel készítve."
+    },
+    "beyran-corbasi": {
+      "name": "Fűszeres Bárány Beyran Leves",
+      "description": "Regionális leves, melyet erős tűzön készítenek báránnyal, rizzsel, fokhagymával és csípős paprikával."
+    },
+    "kelle-paca-corbasi": {
+      "name": "Fej és Csülök Leves",
+      "description": "Gazdag csontleves, melyet marhacsülökkel és fejhússal hosszan főzve készítenek."
+    },
+    "sehriye-corbasi": {
+      "name": "Vermicelli leves",
+      "description": "Napi leves csirkehús alapléből, paradicsommal, vermicellivel és petrezselyemmel."
+    },
+    "tavuk-sis": {
+      "name": "Csirke nyársak",
+      "description": "Csirkehús darabok, különleges fűszerekkel pácolva, sült paprikával és paradicsommal tálalva."
+    },
+    "kasap-sucuk": {
+      "name": "Grillezett hentessel készített sucuk",
+      "description": "Fűszeres marhahús kolbász faszénen sütve, sült zöldségekkel és sumakos hagymával."
+    },
+    "karisik-izgara": {
+      "name": "Vegyes grill",
+      "description": "Bőséges és válogatott grilltál, mely húsgolyókat, csirke nyársakat, báránybordát és kolbászt tartalmaz."
+    },
+    "nohut-yemegi": {
+      "name": "Csicseriborsó pörkölt marhahússal",
+      "description": "Házi készítésű étel csicseriborsóból és kockára vágott marhahúsból, lassan rézüstben főzve."
+    },
+    "patlican-musakka": {
+      "name": "Padlizsános Moussaka",
+      "description": "Rántott padlizsán, darált marhahús és moussaka, paradicsomszósszal sütve, éttermi stílusban."
+    },
+    "zeytinyagli-taze-fasulye": {
+      "name": "Zöldbab olívaolajban",
+      "description": "Hagyományos étel olívaolajban főzve zöldbabbal, paradicsommal és hagymával, hidegen tálalva."
+    },
+    "tavuk-sote": {
+      "name": "Rántott csirke",
+      "description": "Csirkehúsdarabok magas hőfokon pirítva színes paprikával, gombával és paradicsommal."
+    },
+    "izmir-kofte": {
+      "name": "İzmir-stílusú húsgombócok",
+      "description": "Hagyományos főétel marhahúsgombóccal, burgonyával és paprikával, paradicsomszószban sütve."
+    },
+    "etli-bezelye": {
+      "name": "Borsó marhával",
+      "description": "Napi étel fazékban főzve kockára vágott marhahússal, borsóval, sárgarépával és burgonyával."
+    },
+    "patlican-oturtma": {
+      "name": "Sült padlizsán darált hússal",
+      "description": "A nyelvet a sütőben készítik padlizsánnal, fűszeres darált hússal és fokhagymás paradicsomszósszal."
+    },
+    "salgam-suyu": {
+      "name": "Erjesztett torma lé",
+      "description": "Hagyományos, fűszeres torma lé, amelyet lila répával és bulgur élesztővel erjesztenek."
+    },
+    "maden-suyu": {
+      "name": "Ásványvíz",
+      "description": "Természetes, szénsavmentes ásványvíz, hidegen tálalva."
+    },
+    "su": {
+      "name": "Természetes forrásvíz",
+      "description": "Természetes forrásvíz, hidegen, üveges kiszerelésben tálalva."
+    },
+    "kola": {
+      "name": "Kóla",
+      "description": "Egy klasszikus szénsavas ital, jéghidegen tálalva."
+    },
+    "gazoz": {
+      "name": "Török citromszóda",
+      "description": "Hagyományos ízesítésű, frissítő, hidegen tálalt natúr szódavíz."
+    },
+    "turk-kahvesi": {
+      "name": "Török kávé",
+      "description": "Hagyományos török kávé habbal, magas hőfokon réz cezvében főzve."
+    },
+    "demleme-cay": {
+      "name": "Török főzött tea",
+      "description": "Frissen főzött, forró Rize tea keskeny üvegben tálalva."
+    },
+    "ev-yapimi-limonata": {
+      "name": "Házi limonádé",
+      "description": "Frissítő limonádé, amelyet naponta készítenek friss citrommal, mentával és egy kevés cukorral."
+    },
+    "hosaf": {
+      "name": "Napi gyümölcskompót",
+      "description": "Házi kompót, amelyet naponta főznek mazsolával, sárgabarackkal vagy szilvával, az évszaknak megfelelően."
+    },
+    "iskender-kebabi": {
+      "name": "Bursa İskender Kebab",
+      "description": "A húst nyárson forgatják pide fölött, paradicsomszósszal, forró vajjal és joghurttal tálalva."
+    },
+    "kazandibi": {
+      "name": "Karamellizált tejpuding",
+      "description": "Egy hagyományos tejdesszert, amelyet megfelelően karamellizálnak, selymes állagú."
+    },
+    "tavuk-gogsu": {
+      "name": "Oszmán tejpuding",
+      "description": "Egy könnyű és rostos tejdesszert, hagyományos recept alapján készítve, fahéjjal tálalva."
+    },
+    "keskul": {
+      "name": "Mandulatejes puding",
+      "description": "Oszmán stílusú tejdesszert, mandulaízzel és kókuszdióval kiegészítve."
+    },
+    "irmik-helvasi": {
+      "name": "Gríz halva",
+      "description": "Gríz halva, vajjal és fenyőmaggal megpirítva, forrón és szemcsésen tálalva."
+    },
+    "kabak-tatlisi": {
+      "name": "Sütőtökös desszert tahinivel",
+      "description": "A sütőtök lassan a saját levében főzve, tahinivel és dióval tálalva."
+    },
+    "ayva-tatlisi": {
+      "name": "Birsalmás desszert",
+      "description": "A szegfűszeggel és fahéjjal főzött birsalma túróval és dióval tálalva."
+    },
+    "revani": {
+      "name": "Grízsütemény sziruppal",
+      "description": "A klasszikus éttermi desszert, ahol a lágy grízes sütemény találkozik a citromos sziruppal."
+    },
+    "ekmek-kadayifi": {
+      "name": "Kenyeres puding tejszínnel",
+      "description": "A karamellizált sziruppal pihentetett kenyérpuding bivalytejszínnel tálalva."
+    },
+    "cevizli-baklava": {
+      "name": "Diós baklava",
+      "description": "Réteges, nagyon vékonyra nyújtott, ropogós baklava sok dióval és sima vajjal."
+    }
+  },
+  "allergens": {
+    "Süt ürünleri": "Tejtermék",
+    "Gluten": "Glutén",
+    "Yumurta": "Tojás",
+    "Badem": "Mandula",
+    "Çam fıstığı": "Fenyőmag",
+    "Susam": "Szezám",
+    "Ceviz": "Dió"
+  },
+  "tags": {
+    "Popüler": "Népszerű",
+    "Vejetaryen": "Vegetáriánus",
+    "Günün Yemeği": "Nap étele",
+    "Şefin Önerisi": "Séf ajánlata",
+    "Yeni": "Új",
+    "Acılı": "Csípős",
+    "Ev Yapımı": "Házi készítésű",
+    "Lokanta Klasiği": "Éttermi klasszikus",
+    "Günün Çorbası": "Nap leves",
+    "Vegan": "Vegán",
+    "Hafif": "Könnyű",
+    "Yöresel": "Helyi",
+    "Paylaşmalık": "Megosztható",
+    "Ev Yemeği": "Otthoni stílusú",
+    "Zeytinyağlı": "Olívaolaj",
+    "Nostaljik": "Nostalgikus",
+    "Geleneksel": "Hagyományos",
+    "Bursa Lezzeti": "Bursa Íze",
+    "Sütlü Tatlı": "Tejes desszert",
+    "Sıcak Tatlı": "Meleg desszert",
+    "Mevsimlik": "Idényjellegű",
+    "Şerbetli": "Szirupos desszert"
+  }
+}
