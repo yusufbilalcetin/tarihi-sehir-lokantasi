@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import { BottomNavigation, type MenuTab } from "@/components/menu/bottom-navigation";
 import { CartItem } from "@/components/menu/cart-item";
 import { CategoryGrid, type MenuCategory } from "@/components/menu/category-grid";
+import { CurrencySelector } from "@/components/menu/currency-selector";
 import { MenuPreferencesProvider, useMenuPreferences } from "@/components/menu/menu-preferences-provider";
 import { OrderStatusTimeline } from "@/components/menu/order-status-timeline";
 import { ProductCard } from "@/components/menu/product-card";
@@ -16,7 +17,7 @@ import { SplashIntro } from "@/components/menu/splash-intro";
 import { EmptyState } from "@/components/shared/empty-state";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Sheet, SheetClose, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/ui/sheet";
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { categories, products } from "@/lib/mock-data";
 import { getMenuCategoryName, getMenuProductDescription, getMenuProductName } from "@/lib/i18n/menu-content";
 import type { MenuTranslationKey } from "@/lib/i18n/menu-translations";
@@ -67,6 +68,21 @@ function currentHistoryState() {
 function currentHistoryView(): MenuHistoryView | undefined {
   const view = currentHistoryState()[MENU_VIEW_KEY];
   return view === "categories" || view === "products" || view === "detail" ? view : undefined;
+}
+
+function OrderCurrencyPanel({ amount }: { amount: number }) {
+  const { currency, formatPrice, t } = useMenuPreferences();
+
+  return (
+    <div className="mt-4 border-t pt-4 text-center">
+      <p className="text-xs font-semibold text-muted-foreground">{t("currencyLabel")}</p>
+      <div className="mt-2 flex justify-center"><CurrencySelector variant="surface" /></div>
+      <p className="mt-3 text-sm text-muted-foreground">
+        {t("total")}: <strong dir="ltr" className="ms-1 text-base tabular-nums text-burgundy">{formatPrice(amount)}</strong>
+      </p>
+      {currency !== "TRY" ? <p className="mx-auto mt-2 max-w-md text-[11px] leading-5 text-muted-foreground">{t("approximateCurrency")}</p> : null}
+    </div>
+  );
 }
 
 export function MenuExperience() {
@@ -393,7 +409,7 @@ function MenuExperienceContent() {
         {activeTab === "menu" ? (
           <>
             <RestaurantHeader tableName={tableName} />
-            <main className="mx-auto max-w-5xl px-4 pb-6 pt-5 sm:px-6">
+            <main className="menu-shell pb-6 pt-5">
               <div className={cn("relative", !activeCategory && !hasSearch && "mx-auto max-w-3xl")}>
                 <Search className="pointer-events-none absolute start-3.5 top-1/2 size-5 -translate-y-1/2 text-muted-foreground" />
                 <Input value={search} onChange={(event) => handleSearchChange(event.target.value)} placeholder={t("search")} aria-label={t("searchLabel")} className="h-12 rounded-2xl border-border bg-card ps-11 pe-4 text-base shadow-sm placeholder:text-muted-foreground/70" />
@@ -405,9 +421,9 @@ function MenuExperienceContent() {
               ) : null}
               {!activeCategory && !hasSearch ? (
                 <section className="mx-auto w-full max-w-3xl pt-6" aria-labelledby="category-heading">
-                  <div className="mb-4">
+                  <div className="mb-5 text-center">
                     <h1 ref={categoryHeadingRef} id="category-heading" tabIndex={-1} className="font-heading text-2xl font-semibold outline-none sm:text-3xl">{t("categories")}</h1>
-                    <p className="mt-1 text-sm leading-6 text-[#70665C]">{t("categoryIntro")}</p>
+                    <p className="mx-auto mt-1 max-w-xl text-sm leading-6 text-[#70665C]">{t("categoryIntro")}</p>
                   </div>
                   <CategoryGrid categories={menuCategories} onSelect={selectCategory} />
                 </section>
@@ -417,15 +433,15 @@ function MenuExperienceContent() {
                     <ChevronLeft className={cn("size-4", direction === "rtl" && "rotate-180")} aria-hidden="true" />
                     {hasSearch && activeCategory ? t("backToCategory", { name: selectedCategoryName }) : t("backToCategories")}
                   </button>
-                  <div className="mb-4 mt-2 flex items-end justify-between gap-3">
-                    <div>
+                  <div className="mb-5 mt-2 grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-end gap-3 text-center">
+                    <div className="col-start-2">
                       <h1 ref={productHeadingRef} id="product-list-heading" tabIndex={-1} className="font-heading text-2xl font-semibold outline-none sm:text-3xl">{hasSearch ? t("searchResults") : selectedCategoryName}</h1>
                       <p className="mt-1 text-xs text-[#70665C]" role="status" aria-live="polite">{hasSearch ? t("productsFound", { count: filteredProducts.length }) : t("itemCount", { count: selectedCategory?.productCount ?? filteredProducts.length })}</p>
                     </div>
-                    {hasSearch ? <button type="button" onClick={clearSearch} className="min-h-11 shrink-0 text-sm font-semibold text-burgundy">{t("clearSearch")}</button> : null}
+                    {hasSearch ? <button type="button" onClick={clearSearch} className="col-start-3 min-h-11 justify-self-end text-sm font-semibold text-burgundy">{t("clearSearch")}</button> : null}
                   </div>
                   {filteredProducts.length ? (
-                    <div className="grid gap-3 lg:grid-cols-2">{filteredProducts.map((product) => <ProductCard key={product.id} product={product} onOpen={() => openProduct(product)} onAdd={() => addToCart(product)} />)}</div>
+                    <div className="grid gap-[var(--menu-grid-gap)] lg:grid-cols-2">{filteredProducts.map((product) => <ProductCard key={product.id} product={product} onOpen={() => openProduct(product)} onAdd={() => addToCart(product)} />)}</div>
                   ) : <EmptyState icon={UtensilsCrossed} title={t("noResults")} description={t("noResultsDescription")} />}
                 </section>
               )}
@@ -434,8 +450,8 @@ function MenuExperienceContent() {
         ) : null}
 
         {activeTab === "order" ? (
-          <main className="mx-auto max-w-2xl px-4 pb-8 pt-[max(1.5rem,env(safe-area-inset-top))] sm:px-6">
-            <div className="flex items-center gap-3"><button type="button" onClick={openCategoryHome} className="touch-target -ms-2 flex items-center justify-center rounded-xl" aria-label={t("backToCategories")}><ChevronLeft className={cn(direction === "rtl" && "rotate-180")} /></button><div><h1 className="font-heading text-3xl font-semibold">{t("order")}</h1><p className="text-sm text-muted-foreground">{tableName}</p></div></div>
+          <main className="menu-shell menu-shell-narrow pb-8 pt-[max(1.5rem,env(safe-area-inset-top))]">
+            <div className="relative flex min-h-12 items-center justify-center px-12 text-center"><button type="button" onClick={openCategoryHome} className="touch-target absolute start-0 flex items-center justify-center rounded-xl" aria-label={t("backToCategories")}><ChevronLeft className={cn(direction === "rtl" && "rotate-180")} /></button><div><h1 className="font-heading text-3xl font-semibold">{t("order")}</h1><p className="text-sm text-muted-foreground">{tableName}</p></div></div>
             {orderSent ? (
               <section className="mt-6 rounded-3xl border bg-card p-5 surface-shadow sm:p-6">
                 <div className="flex size-12 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-700"><CheckCircle2 className="size-6" /></div>
@@ -443,6 +459,7 @@ function MenuExperienceContent() {
                 <p className="mt-1 text-sm leading-6 text-muted-foreground">{t("orderTracking", { number: 2420 })}</p>
                 <OrderStatusTimeline currentStep={2} />
                 <div className="mt-5 border-t pt-4"><div className="flex justify-between text-sm text-muted-foreground"><span>{t("total")}</span><strong dir="ltr" className="text-lg text-burgundy">{formatPrice(submittedTotal)}</strong></div></div>
+                <OrderCurrencyPanel amount={submittedTotal} />
                 <Button type="button" variant="outline" onClick={() => { setOrderSent(false); openCategoryHome(); }} className="mt-4 h-11 w-full rounded-xl">{t("newItem")}</Button>
               </section>
             ) : cart.length ? (
@@ -450,16 +467,16 @@ function MenuExperienceContent() {
                 <div className="mt-6 space-y-3">{cart.map((item) => <CartItem key={item.id} item={item} onDecrease={() => updateQuantity(item.id, -1)} onIncrease={() => updateQuantity(item.id, 1)} onRemove={() => setCart((current) => current.filter((cartItem) => cartItem.id !== item.id))} />)}</div>
                 <section className="mt-5 rounded-2xl border bg-card p-5">
                   <dl className="space-y-3 text-sm"><div className="flex justify-between text-muted-foreground"><dt>{t("subtotal")}</dt><dd dir="ltr">{formatPrice(subtotal)}</dd></div><div className="flex justify-between text-muted-foreground"><dt>{t("serviceFee")}</dt><dd dir="ltr">{formatPrice(0)}</dd></div><div className="flex justify-between border-t pt-3 text-base font-bold"><dt>{t("total")}</dt><dd dir="ltr" className="text-burgundy">{formatPrice(subtotal)}</dd></div></dl>
+                  <OrderCurrencyPanel amount={subtotal} />
                   <Button type="button" onClick={sendOrder} className="mt-5 h-12 w-full rounded-xl text-sm font-bold"><Send className="size-4" /> {t("sendOrder")}</Button>
                 </section>
-                {currency !== "TRY" ? <p className="mt-3 text-center text-xs leading-5 text-muted-foreground">{t("approximateCurrency")}</p> : null}
               </>
             ) : <div className="mt-6"><EmptyState icon={ShoppingBag} title={t("emptyCart")} description={t("emptyCartDescription")} /><Button type="button" onClick={openCategoryHome} className="mt-4 h-11 w-full rounded-xl">{t("browseMenu")}</Button></div>}
           </main>
         ) : null}
 
         {activeTab === "bill" ? (
-          <main className="mx-auto flex min-h-[calc(100dvh-5rem)] max-w-xl items-center px-4 py-8 sm:px-6">
+          <main className="menu-shell menu-shell-narrow flex min-h-[calc(100dvh-5rem)] items-center py-8">
             <section className="w-full rounded-3xl border bg-card p-6 text-center surface-shadow sm:p-8">
               <div className="mx-auto flex size-14 items-center justify-center rounded-2xl bg-burgundy/8 text-burgundy">{billRequested ? <CircleCheck className="size-7" /> : <ReceiptText className="size-7" />}</div>
               <h1 className="mt-5 font-heading text-2xl font-semibold">{billRequested ? t("billSent") : t("billConfirm")}</h1>
@@ -472,16 +489,16 @@ function MenuExperienceContent() {
 
       <ProductDetailSheet key={selectedProduct?.id ?? "none"} product={selectedProduct} open={Boolean(selectedProduct)} onOpenChange={(open) => { if (!open) closeProduct(); }} onAdd={addToCart} />
 
-      <Sheet open={waiterOpen} onOpenChange={setWaiterOpen}>
-        <SheetContent dir={direction} side="bottom" showCloseButton={false} className="mx-auto max-h-[88dvh] w-full overflow-y-auto rounded-t-3xl p-0 sm:max-w-xl">
-          <SheetClose className="absolute end-3 top-3 z-10 inline-flex size-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+      <Dialog open={waiterOpen} onOpenChange={setWaiterOpen}>
+        <DialogContent dir={direction} showCloseButton={false} className="menu-dialog-scroll flex max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] max-w-xl flex-col gap-0 overflow-y-auto rounded-3xl border-border p-0 sm:max-w-xl">
+          <DialogClose className="absolute end-4 top-4 z-10 inline-flex size-10 items-center justify-center rounded-xl text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
             <X className="size-4" aria-hidden="true" />
             <span className="sr-only">{t("close")}</span>
-          </SheetClose>
-          <SheetHeader className="px-5 pb-2 pe-14 pt-6 text-start"><div className="mb-2 flex size-11 items-center justify-center rounded-2xl bg-burgundy/8 text-burgundy"><BellRing className="size-5" /></div><SheetTitle className="font-heading text-2xl font-semibold">{t("waiterHelpTitle")}</SheetTitle><SheetDescription>{t("waiterHelpDescription", { table: tableName })}</SheetDescription></SheetHeader>
-          <div className="space-y-2 px-5 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-3">{waiterOptions.map((option) => <button key={option.type} type="button" onClick={() => sendWaiterCall(option.type)} className="flex min-h-16 w-full items-center justify-between rounded-2xl border bg-card px-4 py-3 text-start transition-colors hover:border-copper focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"><span><span className="block text-sm font-bold">{t(option.titleKey)}</span><span className="mt-0.5 block text-xs text-muted-foreground">{t(option.descriptionKey)}</span></span><ChevronLeft className={cn("size-4 text-muted-foreground", direction === "ltr" && "rotate-180")} /></button>)}</div>
-        </SheetContent>
-      </Sheet>
+          </DialogClose>
+          <DialogHeader className="items-center px-14 pb-4 pt-6 text-center sm:px-16"><div className="mb-1 flex size-11 items-center justify-center rounded-2xl bg-burgundy/8 text-burgundy"><BellRing className="size-5" /></div><DialogTitle className="font-heading text-2xl font-semibold">{t("waiterHelpTitle")}</DialogTitle><DialogDescription className="mx-auto max-w-md">{t("waiterHelpDescription", { table: tableName })}</DialogDescription></DialogHeader>
+          <div className="grid grid-cols-1 gap-3 border-t px-5 py-5 sm:grid-cols-2 sm:px-6">{waiterOptions.map((option) => <button key={option.type} type="button" onClick={() => sendWaiterCall(option.type)} className="grid min-h-20 w-full grid-cols-[minmax(0,1fr)_1rem] items-center gap-3 rounded-2xl border bg-card px-4 py-3 text-start transition-colors hover:border-copper focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"><span><span className="block text-sm font-bold">{t(option.titleKey)}</span><span className="mt-0.5 block text-xs leading-5 text-muted-foreground">{t(option.descriptionKey)}</span></span><ChevronLeft className={cn("size-4 text-muted-foreground", direction === "ltr" && "rotate-180")} /></button>)}</div>
+        </DialogContent>
+      </Dialog>
 
       {introComplete && preferencesReady ? <BottomNavigation active={activeTab} cartCount={cartCount} onChange={handleTabChange} /> : null}
     </>

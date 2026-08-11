@@ -9,7 +9,7 @@ export function CartItem({ item, onDecrease, onIncrease, onRemove }: { item: Car
   const name = getMenuProductName(item.product, language);
 
   return (
-    <article className="grid grid-cols-[4.5rem_1fr] gap-3 rounded-2xl border bg-card p-3 shadow-[0_8px_26px_rgba(104,31,37,0.04)] sm:grid-cols-[5.5rem_1fr]">
+    <article className="grid grid-cols-[4.5rem_minmax(0,1fr)] gap-[var(--menu-grid-gap)] rounded-[var(--menu-card-radius)] border bg-card p-[var(--menu-card-padding)] shadow-[0_8px_26px_rgba(104,31,37,0.04)] sm:grid-cols-[5.5rem_minmax(0,1fr)]">
       <div className="relative aspect-square overflow-hidden rounded-xl bg-muted"><Image src={item.product.image} alt={name} fill sizes="88px" className="object-cover" /></div>
       <div className="min-w-0">
         <div className="flex items-start justify-between gap-2">

@@ -109,6 +109,50 @@
     min-height: 44px;
     min-width: 44px;
   }
+
+  .menu-shell {
+    width: min(calc(100% - (2 * var(--menu-gutter))), 64rem);
+    margin-inline: auto;
+  }
+
+  .menu-shell-narrow {
+    max-width: 42rem;
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #A77E3E #F1E6D4;
+  }
+
+  *::-webkit-scrollbar {
+    width: 9px;
+    height: 9px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: #F1E6D4;
+  }
+
+  *::-webkit-scrollbar-button {
+    width: 0;
+    height: 0;
+    display: none;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    min-height: 48px;
+    border: 2px solid #F1E6D4;
+    border-radius: 999px;
+    background: #A77E3E;
+  }
+
+  *::-webkit-scrollbar-thumb:hover {
+    background: #835F2D;
+  }
+
+  *::-webkit-scrollbar-corner {
+    background: #F1E6D4;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -145,6 +189,12 @@
 }
 
 .menu-content {
+  --menu-gutter: clamp(1rem, 4vw, 1.5rem);
+  --menu-grid-gap: clamp(0.75rem, 2.5vw, 1rem);
+  --menu-card-padding: clamp(0.875rem, 2.5vw, 1rem);
+  --menu-section-gap: clamp(1.25rem, 4vw, 1.75rem);
+  --menu-control-height: 3rem;
+  --menu-card-radius: 1rem;
   min-height: 100dvh;
   background: var(--background);
   opacity: 0;

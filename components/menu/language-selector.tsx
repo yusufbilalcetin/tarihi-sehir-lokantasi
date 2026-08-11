@@ -79,7 +79,7 @@ function LanguageSection({
   if (languages.length === 0) return null;
   return (
     <section aria-labelledby={`language-section-${title.replaceAll(" ", "-")}`} className="space-y-1.5">
-      <h3 id={`language-section-${title.replaceAll(" ", "-")}`} className="px-3 pt-3 text-xs font-extrabold uppercase tracking-[0.12em] text-burgundy">
+      <h3 id={`language-section-${title.replaceAll(" ", "-")}`} className="px-3 pt-3 text-center text-xs font-extrabold uppercase tracking-[0.12em] text-burgundy">
         {title}
       </h3>
       <div className="grid grid-cols-1 gap-0.5 sm:grid-cols-2">
@@ -135,21 +135,20 @@ export function LanguageSelector() {
         dir={direction}
         showCloseButton={false}
         initialFocus={searchInputRef}
-        className="bottom-0 left-0 top-auto flex max-h-[92dvh] w-full max-w-none translate-x-0 translate-y-0 flex-col gap-0 overflow-hidden rounded-b-none rounded-t-[28px] border border-[#D8C7AF] bg-[#F8F0E4] p-0 text-[#292D25] shadow-[0_-20px_60px_rgba(24,30,23,0.24)] sm:bottom-auto sm:left-1/2 sm:top-1/2 sm:max-h-[82dvh] sm:max-w-[600px] sm:-translate-x-1/2 sm:-translate-y-1/2 sm:rounded-[24px]"
+        className="flex max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] max-w-[600px] flex-col gap-0 overflow-hidden rounded-[24px] border border-[#D8C7AF] bg-[#F8F0E4] p-0 text-[#292D25] shadow-[0_24px_70px_rgba(24,30,23,0.24)] sm:max-h-[82dvh] sm:max-w-[600px]"
       >
-        <div className="mx-auto mt-2 h-1 w-11 rounded-full bg-[#B9AA96] sm:hidden" aria-hidden="true" />
-        <DialogHeader className="relative gap-1 px-5 pb-4 pt-4 pe-14 sm:px-6 sm:pt-6">
+        <DialogHeader className="relative items-center gap-1 px-14 pb-4 pt-5 text-center sm:px-16 sm:pt-6">
           <DialogTitle className="font-heading text-2xl font-semibold text-[#292D25]">{t("languagePickerTitle")}</DialogTitle>
-          <DialogDescription className="max-w-md text-sm leading-5 text-[#70665C]">{t("languagePickerDescription")}</DialogDescription>
+          <DialogDescription className="mx-auto max-w-md text-sm leading-5 text-[#70665C]">{t("languagePickerDescription")}</DialogDescription>
           <DialogClose
             aria-label={t("close")}
-            className="absolute end-4 top-3 inline-flex size-10 items-center justify-center rounded-full text-[#5E584F] outline-none transition-colors hover:bg-[#E9DDCA] focus-visible:ring-2 focus-visible:ring-burgundy sm:top-5"
+            className="absolute end-4 top-4 inline-flex size-10 items-center justify-center rounded-full text-[#5E584F] outline-none transition-colors hover:bg-[#E9DDCA] focus-visible:ring-2 focus-visible:ring-burgundy"
           >
             <X className="size-5" aria-hidden="true" />
           </DialogClose>
         </DialogHeader>
 
-        <div className="sticky top-0 z-10 border-y border-[#DFD1BD] bg-[#F8F0E4]/96 px-4 py-3 backdrop-blur-sm sm:px-6">
+        <div className="sticky top-0 z-10 border-y border-[#DFD1BD] bg-[#F8F0E4]/96 px-5 py-3 backdrop-blur-sm sm:px-6">
           <label className="relative block">
             <span className="sr-only">{t("searchLanguage")}</span>
             <Search className="pointer-events-none absolute start-3.5 top-1/2 size-5 -translate-y-1/2 text-burgundy" aria-hidden="true" />
@@ -173,7 +172,7 @@ export function LanguageSelector() {
         <p className="sr-only" aria-live="polite">{query ? `${searchResults.length} ${t("items")}` : ""}</p>
         {languageLoading ? <p className="px-6 py-2 text-sm font-semibold text-burgundy" role="status">{t("loadingLanguage")}</p> : null}
         {loadError ? <p className="px-6 py-2 text-sm font-semibold text-destructive" role="alert">{t("languageLoadError")}</p> : null}
-        <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-2 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-1 sm:px-3">
+        <div className="menu-dialog-scroll min-h-0 flex-1 overflow-y-auto overscroll-contain px-3 pb-5 pt-1 sm:px-4">
           {query ? (
             searchResults.length > 0 ? (
               <LanguageSection title={t("allLanguages")} languages={searchResults} selectedLanguage={language} disabled={languageLoading} onSelect={selectLanguage} />

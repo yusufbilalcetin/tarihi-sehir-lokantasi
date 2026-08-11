@@ -10,7 +10,7 @@ export function RestaurantHeader({ tableName }: { tableName: string }) {
   const { t } = useMenuPreferences();
 
   return (
-    <header className="overflow-hidden rounded-b-[2rem] bg-[#17130F] px-4 pb-6 pt-[max(1.25rem,env(safe-area-inset-top))] text-[#FFFDF8] shadow-[0_22px_60px_rgba(37,33,29,0.18)] sm:px-6 sm:pb-8">
+    <header className="overflow-hidden rounded-b-[2rem] bg-[#17130F] px-[var(--menu-gutter)] pb-6 pt-[max(1.25rem,env(safe-area-inset-top))] text-[#FFFDF8] shadow-[0_22px_60px_rgba(37,33,29,0.18)] sm:pb-8">
       <div className="mx-auto max-w-5xl">
         <BrandMark className="mx-auto max-w-xl" />
         <p className="mt-2 text-center font-heading text-xs tracking-[0.16em] text-[#F5EBDD]/65 sm:text-sm">
@@ -30,7 +30,7 @@ export function RestaurantHeader({ tableName }: { tableName: string }) {
             {t("serviceOpen")}
           </div>
         </div>
-        <div className="mt-3 flex min-w-0 items-center justify-end gap-2">
+        <div className="mt-3 flex min-w-0 items-center justify-center gap-2">
           <LanguageSelector />
           <CurrencySelector />
         </div>

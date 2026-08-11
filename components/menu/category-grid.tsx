@@ -19,7 +19,7 @@ export function CategoryGrid({ categories, onSelect }: CategoryGridProps) {
 
   return (
     <nav aria-label={t("categoryNavigation")}>
-      <ul className="grid grid-cols-2 gap-3 sm:gap-4">
+      <ul className="grid grid-cols-2 gap-[var(--menu-grid-gap)]">
         {categories.map((category) => {
           const categoryName = getMenuCategoryName(category, language);
           return (
@@ -30,7 +30,7 @@ export function CategoryGrid({ categories, onSelect }: CategoryGridProps) {
               disabled={!category.active}
               onClick={() => onSelect(category)}
               aria-label={t("openCategory", { name: categoryName, count: category.productCount })}
-              className="group w-full overflow-hidden rounded-2xl border border-border bg-card text-start shadow-[0_12px_32px_rgba(104,31,37,0.055)] transition-[transform,border-color,box-shadow] duration-200 hover:border-copper/70 hover:shadow-[0_16px_36px_rgba(104,31,37,0.09)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-cream active:scale-[0.985] disabled:cursor-not-allowed disabled:opacity-50 motion-reduce:transition-none"
+              className="group h-full w-full overflow-hidden rounded-[var(--menu-card-radius)] border border-border bg-card text-start shadow-[0_12px_32px_rgba(104,31,37,0.055)] transition-[transform,border-color,box-shadow] duration-200 hover:border-copper/70 hover:shadow-[0_16px_36px_rgba(104,31,37,0.09)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-cream active:scale-[0.985] disabled:cursor-not-allowed disabled:opacity-50 motion-reduce:transition-none"
             >
               <span className="relative block aspect-[4/3] overflow-hidden bg-muted">
                 <Image
@@ -42,7 +42,7 @@ export function CategoryGrid({ categories, onSelect }: CategoryGridProps) {
                 />
               </span>
 
-              <span className="block min-h-20 px-3 py-3 sm:min-h-24 sm:px-4 sm:py-4">
+              <span className="block min-h-24 p-[var(--menu-card-padding)]">
                 <span className="block font-heading text-base font-semibold leading-tight text-foreground sm:text-lg">
                   {categoryName}
                 </span>

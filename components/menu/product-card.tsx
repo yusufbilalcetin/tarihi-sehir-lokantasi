@@ -13,13 +13,13 @@ export function ProductCard({ product, onOpen, onAdd }: { product: Product; onOp
   const description = getMenuProductDescription(product, language);
 
   return (
-    <article className="group relative grid min-h-44 grid-cols-[7.75rem_1fr] overflow-hidden rounded-2xl border bg-card shadow-[0_12px_32px_rgba(104,31,37,0.055)] sm:grid-cols-[10rem_1fr]">
+    <article className="group relative grid min-h-44 grid-cols-[7.75rem_minmax(0,1fr)] overflow-hidden rounded-[var(--menu-card-radius)] border bg-card shadow-[0_12px_32px_rgba(104,31,37,0.055)] sm:grid-cols-[10rem_minmax(0,1fr)]">
       <button type="button" onClick={onOpen} className="absolute inset-0 z-[1] rounded-2xl text-start focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring" aria-label={t("productDetails", { name })} />
       <div className="pointer-events-none relative overflow-hidden">
         <Image src={product.image} alt={name} fill sizes="(max-width: 640px) 124px, 160px" className={`object-cover transition-transform duration-300 group-hover:scale-[1.025] ${soldOut ? "grayscale-[0.55]" : ""}`} />
         {soldOut ? <div className="absolute inset-0 bg-[#25211D]/25" /> : null}
       </div>
-      <div className="pointer-events-none relative flex min-w-0 flex-col p-3.5 sm:p-4">
+      <div className="pointer-events-none relative flex min-w-0 flex-col p-[var(--menu-card-padding)]">
         <div>
           <div className="flex flex-wrap gap-1.5">
             {product.tags.slice(0, 2).map((tag) => <Badge key={tag} variant="outline" className="border-copper/35 bg-copper/10 px-1.5 py-0 text-[10px] font-semibold text-burgundy">{getMenuTag(tag, language)}</Badge>)}
