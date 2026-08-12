@@ -80,7 +80,7 @@ export function CurrencySelector({ variant = "header" }: { variant?: "header" | 
       <DialogTrigger
         aria-label={t("currencyLabel")}
         className={cn(
-          "inline-flex h-10 min-w-0 items-center justify-center gap-1.5 rounded-xl px-3 text-xs font-bold outline-none transition-colors focus-visible:ring-2 focus-visible:ring-copper",
+          "motion-press motion-ripple motion-hover inline-flex h-10 min-w-0 items-center justify-center gap-1.5 rounded-xl px-3 text-xs font-bold outline-none focus-visible:ring-2 focus-visible:ring-copper",
           variant === "header"
             ? "border border-white/15 bg-white/[0.07] text-[#FFFDF8] hover:bg-white/[0.12]"
             : "min-w-28 border border-[#DCCBB7] bg-[#FFFDF8] text-foreground shadow-sm hover:border-copper/70 hover:bg-[#F9F1E6]",
@@ -123,7 +123,7 @@ export function CurrencySelector({ variant = "header" }: { variant?: "header" | 
                     aria-selected={isSelected}
                     onClick={() => selectCurrency(option.id)}
                     className={cn(
-                      "grid min-h-16 w-full grid-cols-[3.5rem_minmax(0,1fr)_1.5rem] items-center gap-3 rounded-2xl border px-3 py-2.5 text-start outline-none transition-colors focus-visible:ring-2 focus-visible:ring-burgundy focus-visible:ring-offset-2 focus-visible:ring-offset-[#F8F0E4]",
+                      "motion-press motion-ripple motion-hover grid min-h-16 w-full grid-cols-[3.5rem_minmax(0,1fr)_1.5rem] items-center gap-3 rounded-2xl border px-3 py-2.5 text-start outline-none focus-visible:ring-2 focus-visible:ring-burgundy focus-visible:ring-offset-2 focus-visible:ring-offset-[#F8F0E4]",
                       isSelected
                         ? "border-burgundy/45 bg-[#EDE0CD]"
                         : "border-[#DED0BC] bg-[#FFFDF8] hover:border-copper/70 hover:bg-[#F7EEDF]",

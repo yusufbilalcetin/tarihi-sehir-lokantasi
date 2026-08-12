@@ -19,7 +19,7 @@ export function LanguageFlag({ language, size = "md", className }: LanguageFlagP
       className={cn("inline-flex shrink-0 items-center justify-center", dimensions, className)}
       aria-hidden="true"
     >
-      {platform === "desktop" && language.flag.countryCode ? (
+      {platform === "windows" && language.flag.countryCode ? (
         // Local SVGs keep desktop flags consistent without preloading the full set.
         // eslint-disable-next-line @next/next/no-img-element
         <img

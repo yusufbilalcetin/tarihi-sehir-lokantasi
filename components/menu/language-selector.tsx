@@ -42,7 +42,7 @@ function LanguageRow({
       disabled={disabled}
       aria-pressed={selected}
       className={cn(
-        "group flex min-h-14 w-full items-center gap-3 rounded-xl px-3 py-2 text-start outline-none transition-colors hover:bg-[#EFE4D4] focus-visible:ring-2 focus-visible:ring-burgundy focus-visible:ring-offset-2",
+        "motion-press motion-ripple group flex min-h-14 w-full items-center gap-3 rounded-xl px-3 py-2 text-start outline-none hover:bg-[#EFE4D4] focus-visible:ring-2 focus-visible:ring-burgundy focus-visible:ring-offset-2",
         selected && "bg-[#E9DDCA]",
         disabled && "cursor-wait opacity-65",
       )}
@@ -123,7 +123,7 @@ export function LanguageSelector() {
     }}>
       <DialogTrigger
         aria-label={t("languageLabel")}
-        className="inline-flex h-10 min-w-0 items-center justify-center gap-1.5 rounded-xl border border-white/15 bg-white/[0.07] px-2.5 text-xs font-bold text-[#FFFDF8] outline-none transition-colors hover:bg-white/[0.12] focus-visible:ring-2 focus-visible:ring-copper sm:px-3"
+        className="motion-press motion-ripple motion-hover inline-flex h-10 min-w-0 items-center justify-center gap-1.5 rounded-xl border border-white/15 bg-white/[0.07] px-2.5 text-xs font-bold text-[#FFFDF8] outline-none hover:bg-white/[0.12] focus-visible:ring-2 focus-visible:ring-copper sm:px-3"
       >
         <Globe2 className="size-3.5 text-copper" aria-hidden="true" />
         <LanguageFlag language={languageDefinition} size="sm" />
@@ -171,7 +171,7 @@ export function LanguageSelector() {
 
         <p className="sr-only" aria-live="polite">{query ? `${searchResults.length} ${t("items")}` : ""}</p>
         {languageLoading ? <p className="px-6 py-2 text-sm font-semibold text-burgundy" role="status">{t("loadingLanguage")}</p> : null}
-        {loadError ? <p className="px-6 py-2 text-sm font-semibold text-destructive" role="alert">{t("languageLoadError")}</p> : null}
+        {loadError ? <p className="motion-error px-6 py-2 text-sm font-semibold text-destructive" role="alert">{t("languageLoadError")}</p> : null}
         <div className="menu-dialog-scroll min-h-0 flex-1 overflow-y-auto overscroll-contain px-3 pb-5 pt-1 sm:px-4">
           {query ? (
             searchResults.length > 0 ? (

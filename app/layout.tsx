@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Lora, Manrope } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
+import { MotionPlatform } from "@/components/shared/motion-platform";
 import "./globals.css";
 
 const manrope = Manrope({
@@ -34,6 +35,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="tr" className={`${manrope.variable} ${lora.variable} h-full antialiased`}>
       <body className="min-h-full text-foreground">
+        <MotionPlatform />
         {children}
         <Toaster richColors position="top-center" />
       </body>

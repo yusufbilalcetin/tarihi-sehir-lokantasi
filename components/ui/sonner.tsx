@@ -3,13 +3,28 @@
 import { useTheme } from "next-themes"
 import { Toaster as Sonner, type ToasterProps } from "sonner"
 import { CircleCheckIcon, InfoIcon, TriangleAlertIcon, OctagonXIcon, Loader2Icon } from "lucide-react"
+import { useSyncExternalStore } from "react"
 
-const Toaster = ({ ...props }: ToasterProps) => {
+const mobileToastQuery = "(hover: none) and (pointer: coarse)"
+
+function subscribeToInputMode(onChange: () => void) {
+  const query = window.matchMedia(mobileToastQuery)
+  query.addEventListener("change", onChange)
+  return () => query.removeEventListener("change", onChange)
+}
+
+const Toaster = ({ position, ...props }: ToasterProps) => {
   const { theme = "system" } = useTheme()
+  const isTouchDevice = useSyncExternalStore(
+    subscribeToInputMode,
+    () => window.matchMedia(mobileToastQuery).matches,
+    () => false,
+  )
 
   return (
     <Sonner
       theme={theme as ToasterProps["theme"]}
+      position={isTouchDevice ? "bottom-center" : (position ?? "top-center")}
       className="toaster group"
       icons={{
         success: (

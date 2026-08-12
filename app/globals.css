@@ -85,6 +85,69 @@
   --sidebar-accent-foreground: #FFFDF8;
   --sidebar-border: #46503F;
   --sidebar-ring: #B98352;
+  --motion-fast: 120ms;
+  --motion-normal: 180ms;
+  --motion-medium: 220ms;
+  --motion-slow: 280ms;
+  --motion-exit: 150ms;
+  --motion-spatial: 240ms;
+  --motion-press-in: 110ms;
+  --motion-stagger: 32ms;
+  --ease-standard: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-enter: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-exit: cubic-bezier(0.4, 0, 1, 1);
+  --ease-spatial: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-modal: cubic-bezier(0.16, 1, 0.3, 1);
+  --motion-release-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --motion-ios-spring-soft: cubic-bezier(0.22, 1.25, 0.36, 1);
+  --motion-ios-spring-snappy: cubic-bezier(0.2, 1.35, 0.4, 1);
+  --motion-ios-enter: cubic-bezier(0.16, 1, 0.3, 1);
+  --press-scale: 0.99;
+  --press-depth: 0px;
+  --card-press-scale: 0.985;
+  --modal-enter-scale: 0.98;
+  --modal-enter-y: 4px;
+  --modal-exit-y: 2px;
+}
+
+html[data-platform="ios"] {
+  --motion-fast: 150ms;
+  --motion-normal: 200ms;
+  --motion-medium: 240ms;
+  --motion-slow: 280ms;
+  --motion-exit: 170ms;
+  --motion-spatial: 260ms;
+  --motion-press-in: 120ms;
+  --ease-standard: var(--motion-ios-spring-soft);
+  --ease-enter: var(--motion-ios-enter);
+  --ease-spatial: cubic-bezier(0.22, 0.9, 0.28, 1);
+  --ease-modal: var(--motion-ios-spring-soft);
+  --motion-release-ease: var(--motion-ios-spring-soft);
+  --press-scale: 0.975;
+  --press-depth: 1px;
+  --modal-enter-scale: 0.965;
+  --modal-enter-y: 8px;
+  --modal-exit-y: 4px;
+}
+
+html[data-platform="android"] {
+  --motion-fast: 110ms;
+  --motion-normal: 160ms;
+  --motion-medium: 200ms;
+  --motion-slow: 220ms;
+  --motion-exit: 140ms;
+  --motion-spatial: 220ms;
+  --motion-press-in: 90ms;
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-enter: cubic-bezier(0.05, 0.7, 0.1, 1);
+  --ease-spatial: cubic-bezier(0.2, 0, 0, 1);
+  --ease-modal: cubic-bezier(0.05, 0.7, 0.1, 1);
+  --motion-release-ease: cubic-bezier(0.2, 0, 0, 1);
+  --press-scale: 0.985;
+  --press-depth: 0px;
+  --modal-enter-scale: 0.98;
+  --modal-enter-y: 4px;
+  --modal-exit-y: 2px;
 }
 
 @layer base {
@@ -108,6 +171,341 @@
   .touch-target {
     min-height: 44px;
     min-width: 44px;
+  }
+
+  .motion-press {
+    transition: transform var(--motion-normal) var(--motion-release-ease), opacity var(--motion-fast) ease, color var(--motion-normal) ease, background-color var(--motion-normal) ease, border-color var(--motion-normal) ease;
+    transform: translateY(0) scale(1);
+  }
+
+  .motion-press:active:not(:disabled) {
+    transform: translateY(var(--press-depth)) scale(var(--press-scale));
+    transition-duration: var(--motion-press-in);
+    transition-timing-function: var(--ease-standard);
+  }
+
+  .motion-press > svg,
+  .motion-press > .motion-icon-swap {
+    transition: transform var(--motion-fast) var(--motion-release-ease);
+  }
+
+  .motion-press:active:not(:disabled) > svg,
+  .motion-press:active:not(:disabled) > .motion-icon-swap {
+    transform: scale(0.86);
+  }
+
+  .motion-press:active:not(:disabled) [data-icon-kind="trash"] {
+    transform: scale(0.88) rotate(-4deg);
+  }
+
+  .motion-ripple {
+    position: relative;
+    overflow: hidden;
+  }
+
+  html[data-platform="android"] .motion-ripple::after {
+    position: absolute;
+    inset: -20%;
+    border-radius: inherit;
+    background: currentColor;
+    content: "";
+    pointer-events: none;
+    opacity: 0;
+    transform: scale(0.45);
+    transition: opacity var(--motion-fast) ease, transform var(--motion-fast) var(--ease-enter);
+  }
+
+  html[data-platform="android"] .motion-ripple:active::after {
+    opacity: 0.08;
+    transform: scale(1);
+  }
+
+  .motion-page {
+    animation: motion-page-in var(--motion-medium) var(--ease-enter) backwards;
+  }
+
+  .motion-page[data-navigation-direction="forward"] {
+    --motion-page-x: 8px;
+  }
+
+  .motion-page[data-navigation-direction="back"] {
+    --motion-page-x: -8px;
+  }
+
+  .motion-header {
+    animation: motion-header-in var(--motion-medium) var(--ease-enter) backwards;
+  }
+
+  .motion-table {
+    animation: motion-table-in var(--motion-medium) var(--ease-enter) 40ms backwards;
+  }
+
+  html[data-motion-ready="true"] .motion-reveal[data-reveal-animate="true"] {
+    opacity: 0;
+    transform: translateY(10px) scale(0.99);
+  }
+
+  html[data-motion-ready="true"] .motion-reveal[data-reveal-animate="true"][data-revealed="true"] {
+    opacity: 1;
+    transform: none;
+    animation: motion-card-in var(--motion-medium) var(--ease-enter) backwards;
+    animation-delay: var(--motion-delay, 0ms);
+  }
+
+  .motion-product-image {
+    opacity: 0;
+    transform: scale(1.01);
+    transition: opacity var(--motion-normal) ease, transform var(--motion-medium) var(--ease-enter);
+  }
+
+  .motion-product-image[data-loaded="true"] {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .motion-search-icon {
+    transition: transform var(--motion-normal) var(--ease-standard), color var(--motion-normal) ease;
+  }
+
+  .motion-search:focus-within .motion-search-icon {
+    color: var(--primary);
+    transform: translateY(-50%) scale(1.04);
+  }
+
+  .motion-number {
+    display: inline-block;
+    animation: motion-number-in var(--motion-normal) var(--ease-enter) both;
+  }
+
+  .motion-number[data-direction="down"] {
+    --motion-number-y: -3px;
+  }
+
+  .motion-value {
+    position: relative;
+    display: inline-block;
+  }
+
+  .motion-value-old {
+    position: absolute;
+    inset-inline-start: 0;
+    top: 0;
+    pointer-events: none;
+    animation: motion-value-old-out var(--motion-normal) var(--ease-exit) both;
+    animation-delay: var(--motion-value-delay, 0ms);
+  }
+
+  .motion-value-new {
+    display: inline-block;
+    animation: motion-value-new-in var(--motion-normal) var(--ease-enter) both;
+    animation-delay: var(--motion-value-delay, 0ms);
+  }
+
+  .motion-value-old[data-direction="down"],
+  .motion-value-new[data-direction="down"] {
+    --motion-value-old-y: 5px;
+    --motion-value-new-y: -5px;
+  }
+
+  .motion-card-media {
+    transition: transform var(--motion-fast) var(--motion-release-ease);
+  }
+
+  .motion-card-hover {
+    transition: transform var(--motion-normal) var(--motion-release-ease), border-color var(--motion-normal) ease, box-shadow var(--motion-normal) ease;
+  }
+
+  .motion-card-hover:has(.motion-card-trigger:active) {
+    transform: scale(var(--card-press-scale));
+    transition-duration: var(--motion-press-in);
+  }
+
+  .motion-card-press:active .motion-card-media,
+  .motion-card-hover:has(.motion-card-trigger:active) .motion-card-media {
+    transform: scale(1.015);
+  }
+
+  .motion-icon-swap {
+    position: relative;
+    display: inline-flex;
+    width: 0.875rem;
+    height: 0.875rem;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .motion-icon-swap > svg {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transform: scale(0.72) rotate(-6deg);
+    transition: opacity var(--motion-normal) ease, transform var(--motion-normal) var(--ease-enter);
+  }
+
+  .motion-icon-swap > svg[data-active="true"] {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .motion-icon-swap > svg[data-icon-kind="minus"] {
+    transform: scaleX(0.45);
+  }
+
+  .motion-icon-swap > svg[data-icon-kind="minus"][data-active="true"] {
+    transform: scaleX(1);
+  }
+
+  .motion-cart-exit {
+    pointer-events: none;
+    animation: motion-cart-out var(--motion-normal) var(--ease-exit) forwards;
+  }
+
+  .motion-nav-item,
+  .motion-nav-item > svg,
+  .motion-nav-item > span:not(.motion-nav-badge) {
+    transition: color var(--motion-normal) ease, opacity var(--motion-normal) ease, transform var(--motion-normal) var(--ease-standard), background-color var(--motion-normal) ease;
+  }
+
+  .motion-nav-item[aria-current="page"] > svg,
+  .motion-nav-item[aria-current="page"] > span:not(.motion-nav-badge) {
+    animation: motion-nav-active var(--motion-normal) var(--ease-enter) both;
+  }
+
+  .motion-nav-badge {
+    transform-origin: center;
+  }
+
+  .motion-nav-indicator {
+    position: absolute;
+    inset-block-end: 4px;
+    inset-inline-start: 0.5rem;
+    width: calc((100% - 1rem) / 4);
+    height: 2px;
+    pointer-events: none;
+    transform: translateX(var(--motion-nav-offset, 0%));
+    transition: transform var(--motion-spatial) var(--ease-spatial);
+  }
+
+  .motion-nav-indicator::after {
+    display: block;
+    width: 1.75rem;
+    height: 100%;
+    margin-inline: auto;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--primary) 55%, transparent);
+    content: "";
+  }
+
+  .motion-status {
+    animation: motion-status-in var(--motion-medium) var(--ease-enter) both;
+  }
+
+  [data-motion-success="true"] svg > path,
+  [data-motion-success="true"] svg > polyline {
+    stroke-dasharray: 32;
+    stroke-dashoffset: 32;
+    animation: motion-check-stroke var(--motion-medium) var(--ease-enter) 30ms forwards;
+  }
+
+  .motion-results {
+    animation: motion-results-in var(--motion-fast) ease both;
+  }
+
+  .motion-results[data-searching="true"] .motion-card {
+    animation: none;
+  }
+
+  [data-slot="dialog-close"] {
+    transition: transform var(--motion-fast) var(--ease-standard), color var(--motion-normal) ease, background-color var(--motion-normal) ease;
+  }
+
+  [data-slot="dialog-close"]:active {
+    transform: scale(var(--press-scale));
+  }
+
+  .motion-dialog-overlay {
+    opacity: 1;
+    transition: opacity var(--motion-medium) var(--ease-enter);
+  }
+
+  .motion-dialog-overlay[data-starting-style],
+  .motion-dialog-overlay[data-ending-style] {
+    opacity: 0;
+  }
+
+  .motion-dialog {
+    opacity: 1;
+    transform: translate(-50%, -50%) translateY(0) scale(1);
+    transform-origin: center;
+    transition: opacity var(--motion-medium) var(--ease-modal) 25ms, transform var(--motion-medium) var(--ease-modal) 25ms;
+  }
+
+  .motion-dialog[data-starting-style] {
+    opacity: 0;
+    transform: translate(-50%, -50%) translateY(var(--modal-enter-y)) scale(var(--modal-enter-scale));
+  }
+
+  .motion-dialog[data-ending-style] {
+    opacity: 0;
+    transform: translate(-50%, -50%) translateY(var(--modal-exit-y)) scale(var(--modal-enter-scale));
+    transition-duration: var(--motion-exit);
+    transition-timing-function: var(--ease-exit);
+    transition-delay: 0ms;
+  }
+
+  .motion-dialog [data-slot="dialog-header"],
+  .motion-dialog .menu-dialog-scroll {
+    animation: motion-modal-content-in var(--motion-normal) var(--ease-enter) 45ms backwards;
+  }
+
+  .motion-popover {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    transform-origin: var(--transform-origin);
+    transition: opacity var(--motion-normal) var(--ease-enter), transform var(--motion-normal) var(--ease-enter);
+  }
+
+  .motion-popover[data-starting-style],
+  .motion-popover[data-ending-style] {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.98);
+  }
+
+  .motion-sheet[data-ending-style] {
+    transition-duration: var(--motion-exit);
+    transition-timing-function: var(--ease-exit);
+  }
+
+  .cn-toast {
+    transition: opacity var(--motion-normal) var(--ease-enter), transform var(--motion-normal) var(--ease-enter) !important;
+  }
+
+  .cn-toast[data-sonner-toast]:not([data-mounted="true"]) {
+    --y: translateY(8px);
+  }
+
+  .cn-toast[data-sonner-toast][data-mounted="true"] {
+    --y: translateY(0);
+  }
+
+  .cn-toast[data-sonner-toast][data-removed="true"] {
+    --y: translateY(-3px);
+  }
+
+  .motion-empty {
+    animation: motion-empty-in var(--motion-medium) var(--ease-enter) both;
+  }
+
+  .motion-error {
+    animation: motion-error-nudge var(--motion-normal) var(--ease-standard) both;
+  }
+
+  .motion-cta {
+    transition: transform var(--motion-normal) var(--motion-release-ease), opacity var(--motion-fast) ease, color var(--motion-normal) ease, background-color var(--motion-normal) ease, border-color var(--motion-normal) ease;
+  }
+
+  .motion-action-label {
+    animation: motion-action-label-in var(--motion-normal) var(--ease-enter) both;
   }
 
   .menu-shell {
@@ -155,6 +553,77 @@
   }
 }
 
+@media (hover: hover) and (pointer: fine) {
+  .motion-hover:hover {
+    transform: translateY(-1px);
+  }
+
+  .motion-cta:hover {
+    transform: translateY(-1px);
+  }
+
+  .motion-cta:hover:active {
+    transform: translateY(0) scale(0.99);
+  }
+
+  .motion-card-hover:hover {
+    transform: translateY(-2px);
+    border-color: color-mix(in srgb, var(--border) 72%, var(--primary));
+    box-shadow: 0 15px 34px rgb(104 31 37 / 0.075);
+  }
+
+  .motion-hover:hover:active,
+  .motion-card-hover:hover:active,
+  .motion-card-hover:hover .motion-press:active {
+    transform: translateY(0) scale(0.99);
+  }
+
+  .motion-card-hover:hover:has(.motion-card-trigger:active) {
+    transform: translateY(0) scale(0.99);
+  }
+
+  .motion-nav-item:hover {
+    background-color: color-mix(in srgb, var(--muted) 45%, transparent);
+  }
+}
+
+.motion-view-panel {
+  view-transition-name: menu-panel;
+}
+
+html:active-view-transition .motion-view-panel {
+  animation: none;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+}
+
+html[data-navigation-direction="forward"]::view-transition-old(menu-panel) {
+  --motion-panel-x: -6px;
+}
+
+html[data-navigation-direction="forward"]::view-transition-new(menu-panel) {
+  --motion-panel-x: 8px;
+}
+
+html[data-navigation-direction="back"]::view-transition-old(menu-panel) {
+  --motion-panel-x: 6px;
+}
+
+html[data-navigation-direction="back"]::view-transition-new(menu-panel) {
+  --motion-panel-x: -8px;
+}
+
+::view-transition-old(menu-panel) {
+  animation: motion-panel-old-out var(--motion-normal) var(--ease-exit) both;
+}
+
+::view-transition-new(menu-panel) {
+  animation: motion-panel-new-in var(--motion-medium) var(--ease-enter) both;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     scroll-behavior: auto !important;
@@ -174,7 +643,7 @@
   place-items: center;
   overflow: hidden;
   background: #120c08;
-  animation: menu-splash-out var(--intro-fade-duration, 600ms) cubic-bezier(0.22, 1, 0.36, 1) var(--intro-fade-delay, 2600ms) forwards;
+  animation: menu-splash-out var(--intro-fade-duration, 60ms) var(--ease-exit) var(--intro-fade-delay, 120ms) forwards;
 }
 
 .menu-splash-logo {
@@ -182,10 +651,7 @@
   height: auto;
   object-fit: contain;
   opacity: 0;
-  filter: blur(4px);
-  transform: scale(0.92);
-  will-change: transform, opacity;
-  animation: menu-logo-in var(--intro-logo-duration, 1300ms) cubic-bezier(0.22, 1, 0.36, 1) var(--intro-logo-delay, 300ms) forwards;
+  animation: menu-logo-in var(--intro-logo-duration, 100ms) var(--ease-enter) var(--intro-logo-delay, 10ms) forwards;
 }
 
 .menu-content {
@@ -204,7 +670,7 @@
 .menu-content-ready {
   opacity: 1;
   transform: translateY(0);
-  transition: opacity 400ms cubic-bezier(0.22, 1, 0.36, 1), transform 400ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition: opacity var(--motion-medium) var(--ease-enter), transform var(--motion-medium) var(--ease-enter);
 }
 
 html[data-sehir-intro="seen"] .menu-splash {
@@ -217,8 +683,105 @@ html[data-sehir-intro="seen"] .menu-content {
 }
 
 @keyframes menu-logo-in {
-  from { opacity: 0; filter: blur(4px); transform: scale(0.92); }
-  to { opacity: 1; filter: blur(0); transform: scale(1); }
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes motion-page-in {
+  from { opacity: 0; transform: translateX(var(--motion-page-x, 0)) translateY(2px); }
+  to { opacity: 1; transform: translateX(0) translateY(0); }
+}
+
+@keyframes motion-header-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes motion-table-in {
+  from { opacity: 0; transform: scale(0.98); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes motion-card-in {
+  from { opacity: 0; transform: translateY(10px) scale(0.99); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes motion-number-in {
+  from { opacity: 0.35; transform: translateY(var(--motion-number-y, 3px)); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes motion-cart-out {
+  to { opacity: 0; transform: translateX(-10px) scale(0.985); }
+}
+
+@keyframes motion-nav-active {
+  0% { opacity: 0.65; transform: scale(0.88); }
+  68% { opacity: 1; transform: scale(1.04); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes motion-badge-pop {
+  0% { transform: scale(0.75); }
+  55% { transform: scale(1.14); }
+  82% { transform: scale(0.97); }
+  100% { transform: scale(1); }
+}
+
+@keyframes motion-value-old-out {
+  from { opacity: 1; transform: translateY(0) scale(1); }
+  to { opacity: 0; transform: translateY(var(--motion-value-old-y, -5px)) scale(0.92); }
+}
+
+@keyframes motion-value-new-in {
+  from { opacity: 0; transform: translateY(var(--motion-value-new-y, 5px)) scale(0.92); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes motion-status-in {
+  from { opacity: 0; transform: translateY(4px) scale(0.9); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes motion-check-stroke {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes motion-results-in {
+  from { opacity: 0.45; }
+  to { opacity: 1; }
+}
+
+@keyframes motion-empty-in {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes motion-modal-content-in {
+  from { opacity: 0; transform: translateY(2px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes motion-error-nudge {
+  0%, 100% { transform: translateX(0); }
+  28% { transform: translateX(-2px); }
+  55% { transform: translateX(2px); }
+  78% { transform: translateX(-1px); }
+}
+
+@keyframes motion-action-label-in {
+  from { opacity: 0; transform: translateY(2px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes motion-panel-old-out {
+  to { opacity: 0; transform: translateX(var(--motion-panel-x, -6px)); }
+}
+
+@keyframes motion-panel-new-in {
+  from { opacity: 0; transform: translateX(var(--motion-panel-x, 8px)); }
+  to { opacity: 1; transform: translateX(0); }
 }
 
 @keyframes menu-splash-out {
@@ -227,7 +790,11 @@ html[data-sehir-intro="seen"] .menu-content {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .menu-splash { animation: menu-splash-out 180ms ease 240ms forwards !important; }
+  ::view-transition-old(menu-panel),
+  ::view-transition-new(menu-panel) {
+    animation: none;
+  }
+  .menu-splash { animation: menu-splash-out 80ms ease 80ms forwards !important; }
   .menu-splash-logo {
     opacity: 1;
     filter: none;
@@ -238,5 +805,54 @@ html[data-sehir-intro="seen"] .menu-content {
   .menu-content-ready {
     transform: none;
     transition: none;
+  }
+
+  .motion-page,
+  .motion-header,
+  .motion-table,
+  .motion-card,
+  .motion-reveal[data-revealed="true"],
+  .motion-number,
+  .motion-value-old,
+  .motion-value-new,
+  .motion-nav-item[aria-current="page"] > svg,
+  .motion-nav-item[aria-current="page"] > span,
+  .motion-nav-badge,
+  .motion-status,
+  [data-motion-success="true"] svg > path,
+  [data-motion-success="true"] svg > polyline,
+  .motion-results,
+  .motion-empty,
+  .motion-error,
+  .motion-action-label,
+  .motion-dialog [data-slot="dialog-header"],
+  .motion-dialog .menu-dialog-scroll,
+  .motion-cart-exit {
+    animation: none !important;
+  }
+
+  .motion-reveal,
+  .motion-product-image,
+  .motion-product-image[data-loaded="true"] {
+    opacity: 1;
+    transform: none;
+  }
+
+  [data-motion-success="true"] svg > path,
+  [data-motion-success="true"] svg > polyline {
+    stroke-dashoffset: 0;
+  }
+
+  .motion-press:active,
+  .motion-hover:hover,
+  .motion-card-hover:hover,
+  .motion-search:focus-within .motion-search-icon {
+    transform: none;
+  }
+
+  .motion-dialog,
+  .motion-dialog[data-starting-style],
+  .motion-dialog[data-ending-style] {
+    transform: translate(-50%, -50%);
   }
 }

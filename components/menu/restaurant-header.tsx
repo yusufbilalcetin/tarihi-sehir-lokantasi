@@ -10,7 +10,7 @@ export function RestaurantHeader({ tableName }: { tableName: string }) {
   const { t } = useMenuPreferences();
 
   return (
-    <header className="overflow-hidden rounded-b-[2rem] bg-[#17130F] px-[var(--menu-gutter)] pb-6 pt-[max(1.25rem,env(safe-area-inset-top))] text-[#FFFDF8] shadow-[0_22px_60px_rgba(37,33,29,0.18)] sm:pb-8">
+    <header className="motion-header overflow-hidden rounded-b-[2rem] bg-[#17130F] px-[var(--menu-gutter)] pb-6 pt-[max(1.25rem,env(safe-area-inset-top))] text-[#FFFDF8] shadow-[0_22px_60px_rgba(37,33,29,0.18)] sm:pb-8">
       <div className="mx-auto max-w-5xl">
         <BrandMark className="mx-auto max-w-xl" />
         <p className="mt-2 text-center font-heading text-xs tracking-[0.16em] text-[#F5EBDD]/65 sm:text-sm">
@@ -20,7 +20,7 @@ export function RestaurantHeader({ tableName }: { tableName: string }) {
           <span className="flex items-center gap-1.5"><MapPin className="size-3.5 text-copper" /> {t("location")}</span>
           <span className="flex items-center gap-1.5"><Clock3 className="size-3.5 text-copper" /> 11:00 - 22:00</span>
         </div>
-        <div className="mt-5 flex min-w-0 items-center justify-between gap-3 rounded-2xl border border-white/10 bg-white/[0.06] px-3 py-3 sm:px-4">
+        <div className="motion-table mt-5 flex min-w-0 items-center justify-between gap-3 rounded-2xl border border-white/10 bg-white/[0.06] px-3 py-3 sm:px-4">
           <div>
             <p className="text-[11px] font-semibold tracking-wide text-[#F5EBDD]/55">{t("yourTable")}</p>
             <p className="mt-0.5 font-heading text-xl font-semibold">{tableName}</p>

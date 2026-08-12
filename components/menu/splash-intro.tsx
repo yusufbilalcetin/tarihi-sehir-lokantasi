@@ -6,14 +6,14 @@ import { INTRO_SESSION_KEY } from "@/lib/intro-constants";
 import { useMenuPreferences } from "./menu-preferences-provider";
 
 export const INTRO_TIMING = {
-  logoDelayMs: 300,
-  logoDurationMs: 1300,
-  fadeDelayMs: 2600,
-  fadeDurationMs: 600,
+  logoDelayMs: 10,
+  logoDurationMs: 100,
+  fadeDelayMs: 120,
+  fadeDurationMs: 60,
 } as const;
 
 export const INTRO_DURATION_MS = INTRO_TIMING.fadeDelayMs + INTRO_TIMING.fadeDurationMs;
-export const REDUCED_INTRO_DURATION_MS = 420;
+export const REDUCED_INTRO_DURATION_MS = 80;
 
 type SplashStyle = CSSProperties & {
   "--intro-logo-delay": string;

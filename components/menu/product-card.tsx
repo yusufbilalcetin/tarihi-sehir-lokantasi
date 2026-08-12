@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import { Plus } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
@@ -5,18 +7,21 @@ import { Button } from "@/components/ui/button";
 import { useMenuPreferences } from "@/components/menu/menu-preferences-provider";
 import { getMenuProductDescription, getMenuProductName, getMenuTag } from "@/lib/i18n/menu-content";
 import type { Product } from "@/types";
+import { useRevealOnce } from "@/lib/motion/use-reveal-once";
+import { MotionValue } from "@/components/shared/motion-value";
 
-export function ProductCard({ product, onOpen, onAdd }: { product: Product; onOpen: () => void; onAdd: () => void }) {
+export function ProductCard({ product, index = 0, onOpen, onAdd }: { product: Product; index?: number; onOpen: () => void; onAdd: () => void }) {
   const { formatPrice, language, t } = useMenuPreferences();
   const soldOut = product.status === "sold-out";
   const name = getMenuProductName(product, language);
   const description = getMenuProductDescription(product, language);
+  const { ref, revealed, animate } = useRevealOnce<HTMLElement>(`product-${product.id}`);
 
   return (
-    <article className="group relative grid min-h-44 grid-cols-[7.75rem_minmax(0,1fr)] overflow-hidden rounded-[var(--menu-card-radius)] border bg-card shadow-[0_12px_32px_rgba(104,31,37,0.055)] sm:grid-cols-[10rem_minmax(0,1fr)]">
-      <button type="button" onClick={onOpen} className="absolute inset-0 z-[1] rounded-2xl text-start focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring" aria-label={t("productDetails", { name })} />
-      <div className="pointer-events-none relative overflow-hidden">
-        <Image src={product.image} alt={name} fill sizes="(max-width: 640px) 124px, 160px" className={`object-cover transition-transform duration-300 group-hover:scale-[1.025] ${soldOut ? "grayscale-[0.55]" : ""}`} />
+    <article ref={ref} data-revealed={revealed} data-reveal-animate={animate} className="motion-reveal motion-card-hover group relative grid min-h-44 grid-cols-[7.75rem_minmax(0,1fr)] overflow-hidden rounded-[var(--menu-card-radius)] border bg-card shadow-[0_12px_32px_rgba(104,31,37,0.055)] sm:grid-cols-[10rem_minmax(0,1fr)]" style={{ "--motion-delay": `${Math.min(index * 28, 112)}ms` } as React.CSSProperties}>
+      <button type="button" onClick={onOpen} className="motion-card-trigger motion-press motion-ripple absolute inset-0 z-[1] rounded-2xl text-start focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring" aria-label={t("productDetails", { name })} />
+      <div className="motion-card-media pointer-events-none relative overflow-hidden">
+        <Image src={product.image} alt={name} fill sizes="(max-width: 640px) 124px, 160px" className={`motion-product-image object-cover ${soldOut ? "grayscale-[0.55]" : ""}`} onLoad={(event) => { event.currentTarget.dataset.loaded = "true"; }} />
         {soldOut ? <div className="absolute inset-0 bg-[#25211D]/25" /> : null}
       </div>
       <div className="pointer-events-none relative flex min-w-0 flex-col p-[var(--menu-card-padding)]">
@@ -29,7 +34,7 @@ export function ProductCard({ product, onOpen, onAdd }: { product: Product; onOp
           <p className="mt-1 line-clamp-2 text-xs leading-5 text-muted-foreground sm:text-sm">{description}</p>
         </div>
         <div className="mt-auto flex items-end justify-between gap-2 pt-3">
-          <span dir="ltr" className="text-base font-extrabold tabular-nums text-burgundy sm:text-lg">{formatPrice(product.price)}</span>
+          <MotionValue value={formatPrice(product.price)} numericValue={product.price} delayMs={Math.min(index * 20, 60)} className="text-base font-extrabold tabular-nums text-burgundy sm:text-lg" />
           <Button type="button" size="icon" disabled={soldOut} onClick={onAdd} aria-label={`${name}: ${t("addToCart")}`} className="pointer-events-auto relative z-10 size-11 rounded-xl shadow-sm">
             <Plus className="size-5" strokeWidth={2.2} />
           </Button>
