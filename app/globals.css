@@ -85,49 +85,49 @@
   --sidebar-accent-foreground: #FFFDF8;
   --sidebar-border: #46503F;
   --sidebar-ring: #B98352;
-  --motion-fast: 120ms;
+  --motion-fast: 140ms;
   --motion-normal: 180ms;
   --motion-medium: 220ms;
   --motion-slow: 280ms;
   --motion-exit: 150ms;
-  --motion-spatial: 240ms;
-  --motion-press-in: 110ms;
-  --motion-stagger: 32ms;
-  --ease-standard: cubic-bezier(0.2, 0.8, 0.2, 1);
-  --ease-enter: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-exit: cubic-bezier(0.4, 0, 1, 1);
-  --ease-spatial: cubic-bezier(0.2, 0.8, 0.2, 1);
-  --ease-modal: cubic-bezier(0.16, 1, 0.3, 1);
-  --motion-release-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
-  --motion-ios-spring-soft: cubic-bezier(0.22, 1.25, 0.36, 1);
-  --motion-ios-spring-snappy: cubic-bezier(0.2, 1.35, 0.4, 1);
-  --motion-ios-enter: cubic-bezier(0.16, 1, 0.3, 1);
-  --press-scale: 0.99;
+  --motion-spatial: 220ms;
+  --motion-press-in: 100ms;
+  --motion-stagger: 22ms;
+  --ease-standard: cubic-bezier(0.25, 0.8, 0.25, 1);
+  --ease-enter: cubic-bezier(0.22, 0.75, 0.25, 1);
+  --ease-exit: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spatial: cubic-bezier(0.25, 0.8, 0.25, 1);
+  --ease-modal: cubic-bezier(0.22, 0.75, 0.25, 1);
+  --motion-release-ease: cubic-bezier(0.25, 0.8, 0.25, 1);
+  --motion-ios-spring-soft: cubic-bezier(0.22, 0.75, 0.25, 1);
+  --motion-ios-spring-snappy: cubic-bezier(0.2, 0.8, 0.25, 1);
+  --motion-ios-enter: cubic-bezier(0.22, 0.75, 0.25, 1);
+  --press-scale: 0.995;
   --press-depth: 0px;
-  --card-press-scale: 0.985;
-  --modal-enter-scale: 0.98;
+  --card-press-scale: 0.99;
+  --modal-enter-scale: 0.985;
   --modal-enter-y: 4px;
   --modal-exit-y: 2px;
 }
 
 html[data-platform="ios"] {
   --motion-fast: 150ms;
-  --motion-normal: 200ms;
-  --motion-medium: 240ms;
+  --motion-normal: 190ms;
+  --motion-medium: 230ms;
   --motion-slow: 280ms;
   --motion-exit: 170ms;
-  --motion-spatial: 260ms;
-  --motion-press-in: 120ms;
+  --motion-spatial: 230ms;
+  --motion-press-in: 110ms;
   --ease-standard: var(--motion-ios-spring-soft);
   --ease-enter: var(--motion-ios-enter);
-  --ease-spatial: cubic-bezier(0.22, 0.9, 0.28, 1);
+  --ease-spatial: cubic-bezier(0.25, 0.8, 0.25, 1);
   --ease-modal: var(--motion-ios-spring-soft);
   --motion-release-ease: var(--motion-ios-spring-soft);
-  --press-scale: 0.975;
-  --press-depth: 1px;
-  --modal-enter-scale: 0.965;
-  --modal-enter-y: 8px;
-  --modal-exit-y: 4px;
+  --press-scale: 0.988;
+  --press-depth: 0px;
+  --modal-enter-scale: 0.985;
+  --modal-enter-y: 4px;
+  --modal-exit-y: 2px;
 }
 
 html[data-platform="android"] {
@@ -138,14 +138,14 @@ html[data-platform="android"] {
   --motion-exit: 140ms;
   --motion-spatial: 220ms;
   --motion-press-in: 90ms;
-  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
-  --ease-enter: cubic-bezier(0.05, 0.7, 0.1, 1);
-  --ease-spatial: cubic-bezier(0.2, 0, 0, 1);
-  --ease-modal: cubic-bezier(0.05, 0.7, 0.1, 1);
-  --motion-release-ease: cubic-bezier(0.2, 0, 0, 1);
+  --ease-standard: cubic-bezier(0.22, 0.7, 0.3, 1);
+  --ease-enter: cubic-bezier(0.2, 0.75, 0.25, 1);
+  --ease-spatial: cubic-bezier(0.22, 0.7, 0.3, 1);
+  --ease-modal: cubic-bezier(0.2, 0.75, 0.25, 1);
+  --motion-release-ease: cubic-bezier(0.22, 0.7, 0.3, 1);
   --press-scale: 0.985;
   --press-depth: 0px;
-  --modal-enter-scale: 0.98;
+  --modal-enter-scale: 0.985;
   --modal-enter-y: 4px;
   --modal-exit-y: 2px;
 }
@@ -191,11 +191,11 @@ html[data-platform="android"] {
 
   .motion-press:active:not(:disabled) > svg,
   .motion-press:active:not(:disabled) > .motion-icon-swap {
-    transform: scale(0.86);
+    transform: scale(0.94);
   }
 
   .motion-press:active:not(:disabled) [data-icon-kind="trash"] {
-    transform: scale(0.88) rotate(-4deg);
+    transform: scale(0.96) rotate(-2deg);
   }
 
   .motion-ripple {
@@ -211,12 +211,12 @@ html[data-platform="android"] {
     content: "";
     pointer-events: none;
     opacity: 0;
-    transform: scale(0.45);
+    transform: scale(0.7);
     transition: opacity var(--motion-fast) ease, transform var(--motion-fast) var(--ease-enter);
   }
 
   html[data-platform="android"] .motion-ripple:active::after {
-    opacity: 0.08;
+    opacity: 0.055;
     transform: scale(1);
   }
 
@@ -225,11 +225,11 @@ html[data-platform="android"] {
   }
 
   .motion-page[data-navigation-direction="forward"] {
-    --motion-page-x: 8px;
+    --motion-page-x: 4px;
   }
 
   .motion-page[data-navigation-direction="back"] {
-    --motion-page-x: -8px;
+    --motion-page-x: -4px;
   }
 
   .motion-header {
@@ -242,7 +242,7 @@ html[data-platform="android"] {
 
   html[data-motion-ready="true"] .motion-reveal[data-reveal-animate="true"] {
     opacity: 0;
-    transform: translateY(10px) scale(0.99);
+    transform: translateY(4px);
   }
 
   html[data-motion-ready="true"] .motion-reveal[data-reveal-animate="true"][data-revealed="true"] {
@@ -254,13 +254,11 @@ html[data-platform="android"] {
 
   .motion-product-image {
     opacity: 0;
-    transform: scale(1.01);
-    transition: opacity var(--motion-normal) ease, transform var(--motion-medium) var(--ease-enter);
+    transition: opacity var(--motion-normal) ease;
   }
 
   .motion-product-image[data-loaded="true"] {
     opacity: 1;
-    transform: scale(1);
   }
 
   .motion-search-icon {
@@ -269,7 +267,7 @@ html[data-platform="android"] {
 
   .motion-search:focus-within .motion-search-icon {
     color: var(--primary);
-    transform: translateY(-50%) scale(1.04);
+    transform: translateY(-50%) scale(1.02);
   }
 
   .motion-number {
@@ -278,7 +276,7 @@ html[data-platform="android"] {
   }
 
   .motion-number[data-direction="down"] {
-    --motion-number-y: -3px;
+    --motion-number-y: -2px;
   }
 
   .motion-value {
@@ -303,8 +301,8 @@ html[data-platform="android"] {
 
   .motion-value-old[data-direction="down"],
   .motion-value-new[data-direction="down"] {
-    --motion-value-old-y: 5px;
-    --motion-value-new-y: -5px;
+    --motion-value-old-y: 2px;
+    --motion-value-new-y: -2px;
   }
 
   .motion-card-media {
@@ -312,7 +310,7 @@ html[data-platform="android"] {
   }
 
   .motion-card-hover {
-    transition: transform var(--motion-normal) var(--motion-release-ease), border-color var(--motion-normal) ease, box-shadow var(--motion-normal) ease;
+    transition: transform var(--motion-normal) var(--motion-release-ease), border-color var(--motion-normal) ease;
   }
 
   .motion-card-hover:has(.motion-card-trigger:active) {
@@ -322,7 +320,7 @@ html[data-platform="android"] {
 
   .motion-card-press:active .motion-card-media,
   .motion-card-hover:has(.motion-card-trigger:active) .motion-card-media {
-    transform: scale(1.015);
+    transform: scale(1.005);
   }
 
   .motion-icon-swap {
@@ -338,7 +336,7 @@ html[data-platform="android"] {
     position: absolute;
     inset: 0;
     opacity: 0;
-    transform: scale(0.72) rotate(-6deg);
+    transform: scale(0.9) rotate(-2deg);
     transition: opacity var(--motion-normal) ease, transform var(--motion-normal) var(--ease-enter);
   }
 
@@ -348,7 +346,7 @@ html[data-platform="android"] {
   }
 
   .motion-icon-swap > svg[data-icon-kind="minus"] {
-    transform: scaleX(0.45);
+    transform: scaleX(0.75);
   }
 
   .motion-icon-swap > svg[data-icon-kind="minus"][data-active="true"] {
@@ -437,7 +435,7 @@ html[data-platform="android"] {
     opacity: 1;
     transform: translate(-50%, -50%) translateY(0) scale(1);
     transform-origin: center;
-    transition: opacity var(--motion-medium) var(--ease-modal) 25ms, transform var(--motion-medium) var(--ease-modal) 25ms;
+    transition: opacity var(--motion-medium) var(--ease-modal) 10ms, transform var(--motion-medium) var(--ease-modal) 10ms;
   }
 
   .motion-dialog[data-starting-style] {
@@ -455,7 +453,7 @@ html[data-platform="android"] {
 
   .motion-dialog [data-slot="dialog-header"],
   .motion-dialog .menu-dialog-scroll {
-    animation: motion-modal-content-in var(--motion-normal) var(--ease-enter) 45ms backwards;
+    animation: motion-modal-content-in var(--motion-normal) var(--ease-enter) 15ms backwards;
   }
 
   .motion-popover {
@@ -468,7 +466,7 @@ html[data-platform="android"] {
   .motion-popover[data-starting-style],
   .motion-popover[data-ending-style] {
     opacity: 0;
-    transform: translateY(-4px) scale(0.98);
+    transform: translateY(-3px) scale(0.99);
   }
 
   .motion-sheet[data-ending-style] {
@@ -481,7 +479,7 @@ html[data-platform="android"] {
   }
 
   .cn-toast[data-sonner-toast]:not([data-mounted="true"]) {
-    --y: translateY(8px);
+    --y: translateY(4px);
   }
 
   .cn-toast[data-sonner-toast][data-mounted="true"] {
@@ -489,7 +487,7 @@ html[data-platform="android"] {
   }
 
   .cn-toast[data-sonner-toast][data-removed="true"] {
-    --y: translateY(-3px);
+    --y: translateY(-2px);
   }
 
   .motion-empty {
@@ -567,7 +565,7 @@ html[data-platform="android"] {
   }
 
   .motion-card-hover:hover {
-    transform: translateY(-2px);
+    transform: translateY(-1px);
     border-color: color-mix(in srgb, var(--border) 72%, var(--primary));
     box-shadow: 0 15px 34px rgb(104 31 37 / 0.075);
   }
@@ -601,19 +599,19 @@ html:active-view-transition .motion-view-panel {
 }
 
 html[data-navigation-direction="forward"]::view-transition-old(menu-panel) {
-  --motion-panel-x: -6px;
+  --motion-panel-x: -4px;
 }
 
 html[data-navigation-direction="forward"]::view-transition-new(menu-panel) {
-  --motion-panel-x: 8px;
+  --motion-panel-x: 4px;
 }
 
 html[data-navigation-direction="back"]::view-transition-old(menu-panel) {
-  --motion-panel-x: 6px;
+  --motion-panel-x: 4px;
 }
 
 html[data-navigation-direction="back"]::view-transition-new(menu-panel) {
-  --motion-panel-x: -8px;
+  --motion-panel-x: -4px;
 }
 
 ::view-transition-old(menu-panel) {
@@ -703,7 +701,7 @@ html[data-sehir-intro="seen"] .menu-content {
 }
 
 @keyframes motion-card-in {
-  from { opacity: 0; transform: translateY(10px) scale(0.99); }
+  from { opacity: 0; transform: translateY(4px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
@@ -713,34 +711,32 @@ html[data-sehir-intro="seen"] .menu-content {
 }
 
 @keyframes motion-cart-out {
-  to { opacity: 0; transform: translateX(-10px) scale(0.985); }
+  to { opacity: 0; transform: translateX(-4px) scale(0.995); }
 }
 
 @keyframes motion-nav-active {
-  0% { opacity: 0.65; transform: scale(0.88); }
-  68% { opacity: 1; transform: scale(1.04); }
+  0% { opacity: 0.8; transform: scale(0.97); }
   100% { opacity: 1; transform: scale(1); }
 }
 
 @keyframes motion-badge-pop {
-  0% { transform: scale(0.75); }
-  55% { transform: scale(1.14); }
-  82% { transform: scale(0.97); }
+  0% { transform: scale(0.92); }
+  60% { transform: scale(1.04); }
   100% { transform: scale(1); }
 }
 
 @keyframes motion-value-old-out {
   from { opacity: 1; transform: translateY(0) scale(1); }
-  to { opacity: 0; transform: translateY(var(--motion-value-old-y, -5px)) scale(0.92); }
+  to { opacity: 0; transform: translateY(var(--motion-value-old-y, -2px)) scale(0.98); }
 }
 
 @keyframes motion-value-new-in {
-  from { opacity: 0; transform: translateY(var(--motion-value-new-y, 5px)) scale(0.92); }
+  from { opacity: 0; transform: translateY(var(--motion-value-new-y, 2px)) scale(0.98); }
   to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 @keyframes motion-status-in {
-  from { opacity: 0; transform: translateY(4px) scale(0.9); }
+  from { opacity: 0; transform: translateY(3px) scale(0.98); }
   to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
@@ -754,7 +750,7 @@ html[data-sehir-intro="seen"] .menu-content {
 }
 
 @keyframes motion-empty-in {
-  from { opacity: 0; transform: translateY(5px); }
+  from { opacity: 0; transform: translateY(4px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
@@ -771,16 +767,16 @@ html[data-sehir-intro="seen"] .menu-content {
 }
 
 @keyframes motion-action-label-in {
-  from { opacity: 0; transform: translateY(2px) scale(0.98); }
+  from { opacity: 0; transform: translateY(2px) scale(0.99); }
   to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 @keyframes motion-panel-old-out {
-  to { opacity: 0; transform: translateX(var(--motion-panel-x, -6px)); }
+  to { opacity: 0; transform: translateX(var(--motion-panel-x, -4px)); }
 }
 
 @keyframes motion-panel-new-in {
-  from { opacity: 0; transform: translateX(var(--motion-panel-x, 8px)); }
+  from { opacity: 0; transform: translateX(var(--motion-panel-x, 4px)); }
   to { opacity: 1; transform: translateX(0); }
 }
 

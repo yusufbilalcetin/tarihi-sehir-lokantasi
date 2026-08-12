@@ -21,7 +21,7 @@ function CategoryCard({ category, index, onSelect }: { category: MenuCategory; i
   const { ref, revealed, animate } = useRevealOnce<HTMLLIElement>(`category-${category.id}`);
 
   return (
-    <li ref={ref} data-revealed={revealed} data-reveal-animate={animate} className="motion-reveal min-w-0" style={{ "--motion-delay": `${Math.min(index * 28, 112)}ms` } as React.CSSProperties}>
+    <li ref={ref} data-revealed={revealed} data-reveal-animate={animate} className="motion-reveal min-w-0" style={{ "--motion-delay": `${Math.min(index * 20, 80)}ms` } as React.CSSProperties}>
       <button
         id={`menu-category-${category.id}`}
         type="button"

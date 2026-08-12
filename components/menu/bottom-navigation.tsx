@@ -28,12 +28,11 @@ export function BottomNavigation({ active, cartCount, onChange }: { active: Menu
     badgeAnimation.current?.cancel();
     badgeAnimation.current = badge.animate(
       [
-        { transform: "scale(0.75)", offset: 0 },
-        { transform: "scale(1.14)", offset: 0.55 },
-        { transform: "scale(0.97)", offset: 0.82 },
+        { transform: "scale(0.92)", offset: 0 },
+        { transform: "scale(1.04)", offset: 0.6 },
         { transform: "scale(1)", offset: 1 },
       ],
-      { duration: 220, delay: 50, easing: "cubic-bezier(0.16, 1, 0.3, 1)" },
+      { duration: 190, delay: 30, easing: "cubic-bezier(0.22, 0.75, 0.25, 1)" },
     );
     return () => badgeAnimation.current?.cancel();
   }, [cartCount]);

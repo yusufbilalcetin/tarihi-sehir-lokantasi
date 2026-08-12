@@ -84,7 +84,7 @@ function OrderCurrencyPanel({ amount }: { amount: number }) {
       <p className="text-xs font-semibold text-muted-foreground">{t("currencyLabel")}</p>
       <div className="mt-2 flex justify-center"><CurrencySelector variant="surface" /></div>
       <p className="mt-3 text-sm text-muted-foreground">
-        {t("total")}: <strong dir="ltr" className="ms-1 text-base tabular-nums text-burgundy"><MotionValue value={formatPrice(amount)} numericValue={amount} delayMs={40} /></strong>
+        {t("total")}: <strong dir="ltr" className="ms-1 text-base tabular-nums text-burgundy"><MotionValue value={formatPrice(amount)} numericValue={amount} delayMs={20} /></strong>
       </p>
       {currency !== "TRY" ? <p className="mx-auto mt-2 max-w-md text-[11px] leading-5 text-muted-foreground">{t("approximateCurrency")}</p> : null}
     </div>
@@ -296,8 +296,8 @@ function MenuExperienceContent() {
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const previousPositions = new Map<string, DOMRect>();
     const rootStyles = window.getComputedStyle(document.documentElement);
-    const spatialDuration = Number.parseFloat(rootStyles.getPropertyValue("--motion-spatial")) || 240;
-    const spatialEasing = rootStyles.getPropertyValue("--ease-spatial").trim() || "cubic-bezier(0.2, 0.8, 0.2, 1)";
+    const spatialDuration = Number.parseFloat(rootStyles.getPropertyValue("--motion-spatial")) || 220;
+    const spatialEasing = rootStyles.getPropertyValue("--ease-spatial").trim() || "cubic-bezier(0.25, 0.8, 0.25, 1)";
 
     if (list && !reduceMotion) {
       list.querySelectorAll<HTMLElement>("[data-cart-item-id]").forEach((element) => {
@@ -328,9 +328,9 @@ function MenuExperienceContent() {
         const exitAnimation = clone.animate(
           [
             { opacity: 1, transform: "translateX(0) scale(1)" },
-            { opacity: 0, transform: "translateX(-10px) scale(0.985)" },
+            { opacity: 0, transform: "translateX(-4px) scale(0.995)" },
           ],
-          { duration: 160, easing: "cubic-bezier(0.4, 0, 1, 1)", fill: "forwards" },
+          { duration: 170, easing: "cubic-bezier(0.4, 0, 0.2, 1)", fill: "forwards" },
         );
         void exitAnimation.finished.then(() => clone.remove(), () => clone.remove());
       }
@@ -585,7 +585,7 @@ function MenuExperienceContent() {
               <>
                 <div ref={cartListRef} className="mt-6 space-y-3">{cart.map((item, index) => <CartItem key={item.id} item={item} motionIndex={index} onDecrease={() => updateQuantity(item.id, -1)} onIncrease={() => updateQuantity(item.id, 1)} onRemove={() => removeCartItem(item.id)} />)}</div>
                 <section className="mt-5 rounded-2xl border bg-card p-5">
-                  <dl className="space-y-3 text-sm"><div className="flex justify-between text-muted-foreground"><dt>{t("subtotal")}</dt><dd dir="ltr"><MotionValue value={formatPrice(subtotal)} numericValue={subtotal} delayMs={40} /></dd></div><div className="flex justify-between text-muted-foreground"><dt>{t("serviceFee")}</dt><dd dir="ltr"><MotionValue value={formatPrice(0)} numericValue={0} delayMs={50} /></dd></div><div className="flex justify-between border-t pt-3 text-base font-bold"><dt>{t("total")}</dt><dd dir="ltr" className="text-burgundy"><MotionValue value={formatPrice(subtotal)} numericValue={subtotal} delayMs={60} /></dd></div></dl>
+                  <dl className="space-y-3 text-sm"><div className="flex justify-between text-muted-foreground"><dt>{t("subtotal")}</dt><dd dir="ltr"><MotionValue value={formatPrice(subtotal)} numericValue={subtotal} delayMs={20} /></dd></div><div className="flex justify-between text-muted-foreground"><dt>{t("serviceFee")}</dt><dd dir="ltr"><MotionValue value={formatPrice(0)} numericValue={0} delayMs={30} /></dd></div><div className="flex justify-between border-t pt-3 text-base font-bold"><dt>{t("total")}</dt><dd dir="ltr" className="text-burgundy"><MotionValue value={formatPrice(subtotal)} numericValue={subtotal} delayMs={40} /></dd></div></dl>
                   <OrderCurrencyPanel amount={subtotal} />
                   <Button type="button" onClick={sendOrder} className="motion-cta mt-5 h-12 w-full rounded-xl text-sm font-bold"><Send className="size-4" /> {t("sendOrder")}</Button>
                 </section>

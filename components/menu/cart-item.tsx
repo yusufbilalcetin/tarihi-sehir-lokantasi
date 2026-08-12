@@ -28,7 +28,7 @@ export function CartItem({ item, motionIndex = 0, onDecrease, onIncrease, onRemo
       <div className="relative aspect-square overflow-hidden rounded-xl bg-muted"><Image src={item.product.image} alt={name} fill sizes="88px" className="motion-product-image object-cover" onLoad={(event) => { event.currentTarget.dataset.loaded = "true"; }} /></div>
       <div className="min-w-0">
         <div className="flex items-start justify-between gap-2">
-          <div><h3 className="font-heading text-base font-semibold">{name}</h3><p dir="ltr" className="mt-0.5 text-xs text-muted-foreground"><MotionValue value={`${formatPrice(item.unitPrice)} / ${t("each")}`} numericValue={item.unitPrice} delayMs={Math.min(motionIndex * 20, 60)} /></p></div>
+          <div><h3 className="font-heading text-base font-semibold">{name}</h3><p dir="ltr" className="mt-0.5 text-xs text-muted-foreground"><MotionValue value={`${formatPrice(item.unitPrice)} / ${t("each")}`} numericValue={item.unitPrice} delayMs={Math.min(motionIndex * 10, 30)} /></p></div>
         </div>
         {item.note ? <p className="mt-2 rounded-lg bg-muted px-2.5 py-1.5 text-xs text-muted-foreground">{t("note")}: {item.note}</p> : null}
         <div className="mt-3 flex items-center justify-between gap-3">
@@ -47,7 +47,7 @@ export function CartItem({ item, motionIndex = 0, onDecrease, onIncrease, onRemo
             <span className="min-w-6 text-center text-sm font-bold tabular-nums"><MotionValue value={formatNumber(item.quantity)} numericValue={item.quantity} direction={quantityDirection} /></span>
             <button type="button" onClick={() => { setQuantityDirection("up"); onIncrease(); }} className="motion-press motion-ripple touch-target flex items-center justify-center px-2.5" aria-label={t("increaseQuantity")}><Plus className="size-3.5" /></button>
           </div>
-          <strong dir="ltr" className="text-sm tabular-nums text-burgundy"><MotionValue value={formatPrice(item.unitPrice * item.quantity)} numericValue={item.unitPrice * item.quantity} direction={quantityDirection} delayMs={40 + Math.min(motionIndex * 20, 60)} /></strong>
+          <strong dir="ltr" className="text-sm tabular-nums text-burgundy"><MotionValue value={formatPrice(item.unitPrice * item.quantity)} numericValue={item.unitPrice * item.quantity} direction={quantityDirection} delayMs={20 + Math.min(motionIndex * 10, 20)} /></strong>
         </div>
       </div>
     </article>
