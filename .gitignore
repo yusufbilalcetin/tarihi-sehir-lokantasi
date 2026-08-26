@@ -33,6 +33,7 @@ yarn-error.log*
 # Local environment files
 .env*
 !.env.example
+!.env.integration.example
 
 # vercel
 .vercel
@@ -40,3 +41,12 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+.phase7d3-fixture.json
+
+# The local print agent's device map and journal stay on the restaurant's
+# machine; the config may name LAN addresses and must never be committed.
+tools/printer-agent/printer-agent.config.json
+tools/printer-agent/*.journal.json
+
+# Personal editor state, not project configuration.
+.vscode/

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   Banknote,
   Check,
@@ -10,6 +10,7 @@ import {
   CreditCard,
   Ellipsis,
   ReceiptText,
+  Split,
   TrendingUp,
   UsersRound,
   WalletCards,
@@ -29,8 +30,15 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { BillOperationsSheet } from "@/components/cashier/bill-operations-sheet";
+import { ShiftPanel } from "@/components/cashier/shift-panel";
+import { RealtimeStatus } from "@/components/staff/realtime-status";
+import { staffOrderToViewModel, staffTableToViewModel } from "@/lib/adapters/staff-view-model";
+import { ApiClientError, newIdempotencyKey } from "@/lib/api/client";
+import { cashierShiftApi, ledgerApi, paymentApi, staffApi } from "@/lib/api/endpoints";
+import { useApiResource } from "@/lib/hooks/use-api-resource";
+import { useStaffRealtime } from "@/lib/realtime/use-staff-realtime";
 import { formatCurrency } from "@/lib/format";
-import { orders, restaurantTables } from "@/lib/mock-data";
 import { cn } from "@/lib/utils";
 import type { Order, Payment, RestaurantTable } from "@/types";
 
@@ -39,12 +47,17 @@ type PaymentMethod = Payment["method"];
 interface OpenBill {
   table: RestaurantTable;
   order: Order;
+  /** True when the guest has already asked for the bill from the QR menu. */
+  billRequested: boolean;
 }
 
-const openBills: OpenBill[] = restaurantTables.flatMap((table) => {
-  const order = orders.find((candidate) => candidate.tableId === table.id);
-  return order && typeof table.total === "number" ? [{ table, order }] : [];
-});
+const CASHIER_POLL_MS = 15_000;
+
+const API_PAYMENT_METHOD: Record<PaymentMethod, "CASH" | "CARD" | "OTHER"> = {
+  cash: "CASH",
+  card: "CARD",
+  other: "OTHER",
+};
 
 const paymentMethods: {
   id: PaymentMethod;
@@ -74,72 +87,208 @@ function formatDate(date: Date | null) {
   }).format(date);
 }
 
-export function CashierDashboard() {
-  const defaultBill = openBills.find((bill) => bill.table.status === "bill-requested") ?? openBills[0];
-  const [selectedTableId, setSelectedTableId] = useState(defaultBill?.table.id ?? "");
-  const [paidTableIds, setPaidTableIds] = useState<string[]>([]);
+/**
+ * `inWindow` renders the till as a module-window body. The pane structure is
+ * untouched: open bills on the left, the selected bill and its payment panel
+ * on the right is what the till already does well, and re-cutting a payment
+ * surface is not a change to make for visual symmetry alone.
+ */
+export function CashierDashboard({ inWindow = false }: { inWindow?: boolean } = {}) {
+  const [selectedTableId, setSelectedTableId] = useState<string | null>(null);
+  const [collectedTotal, setCollectedTotal] = useState(0);
+  const [lastPaid, setLastPaid] = useState<{ tableName: string; method: PaymentMethod } | null>(null);
   const [methodsByTable, setMethodsByTable] = useState<Record<string, PaymentMethod>>({});
+  const [collecting, setCollecting] = useState(false);
+  const [operationsOpen, setOperationsOpen] = useState(false);
   const [now, setNow] = useState<Date | null>(null);
 
+  const loadCashier = useCallback(async (signal: AbortSignal) => {
+    const [tables, orders, calls] = await Promise.all([
+      staffApi.tables(signal),
+      // The till only ever collects a served, unsettled order.
+      staffApi.orders({ open: true }, signal),
+      staffApi.calls(undefined, signal),
+    ]);
+    return { tables: tables.tables, orders: orders.orders, calls: calls.calls };
+  }, []);
+  const resource = useApiResource(loadCashier, { pollMs: CASHIER_POLL_MS });
+  const { refetch } = resource;
+
+  // The cash drawer state is its own resource: collection is refused by the
+  // backend without an open shift, and the UI must not offer what the server
+  // will reject.
+  const loadShift = useCallback((signal: AbortSignal) => cashierShiftApi.current(signal), []);
+  const shiftResource = useApiResource(loadShift, { pollMs: CASHIER_POLL_MS });
+  const refetchShift = shiftResource.refetch;
+  const shiftOpen = Boolean(shiftResource.data?.shift);
+
+  const realtimeStatus = useStaffRealtime({
+    onEvent: useCallback(() => void refetch(), [refetch]),
+    onResync: useCallback(() => void refetch(), [refetch]),
+  });
+
   useEffect(() => {
-    const updateClock = () => setNow(new Date());
-    updateClock();
-    const interval = window.setInterval(updateClock, 30_000);
-    return () => window.clearInterval(interval);
+    const timer = window.setTimeout(() => setNow(new Date()), 0);
+    const interval = window.setInterval(() => setNow(new Date()), 30_000);
+    return () => {
+      window.clearTimeout(timer);
+      window.clearInterval(interval);
+    };
   }, []);
 
-  const selectedBill = openBills.find((bill) => bill.table.id === selectedTableId) ?? openBills[0];
+  const openBills = useMemo<OpenBill[]>(() => {
+    const tables = (resource.data?.tables ?? []).map((table) => staffTableToViewModel(table));
+    const orders = (resource.data?.orders ?? []).map((order) => staffOrderToViewModel(order));
+    const billRequestTableIds = new Set(
+      (resource.data?.calls ?? [])
+        .filter(
+          (call) =>
+            call.type === "BILL_REQUEST" &&
+            (call.status === "OPEN" || call.status === "ACKNOWLEDGED"),
+        )
+        .map((call) => call.table.id),
+    );
+
+    return tables.flatMap((table) => {
+      // Only a served order is collectable; the API rejects anything earlier.
+      const order = orders.find(
+        (candidate) => candidate.tableId === table.id && candidate.status === "served",
+      );
+      return order ? [{ table, order, billRequested: billRequestTableIds.has(table.id) }] : [];
+    });
+  }, [resource.data]);
+
+  const selectedBill =
+    openBills.find((bill) => bill.table.id === selectedTableId) ??
+    openBills.find((bill) => bill.billRequested) ??
+    openBills[0];
   const selectedMethod = selectedBill ? methodsByTable[selectedBill.table.id] ?? "card" : "card";
-  const selectedIsPaid = selectedBill ? paidTableIds.includes(selectedBill.table.id) : false;
-  const visibleBills = useMemo(
-    () => openBills.filter((bill) => !paidTableIds.includes(bill.table.id)),
-    [paidTableIds],
+  const visibleBills = openBills;
+
+  // The ledger is the server's money view of the selected bill; the counter
+  // never derives collected or refunded figures itself.
+  const selectedOrderId = selectedBill?.order.id ?? null;
+  const loadLedger = useCallback(
+    (signal: AbortSignal) =>
+      selectedOrderId
+        ? ledgerApi.get(selectedOrderId, signal)
+        : Promise.resolve(null),
+    [selectedOrderId],
+  );
+  const ledger = useApiResource(loadLedger, { enabled: Boolean(selectedOrderId) });
+  const refetchLedger = ledger.refetch;
+  const ledgerPayments = useMemo(
+    () =>
+      (ledger.data?.payments ?? [])
+        .filter((payment) => payment.status === "COMPLETED")
+        .map((payment) => ({
+          id: payment.id,
+          amount: payment.amount,
+          refundedAmount: payment.refundedAmount,
+          method: payment.method,
+          at: new Intl.DateTimeFormat("tr-TR", {
+            hour: "2-digit",
+            minute: "2-digit",
+          }).format(new Date(payment.processedAt)),
+        })),
+    [ledger.data],
   );
 
   const metrics = useMemo(() => {
-    const unpaidBills = openBills.filter((bill) => !paidTableIds.includes(bill.table.id));
-    const paidBills = openBills.filter((bill) => paidTableIds.includes(bill.table.id));
-    const outstanding = unpaidBills.reduce((sum, bill) => sum + (bill.table.total ?? bill.order.total), 0);
-    const collected = paidBills.reduce((sum, bill) => sum + (bill.table.total ?? bill.order.total), 0);
-    const paymentWaiting = unpaidBills.filter((bill) => bill.table.status === "bill-requested").length;
-
+    const outstanding = openBills.reduce((sum, bill) => sum + bill.order.total, 0);
     return {
       outstanding,
-      collected,
-      paymentWaiting,
-      unpaidCount: unpaidBills.length,
-      average: unpaidBills.length ? outstanding / unpaidBills.length : 0,
+      collected: collectedTotal,
+      paymentWaiting: openBills.filter((bill) => bill.billRequested).length,
+      unpaidCount: openBills.length,
+      average: openBills.length ? outstanding / openBills.length : 0,
     };
-  }, [paidTableIds]);
+  }, [collectedTotal, openBills]);
 
   const selectPaymentMethod = (method: PaymentMethod) => {
-    if (!selectedBill || selectedIsPaid) return;
+    if (!selectedBill || collecting) return;
     setMethodsByTable((current) => ({ ...current, [selectedBill.table.id]: method }));
   };
 
-  const takePayment = () => {
-    if (!selectedBill || selectedIsPaid) return;
+  async function takePayment() {
+    if (!selectedBill || collecting || !shiftOpen) return;
+    setCollecting(true);
+    const bill = selectedBill;
+    try {
+      const payment = await paymentApi.collect(
+        { orderId: bill.order.id, method: API_PAYMENT_METHOD[selectedMethod] },
+        newIdempotencyKey(),
+      );
+      setCollectedTotal((current) => current + Number(payment.amount));
+      setLastPaid({ tableName: bill.table.name, method: selectedMethod });
+      setSelectedTableId(null);
+      await refetch();
+      await refetchShift();
+      toast.success(`${bill.table.name} ödemesi alındı`, {
+        description: `${formatCurrency(Number(payment.amount))} tahsil edildi.`,
+      });
+    } catch (error) {
+      // Never show a paid state for a rejected collection.
+      toast.error(error instanceof ApiClientError ? error.message : "Ödeme alınamadı.");
+      // A conflict means the bill or the drawer moved under us — already paid,
+      // shift closed, check settled elsewhere. Re-read both so the operator is
+      // looking at what is actually true before trying again.
+      if (error instanceof ApiClientError && error.status === 409) {
+        await refetch();
+        await refetchShift();
+      }
+    } finally {
+      setCollecting(false);
+    }
+  }
 
-    setPaidTableIds((current) => [...current, selectedBill.table.id]);
-    toast.success(`${selectedBill.table.name} ödemesi alındı`, {
-      description: `${formatCurrency(selectedBill.table.total ?? selectedBill.order.total)} tahsil edildi.`,
-    });
-  };
+  // The till panel is always reachable, including with no open bills: a shift
+  // has to be openable before the first guest asks to pay, and closeable after
+  // the last one has left.
+  const shiftSection = shiftResource.data ? (
+    <ShiftPanel
+      state={shiftResource.data}
+      onChanged={async () => {
+        await refetchShift();
+        await refetch();
+      }}
+    />
+  ) : null;
 
   if (!selectedBill) {
     return (
-      <main className="flex min-h-[100dvh] items-center justify-center bg-background p-6">
-        <div className="max-w-md text-center">
-          <CircleCheckBig className="mx-auto size-10 text-olive" aria-hidden="true" />
-          <h1 className="mt-4 font-heading text-2xl font-semibold">Açık hesap bulunmuyor</h1>
-          <p className="mt-2 text-sm text-muted-foreground">Yeni bir masa hesabı açıldığında burada görünecek.</p>
+      <main className={inWindow ? "p-4 sm:p-6" : "min-h-[100dvh] bg-background p-4 sm:p-6"}>
+        <div className="mx-auto max-w-3xl">
+          {shiftSection}
+          <div className="mt-6 text-center">
+            <CircleCheckBig className="mx-auto size-10 text-olive" aria-hidden="true" />
+            <h1 className="mt-4 font-heading text-2xl font-semibold">
+              {resource.loading ? "Hesaplar yükleniyor…" : "Açık hesap bulunmuyor"}
+            </h1>
+            <p className="mt-2 text-sm text-muted-foreground">
+              {resource.error
+                ? resource.error.message
+                : resource.loading
+                  ? // While the first read is still in flight nothing is known
+                    // yet, so the empty-state sentence below would be a claim
+                    // rather than a fact.
+                    "Açık masa hesapları getiriliyor."
+                  : lastPaid
+                    ? `${lastPaid.tableName} hesabı kapatıldı. Yeni bir masa hesabı açıldığında burada görünecek.`
+                    : "Servis edilen bir sipariş oluştuğunda burada görünecek."}
+            </p>
+            <div className="mt-4 flex justify-center">
+              <RealtimeStatus status={realtimeStatus} />
+            </div>
+          </div>
         </div>
       </main>
     );
   }
 
   return (
-    <main className="min-h-[100dvh] bg-background">
+    <main className={inWindow ? "" : "min-h-[100dvh] bg-background"}>
+      {inWindow ? null : (
       <header className="border-b border-white/10 bg-olive text-[#FFFDF8]">
         <div className="mx-auto flex max-w-[1600px] items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
           <div className="flex min-w-0 items-center gap-3">
@@ -147,8 +296,15 @@ export function CashierDashboard() {
             <div className="min-w-0">
               <div className="flex items-center gap-2.5">
                 <h1 className="truncate font-heading text-2xl font-semibold tracking-tight sm:text-3xl">Kasa Paneli</h1>
-                <Badge className="hidden border border-gold/30 bg-gold/10 text-[#F7E5C2] sm:inline-flex">
-                  Vardiya açık
+                <Badge
+                  className={cn(
+                    "hidden border sm:inline-flex",
+                    shiftOpen
+                      ? "border-gold/30 bg-gold/10 text-[#F7E5C2]"
+                      : "border-white/25 bg-white/5 text-[#F5EBDD]/80",
+                  )}
+                >
+                  {shiftOpen ? "Açık Vardiya" : "Kasa Kapalı"}
                 </Badge>
               </div>
               <p className="mt-1 truncate text-sm text-[#F5EBDD]/65">Hesap ve ödeme yönetimi</p>
@@ -163,8 +319,13 @@ export function CashierDashboard() {
           </div>
         </div>
       </header>
+      )}
 
-      <div className="mx-auto max-w-[1600px] px-4 py-5 sm:px-6 lg:px-8 lg:py-7">
+      <div className={inWindow ? "px-4 py-4 sm:px-6" : "mx-auto max-w-[1600px] px-4 py-5 sm:px-6 lg:px-8 lg:py-7"}>
+        <section className="mb-5" aria-label="Kasa vardiyası">
+          {shiftSection}
+        </section>
+
         <section className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4" aria-label="Kasa özeti">
           <StatCard
             label="Açık hesap"
@@ -181,8 +342,8 @@ export function CashierDashboard() {
           />
           <StatCard
             label="Bugün tahsilat"
-            value={formatCurrency(18_460 + metrics.collected)}
-            helper="Örnek vardiya toplamı"
+            value={formatCurrency(metrics.collected)}
+            helper="Bu oturumda tahsil edilen"
             icon={CircleDollarSign}
             tone="success"
           />
@@ -209,9 +370,8 @@ export function CashierDashboard() {
             </CardHeader>
             <CardContent className="p-2.5">
               <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-1" aria-label="Açık masa hesapları">
-                {visibleBills.length ? visibleBills.map(({ table, order }) => {
+                {visibleBills.length ? visibleBills.map(({ table, order, billRequested }) => {
                   const isSelected = table.id === selectedBill.table.id;
-                  const isPaid = paidTableIds.includes(table.id);
 
                   return (
                     <button
@@ -230,17 +390,17 @@ export function CashierDashboard() {
                         <span>
                           <span className="block font-heading text-lg font-semibold leading-5 text-foreground">{table.name}</span>
                           <span className="mt-1.5 block text-xs font-medium text-muted-foreground">
-                            {order.orderNumber} · {table.activeMinutes ?? order.elapsedMinutes} dk açık
+                            {order.orderNumber} · {order.elapsedMinutes} dk açık
                           </span>
                         </span>
                         <span className="text-base font-extrabold tabular-nums text-foreground">
-                          {formatCurrency(table.total ?? order.total)}
+                          {formatCurrency(order.total)}
                         </span>
                       </span>
                       <span className="mt-3 flex items-center justify-between gap-2">
-                        {isPaid ? (
-                          <Badge variant="outline" className="border-emerald-200 bg-emerald-50 text-emerald-800">
-                            <Check className="size-3" aria-hidden="true" /> Ödendi
+                        {billRequested ? (
+                          <Badge variant="outline" className="border-status-warning/25 bg-status-warning-tint text-status-warning">
+                            <ReceiptText className="size-3" aria-hidden="true" /> Hesap istiyor
                           </Badge>
                         ) : (
                           <StatusBadge status={table.status} />
@@ -250,10 +410,10 @@ export function CashierDashboard() {
                     </button>
                   );
                 }) : (
-                  <div className="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-6 text-center">
-                    <CircleCheckBig className="mx-auto size-7 text-emerald-700" aria-hidden="true" />
-                    <p className="mt-2 text-sm font-bold text-emerald-950">Tüm açık hesaplar kapandı</p>
-                    <p className="mt-1 text-xs text-emerald-800">Yeni hesap talepleri burada görünecek.</p>
+                  <div className="rounded-xl border border-status-success/25 bg-status-success-tint px-4 py-6 text-center">
+                    <CircleCheckBig className="mx-auto size-7 text-status-success" aria-hidden="true" />
+                    <p className="mt-2 text-sm font-bold text-status-success">Tüm açık hesaplar kapandı</p>
+                    <p className="mt-1 text-xs text-status-success">Yeni hesap talepleri burada görünecek.</p>
                   </div>
                 )}
               </div>
@@ -266,19 +426,14 @@ export function CashierDashboard() {
                 <div>
                   <div className="flex flex-wrap items-center gap-2.5">
                     <CardTitle className="text-2xl">{selectedBill.table.name}</CardTitle>
-                    {selectedIsPaid ? (
-                      <Badge variant="outline" className="border-emerald-200 bg-emerald-50 text-emerald-800">
-                        Ödendi
-                      </Badge>
-                    ) : (
-                      <StatusBadge status="pending" label="Ödeme Bekliyor" />
-                    )}
+                    <StatusBadge status="pending" label="Ödeme Bekliyor" />
+                    <RealtimeStatus status={realtimeStatus} />
                   </div>
                   <p className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-muted-foreground">
                     <span className="font-semibold text-foreground">{selectedBill.order.orderNumber}</span>
                     <span className="inline-flex items-center gap-1">
                       <Clock3 className="size-3.5" aria-hidden="true" />
-                      {selectedBill.table.activeMinutes ?? selectedBill.order.elapsedMinutes} dk
+                      {selectedBill.order.elapsedMinutes} dk
                     </span>
                     <span className="inline-flex items-center gap-1">
                       <UsersRound className="size-3.5" aria-hidden="true" />
@@ -289,7 +444,7 @@ export function CashierDashboard() {
                 <div className="sm:text-right">
                   <p className="text-xs font-medium text-muted-foreground">Ödenecek toplam</p>
                   <p className="mt-1 text-3xl font-extrabold tabular-nums tracking-tight text-burgundy">
-                    {formatCurrency(selectedBill.table.total ?? selectedBill.order.total)}
+                    {formatCurrency(selectedBill.order.total)}
                   </p>
                 </div>
               </div>
@@ -326,17 +481,18 @@ export function CashierDashboard() {
               </div>
 
               <div className="px-4 py-4 sm:px-5 sm:py-5">
-                {selectedIsPaid ? (
-                  <div className="flex min-h-44 flex-col items-center justify-center rounded-xl border border-emerald-200 bg-emerald-50/80 px-5 py-7 text-center">
-                    <div className="flex size-12 items-center justify-center rounded-xl bg-emerald-700 text-white">
-                      <CircleCheckBig className="size-6" aria-hidden="true" />
+                {lastPaid ? (
+                  <div className="mb-4 flex flex-col items-center justify-center rounded-xl border border-status-success/25 bg-status-success-tint/80 px-5 py-5 text-center" aria-live="polite">
+                    <div className="flex size-10 items-center justify-center rounded-xl bg-status-success text-white">
+                      <CircleCheckBig className="size-5" aria-hidden="true" />
                     </div>
-                    <h2 className="mt-3 font-heading text-xl font-semibold text-emerald-950">Ödeme alındı</h2>
-                    <p className="mt-1 max-w-sm text-sm leading-6 text-emerald-800">
-                      {selectedBill.table.name} hesabı {selectedMethod === "cash" ? "nakit olarak" : selectedMethod === "card" ? "kartla" : "diğer yöntemle"} kapatıldı.
+                    <h2 className="mt-2 font-heading text-lg font-semibold text-status-success">Ödeme alındı</h2>
+                    <p className="mt-1 max-w-sm text-sm leading-6 text-status-success">
+                      {lastPaid.tableName} hesabı {lastPaid.method === "cash" ? "nakit olarak" : lastPaid.method === "card" ? "kartla" : "diğer yöntemle"} kapatıldı.
                     </p>
                   </div>
-                ) : (
+                ) : null}
+                {(
                   <div>
                     <fieldset>
                       <legend className="font-heading text-lg font-semibold">Ödeme yöntemi</legend>
@@ -373,9 +529,39 @@ export function CashierDashboard() {
                       </div>
                     </fieldset>
 
-                    <Button type="button" size="lg" className="mt-4 h-12 w-full bg-burgundy text-base font-bold text-primary-foreground hover:bg-burgundy/90" onClick={takePayment}>
+                    {/* Disabling the button is convenience only: the backend
+                        refuses a collection without an open shift regardless. */}
+                    {!shiftOpen ? (
+                      <p
+                        className="mt-4 rounded-lg border border-burgundy/25 bg-burgundy/[0.05] px-3 py-2 text-sm font-medium text-burgundy"
+                        role="status"
+                      >
+                        Kasa kapalı. Tahsilat ve iade için önce kasayı açın.
+                      </p>
+                    ) : null}
+                    <Button
+                      type="button"
+                      size="lg"
+                      disabled={collecting || !shiftOpen}
+                      aria-busy={collecting}
+                      className="mt-4 h-12 w-full bg-burgundy text-base font-bold text-primary-foreground hover:bg-burgundy/90"
+                      onClick={() => void takePayment()}
+                    >
                       <Check className="size-5" aria-hidden="true" />
-                      {formatCurrency(selectedBill.table.total ?? selectedBill.order.total)} tahsil et
+                      {formatCurrency(selectedBill.order.total)} tahsil et
+                    </Button>
+
+                    {/* Split bills, part payments and refunds live in a sheet so
+                        the one-tap collection above stays the fast path. */}
+                    <Button
+                      type="button"
+                      variant="outline"
+                      className="mt-2 h-11 w-full font-semibold"
+                      disabled={!shiftOpen}
+                      onClick={() => setOperationsOpen(true)}
+                    >
+                      <Split className="size-4" aria-hidden="true" />
+                      Hesap İşlemleri
                     </Button>
                   </div>
                 )}
@@ -384,6 +570,24 @@ export function CashierDashboard() {
           </Card>
         </div>
       </div>
+
+      {selectedBill ? (
+        <BillOperationsSheet
+          open={operationsOpen}
+          orderId={selectedBill.order.id}
+          orderNumber={selectedBill.order.orderNumber}
+          tableName={selectedBill.table.name}
+          orderTotal={selectedBill.order.total.toFixed(2)}
+          payments={ledgerPayments}
+          onOpenChange={setOperationsOpen}
+          onChanged={async () => {
+            await refetch();
+            await refetchLedger();
+            // A refund inside the sheet moves this shift's drawer figures.
+            await refetchShift();
+          }}
+        />
+      ) : null}
     </main>
   );
 }

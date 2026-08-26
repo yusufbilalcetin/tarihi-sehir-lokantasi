@@ -8,7 +8,8 @@ export type TableStatus =
   | "dining"
   | "waiter-call"
   | "bill-requested"
-  | "cleaning";
+  | "cleaning"
+  | "inactive";
 
 export type OrderStatus =
   | "pending"
@@ -26,6 +27,10 @@ export interface Category {
   productCount: number;
   active: boolean;
   sortOrder: number;
+  /** Cover artwork; absent means the menu falls back to neutral artwork. */
+  imageUrl?: string | null;
+  /** Stable translation-catalog key; database rows use UUID ids. */
+  i18nKey?: string;
 }
 
 export interface Product {
@@ -41,7 +46,19 @@ export interface Product {
   tags: string[];
   status: ProductStatus;
   featured?: boolean;
+  /** Sales-derived bounded popularity snapshot; distinct from curated featured. */
+  popular?: boolean;
+  /** Stable translation-catalog key; database rows use UUID ids. */
+  i18nKey?: string;
 }
+
+export type OrderItemStatus =
+  | "pending"
+  | "preparing"
+  | "ready"
+  | "served"
+  | "cancelled"
+  | "voided";
 
 export interface OrderItem {
   id: string;
@@ -51,12 +68,19 @@ export interface OrderItem {
   unitPrice: number;
   note?: string;
   image?: string;
+  status?: OrderItemStatus;
 }
 
 export interface Order {
   id: string;
   orderNumber: string;
-  tableId: string;
+  /** Null on takeaway and courier orders, which belong to no table. */
+  tableId: string | null;
+  /**
+   * Where the order is, in words. A table name for dine-in; "Paket Sipariş"
+   * or "Kurye Siparişi" otherwise. Every screen that shows an order's location
+   * reads this one field, so none of them has to know about channels.
+   */
   tableName: string;
   createdAt: string;
   elapsedMinutes: number;
@@ -110,6 +134,7 @@ export type WaiterCallType =
   | "Ekmek istiyorum"
   | "Ek servis istiyorum"
   | "Hesap istiyor"
+  | "Masa notu"
   | "Diğer";
 
 export interface WaiterCall {

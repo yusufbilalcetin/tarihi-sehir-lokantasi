@@ -17,10 +17,6 @@ export function getLoadedMenuCatalog(locale: string) {
   return catalogCache.get(locale) ?? catalogCache.get(locale.split("-")[0] ?? locale);
 }
 
-export function hasMenuCatalog(locale: string) {
-  return Boolean(localeCatalogLoaders[locale] ?? localeCatalogLoaders[locale.split("-")[0] ?? locale]);
-}
-
 export async function loadMenuCatalog(locale: string) {
   const catalogCode = localeCatalogLoaders[locale]
     ? locale

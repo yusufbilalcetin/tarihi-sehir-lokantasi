@@ -36,6 +36,15 @@ export function isExchangeRateSnapshot(value: unknown): value is ExchangeRateSna
     && Number.isFinite(Date.parse(candidate.updatedAt));
 }
 
+/**
+ * Guest-facing prices: menu cards, the cart, the subtotal and the order total.
+ *
+ * Kuruş are shown for TRY as well as for the converted currencies. They used to
+ * be dropped, which looked tidy on a menu card of round prices but rounded the
+ * guest's own cart: a ₺348,40 basket read "₺348" and a ₺75,50 item read "₺76",
+ * while the till and the receipt charged the true amount. What the guest agrees
+ * to has to be what they are asked to pay.
+ */
 export function formatMenuPrice(
   priceTRY: number,
   currency: MenuCurrency,
@@ -45,7 +54,7 @@ export function formatMenuPrice(
   return new Intl.NumberFormat(getMenuLanguage(language)?.locale ?? "tr-TR", {
     style: "currency",
     currency,
-    minimumFractionDigits: currency === "TRY" ? 0 : 2,
-    maximumFractionDigits: currency === "TRY" ? 0 : 2,
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
   }).format(priceTRY * rates[currency]);
 }

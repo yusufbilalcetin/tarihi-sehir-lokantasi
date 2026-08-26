@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { DashboardView } from "@/components/admin/dashboard-view";
+import { DashboardViewModule } from "@/components/admin/dashboard-module";
 
 export const metadata: Metadata = { title: "Admin Dashboard" };
 
-export default function AdminDashboardPage() {
-  return <DashboardView />;
+export default function AdminDashboardViewPage() {
+  return <DashboardViewModule />;
 }

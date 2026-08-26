@@ -19,9 +19,12 @@ import {
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { StatusBadge } from "@/components/shared/status-badge";
-import { categories, products as initialProducts } from "@/lib/mock-data";
+import { RealtimeStatus } from "@/components/staff/realtime-status";
+import { useAdminMenu } from "@/components/admin/use-admin-menu";
+import { adminApi } from "@/lib/api/endpoints";
 import { formatCurrency } from "@/lib/format";
-import type { Product, ProductStatus } from "@/types";
+import { MENU_PLACEHOLDER_IMAGE } from "@/lib/adapters/menu-view-model";
+import type { Category, Product, ProductStatus } from "@/types";
 
 interface ProductFormData {
   name: string;
@@ -37,19 +40,24 @@ interface ProductFormData {
   image: string;
 }
 
-const emptyForm: ProductFormData = {
-  name: "",
-  description: "",
-  price: "",
-  categoryId: categories[1]?.id ?? categories[0].id,
-  weight: "",
-  tags: "",
-  allergens: "",
-  active: true,
-  soldOut: false,
-  featured: false,
-  image: "/images/food/mercimek-corbasi.png",
-};
+// A product with no picture must never borrow another dish's photograph.
+const PLACEHOLDER_IMAGE = MENU_PLACEHOLDER_IMAGE;
+
+function emptyForm(categoryId: string): ProductFormData {
+  return {
+    name: "",
+    description: "",
+    price: "",
+    categoryId,
+    weight: "",
+    tags: "",
+    allergens: "",
+    active: true,
+    soldOut: false,
+    featured: false,
+    image: PLACEHOLDER_IMAGE,
+  };
+}
 
 function toFormData(product: Product): ProductFormData {
   return {
@@ -69,16 +77,23 @@ function toFormData(product: Product): ProductFormData {
 
 function ProductForm({
   product,
+  categories,
+  saving,
   onOpenChange,
   onSave,
 }: {
   product: Product | null;
+  categories: readonly Category[];
+  saving: boolean;
   onOpenChange: (open: boolean) => void;
-  onSave: (form: ProductFormData) => void;
+  onSave: (form: ProductFormData, imageFile: File | null) => void;
 }) {
-  const initialForm = product ? toFormData(product) : emptyForm;
+  const initialForm = product ? toFormData(product) : emptyForm(categories[0]?.id ?? "");
   const [form, setForm] = useState<ProductFormData>(initialForm);
   const [previewUrl, setPreviewUrl] = useState(initialForm.image);
+  // The file is uploaded after the product row exists, so a new product gets a
+  // real storage path instead of a data URL.
+  const [imageFile, setImageFile] = useState<File | null>(null);
 
   function update<K extends keyof ProductFormData>(key: K, value: ProductFormData[K]) {
     setForm((current) => ({ ...current, [key]: value }));
@@ -86,11 +101,10 @@ function ProductForm({
 
   function handleFile(file?: File) {
     if (!file) return;
+    setImageFile(file);
     const reader = new FileReader();
     reader.addEventListener("load", () => {
-      if (typeof reader.result !== "string") return;
-      setPreviewUrl(reader.result);
-      update("image", reader.result);
+      if (typeof reader.result === "string") setPreviewUrl(reader.result);
     }, { once: true });
     reader.readAsDataURL(file);
   }
@@ -101,7 +115,11 @@ function ProductForm({
       toast.error("Ürün adı ve geçerli bir fiyat girin.");
       return;
     }
-    onSave(form);
+    if (!form.categoryId) {
+      toast.error("Önce bir kategori oluşturun.");
+      return;
+    }
+    onSave(form, imageFile);
   }
 
   return (
@@ -110,7 +128,7 @@ function ProductForm({
         <form onSubmit={handleSubmit} className="flex min-h-full flex-col">
           <SheetHeader className="border-b px-5 py-5 pr-12 sm:px-6">
             <SheetTitle className="text-xl">{product ? "Ürünü düzenle" : "Yeni ürün"}</SheetTitle>
-            <SheetDescription>QR menüde gösterilecek ürün bilgilerini düzenleyin. Kaydetme işlemi demo state üzerinde çalışır.</SheetDescription>
+            <SheetDescription>QR menüde gösterilecek ürün bilgilerini düzenleyin.</SheetDescription>
           </SheetHeader>
 
           <div className="grid gap-6 px-5 pb-6 sm:px-6">
@@ -121,7 +139,7 @@ function ProductForm({
               <div className="flex flex-col justify-center rounded-2xl border border-dashed bg-background p-4">
                 <UploadCloud className="size-6 text-burgundy" />
                 <p className="mt-2 text-sm font-extrabold">Ürün fotoğrafı</p>
-                <p className="mt-1 text-xs leading-5 text-muted-foreground">JPG veya PNG seçin. Bu demoda dosya yalnızca yerel önizleme için kullanılır.</p>
+                <p className="mt-1 text-xs leading-5 text-muted-foreground">JPG, PNG, WebP veya AVIF seçin. En fazla 5 MB.</p>
                 <label className="mt-3 inline-flex h-9 w-fit cursor-pointer items-center gap-2 rounded-lg border bg-card px-3 text-xs font-bold transition-colors hover:bg-muted">
                   <ImagePlus className="size-4" /> Görsel Seç
                   <input type="file" accept="image/png,image/jpeg,image/webp" className="sr-only" onChange={(event) => handleFile(event.target.files?.[0])} />
@@ -137,11 +155,11 @@ function ProductForm({
                 <Textarea value={form.description} onChange={(event) => update("description", event.target.value)} placeholder="Ürünün içeriğini ve hazırlama biçimini yazın." className="min-h-24 bg-card" />
               </Field>
               <Field label="Fiyat">
-                <div className="relative"><Input type="number" min="0" step="1" value={form.price} onChange={(event) => update("price", event.target.value)} className="h-10 bg-card pr-10" /><span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm font-bold text-muted-foreground">₺</span></div>
+                <div className="relative"><Input type="number" min="0" step="0.01" value={form.price} onChange={(event) => update("price", event.target.value)} className="h-10 bg-card pr-10" /><span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm font-bold text-muted-foreground">₺</span></div>
               </Field>
               <Field label="Kategori">
                 <NativeSelect value={form.categoryId} onChange={(event) => update("categoryId", event.target.value)}>
-                  {categories.filter((category) => category.id !== "featured").map((category) => <option key={category.id} value={category.id}>{category.name}</option>)}
+                  {categories.map((category) => <option key={category.id} value={category.id}>{category.name}</option>)}
                 </NativeSelect>
               </Field>
               <Field label="Gramaj / porsiyon">
@@ -174,7 +192,7 @@ function ProductForm({
           <SheetFooter className="sticky bottom-0 border-t bg-card">
             <div className="flex gap-2">
               <Button type="button" variant="outline" className="flex-1" onClick={() => onOpenChange(false)}>Vazgeç</Button>
-              <Button type="submit" className="flex-1">{product ? "Değişiklikleri Kaydet" : "Ürünü Ekle"}</Button>
+              <Button type="submit" className="flex-1" disabled={saving} aria-busy={saving}>{product ? "Değişiklikleri Kaydet" : "Ürünü Ekle"}</Button>
             </div>
           </SheetFooter>
         </form>
@@ -184,7 +202,9 @@ function ProductForm({
 }
 
 export function ProductsManager() {
-  const [products, setProducts] = useState<Product[]>(initialProducts);
+  const menu = useAdminMenu();
+  const products = menu.productViews;
+  const categories = menu.categoryViews.filter((category) => category.active);
   const [query, setQuery] = useState("");
   const [categoryId, setCategoryId] = useState("all");
   const [status, setStatus] = useState<"all" | ProductStatus>("all");
@@ -209,36 +229,40 @@ export function ProductsManager() {
     setFormOpen(true);
   }
 
-  function saveProduct(form: ProductFormData) {
-    const category = categories.find((item) => item.id === form.categoryId);
-    const nextStatus: ProductStatus = form.soldOut ? "sold-out" : form.active ? "active" : "inactive";
-    const shared = {
+  function saveProduct(form: ProductFormData, imageFile: File | null) {
+    const payload = {
       name: form.name.trim(),
-      description: form.description.trim(),
-      price: Number(form.price),
+      description: form.description.trim() || null,
+      // Prices travel as exact decimal strings; the server re-validates them.
+      price: Number(form.price).toFixed(2),
       categoryId: form.categoryId,
-      category: category?.name ?? "Diğer",
-      image: form.image,
-      weight: form.weight.trim(),
+      weightLabel: form.weight.trim() || null,
       tags: form.tags.split(",").map((item) => item.trim()).filter(Boolean),
       allergens: form.allergens.split(",").map((item) => item.trim()).filter(Boolean),
-      status: nextStatus,
-      featured: form.featured,
+      isActive: form.active,
+      isAvailable: !form.soldOut,
+      isFeatured: form.featured,
     };
+    const target = editing;
 
-    if (editing) {
-      setProducts((current) => current.map((product) => (product.id === editing.id ? { ...product, ...shared } : product)));
-      toast.success("Ürün bilgileri güncellendi.");
-    } else {
-      setProducts((current) => [{ id: `demo-${Date.now()}`, ...shared }, ...current]);
-      toast.success("Yeni ürün demo menüye eklendi.");
-    }
-    setFormOpen(false);
+    void menu
+      .run(async () => {
+        const saved = target
+          ? await adminApi.updateProduct(target.id, payload)
+          : await adminApi.createProduct(payload);
+        if (imageFile) await adminApi.uploadProductImage(saved.id, imageFile);
+        return saved;
+      }, target ? "Ürün bilgileri güncellendi." : "Yeni ürün menüye eklendi.")
+      .then((result) => {
+        if (result) setFormOpen(false);
+      });
   }
 
   function removeProduct(product: Product) {
-    setProducts((current) => current.filter((item) => item.id !== product.id));
-    toast.success(`${product.name} listeden kaldırıldı.`);
+    void menu.run(
+      () => adminApi.updateProduct(product.id, { archived: true }),
+      `${product.name} arşivlendi.`,
+    );
   }
 
   return (
@@ -254,6 +278,7 @@ export function ProductsManager() {
         <SummaryChip label="Aktif" value={products.filter((product) => product.status === "active").length} />
         <SummaryChip label="Tükendi" value={products.filter((product) => product.status === "sold-out").length} />
         <SummaryChip label="Öne çıkan" value={products.filter((product) => product.featured).length} />
+        <RealtimeStatus status={menu.realtimeStatus} />
       </div>
 
       <AdminPanel contentClassName="p-0 sm:p-0">
@@ -264,7 +289,7 @@ export function ProductsManager() {
           </div>
           <NativeSelect value={categoryId} onChange={(event) => setCategoryId(event.target.value)} className="sm:w-48" aria-label="Kategori filtresi">
             <option value="all">Tüm kategoriler</option>
-            {categories.filter((category) => category.id !== "featured").map((category) => <option key={category.id} value={category.id}>{category.name}</option>)}
+            {categories.map((category) => <option key={category.id} value={category.id}>{category.name}</option>)}
           </NativeSelect>
           <NativeSelect value={status} onChange={(event) => setStatus(event.target.value as "all" | ProductStatus)} className="sm:w-44" aria-label="Durum filtresi">
             <option value="all">Tüm durumlar</option>
@@ -274,7 +299,9 @@ export function ProductsManager() {
           </NativeSelect>
         </DataToolbar>
 
-        {filtered.length ? (
+        {menu.error && !products.length ? (
+          <div className="grid min-h-64 place-items-center p-8 text-center"><div><PackageOpen className="mx-auto size-9 text-muted-foreground" /><p className="mt-3 font-bold">Ürünler yüklenemedi</p><p className="mt-1 text-sm text-muted-foreground">{menu.error.message}</p></div></div>
+        ) : filtered.length ? (
           <>
             <div className="hidden overflow-x-auto lg:block">
               <table className="w-full min-w-[860px] text-left text-sm">
@@ -325,7 +352,7 @@ export function ProductsManager() {
         )}
       </AdminPanel>
 
-      {formOpen ? <ProductForm key={editing?.id ?? "new"} product={editing} onOpenChange={setFormOpen} onSave={saveProduct} /> : null}
+      {formOpen ? <ProductForm key={editing?.id ?? "new"} product={editing} categories={categories} saving={menu.saving} onOpenChange={setFormOpen} onSave={saveProduct} /> : null}
     </div>
   );
 }

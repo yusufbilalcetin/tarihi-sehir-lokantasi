@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
-import { OrdersManager } from "@/components/admin/orders-manager";
+import { OrdersManagerModule } from "@/components/admin/orders-module";
 
 export const metadata: Metadata = { title: "Siparişler" };
 
-export default function AdminOrdersPage() {
-  return <OrdersManager />;
+export default function AdminOrdersManagerPage() {
+  return <OrdersManagerModule />;
 }
-

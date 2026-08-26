@@ -4,21 +4,11 @@ import { useEffect, useRef, useState } from "react";
 
 const revealedItems = new Set<string>();
 
-function hasActiveViewTransition() {
-  try {
-    return document.documentElement.matches(":active-view-transition");
-  } catch {
-    return false;
-  }
-}
-
 export function useRevealOnce<T extends HTMLElement>(id: string) {
   const ref = useRef<T>(null);
   const [initialState] = useState(() => {
     const alreadyRevealed = revealedItems.has(id);
-    const skipReveal = !alreadyRevealed && hasActiveViewTransition();
-    if (skipReveal) revealedItems.add(id);
-    return { animate: !alreadyRevealed && !skipReveal, revealed: alreadyRevealed || skipReveal };
+    return { animate: !alreadyRevealed, revealed: alreadyRevealed };
   });
   const [revealed, setRevealed] = useState(initialState.revealed);
 

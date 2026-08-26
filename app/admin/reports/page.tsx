@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { ReportsView } from "@/components/admin/reports-view";
+import { AdvancedReportsViewModule } from "@/components/admin/reports-module";
 
 export const metadata: Metadata = { title: "Raporlar" };
 
-export default function AdminReportsPage() {
-  return <ReportsView />;
+export default function AdminAdvancedReportsViewPage() {
+  return <AdvancedReportsViewModule />;
 }

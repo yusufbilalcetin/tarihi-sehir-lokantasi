@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { MenuOverview } from "@/components/admin/menu-overview";
+import { MenuOverviewModule } from "@/components/admin/menu-module";
 
 export const metadata: Metadata = { title: "Menü Yönetimi" };
 
-export default function AdminMenuPage() {
-  return <MenuOverview />;
+export default function AdminMenuOverviewPage() {
+  return <MenuOverviewModule />;
 }

@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { TablesManager } from "@/components/admin/tables-manager";
+import { TablesManagerModule } from "@/components/admin/tables-module";
 
 export const metadata: Metadata = { title: "Masalar" };
 
-export default function AdminTablesPage() {
-  return <TablesManager />;
+export default function AdminTablesManagerPage() {
+  return <TablesManagerModule />;
 }

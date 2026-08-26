@@ -1,18 +1,20 @@
 "use client";
 
-import type { ReactNode } from "react";
+import { type ReactNode } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   BellRing,
-  Clock3,
   LayoutDashboard,
-  LogOut,
   ReceiptText,
   TableProperties,
 } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { BrandMark } from "@/components/shared/brand-mark";
+import { LogoutButton } from "@/components/staff/logout-button";
+import { useStaffSession } from "@/components/staff/staff-session-provider";
+import { STAFF_ROLE_LABELS } from "@/lib/domain/staff-accounts";
+import { getInitials } from "@/lib/format";
 import { cn } from "@/lib/utils";
 
 const navigation = [
@@ -23,6 +25,11 @@ const navigation = [
 ] as const;
 
 function StaffHeader({ pathname }: { pathname: string }) {
+  // The header is the only "who am I signed in as" indicator on these screens,
+  // so it reads the real session rather than a fixed name.
+  const { name, role } = useStaffSession();
+  const roleLabel = STAFF_ROLE_LABELS[role];
+
   return (
     <header className="sticky top-0 z-30 border-b border-sidebar-border bg-olive text-sidebar-foreground shadow-[0_8px_28px_rgb(48_56_45/0.12)]">
       <div className="mx-auto flex h-16 w-full max-w-[1400px] items-center gap-3 px-4 sm:px-6 lg:px-8">
@@ -36,7 +43,7 @@ function StaffHeader({ pathname }: { pathname: string }) {
             <span className="block truncate font-heading text-sm font-semibold text-card">
               Tarihi Şehir Lokantası
             </span>
-            <span className="block text-[11px] font-medium text-cream/65">Garson paneli</span>
+            <span className="block text-[11px] font-medium text-cream/65">{roleLabel} paneli</span>
           </span>
         </Link>
 
@@ -63,26 +70,16 @@ function StaffHeader({ pathname }: { pathname: string }) {
         </nav>
 
         <div className="ml-auto flex items-center gap-2">
-          <div className="hidden items-center gap-2 rounded-lg border border-sidebar-border bg-sidebar-accent/60 px-3 py-2 text-xs font-medium text-cream/75 lg:flex">
-            <Clock3 className="size-4 text-copper" strokeWidth={1.8} />
-            10:00 - 18:00
-          </div>
           <div className="hidden items-center gap-2 sm:flex">
             <Avatar className="size-9 border border-copper/30">
-              <AvatarFallback className="bg-copper text-olive">AY</AvatarFallback>
+              <AvatarFallback className="bg-copper text-olive">{getInitials(name)}</AvatarFallback>
             </Avatar>
             <div className="hidden leading-tight xl:block">
-              <p className="text-sm font-semibold text-card">Ahmet Yılmaz</p>
-              <p className="text-xs text-cream/60">Garson</p>
+              <p className="text-sm font-semibold text-card">{name}</p>
+              <p className="text-xs text-cream/60">{roleLabel}</p>
             </div>
           </div>
-          <Link
-            href="/staff/login"
-            className="flex size-11 items-center justify-center rounded-lg text-cream/70 transition-colors hover:bg-sidebar-accent hover:text-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-copper"
-            aria-label="Personel panelinden çıkış yap"
-          >
-            <LogOut className="size-5" strokeWidth={1.8} />
-          </Link>
+          <LogoutButton className="text-cream/70 hover:bg-sidebar-accent hover:text-card" />
         </div>
       </div>
     </header>
@@ -122,10 +119,6 @@ function StaffBottomNavigation({ pathname }: { pathname: string }) {
 
 export function StaffShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
-
-  if (pathname === "/staff/login") {
-    return <>{children}</>;
-  }
 
   return (
     <div className="min-h-[100dvh] bg-background">

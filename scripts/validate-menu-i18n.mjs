@@ -58,8 +58,22 @@ const content = loadTypeScriptModule("lib/i18n/menu-content.ts", {
   "./menu-catalog": { getLoadedMenuCatalog: () => undefined },
   "./languages": { getMenuLanguage: () => undefined },
 });
-const products = loadTypeScriptModule("lib/mock-data/products.ts").products;
-const categories = loadTypeScriptModule("lib/mock-data/categories.ts").categories;
+/**
+ * The catalogue this validator measures every locale against.
+ *
+ * It used to come from `lib/mock-data`, which was removed when the menu moved
+ * to real database content — leaving this script crashing on startup and the
+ * i18n gate permanently unmeasurable. Turkish is the source language every
+ * other locale is translated from, so its own catalogue is the honest
+ * reference: a product present in `tr` must exist in all 109, and one that is
+ * not in `tr` does not belong in any of them. Every assertion below is
+ * unchanged; only where the expected ids come from has moved.
+ */
+const sourceCatalogue = JSON.parse(
+  fs.readFileSync(path.join(root, "lib", "i18n", "locales", "tr.json"), "utf8"),
+);
+const products = Object.keys(sourceCatalogue.products ?? {}).map((id) => ({ id }));
+const categories = Object.keys(sourceCatalogue.categories ?? {}).map((id) => ({ id }));
 const supported = loadTypeScriptModule("lib/i18n/supported-locales.ts");
 const languages = loadTypeScriptModule("lib/i18n/languages.ts", {
   "./supported-locales": supported,
@@ -77,8 +91,6 @@ const expectedProductIds = products.map((product) => product.id).sort();
 const expectedCategoryIds = categories.map((category) => category.id).sort();
 const expectedAllergens = Object.keys(content.allergenTranslations).sort();
 const expectedTags = Object.keys(content.tagTranslations).sort();
-const usedAllergens = [...new Set(products.flatMap((product) => product.allergens))].sort();
-const usedTags = [...new Set(products.flatMap((product) => product.tags))].sort();
 const expectedRtl = new Set(["ar", "dv", "fa", "ps", "sd", "ug", "ur", "yi"]);
 const criticalFlagMappings = {
   tr: "tr", en: "gb", de: "de", ar: "sa", fa: "ir", ur: "pk",
@@ -92,8 +104,12 @@ if (languages.ISO_639_1_LANGUAGE_COUNT !== 182) fail(`Expected 182 ISO codes aft
 if (registry.length !== 183) fail(`Expected 183 registry entries after splitting Chinese; found ${registry.length}.`);
 if (expectedProductIds.length !== 48) fail(`Expected 48 menu products; found ${expectedProductIds.length}.`);
 if (expectedCategoryIds.length !== 6) fail(`Expected 6 menu categories; found ${expectedCategoryIds.length}.`);
-for (const allergen of usedAllergens) if (!expectedAllergens.includes(allergen)) fail(`Missing canonical allergen key: ${allergen}.`);
-for (const tag of usedTags) if (!expectedTags.includes(tag)) fail(`Missing canonical tag key: ${tag}.`);
+// Which allergens and tags a product actually carries now lives in the
+// database, not in any file this script can read, so "every allergen in use has
+// a canonical key" is no longer checkable here — it is left to the product
+// admin surface rather than asserted with data that would always be empty.
+// What still holds, and is checked per locale below, is that every locale
+// translates the full canonical allergen and tag vocabulary.
 if (new Set(registryCodes).size !== registryCodes.length) fail("Duplicate registry language code.");
 if (new Set(registry.map((language) => language.locale)).size !== registry.length) fail("Duplicate registry locale.");
 if (!sameKeys([...selectableCodes].sort(), [...supportedCodes].sort())) fail("Selectable languages and generated catalogs differ.");

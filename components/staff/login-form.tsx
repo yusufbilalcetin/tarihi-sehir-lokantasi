@@ -18,9 +18,6 @@ interface LoginErrors {
   form?: string;
 }
 
-const DEMO_CODE = "1042";
-const DEMO_PIN = "1234";
-
 export function LoginForm() {
   const router = useRouter();
   const [values, setValues] = useState<LoginValues>({ code: "", pin: "" });
@@ -28,31 +25,49 @@ export function LoginForm() {
   const [showPin, setShowPin] = useState(false);
   const [submitting, setSubmitting] = useState(false);
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     const nextErrors: LoginErrors = {};
-    if (!values.code.trim()) nextErrors.code = "Personel kodunuzu girin.";
-    if (!values.pin.trim()) nextErrors.pin = "PIN kodunuzu girin.";
+    if (!values.code.trim()) nextErrors.code = "E-posta veya personel kodunuzu girin.";
+    if (!values.pin.trim()) nextErrors.pin = "Şifre veya PIN kodunuzu girin.";
 
     if (Object.keys(nextErrors).length > 0) {
       setErrors(nextErrors);
       return;
     }
 
-    if (values.code !== DEMO_CODE || values.pin !== DEMO_PIN) {
-      setErrors({ form: "Personel kodu veya PIN hatalı. Demo bilgilerini kontrol edin." });
-      return;
-    }
-
     setErrors({});
     setSubmitting(true);
-    router.push("/staff/dashboard");
+
+    try {
+      // Credentials are only ever checked on the server; this component never
+      // sees them and the session cookie it returns is HttpOnly.
+      const response = await fetch("/api/staff/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values),
+      });
+      const payload = (await response.json().catch(() => null)) as
+        | { redirectTo?: string; error?: string }
+        | null;
+
+      if (!response.ok || !payload?.redirectTo) {
+        setErrors({ form: payload?.error ?? "Giriş yapılamadı. Lütfen tekrar deneyin." });
+        setSubmitting(false);
+        return;
+      }
+
+      router.replace(payload.redirectTo);
+      router.refresh();
+    } catch {
+      setErrors({ form: "Sunucuya ulaşılamadı. Bağlantınızı kontrol edip tekrar deneyin." });
+      setSubmitting(false);
+    }
   }
 
   function setField(field: keyof LoginValues, value: string) {
-    const onlyNumbers = value.replace(/\D/g, "");
-    setValues((current) => ({ ...current, [field]: onlyNumbers }));
+    setValues((current) => ({ ...current, [field]: value }));
     setErrors((current) => ({ ...current, [field]: undefined, form: undefined }));
   }
 
@@ -82,7 +97,7 @@ export function LoginForm() {
           <form className="space-y-5" onSubmit={handleSubmit} noValidate>
             <div className="grid gap-2">
               <label htmlFor="staff-code" className="text-sm font-semibold text-foreground">
-                Personel Kodu
+                E-posta / Personel Kodu
               </label>
               <div className="relative">
                 <UserRound className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" strokeWidth={1.8} />
@@ -90,15 +105,15 @@ export function LoginForm() {
                   id="staff-code"
                   name="staff-code"
                   type="text"
-                  inputMode="numeric"
+                  inputMode="text"
                   autoComplete="username"
-                  maxLength={4}
+                  maxLength={320}
                   value={values.code}
                   onChange={(event) => setField("code", event.target.value)}
                   aria-invalid={Boolean(errors.code || errors.form)}
                   aria-describedby={errors.code ? "staff-code-error" : undefined}
-                  className="h-12 bg-background pl-10 text-base tracking-[0.12em]"
-                  placeholder="4 haneli kod"
+                  className="h-12 bg-background pl-10 text-base"
+                  placeholder="ornek@lokanta.com veya kod"
                 />
               </div>
               {errors.code ? (
@@ -110,7 +125,7 @@ export function LoginForm() {
 
             <div className="grid gap-2">
               <label htmlFor="staff-pin" className="text-sm font-semibold text-foreground">
-                PIN
+                Şifre / PIN
               </label>
               <div className="relative">
                 <KeyRound className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" strokeWidth={1.8} />
@@ -118,21 +133,20 @@ export function LoginForm() {
                   id="staff-pin"
                   name="staff-pin"
                   type={showPin ? "text" : "password"}
-                  inputMode="numeric"
                   autoComplete="current-password"
-                  maxLength={4}
+                  maxLength={1024}
                   value={values.pin}
                   onChange={(event) => setField("pin", event.target.value)}
                   aria-invalid={Boolean(errors.pin || errors.form)}
                   aria-describedby={errors.pin ? "staff-pin-error" : undefined}
-                  className="h-12 bg-background px-10 text-base tracking-[0.2em]"
-                  placeholder="4 haneli PIN"
+                  className="h-12 bg-background px-10 text-base"
+                  placeholder="Şifreniz veya PIN kodunuz"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPin((visible) => !visible)}
                   className="absolute right-0 top-1/2 flex size-11 -translate-y-1/2 items-center justify-center rounded-lg text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                  aria-label={showPin ? "PIN kodunu gizle" : "PIN kodunu göster"}
+                  aria-label={showPin ? "Şifreyi gizle" : "Şifreyi göster"}
                 >
                   {showPin ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
                 </button>
@@ -155,13 +169,6 @@ export function LoginForm() {
             </Button>
           </form>
 
-          <div className="mt-5 rounded-lg border border-border bg-muted/55 px-4 py-3 text-sm">
-            <p className="font-semibold text-foreground">Demo bilgileri</p>
-            <div className="mt-1.5 flex flex-wrap gap-x-5 gap-y-1 text-muted-foreground">
-              <span>Kod: <strong className="font-mono text-foreground">1042</strong></span>
-              <span>PIN: <strong className="font-mono text-foreground">1234</strong></span>
-            </div>
-          </div>
         </div>
 
         <p className="mt-5 text-center text-xs font-medium text-cream/55">

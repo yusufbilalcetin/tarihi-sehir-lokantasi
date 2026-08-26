@@ -1,7 +1,23 @@
-import type { ReactNode } from "react";
+"use client";
+
+import { createContext, useContext, type ReactNode } from "react";
 import type { LucideIcon } from "lucide-react";
 import { ArrowDownRight, ArrowUpRight } from "lucide-react";
 import { cn } from "@/lib/utils";
+
+/**
+ * Set by AdminModuleWindow's page-level heading. Every admin manager states
+ * its own title through AdminPageHeader, so the context prevents duplicate
+ * headings while allowing manager-specific actions to remain available.
+ *
+ * The actions keep rendering either way: they are the module's toolbar, not
+ * decoration, and remain part of the page content.
+ */
+const AdminPageHeaderContext = createContext(false);
+
+export function AdminPageHeaderProvider({ children }: { children: ReactNode }) {
+  return <AdminPageHeaderContext.Provider value>{children}</AdminPageHeaderContext.Provider>;
+}
 
 export function AdminPageHeader({
   title,
@@ -12,6 +28,14 @@ export function AdminPageHeader({
   description: string;
   actions?: ReactNode;
 }) {
+  const pageHeadingAlreadyRendered = useContext(AdminPageHeaderContext);
+
+  if (pageHeadingAlreadyRendered) {
+    return actions ? (
+      <div className="flex flex-wrap items-center justify-end gap-2">{actions}</div>
+    ) : null;
+  }
+
   return (
     <header className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
       <div className="min-w-0">
@@ -39,7 +63,7 @@ export function AdminPanel({
   contentClassName?: string;
 }) {
   return (
-    <section className={cn("overflow-hidden rounded-2xl border bg-card shadow-[0_14px_40px_rgba(74,40,40,0.055)]", className)}>
+    <section className={cn("overflow-hidden rounded-xl border border-border/80 bg-card", className)}>
       {title || action ? (
         <div className="flex items-start justify-between gap-4 border-b px-4 py-4 sm:px-5">
           <div>
@@ -76,7 +100,7 @@ export function AdminKpi({
   return (
     <article
       className={cn(
-        "relative overflow-hidden rounded-2xl border bg-card p-4 shadow-[0_12px_35px_rgba(74,40,40,0.055)] sm:p-5",
+        "relative overflow-hidden rounded-xl border border-border/80 bg-card p-4 sm:p-5",
         inverse && "border-olive bg-olive text-cream",
       )}
     >
@@ -94,8 +118,8 @@ export function AdminKpi({
           <span
             className={cn(
               "inline-flex items-center gap-0.5 font-bold",
-              positive ? "text-emerald-700" : "text-rose-700",
-              inverse && (positive ? "text-emerald-300" : "text-rose-300"),
+              positive ? "text-status-success" : "text-status-danger",
+              inverse && (positive ? "text-order-ready-tint" : "text-order-void-tint"),
             )}
           >
             <TrendIcon className="size-3.5" /> %{Math.abs(change).toLocaleString("tr-TR")}
@@ -142,4 +166,3 @@ export function SummaryChip({ label, value }: { label: string; value: string | n
     </div>
   );
 }
-

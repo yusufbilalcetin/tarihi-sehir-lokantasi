@@ -1,5 +1,6 @@
 import Image from "next/image";
-import { Minus, Plus, Trash2 } from "lucide-react";
+import { Minus, Plus, Trash2, UtensilsCrossed } from "lucide-react";
+import { MENU_PLACEHOLDER_IMAGE } from "@/lib/adapters/menu-view-model";
 import { useState } from "react";
 import { MotionValue } from "@/components/shared/motion-value";
 import { useMenuPreferences } from "@/components/menu/menu-preferences-provider";
@@ -25,7 +26,13 @@ export function CartItem({ item, motionIndex = 0, onDecrease, onIncrease, onRemo
       data-cart-item-id={item.id}
       className="grid grid-cols-[4.5rem_minmax(0,1fr)] gap-[var(--menu-grid-gap)] rounded-[var(--menu-card-radius)] border bg-card p-[var(--menu-card-padding)] shadow-[0_8px_26px_rgba(104,31,37,0.04)] sm:grid-cols-[5.5rem_minmax(0,1fr)]"
     >
-      <div className="relative aspect-square overflow-hidden rounded-xl bg-muted"><Image src={item.product.image} alt={name} fill sizes="88px" className="motion-product-image object-cover" onLoad={(event) => { event.currentTarget.dataset.loaded = "true"; }} /></div>
+      <div className="relative aspect-square overflow-hidden rounded-xl bg-muted">
+        {item.product.image !== MENU_PLACEHOLDER_IMAGE ? (
+          <Image src={item.product.image} alt={name} fill sizes="88px" className="motion-product-image object-cover" onLoad={(event) => { event.currentTarget.dataset.loaded = "true"; }} />
+        ) : (
+          <div aria-hidden="true" className="flex h-full w-full items-center justify-center bg-olive"><UtensilsCrossed className="size-5 text-gold/70" strokeWidth={1.5} /></div>
+        )}
+      </div>
       <div className="min-w-0">
         <div className="flex items-start justify-between gap-2">
           <div><h3 className="font-heading text-base font-semibold">{name}</h3><p dir="ltr" className="mt-0.5 text-xs text-muted-foreground"><MotionValue value={`${formatPrice(item.unitPrice)} / ${t("each")}`} numericValue={item.unitPrice} delayMs={Math.min(motionIndex * 10, 30)} /></p></div>

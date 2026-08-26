@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { QrManager } from "@/components/admin/qr-manager";
+import { QrManagerModule } from "@/components/admin/qr-codes-module";
 
 export const metadata: Metadata = { title: "QR Kodlar" };
 
-export default function AdminQrCodesPage() {
-  return <QrManager />;
+export default function AdminQrManagerPage() {
+  return <QrManagerModule />;
 }

@@ -1,0 +1,1 @@
+CREATE INDEX "stock_movements_restaurant_occurred_idx" ON "stock_movements" USING btree ("restaurant_id","occurred_at" DESC NULLS LAST);

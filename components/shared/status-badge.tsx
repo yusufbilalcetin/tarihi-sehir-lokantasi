@@ -1,35 +1,116 @@
-import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import type { OrderStatus, ProductStatus, TableStatus } from "@/types";
 
-type Status = OrderStatus | ProductStatus | TableStatus | "open" | "assigned" | "resolved" | "paid";
+/**
+ * The one place a state becomes a colour and a word.
+ *
+ * It used to reach for whatever Tailwind hue was nearest — emerald, sky,
+ * violet, cyan, rose — which is what made every panel read as a generic admin
+ * template and let a status shout louder than the restaurant's own colours.
+ * Every tone below now comes from the order/status tokens, so "hazır" is the
+ * same green on the floor, in the kitchen and in a report, and no status can
+ * out-shout the brand.
+ *
+ * Colour is never the only carrier: each badge states its meaning in words,
+ * and the shape carries a dot for the states that need finding at a glance.
+ */
 
-const statusConfig: Record<Status, { label: string; className: string }> = {
-  available: { label: "Boş", className: "border-emerald-200 bg-emerald-50 text-emerald-800" },
-  occupied: { label: "Dolu", className: "border-stone-300 bg-stone-100 text-stone-800" },
-  ordering: { label: "Sipariş Bekliyor", className: "border-amber-200 bg-amber-50 text-amber-900" },
-  waiting: { label: "Onay Bekliyor", className: "border-amber-200 bg-amber-50 text-amber-900" },
-  dining: { label: "Serviste", className: "border-sky-200 bg-sky-50 text-sky-800" },
-  "waiter-call": { label: "Garson Çağrısı", className: "border-rose-200 bg-rose-50 text-rose-800" },
-  "bill-requested": { label: "Hesap İstiyor", className: "border-violet-200 bg-violet-50 text-violet-800" },
-  cleaning: { label: "Temizleniyor", className: "border-cyan-200 bg-cyan-50 text-cyan-800" },
-  pending: { label: "Bekliyor", className: "border-amber-200 bg-amber-50 text-amber-900" },
-  confirmed: { label: "Onaylandı", className: "border-blue-200 bg-blue-50 text-blue-800" },
-  preparing: { label: "Hazırlanıyor", className: "border-orange-200 bg-orange-50 text-orange-800" },
-  ready: { label: "Hazır", className: "border-emerald-200 bg-emerald-50 text-emerald-800" },
-  served: { label: "Servis Edildi", className: "border-sky-200 bg-sky-50 text-sky-800" },
-  completed: { label: "Tamamlandı", className: "border-stone-300 bg-stone-100 text-stone-800" },
-  cancelled: { label: "İptal", className: "border-red-200 bg-red-50 text-red-800" },
-  active: { label: "Aktif", className: "border-emerald-200 bg-emerald-50 text-emerald-800" },
-  inactive: { label: "Pasif", className: "border-stone-300 bg-stone-100 text-stone-700" },
-  "sold-out": { label: "Bugün Tükendi", className: "border-rose-200 bg-rose-50 text-rose-800" },
-  open: { label: "Bekliyor", className: "border-rose-200 bg-rose-50 text-rose-800" },
-  assigned: { label: "Üstlenildi", className: "border-sky-200 bg-sky-50 text-sky-800" },
-  resolved: { label: "Çözüldü", className: "border-emerald-200 bg-emerald-50 text-emerald-800" },
-  paid: { label: "Ödendi", className: "border-emerald-200 bg-emerald-50 text-emerald-800" },
+type Status =
+  | OrderStatus
+  | ProductStatus
+  | TableStatus
+  | "open"
+  | "assigned"
+  | "resolved"
+  | "paid";
+
+type Tone =
+  | "new"
+  | "preparing"
+  | "ready"
+  | "served"
+  | "settled"
+  | "void"
+  | "success"
+  | "warning"
+  | "danger"
+  | "info"
+  | "neutral";
+
+const TONE_CLASS: Readonly<Record<Tone, string>> = {
+  new: "border-order-new/25 bg-order-new-tint text-order-new",
+  preparing: "border-order-preparing/25 bg-order-preparing-tint text-order-preparing",
+  ready: "border-order-ready/25 bg-order-ready-tint text-order-ready",
+  served: "border-order-served/25 bg-order-served-tint text-order-served",
+  settled: "border-order-settled/25 bg-order-settled-tint text-order-settled",
+  void: "border-order-void/25 bg-order-void-tint text-order-void",
+  success: "border-status-success/25 bg-status-success-tint text-status-success",
+  warning: "border-status-warning/25 bg-status-warning-tint text-status-warning",
+  danger: "border-status-danger/25 bg-status-danger-tint text-status-danger",
+  info: "border-status-info/25 bg-status-info-tint text-status-info",
+  neutral: "border-border-strong bg-surface-muted text-text-secondary",
 };
 
-export function StatusBadge({ status, label, className }: { status: Status; label?: string; className?: string }) {
-  const config = statusConfig[status];
-  return <Badge variant="outline" className={cn("whitespace-nowrap font-semibold", config.className, className)}>{label ?? config.label}</Badge>;
+/**
+ * Wording follows lib/domain/display.ts. These are the *view* statuses the
+ * panel adapters emit (lowercase), not the database enums, so the two maps
+ * cannot simply be merged — but they must never disagree, which is what
+ * tests/foundation/phase36-status-badge.test.ts holds them to.
+ */
+const STATUS: Readonly<Record<Status, { label: string; tone: Tone; dot?: boolean }>> = {
+  // Tables
+  available: { label: "Boş", tone: "success" },
+  occupied: { label: "Dolu", tone: "neutral" },
+  ordering: { label: "Sipariş veriyor", tone: "new" },
+  waiting: { label: "Sipariş bekliyor", tone: "new" },
+  dining: { label: "Yemekte", tone: "served" },
+  "waiter-call": { label: "Garson çağırdı", tone: "danger", dot: true },
+  "bill-requested": { label: "Hesap istedi", tone: "warning", dot: true },
+  cleaning: { label: "Temizleniyor", tone: "info" },
+  // Orders and items
+  pending: { label: "Bekliyor", tone: "new" },
+  confirmed: { label: "Onaylandı", tone: "new" },
+  preparing: { label: "Hazırlanıyor", tone: "preparing", dot: true },
+  ready: { label: "Hazır", tone: "ready", dot: true },
+  served: { label: "Servis edildi", tone: "served" },
+  completed: { label: "Tamamlandı", tone: "settled" },
+  cancelled: { label: "İptal edildi", tone: "void" },
+  // Catalogue
+  active: { label: "Aktif", tone: "success" },
+  inactive: { label: "Pasif", tone: "neutral" },
+  "sold-out": { label: "Tükendi", tone: "void" },
+  // Service requests
+  open: { label: "Yeni", tone: "danger", dot: true },
+  assigned: { label: "İlgileniliyor", tone: "warning" },
+  resolved: { label: "Çözüldü", tone: "success" },
+  paid: { label: "Ödendi", tone: "success" },
+};
+
+export interface StatusBadgeProps {
+  readonly status: Status;
+  readonly label?: string;
+  readonly size?: "sm" | "md";
+  readonly className?: string;
 }
+
+export function StatusBadge({ status, label, size = "md", className }: StatusBadgeProps) {
+  const config = STATUS[status];
+  return (
+    <span
+      className={cn(
+        "inline-flex items-center gap-1.5 whitespace-nowrap rounded-full border font-semibold",
+        size === "sm" ? "px-2 py-0.5 text-[11px]" : "px-2.5 py-1 text-xs",
+        TONE_CLASS[config.tone],
+        className,
+      )}
+    >
+      {config.dot ? (
+        <span className="size-1.5 shrink-0 rounded-full bg-current" aria-hidden="true" />
+      ) : null}
+      {label ?? config.label}
+    </span>
+  );
+}
+
+/** Exported so the display-language tests can walk every state this can show. */
+export const STATUS_BADGE_STATES = STATUS;

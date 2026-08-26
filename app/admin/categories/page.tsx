@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { CategoriesManager } from "@/components/admin/categories-manager";
+import { CategoriesManagerModule } from "@/components/admin/categories-module";
 
 export const metadata: Metadata = { title: "Kategoriler" };
 
-export default function AdminCategoriesPage() {
-  return <CategoriesManager />;
+export default function AdminCategoriesManagerPage() {
+  return <CategoriesManagerModule />;
 }

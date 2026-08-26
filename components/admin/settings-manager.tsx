@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type ReactNode } from "react";
+import { useCallback, useEffect, useState, type ReactNode } from "react";
 import { BellRing, Building2, Check, ImagePlus, MenuSquare, Palette, Save, ShoppingBag, UploadCloud } from "lucide-react";
 import { toast } from "sonner";
 import { AdminPageHeader, Field, NativeSelect } from "@/components/admin/admin-ui";
@@ -9,6 +9,9 @@ import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
+import { ApiClientError } from "@/lib/api/client";
+import { adminApi } from "@/lib/api/endpoints";
+import { useApiResource } from "@/lib/hooks/use-api-resource";
 import { cn } from "@/lib/utils";
 
 function SettingsSection({ title, description, children }: { title: string; description: string; children: ReactNode }) {
@@ -45,20 +48,72 @@ export function SettingsManager() {
   const [accent, setAccent] = useState("#681F25");
   const [logoName, setLogoName] = useState("wordmark-transparent.png");
   const [bannerName, setBannerName] = useState("Henüz yüklenmedi");
+  const [saving, setSaving] = useState(false);
+
+  const loadSettings = useCallback((signal: AbortSignal) => adminApi.settings(signal), []);
+  const resource = useApiResource(loadSettings);
+  const settings = resource.data;
+
+  // The persisted toggles hydrate the form once the API answers.
+  useEffect(() => {
+    if (!settings) return;
+    const timer = window.setTimeout(() => {
+      setMenu((current) => ({ ...current, images: settings.menuImagesEnabled }));
+      setOrder({
+        enabled: settings.orderingEnabled,
+        waiterApproval: settings.waiterApprovalRequired,
+        customerNote: settings.customerNotesEnabled,
+      });
+    }, 0);
+    return () => window.clearTimeout(timer);
+  }, [settings]);
 
   function updateBusiness(key: keyof typeof business, value: string) {
     setBusiness((current) => ({ ...current, [key]: value }));
   }
 
-  function saveSettings() {
-    toast.success("Ayarlar demo oturumu için kaydedildi.");
+  async function saveSettings() {
+    if (saving) return;
+    setSaving(true);
+    try {
+      await adminApi.updateSettings({
+        menuImagesEnabled: menu.images,
+        orderingEnabled: order.enabled,
+        waiterApprovalRequired: order.waiterApproval,
+        customerNotesEnabled: order.customerNote,
+      });
+      await resource.refetch();
+      toast.success("Menü ve sipariş ayarları kaydedildi.");
+    } catch (error) {
+      toast.error(error instanceof ApiClientError ? error.message : "Ayarlar kaydedilemedi.");
+    } finally {
+      setSaving(false);
+    }
   }
 
-  const saveButton = <Button className="h-10" onClick={saveSettings}><Save /> Değişiklikleri Kaydet</Button>;
+  const saveButton = (
+    <Button className="h-10" disabled={saving || resource.loading} aria-busy={saving} onClick={() => void saveSettings()}>
+      <Save /> Değişiklikleri Kaydet
+    </Button>
+  );
+
+  // ponytail: business profile, notification channels and theming have no
+  // persisted columns yet, so those panels stay local previews for now.
+  const previewNote = (
+    <p className="rounded-xl border border-dashed bg-background px-3 py-2 text-xs leading-5 text-muted-foreground">
+      Bu bölüm henüz kaydedilmiyor; yalnızca önizleme amaçlıdır.
+    </p>
+  );
 
   return (
     <div className="space-y-6">
       <AdminPageHeader title="Ayarlar" description="İşletme bilgilerini, sipariş akışını ve müşteri menüsü tercihlerini yönetin." actions={saveButton} />
+
+      {resource.error ? (
+        <p role="alert" className="rounded-xl border border-destructive/30 bg-destructive/5 px-4 py-3 text-sm font-semibold text-destructive">
+          Ayarlar yüklenemedi: {resource.error.message}
+        </p>
+      ) : null}
 
       <Tabs defaultValue="business" className="gap-5">
         <div className="overflow-x-auto pb-1">
@@ -73,6 +128,7 @@ export function SettingsManager() {
 
         <TabsContent value="business" className="grid gap-5 xl:grid-cols-[minmax(0,1.25fr)_minmax(320px,0.75fr)]">
           <SettingsSection title="İşletme bilgileri" description="Müşteri menüsü ve resmi işletme görünümünde kullanılacak bilgiler.">
+            {previewNote}
             <div className="grid gap-4 sm:grid-cols-2">
               <Field label="İşletme adı" className="sm:col-span-2"><Input value={business.name} onChange={(event) => updateBusiness("name", event.target.value)} className="h-10" /></Field>
               <Field label="Slogan" className="sm:col-span-2"><Input value={business.slogan} onChange={(event) => updateBusiness("slogan", event.target.value)} className="h-10" /></Field>
@@ -93,7 +149,8 @@ export function SettingsManager() {
         </TabsContent>
 
         <TabsContent value="menu" className="grid gap-5 lg:grid-cols-2">
-          <SettingsSection title="Dil ve para birimi" description="Müşteri menüsündeki bölgesel gösterim seçenekleri.">
+          <SettingsSection title="Dil ve para birimi" description="Müşteri menüsündeki bölgesel gösterim seçenekleri. Misafir kendi dilini ve para birimini menüden seçer.">
+            {previewNote}
             <Field label="Para birimi"><NativeSelect value={menu.currency} onChange={(event) => setMenu((current) => ({ ...current, currency: event.target.value }))}><option value="TRY">Türk Lirası (₺)</option><option value="EUR">Euro (€)</option><option value="USD">ABD Doları ($)</option></NativeSelect></Field>
             <Field label="Menü dili"><NativeSelect value={menu.language} onChange={(event) => setMenu((current) => ({ ...current, language: event.target.value }))}><option value="tr">Türkçe</option><option value="en">İngilizce</option></NativeSelect></Field>
             <Field label="Fiyat gösterimi"><NativeSelect value={menu.priceStyle} onChange={(event) => setMenu((current) => ({ ...current, priceStyle: event.target.value }))}><option value="symbol-after">120 ₺</option><option value="symbol-before">₺120</option><option value="code">120 TRY</option></NativeSelect></Field>
@@ -114,6 +171,7 @@ export function SettingsManager() {
 
         <TabsContent value="notifications" className="max-w-3xl">
           <SettingsSection title="Operasyon bildirimleri" description="Yönetim ve personel ekranlarında gösterilecek uyarıları seçin.">
+            {previewNote}
             <ToggleRow label="Bildirim sesi" description="Yeni olaylarda kısa bir uyarı sesi çal." checked={notifications.sound} onCheckedChange={(checked) => setNotifications((current) => ({ ...current, sound: checked }))} />
             <ToggleRow label="Garson çağrısı" description="Müşteri garson çağırdığında bildirim göster." checked={notifications.waiterCall} onCheckedChange={(checked) => setNotifications((current) => ({ ...current, waiterCall: checked }))} />
             <ToggleRow label="Yeni sipariş" description="QR menüden sipariş geldiğinde ekibe bildir." checked={notifications.newOrder} onCheckedChange={(checked) => setNotifications((current) => ({ ...current, newOrder: checked }))} />
@@ -123,6 +181,7 @@ export function SettingsManager() {
 
         <TabsContent value="appearance" className="grid gap-5 lg:grid-cols-2">
           <SettingsSection title="Restoran renkleri" description="QR menüde kullanılacak ana vurgu rengini seçin.">
+            {previewNote}
             <div className="flex flex-wrap gap-3">
               {["#681F25", "#30382D", "#B98352", "#7C3A2D", "#435343"].map((color) => <button key={color} type="button" onClick={() => setAccent(color)} aria-label={`${color} rengini seç`} className="grid size-12 place-items-center rounded-xl border-4 border-card ring-1 ring-border transition-transform active:scale-95" style={{ backgroundColor: color }}>{accent === color ? <Check className="size-5 text-white" /> : null}</button>)}
             </div>

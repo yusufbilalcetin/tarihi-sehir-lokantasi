@@ -16,9 +16,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { StatusBadge } from "@/components/shared/status-badge";
-import { restaurantTables as initialTables } from "@/lib/mock-data";
+import { RealtimeStatus } from "@/components/staff/realtime-status";
+import { useAdminTables } from "@/components/admin/use-admin-tables";
+import { adminApi } from "@/lib/api/endpoints";
 import { formatCurrency } from "@/lib/format";
-import type { RestaurantTable, TableStatus } from "@/types";
+import type { TableStatus } from "@/types";
 
 const tableStatuses: Array<{ value: TableStatus; label: string }> = [
   { value: "available", label: "Boş" },
@@ -29,26 +31,32 @@ const tableStatuses: Array<{ value: TableStatus; label: string }> = [
   { value: "waiter-call", label: "Garson çağrısı" },
   { value: "bill-requested", label: "Hesap istiyor" },
   { value: "cleaning", label: "Temizleniyor" },
+  { value: "inactive", label: "Pasif" },
 ];
 
 export function TablesManager() {
-  const [tables, setTables] = useState<RestaurantTable[]>(initialTables);
+  const admin = useAdminTables();
+  const tables = admin.tableViews;
   const [query, setQuery] = useState("");
   const [status, setStatus] = useState<"all" | TableStatus>("all");
   const [dialogOpen, setDialogOpen] = useState(false);
   const [name, setName] = useState("");
   const [seats, setSeats] = useState("4");
-  const [qrAvailable, setQrAvailable] = useState(true);
+  const [issuedToken, setIssuedToken] = useState<{ tableName: string; rawToken: string } | null>(null);
 
   const filtered = useMemo(() => {
     const normalized = query.trim().toLocaleLowerCase("tr-TR");
     return tables.filter((table) => (!normalized || table.name.toLocaleLowerCase("tr-TR").includes(normalized)) && (status === "all" || table.status === status));
   }, [tables, query, status]);
 
+  const nextTableNumber = useMemo(
+    () => admin.tables.reduce((highest, table) => Math.max(highest, table.number), 0) + 1,
+    [admin.tables],
+  );
+
   function openNew() {
-    setName(`Masa ${tables.length + 1}`);
+    setName(`Masa ${nextTableNumber}`);
     setSeats("4");
-    setQrAvailable(true);
     setDialogOpen(true);
   }
 
@@ -58,14 +66,27 @@ export function TablesManager() {
       toast.error("Masa adı ve sandalye sayısını kontrol edin.");
       return;
     }
-    setTables((current) => [...current, { id: `table-${Date.now()}`, name: name.trim(), seats: Number(seats), status: "available", qrAvailable, lastActivity: "Yeni oluşturuldu" }]);
-    setDialogOpen(false);
-    toast.success("Yeni masa salon planına eklendi.");
+    void admin
+      .run(
+        () => adminApi.createTable({
+          name: name.trim(),
+          tableNumber: nextTableNumber,
+          seats: Number(seats),
+        }),
+        "Yeni masa salon planına eklendi.",
+      )
+      .then((result) => {
+        if (!result) return;
+        setDialogOpen(false);
+        setIssuedToken({ tableName: result.table.name, rawToken: result.rawToken });
+      });
   }
 
-  function updateStatus(id: string, next: TableStatus) {
-    setTables((current) => current.map((table) => table.id === id ? { ...table, status: next, lastActivity: "Az önce" } : table));
-    toast.success("Masa durumu güncellendi.");
+  function toggleActive(id: string, isActive: boolean) {
+    void admin.run(
+      () => adminApi.updateTable(id, { isActive }),
+      isActive ? "Masa servise açıldı." : "Masa servis dışı bırakıldı.",
+    );
   }
 
   return (
@@ -81,7 +102,19 @@ export function TablesManager() {
         <SummaryChip label="Boş" value={tables.filter((table) => table.status === "available").length} />
         <SummaryChip label="Aktif" value={tables.filter((table) => table.status !== "available").length} />
         <SummaryChip label="Hizmet bekleyen" value={tables.filter((table) => ["waiter-call", "bill-requested"].includes(table.status)).length} />
+        <RealtimeStatus status={admin.realtimeStatus} />
       </div>
+
+      {issuedToken ? (
+        <div className="rounded-2xl border border-copper/40 bg-copper/8 p-4" role="status">
+          <p className="text-sm font-extrabold">{issuedToken.tableName} QR bağlantısı oluşturuldu</p>
+          <p className="mt-1 text-xs leading-5 text-muted-foreground">
+            Bu adres yalnızca bir kez gösterilir ve veritabanında saklanmaz. Kaydetmezseniz masa için QR Yenile işlemi yapmanız gerekir.
+          </p>
+          <code className="mt-2 block overflow-x-auto rounded-lg bg-card px-3 py-2 text-xs">/menu/{issuedToken.rawToken}</code>
+          <Button variant="outline" className="mt-3 bg-card" onClick={() => setIssuedToken(null)}>Kapat</Button>
+        </div>
+      ) : null}
 
       <div className="overflow-hidden rounded-2xl border bg-card shadow-[0_14px_40px_rgba(74,40,40,0.055)]">
         <DataToolbar>
@@ -95,7 +128,9 @@ export function TablesManager() {
           </NativeSelect>
         </DataToolbar>
 
-        {filtered.length ? (
+        {admin.error && !tables.length ? (
+          <div className="grid min-h-64 place-items-center p-8 text-center"><div><Armchair className="mx-auto size-9 text-muted-foreground" /><p className="mt-3 font-bold">Masalar yüklenemedi</p><p className="mt-1 text-sm text-muted-foreground">{admin.error.message}</p></div></div>
+        ) : filtered.length ? (
           <div className="grid gap-3 p-4 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
             {filtered.map((table) => (
               <article key={table.id} className="rounded-2xl border bg-background p-4 transition-colors hover:border-copper/55">
@@ -111,11 +146,14 @@ export function TablesManager() {
                   <div className="rounded-lg bg-muted/45 px-2.5 py-2"><span className="block text-muted-foreground">Son aktivite</span><strong className="mt-1 flex items-center gap-1"><Clock3 className="size-3" /> {table.lastActivity}</strong></div>
                   <div className="rounded-lg bg-muted/45 px-2.5 py-2"><span className="block text-muted-foreground">QR kod</span><strong className="mt-1 flex items-center gap-1"><QrCode className="size-3" /> {table.qrAvailable ? "Hazır" : "Eksik"}</strong></div>
                 </div>
-                <label className="mt-3 block text-xs font-bold text-muted-foreground">
-                  Durumu değiştir
-                  <NativeSelect value={table.status} onChange={(event) => updateStatus(table.id, event.target.value as TableStatus)} className="mt-1.5 h-9 bg-card text-xs">
-                    {tableStatuses.map((item) => <option key={item.value} value={item.value}>{item.label}</option>)}
-                  </NativeSelect>
+                <label className="mt-3 flex min-h-12 items-center justify-between gap-3 rounded-lg border bg-card px-3 text-xs font-bold">
+                  <span>Servise açık</span>
+                  <Switch
+                    checked={table.status !== "inactive"}
+                    disabled={admin.saving}
+                    onCheckedChange={(checked) => toggleActive(table.id, checked)}
+                    aria-label={`${table.name} servis durumu`}
+                  />
                 </label>
               </article>
             ))}
@@ -135,11 +173,11 @@ export function TablesManager() {
             <div className="grid gap-4 py-5 sm:grid-cols-2">
               <Field label="Masa adı"><Input value={name} onChange={(event) => setName(event.target.value)} className="h-10" /></Field>
               <Field label="Sandalye"><Input type="number" min="1" max="20" value={seats} onChange={(event) => setSeats(event.target.value)} className="h-10" /></Field>
-              <label className="flex min-h-14 items-center justify-between gap-4 rounded-xl border bg-background px-3 sm:col-span-2"><span><span className="block text-sm font-bold">QR kod hazırla</span><span className="text-xs text-muted-foreground">Masa oluşturulunca QR kaydı açılsın</span></span><Switch checked={qrAvailable} onCheckedChange={setQrAvailable} aria-label="QR kod hazırla" /></label>
+              <p className="rounded-xl border border-dashed bg-background px-3 py-3 text-xs leading-5 text-muted-foreground sm:col-span-2">Masa oluşturulduğunda QR bağlantısı bir kez gösterilir. Bağlantıyı kaybederseniz QR Kodlar ekranından yenileyin.</p>
             </div>
             <DialogFooter>
               <Button type="button" variant="outline" onClick={() => setDialogOpen(false)}>Vazgeç</Button>
-              <Button type="submit">Masayı Ekle</Button>
+              <Button type="submit" disabled={admin.saving} aria-busy={admin.saving}>Masayı Ekle</Button>
             </DialogFooter>
           </form>
         </DialogContent>

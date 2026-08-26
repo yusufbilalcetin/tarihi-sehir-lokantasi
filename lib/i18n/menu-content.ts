@@ -108,20 +108,39 @@ export const allergenTranslations: Record<string, LocalizedText> = {
   Ceviz: { tr: "Ceviz", en: "Walnut", de: "Walnuss", ar: "الجوز" },
 };
 
+/**
+ * Database categories are keyed by UUID and stored with a Turkish slug, while
+ * every translation catalog is keyed by these stable English keys.
+ */
+export const categoryKeyBySlug: Record<string, string> = {
+  corbalar: "soups",
+  izgaralar: "grill",
+  "ana-yemekler": "mains",
+  icecekler: "drinks",
+  kebaplar: "kebabs",
+  tatlilar: "dessert",
+};
+
+function translationKey(entity: { id: string; i18nKey?: string }) {
+  return entity.i18nKey ?? entity.id;
+}
+
 export function getMenuCategoryName(category: Category, language: MenuLanguage) {
-  const catalogName = getLoadedMenuCatalog(language)?.categories[category.id];
+  const key = translationKey(category);
+  const catalogName = getLoadedMenuCatalog(language)?.categories[key];
   if (catalogName) return catalogName;
-  return getLocalizedText(categoryNames[category.id] ?? category.name, language);
+  return getLocalizedText(categoryNames[key] ?? category.name, language);
 }
 
 export function getMenuProductName(product: Product, language: MenuLanguage) {
-  const catalogName = getLoadedMenuCatalog(language)?.products[product.id]?.name;
+  const key = translationKey(product);
+  const catalogName = getLoadedMenuCatalog(language)?.products[key]?.name;
   if (catalogName) return catalogName;
-  return getLocalizedText(productNames[product.id] ?? product.name, language);
+  return getLocalizedText(productNames[key] ?? product.name, language);
 }
 
 export function getMenuProductDescription(product: Product, language: MenuLanguage) {
-  const catalogDescription = getLoadedMenuCatalog(language)?.products[product.id]?.description;
+  const catalogDescription = getLoadedMenuCatalog(language)?.products[translationKey(product)]?.description;
   if (catalogDescription) return catalogDescription;
   if (language === "tr") return product.description;
   const baseLanguage = language.split("-")[0] ?? language;

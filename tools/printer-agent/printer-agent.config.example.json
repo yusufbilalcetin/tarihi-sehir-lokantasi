@@ -1,0 +1,13 @@
+{
+  "baseUrl": "https://your-deployment.example",
+  "pollIntervalMs": 3000,
+  "idlePollIntervalMs": 10000,
+  "heartbeatIntervalMs": 30000,
+  "claimLimit": 5,
+  "journalPath": "printer-agent.journal.json",
+  "devices": {
+    "kitchen-main": { "transport": "tcp", "host": "192.168.1.50", "port": 9100 },
+    "bar-main": { "transport": "tcp", "host": "192.168.1.51", "port": 9100 },
+    "receipt-main": { "transport": "tcp", "host": "192.168.1.52", "port": 9100 }
+  }
+}

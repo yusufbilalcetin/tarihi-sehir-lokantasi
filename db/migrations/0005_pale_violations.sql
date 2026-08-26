@@ -1,0 +1,1 @@
+ALTER TYPE "public"."order_event_type" ADD VALUE 'ORDER_ITEM_STATUS_CHANGED';

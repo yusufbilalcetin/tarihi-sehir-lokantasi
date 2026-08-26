@@ -22,6 +22,9 @@ export function BrandMark({ compact = false, className, priority = false }: Bran
       alt="Tarihi Şehir Lokantası"
       width={2172}
       height={724}
+      // Without this Next sizes the srcset from the intrinsic 2172px and ships a
+      // 3840px variant to a wordmark that is never drawn wider than ~576px.
+      sizes="(max-width: 640px) 100vw, 576px"
       preload={priority}
       className={cn("h-auto w-full object-contain", className)}
     />

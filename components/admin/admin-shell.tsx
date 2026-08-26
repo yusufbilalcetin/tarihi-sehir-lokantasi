@@ -5,28 +5,42 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
-  Bell,
+  BadgeDollarSign,
   BookOpen,
   Boxes,
+  CalendarClock,
+  CalendarDays,
   ChartNoAxesCombined,
   ChevronDown,
+  ClipboardCheck,
   ClipboardList,
+  CookingPot,
+  Factory,
   Grid2X2,
+  History,
   LayoutDashboard,
   Menu,
+  PackageCheck,
   PackageOpen,
+  PlugZap,
+  Printer,
   QrCode,
   Search,
+  ReceiptText,
+  ShoppingBag,
+  TrendingUp,
+  Truck,
   Settings,
   SlidersHorizontal,
   Store,
   UsersRound,
+  Wallet,
+  WalletCards,
   X,
   type LucideIcon,
 } from "lucide-react";
 import { BrandMark } from "@/components/shared/brand-mark";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import {
   Sheet,
   SheetContent,
@@ -36,7 +50,9 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { getInitials } from "@/lib/format";
-import { adminUser } from "@/lib/mock-data";
+import { LogoutButton } from "@/components/staff/logout-button";
+import { useStaffSession } from "@/components/staff/staff-session-provider";
+import { STAFF_ROLE_LABELS } from "@/lib/domain/display";
 import { cn } from "@/lib/utils";
 
 interface NavItem {
@@ -46,7 +62,7 @@ interface NavItem {
 }
 
 const primaryNav: NavItem[] = [
-  { label: "Dashboard", href: "/admin/dashboard", icon: LayoutDashboard },
+  { label: "Bugün", href: "/admin/dashboard", icon: LayoutDashboard },
   { label: "Siparişler", href: "/admin/orders", icon: ClipboardList },
   { label: "Masalar", href: "/admin/tables", icon: Grid2X2 },
 ];
@@ -58,13 +74,111 @@ const catalogNav: NavItem[] = [
 ];
 
 const managementNav: NavItem[] = [
+  { label: "İşletme ERP", href: "/admin/erp", icon: Factory },
   { label: "Personel", href: "/admin/staff", icon: UsersRound },
+  { label: "Kasa ve Vardiyalar", href: "/admin/cash-registers", icon: Wallet },
+  { label: "Gün Sonu Kasa", href: "/admin/cash-reports", icon: ReceiptText },
   { label: "QR Kodlar", href: "/admin/qr-codes", icon: QrCode },
+  { label: "Yazıcılar", href: "/admin/printers", icon: Printer },
   { label: "Raporlar", href: "/admin/reports", icon: ChartNoAxesCombined },
   { label: "Ayarlar", href: "/admin/settings", icon: Settings },
 ];
 
-const titleByPath = [...primaryNav, ...catalogNav, ...managementNav].reduce<Record<string, string>>(
+/**
+ * The ERP is grouped the way a restaurant is run, not the way its tables are
+ * named. A flat list of twenty-three modules makes a manager read every label
+ * to find one screen; these five headings each answer a different question.
+ */
+const stockNav: NavItem[] = [
+  { label: "Stok", href: "/admin/inventory", icon: Boxes },
+  { label: "Stok Hareketleri", href: "/admin/stock-movements", icon: History },
+  { label: "Sayım Farkları", href: "/admin/stock-counts", icon: ClipboardCheck },
+  { label: "Depolar", href: "/admin/warehouses", icon: Store },
+  { label: "Reçeteler", href: "/admin/recipes", icon: CookingPot },
+  { label: "Maliyet", href: "/admin/costing", icon: BadgeDollarSign },
+  { label: "Üretim", href: "/admin/production", icon: Factory },
+  { label: "Fire", href: "/admin/waste", icon: PackageOpen },
+  { label: "Üretim Tahmini", href: "/admin/forecast", icon: CalendarClock },
+];
+
+const purchasingNav: NavItem[] = [
+  { label: "Tedarikçiler", href: "/admin/suppliers", icon: Truck },
+  { label: "Satın Alma", href: "/admin/purchasing", icon: ClipboardList },
+  { label: "Borçlar", href: "/admin/payables", icon: WalletCards },
+  { label: "Alım Fiyat Geçmişi", href: "/admin/price-history", icon: TrendingUp },
+];
+
+const peopleNav: NavItem[] = [
+  { label: "Puantaj", href: "/admin/attendance", icon: ClipboardCheck },
+  { label: "Vardiya Planı", href: "/admin/schedules", icon: CalendarDays },
+  { label: "Operasyonel Bordro", href: "/admin/payroll", icon: ReceiptText },
+];
+
+const guestNav: NavItem[] = [
+  { label: "Rezervasyon", href: "/admin/reservations", icon: CalendarDays },
+  { label: "Paket ve Kurye", href: "/admin/fulfillment", icon: ShoppingBag },
+  { label: "Müşteriler", href: "/admin/customers", icon: UsersRound },
+  { label: "Geri Bildirim", href: "/admin/feedback", icon: BookOpen },
+  { label: "Sadakat", href: "/admin/loyalty", icon: Wallet },
+  { label: "Entegrasyonlar", href: "/admin/integrations", icon: PlugZap },
+];
+
+const erpReportsNav: NavItem[] = [
+  { label: "Satış Raporu", href: "/admin/sales", icon: TrendingUp },
+  { label: "Menü Mühendisliği", href: "/admin/menu-engineering", icon: ChartNoAxesCombined },
+  { label: "Popüler Ürünler", href: "/admin/popular", icon: PackageCheck },
+  { label: "ERP Raporları", href: "/admin/erp-reports", icon: ChartNoAxesCombined },
+];
+
+const erpNav: NavItem[] = [...stockNav, ...purchasingNav, ...peopleNav, ...guestNav, ...erpReportsNav];
+
+interface NavSection {
+  readonly label: string;
+  readonly items: NavItem[];
+}
+
+/**
+ * The menu, as data.
+ *
+ * Forty links rendered flat is forty decisions before the first click. Each
+ * section below collapses to a single row, and only the one holding the current
+ * page opens on load — so the ordinary state of this sidebar is eight choices,
+ * not forty, and nothing had to be deleted to get there.
+ */
+const NAV_SECTIONS: readonly NavSection[] = [
+  { label: "Operasyon", items: primaryNav },
+  { label: "Katalog", items: catalogNav },
+  { label: "Stok & Üretim", items: stockNav },
+  { label: "Satın Alma & Tedarikçiler", items: purchasingNav },
+  { label: "Personel", items: peopleNav },
+  { label: "Müşteri & Operasyon", items: guestNav },
+  { label: "Raporlar", items: erpReportsNav },
+  { label: "Yönetim", items: managementNav },
+];
+
+/**
+ * Finding a screen without knowing which section owns it.
+ *
+ * This searches the menu that is already in memory — labels and section names,
+ * nothing else. No request is made, so typing costs nothing and there is no
+ * query to bound. It answers "where is fire girişi", not "which product is
+ * called fire".
+ */
+function searchNav(query: string): readonly { item: NavItem; section: string }[] {
+  const needle = query.trim().toLocaleLowerCase("tr");
+  if (needle.length < 2) return [];
+  const matches: { item: NavItem; section: string }[] = [];
+  for (const section of NAV_SECTIONS) {
+    for (const item of section.items) {
+      const haystack = `${item.label} ${section.label}`.toLocaleLowerCase("tr");
+      if (haystack.includes(needle)) matches.push({ item, section: section.label });
+    }
+  }
+  return matches.slice(0, 8);
+}
+
+
+const titleByPath = [...primaryNav, ...catalogNav, ...erpNav, ...managementNav].reduce<Record<string, string>>(
   (acc, item) => {
     acc[item.href] = item.label;
     return acc;
@@ -72,7 +186,10 @@ const titleByPath = [...primaryNav, ...catalogNav, ...managementNav].reduce<Reco
   {},
 );
 
-const adminInitials = getInitials(adminUser.name);
+
+function isActivePath(pathname: string, href: string) {
+  return pathname === href || pathname.startsWith(`${href}/`);
+}
 
 function NavGroup({
   label,
@@ -85,13 +202,28 @@ function NavGroup({
   pathname: string;
   onNavigate?: () => void;
 }) {
+  const holdsCurrentPage = items.some((item) => isActivePath(pathname, item.href));
+  const [open, setOpen] = useState(holdsCurrentPage);
+  const panelId = `nav-${label.replace(/[^a-zA-Z]+/g, "-").toLowerCase()}`;
+
   return (
     <div className="space-y-1">
-      <p className="px-3 pb-1 pt-4 text-[11px] font-bold uppercase tracking-[0.14em] text-sidebar-foreground/45">
-        {label}
-      </p>
+      <button
+        type="button"
+        onClick={() => setOpen((current) => !current)}
+        aria-expanded={open}
+        aria-controls={panelId}
+        className="flex min-h-10 w-full items-center gap-2 rounded-xl px-3 text-[11px] font-bold uppercase tracking-[0.14em] text-sidebar-foreground/45 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+      >
+        <span className="flex-1 text-left">{label}</span>
+        {/* A closed section that holds the current page still says so, so the
+            collapse never hides where the user actually is. */}
+        {!open && holdsCurrentPage ? <span className="size-1.5 rounded-full bg-sidebar-primary" aria-hidden="true" /> : null}
+        <ChevronDown className={cn("size-4 transition-transform", !open && "-rotate-90")} aria-hidden="true" />
+      </button>
+      <div id={panelId} hidden={!open} className="space-y-1">
       {items.map((item) => {
-        const active = pathname === item.href || pathname.startsWith(`${item.href}/`);
+        const active = isActivePath(pathname, item.href);
         const Icon = item.icon;
         return (
           <Link
@@ -111,11 +243,58 @@ function NavGroup({
           </Link>
         );
       })}
+      </div>
+    </div>
+  );
+}
+
+function NavSearch({ pathname, onNavigate }: { pathname: string; onNavigate?: () => void }) {
+  const [query, setQuery] = useState("");
+  const results = searchNav(query);
+  const searching = query.trim().length >= 2;
+
+  return (
+    <div className="pb-1 pt-2">
+      <label className="relative block">
+        <span className="sr-only">Menüde ara</span>
+        <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-sidebar-foreground/45" aria-hidden="true" />
+        <input
+          type="search"
+          value={query}
+          onChange={(event) => setQuery(event.target.value)}
+          placeholder="Ekran ara…"
+          className="min-h-10 w-full rounded-xl border border-sidebar-border bg-sidebar-accent/40 pl-9 pr-3 text-sm font-medium text-sidebar-foreground placeholder:text-sidebar-foreground/40 focus:outline-none focus:ring-2 focus:ring-sidebar-primary"
+        />
+      </label>
+      {searching ? (
+        <div className="mt-2 space-y-1" role="status" aria-live="polite">
+          {results.length ? (
+            results.map((result) => (
+              <Link
+                key={result.item.href}
+                href={result.item.href}
+                onClick={() => { setQuery(""); onNavigate?.(); }}
+                aria-current={isActivePath(pathname, result.item.href) ? "page" : undefined}
+                className="flex min-h-10 items-center gap-3 rounded-xl px-3 text-sm font-semibold text-sidebar-foreground/80 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+              >
+                <result.item.icon className="size-[18px] shrink-0" strokeWidth={1.8} />
+                <span className="min-w-0 flex-1 truncate">{result.item.label}</span>
+                <span className="shrink-0 truncate text-[11px] font-medium text-sidebar-foreground/40">{result.section}</span>
+              </Link>
+            ))
+          ) : (
+            <p className="px-3 py-2 text-xs text-sidebar-foreground/50">Eşleşen ekran yok.</p>
+          )}
+        </div>
+      ) : null}
     </div>
   );
 }
 
 function SidebarContent({ pathname, onNavigate }: { pathname: string; onNavigate?: () => void }) {
+  const { name, role } = useStaffSession();
+  const roleLabel = STAFF_ROLE_LABELS[role];
+
   return (
     <div className="flex h-full flex-col bg-sidebar text-sidebar-foreground">
       <div className="flex h-[76px] items-center gap-3 border-b border-sidebar-border px-5">
@@ -127,9 +306,10 @@ function SidebarContent({ pathname, onNavigate }: { pathname: string; onNavigate
       </div>
 
       <nav className="flex-1 overflow-y-auto px-3 pb-4 pt-2" aria-label="Yönetim menüsü">
-        <NavGroup label="Operasyon" items={primaryNav} pathname={pathname} onNavigate={onNavigate} />
-        <NavGroup label="Katalog" items={catalogNav} pathname={pathname} onNavigate={onNavigate} />
-        <NavGroup label="Yönetim" items={managementNav} pathname={pathname} onNavigate={onNavigate} />
+        <NavSearch pathname={pathname} onNavigate={onNavigate} />
+        {NAV_SECTIONS.map((section) => (
+          <NavGroup key={section.label} label={section.label} items={section.items} pathname={pathname} onNavigate={onNavigate} />
+        ))}
       </nav>
 
       <div className="border-t border-sidebar-border p-3">
@@ -144,11 +324,11 @@ function SidebarContent({ pathname, onNavigate }: { pathname: string; onNavigate
         </Link>
         <div className="mt-3 flex items-center gap-3 px-2 py-1.5">
           <div className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-sidebar-primary text-sm font-bold text-sidebar-primary-foreground">
-            {adminInitials}
+            {getInitials(name)}
           </div>
           <div className="min-w-0 flex-1">
-            <p className="truncate text-sm font-semibold">{adminUser.name}</p>
-            <p className="truncate text-xs text-sidebar-foreground/50">{adminUser.roleLabel}</p>
+            <p className="truncate text-sm font-semibold">{name}</p>
+            <p className="truncate text-xs text-sidebar-foreground/50">{roleLabel}</p>
           </div>
           <SlidersHorizontal className="size-4 text-sidebar-foreground/50" />
         </div>
@@ -158,12 +338,19 @@ function SidebarContent({ pathname, onNavigate }: { pathname: string; onNavigate
 }
 
 export function AdminShell({ children }: { children: ReactNode }) {
+  const { name, role } = useStaffSession();
+  const roleLabel = STAFF_ROLE_LABELS[role];
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const pageTitle = titleByPath[pathname] ?? "Yönetim";
+  const pageTitle = Object.entries(titleByPath)
+    .sort(([left], [right]) => right.length - left.length)
+    .find(([href]) => isActivePath(pathname, href))?.[1] ?? "Yönetim";
 
   return (
     <div className="min-h-[100dvh] bg-background">
+      <a href="#admin-content" className="sr-only fixed left-4 top-4 z-50 rounded-lg bg-foreground px-4 py-2 text-sm font-semibold text-background focus:not-sr-only">
+        Ana içeriğe geç
+      </a>
       <aside className="fixed inset-y-0 left-0 hidden w-[264px] border-r border-sidebar-border lg:block">
         <SidebarContent pathname={pathname} />
       </aside>
@@ -201,31 +388,25 @@ export function AdminShell({ children }: { children: ReactNode }) {
             </SheetContent>
           </Sheet>
 
-          <div className="min-w-0 flex-1">
-            <p className="truncate text-sm font-bold text-foreground sm:text-base">{pageTitle}</p>
-            <p className="hidden text-xs text-muted-foreground sm:block">11 Ağustos 2026, Salı</p>
-          </div>
+          <nav className="min-w-0 flex-1 text-sm" aria-label="İçerik yolu">
+            <ol className="flex min-w-0 items-center gap-2">
+              <li className="hidden font-medium text-muted-foreground sm:block">Yönetim</li>
+              <li className="hidden text-muted-foreground/45 sm:block" aria-hidden="true">/</li>
+              <li className="truncate font-bold text-foreground" aria-current="page">{pageTitle}</li>
+            </ol>
+          </nav>
 
-          <div className="relative hidden w-full max-w-xs md:block">
-            <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
-            <Input className="h-10 bg-card pl-9" aria-label="Yönetim panelinde ara" placeholder="Hızlı ara..." />
-          </div>
-
-          <Button variant="outline" size="icon-lg" className="relative size-10 bg-card" aria-label="Bildirimler">
-            <Bell className="size-[18px]" />
-            <span className="absolute right-2 top-2 size-2 rounded-full bg-burgundy ring-2 ring-card" />
-          </Button>
-          <Button variant="ghost" className="hidden h-10 gap-2 px-2 sm:flex" aria-label={`${adminUser.name} kullanıcı menüsü`}>
-            <span className="flex size-8 items-center justify-center rounded-lg bg-olive text-xs font-bold text-cream">{adminInitials}</span>
-            <span className="hidden text-left xl:block">
-              <span className="block text-xs font-bold">{adminUser.name}</span>
-              <span className="block text-[11px] text-muted-foreground">{adminUser.roleLabel}</span>
+          <div className="flex items-center gap-2">
+            <span className="flex size-8 items-center justify-center rounded-lg bg-olive text-xs font-bold text-cream">{getInitials(name)}</span>
+            <span className="hidden text-left sm:block">
+              <span className="block text-xs font-bold">{name}</span>
+              <span className="block text-[11px] text-muted-foreground">{roleLabel}</span>
             </span>
-            <ChevronDown className="size-4 text-muted-foreground" />
-          </Button>
+          </div>
+          <LogoutButton className="text-muted-foreground hover:bg-muted hover:text-foreground" />
         </header>
 
-        <main className="mx-auto w-full max-w-[1600px] p-4 sm:p-6 lg:p-8">{children}</main>
+        <main id="admin-content" className="min-w-0 w-full p-4 sm:p-6 lg:p-8 xl:p-10">{children}</main>
       </div>
     </div>
   );

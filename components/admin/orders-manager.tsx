@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { CheckCheck, ChevronRight, Clock3, Eye, ListFilter, Search, UtensilsCrossed } from "lucide-react";
 import { toast } from "sonner";
 import { AdminPageHeader, AdminPanel, DataToolbar, NativeSelect, SummaryChip } from "@/components/admin/admin-ui";
@@ -15,9 +15,18 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { StatusBadge } from "@/components/shared/status-badge";
-import { orders as initialOrders } from "@/lib/mock-data";
+import { RealtimeStatus } from "@/components/staff/realtime-status";
+import { useStaffSession } from "@/components/staff/staff-session-provider";
+import { staffOrderToViewModel, toApiOrderStatus } from "@/lib/adapters/staff-view-model";
+import { ApiClientError } from "@/lib/api/client";
+import { staffApi } from "@/lib/api/endpoints";
+import { canRoleTransitionOrderStatus } from "@/lib/domain/status";
+import { useApiResource } from "@/lib/hooks/use-api-resource";
+import { useStaffRealtime } from "@/lib/realtime/use-staff-realtime";
 import { formatCurrency } from "@/lib/format";
 import type { Order, OrderStatus } from "@/types";
+
+const ADMIN_ORDER_POLL_MS = 20_000;
 
 const statusOptions: Array<{ value: "all" | OrderStatus; label: string }> = [
   { value: "all", label: "Tüm durumlar" },
@@ -31,10 +40,25 @@ const statusOptions: Array<{ value: "all" | OrderStatus; label: string }> = [
 ];
 
 export function OrdersManager() {
-  const [orders, setOrders] = useState<Order[]>(initialOrders);
+  const { role } = useStaffSession();
   const [query, setQuery] = useState("");
   const [status, setStatus] = useState<"all" | OrderStatus>("all");
-  const [selected, setSelected] = useState<Order | null>(null);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [pending, setPending] = useState(false);
+
+  const loadOrders = useCallback((signal: AbortSignal) => staffApi.orders(undefined, signal), []);
+  const resource = useApiResource(loadOrders, { pollMs: ADMIN_ORDER_POLL_MS });
+  const { refetch } = resource;
+  const realtimeStatus = useStaffRealtime({
+    onEvent: useCallback(() => void refetch(), [refetch]),
+    onResync: useCallback(() => void refetch(), [refetch]),
+  });
+
+  const orders = useMemo(
+    () => (resource.data?.orders ?? []).map((order) => staffOrderToViewModel(order)),
+    [resource.data],
+  );
+  const selected = orders.find((order) => order.id === selectedId) ?? null;
 
   const filtered = useMemo(() => {
     const normalized = query.trim().toLocaleLowerCase("tr-TR");
@@ -48,10 +72,23 @@ export function OrdersManager() {
     });
   }, [orders, query, status]);
 
-  function updateStatus(orderId: string, nextStatus: OrderStatus) {
-    setOrders((current) => current.map((order) => (order.id === orderId ? { ...order, status: nextStatus } : order)));
-    setSelected((current) => (current?.id === orderId ? { ...current, status: nextStatus } : current));
-    toast.success("Sipariş durumu güncellendi.");
+  // Admin overrides still go through the same status API and role matrix.
+  async function updateStatus(orderId: string, nextStatus: OrderStatus) {
+    if (pending) return;
+    setPending(true);
+    try {
+      await staffApi.updateOrderStatus(orderId, toApiOrderStatus(nextStatus));
+      await refetch();
+      toast.success("Sipariş durumu güncellendi.");
+    } catch (error) {
+      toast.error(error instanceof ApiClientError ? error.message : "Sipariş güncellenemedi.");
+    } finally {
+      setPending(false);
+    }
+  }
+
+  function canApply(order: Order, nextStatus: OrderStatus) {
+    return canRoleTransitionOrderStatus(role, toApiOrderStatus(order.status), toApiOrderStatus(nextStatus));
   }
 
   const openCount = orders.filter((order) => !["completed", "cancelled"].includes(order.status)).length;
@@ -62,14 +99,15 @@ export function OrdersManager() {
     <div className="space-y-6">
       <AdminPageHeader
         title="Siparişler"
-        description="Açık ve tamamlanan siparişleri görüntüleyin, durumları demo akışı içinde yönetin."
-        actions={<Button className="h-10" onClick={() => toast.success("Yeni sipariş ekranı demo modunda açıldı.")}><UtensilsCrossed /> Sipariş Oluştur</Button>}
+        description="Açık ve tamamlanan siparişleri görüntüleyin, durumları yetkiniz dahilinde yönetin."
+        actions={<Button className="h-10" variant="outline" disabled={resource.loading} onClick={() => void refetch()}><UtensilsCrossed /> Listeyi Yenile</Button>}
       />
 
       <div className="flex flex-wrap gap-2">
         <SummaryChip label="Açık" value={openCount} />
         <SummaryChip label="Onay bekleyen" value={waitingCount} />
         <SummaryChip label="Listelenen ciro" value={formatCurrency(total)} />
+        <RealtimeStatus status={realtimeStatus} />
       </div>
 
       <AdminPanel className="overflow-hidden" contentClassName="p-0 sm:p-0">
@@ -119,7 +157,7 @@ export function OrdersManager() {
                       <td className="px-3 py-4 text-muted-foreground">{order.waiterName ?? "Atanmadı"}</td>
                       <td className="px-3 py-4 text-right font-extrabold tabular-nums">{formatCurrency(order.total)}</td>
                       <td className="px-5 py-4 text-right">
-                        <Button variant="ghost" size="icon-sm" aria-label={`${order.orderNumber} detayını aç`} onClick={() => setSelected(order)}>
+                        <Button variant="ghost" size="icon-sm" aria-label={`${order.orderNumber} detayını aç`} onClick={() => setSelectedId(order.id)}>
                           <ChevronRight className="size-4" />
                         </Button>
                       </td>
@@ -131,7 +169,7 @@ export function OrdersManager() {
 
             <div className="divide-y md:hidden">
               {filtered.map((order) => (
-                <button key={order.id} type="button" onClick={() => setSelected(order)} className="w-full p-4 text-left transition-colors hover:bg-muted/25">
+                <button key={order.id} type="button" onClick={() => setSelectedId(order.id)} className="w-full p-4 text-left transition-colors hover:bg-muted/25">
                   <div className="flex items-start justify-between gap-3">
                     <div>
                       <p className="font-extrabold">{order.orderNumber} <span className="font-semibold text-muted-foreground">{order.tableName}</span></p>
@@ -158,7 +196,7 @@ export function OrdersManager() {
         )}
       </AdminPanel>
 
-      <Sheet open={Boolean(selected)} onOpenChange={(open) => !open && setSelected(null)}>
+      <Sheet open={Boolean(selected)} onOpenChange={(open) => !open && setSelectedId(null)}>
         <SheetContent className="w-full overflow-y-auto sm:max-w-lg">
           {selected ? (
             <>
@@ -200,8 +238,21 @@ export function OrdersManager() {
               </div>
               <SheetFooter className="sticky bottom-0 border-t bg-card">
                 <div className="grid grid-cols-2 gap-2">
-                  <Button variant="outline" onClick={() => updateStatus(selected.id, "preparing")}>Hazırlanıyor</Button>
-                  <Button onClick={() => updateStatus(selected.id, "completed")}><CheckCheck /> Tamamlandı</Button>
+                  <Button
+                    variant="outline"
+                    disabled={pending || !canApply(selected, "preparing")}
+                    aria-busy={pending}
+                    onClick={() => void updateStatus(selected.id, "preparing")}
+                  >
+                    Hazırlanıyor
+                  </Button>
+                  <Button
+                    disabled={pending || !canApply(selected, "completed")}
+                    aria-busy={pending}
+                    onClick={() => void updateStatus(selected.id, "completed")}
+                  >
+                    <CheckCheck /> Tamamlandı
+                  </Button>
                 </div>
               </SheetFooter>
             </>

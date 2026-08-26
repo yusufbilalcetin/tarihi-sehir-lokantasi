@@ -145,23 +145,12 @@ export const MENU_LANGUAGE_REGISTRY: readonly MenuLanguageDefinition[] = [
 export const MENU_LANGUAGES = MENU_LANGUAGE_REGISTRY.filter((language) =>
   SUPPORTED_MENU_LOCALE_SET.has(language.code),
 );
-export const TOTAL_MENU_LANGUAGE_COUNT = MENU_LANGUAGES.length;
-export const TOTAL_REGISTERED_MENU_LANGUAGE_COUNT = MENU_LANGUAGE_REGISTRY.length;
-export const POPULAR_MENU_LANGUAGES = POPULAR_LANGUAGE_CODES
-  .map((code) => MENU_LANGUAGES.find((language) => language.code === code))
-  .filter((language): language is MenuLanguageDefinition => Boolean(language));
 
-const registeredLanguageByCode = new Map(MENU_LANGUAGE_REGISTRY.map((language) => [language.code.toLocaleLowerCase("en-US"), language]));
 const languageByCode = new Map(MENU_LANGUAGES.map((language) => [language.code.toLocaleLowerCase("en-US"), language]));
 
 export function getMenuLanguage(code: string | null | undefined) {
   if (!code) return undefined;
   return languageByCode.get(code.toLocaleLowerCase("en-US"));
-}
-
-export function getRegisteredMenuLanguage(code: string | null | undefined) {
-  if (!code) return undefined;
-  return registeredLanguageByCode.get(code.toLocaleLowerCase("en-US"));
 }
 
 export function isMenuLanguage(code: string | null | undefined): code is MenuLanguage {

@@ -272,7 +272,100 @@ function writeGeneratedModules(locales) {
   fs.writeFileSync(loadersPath, `import type { MenuLocaleCatalog } from "./menu-catalog";\n\nexport const localeCatalogLoaders: Record<string, () => Promise<MenuLocaleCatalog>> = {\n${loaderLines.join("\n")}\n};\n`, "utf8");
 }
 
+/**
+ * Adds only the interface keys a catalog is missing, and touches nothing else.
+ *
+ * A full regeneration re-translates all 48 products for all 107 machine
+ * locales and, on any failure, deletes the catalogs it could not finish. When
+ * the customer surface simply grows a screen — the takeaway confirmation, the
+ * order tracking page — that is the wrong tool: the products did not change,
+ * the curated wording did not change, and losing a language over a flaky
+ * request would be a far worse outcome than the keys being added a minute
+ * later. This adds the new keys through the same translator, from the same
+ * English source, and leaves every existing string exactly as it was.
+ */
+async function backfillMissingUiKeys() {
+  const translations = loadTypeScriptModule("lib/i18n/menu-translations.ts", {
+    "./menu-catalog": { getLoadedMenuCatalog: () => undefined },
+  });
+  const curated = translations.menuTranslations;
+  const expectedKeys = Object.keys(curated.tr);
+  const english = curated.en;
+  const files = fs.readdirSync(localeDirectory).filter((name) => name.endsWith(".json"));
+  const pending = [];
+
+  for (const fileName of files) {
+    const locale = fileName.slice(0, -5);
+    const filePath = path.join(localeDirectory, fileName);
+    const catalog = JSON.parse(fs.readFileSync(filePath, "utf8"));
+    const missing = expectedKeys.filter((key) => !catalog.ui?.[key]?.trim?.());
+    if (!missing.length) continue;
+    // A curated language is not machine translated: its words are the source.
+    const source = curated[locale] ?? curated[locale.split("-")[0]];
+    if (source) {
+      for (const key of missing) catalog.ui[key] = source[key];
+      writeJson(filePath, catalog);
+      process.stdout.write(`Curated ${locale}: ${missing.length} keys.
+`);
+      continue;
+    }
+    pending.push({ locale, filePath, catalog, missing });
+  }
+
+  let nextIndex = 0;
+  let completed = 0;
+  const failed = [];
+  async function worker() {
+    while (nextIndex < pending.length) {
+      const job = pending[nextIndex++];
+      try {
+        const entries = job.missing.map((key) => [key, english[key]]);
+        for (const batch of splitBatches(entries)) {
+          for (const [key, value] of await translateBatch(batch, job.locale)) {
+            job.catalog.ui[key] = value;
+          }
+        }
+        // Some target languages come back with the batching tags rewritten, so
+        // a key can arrive empty or still wearing one. Those are asked for on
+        // their own rather than costing the locale its whole update.
+        const stragglers = job.missing.filter(
+          (key) => !job.catalog.ui[key]?.trim() || /<\/?tsl/i.test(job.catalog.ui[key]),
+        );
+        for (const key of stragglers) {
+          const translated = await requestTranslation(protectText(english[key]), job.locale);
+          job.catalog.ui[key] = restoreText(translated.replace(/<\/?tsl\d*>/gi, ""));
+        }
+        // Written only once every key arrived, so a half-translated catalog
+        // never reaches the disk.
+        if (expectedKeys.some((key) => !job.catalog.ui[key]?.trim())) {
+          throw new Error("catalog still incomplete after translation");
+        }
+        writeJson(job.filePath, job.catalog);
+        completed += 1;
+        process.stdout.write(`Backfilled ${completed}/${pending.length} (${job.locale})
+`);
+      } catch (error) {
+        failed.push(job.locale);
+        process.stderr.write(`Backfill failed for ${job.locale}: ${String(error)}
+`);
+      }
+    }
+  }
+  await Promise.all(Array.from({ length: MAX_CONCURRENT_LOCALES }, () => worker()));
+  process.stdout.write(`Backfilled ${completed} locale catalogs.
+`);
+  if (failed.length) {
+    process.stderr.write(`Incomplete locales: ${failed.join(", ")}
+`);
+    process.exitCode = 1;
+  }
+}
+
 async function main() {
+  if (process.argv.includes("--missing-ui")) {
+    await backfillMissingUiKeys();
+    return;
+  }
   process.stdout.write("Reading locale registry...\n");
   fs.mkdirSync(localeDirectory, { recursive: true });
   const registryLocales = readRegistryCodes();

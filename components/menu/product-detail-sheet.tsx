@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { Minus, Plus, Scale, ShieldAlert, X } from "lucide-react";
+import { Minus, Plus, Scale, ShieldAlert, UtensilsCrossed, X } from "lucide-react";
+import { MENU_PLACEHOLDER_IMAGE } from "@/lib/adapters/menu-view-model";
 import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -12,7 +13,7 @@ import { getMenuAllergen, getMenuProductDescription, getMenuProductName, getMenu
 import type { Product } from "@/types";
 import { MotionValue } from "@/components/shared/motion-value";
 
-export function ProductDetailSheet({ product, open, onOpenChange, onAdd }: { product: Product | null; open: boolean; onOpenChange: (open: boolean) => void; onAdd: (product: Product, quantity: number, note: string) => void }) {
+export function ProductDetailSheet({ product, open, canOrder = true, onOpenChange, onAdd }: { product: Product | null; open: boolean; canOrder?: boolean; onOpenChange: (open: boolean) => void; onAdd: (product: Product, quantity: number, note: string) => void }) {
   const { direction, formatNumber, formatPrice, language, t } = useMenuPreferences();
   const [quantity, setQuantity] = useState(1);
   const [quantityDirection, setQuantityDirection] = useState<"up" | "down">("up");
@@ -20,6 +21,7 @@ export function ProductDetailSheet({ product, open, onOpenChange, onAdd }: { pro
 
   if (!product) return null;
   const soldOut = product.status === "sold-out";
+  const hasPhoto = product.image !== MENU_PLACEHOLDER_IMAGE;
   const name = getMenuProductName(product, language);
   const description = getMenuProductDescription(product, language);
 
@@ -37,13 +39,31 @@ export function ProductDetailSheet({ product, open, onOpenChange, onAdd }: { pro
         </DialogClose>
         <div className="menu-dialog-scroll min-h-0 flex-1 overflow-y-auto overscroll-contain">
         <div className="relative aspect-[16/9] min-h-44 shrink-0 overflow-hidden rounded-t-3xl bg-muted sm:min-h-52">
-          <Image src={product.image} alt={name} fill sizes="(max-width: 768px) 100vw, 672px" className="motion-product-image object-cover" onLoad={(event) => { event.currentTarget.dataset.loaded = "true"; }} />
-          <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#25211D]/55 to-transparent" />
+          {hasPhoto ? (
+            <>
+              <Image src={product.image} alt={name} fill sizes="(max-width: 768px) 100vw, 672px" className="motion-product-image object-cover" onLoad={(event) => { event.currentTarget.dataset.loaded = "true"; }} />
+              <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#25211D]/55 to-transparent" />
+            </>
+          ) : (
+            /* Same contract as the product card: no photograph means the
+               restaurant's own mark, never a stretched stock plate. */
+            <div aria-hidden="true" className="flex h-full w-full items-center justify-center bg-olive">
+              <UtensilsCrossed className="size-12 text-gold/70" strokeWidth={1.4} />
+            </div>
+          )}
         </div>
         <DialogHeader className="items-center px-5 pb-0 pt-5 text-center sm:px-6">
           <div className="flex flex-wrap justify-center gap-2">{product.tags.map((tag) => <Badge key={tag} variant="outline" className="border-copper/40 bg-copper/10 text-burgundy">{getMenuTag(tag, language)}</Badge>)}</div>
           <DialogTitle className="mt-2 font-heading text-3xl font-semibold leading-tight">{name}</DialogTitle>
-          <DialogDescription className="mx-auto max-w-xl text-sm leading-6">{description}</DialogDescription>
+          <p dir="ltr" className="mt-2 font-heading text-3xl font-bold tabular-nums text-primary">
+            {formatPrice(product.price)}
+          </p>
+          {soldOut ? (
+            <span className="mt-1 inline-flex items-center rounded-full border border-order-void/25 bg-order-void-tint px-2.5 py-1 text-xs font-semibold text-order-void">
+              {t("soldOut")}
+            </span>
+          ) : null}
+          <DialogDescription className="mx-auto mt-2 max-w-xl text-sm leading-6">{description}</DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 px-5 py-5 sm:grid-cols-2 sm:px-6">
           <div className="flex items-start gap-3 rounded-2xl border bg-background p-4">
@@ -66,7 +86,7 @@ export function ProductDetailSheet({ product, open, onOpenChange, onAdd }: { pro
               <span className="min-w-8 text-center font-bold tabular-nums"><MotionValue value={formatNumber(quantity)} numericValue={quantity} direction={quantityDirection} /></span>
               <button type="button" className="motion-press motion-ripple touch-target flex items-center justify-center px-3" aria-label={t("increaseQuantity")} onClick={() => { setQuantityDirection("up"); setQuantity((value) => value + 1); }}><Plus className="size-4" /></button>
             </div>
-            <Button type="button" onClick={handleAdd} disabled={soldOut} className="motion-cta h-12 flex-1 rounded-xl px-5 text-sm font-bold">
+            <Button type="button" onClick={handleAdd} disabled={soldOut || !canOrder} className="motion-cta h-12 flex-1 rounded-xl px-5 text-sm font-bold">
               {soldOut ? t("soldOut") : <>{t("addToCart")} · <MotionValue value={formatPrice(product.price * quantity)} numericValue={product.price * quantity} direction={quantityDirection} delayMs={40} /></>}
             </Button>
         </DialogFooter>

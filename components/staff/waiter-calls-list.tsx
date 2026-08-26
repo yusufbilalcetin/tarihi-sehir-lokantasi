@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import {
   BellRing,
   CheckCircle2,
@@ -11,14 +11,21 @@ import {
   Utensils,
 } from "lucide-react";
 import { toast } from "sonner";
-import { EmptyState } from "@/components/shared/empty-state";
+import { EmptyState } from "@/components/shared/data-states";
+import { RealtimeStatus } from "@/components/staff/realtime-status";
 import { StatusBadge } from "@/components/shared/status-badge";
 import { Button } from "@/components/ui/button";
-import { waiterCalls } from "@/lib/mock-data/calls";
+import { staffCallToViewModel } from "@/lib/adapters/staff-view-model";
+import { ApiClientError } from "@/lib/api/client";
+import { staffApi } from "@/lib/api/endpoints";
+import { useApiResource } from "@/lib/hooks/use-api-resource";
+import { useStaffRealtime } from "@/lib/realtime/use-staff-realtime";
 import { cn } from "@/lib/utils";
 import type { WaiterCall } from "@/types";
 
 type CallFilter = "all" | WaiterCall["status"];
+
+const CALL_POLL_MS = 15_000;
 
 const callFilters: { value: CallFilter; label: string }[] = [
   { value: "all", label: "Tümü" },
@@ -35,45 +42,72 @@ function getCallIcon(call: WaiterCall) {
 }
 
 function getCallTone(call: WaiterCall) {
-  if (call.status === "resolved") return "border-l-emerald-600";
-  if (call.type === "Hesap istiyor") return "border-l-violet-600 bg-violet-50/35";
-  if (call.status === "open") return "border-l-rose-600 bg-rose-50/35";
-  return "border-l-sky-600";
+  // Urgency, in the shared status vocabulary: an open call is the one that
+  // needs somebody now, a bill request is the warning tier, and a resolved
+  // call recedes.
+  if (call.status === "resolved") return "border-l-status-success";
+  if (call.type === "Hesap istiyor") return "border-l-status-warning bg-status-warning-tint/40";
+  if (call.status === "open") return "border-l-status-danger bg-status-danger-tint/40";
+  return "border-l-status-info";
 }
 
 export function WaiterCallsList() {
-  const [calls, setCalls] = useState<WaiterCall[]>(waiterCalls);
   const [filter, setFilter] = useState<CallFilter>("all");
+  const [pendingCallId, setPendingCallId] = useState<string | null>(null);
+
+  const loadCalls = useCallback((signal: AbortSignal) => staffApi.calls(undefined, signal), []);
+  const resource = useApiResource(loadCalls, { pollMs: CALL_POLL_MS });
+  const { refetch } = resource;
+  const realtimeStatus = useStaffRealtime({
+    onEvent: useCallback(() => void refetch(), [refetch]),
+    onResync: useCallback(() => void refetch(), [refetch]),
+  });
+
+  const calls = useMemo(
+    () => (resource.data?.calls ?? []).map((call) => staffCallToViewModel(call)),
+    [resource.data],
+  );
 
   const visibleCalls = useMemo(
     () => calls.filter((call) => filter === "all" || call.status === filter),
     [calls, filter],
   );
 
+  async function updateCall(
+    call: WaiterCall,
+    status: "ACKNOWLEDGED" | "RESOLVED",
+    successMessage: string,
+  ) {
+    if (pendingCallId) return;
+    setPendingCallId(call.id);
+    try {
+      await staffApi.updateCall(call.id, status);
+      await refetch();
+      toast.success(`${call.tableName} ${successMessage}`);
+    } catch (error) {
+      toast.error(error instanceof ApiClientError ? error.message : "İşlem tamamlanamadı.");
+    } finally {
+      setPendingCallId(null);
+    }
+  }
+
   function assignCall(call: WaiterCall) {
-    setCalls((current) =>
-      current.map((item) =>
-        item.id === call.id
-          ? { ...item, status: "assigned", assignedTo: "Ahmet" }
-          : item,
-      ),
-    );
-    toast.success(`${call.tableName} talebini üstlendin.`, {
-      description: "Durum Ahmet ilgileniyor olarak güncellendi.",
-    });
+    void updateCall(call, "ACKNOWLEDGED", "talebini üstlendin.");
   }
 
   function resolveCall(call: WaiterCall) {
-    setCalls((current) =>
-      current.map((item) =>
-        item.id === call.id ? { ...item, status: "resolved" } : item,
-      ),
-    );
-    toast.success(`${call.tableName} talebi tamamlandı.`);
+    void updateCall(call, "RESOLVED", "talebi tamamlandı.");
   }
 
   return (
     <div className="space-y-5">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <p className="text-sm font-medium text-muted-foreground" aria-live="polite">
+          {resource.loading ? "Çağrılar yükleniyor…" : `${visibleCalls.length} çağrı gösteriliyor`}
+        </p>
+        <RealtimeStatus status={realtimeStatus} />
+      </div>
+
       <div className="flex gap-2 overflow-x-auto pb-1" aria-label="Garson çağrısı filtresi">
         {callFilters.map((item) => {
           const count = item.value === "all"
@@ -103,7 +137,13 @@ export function WaiterCallsList() {
         })}
       </div>
 
-      {visibleCalls.length > 0 ? (
+      {resource.error && !resource.data ? (
+        <EmptyState
+          icon={BellRing}
+          title="Çağrılar yüklenemedi"
+          description={resource.error.message}
+        />
+      ) : visibleCalls.length > 0 ? (
         <div className="space-y-3" aria-live="polite">
           {visibleCalls.map((call) => {
             const Icon = getCallIcon(call);
@@ -136,7 +176,7 @@ export function WaiterCallsList() {
                       {call.status === "open"
                         ? "Atanmayı bekliyor"
                         : call.status === "assigned"
-                          ? `${call.assignedTo} ilgileniyor`
+                          ? `${call.assignedTo ?? "Bir garson"} ilgileniyor`
                           : "Talep tamamlandı"}
                     </p>
                   </div>
@@ -144,17 +184,17 @@ export function WaiterCallsList() {
 
                 <div className="sm:w-40 sm:shrink-0">
                   {call.status === "open" ? (
-                    <Button type="button" className="min-h-11 w-full" onClick={() => assignCall(call)}>
+                    <Button type="button" className="min-h-11 w-full" disabled={pendingCallId === call.id} aria-busy={pendingCallId === call.id} onClick={() => assignCall(call)}>
                       <BellRing className="size-4" strokeWidth={1.8} />
                       Üstlen
                     </Button>
                   ) : call.status === "assigned" ? (
-                    <Button type="button" variant="secondary" className="min-h-11 w-full" onClick={() => resolveCall(call)}>
+                    <Button type="button" variant="secondary" className="min-h-11 w-full" disabled={pendingCallId === call.id} aria-busy={pendingCallId === call.id} onClick={() => resolveCall(call)}>
                       <CheckCircle2 className="size-4" strokeWidth={1.8} />
                       Tamamlandı
                     </Button>
                   ) : (
-                    <div className="flex min-h-11 items-center justify-center gap-2 rounded-lg bg-emerald-50 px-3 text-sm font-semibold text-emerald-800">
+                    <div className="flex min-h-11 items-center justify-center gap-2 rounded-lg bg-status-success-tint px-3 text-sm font-semibold text-status-success">
                       <CheckCircle2 className="size-4" strokeWidth={1.8} />
                       Tamamlandı
                     </div>

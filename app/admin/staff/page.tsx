@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { StaffManager } from "@/components/admin/staff-manager";
+import { StaffManagerModule } from "@/components/admin/staff-module";
 
 export const metadata: Metadata = { title: "Personel" };
 
-export default function AdminStaffPage() {
-  return <StaffManager />;
+export default function AdminStaffManagerPage() {
+  return <StaffManagerModule />;
 }

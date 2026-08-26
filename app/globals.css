@@ -43,6 +43,60 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
+  /* ---------------------------------------------------------------------
+     Phase 36 semantic layer.
+
+     The brand hues above stay exactly as they are — this names what they are
+     *for*, so a screen asks for `surface-raised` or `status-danger` instead of
+     re-deciding which brown belongs on a toolbar. Five product faces share one
+     vocabulary; that shared vocabulary is what keeps them one family while
+     each face still gets the density it needs.
+     --------------------------------------------------------------------- */
+
+  /* Surfaces, from the page ground upward. */
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-surface-muted: var(--surface-muted);
+  --color-surface-inverse: var(--surface-inverse);
+  --color-surface-inverse-raised: var(--surface-inverse-raised);
+
+  /* Text, by role rather than by shade. */
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+  --color-text-inverse: var(--text-inverse);
+  --color-text-inverse-muted: var(--text-inverse-muted);
+
+  --color-border-subtle: var(--border-subtle);
+  --color-border-strong: var(--border-strong);
+
+  /* Feedback. Deliberately warm-leaning and desaturated: on an operational
+     screen these must read instantly without shouting over the brand. */
+  --color-status-success: var(--status-success);
+  --color-status-success-tint: var(--status-success-tint);
+  --color-status-warning: var(--status-warning);
+  --color-status-warning-tint: var(--status-warning-tint);
+  --color-status-danger: var(--status-danger);
+  --color-status-danger-tint: var(--status-danger-tint);
+  --color-status-info: var(--status-info);
+  --color-status-info-tint: var(--status-info-tint);
+
+  /* Order lifecycle. One hue per stage, used identically by the floor, the
+     kitchen and the office so a colour means the same thing in every room. */
+  --color-order-new: var(--order-new);
+  --color-order-new-tint: var(--order-new-tint);
+  --color-order-preparing: var(--order-preparing);
+  --color-order-preparing-tint: var(--order-preparing-tint);
+  --color-order-ready: var(--order-ready);
+  --color-order-ready-tint: var(--order-ready-tint);
+  --color-order-served: var(--order-served);
+  --color-order-served-tint: var(--order-served-tint);
+  --color-order-settled: var(--order-settled);
+  --color-order-settled-tint: var(--order-settled-tint);
+  --color-order-void: var(--order-void);
+  --color-order-void-tint: var(--order-void-tint);
+
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
@@ -77,6 +131,77 @@
   --chart-4: #8C704A;
   --chart-5: #746B61;
   --radius: 0.75rem;
+
+  /* --- Phase 36 semantic values ------------------------------------- */
+
+  /* Warm cream ground, with each step up in elevation getting lighter and
+     slightly less saturated — the way paper stacks read under warm light. */
+  --surface: #F5EBDD;
+  --surface-raised: #FFFDF8;
+  --surface-elevated: #FFFFFC;
+  --surface-muted: #EEE2D3;
+  --surface-inverse: #262C23;
+  --surface-inverse-raised: #313829;
+
+  --text-primary: #25211D;
+  --text-secondary: #5C544A;
+  --text-muted: #8A8073;
+  --text-inverse: #F7F1E7;
+  --text-inverse-muted: #B3AB9C;
+
+  --border-subtle: #EFE3D3;
+  --border-strong: #CDBAA2;
+
+  /* Each status hue is picked to sit inside the brand family: the green leans
+     to the olive, the amber to the copper, the red to the burgundy. Only the
+     informational blue sits outside, which is why it is the rarest of them. */
+  --status-success: #3F6B47;
+  --status-success-tint: #E7EFE5;
+  --status-warning: #A8681F;
+  --status-warning-tint: #F8ECD9;
+  --status-danger: #8C2B21;
+  --status-danger-tint: #F7E3DF;
+  --status-info: #3E5C6B;
+  --status-info-tint: #E4EDF1;
+
+  /* A ticket's life, as colour. New is warm-neutral because a new ticket is
+     not yet a problem; preparing borrows the copper; ready is the only green
+     on a kitchen screen so it can be found across a room; served and settled
+     recede on purpose, because finished work should stop competing. */
+  --order-new: #8C704A;
+  --order-new-tint: #F3E8D8;
+  --order-preparing: #A8681F;
+  --order-preparing-tint: #F8ECD9;
+  --order-ready: #3F6B47;
+  --order-ready-tint: #E4EFE3;
+  --order-served: #5C6B58;
+  --order-served-tint: #EAEFE7;
+  --order-settled: #746B61;
+  --order-settled-tint: #EDE6DC;
+  --order-void: #8C2B21;
+  --order-void-tint: #F4E2DF;
+
+  /* One ladder for everything that floats, so a sheet can never land under
+     the header that opened it. */
+  --z-base: 0;
+  --z-raised: 10;
+  --z-sticky: 20;
+  --z-appbar: 30;
+  --z-overlay: 40;
+  --z-window: 50;
+  --z-popover: 60;
+  --z-toast: 70;
+
+  /* Touch. 44px is the floor the tablet faces are built to (Phase 36 §61). */
+  --touch-target: 2.75rem;
+  --touch-target-lg: 3.25rem;
+
+  /* Elevation, warm-tinted rather than neutral grey, so shadows sit on cream
+     without turning it muddy. */
+  --shadow-raised: 0 1px 2px rgba(37, 33, 29, 0.05), 0 1px 3px rgba(37, 33, 29, 0.04);
+  --shadow-floating: 0 4px 12px rgba(37, 33, 29, 0.08), 0 2px 4px rgba(37, 33, 29, 0.04);
+  --shadow-window: 0 24px 64px rgba(37, 33, 29, 0.22), 0 8px 20px rgba(37, 33, 29, 0.12);
+
   --sidebar: #2B3228;
   --sidebar-foreground: #F5EBDD;
   --sidebar-primary: #B98352;
@@ -86,15 +211,15 @@
   --sidebar-border: #46503F;
   --sidebar-ring: #B98352;
   --motion-fast: 140ms;
-  --motion-normal: 180ms;
+  --motion-base: 180ms;
   --motion-medium: 220ms;
-  --motion-slow: 280ms;
+  --motion-slow: 260ms;
   --motion-exit: 150ms;
   --motion-spatial: 220ms;
   --motion-press-in: 100ms;
   --motion-stagger: 22ms;
   --ease-standard: cubic-bezier(0.25, 0.8, 0.25, 1);
-  --ease-enter: cubic-bezier(0.22, 0.75, 0.25, 1);
+  --ease-soft: cubic-bezier(0.22, 0.75, 0.25, 1);
   --ease-exit: cubic-bezier(0.4, 0, 0.2, 1);
   --ease-spatial: cubic-bezier(0.25, 0.8, 0.25, 1);
   --ease-modal: cubic-bezier(0.22, 0.75, 0.25, 1);
@@ -112,14 +237,14 @@
 
 html[data-platform="ios"] {
   --motion-fast: 150ms;
-  --motion-normal: 190ms;
+  --motion-base: 190ms;
   --motion-medium: 230ms;
   --motion-slow: 280ms;
   --motion-exit: 170ms;
   --motion-spatial: 230ms;
   --motion-press-in: 110ms;
   --ease-standard: var(--motion-ios-spring-soft);
-  --ease-enter: var(--motion-ios-enter);
+  --ease-soft: var(--motion-ios-enter);
   --ease-spatial: cubic-bezier(0.25, 0.8, 0.25, 1);
   --ease-modal: var(--motion-ios-spring-soft);
   --motion-release-ease: var(--motion-ios-spring-soft);
@@ -132,14 +257,14 @@ html[data-platform="ios"] {
 
 html[data-platform="android"] {
   --motion-fast: 110ms;
-  --motion-normal: 160ms;
+  --motion-base: 160ms;
   --motion-medium: 200ms;
   --motion-slow: 220ms;
   --motion-exit: 140ms;
   --motion-spatial: 220ms;
   --motion-press-in: 90ms;
   --ease-standard: cubic-bezier(0.22, 0.7, 0.3, 1);
-  --ease-enter: cubic-bezier(0.2, 0.75, 0.25, 1);
+  --ease-soft: cubic-bezier(0.2, 0.75, 0.25, 1);
   --ease-spatial: cubic-bezier(0.22, 0.7, 0.3, 1);
   --ease-modal: cubic-bezier(0.2, 0.75, 0.25, 1);
   --motion-release-ease: cubic-bezier(0.22, 0.7, 0.3, 1);
@@ -174,7 +299,7 @@ html[data-platform="android"] {
   }
 
   .motion-press {
-    transition: transform var(--motion-normal) var(--motion-release-ease), opacity var(--motion-fast) ease, color var(--motion-normal) ease, background-color var(--motion-normal) ease, border-color var(--motion-normal) ease;
+    transition: transform var(--motion-base) var(--motion-release-ease), opacity var(--motion-fast) ease, color var(--motion-base) ease, background-color var(--motion-base) ease, border-color var(--motion-base) ease;
     transform: translateY(0) scale(1);
   }
 
@@ -212,7 +337,7 @@ html[data-platform="android"] {
     pointer-events: none;
     opacity: 0;
     transform: scale(0.7);
-    transition: opacity var(--motion-fast) ease, transform var(--motion-fast) var(--ease-enter);
+    transition: opacity var(--motion-fast) ease, transform var(--motion-fast) var(--ease-soft);
   }
 
   html[data-platform="android"] .motion-ripple:active::after {
@@ -221,7 +346,7 @@ html[data-platform="android"] {
   }
 
   .motion-page {
-    animation: motion-page-in var(--motion-medium) var(--ease-enter) backwards;
+    animation: motion-page-in var(--motion-medium) var(--ease-soft) backwards;
   }
 
   .motion-page[data-navigation-direction="forward"] {
@@ -232,12 +357,13 @@ html[data-platform="android"] {
     --motion-page-x: -4px;
   }
 
-  .motion-header {
-    animation: motion-header-in var(--motion-medium) var(--ease-enter) backwards;
+  /* Entry only on the first mount of the session — see RestaurantHeader (§14). */
+  .motion-header[data-motion-enter="true"] {
+    animation: motion-header-in var(--motion-medium) var(--ease-soft) backwards;
   }
 
-  .motion-table {
-    animation: motion-table-in var(--motion-medium) var(--ease-enter) 40ms backwards;
+  .motion-table[data-motion-enter="true"] {
+    animation: motion-table-in var(--motion-medium) var(--ease-soft) 40ms backwards;
   }
 
   html[data-motion-ready="true"] .motion-reveal[data-reveal-animate="true"] {
@@ -248,13 +374,13 @@ html[data-platform="android"] {
   html[data-motion-ready="true"] .motion-reveal[data-reveal-animate="true"][data-revealed="true"] {
     opacity: 1;
     transform: none;
-    animation: motion-card-in var(--motion-medium) var(--ease-enter) backwards;
+    animation: motion-card-in var(--motion-medium) var(--ease-soft) backwards;
     animation-delay: var(--motion-delay, 0ms);
   }
 
   .motion-product-image {
     opacity: 0;
-    transition: opacity var(--motion-normal) ease;
+    transition: opacity var(--motion-base) ease;
   }
 
   .motion-product-image[data-loaded="true"] {
@@ -262,7 +388,7 @@ html[data-platform="android"] {
   }
 
   .motion-search-icon {
-    transition: transform var(--motion-normal) var(--ease-standard), color var(--motion-normal) ease;
+    transition: transform var(--motion-base) var(--ease-standard), color var(--motion-base) ease;
   }
 
   .motion-search:focus-within .motion-search-icon {
@@ -272,7 +398,7 @@ html[data-platform="android"] {
 
   .motion-number {
     display: inline-block;
-    animation: motion-number-in var(--motion-normal) var(--ease-enter) both;
+    animation: motion-number-in var(--motion-base) var(--ease-soft) both;
   }
 
   .motion-number[data-direction="down"] {
@@ -289,13 +415,13 @@ html[data-platform="android"] {
     inset-inline-start: 0;
     top: 0;
     pointer-events: none;
-    animation: motion-value-old-out var(--motion-normal) var(--ease-exit) both;
+    animation: motion-value-old-out var(--motion-base) var(--ease-exit) both;
     animation-delay: var(--motion-value-delay, 0ms);
   }
 
   .motion-value-new {
     display: inline-block;
-    animation: motion-value-new-in var(--motion-normal) var(--ease-enter) both;
+    animation: motion-value-new-in var(--motion-base) var(--ease-soft) both;
     animation-delay: var(--motion-value-delay, 0ms);
   }
 
@@ -310,7 +436,7 @@ html[data-platform="android"] {
   }
 
   .motion-card-hover {
-    transition: transform var(--motion-normal) var(--motion-release-ease), border-color var(--motion-normal) ease;
+    transition: transform var(--motion-base) var(--motion-release-ease), border-color var(--motion-base) ease;
   }
 
   .motion-card-hover:has(.motion-card-trigger:active) {
@@ -337,7 +463,7 @@ html[data-platform="android"] {
     inset: 0;
     opacity: 0;
     transform: scale(0.9) rotate(-2deg);
-    transition: opacity var(--motion-normal) ease, transform var(--motion-normal) var(--ease-enter);
+    transition: opacity var(--motion-base) ease, transform var(--motion-base) var(--ease-soft);
   }
 
   .motion-icon-swap > svg[data-active="true"] {
@@ -355,18 +481,18 @@ html[data-platform="android"] {
 
   .motion-cart-exit {
     pointer-events: none;
-    animation: motion-cart-out var(--motion-normal) var(--ease-exit) forwards;
+    animation: motion-cart-out var(--motion-base) var(--ease-exit) forwards;
   }
 
   .motion-nav-item,
   .motion-nav-item > svg,
   .motion-nav-item > span:not(.motion-nav-badge) {
-    transition: color var(--motion-normal) ease, opacity var(--motion-normal) ease, transform var(--motion-normal) var(--ease-standard), background-color var(--motion-normal) ease;
+    transition: color var(--motion-base) ease, opacity var(--motion-base) ease, transform var(--motion-base) var(--ease-standard), background-color var(--motion-base) ease;
   }
 
   .motion-nav-item[aria-current="page"] > svg,
   .motion-nav-item[aria-current="page"] > span:not(.motion-nav-badge) {
-    animation: motion-nav-active var(--motion-normal) var(--ease-enter) both;
+    animation: motion-nav-active var(--motion-base) var(--ease-soft) both;
   }
 
   .motion-nav-badge {
@@ -395,14 +521,14 @@ html[data-platform="android"] {
   }
 
   .motion-status {
-    animation: motion-status-in var(--motion-medium) var(--ease-enter) both;
+    animation: motion-status-in var(--motion-medium) var(--ease-soft) both;
   }
 
   [data-motion-success="true"] svg > path,
   [data-motion-success="true"] svg > polyline {
     stroke-dasharray: 32;
     stroke-dashoffset: 32;
-    animation: motion-check-stroke var(--motion-medium) var(--ease-enter) 30ms forwards;
+    animation: motion-check-stroke var(--motion-medium) var(--ease-soft) 30ms forwards;
   }
 
   .motion-results {
@@ -414,7 +540,7 @@ html[data-platform="android"] {
   }
 
   [data-slot="dialog-close"] {
-    transition: transform var(--motion-fast) var(--ease-standard), color var(--motion-normal) ease, background-color var(--motion-normal) ease;
+    transition: transform var(--motion-fast) var(--ease-standard), color var(--motion-base) ease, background-color var(--motion-base) ease;
   }
 
   [data-slot="dialog-close"]:active {
@@ -423,7 +549,7 @@ html[data-platform="android"] {
 
   .motion-dialog-overlay {
     opacity: 1;
-    transition: opacity var(--motion-medium) var(--ease-enter);
+    transition: opacity var(--motion-medium) var(--ease-soft);
   }
 
   .motion-dialog-overlay[data-starting-style],
@@ -453,14 +579,14 @@ html[data-platform="android"] {
 
   .motion-dialog [data-slot="dialog-header"],
   .motion-dialog .menu-dialog-scroll {
-    animation: motion-modal-content-in var(--motion-normal) var(--ease-enter) 15ms backwards;
+    animation: motion-modal-content-in var(--motion-base) var(--ease-soft) 15ms backwards;
   }
 
   .motion-popover {
     opacity: 1;
     transform: translateY(0) scale(1);
     transform-origin: var(--transform-origin);
-    transition: opacity var(--motion-normal) var(--ease-enter), transform var(--motion-normal) var(--ease-enter);
+    transition: opacity var(--motion-base) var(--ease-soft), transform var(--motion-base) var(--ease-soft);
   }
 
   .motion-popover[data-starting-style],
@@ -475,7 +601,7 @@ html[data-platform="android"] {
   }
 
   .cn-toast {
-    transition: opacity var(--motion-normal) var(--ease-enter), transform var(--motion-normal) var(--ease-enter) !important;
+    transition: opacity var(--motion-base) var(--ease-soft), transform var(--motion-base) var(--ease-soft) !important;
   }
 
   .cn-toast[data-sonner-toast]:not([data-mounted="true"]) {
@@ -491,19 +617,19 @@ html[data-platform="android"] {
   }
 
   .motion-empty {
-    animation: motion-empty-in var(--motion-medium) var(--ease-enter) both;
+    animation: motion-empty-in var(--motion-medium) var(--ease-soft) both;
   }
 
   .motion-error {
-    animation: motion-error-nudge var(--motion-normal) var(--ease-standard) both;
+    animation: motion-error-nudge var(--motion-base) var(--ease-standard) both;
   }
 
   .motion-cta {
-    transition: transform var(--motion-normal) var(--motion-release-ease), opacity var(--motion-fast) ease, color var(--motion-normal) ease, background-color var(--motion-normal) ease, border-color var(--motion-normal) ease;
+    transition: transform var(--motion-base) var(--motion-release-ease), opacity var(--motion-fast) ease, color var(--motion-base) ease, background-color var(--motion-base) ease, border-color var(--motion-base) ease;
   }
 
   .motion-action-label {
-    animation: motion-action-label-in var(--motion-normal) var(--ease-enter) both;
+    animation: motion-action-label-in var(--motion-base) var(--ease-soft) both;
   }
 
   .menu-shell {
@@ -585,42 +711,9 @@ html[data-platform="android"] {
   }
 }
 
-.motion-view-panel {
-  view-transition-name: menu-panel;
-}
-
-html:active-view-transition .motion-view-panel {
-  animation: none;
-}
-
-::view-transition-old(root),
-::view-transition-new(root) {
-  animation: none;
-}
-
-html[data-navigation-direction="forward"]::view-transition-old(menu-panel) {
-  --motion-panel-x: -4px;
-}
-
-html[data-navigation-direction="forward"]::view-transition-new(menu-panel) {
-  --motion-panel-x: 4px;
-}
-
-html[data-navigation-direction="back"]::view-transition-old(menu-panel) {
-  --motion-panel-x: 4px;
-}
-
-html[data-navigation-direction="back"]::view-transition-new(menu-panel) {
-  --motion-panel-x: -4px;
-}
-
-::view-transition-old(menu-panel) {
-  animation: motion-panel-old-out var(--motion-normal) var(--ease-exit) both;
-}
-
-::view-transition-new(menu-panel) {
-  animation: motion-panel-new-in var(--motion-medium) var(--ease-enter) both;
-}
+/* Motion doc §49: one transition system only. The panel enter/exit lives in
+   .motion-page; the View Transition API layer that used to sit on top of it was
+   removed because the two overlapped (duplicate snapshots, flashes). */
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -649,7 +742,7 @@ html[data-navigation-direction="back"]::view-transition-new(menu-panel) {
   height: auto;
   object-fit: contain;
   opacity: 0;
-  animation: menu-logo-in var(--intro-logo-duration, 100ms) var(--ease-enter) var(--intro-logo-delay, 10ms) forwards;
+  animation: menu-logo-in var(--intro-logo-duration, 100ms) var(--ease-soft) var(--intro-logo-delay, 10ms) forwards;
 }
 
 .menu-content {
@@ -668,7 +761,7 @@ html[data-navigation-direction="back"]::view-transition-new(menu-panel) {
 .menu-content-ready {
   opacity: 1;
   transform: translateY(0);
-  transition: opacity var(--motion-medium) var(--ease-enter), transform var(--motion-medium) var(--ease-enter);
+  transition: opacity var(--motion-medium) var(--ease-soft), transform var(--motion-medium) var(--ease-soft);
 }
 
 html[data-sehir-intro="seen"] .menu-splash {
@@ -719,11 +812,8 @@ html[data-sehir-intro="seen"] .menu-content {
   100% { opacity: 1; transform: scale(1); }
 }
 
-@keyframes motion-badge-pop {
-  0% { transform: scale(0.92); }
-  60% { transform: scale(1.04); }
-  100% { transform: scale(1); }
-}
+/* The badge pop lives in bottom-navigation.tsx as a Web Animations API keyframe
+   instead, so a rapid tap can cancel the in-flight run (§39). */
 
 @keyframes motion-value-old-out {
   from { opacity: 1; transform: translateY(0) scale(1); }
@@ -771,25 +861,12 @@ html[data-sehir-intro="seen"] .menu-content {
   to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
-@keyframes motion-panel-old-out {
-  to { opacity: 0; transform: translateX(var(--motion-panel-x, -4px)); }
-}
-
-@keyframes motion-panel-new-in {
-  from { opacity: 0; transform: translateX(var(--motion-panel-x, 4px)); }
-  to { opacity: 1; transform: translateX(0); }
-}
-
 @keyframes menu-splash-out {
   from { opacity: 1; }
   to { opacity: 0; visibility: hidden; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  ::view-transition-old(menu-panel),
-  ::view-transition-new(menu-panel) {
-    animation: none;
-  }
   .menu-splash { animation: menu-splash-out 80ms ease 80ms forwards !important; }
   .menu-splash-logo {
     opacity: 1;
@@ -850,5 +927,75 @@ html[data-sehir-intro="seen"] .menu-content {
   .motion-dialog[data-starting-style],
   .motion-dialog[data-ending-style] {
     transform: translate(-50%, -50%);
+  }
+}
+
+/* Printable management report: the page becomes the document, so navigation,
+   filters and action buttons drop out and tables are allowed to break. */
+@media print {
+  aside,
+  nav,
+  header button,
+  [data-slot="sidebar"] {
+    display: none !important;
+  }
+
+  main {
+    padding: 0 !important;
+  }
+
+  table {
+    break-inside: auto;
+  }
+
+  tr {
+    break-inside: avoid;
+    break-after: auto;
+  }
+
+  thead {
+    display: table-header-group;
+  }
+
+  /* Report tables scroll on screen; on paper they must lay out in full. */
+  .overflow-x-auto {
+    overflow: visible !important;
+  }
+
+  table {
+    min-width: 0 !important;
+    width: 100% !important;
+  }
+
+  section {
+    break-inside: auto;
+  }
+
+  h2 {
+    break-after: avoid;
+  }
+
+  /* A cash report opened in a dialog becomes the whole printed page: the
+     underlying screen, the overlay and the dialog's own controls drop out, and
+     the report itself is laid flat instead of being a centred fixed panel. */
+  body:has([data-print-root]) header,
+  body:has([data-print-root]) main,
+  body:has([data-print-root]) [data-slot="dialog-overlay"],
+  [data-print-hide] {
+    display: none !important;
+  }
+
+  [data-print-root] {
+    position: static !important;
+    transform: none !important;
+    inset: auto !important;
+    width: 100% !important;
+    max-width: none !important;
+    max-height: none !important;
+    overflow: visible !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    gap: 0 !important;
   }
 }

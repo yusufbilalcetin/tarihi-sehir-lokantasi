@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import {
   CheckCircle2,
   ChefHat,
@@ -10,16 +10,27 @@ import {
   Utensils,
 } from "lucide-react";
 import { toast } from "sonner";
-import { EmptyState } from "@/components/shared/empty-state";
+import { EmptyState } from "@/components/shared/data-states";
+import { RealtimeStatus } from "@/components/staff/realtime-status";
+import { useStaffSession } from "@/components/staff/staff-session-provider";
 import { StatusBadge } from "@/components/shared/status-badge";
+import { PrintButton } from "@/components/shared/print-button";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { staffOrderToViewModel, toApiOrderStatus } from "@/lib/adapters/staff-view-model";
+import { ApiClientError } from "@/lib/api/client";
+import { staffApi } from "@/lib/api/endpoints";
+import { canRoleTransitionOrderStatus } from "@/lib/domain/status";
+import { useApiResource } from "@/lib/hooks/use-api-resource";
+import { useStaffRealtime } from "@/lib/realtime/use-staff-realtime";
 import { formatCurrency } from "@/lib/format";
-import { orders as initialOrders } from "@/lib/mock-data/orders";
 import { cn } from "@/lib/utils";
 import type { Order, OrderStatus } from "@/types";
 
 type OrderFilter = "all" | OrderStatus;
+
+/** Fallback cadence for when Realtime is unavailable or a message was missed. */
+const ORDER_POLL_MS = 20_000;
 
 const filters: { value: OrderFilter; label: string }[] = [
   { value: "all", label: "Tümü" },
@@ -56,10 +67,16 @@ const actionIcons: Partial<Record<OrderStatus, typeof CheckCircle2>> = {
 
 function OrderCard({
   order,
+  canAdvance,
+  canCancel,
+  pending,
   onAdvance,
   onCancel,
 }: {
   order: Order;
+  canAdvance: boolean;
+  canCancel: boolean;
+  pending: boolean;
   onAdvance: (order: Order) => void;
   onCancel: (order: Order) => void;
 }) {
@@ -104,7 +121,7 @@ function OrderCard({
                 <div className="min-w-0 flex-1">
                   <p className="font-semibold text-foreground">{item.productName}</p>
                   {item.note ? (
-                    <p className="mt-1 rounded-md bg-amber-50 px-2 py-1 text-xs font-medium leading-5 text-amber-900">
+                    <p className="mt-1 rounded-md bg-status-warning-tint px-2 py-1 text-xs font-medium leading-5 text-status-warning">
                       Mutfak notu: {item.note}
                     </p>
                   ) : null}
@@ -125,14 +142,19 @@ function OrderCard({
           <p className="mt-1 text-xs text-muted-foreground">{order.items.reduce((sum, item) => sum + item.quantity, 0)} ürün</p>
 
           <div className="mt-4 grid gap-2">
-            {actionLabel && ActionIcon ? (
-              <Button type="button" className="min-h-11 w-full" onClick={() => onAdvance(order)}>
+            {actionLabel && ActionIcon && canAdvance ? (
+              <Button type="button" className="min-h-11 w-full" disabled={pending} aria-busy={pending} onClick={() => onAdvance(order)}>
                 <ActionIcon className="size-4" strokeWidth={1.8} />
                 {actionLabel}
               </Button>
             ) : null}
-            {(order.status === "pending" || order.status === "confirmed") ? (
-              <Button type="button" variant="destructive" className="min-h-11 w-full" onClick={() => onCancel(order)}>
+            <PrintButton
+              label="Adisyon Yazdır"
+              className="min-h-11 w-full"
+              document={{ documentType: "CUSTOMER_BILL", orderId: order.id }}
+            />
+            {canCancel ? (
+              <Button type="button" variant="destructive" className="min-h-11 w-full" disabled={pending} aria-busy={pending} onClick={() => onCancel(order)}>
                 Siparişi İptal Et
               </Button>
             ) : null}
@@ -144,9 +166,24 @@ function OrderCard({
 }
 
 export function OrdersList() {
-  const [orderList, setOrderList] = useState<Order[]>(initialOrders);
+  const { role } = useStaffSession();
   const [filter, setFilter] = useState<OrderFilter>("all");
   const [query, setQuery] = useState("");
+  const [pendingOrderId, setPendingOrderId] = useState<string | null>(null);
+
+  const loadOrders = useCallback((signal: AbortSignal) => staffApi.orders(undefined, signal), []);
+  const resource = useApiResource(loadOrders, { pollMs: ORDER_POLL_MS });
+  const { refetch } = resource;
+  const realtimeStatus = useStaffRealtime({
+    // Realtime only signals that something changed; the API stays authoritative.
+    onEvent: useCallback(() => void refetch(), [refetch]),
+    onResync: useCallback(() => void refetch(), [refetch]),
+  });
+
+  const orderList = useMemo(
+    () => (resource.data?.orders ?? []).map((order) => staffOrderToViewModel(order)),
+    [resource.data],
+  );
 
   const visibleOrders = useMemo(() => {
     const normalizedQuery = query.trim().toLocaleLowerCase("tr-TR");
@@ -164,25 +201,56 @@ export function OrdersList() {
     });
   }, [filter, orderList, query]);
 
-  function advanceOrder(order: Order) {
-    const status = nextStatus[order.status];
-    if (!status) return;
+  // Only offer transitions the API would accept for this role.
+  const allowedNext = useCallback(
+    (order: Order): OrderStatus | null => {
+      const candidate = nextStatus[order.status];
+      if (!candidate) return null;
+      return canRoleTransitionOrderStatus(
+        role,
+        toApiOrderStatus(order.status),
+        toApiOrderStatus(candidate),
+      )
+        ? candidate
+        : null;
+    },
+    [role],
+  );
 
-    setOrderList((current) =>
-      current.map((item) => (item.id === order.id ? { ...item, status } : item)),
-    );
-    toast.success(`${order.tableName} siparişi güncellendi.`, {
-      description: `${actionLabels[order.status]} işlemi tamamlandı.`,
-    });
+  const canCancel = useCallback(
+    (order: Order) =>
+      canRoleTransitionOrderStatus(
+        role,
+        toApiOrderStatus(order.status),
+        "CANCELLED",
+      ),
+    [role],
+  );
+
+  async function applyStatus(order: Order, status: OrderStatus, successMessage: string) {
+    if (pendingOrderId) return;
+    setPendingOrderId(order.id);
+    try {
+      await staffApi.updateOrderStatus(order.id, toApiOrderStatus(status));
+      await refetch();
+      toast.success(`${order.tableName} ${successMessage}`);
+    } catch (error) {
+      toast.error(
+        error instanceof ApiClientError ? error.message : "İşlem tamamlanamadı.",
+      );
+    } finally {
+      setPendingOrderId(null);
+    }
+  }
+
+  function advanceOrder(order: Order) {
+    const status = allowedNext(order);
+    if (!status) return;
+    void applyStatus(order, status, "siparişi güncellendi.");
   }
 
   function cancelOrder(order: Order) {
-    setOrderList((current) =>
-      current.map((item) => (item.id === order.id ? { ...item, status: "cancelled" } : item)),
-    );
-    toast.info(`${order.tableName} siparişi iptal edildi.`, {
-      description: "Değişiklik yalnızca demo arayüzünde saklanır.",
-    });
+    void applyStatus(order, "cancelled", "siparişi iptal edildi.");
   }
 
   return (
@@ -230,14 +298,31 @@ export function OrdersList() {
         </div>
       </div>
 
-      <p className="text-sm font-medium text-muted-foreground" aria-live="polite">
-        {visibleOrders.length} sipariş gösteriliyor
-      </p>
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <p className="text-sm font-medium text-muted-foreground" aria-live="polite">
+          {resource.loading ? "Siparişler yükleniyor…" : `${visibleOrders.length} sipariş gösteriliyor`}
+        </p>
+        <RealtimeStatus status={realtimeStatus} />
+      </div>
 
-      {visibleOrders.length > 0 ? (
+      {resource.error && !resource.data ? (
+        <EmptyState
+          icon={Search}
+          title="Siparişler yüklenemedi"
+          description={resource.error.message}
+        />
+      ) : visibleOrders.length > 0 ? (
         <div className="space-y-4">
           {visibleOrders.map((order) => (
-            <OrderCard key={order.id} order={order} onAdvance={advanceOrder} onCancel={cancelOrder} />
+            <OrderCard
+              key={order.id}
+              order={order}
+              canAdvance={Boolean(allowedNext(order))}
+              canCancel={canCancel(order)}
+              pending={pendingOrderId === order.id}
+              onAdvance={advanceOrder}
+              onCancel={cancelOrder}
+            />
           ))}
         </div>
       ) : (

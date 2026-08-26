@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { SettingsManager } from "@/components/admin/settings-manager";
+import { SettingsManagerModule } from "@/components/admin/settings-module";
 
 export const metadata: Metadata = { title: "Ayarlar" };
 
-export default function AdminSettingsPage() {
-  return <SettingsManager />;
+export default function AdminSettingsManagerPage() {
+  return <SettingsManagerModule />;
 }

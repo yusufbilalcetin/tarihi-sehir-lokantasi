@@ -1,0 +1,125 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1786625089707,
+      "tag": "0000_central_restaurant_foundation",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1786633199716,
+      "tag": "0001_strange_radioactive_man",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1786633366132,
+      "tag": "0002_lovely_ultron",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1786633991677,
+      "tag": "0003_phase3_supabase_permissions",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1786634679745,
+      "tag": "0004_far_colossus",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1786636833889,
+      "tag": "0005_pale_violations",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1786644366127,
+      "tag": "0006_clean_wiccan",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1786646457100,
+      "tag": "0007_medical_senator_kelly",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1786707108028,
+      "tag": "0008_short_living_lightning",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1786714384700,
+      "tag": "0009_massive_puma",
+      "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1786786710029,
+      "tag": "0010_phase8a_cashier_shifts",
+      "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1786792492984,
+      "tag": "0011_phase8b_z_reports",
+      "breakpoints": true
+    },
+    {
+      "idx": 12,
+      "version": "7",
+      "when": 1786807447078,
+      "tag": "0012_phase8c_printing",
+      "breakpoints": true
+    },
+    {
+      "idx": 13,
+      "version": "7",
+      "when": 1787688718221,
+      "tag": "0013_phase38_erp_core",
+      "breakpoints": true
+    },
+    {
+      "idx": 14,
+      "version": "7",
+      "when": 1787696923906,
+      "tag": "0014_phase39_fulfillment_items",
+      "breakpoints": true
+    },
+    {
+      "idx": 15,
+      "version": "7",
+      "when": 1787699040498,
+      "tag": "0015_phase39_order_channel",
+      "breakpoints": true
+    },
+    {
+      "idx": 16,
+      "version": "7",
+      "when": 1787747580939,
+      "tag": "0016_phase39_stock_movement_time_index",
+      "breakpoints": true
+    }
+  ]
+}

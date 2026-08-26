@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { ProductsManager } from "@/components/admin/products-manager";
+import { ProductsManagerModule } from "@/components/admin/products-module";
 
 export const metadata: Metadata = { title: "Ürünler" };
 
-export default function AdminProductsPage() {
-  return <ProductsManager />;
+export default function AdminProductsManagerPage() {
+  return <ProductsManagerModule />;
 }

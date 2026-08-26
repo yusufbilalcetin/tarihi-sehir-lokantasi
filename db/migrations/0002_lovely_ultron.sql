@@ -1,0 +1,3 @@
+ALTER TABLE "staff_profiles" ADD COLUMN "login_identifier" varchar(80);--> statement-breakpoint
+CREATE UNIQUE INDEX "staff_profiles_login_identifier_key" ON "staff_profiles" USING btree ("login_identifier") WHERE "staff_profiles"."login_identifier" is not null;--> statement-breakpoint
+ALTER TABLE "staff_profiles" ADD CONSTRAINT "staff_profiles_login_identifier_format_check" CHECK ("staff_profiles"."login_identifier" is null or "staff_profiles"."login_identifier" ~ '^[A-Za-z0-9._-]{3,80}$');
