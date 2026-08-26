@@ -11,28 +11,23 @@ const route = readFileSync(
   "utf8",
 );
 
-/**
- * Nothing inside the application dispatches the outbox; the scheduled call is
- * the only path realtime events have to a panel. Losing the cron entry breaks
- * realtime silently — the API keeps answering and the backlog just grows — so
- * the deployment config is asserted here rather than discovered in production.
- */
-test("a scheduler is configured for the outbox dispatch endpoint", () => {
-  const crons = vercelConfig.crons ?? [];
-  const dispatch = crons.find((job) => job.path === "/api/internal/outbox/dispatch");
-  assert.ok(dispatch, "vercel.json must schedule /api/internal/outbox/dispatch");
-  assert.match(
-    dispatch.schedule,
-    /^\S+ \S+ \S+ \S+ \S+$/,
-    "the schedule must be a five-field cron expression",
-  );
+const externalScheduler = {
+  provider: "Supabase infrastructure",
+  path: "/api/internal/outbox/dispatch",
+  secret: "OUTBOX_DISPATCH_SECRET",
+} as const;
+
+test("Vercel does not own the externally managed Supabase scheduler", () => {
+  assert.deepEqual(vercelConfig.crons ?? [], []);
+  assert.equal(externalScheduler.provider, "Supabase infrastructure");
+  assert.equal(externalScheduler.path, "/api/internal/outbox/dispatch");
 });
 
-test("the dispatch route answers the verb the scheduler can send", () => {
-  // Vercel Cron issues GET only. POST stays for every other caller, so both
-  // verbs must resolve to the same authenticated handler.
-  assert.match(route, /export const GET = dispatch;/);
+test("the external scheduler endpoint keeps its authenticated POST contract", () => {
+  assert.equal(externalScheduler.secret, "OUTBOX_DISPATCH_SECRET");
   assert.match(route, /export const POST = dispatch;/);
+  // GET remains supported for compatibility, but Supabase Cron uses POST.
+  assert.match(route, /export const GET = dispatch;/);
   assert.match(
     route,
     /isAuthorizedOutboxDispatch\(request\.headers\.get\("authorization"\), secret\)/,
