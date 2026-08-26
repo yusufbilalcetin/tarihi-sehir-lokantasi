@@ -1,151 +1,61 @@
 # Tarihi Şehir Lokantası
 
-Tek bir lokanta için QR menü ve restoran operasyon sistemi. Müşteri masadaki QR
-kodu okutup sipariş verir; garson, mutfak, kasa ve yönetim panelleri aynı
-veritabanı üzerinden çalışır.
+Modern QR menü ve restoran operasyonları için hazırlanmış, yalnızca frontend çalışan Next.js prototipi.
 
-## Gereksinimler
-
-- Node.js 20+
-- PostgreSQL (Supabase projesi önerilir)
-- Yazıcı kullanılacaksa ESC/POS uyumlu bir yazıcı ve `tools/printer-agent`
-
-## Kurulum
+## Çalıştırma
 
 ```bash
 npm install
-cp .env.example .env.local   # değerleri doldurun
-npm run db:migrate
 npm run dev
 ```
 
-## Ortam değişkenleri
-
-Tüm değişkenler ve ne işe yaradıkları `.env.example` içinde açıklanmıştır.
-Gerçek değerleri yalnızca `.env.local` veya deployment secret ayarlarında
-tutun; repoya yazmayın.
-
-`NEXT_PUBLIC_` önekli olanlar dışındaki her değer server-only'dir. Özellikle
-`SUPABASE_SERVICE_ROLE_KEY`, `AUTH_SECRET`, `QR_TOKEN_PEPPER`,
-`STAFF_SESSION_SECRET`, `OUTBOX_DISPATCH_SECRET`, `MAINTENANCE_SECRET` ve
-`PRINTER_AGENT_TOKEN_PEPPER` hiçbir koşulda browser'a gönderilmemelidir.
-
-## Veritabanı
-
-Şema kaynağı `db/schema.ts`, sürümlenen migration'lar `db/migrations/`
-altındadır. Ayrıntılar için `docs/database.md`.
+Production doğrulaması:
 
 ```bash
-npm run db:generate   # şema değişikliğinden migration üret
-npm run db:migrate    # bekleyen migration'ları uygula
-npm run db:studio     # Drizzle Studio
-npm run db:seed       # geliştirme verisi (ALLOW_DATABASE_SEED=true gerekir)
-```
-
-Seed verisi `db/seed-data/` altındadır ve yalnızca geliştirme içindir.
-
-## Roller ve panel erişimi
-
-Yetki matrisi `lib/auth/role-access.ts` içindeki tek kaynaktan yönetilir.
-
-| Panel | Erişebilen roller |
-| --- | --- |
-| `/admin/*` | `ADMIN`, `MANAGER` |
-| `/staff/*` | `ADMIN`, `MANAGER`, `WAITER` |
-| `/kitchen` | `ADMIN`, `MANAGER`, `KITCHEN` |
-| `/cashier` | `ADMIN`, `MANAGER`, `CASHIER` |
-
-Personel hesapları Supabase Auth üzerinde tutulur. İlk hesabı oluşturmak için:
-
-```bash
-npm run staff:bootstrap -- --help
-npm run staff:setup-link -- --help
-```
-
-Yetki kontrolü her zaman server tarafında yapılır: `proxy.ts` yalnızca kaba bir
-kimlik doğrulaması yapar, rol ve restoran kapsamı layout'larda ve API
-handler'larında yeniden doğrulanır.
-
-## Müşteri akışı
-
-QR kodundaki tek kullanımlık token `proxy.ts` içinde doğrulanır ve kısa ömürlü,
-imzalı bir HttpOnly masa oturumu cookie'sine çevrilir. Ham token hiçbir zaman
-istemciye veya log'a düşmez. Sipariş fiyatları istemciden gelen değerle değil,
-her zaman veritabanındaki güncel fiyatla hesaplanır.
-
-## Geliştirme ve doğrulama
-
-```bash
-npm run dev
 npm run lint
 npm run build
-npm start                   # production derlemesini çalıştırır (önce npm run build)
-npm run test:foundation     # saf birim testleri, veritabanı gerektirmez
-npm run test:integration    # ayrı bir TEST veritabanı gerektirir, aşağıya bakın
 ```
 
-### Panel ve sipariş akışı HTTP E2E'si
+## Demo girişleri
 
-`tests/integration/phase9a-…` (panel yetkilendirmesi) ve `phase9b-…` (sipariş →
-mutfak → kasa yaşam döngüsü) çalışan bir loopback sunucusuna karşı koşar; ikisi
-de opt-in'dir ve kendi kayıtlarını temizler. Gerekli değişkenler her dosyanın
-başındaki açıklamada listelidir; hesaplar `npm run staff:bootstrap` ile
-oluşturulur ve şifreleri yalnızca kurulum bağlantısıyla belirlenir.
+- Müşteri menüsü: `http://localhost:3000/menu/demo-table`
+- Garson girişi: `http://localhost:3000/staff/login`
+- Personel kodu: `1042`
+- PIN: `1234`
+- Mutfak: `http://localhost:3000/kitchen`
+- Kasa: `http://localhost:3000/cashier`
+- Admin: `http://localhost:3000/admin/dashboard`
 
-### Integration testleri ve test veritabanı
+## Mimari
 
-> **Integration test kimlik bilgileri production/uygulama Supabase projesini
-> asla göstermemelidir.**
+- `app/`: App Router route ve layout dosyaları
+- `components/`: role göre ayrılmış reusable UI bileşenleri
+- `components/ui/`: özelleştirilmiş shadcn/ui bileşenleri
+- `lib/mock-data/`: gerçekçi demo verileri
+- `lib/services/`: ileride backend adaptörü eklemek için servis sözleşmesi
+- `types/`: ortak TypeScript modelleri
+- `public/images/`: marka ve yemek görselleri
 
-Bu testler sipariş, ödeme ve audit kaydı **yazar** ve bunları silmez. Bu yüzden
-hedef ortam atılabilir olmalıdır:
+Firebase, veritabanı, gerçek authentication, ödeme API'si ve WebSocket kullanılmaz.
 
-| Ortam | Durum |
-| --- | --- |
-| Lokal disposable Supabase (`supabase start`, loopback) | Tercih edilen |
-| Ayrı "… TEST" Supabase projesi (kendi project ref'i) | Kabul edilir |
-| Production / uygulamanın kullandığı proje | **Yasak** |
+## Splash intro
 
-Değişkenler `.env.integration.example` içinde açıklanmıştır; uygulamanın normal
-Supabase değişkenlerine hiçbir zaman geri düşmez.
+QR menü introsu `components/menu/splash-intro.tsx` içindedir. Aşamalar `INTRO_TIMING`, toplam süre `INTRO_DURATION_MS` sabitinden değiştirilir. Aynı browser session'ında yalnızca bir kez gösterilir ve `prefers-reduced-motion` desteği vardır.
 
-`tests/integration/supabase-test-environment.ts` son emniyet kapısıdır: hedef,
-`NEXT_PUBLIC_SUPABASE_URL` ile aynı Supabase projesine veya `DATABASE_URL` ile
-aynı veritabanı kimliğine çözümlenirse suite **çalışmaz**. Canlı değerleri
-kopyalamak testleri başlatmaz, yalnızca bir ret mesajı üretir. Paylaşılan lokal
-loopback stack bu kuraldan muaftır.
+Şeffaf logo dosyası: `public/images/brand/wordmark-transparent.png`
 
-## Zamanlanmış işler (outbox dispatcher)
+QR menü keşif akışı: splash → kategori ana ekranı → kategori ürünleri → ürün detay sheet'i. Mobil geri eylemi detaydan ürün listesine, ürün listesinden kategori ekranına döner.
 
-Realtime olayları önce `outbox_events` tablosuna yazılır ve panellere ancak bir
-worker onları yayımladıktan sonra ulaşır. Uygulama içinde bu worker'ı çağıran
-hiçbir yol yoktur: tek giriş noktası korumalı
-`/api/internal/outbox/dispatch` ucudur. **Bu uç düzenli olarak çağrılmazsa
-realtime hiç çalışmaz** ve outbox sınırsız büyür.
+## Vercel Environment Variables
 
-`vercel.json` bunu dakikada bir çalışan bir Vercel Cron işi olarak tanımlar.
-Vercel cron yalnızca `GET` gönderir ve `Authorization: Bearer $CRON_SECRET`
-başlığını ekler; bu yüzden route hem `GET` hem `POST` kabul eder ve deployment
-ortamında **`CRON_SECRET`, `OUTBOX_DISPATCH_SECRET` ile aynı değere
-ayarlanmalıdır**. Secret olmadan gelen çağrı 401 alır.
+Firebase Web SDK için aşağıdaki değişkenleri Vercel proje ayarlarında tanımlayın:
 
-Kapasite sınırı bilinçlidir: her çağrı en çok `OUTBOX_BATCH_SIZE` olayı sırayla
-yayımlar, yani dakikada bir cron ile üst sınır dakikada o kadar olaydır.
-Paneller ayrıca 15–30 saniyede bir kendi verilerini yeniden okuduğu için
-dispatcher gecikse bile ekranlar bayat kalmaz; realtime bu yolun üzerine
-gecikme iyileştirmesidir, tek kaynağı değildir.
+- `NEXT_PUBLIC_FIREBASE_API_KEY` (zorunlu)
+- `NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN` (zorunlu)
+- `NEXT_PUBLIC_FIREBASE_PROJECT_ID` (zorunlu)
+- `NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET` (zorunlu)
+- `NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID` (zorunlu)
+- `NEXT_PUBLIC_FIREBASE_APP_ID` (zorunlu)
+- `NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID` (isteğe bağlı; Analytics için)
 
-## Yazıcı ajanı
-
-Lokal ESC/POS yazıcılarına basım `tools/printer-agent` üzerinden yapılır.
-Kurulum ve token yönetimi için `tools/printer-agent/README.md` ve
-`docs/printing.md`.
-
-## Dokümantasyon
-
-- `docs/database.md` — şema, migration ve bağlantı yönetimi
-- `docs/database-recovery.md` — yedek ve kurtarma
-- `docs/data-retention.md` — veri saklama ve temizlik
-- `docs/printing.md` — basım mimarisi
-- `docs/security-foundation.md` — kimlik, yetki ve sır yönetimi
-- `docs/long-term-capacity.md` — kapasite planlaması
+Vercel'de her değişkeni **Production**, **Preview** ve **Development** ortamları için ekleyin. Değerleri repoya veya README'ye yazmayın; yerel geliştirmede git tarafından yok sayılan `.env.local` dosyasını, başlangıç şablonu olarak ise `.env.example` dosyasını kullanın.
