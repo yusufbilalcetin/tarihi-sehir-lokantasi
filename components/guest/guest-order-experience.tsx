@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Bike, ShoppingBag, Trash2 } from "lucide-react";
 
 import { CartItem } from "@/components/menu/cart-item";
-import { CategoryChips } from "@/components/menu/category-chips";
+import { CategoryJump } from "@/components/menu/category-jump";
 import { MenuStateCard } from "@/components/menu/menu-state-card";
 import { MenuPreferencesProvider, useMenuPreferences } from "@/components/menu/menu-preferences-provider";
 import { ProductCard } from "@/components/menu/product-card";
@@ -16,6 +16,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { ApiClientError, newIdempotencyKey } from "@/lib/api/client";
 import { guestApi, type GuestOrderPayload } from "@/lib/api/endpoints";
 import { menuApiToViewModel } from "@/lib/adapters/menu-view-model";
+import { getMenuCategoryName } from "@/lib/i18n/menu-content";
 import { useApiResource } from "@/lib/hooks/use-api-resource";
 import type { MenuTranslationKey } from "@/lib/i18n/menu-translations";
 import { cn } from "@/lib/utils";
@@ -70,14 +71,11 @@ export function GuestOrderExperience({ restaurantSlug }: { readonly restaurantSl
 }
 
 function GuestOrderContent({ restaurantSlug }: { readonly restaurantSlug: string }) {
-  const { formatPrice, t } = useMenuPreferences();
+  const { formatPrice, language, t } = useMenuPreferences();
 
   const [step, setStep] = useState<Step>("channel");
   const [channel, setChannel] = useState<Channel | null>(null);
   const [cart, setCart] = useState<CartItemType[]>([]);
-  // Null means "everything"; the chips themselves only name real categories.
-  const [activeCategory, setActiveCategory] = useState<string | null>(null);
-  const [search, setSearch] = useState("");
   const [detail, setDetail] = useState<Product | null>(null);
   const [customerName, setCustomerName] = useState("");
   const [contact, setContact] = useState("");
@@ -110,18 +108,23 @@ function GuestOrderContent({ restaurantSlug }: { readonly restaurantSlug: string
     [resource.data],
   );
 
-  const products = useMemo(() => {
+  /**
+   * The menu, course by course.
+   *
+   * This is the same shape the QR menu next door presents: every category in
+   * the restaurant's own order, with its dishes under it. A search field and a
+   * chip rail sat here before and asked a guest to decide how to look before
+   * they had seen anything — on a menu of this size that is work, not help.
+   */
+  const sections = useMemo(() => {
     if (!menu) return [];
-    const term = search.trim().toLocaleLowerCase("tr-TR");
-    return menu.products.filter((product) => {
-      if (activeCategory !== null && product.categoryId !== activeCategory) return false;
-      if (!term) return true;
-      return (
-        product.name.toLocaleLowerCase("tr-TR").includes(term) ||
-        product.description.toLocaleLowerCase("tr-TR").includes(term)
-      );
-    });
-  }, [menu, activeCategory, search]);
+    return menu.categories
+      .map((category) => ({
+        category,
+        products: menu.products.filter((product) => product.categoryId === category.id),
+      }))
+      .filter((section) => section.products.length > 0);
+  }, [menu]);
 
   const cartTotal = useMemo(
     () => cart.reduce((sum, item) => sum + item.unitPrice * item.quantity, 0),
@@ -418,47 +421,33 @@ function GuestOrderContent({ restaurantSlug }: { readonly restaurantSlug: string
       title={channel ? t(CHANNEL_TITLE[channel]) : undefined}
     >
       <div className="space-y-4 pb-32">
-        <Input
-          value={search}
-          onChange={(event) => setSearch(event.target.value)}
-          placeholder={t("searchLabel")}
-          aria-label={t("searchLabel")}
-          className="min-h-11"
-        />
-
-        {menu ? (
-          <div className="space-y-2">
-            <CategoryChips
-              categories={menu.categories}
-              activeCategoryId={activeCategory}
-              onSelect={(category) =>
-                setActiveCategory((current) => (current === category.id ? null : category.id))
-              }
-            />
-            {activeCategory !== null ? (
-              <button
-                type="button"
-                onClick={() => setActiveCategory(null)}
-                className="min-h-11 text-sm font-medium text-text-secondary underline-offset-4 hover:underline"
-              >
-                {t("showAllMenu")}
-              </button>
-            ) : null}
-          </div>
-        ) : null}
-
-        {products.length === 0 ? (
-          <MenuStateCard title={t("noResults")} description={t("noResultsDescription")} />
+        {sections.length === 0 ? (
+          <MenuStateCard title={t("menuUnavailable")} description={t("orderingClosedDescription")} />
         ) : (
-          <div className="grid gap-3">
-            {products.map((product, index) => (
-              <ProductCard
-                key={product.id}
-                product={product}
-                index={index}
-                onOpen={() => setDetail(product)}
-                onAdd={() => addToCart(product, 1, "")}
-              />
+          <div className="space-y-8">
+            {/* No collapsing header above this page, so the bar parks at the
+                top of the viewport rather than under one. */}
+            <CategoryJump sections={sections} stickyTopClass="top-0" />
+            {sections.map(({ category, products }) => (
+              <section key={category.id} aria-labelledby={`menu-category-${category.id}`}>
+                <h2
+                  id={`menu-category-${category.id}`}
+                  className="font-heading text-[22px] font-semibold text-text-primary"
+                >
+                  {getMenuCategoryName(category, language)}
+                </h2>
+                <div className="mt-3 grid gap-2">
+                  {products.map((product, index) => (
+                    <ProductCard
+                      key={product.id}
+                      product={product}
+                      index={index}
+                      onOpen={() => setDetail(product)}
+                      onAdd={() => addToCart(product, 1, "")}
+                    />
+                  ))}
+                </div>
+              </section>
             ))}
           </div>
         )}

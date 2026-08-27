@@ -71,7 +71,7 @@ export function TableCard({
           <span className="block truncate text-2xl font-extrabold leading-tight tracking-tight text-text-primary">
             {table.name}
           </span>
-          <span className="mt-1 flex items-center gap-1.5 text-xs font-medium text-text-muted">
+          <span className="mt-1 flex items-center gap-1.5 whitespace-nowrap text-xs font-medium text-text-muted">
             <UsersRound className="size-3.5" strokeWidth={1.8} aria-hidden="true" />
             {table.seats} kişilik
           </span>
@@ -93,9 +93,14 @@ export function TableCard({
         </span>
       ) : null}
 
-      <div className="mt-auto flex w-full items-end justify-between gap-3 pt-4">
-        <StatusBadge status={table.status} size="sm" className="max-w-full" />
-        <span className="flex shrink-0 items-center gap-1 text-xs font-medium text-text-muted">
+      <div className="mt-auto flex w-full flex-wrap items-end justify-between gap-x-3 gap-y-1.5 pt-4">
+        {/* One strong statement per card. The two attention states already say
+            "Hesap istedi" / "Garson çağırdı" in the marker above, at the size a
+            waiter reads across a room; the small badge repeated the same words
+            in the same card and cost the glance it was meant to save. Every
+            other status has no marker, so there the badge is the only voice. */}
+        {attention ? null : <StatusBadge status={table.status} size="sm" className="max-w-full" />}
+        <span className="ms-auto flex shrink-0 items-center gap-1 whitespace-nowrap text-xs font-medium text-text-muted">
           <Clock3 className="size-3.5" strokeWidth={1.8} aria-hidden="true" />
           {table.lastActivity}
         </span>

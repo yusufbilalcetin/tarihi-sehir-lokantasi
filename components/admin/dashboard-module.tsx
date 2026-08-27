@@ -9,8 +9,8 @@ import { DashboardView } from "@/components/admin/dashboard-view";
 export function DashboardViewModule() {
   return (
     <AdminModuleWindow
-      title="Yönetim Özeti"
-      description="Bugünün satışı, tahsilatı ve salonun anlık durumu."
+      title="Genel Bakış"
+      description="Bugünün satışı ve salonun anlık durumu."
       icon={LayoutDashboard}
       size="workspace"
     >

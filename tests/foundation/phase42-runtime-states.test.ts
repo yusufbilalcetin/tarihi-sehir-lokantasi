@@ -42,9 +42,11 @@ test("failure outranks loading, and neither is emptiness", () => {
 /* ------------------------------------------------ dashboard panels ------- */
 
 test("every dashboard panel distinguishes loading, failure and emptiness", () => {
-  // Four panels, four independent resources. Each must pass its own error in.
+  // One notice per independent resource. The count is the dashboard's own
+  // business — it has been four and is now two — but every panel that has one
+  // must pass its own three states and its own copy, never a shared sentence.
   const notices = [...dashboard.matchAll(/<PanelNotice[\s\S]*?\/>/g)].map((match) => match[0]);
-  assert.equal(notices.length, 4, `expected 4 panel notices, found ${notices.length}`);
+  assert.ok(notices.length > 0, "the dashboard reports no resource state at all");
   for (const notice of notices) {
     assert.match(notice, /loading=\{/, "a panel notice has no loading input");
     assert.match(notice, /error=\{/, "a panel notice has no error input");

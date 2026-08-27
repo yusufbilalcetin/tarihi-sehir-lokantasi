@@ -123,13 +123,13 @@ export function LanguageSelector() {
     }}>
       <DialogTrigger
         aria-label={t("languageLabel")}
-        className="motion-press motion-ripple motion-hover inline-flex h-10 min-w-0 items-center justify-center gap-1.5 rounded-xl border border-white/15 bg-white/[0.07] px-2.5 text-xs font-bold text-[#FFFDF8] outline-none hover:bg-white/[0.12] focus-visible:ring-2 focus-visible:ring-copper sm:px-3"
+        className="motion-press motion-ripple motion-hover inline-flex h-10 min-w-0 items-center justify-center gap-1.5 rounded-xl border border-white/15 bg-white/[0.07] px-2 text-xs font-bold text-[#FFFDF8] outline-none hover:bg-white/[0.12] focus-visible:ring-2 focus-visible:ring-copper sm:px-3"
       >
-        <Globe2 className="size-3.5 text-copper" aria-hidden="true" />
+        <Globe2 className="hidden size-3.5 text-copper sm:block" aria-hidden="true" />
         <LanguageFlag language={languageDefinition} size="sm" />
         <span className="sm:hidden">{languageDefinition.code.split("-")[0]?.toUpperCase()}</span>
         <span className="hidden max-w-24 truncate sm:inline">{languageDefinition.nativeName}</span>
-        <ChevronDown className="size-3.5 opacity-70" aria-hidden="true" />
+        <ChevronDown className="hidden size-3.5 opacity-70 sm:block" aria-hidden="true" />
       </DialogTrigger>
       <DialogContent
         dir={direction}

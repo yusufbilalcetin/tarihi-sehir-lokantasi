@@ -3,6 +3,7 @@
 import { useMemo } from "react";
 
 import { PageHeader } from "@/components/shared/page-header";
+import { StaffAttendanceCard } from "@/components/staff/staff-attendance-card";
 import { StaffFloor } from "@/components/staff/staff-floor";
 import { useStaffFloor } from "@/components/staff/use-staff-floor";
 import { Badge } from "@/components/ui/badge";
@@ -33,7 +34,7 @@ export function StaffTablesView() {
     <div className="space-y-6">
       <PageHeader
         title="Masalar"
-        description="Salonun tamamını izle, masa detaylarını aç ve servis işlemlerini hızlıca tamamla."
+        description="Bir masaya dokunarak sipariş ve servis işlemlerini aç."
         action={
           <Badge variant="outline" className="h-8 border-copper/40 bg-card px-3 text-sm text-burgundy">
             {floor.tables.length} masa
@@ -51,6 +52,10 @@ export function StaffTablesView() {
       </div>
 
       <StaffFloor floor={floor} />
+
+      {/* Clocking in is a daily task and this is the screen a waiter starts on,
+          so it lives here rather than behind a tab of its own. */}
+      <StaffAttendanceCard />
     </div>
   );
 }

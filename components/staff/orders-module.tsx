@@ -8,7 +8,7 @@ export function OrdersModule() {
   return (
     <ModulePage
       title="Siparişler"
-      description="Salon siparişlerini filtrele, mutfak durumunu takip et ve servis akışını güncelle."
+      description="Salon siparişlerini takip et ve durumlarını güncelle."
     >
       <OrdersList />
     </ModulePage>

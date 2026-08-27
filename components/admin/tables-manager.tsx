@@ -140,7 +140,7 @@ export function TablesManager() {
                   <div className="rounded-lg bg-muted/45 px-2.5 py-2"><span className="block text-muted-foreground">Son aktivite</span><strong className="mt-1 flex items-center gap-1"><Clock3 className="size-3" /> {table.lastActivity}</strong></div>
                   <div className="rounded-lg bg-muted/45 px-2.5 py-2"><span className="block text-muted-foreground">QR kod</span><strong className="mt-1 flex items-center gap-1"><QrCode className="size-3" /> {table.qrAvailable ? "Hazır" : "Eksik"}</strong></div>
                 </div>
-                <label className="mt-3 flex min-h-12 items-center justify-between gap-3 rounded-lg border bg-card px-3 text-xs font-bold">
+                <label className="mt-3 flex min-h-12 items-center justify-between gap-3 border-t pt-3 text-xs font-bold">
                   <span>Servise açık</span>
                   <Switch
                     checked={table.status !== "inactive"}

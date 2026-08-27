@@ -9,8 +9,8 @@ export default function NotFound() {
         <div className="mx-auto flex size-14 items-center justify-center rounded-2xl bg-muted text-burgundy"><MapPinOff className="size-7" /></div>
         <p className="mt-5 text-xs font-bold tracking-widest text-copper">404</p>
         <h1 className="mt-2 font-heading text-2xl font-semibold">Bu ekran bulunamadı</h1>
-        <p className="mt-2 text-sm leading-6 text-muted-foreground">Bağlantı değişmiş veya demo route’u kaldırılmış olabilir.</p>
-        <Button nativeButton={false} render={<Link href="/" />} className="mt-6 h-11 w-full rounded-xl"><ArrowLeft className="size-4" /> Portal Seçimine Dön</Button>
+        <p className="mt-2 text-sm leading-6 text-muted-foreground">Bağlantı değişmiş ya da bu ekran kaldırılmış olabilir.</p>
+        <Button nativeButton={false} render={<Link href="/" />} className="mt-6 h-11 w-full rounded-xl"><ArrowLeft className="size-4" /> Ana Ekrana Dön</Button>
       </section>
     </main>
   );

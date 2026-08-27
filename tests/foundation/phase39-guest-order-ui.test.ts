@@ -131,10 +131,21 @@ test("the guest's contact details never reach a log or a telemetry payload", () 
 });
 
 test("the guest screen reuses the menu components rather than copying them", () => {
-  for (const component of ["ProductCard", "ProductDetailSheet", "CartItem", "CategoryChips", "MenuStateCard", "MenuPreferencesProvider"]) {
+  for (const component of ["ProductCard", "ProductDetailSheet", "CartItem", "MenuStateCard", "MenuPreferencesProvider"]) {
     assert.match(ui, new RegExp(`from "@/components/menu/[a-z-]+";`), "menu components are not imported");
     assert.ok(ui.includes(component), `${component} was not reused`);
   }
+});
+
+test("the guest browses the menu course by course, with nothing to decide first", () => {
+  // A search field and a category rail used to sit above the dishes, so the
+  // first thing a hungry stranger met was a choice about how to look. The menu
+  // is presented the way the restaurant orders it instead — the same shape the
+  // QR flow next door already uses.
+  assert.match(ui, /\.filter\(\(section\) => section\.products\.length > 0\)/);
+  assert.match(ui, /getMenuCategoryName\(category, language\)/);
+  assert.equal(ui.includes("CategoryChips"), false, "the category chip rail came back");
+  assert.equal(ui.includes('t("searchLabel")'), false, "the menu search field came back");
 });
 
 test("the QR table flow still opens dine-in orders and cannot open the guest channels", () => {

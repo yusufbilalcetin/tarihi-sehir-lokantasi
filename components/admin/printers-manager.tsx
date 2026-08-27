@@ -171,11 +171,11 @@ export function PrintersManager() {
       <Card className="gap-0 py-0">
         <CardHeader className="border-b py-4">
           <CardTitle className="flex items-center gap-2 text-lg">
-            <ShieldAlert className="size-4.5" aria-hidden="true" /> Agentlar
+            <ShieldAlert className="size-4.5" aria-hidden="true" /> Yazdırma Bilgisayarları
           </CardTitle>
           <p className="mt-1 text-xs text-muted-foreground">
-            Agent restoran içinde çalışır ve dışarı doğru bağlanır; yazıcı adresleri
-            yerel yapılandırmada kalır.
+            Bu bilgisayar restoran içinde çalışır ve dışarı doğru bağlanır; yazıcı
+            adresleri restoranın kendi ağında kalır.
           </p>
         </CardHeader>
         <CardContent className="p-4 sm:p-5">
@@ -189,14 +189,14 @@ export function PrintersManager() {
                   setAgentName("");
                   setIssuedToken({ name: created.agent.name, token: created.rawToken });
                 },
-                "Agent oluşturulamadı.",
-                "Agent oluşturuldu",
+                "Bilgisayar eklenemedi.",
+                "Bilgisayar eklendi",
               );
             }}
           >
             <div className="min-w-48 flex-1">
               <label className="text-xs font-semibold text-muted-foreground" htmlFor="agent-name">
-                Agent adı
+                Bilgisayar adı
               </label>
               <Input
                 id="agent-name"
@@ -208,7 +208,7 @@ export function PrintersManager() {
               />
             </div>
             <Button type="submit" className="h-10" disabled={busy || !agentName.trim()}>
-              <Plus className="size-4" aria-hidden="true" /> Agent Ekle
+              <Plus className="size-4" aria-hidden="true" /> Bilgisayar Ekle
             </Button>
           </form>
 
@@ -216,7 +216,7 @@ export function PrintersManager() {
             <Table className="min-w-[40rem]">
               <TableHeader>
                 <TableRow className="hover:bg-transparent">
-                  <TableHead className="pl-0">Agent</TableHead>
+                  <TableHead className="pl-0">Bilgisayar</TableHead>
                   <TableHead className="w-32">Durum</TableHead>
                   <TableHead className="w-36">Son görülme</TableHead>
                   <TableHead className="w-24">Sürüm</TableHead>
@@ -270,12 +270,12 @@ export function PrintersManager() {
                                   });
                                 }
                               },
-                              "Token yenilenemedi.",
-                              "Yeni token oluşturuldu",
+                              "Anahtar yenilenemedi.",
+                              "Yeni anahtar oluşturuldu",
                             )
                           }
                         >
-                          <RefreshCw className="size-3.5" aria-hidden="true" /> Token yenile
+                          <RefreshCw className="size-3.5" aria-hidden="true" /> Anahtarı yenile
                         </Button>
                         <Button
                           type="button"
@@ -285,8 +285,8 @@ export function PrintersManager() {
                           onClick={() =>
                             void act(
                               () => printerApi.updateAgent(agent.id, { action: "REVOKE" }),
-                              "Agent iptal edilemedi.",
-                              "Agent iptal edildi",
+                              "Bilgisayarın erişimi kapatılamadı.",
+                              "Bilgisayarın erişimi kapatıldı",
                             )
                           }
                         >
@@ -299,7 +299,7 @@ export function PrintersManager() {
                 {(agents.data?.agents.length ?? 0) === 0 ? (
                   <TableRow>
                     <TableCell colSpan={5} className="py-6 text-center text-sm text-muted-foreground">
-                      {agents.loading ? "Yükleniyor…" : "Henüz agent tanımlanmamış."}
+                      {agents.loading ? "Yükleniyor…" : "Henüz yazdırma bilgisayarı tanımlanmamış."}
                     </TableCell>
                   </TableRow>
                 ) : null}
@@ -340,7 +340,7 @@ export function PrintersManager() {
             }}
           >
             <div>
-              <label className="text-xs font-semibold text-muted-foreground">Agent</label>
+              <label className="text-xs font-semibold text-muted-foreground">Bilgisayar</label>
               <Select
                 items={agentLabels}
                 value={printerDraft.agentId}
@@ -792,8 +792,8 @@ export function PrintersManager() {
       <Dialog open={issuedToken !== null} onOpenChange={() => setIssuedToken(null)}>
         <WindowDialogContent
           size="md"
-          title="Agent Token"
-          description="Bu token yalnızca şimdi gösterilir. Sunucuda yalnız özeti saklanır; kaybolursa kurtarılamaz, yenilenir."
+          title="Bağlantı Anahtarı"
+          description="Bu anahtar yalnızca şimdi gösterilir. Sunucuda yalnızca özeti saklanır; kaybolursa geri getirilemez, yenisi oluşturulur."
           // The only way out is the acknowledgement: a close control in the title
           // bar invites dismissing a secret that cannot be shown again.
           showCloseButton={false}
@@ -809,7 +809,7 @@ export function PrintersManager() {
               {issuedToken?.token}
             </code>
             <p className="text-xs text-muted-foreground">
-              Agent makinesinde <code>PRINTER_AGENT_TOKEN</code> ortam değişkenine yazın.
+              Bu bilgisayarda <code>PRINTER_AGENT_TOKEN</code> ortam değişkenine yazın.
               Yapılandırma dosyasına yazmayın.
             </p>
           </div>

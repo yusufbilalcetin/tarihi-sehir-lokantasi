@@ -221,7 +221,7 @@ export function StaffManager() {
     <div className="space-y-6">
       <AdminPageHeader
         title="Personel"
-        description="Çalışan hesaplarını, giriş yetkilerini ve rol bazlı panel erişimlerini yönetin."
+        description="Çalışan hesaplarını, şifrelerini ve hangi ekranları açabileceklerini yönetin."
         actions={
           canManage ? (
             <Button className="h-10" onClick={openNew}>

@@ -1,19 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, Banknote, CircleDollarSign, Clock3, ReceiptText, RefreshCw, Utensils } from "lucide-react";
-import { AdminKpi, AdminPageHeader, AdminPanel } from "@/components/admin/admin-ui";
+import { ArrowRight, RefreshCw, Wallet } from "lucide-react";
+import { AdminPageHeader, AdminPanel } from "@/components/admin/admin-ui";
 import { panelState } from "@/components/shared/data-states";
 import { cn } from "@/lib/utils";
-import { DashboardSalesChart } from "@/components/admin/admin-charts";
-import { useAdminReports } from "@/components/admin/use-admin-reports";
-import { useAdminTables } from "@/components/admin/use-admin-tables";
-import { RealtimeStatus } from "@/components/staff/realtime-status";
-import { useStaffSession } from "@/components/staff/staff-session-provider";
 import { Button } from "@/components/ui/button";
 import { StatusBadge } from "@/components/shared/status-badge";
 import { staffOrderToViewModel } from "@/lib/adapters/staff-view-model";
-import { staffApi } from "@/lib/api/endpoints";
+import { cashierShiftApi, staffApi } from "@/lib/api/endpoints";
 import { useApiResource } from "@/lib/hooks/use-api-resource";
 import { formatCurrency, formatElapsed } from "@/lib/format";
 import { useCallback, useMemo } from "react";
@@ -21,6 +16,8 @@ import { readOverview, TodayPanel } from "@/components/admin/today-panel";
 
 const ORDER_POLL_MS = 20_000;
 
+/** One page of open drawers is enough to answer "şu anda kasa açık mı?". */
+const OPEN_SHIFT_QUERY = "status=OPEN&page=1&pageSize=20";
 
 /**
  * One panel's no-content line.
@@ -70,11 +67,17 @@ function PanelNotice({
   );
 }
 
+/**
+ * The manager's home, and only the manager's home.
+ *
+ * It answers four questions and then stops: what did today sell, what is still
+ * open on the floor, is a till open, and is anything wrong right now. The
+ * fortnight of charts, the best-seller league table and the floor grid this
+ * screen used to carry are all still in the product — under Raporlar, Menü and
+ * Masalar — and none of them was ever the reason someone opened this page in
+ * the middle of service.
+ */
 export function DashboardView() {
-  const { name } = useStaffSession();
-  const reports = useAdminReports();
-  const tables = useAdminTables();
-
   // The same bounded endpoint the ERP screen reads — one request, ten
   // statements, one round trip. The panel is imported rather than rebuilt so
   // the two screens cannot disagree about what needs attention today.
@@ -88,17 +91,17 @@ export function DashboardView() {
     [orderResource.data],
   );
 
-  const activeTables = tables.tableViews
-    .filter((table) => table.status !== "available" && table.status !== "inactive")
-    .slice(0, 6);
-  const totals = reports.reports?.totals;
-  const bestSellers = reports.reports?.bestSellers ?? [];
-  const adminFirstName = name.split(" ")[0];
+  const loadShifts = useCallback(
+    (signal: AbortSignal) => cashierShiftApi.history(OPEN_SHIFT_QUERY, signal),
+    [],
+  );
+  const shiftResource = useApiResource(loadShifts, { pollMs: ORDER_POLL_MS });
+  const openShifts = shiftResource.data?.rows ?? [];
 
   return (
     <div className="space-y-6">
       <AdminPageHeader
-        title={`Merhaba ${adminFirstName}`}
+        title="Genel Bakış"
         description="Bugün ne oluyor ve şimdi ne yapmanız gerekiyor."
         actions={
           <Button render={<Link href="/admin/reports" />} nativeButton={false} variant="outline" className="h-10 bg-card">
@@ -107,89 +110,11 @@ export function DashboardView() {
         }
       />
 
-      <div className="flex flex-wrap items-center gap-2">
-        <RealtimeStatus status={tables.realtimeStatus} />
-      </div>
-
       <TodayPanel overview={overview.data ?? null} error={overview.error} onRetry={() => void overview.refetch()} />
 
-      <div>
-        <h3 className="text-base font-bold">Son 14 gün</h3>
-        <p className="text-sm text-muted-foreground">Bugünün ötesindeki eğilim; günlük karar için yukarısı yeterlidir.</p>
-      </div>
-
-      <div className="grid gap-4 sm:grid-cols-3">
-        <AdminKpi label="14 Günlük Ciro" value={formatCurrency(Number(totals?.revenue ?? 0))} icon={Banknote} inverse />
-        <AdminKpi label="Sipariş" value={String(totals?.orderCount ?? 0)} icon={ReceiptText} />
-        <AdminKpi label="Ortalama Sipariş" value={formatCurrency(Number(totals?.averageOrder ?? 0))} icon={CircleDollarSign} />
-      </div>
-
-      <div className="grid gap-6 xl:grid-cols-[minmax(0,1.65fr)_minmax(300px,0.75fr)]">
+      <div className="grid gap-6 xl:grid-cols-[minmax(0,1.5fr)_minmax(320px,0.8fr)]">
         <AdminPanel
-          title="Satış grafiği"
-          description="Son 14 gün, günlük brüt satış"
-          action={
-            <div className="hidden items-center gap-2 text-xs text-muted-foreground sm:flex">
-              <span className="size-2 rounded-full bg-burgundy" /> Satış
-            </div>
-          }
-        >
-          <div className="mb-1 flex items-end gap-3">
-            <strong className="text-2xl font-extrabold tabular-nums">{formatCurrency(Number(totals?.revenue ?? 0))}</strong>
-          </div>
-          {reports.salesSeries.length && !reports.error ? (
-            <DashboardSalesChart data={reports.salesSeries} />
-          ) : (
-            <PanelNotice
-              className="py-20"
-              loading={reports.loading}
-              error={reports.error}
-              empty={reports.salesSeries.length === 0}
-              loadingText="Satış verisi yükleniyor…"
-              errorText="Satış verileri alınamadı."
-              emptyText="Bu dönemde satış kaydı yok."
-              onRetry={reports.refetch}
-            />
-          )}
-        </AdminPanel>
-
-        <AdminPanel title="En çok satanlar" description="Son 14 günün satış adedine göre" contentClassName="p-0 sm:p-0">
-          <div className="divide-y">
-            {bestSellers.length && !reports.error ? bestSellers.slice(0, 4).map((item, index) => (
-              <div key={item.productName} className="flex items-center gap-3 px-4 py-4 sm:px-5">
-                <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-muted font-heading text-sm font-bold text-burgundy">
-                  {index + 1}
-                </span>
-                <div className="min-w-0 flex-1">
-                  <p className="truncate text-sm font-bold">{item.productName}</p>
-                  <p className="mt-0.5 text-xs text-muted-foreground">{formatCurrency(Number(item.revenue))} ciro</p>
-                </div>
-                <strong className="text-sm tabular-nums">{item.quantity} adet</strong>
-              </div>
-            )) : (
-              <PanelNotice
-                className="px-5"
-                loading={reports.loading}
-                error={reports.error}
-                empty={bestSellers.length === 0}
-                loadingText="Ürün performansı yükleniyor…"
-                errorText="Ürün performansı alınamadı."
-                emptyText="Henüz satış yok."
-                onRetry={reports.refetch}
-              />
-            )}
-          </div>
-          <div className="border-t bg-muted/25 p-3">
-            <Button render={<Link href="/admin/products" />} nativeButton={false} variant="ghost" className="w-full justify-between">
-              Ürün performansı <ArrowRight className="size-4" />
-            </Button>
-          </div>
-        </AdminPanel>
-      </div>
-
-      <div className="grid gap-6 xl:grid-cols-[minmax(0,1.35fr)_minmax(360px,0.9fr)]">
-        <AdminPanel
-          title="Son siparişler"
+          title="Açık siparişler"
           description="Salondaki en güncel hareketler"
           action={
             <Button render={<Link href="/admin/orders" />} nativeButton={false} variant="ghost" size="sm">
@@ -210,7 +135,7 @@ export function DashboardView() {
                 </tr>
               </thead>
               <tbody className="divide-y">
-                {orders.length ? orders.slice(0, 5).map((order) => (
+                {orders.length ? orders.slice(0, 6).map((order) => (
                   <tr key={order.id} className="transition-colors hover:bg-muted/25">
                     <td className="px-5 py-3.5 font-extrabold">{order.orderNumber}</td>
                     <td className="px-3 py-3.5 font-semibold">{order.tableName}</td>
@@ -238,42 +163,45 @@ export function DashboardView() {
           </div>
         </AdminPanel>
 
+        {/* Whether a drawer is open decides whether the restaurant can take
+            money at all, so it belongs on this screen rather than one level
+            down beside the register master data. */}
         <AdminPanel
-          title="Aktif masalar"
-          description="Anlık salon görünümü"
+          title="Açık kasa"
+          description="Şu anda açık olan vardiyalar"
           action={
-            <Button render={<Link href="/admin/tables" />} nativeButton={false} variant="ghost" size="sm">
-              Salon <ArrowRight className="size-3.5" />
+            <Button render={<Link href="/admin/cash-registers" />} nativeButton={false} variant="ghost" size="sm">
+              Kasa <ArrowRight className="size-3.5" />
             </Button>
           }
-          contentClassName="grid grid-cols-2 gap-3"
+          contentClassName="p-0 sm:p-0"
         >
-          {activeTables.length ? activeTables.map((table) => (
-            <Link
-              key={table.id}
-              href="/admin/tables"
-              className="rounded-xl border bg-background p-3 transition-colors hover:border-copper/60 hover:bg-accent/35"
-            >
-              <div className="flex items-start justify-between gap-2">
-                <Utensils className="size-4 text-burgundy" strokeWidth={1.8} />
-                <StatusBadge status={table.status} size="sm" className="max-w-full overflow-hidden" />
+          <div className="divide-y">
+            {openShifts.length ? openShifts.map((shift) => (
+              <div key={shift.id} className="flex items-center gap-3 px-4 py-4 sm:px-5">
+                <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-muted text-burgundy">
+                  <Wallet className="size-4" strokeWidth={1.8} aria-hidden="true" />
+                </span>
+                <div className="min-w-0 flex-1">
+                  <p className="truncate text-sm font-bold">{shift.openedByName ?? "Kasiyer"}</p>
+                  <p className="mt-0.5 text-xs text-muted-foreground">
+                    Açılış {formatCurrency(Number(shift.openingCash))}
+                  </p>
+                </div>
               </div>
-              <p className="mt-3 text-sm font-extrabold">{table.name}</p>
-              <p className="mt-1 flex items-center gap-1 text-xs text-muted-foreground">
-                <Clock3 className="size-3" /> {formatElapsed(table.activeMinutes ?? 0)}
-              </p>
-            </Link>
-          )) : (
-            <PanelNotice
-              className="col-span-2"
-              loading={tables.loading}
-              error={tables.error}
-              empty={activeTables.length === 0}
-              loadingText="Salon yükleniyor…"
-              errorText="Masa bilgileri alınamadı."
-              emptyText="Şu anda açık masa yok."
-            />
-          )}
+            )) : (
+              <PanelNotice
+                className="px-5"
+                loading={shiftResource.loading}
+                error={shiftResource.error}
+                empty={openShifts.length === 0}
+                loadingText="Kasa durumu yükleniyor…"
+                errorText="Kasa durumu alınamadı."
+                emptyText="Açık kasa yok."
+                onRetry={() => void shiftResource.refetch()}
+              />
+            )}
+          </div>
         </AdminPanel>
       </div>
     </div>

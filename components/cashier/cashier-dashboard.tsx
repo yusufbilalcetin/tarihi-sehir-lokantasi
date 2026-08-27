@@ -5,18 +5,15 @@ import {
   Banknote,
   Check,
   CircleCheckBig,
-  CircleDollarSign,
   Clock3,
   CreditCard,
   Ellipsis,
   ReceiptText,
   Split,
   UsersRound,
-  WalletCards,
 } from "lucide-react";
 import { toast } from "sonner";
 import { BrandMark } from "@/components/shared/brand-mark";
-import { StatCard } from "@/components/shared/stat-card";
 import { StatusBadge } from "@/components/shared/status-badge";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -87,7 +84,6 @@ function formatClock(date: Date | null) {
  */
 export function CashierDashboard() {
   const [selectedTableId, setSelectedTableId] = useState<string | null>(null);
-  const [collectedTotal, setCollectedTotal] = useState(0);
   const [lastPaid, setLastPaid] = useState<{ tableName: string; method: PaymentMethod } | null>(null);
   const [methodsByTable, setMethodsByTable] = useState<Record<string, PaymentMethod>>({});
   const [collecting, setCollecting] = useState(false);
@@ -190,11 +186,10 @@ export function CashierDashboard() {
     const outstanding = openBills.reduce((sum, bill) => sum + bill.order.total, 0);
     return {
       outstanding,
-      collected: collectedTotal,
       paymentWaiting: openBills.filter((bill) => bill.billRequested).length,
       unpaidCount: openBills.length,
     };
-  }, [collectedTotal, openBills]);
+  }, [openBills]);
 
   const selectPaymentMethod = (method: PaymentMethod) => {
     if (!selectedBill || collecting) return;
@@ -210,7 +205,6 @@ export function CashierDashboard() {
         { orderId: bill.order.id, method: API_PAYMENT_METHOD[selectedMethod] },
         newIdempotencyKey(),
       );
-      setCollectedTotal((current) => current + Number(payment.amount));
       setLastPaid({ tableName: bill.table.name, method: selectedMethod });
       setSelectedTableId(null);
       await refetch();
@@ -308,36 +302,20 @@ export function CashierDashboard() {
           {shiftSection}
         </section>
 
-        <section className="grid gap-3 sm:grid-cols-3" aria-label="Kasa özeti">
-          <StatCard
-            label="Açık hesap"
-            value={formatCurrency(metrics.outstanding)}
-            helper={`${metrics.unpaidCount} masada bekliyor`}
-            icon={WalletCards}
-            tone="alert"
-          />
-          <StatCard
-            label="Ödeme bekleyen"
-            value={String(metrics.paymentWaiting)}
-            helper="Hesap isteyen masalar"
-            icon={ReceiptText}
-          />
-          <StatCard
-            label="Bugün tahsilat"
-            value={formatCurrency(metrics.collected)}
-            helper="Bu oturumda tahsil edilen"
-            icon={CircleDollarSign}
-            tone="success"
-          />
-        </section>
-
-        <div className="mt-4 grid items-start gap-4 lg:grid-cols-[minmax(18rem,0.8fr)_minmax(0,1.5fr)] xl:gap-5">
+        {/* The three tiles that used to sit here said what the two panels below
+            already say — the open total, how many bills, which ones asked for
+            the cheque — and pushed the collect button further down a tablet. */}
+        <div className="grid items-start gap-4 lg:grid-cols-[minmax(18rem,0.8fr)_minmax(0,1.5fr)] xl:gap-5">
           <Card className="gap-0 py-0">
             <CardHeader className="border-b py-4">
               <div className="flex items-center justify-between gap-3">
                 <div>
                   <CardTitle className="text-lg">Açık masalar</CardTitle>
-                  <p className="mt-1 text-xs text-muted-foreground">Detay görmek için masa seçin</p>
+                  {/* The one figure the tiles carried that nothing else did. */}
+                  <p className="mt-1 text-xs text-muted-foreground">
+                    Toplam {formatCurrency(metrics.outstanding)}
+                    {metrics.paymentWaiting > 0 ? ` · ${metrics.paymentWaiting} masa hesap istiyor` : ""}
+                  </p>
                 </div>
                 <Badge variant="outline" className="border-olive/20 bg-olive/[0.06] text-olive">
                   {metrics.unpaidCount} hesap

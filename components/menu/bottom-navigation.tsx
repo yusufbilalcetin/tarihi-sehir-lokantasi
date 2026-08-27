@@ -15,7 +15,18 @@ const items = [
   { id: "bill" as const, labelKey: "bill" as const, icon: ReceiptText },
 ];
 
-export function BottomNavigation({ active, cartCount, onChange }: { active: MenuTab; cartCount: number; onChange: (tab: MenuTab) => void }) {
+/** Kept in step with the padding the menu reserves for the bottom stack. */
+export const TAB_BAR_HEIGHT_PX = 58;
+
+/**
+ * The bottom of the customer screen, as one object.
+ *
+ * The cart row is rendered inside this surface rather than floating above it,
+ * because two independently positioned bars at the bottom of a phone read as
+ * two things arguing about which one is the action. One border, one shadow,
+ * one safe-area inset for the whole stack.
+ */
+export function BottomNavigation({ active, cartCount, cartSlot, onChange }: { active: MenuTab; cartCount: number; cartSlot?: React.ReactNode; onChange: (tab: MenuTab) => void }) {
   const { direction, formatNumber, t } = useMenuPreferences();
   const activeIndex = items.findIndex((item) => item.id === active);
   const indicatorOffset = (direction === "rtl" ? -activeIndex : activeIndex) * 100;
@@ -38,8 +49,10 @@ export function BottomNavigation({ active, cartCount, onChange }: { active: Menu
   }, [cartCount]);
 
   return (
-    <nav dir={direction} aria-label={t("customerNavigation")} className="fixed inset-x-0 bottom-0 z-40 border-t bg-card/96 pb-[env(safe-area-inset-bottom)] shadow-[0_-12px_36px_rgba(37,33,29,0.1)] backdrop-blur-sm">
-      <div className="relative mx-auto grid h-16 w-full max-w-xl grid-cols-4 px-2">
+    <div dir={direction} className="fixed inset-x-0 bottom-0 z-40 border-t bg-card/96 pb-[env(safe-area-inset-bottom)] shadow-[0_-12px_36px_rgba(37,33,29,0.1)] backdrop-blur-sm">
+      {cartSlot}
+      <nav aria-label={t("customerNavigation")}>
+      <div className="relative mx-auto grid h-[3.625rem] w-full max-w-xl grid-cols-4 px-2">
         <span className="motion-nav-indicator" style={{ "--motion-nav-offset": `${indicatorOffset}%` } as React.CSSProperties} aria-hidden="true" />
         {items.map(({ id, labelKey, icon: Icon }) => (
           <button
@@ -47,7 +60,7 @@ export function BottomNavigation({ active, cartCount, onChange }: { active: Menu
             type="button"
             onClick={() => onChange(id)}
             className={cn(
-              "motion-nav-item motion-press motion-ripple relative grid h-16 min-w-0 grid-rows-[1.25rem_1rem] place-items-center content-center gap-1 rounded-xl px-1 text-center text-xs font-semibold leading-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+              "motion-nav-item motion-press motion-ripple relative grid h-[3.625rem] min-w-0 grid-rows-[1.25rem_1rem] place-items-center content-center gap-1 rounded-xl px-1 text-center text-xs font-semibold leading-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
               active === id ? "text-burgundy" : "text-muted-foreground hover:text-foreground",
             )}
             aria-current={active === id ? "page" : undefined}
@@ -58,6 +71,7 @@ export function BottomNavigation({ active, cartCount, onChange }: { active: Menu
           </button>
         ))}
       </div>
-    </nav>
+      </nav>
+    </div>
   );
 }

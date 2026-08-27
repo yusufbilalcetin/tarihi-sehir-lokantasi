@@ -14,8 +14,7 @@ export default async function Home() {
         <div className="max-w-2xl">
           <BrandMark priority className="max-w-xl" />
           <p className="mt-5 max-w-lg text-sm leading-6 text-[#F5EBDD]/70">
-            Tam frontend prototip. Müşteri ve operasyon ekranlarının tamamına buradan
-            ulaşabilirsiniz.
+            Müşteri ve operasyon ekranlarının tamamına buradan ulaşabilirsiniz.
           </p>
         </div>
         {/*

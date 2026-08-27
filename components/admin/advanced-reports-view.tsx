@@ -12,6 +12,8 @@ import {
   OrderTimelineSheet,
   ProductDetailSheet,
 } from "@/components/admin/report-drilldown-sheets";
+import { DashboardSalesChart } from "@/components/admin/admin-charts";
+import { useAdminReports } from "@/components/admin/use-admin-reports";
 import { EmptyState } from "@/components/shared/data-states";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -66,7 +68,7 @@ const SORT_LABELS: Readonly<Record<ProductSort, string>> = {
   GROSS_DESC: "En Yüksek Brüt Satış",
   NET_DESC: "En Yüksek Net Satış",
   CANCELLED_DESC: "En Fazla İptal",
-  VOIDED_DESC: "En Fazla Void",
+  VOIDED_DESC: "En Fazla Hesaptan Düşülen",
   NAME_ASC: "Ürün Adı A-Z",
   NAME_DESC: "Ürün Adı Z-A",
 };
@@ -189,6 +191,8 @@ export function AdvancedReportsView() {
   const busiest = useApiResource(
     useCallback((signal: AbortSignal) => adminApi.reportBusiest(query, signal), [query]),
   );
+  /** The fixed fourteen-day series the manager's home used to carry. */
+  const trend = useAdminReports();
   const productsResource = useApiResource(
     useCallback(
       (signal: AbortSignal) => adminApi.reportProducts(productQuery, signal),
@@ -278,7 +282,7 @@ export function AdvancedReportsView() {
   function downloadProductCsv() {
     const rows = productsResource.data?.rows ?? [];
     const csv = toCsv(
-      ["Ürün", "Kategori", "Adet", "Brüt Satış", "İptal", "Void", "Net Satış"],
+      ["Ürün", "Kategori", "Adet", "Brüt Satış", "İptal", "Hesaptan Düşülen", "Net Satış"],
       rows.map((row) => [
         row.productName,
         row.categoryName ?? "",
@@ -409,6 +413,38 @@ export function AdvancedReportsView() {
         </section>
       ) : null}
 
+      {/*
+        The fortnight trend, where history belongs.
+
+        It used to open the manager's home, above the day's own figures. It
+        reads its own fixed fourteen-day window rather than the filter above,
+        so the section says so instead of letting the dates disagree silently.
+      */}
+      {tab === "overview" ? (
+        <section className="space-y-3 rounded-xl border border-border bg-card p-4">
+          <div className="flex flex-wrap items-end justify-between gap-3">
+            <div>
+              <h2 className="font-heading text-lg font-semibold">Son 14 gün</h2>
+              <p className="mt-0.5 text-xs text-muted-foreground">
+                Sabit 14 günlük eğilim; yukarıdaki tarih aralığından bağımsızdır.
+              </p>
+            </div>
+            <strong className="text-2xl font-extrabold tabular-nums">
+              {formatCurrency(Number(trend.reports?.totals.revenue ?? 0))}
+            </strong>
+          </div>
+          {trend.error && !trend.salesSeries.length ? (
+            <SectionError message="Satış eğilimi alınamadı." onRetry={() => void trend.refetch()} />
+          ) : trend.salesSeries.length ? (
+            <DashboardSalesChart data={trend.salesSeries} />
+          ) : (
+            <p className="py-10 text-center text-sm text-muted-foreground">
+              {trend.loading ? "Satış verisi yükleniyor…" : "Bu dönemde satış kaydı yok."}
+            </p>
+          )}
+        </section>
+      ) : null}
+
       {tab === "products" || tab === "overview" ? (
         <section className="space-y-3">
           <div className="print:hidden flex flex-wrap items-end gap-3">
@@ -493,13 +529,13 @@ export function AdvancedReportsView() {
                       <th className="px-3 py-2 text-right font-semibold">Adet</th>
                       <th className="px-3 py-2 text-right font-semibold">Brüt</th>
                       <th className="px-3 py-2 text-right font-semibold">İptal</th>
-                      <th className="px-3 py-2 text-right font-semibold">Void</th>
+                      <th className="px-3 py-2 text-right font-semibold">Hesaptan Düşülen</th>
                       <th className="px-3 py-2 text-right font-semibold">Net</th>
                     </tr>
                   </thead>
                   <tbody>
                     {(productsResource.data?.rows ?? []).map((row) => (
-                      <tr key={row.productId} className="border-t border-border">
+                      <tr key={`${row.productId}-${row.productName}`} className="border-t border-border">
                         <td className="px-3 py-2 font-semibold">
                           <button
                             type="button"
@@ -902,7 +938,7 @@ export function AdvancedReportsView() {
                     <th className="px-3 py-2 text-right font-semibold">Sipariş</th>
                     <th className="px-3 py-2 text-right font-semibold">Brüt</th>
                     <th className="px-3 py-2 text-right font-semibold">İptal</th>
-                    <th className="px-3 py-2 text-right font-semibold">Void</th>
+                    <th className="px-3 py-2 text-right font-semibold">Hesaptan Düşülen</th>
                     <th className="px-3 py-2 text-right font-semibold">Net</th>
                     <th className="px-3 py-2 text-right font-semibold">Pay</th>
                   </tr>
@@ -1083,7 +1119,7 @@ export function AdvancedReportsView() {
             </thead>
             <tbody>
               {printRows.map((row) => (
-                <tr key={row.productId} className="break-inside-avoid">
+                <tr key={`${row.productId}-${row.productName}`} className="break-inside-avoid">
                   <td className="py-1">{row.productName}</td>
                   <td className="py-1">{row.categoryName ?? "—"}</td>
                   <td className="py-1 text-right tabular-nums">{row.soldQuantity}</td>

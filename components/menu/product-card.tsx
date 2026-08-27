@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { Plus, UtensilsCrossed } from "lucide-react";
 import { MENU_PLACEHOLDER_IMAGE } from "@/lib/adapters/menu-view-model";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useMenuPreferences } from "@/components/menu/menu-preferences-provider";
 import { getMenuProductDescription, getMenuProductName, getMenuTag } from "@/lib/i18n/menu-content";
@@ -11,47 +10,133 @@ import type { Product } from "@/types";
 import { useRevealOnce } from "@/lib/motion/use-reveal-once";
 import { MotionValue } from "@/components/shared/motion-value";
 
-export function ProductCard({ product, index = 0, canOrder = true, onOpen, onAdd }: { product: Product; index?: number; canOrder?: boolean; onOpen: () => void; onAdd: () => void }) {
+/**
+ * One dish, as a line on a menu.
+ *
+ * It used to be a card: a visible border, a drop shadow, a photograph bled to
+ * the edge, and — stacked sixty-one times — a page that read as a dashboard
+ * rather than as something a restaurant hands you. Three things were competing
+ * with the food and each of them lost:
+ *
+ *   the border, which is gone; rows separate by their own warm surface
+ *   the badges, which were filled pills sitting *above* the dish name, so the
+ *     first thing the eye met on every row was the word "Popüler"
+ *   the empty band in the middle, left by pinning the price to the bottom of a
+ *     card taller than its own contents
+ *
+ * What is left, in reading order, is the plate, the name, what it is, and what
+ * it costs. The one control is the add button, and it is the only filled thing
+ * on the row.
+ */
+export function ProductCard({
+  product,
+  index = 0,
+  canOrder = true,
+  onOpen,
+  onAdd,
+}: {
+  product: Product;
+  index?: number;
+  canOrder?: boolean;
+  onOpen: () => void;
+  onAdd: () => void;
+}) {
   const { formatPrice, language, t } = useMenuPreferences();
   const soldOut = product.status === "sold-out";
   const hasPhoto = product.image !== MENU_PLACEHOLDER_IMAGE;
   const name = getMenuProductName(product, language);
   const description = getMenuProductDescription(product, language);
   const { ref, revealed, animate } = useRevealOnce<HTMLElement>(`product-${product.id}`);
+  // Two at most: a third is decoration, and the full set is on the dish itself.
+  const badges = product.tags.slice(0, 2);
 
   return (
-    <article ref={ref} data-revealed={revealed} data-reveal-animate={animate} className="motion-reveal motion-card-hover group relative grid min-h-44 grid-cols-[7.75rem_minmax(0,1fr)] overflow-hidden rounded-[var(--menu-card-radius)] border border-border/85 bg-card shadow-[var(--shadow-raised)] sm:grid-cols-[10rem_minmax(0,1fr)]" style={{ "--motion-delay": `${Math.min(index * 20, 80)}ms` } as React.CSSProperties}>
-      <button type="button" onClick={onOpen} className="motion-card-trigger motion-press motion-ripple absolute inset-0 z-[1] rounded-[var(--menu-card-radius)] text-start focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring" aria-label={t("productDetails", { name })} />
-      <div className="motion-card-media pointer-events-none relative overflow-hidden">
+    <article
+      ref={ref}
+      data-revealed={revealed}
+      data-reveal-animate={animate}
+      className="motion-reveal motion-card-hover group relative flex gap-3 rounded-xl bg-card p-3"
+      style={{ "--motion-delay": `${Math.min(index * 20, 80)}ms` } as React.CSSProperties}
+    >
+      <button
+        type="button"
+        onClick={onOpen}
+        className="motion-card-trigger motion-press absolute inset-0 z-[1] rounded-xl text-start focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring"
+        aria-label={t("productDetails", { name })}
+      />
+
+      <div className="motion-card-media pointer-events-none relative size-23 shrink-0 overflow-hidden rounded-lg bg-muted">
         {hasPhoto ? (
-          <Image src={product.image} alt={name} fill sizes="(max-width: 640px) 124px, 160px" className={`motion-product-image object-cover ${soldOut ? "grayscale-[0.55]" : ""}`} onLoad={(event) => { event.currentTarget.dataset.loaded = "true"; }} />
+          <Image
+            src={product.image}
+            alt={name}
+            fill
+            sizes="(max-width: 640px) 92px, 112px"
+            className={`motion-product-image object-cover ${soldOut ? "grayscale-[0.55]" : ""}`}
+            onLoad={(event) => {
+              event.currentTarget.dataset.loaded = "true";
+            }}
+          />
         ) : (
           /* No photograph of this dish exists yet. A stock plate stretched to
              fill the frame reads as a broken image and cheapens the whole
-             menu, so the card shows the restaurant's own mark instead and
-             lets the dish name carry the card. */
+             menu, so the row shows the restaurant's own mark instead and lets
+             the dish name carry it. */
           <div aria-hidden="true" className="flex h-full w-full items-center justify-center bg-sidebar">
-            <UtensilsCrossed className="size-7 text-gold/70" strokeWidth={1.5} />
+            <UtensilsCrossed className="size-6 text-gold/70" strokeWidth={1.5} />
           </div>
         )}
         {soldOut ? <div className="absolute inset-0 bg-[#25211D]/25" /> : null}
       </div>
-      <div className="pointer-events-none relative flex min-w-0 flex-col p-[var(--menu-card-padding)]">
-        <div>
-          <div className="flex flex-wrap gap-1.5">
-            {product.tags.slice(0, 2).map((tag) => <Badge key={tag} variant="outline" className="border-copper/35 bg-copper/10 px-1.5 py-0 text-xs font-semibold text-burgundy">{getMenuTag(tag, language)}</Badge>)}
-            {soldOut ? <Badge variant="outline" className="border-order-void/25 bg-order-void-tint px-1.5 py-0 text-xs font-semibold text-order-void">{t("soldOut")}</Badge> : null}
-          </div>
-          <h2 className="mt-2 font-heading text-lg font-semibold leading-tight text-foreground sm:text-xl">{name}</h2>
-          <p className="mt-1 line-clamp-2 text-xs leading-5 text-muted-foreground sm:text-sm">{description}</p>
-        </div>
-        <div className="mt-auto flex items-end justify-between gap-2 pt-3">
-          <MotionValue value={formatPrice(product.price)} numericValue={product.price} delayMs={Math.min(index * 10, 40)} className="text-base font-extrabold tabular-nums text-burgundy sm:text-lg" />
-          <Button type="button" size="icon" disabled={soldOut || !canOrder} onClick={onAdd} aria-label={`${name}: ${t("addToCart")}`} className="pointer-events-auto relative z-10 size-11 rounded-md shadow-sm">
-            <Plus className="size-5" strokeWidth={2.2} />
-          </Button>
-        </div>
+
+      <div className="pointer-events-none relative flex min-w-0 flex-1 flex-col">
+        {/* The dish leads. Everything under it is what the dish is. */}
+        <h2 className="line-clamp-2 font-heading text-[17px] font-semibold leading-snug text-foreground sm:text-lg">
+          {name}
+        </h2>
+
+        {badges.length || soldOut ? (
+          <p className="mt-1 flex flex-wrap items-center gap-1">
+            {badges.map((tag) => (
+              <span
+                key={tag}
+                className="rounded border border-copper/30 px-1.5 text-[10px] font-semibold uppercase tracking-[0.04em] leading-4 text-text-secondary"
+              >
+                {getMenuTag(tag, language)}
+              </span>
+            ))}
+            {soldOut ? (
+              <span className="rounded border border-order-void/30 px-1.5 text-[10px] font-semibold uppercase tracking-[0.04em] leading-4 text-order-void">
+                {t("soldOut")}
+              </span>
+            ) : null}
+          </p>
+        ) : null}
+
+        <p className="mt-1 line-clamp-2 text-xs leading-5 text-muted-foreground sm:text-sm">
+          {description}
+        </p>
+
+        <MotionValue
+          value={formatPrice(product.price)}
+          numericValue={product.price}
+          delayMs={Math.min(index * 10, 40)}
+          className="mt-1.5 text-base font-extrabold tabular-nums text-burgundy sm:text-lg"
+        />
       </div>
+
+      {/* Its own column, centred against the row. Sharing a line with the price
+          left a 44px band of nothing under every short description. */}
+      <Button
+        type="button"
+        size="icon"
+        disabled={soldOut || !canOrder}
+        onClick={onAdd}
+        aria-label={`${name}: ${t("addToCart")}`}
+        className="pointer-events-auto relative z-10 size-11 shrink-0 self-center rounded-full shadow-none"
+      >
+        <Plus className="size-5" strokeWidth={2.2} />
+      </Button>
     </article>
   );
 }

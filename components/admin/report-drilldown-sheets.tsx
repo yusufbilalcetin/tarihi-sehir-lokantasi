@@ -123,7 +123,7 @@ export function ProductDetailSheet({
                         <th className="px-3 py-2 font-semibold">Tarih</th>
                         <th className="px-3 py-2 text-right font-semibold">Adet</th>
                         <th className="px-3 py-2 text-right font-semibold">İptal</th>
-                        <th className="px-3 py-2 text-right font-semibold">Void</th>
+                        <th className="px-3 py-2 text-right font-semibold">Hesaptan Düşülen</th>
                         <th className="px-3 py-2 text-right font-semibold">Net</th>
                       </tr>
                     </thead>

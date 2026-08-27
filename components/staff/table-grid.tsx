@@ -58,9 +58,16 @@ import { formatCurrency, formatElapsed } from "@/lib/format";
 import { cn } from "@/lib/utils";
 import type { Order, RestaurantTable } from "@/types";
 
+/**
+ * One primary action, then five equals.
+ *
+ * "Sipariş Ekle" is what a waiter opens a table for; everything else is a
+ * response to something that already happened. Confirming used to be styled as
+ * a second filled button and competed with it for the eye at a glance.
+ */
 const tableActions = [
   { id: "add-order", label: "Sipariş Ekle", icon: Plus, variant: "default" as const },
-  { id: "confirm-order", label: "Siparişi Onayla", icon: BadgeCheck, variant: "secondary" as const },
+  { id: "confirm-order", label: "Siparişi Onayla", icon: BadgeCheck, variant: "outline" as const },
   { id: "mark-served", label: "Servis Edildi", icon: Utensils, variant: "outline" as const },
   { id: "waiter-call", label: "Garson Talebi", icon: BellRing, variant: "outline" as const },
   { id: "bill-request", label: "Hesap", icon: ReceiptText, variant: "outline" as const },
@@ -429,7 +436,7 @@ export function TableGrid({
 
   return (
     <>
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4 xl:grid-cols-6">
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
         {tables.map((table) => (
           <TableCard
             key={table.id}

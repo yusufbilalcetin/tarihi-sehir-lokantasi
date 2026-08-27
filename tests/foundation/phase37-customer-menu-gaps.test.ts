@@ -63,7 +63,11 @@ test("each category is its own titled chapter with a semantic heading", () => {
   assert.match(customerMenuUi, /<h2 id={`menu-category-\$\{category\.id\}`}/);
   assert.match(customerMenuUi, /aria-labelledby={`menu-category-\$\{category\.id\}`}/);
   // A visible rule under the heading is what separates one chapter from the next.
-  assert.match(customerMenuUi, /border-b border-gold\/30/);
+  // The rule stays; its colour is not this test's business — gold was pulled
+  // back to being an accent rather than the colour of every line on the menu.
+  const headingAt = customerMenuUi.indexOf("<h2 id={`menu-category-");
+  const chapterWrapper = customerMenuUi.slice(Math.max(0, headingAt - 220), headingAt);
+  assert.match(chapterWrapper, /border-b border-/, "the rule between one chapter and the next is gone");
 });
 
 test("the menu never names a category in code", () => {

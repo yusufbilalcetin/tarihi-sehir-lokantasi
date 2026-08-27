@@ -183,6 +183,17 @@
 
   /* One ladder for everything that floats, so a sheet can never land under
      the header that opened it. */
+  /*
+   * The customer menu's two sticky bars, as one source of truth.
+   *
+   * The category bar parks directly under the restaurant header, so the header
+   * has to state its own height somewhere both of them can read. Declared here
+   * rather than on `.menu-content` because the public ordering page uses the
+   * same category bar without that wrapper.
+   */
+  --menu-header-height: 3.5rem;
+  --menu-category-height: 3rem;
+
   --z-base: 0;
   --z-raised: 10;
   --z-sticky: 20;
@@ -571,6 +582,20 @@ html[data-platform="android"] {
     transform: translateY(-3px) scale(0.99);
   }
 
+  /*
+   * The category menu, which opens from the control rather than from the edge
+   * of the screen. Same curve and same origin as every other popover; only the
+   * durations differ, because a panel that grows out of a control wants a
+   * fraction longer coming in than going out.
+   */
+  .motion-menu-popover {
+    transition-duration: var(--motion-standard);
+  }
+
+  .motion-menu-popover[data-ending-style] {
+    transition-duration: var(--motion-overlay-exit);
+  }
+
   .motion-sheet[data-ending-style] {
     transition-duration: var(--motion-overlay-exit);
     transition-timing-function: var(--ease-exit);
@@ -732,6 +757,17 @@ html[data-platform="android"] {
   animation: menu-logo-in var(--intro-logo-duration, 100ms) var(--ease-soft) var(--intro-logo-delay, 10ms) forwards;
 }
 
+.motion-cart-bar {
+  animation: motion-cart-bar-in var(--motion-standard) var(--ease-out) both;
+}
+
+/* The cart row arriving with its first item: it lifts into place rather than
+   appearing, and the page already reserved its height so nothing shifts. */
+@keyframes motion-cart-bar-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 .menu-content {
   --menu-gutter: clamp(1rem, 4vw, 1.5rem);
   --menu-grid-gap: clamp(0.75rem, 2.5vw, 1rem);
@@ -837,6 +873,23 @@ html[data-sehir-intro="seen"] .menu-content {
   28% { transform: translateX(-2px); }
   55% { transform: translateX(2px); }
   78% { transform: translateX(-1px); }
+}
+
+/*
+ * A heading that was jumped to, acknowledging the arrival once.
+ *
+ * Not a pulse and not a bounce: the guest asked to be taken here, so the only
+ * job is to confirm they arrived. Opacity alone, well under the 300ms the
+ * design budget allows, and the reduced-motion rule above shortens it to
+ * nothing like every other animation on the page.
+ */
+[data-arrived="true"] {
+  animation: motion-heading-arrive var(--motion-standard) var(--ease-out) both;
+}
+
+@keyframes motion-heading-arrive {
+  from { opacity: 0.72; }
+  to { opacity: 1; }
 }
 
 @keyframes motion-action-label-in {

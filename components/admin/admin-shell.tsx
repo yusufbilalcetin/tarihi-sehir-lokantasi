@@ -31,7 +31,6 @@ import {
   TrendingUp,
   Truck,
   Settings,
-  SlidersHorizontal,
   Store,
   UsersRound,
   Wallet,
@@ -61,32 +60,53 @@ interface NavItem {
   icon: LucideIcon;
 }
 
-const primaryNav: NavItem[] = [
-  { label: "Bugün", href: "/admin/dashboard", icon: LayoutDashboard },
-  { label: "Siparişler", href: "/admin/orders", icon: ClipboardList },
-  { label: "Masalar", href: "/admin/tables", icon: Grid2X2 },
-];
-
-const catalogNav: NavItem[] = [
-  { label: "Menü", href: "/admin/menu", icon: BookOpen },
+const menuNav: NavItem[] = [
+  { label: "Menü Genel Bakış", href: "/admin/menu", icon: BookOpen },
   { label: "Kategoriler", href: "/admin/categories", icon: Boxes },
   { label: "Ürünler", href: "/admin/products", icon: PackageOpen },
 ];
 
-const managementNav: NavItem[] = [
-  { label: "İşletme ERP", href: "/admin/erp", icon: Factory },
+const tableNav: NavItem[] = [
+  { label: "Masa Planı", href: "/admin/tables", icon: Grid2X2 },
+  { label: "QR Kodlar", href: "/admin/qr-codes", icon: QrCode },
+];
+
+const peopleNav: NavItem[] = [
+  { label: "Personel Listesi", href: "/admin/staff", icon: UsersRound },
+  { label: "Puantaj", href: "/admin/attendance", icon: ClipboardCheck },
+  { label: "Vardiya Planı", href: "/admin/schedules", icon: CalendarDays },
+  { label: "Bordro", href: "/admin/payroll", icon: ReceiptText },
+];
+
+const cashNav: NavItem[] = [
   { label: "Kasa ve Vardiyalar", href: "/admin/cash-registers", icon: Wallet },
   { label: "Gün Sonu Kasa", href: "/admin/cash-reports", icon: ReceiptText },
-  { label: "QR Kodlar", href: "/admin/qr-codes", icon: QrCode },
+];
+
+const reportsNav: NavItem[] = [
+  { label: "Genel Raporlar", href: "/admin/reports", icon: ChartNoAxesCombined },
+  { label: "Satış Raporu", href: "/admin/sales", icon: TrendingUp },
+  { label: "Menü Mühendisliği", href: "/admin/menu-engineering", icon: ChartNoAxesCombined },
+  { label: "Popüler Ürünler", href: "/admin/popular", icon: PackageCheck },
+  { label: "ERP Raporları", href: "/admin/erp-reports", icon: ChartNoAxesCombined },
+];
+
+const settingsNav: NavItem[] = [
+  { label: "Genel Ayarlar", href: "/admin/settings", icon: Settings },
   { label: "Yazıcılar", href: "/admin/printers", icon: Printer },
   { label: "Entegrasyonlar", href: "/admin/integrations", icon: PlugZap },
-  { label: "Ayarlar", href: "/admin/settings", icon: Settings },
+  { label: "ERP / Gelişmiş", href: "/admin/erp", icon: Factory },
 ];
 
 /**
- * The ERP is grouped the way a restaurant is run, not the way its tables are
- * named. A flat list of twenty-three modules makes a manager read every label
- * to find one screen; these five headings each answer a different question.
+ * The advanced tools, kept off the sidebar.
+ *
+ * These eighteen screens are real work, but none of them is daily work for the
+ * person who opens this panel to see how service is going. They live one level
+ * down, behind "ERP / Gelişmiş", grouped the way a restaurant is run rather
+ * than the way its tables are named. Nothing was deleted to get there: the ERP
+ * page renders these same sections as its index, and the sidebar search below
+ * still finds every one of them by name.
  */
 const stockNav: NavItem[] = [
   { label: "Stok", href: "/admin/inventory", icon: Boxes },
@@ -107,13 +127,6 @@ const purchasingNav: NavItem[] = [
   { label: "Alım Fiyat Geçmişi", href: "/admin/price-history", icon: TrendingUp },
 ];
 
-const peopleNav: NavItem[] = [
-  { label: "Personel Listesi", href: "/admin/staff", icon: UsersRound },
-  { label: "Puantaj", href: "/admin/attendance", icon: ClipboardCheck },
-  { label: "Vardiya Planı", href: "/admin/schedules", icon: CalendarDays },
-  { label: "Operasyonel Bordro", href: "/admin/payroll", icon: ReceiptText },
-];
-
 const guestNav: NavItem[] = [
   { label: "Rezervasyon", href: "/admin/reservations", icon: CalendarDays },
   { label: "Paket ve Kurye", href: "/admin/fulfillment", icon: ShoppingBag },
@@ -122,38 +135,57 @@ const guestNav: NavItem[] = [
   { label: "Sadakat", href: "/admin/loyalty", icon: Wallet },
 ];
 
-const erpReportsNav: NavItem[] = [
-  { label: "Genel Raporlar", href: "/admin/reports", icon: ChartNoAxesCombined },
-  { label: "Satış Raporu", href: "/admin/sales", icon: TrendingUp },
-  { label: "Menü Mühendisliği", href: "/admin/menu-engineering", icon: ChartNoAxesCombined },
-  { label: "Popüler Ürünler", href: "/admin/popular", icon: PackageCheck },
-  { label: "ERP Raporları", href: "/admin/erp-reports", icon: ChartNoAxesCombined },
-];
+export interface AdminSectionGroup {
+  readonly title: string;
+  readonly items: readonly NavItem[];
+}
 
-const erpNav: NavItem[] = [...stockNav, ...purchasingNav, ...peopleNav, ...guestNav, ...erpReportsNav];
+/** The index the "ERP / Gelişmiş" page renders. Exported so it has one source. */
+export const ERP_SECTIONS: readonly AdminSectionGroup[] = [
+  { title: "Stok ve Üretim", items: stockNav },
+  { title: "Satın Alma", items: purchasingNav },
+  { title: "Misafir ve Rezervasyon", items: guestNav },
+];
 
 interface NavSection {
   readonly label: string;
-  readonly items: NavItem[];
+  /** A section is a single destination when it has an href, a group when it has items. */
+  readonly href?: string;
+  readonly icon?: LucideIcon;
+  readonly items?: readonly NavItem[];
 }
 
 /**
  * The menu, as data.
  *
- * Forty links rendered flat is forty decisions before the first click. Each
- * section below collapses to a single row, and only the one holding the current
- * page opens on load — so the ordinary state of this sidebar is eight choices,
- * not forty, and nothing had to be deleted to get there.
+ * Eight rows. Two of them go straight to a screen — today's state and the
+ * order list, the two things this panel is opened for — and the other six open
+ * to at most five links each. Nothing was removed: every screen that used to
+ * be a sidebar row is still one click from the row that owns it, and the ones
+ * that moved a level down are listed on the ERP page and found by the search
+ * below.
  */
 const NAV_SECTIONS: readonly NavSection[] = [
-  { label: "Operasyon", items: primaryNav },
-  { label: "Katalog", items: catalogNav },
-  { label: "Stok & Üretim", items: stockNav },
-  { label: "Satın Alma & Tedarikçiler", items: purchasingNav },
+  { label: "Genel Bakış", href: "/admin/dashboard", icon: LayoutDashboard },
+  { label: "Siparişler", href: "/admin/orders", icon: ClipboardList },
+  { label: "Menü", items: menuNav },
+  { label: "Masalar", items: tableNav },
   { label: "Personel", items: peopleNav },
-  { label: "Müşteri & Rezervasyon", items: guestNav },
-  { label: "Raporlar", items: erpReportsNav },
-  { label: "Yönetim", items: managementNav },
+  { label: "Kasa", items: cashNav },
+  { label: "Raporlar", items: reportsNav },
+  { label: "Ayarlar", items: settingsNav },
+];
+
+/** Every destination in the product, section name included, for the search below. */
+const SEARCHABLE: readonly { item: NavItem; section: string }[] = [
+  ...NAV_SECTIONS.flatMap((section) =>
+    section.items
+      ? section.items.map((item) => ({ item, section: section.label }))
+      : section.href && section.icon
+        ? [{ item: { label: section.label, href: section.href, icon: section.icon }, section: "Yönetim" }]
+        : [],
+  ),
+  ...ERP_SECTIONS.flatMap((section) => section.items.map((item) => ({ item, section: section.title }))),
 ];
 
 /**
@@ -161,34 +193,68 @@ const NAV_SECTIONS: readonly NavSection[] = [
  *
  * This searches the menu that is already in memory — labels and section names,
  * nothing else. No request is made, so typing costs nothing and there is no
- * query to bound. It answers "where is fire girişi", not "which product is
- * called fire".
+ * query to bound. It is also how the eighteen advanced screens stay one search
+ * away after leaving the sidebar: it answers "where is fire girişi", not
+ * "which product is called fire".
  */
 function searchNav(query: string): readonly { item: NavItem; section: string }[] {
   const needle = query.trim().toLocaleLowerCase("tr");
   if (needle.length < 2) return [];
   const matches: { item: NavItem; section: string }[] = [];
-  for (const section of NAV_SECTIONS) {
-    for (const item of section.items) {
-      const haystack = `${item.label} ${section.label}`.toLocaleLowerCase("tr");
-      if (haystack.includes(needle)) matches.push({ item, section: section.label });
-    }
+  for (const entry of SEARCHABLE) {
+    const haystack = `${entry.item.label} ${entry.section}`.toLocaleLowerCase("tr");
+    if (haystack.includes(needle)) matches.push(entry);
   }
   return matches.slice(0, 8);
 }
 
+const titleByPath = SEARCHABLE.reduce<Record<string, string>>((acc, entry) => {
+  acc[entry.item.href] = entry.item.label;
+  return acc;
+}, {});
 
-const titleByPath = [...primaryNav, ...catalogNav, ...erpNav, ...managementNav].reduce<Record<string, string>>(
-  (acc, item) => {
-    acc[item.href] = item.label;
-    return acc;
-  },
-  {},
+const ERP_ROUTES: readonly string[] = ERP_SECTIONS.flatMap((section) =>
+  section.items.map((item) => item.href),
 );
 
-
 function isActivePath(pathname: string, href: string) {
-  return pathname === href || pathname.startsWith(`${href}/`);
+  if (pathname === href || pathname.startsWith(`${href}/`)) return true;
+  // The eighteen advanced screens no longer have a row of their own, so the row
+  // that owns them lights up instead — a demoted screen must still be able to
+  // say where in the menu it lives.
+  return (
+    href === "/admin/erp" &&
+    ERP_ROUTES.some((route) => pathname === route || pathname.startsWith(`${route}/`))
+  );
+}
+
+function NavLink({
+  item,
+  pathname,
+  onNavigate,
+}: {
+  item: NavItem;
+  pathname: string;
+  onNavigate?: () => void;
+}) {
+  const active = isActivePath(pathname, item.href);
+  const Icon = item.icon;
+  return (
+    <Link
+      href={item.href}
+      onClick={onNavigate}
+      aria-current={active ? "page" : undefined}
+      className={cn(
+        "motion-press group relative flex min-h-10 items-center gap-3 rounded-md px-3 text-sm font-semibold transition-colors before:absolute before:inset-y-2 before:left-0 before:w-0.5 before:rounded-full before:bg-sidebar-primary before:opacity-0 before:transition-opacity before:duration-[var(--motion-quick)] [&_svg]:transition-colors [&_svg]:duration-[var(--motion-quick)]",
+        active
+          ? "bg-sidebar-accent text-sidebar-accent-foreground before:opacity-100 [&_svg]:text-sidebar-primary"
+          : "text-sidebar-foreground/72 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
+      )}
+    >
+      <Icon className="size-[18px]" strokeWidth={1.8} />
+      <span>{item.label}</span>
+    </Link>
+  );
 }
 
 function NavGroup({
@@ -198,7 +264,7 @@ function NavGroup({
   onNavigate,
 }: {
   label: string;
-  items: NavItem[];
+  items: readonly NavItem[];
   pathname: string;
   onNavigate?: () => void;
 }) {
@@ -213,7 +279,7 @@ function NavGroup({
         onClick={() => setOpen((current) => !current)}
         aria-expanded={open}
         aria-controls={panelId}
-        className="motion-press flex min-h-10 w-full items-center gap-2 rounded-md px-3 text-[11px] font-bold uppercase tracking-[0.16em] text-sidebar-foreground/50 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+        className="motion-press flex min-h-10 w-full items-center gap-2 rounded-md px-3 text-sm font-semibold text-sidebar-foreground/72 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
       >
         <span className="flex-1 text-left">{label}</span>
         {/* A closed section that holds the current page still says so, so the
@@ -221,28 +287,10 @@ function NavGroup({
         {!open && holdsCurrentPage ? <span className="size-1.5 rounded-full bg-sidebar-primary" aria-hidden="true" /> : null}
         <ChevronDown className={cn("size-4 transition-transform", !open && "-rotate-90")} aria-hidden="true" />
       </button>
-      <div id={panelId} hidden={!open} className="space-y-1">
-      {items.map((item) => {
-        const active = isActivePath(pathname, item.href);
-        const Icon = item.icon;
-        return (
-          <Link
-            key={item.href}
-            href={item.href}
-            onClick={onNavigate}
-            aria-current={active ? "page" : undefined}
-            className={cn(
-              "motion-press group relative flex min-h-10 items-center gap-3 rounded-md px-3 text-sm font-semibold transition-colors before:absolute before:inset-y-2 before:left-0 before:w-0.5 before:rounded-full before:bg-sidebar-primary before:opacity-0 before:transition-opacity before:duration-[var(--motion-quick)] [&_svg]:transition-colors [&_svg]:duration-[var(--motion-quick)]",
-              active
-                ? "bg-sidebar-accent text-sidebar-accent-foreground before:opacity-100 [&_svg]:text-sidebar-primary"
-                : "text-sidebar-foreground/72 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
-            )}
-          >
-            <Icon className="size-[18px]" strokeWidth={1.8} />
-            <span>{item.label}</span>
-          </Link>
-        );
-      })}
+      <div id={panelId} hidden={!open} className="space-y-1 pl-3">
+        {items.map((item) => (
+          <NavLink key={item.href} item={item} pathname={pathname} onNavigate={onNavigate} />
+        ))}
       </div>
     </div>
   );
@@ -307,9 +355,18 @@ function SidebarContent({ pathname, onNavigate }: { pathname: string; onNavigate
 
       <nav className="flex-1 overflow-y-auto px-3 pb-4 pt-2" aria-label="Yönetim menüsü">
         <NavSearch pathname={pathname} onNavigate={onNavigate} />
-        {NAV_SECTIONS.map((section) => (
-          <NavGroup key={section.label} label={section.label} items={section.items} pathname={pathname} onNavigate={onNavigate} />
-        ))}
+        {NAV_SECTIONS.map((section) =>
+          section.items ? (
+            <NavGroup key={section.label} label={section.label} items={section.items} pathname={pathname} onNavigate={onNavigate} />
+          ) : section.href && section.icon ? (
+            <NavLink
+              key={section.label}
+              item={{ label: section.label, href: section.href, icon: section.icon }}
+              pathname={pathname}
+              onNavigate={onNavigate}
+            />
+          ) : null,
+        )}
       </nav>
 
       <div className="border-t border-sidebar-border p-3">
@@ -330,7 +387,6 @@ function SidebarContent({ pathname, onNavigate }: { pathname: string; onNavigate
             <p className="truncate text-sm font-semibold">{name}</p>
             <p className="truncate text-xs text-sidebar-foreground/50">{roleLabel}</p>
           </div>
-          <SlidersHorizontal className="size-4 text-sidebar-foreground/50" />
         </div>
       </div>
     </div>

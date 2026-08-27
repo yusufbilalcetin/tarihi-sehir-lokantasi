@@ -8,7 +8,7 @@ export function CallsModule() {
   return (
     <ModulePage
       title="Garson Çağrıları"
-      description="Masa taleplerini önem sırasına göre üstlen ve tamamlanan çağrıları kapat."
+      description="Masa taleplerini üstlen ve tamamlananları kapat."
     >
       <WaiterCallsList />
     </ModulePage>

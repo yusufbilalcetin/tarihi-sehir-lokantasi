@@ -10,7 +10,9 @@ import type { AdminReportsResult } from "@/lib/services/admin-reports-service";
 
 const REPORTS_POLL_MS = 60_000;
 
-const dayFormatter = new Intl.DateTimeFormat("tr-TR", { weekday: "short" });
+// Day and month, not the weekday: a fortnight has two of every weekday, and
+// the repeat was both an unreadable axis and a duplicate React key.
+const dayFormatter = new Intl.DateTimeFormat("tr-TR", { day: "numeric", month: "short" });
 
 export interface AdminReportsState {
   readonly reports: AdminReportsResult | null;

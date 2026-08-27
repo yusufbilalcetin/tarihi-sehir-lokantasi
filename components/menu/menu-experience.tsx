@@ -4,6 +4,9 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { BellRing, CheckCircle2, ChevronLeft, CircleCheck, Loader2, ReceiptText, Send, ShoppingBag, UtensilsCrossed, X } from "lucide-react";
 import { toast } from "sonner";
 import { BottomNavigation, type MenuTab } from "@/components/menu/bottom-navigation";
+import { CartBar } from "@/components/menu/cart-bar";
+import { CategoryJump } from "@/components/menu/category-jump";
+import { HighlightCard } from "@/components/menu/highlight-card";
 import { CartItem } from "@/components/menu/cart-item";
 import { CustomerFeedbackForm } from "@/components/menu/customer-feedback-form";
 import { CurrencySelector } from "@/components/menu/currency-selector";
@@ -47,6 +50,9 @@ const MENU_PRODUCT_KEY = "tarihiSehirMenuProduct";
 const MENU_POLL_MS = 30_000;
 const ACTIVE_ORDER_POLL_MS = 12_000;
 const ACTIVE_CALL_POLL_MS = 15_000;
+
+/** Three suggestions is a recommendation; ten is the menu a second time. */
+const MENU_HIGHLIGHT_LIMIT = 3;
 
 const EMPTY_CATEGORIES: readonly MenuViewCategory[] = [];
 const EMPTY_PRODUCTS: readonly Product[] = [];
@@ -247,7 +253,14 @@ function MenuExperienceContent({ tableNumber }: { tableNumber: number }) {
     // Passed as text on purpose: `t` runs numbers through Intl.NumberFormat,
     // which is right for quantities and wrong for identifiers — it turned
     // table 9000 into "Masa 9.000".
-    () => t("tableNumber", { number: String(menu?.table?.number ?? tableNumber) }),
+    () => {
+      const number = menu?.table?.number ?? tableNumber;
+      // A guest must never read a placeholder for the one fact they are most
+      // anxious about. No real number, no line.
+      return Number.isSafeInteger(number) && number > 0
+        ? t("tableNumber", { number: String(number) })
+        : null;
+    },
     [menu?.table?.number, tableNumber, t],
   );
   const groupedProducts = useMemo(
@@ -583,27 +596,36 @@ function MenuExperienceContent({ tableNumber }: { tableNumber: number }) {
       {introComplete && !contentReady ? (
         <div className="fixed inset-0 z-[90] min-h-[100dvh] bg-[#120c08]" role="status" aria-label={t("loadingLanguage")} />
       ) : null}
-      <div dir={direction} lang={languageDefinition.locale} className={cn("menu-content min-h-[100dvh] pb-24", contentReady && "menu-content-ready")} aria-hidden={!contentReady} inert={!contentReady}>
+      <div dir={direction} lang={languageDefinition.locale} className={cn("menu-content min-h-[100dvh]", cartCount > 0 ? "pb-[9.5rem]" : "pb-24", contentReady && "menu-content-ready")} aria-hidden={!contentReady} inert={!contentReady}>
         {activeTab === "menu" ? (
           <>
             <RestaurantHeader tableName={tableName} />
-            <main className="menu-shell pb-6 pt-4">
+            <main className="menu-shell pb-6">
               <h1 className="sr-only">{t("menu")}</h1>
+              <CategoryJump sections={groupedProducts} />
               {currency !== "TRY" ? (
                 <p className="mx-auto max-w-3xl text-center text-xs leading-5 text-[#70665C]">
                   {t("approximateCurrency")}
                 </p>
               ) : null}
-              <section className={cn("motion-page", currency !== "TRY" && "pt-3")} data-navigation-direction={navigationDirection}>
+              <section className={cn("motion-page pt-4", currency !== "TRY" && "pt-3")} data-navigation-direction={navigationDirection}>
+                {/*
+                  Discovery, capped at three.
+
+                  These rails used to carry full-size product cards, so the top
+                  of the menu was a second copy of dishes the guest was about to
+                  meet again under their own category. Three small suggestions
+                  is a recommendation; ten full cards is the menu twice.
+                */}
                 {popularProducts.length ? (
-                  <section className="mb-8" aria-labelledby="popular-products-title">
-                    <h2 id="popular-products-title" className="mb-3 font-heading text-xl font-semibold text-text-primary">
+                  <section className="mb-7" aria-labelledby="popular-products-title">
+                    <h2 id="popular-products-title" className="mb-2.5 font-heading text-lg font-semibold text-text-primary">
                       {getMenuTag("Popüler", language)}
                     </h2>
-                    <div className="-mx-[var(--menu-gutter)] flex snap-x snap-mandatory gap-3 overflow-x-auto px-[var(--menu-gutter)] pb-2 scrollbar-none">
-                      {popularProducts.map((product, index) => (
-                        <div key={`popular-${product.id}`} className="min-w-[min(86vw,24rem)] snap-start sm:min-w-[22rem]">
-                          <ProductCard product={product} index={index} canOrder={orderingEnabled} onOpen={() => openProduct(product)} onAdd={() => addToCart(product)} />
+                    <div className="-mx-[var(--menu-gutter)] flex snap-x snap-mandatory gap-2.5 overflow-x-auto px-[var(--menu-gutter)] pb-1 scrollbar-none">
+                      {popularProducts.slice(0, MENU_HIGHLIGHT_LIMIT).map((product) => (
+                        <div key={`popular-${product.id}`} className="w-[17rem] shrink-0 snap-start">
+                          <HighlightCard product={product} onOpen={() => openProduct(product)} />
                         </div>
                       ))}
                     </div>
@@ -611,14 +633,14 @@ function MenuExperienceContent({ tableNumber }: { tableNumber: number }) {
                 ) : null}
 
                 {featuredProducts.length ? (
-                  <section className="mb-8" aria-labelledby="featured-products-heading">
-                    <h2 id="featured-products-heading" className="mb-3 font-heading text-xl font-semibold sm:text-2xl">
+                  <section className="mb-7" aria-labelledby="featured-products-heading">
+                    <h2 id="featured-products-heading" className="mb-2.5 font-heading text-lg font-semibold text-text-primary">
                       {getMenuTag("Şefin Önerisi", language)}
                     </h2>
-                    <div className="-mx-[var(--menu-gutter)] flex snap-x snap-mandatory gap-[var(--menu-grid-gap)] overflow-x-auto px-[var(--menu-gutter)] pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-                      {featuredProducts.map((product, index) => (
-                        <div key={`featured-${product.id}`} className="min-w-[min(86vw,24rem)] snap-start sm:min-w-[22rem]">
-                          <ProductCard product={product} index={index} canOrder={orderingEnabled} onOpen={() => openProduct(product)} onAdd={() => addToCart(product)} />
+                    <div className="-mx-[var(--menu-gutter)] flex snap-x snap-mandatory gap-2.5 overflow-x-auto px-[var(--menu-gutter)] pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                      {featuredProducts.slice(0, MENU_HIGHLIGHT_LIMIT).map((product) => (
+                        <div key={`featured-${product.id}`} className="w-[17rem] shrink-0 snap-start">
+                          <HighlightCard product={product} onOpen={() => openProduct(product)} />
                         </div>
                       ))}
                     </div>
@@ -626,18 +648,18 @@ function MenuExperienceContent({ tableNumber }: { tableNumber: number }) {
                 ) : null}
 
                 {groupedProducts.length ? (
-                  <div data-customer-menu-content="category-sections" className="space-y-10">
+                  <div data-customer-menu-content="category-sections" className="space-y-7">
                     {groupedProducts.map(({ category, products }) => (
                       <section key={category.id} aria-labelledby={`menu-category-${category.id}`}>
-                        <div className="mb-4 flex items-end justify-between gap-4 border-b border-gold/30 pb-2">
-                          <h2 id={`menu-category-${category.id}`} className="font-heading text-2xl font-semibold text-text-primary sm:text-3xl">
+                        <div className="mb-3 flex items-end justify-between gap-4 border-b border-border/50 pb-2">
+                          <h2 id={`menu-category-${category.id}`} className="font-heading text-[22px] font-semibold text-text-primary sm:text-3xl">
                             {getMenuCategoryName(category, language)}
                           </h2>
                           <p className="shrink-0 text-xs font-medium tabular-nums text-[#70665C]">
                             {t("itemCount", { count: products.length })}
                           </p>
                         </div>
-                        <div className="grid gap-[var(--menu-grid-gap)] lg:grid-cols-2">
+                        <div className="grid gap-2 lg:grid-cols-2 lg:gap-3">
                           {products.map((product, index) => (
                             <ProductCard key={product.id} product={product} index={index} canOrder={orderingEnabled} onOpen={() => openProduct(product)} onAdd={() => addToCart(product)} />
                           ))}
@@ -652,8 +674,8 @@ function MenuExperienceContent({ tableNumber }: { tableNumber: number }) {
         ) : null}
 
         {activeTab === "order" ? (
-          <main className="motion-page menu-shell menu-shell-narrow pb-8 pt-[max(1.5rem,env(safe-area-inset-top))]" data-navigation-direction={navigationDirection}>
-            <div className="relative flex min-h-12 items-center justify-center px-12 text-center"><button type="button" onClick={openMenuHome} className="motion-press motion-ripple touch-target absolute start-0 flex items-center justify-center rounded-xl" aria-label={t("menu")}><ChevronLeft className={cn(direction === "rtl" && "rotate-180")} /></button><div><h1 className="font-heading text-3xl font-semibold">{t("order")}</h1><p className="text-sm text-muted-foreground">{tableName}</p></div></div>
+          <main className="motion-page menu-shell menu-shell-narrow pb-28 pt-[max(1.5rem,env(safe-area-inset-top))]" data-navigation-direction={navigationDirection}>
+            <div className="relative flex min-h-12 items-center justify-center px-12 text-center"><button type="button" onClick={openMenuHome} className="motion-press motion-ripple touch-target absolute start-0 flex items-center justify-center rounded-xl" aria-label={t("menu")}><ChevronLeft className={cn(direction === "rtl" && "rotate-180")} /></button><div><h1 className="font-heading text-3xl font-semibold">{t("order")}</h1>{tableName ? <p className="text-sm text-muted-foreground">{tableName}</p> : null}</div></div>
             {orderResult ? (
               <section className="mt-6 rounded-lg border bg-card p-5 surface-shadow sm:p-6" aria-live="polite">
                 <div className="motion-status flex size-12 items-center justify-center rounded-md bg-status-success-tint text-status-success" data-motion-success="true"><CheckCircle2 className="size-6" /></div>
@@ -661,7 +683,7 @@ function MenuExperienceContent({ tableNumber }: { tableNumber: number }) {
                 <p className="mt-1 text-sm leading-6 text-muted-foreground">{t("orderTrackingStatus")}</p>
                 <OrderStatusTimeline currentStep={ORDER_TIMELINE_STEP[trackedOrder?.status ?? "NEW"] ?? 1} />
                 <div className="mt-5 space-y-2 border-t pt-4">
-                  <div className="flex justify-between text-sm text-text-secondary"><span>{t("yourTable")}</span><span className="font-semibold text-text-primary">{tableName}</span></div>
+                  {tableName ? <div className="flex justify-between text-sm text-text-secondary"><span>{t("yourTable")}</span><span className="font-semibold text-text-primary">{tableName}</span></div> : null}
                   <div className="flex justify-between text-sm text-text-secondary"><span>{t("total")}</span><strong dir="ltr" className="text-lg text-primary"><MotionValue value={formatPrice(sessionTotal)} numericValue={sessionTotal} /></strong></div>
                 </div>
                 <OrderDetailsDisclosure orders={sessionOrders} />
@@ -672,15 +694,17 @@ function MenuExperienceContent({ tableNumber }: { tableNumber: number }) {
             ) : cart.length ? (
               <>
                 <div ref={cartListRef} className="mt-6 space-y-3">{cart.map((item, index) => <CartItem key={item.id} item={item} motionIndex={index} onDecrease={() => updateQuantity(item.id, -1)} onIncrease={() => updateQuantity(item.id, 1)} onRemove={() => removeCartItem(item.id)} />)}</div>
-                <section className="mt-5 rounded-lg border bg-card p-5 shadow-[var(--shadow-raised)]">
+                {/* §32: with a long basket the totals and the button that sends
+                    it were below the fold. They stay above the tab bar now. */}
+                <section className="sticky bottom-[calc(4.5rem+env(safe-area-inset-bottom))] mt-5 rounded-lg border bg-card p-5 shadow-[var(--shadow-raised)]">
                   <dl className="space-y-3 text-sm"><div className="flex justify-between text-muted-foreground"><dt>{t("subtotal")}</dt><dd dir="ltr"><MotionValue value={formatPrice(subtotal)} numericValue={subtotal} delayMs={20} /></dd></div><div className="flex justify-between text-muted-foreground"><dt>{t("serviceFee")}</dt><dd dir="ltr"><MotionValue value={formatPrice(0)} numericValue={0} delayMs={30} /></dd></div><div className="flex justify-between border-t pt-3 text-base font-bold"><dt>{t("total")}</dt><dd dir="ltr" className="text-burgundy"><MotionValue value={formatPrice(subtotal)} numericValue={subtotal} delayMs={40} /></dd></div></dl>
                   <OrderCurrencyPanel amount={subtotal} />
                   <Button type="button" onClick={() => void sendOrder()} disabled={submitting || !orderingEnabled} aria-busy={submitting} className="motion-cta mt-5 h-12 w-full rounded-xl text-sm font-bold">
-                    {/* The spinner is the pending state: there is no translated
-                        "sending…" string in the catalogue and inventing one
-                        would ship untranslated English to 108 languages. */}
+                    {/* The catalogue does carry a translated pending string, so
+                        the button says what is happening rather than only
+                        spinning at the guest. */}
                     {submitting ? <Loader2 className="size-4 animate-spin" aria-hidden="true" /> : <Send className="size-4" aria-hidden="true" />}
-                    {t("sendOrder")}
+                    {submitting ? t("sending") : <>{t("sendOrder")} · <MotionValue value={formatPrice(subtotal)} numericValue={subtotal} delayMs={40} /></>}
                   </Button>
                 </section>
               </>
@@ -728,7 +752,7 @@ function MenuExperienceContent({ tableNumber }: { tableNumber: number }) {
             <X className="size-4" aria-hidden="true" />
             <span className="sr-only">{t("close")}</span>
           </DialogClose>
-          <DialogHeader className="items-center px-14 pb-4 pt-6 text-center sm:px-16"><div className="mb-1 flex size-11 items-center justify-center rounded-md bg-burgundy/8 text-burgundy"><BellRing className="size-5" /></div><DialogTitle className="font-heading text-2xl font-semibold">{t("waiterHelpTitle")}</DialogTitle><DialogDescription className="mx-auto max-w-md">{t("waiterHelpDescription", { table: tableName })}</DialogDescription></DialogHeader>
+          <DialogHeader className="items-center px-14 pb-4 pt-6 text-center sm:px-16"><div className="mb-1 flex size-11 items-center justify-center rounded-md bg-burgundy/8 text-burgundy"><BellRing className="size-5" /></div><DialogTitle className="font-heading text-2xl font-semibold">{t("waiterHelpTitle")}</DialogTitle>{tableName ? <DialogDescription className="mx-auto max-w-md">{t("waiterHelpDescription", { table: tableName })}</DialogDescription> : null}</DialogHeader>
           {waiterCall ? (
             /* A request is already with the floor. Re-offering the options
                here would invite a duplicate call for the same table; the
@@ -746,7 +770,18 @@ function MenuExperienceContent({ tableNumber }: { tableNumber: number }) {
         </DialogContent>
       </Dialog>
 
-      {contentReady ? <BottomNavigation active={waiterOpen ? "waiter" : activeTab} cartCount={cartCount} onChange={handleTabChange} /> : null}
+      {contentReady ? (
+        <BottomNavigation
+          active={waiterOpen ? "waiter" : activeTab}
+          cartCount={cartCount}
+          cartSlot={
+            activeTab === "menu" ? (
+              <CartBar count={cartCount} total={subtotal} onOpen={() => handleTabChange("order")} />
+            ) : null
+          }
+          onChange={handleTabChange}
+        />
+      ) : null}
     </>
   );
 }

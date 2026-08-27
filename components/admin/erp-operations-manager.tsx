@@ -13,7 +13,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import type { ApiResult } from "@/lib/api/response";
 import { ERP_UNIT_LABELS } from "@/lib/domain/erp-workspaces";
 import { useApiResource } from "@/lib/hooks/use-api-resource";
-import { readOverview, Section, TodayPanel } from "@/components/admin/today-panel";
+import { ERP_SECTIONS } from "@/components/admin/admin-shell";
+import { QuickActionsSection, readOverview, Section, SetupChecklist } from "@/components/admin/today-panel";
 
 const unitLabels: Readonly<Record<string, string>> = ERP_UNIT_LABELS;
 
@@ -50,15 +51,51 @@ export function ErpOperationsManager() {
 
   return (
     <div className="space-y-8">
-      <div className="flex flex-wrap items-start justify-between gap-3">
-        <div><h2 className="font-heading text-xl font-semibold">Bugün ne oluyor?</h2><p className="mt-1 text-sm text-muted-foreground">Satış, stok, üretim, mal kabul ve personel sinyalleri gerçek operasyon kayıtlarından okunur.</p></div>
-        <div className="flex flex-wrap gap-2">
-          <Button variant="outline" onClick={() => void create({ command: "REFRESH_POPULAR", windowDays: 30 }, () => undefined)} disabled={saving}>30 günlük popülerliği yenile</Button>
-          <Button variant="outline" onClick={() => void resource.refetch()} disabled={refreshing}><RefreshCw className={refreshing ? "size-4 animate-spin" : "size-4"} /> Yenile</Button>
-        </div>
+      {/*
+        No "Bugün" block here.
+
+        This screen used to open with the same six figures and the same warning
+        list the manager's home already shows, which meant the two screens
+        competed to answer one question and a manager checking today's state had
+        to remember which of them they were looking at. Today belongs to Genel
+        Bakış; this page is the advanced work, and it starts with the advanced
+        work. The overview read stays because the sections below genuinely need
+        it — the setup checklist and the critical-stock table are derived from
+        it — and it is the same single request either way.
+      */}
+      <div className="flex flex-wrap justify-end gap-2">
+        <Button variant="outline" onClick={() => void create({ command: "REFRESH_POPULAR", windowDays: 30 }, () => undefined)} disabled={saving}>30 günlük popülerliği yenile</Button>
+        <Button variant="outline" onClick={() => void resource.refetch()} disabled={refreshing}><RefreshCw className={refreshing ? "size-4 animate-spin" : "size-4"} /> Yenile</Button>
       </div>
 
-      <TodayPanel overview={overview ?? null} />
+      {overview ? <SetupChecklist overview={overview} /> : null}
+
+      {/*
+        The index for everything that left the sidebar.
+
+        Three headings, eighteen screens. This is the whole point of demoting
+        them: a manager who is doing stock work opens one page and sees the
+        stock screens together, instead of reading past nine of them every time
+        they want the order list.
+      */}
+      {ERP_SECTIONS.map((section) => (
+        <Section key={section.title} title={section.title}>
+          <div className="grid gap-2 sm:grid-cols-2 xl:grid-cols-3">
+            {section.items.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="motion-press flex min-h-12 items-center gap-3 rounded-xl border bg-card px-3.5 text-sm font-semibold transition-colors hover:border-copper/55 hover:bg-accent/35"
+              >
+                <item.icon className="size-4.5 shrink-0 text-olive" strokeWidth={1.8} aria-hidden="true" />
+                <span className="min-w-0 truncate">{item.label}</span>
+              </Link>
+            ))}
+          </div>
+        </Section>
+      ))}
+
+      <QuickActionsSection />
 
       <Section title="Operasyon özeti">
         <div className="grid gap-4 xl:grid-cols-[minmax(0,1.5fr)_minmax(20rem,0.8fr)]">

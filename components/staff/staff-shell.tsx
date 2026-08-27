@@ -3,12 +3,7 @@
 import { type ReactNode } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-  BellRing,
-  LayoutDashboard,
-  ReceiptText,
-  TableProperties,
-} from "lucide-react";
+import { BellRing, ReceiptText, TableProperties } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { BrandMark } from "@/components/shared/brand-mark";
 import { LogoutButton } from "@/components/staff/logout-button";
@@ -17,12 +12,23 @@ import { STAFF_ROLE_LABELS } from "@/lib/domain/staff-accounts";
 import { getInitials } from "@/lib/format";
 import { cn } from "@/lib/utils";
 
+/**
+ * Three destinations, and the first one is where the work is.
+ *
+ * The summary tab that used to sit in front of Masalar showed four counters
+ * and the first eight tables — a smaller copy of the screen next to it. The
+ * floor plan absorbed it, so /staff/dashboard (the route a waiter is signed in
+ * to) now renders Masalar as well and lights the same tab.
+ */
 const navigation = [
-  { href: "/staff/dashboard", label: "Özet", icon: LayoutDashboard },
-  { href: "/staff/tables", label: "Masalar", icon: TableProperties },
-  { href: "/staff/orders", label: "Siparişler", icon: ReceiptText },
-  { href: "/staff/calls", label: "Çağrılar", icon: BellRing },
+  { href: "/staff/tables", label: "Masalar", icon: TableProperties, alias: "/staff/dashboard" },
+  { href: "/staff/orders", label: "Siparişler", icon: ReceiptText, alias: null },
+  { href: "/staff/calls", label: "Çağrılar", icon: BellRing, alias: null },
 ] as const;
+
+function isCurrent(pathname: string, item: (typeof navigation)[number]) {
+  return pathname === item.href || pathname === item.alias;
+}
 
 function StaffHeader({ pathname }: { pathname: string }) {
   // The header is the only "who am I signed in as" indicator on these screens,
@@ -34,9 +40,9 @@ function StaffHeader({ pathname }: { pathname: string }) {
     <header className="sticky top-0 z-30 border-b border-sidebar-primary/35 bg-sidebar text-sidebar-foreground shadow-[0_4px_16px_rgba(45,32,24,0.12)]">
       <div className="mx-auto flex h-16 w-full max-w-[1400px] items-center gap-3 px-4 sm:px-6 lg:px-8">
         <Link
-          href="/staff/dashboard"
+          href="/staff/tables"
           className="motion-press flex min-h-11 min-w-0 items-center gap-3 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-copper"
-          aria-label="Tarihi Şehir Lokantası personel özeti"
+          aria-label="Tarihi Şehir Lokantası masa planı"
         >
           <BrandMark compact className="size-9 shrink-0 border-copper/45 bg-sidebar-accent" />
           <span className="hidden min-w-0 sm:block">
@@ -50,7 +56,7 @@ function StaffHeader({ pathname }: { pathname: string }) {
         <nav className="ml-4 hidden h-full items-center gap-1 md:flex" aria-label="Personel menüsü">
           {navigation.map((item) => {
             const Icon = item.icon;
-            const active = pathname === item.href;
+            const active = isCurrent(pathname, item);
 
             return (
               <Link
@@ -92,10 +98,10 @@ function StaffBottomNavigation({ pathname }: { pathname: string }) {
       className="fixed inset-x-0 bottom-0 z-30 border-t border-border bg-card/95 px-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] pt-1 shadow-[0_-10px_30px_rgb(74_40_40/0.08)] backdrop-blur-md md:hidden"
       aria-label="Mobil personel menüsü"
     >
-      <div className="mx-auto grid max-w-md grid-cols-4 gap-1">
+      <div className="mx-auto grid max-w-md grid-cols-3 gap-1">
         {navigation.map((item) => {
           const Icon = item.icon;
-          const active = pathname === item.href;
+          const active = isCurrent(pathname, item);
 
           return (
             <Link

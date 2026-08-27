@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { AlertTriangle, Boxes, CalendarDays, ChefHat, ClipboardCheck, ClipboardList, Factory, PackageCheck, ShoppingBag, TrendingUp, Truck, WalletCards, type LucideIcon } from "lucide-react";
+import { AlertTriangle, Boxes, CalendarDays, ClipboardCheck, ClipboardList, Factory, PackageCheck, ShoppingBag, TrendingUp, Truck, WalletCards, type LucideIcon } from "lucide-react";
 
 import { Money } from "@/components/shared/money";
 import { Button } from "@/components/ui/button";
@@ -91,7 +91,7 @@ const quickActions: readonly { label: string; href: string; icon: LucideIcon }[]
  *
  * The card disappears once all four are done, so it never becomes furniture.
  */
-function SetupChecklist({ overview }: { overview: ErpOverview }) {
+export function SetupChecklist({ overview }: { overview: ErpOverview }) {
   const steps = [
     { done: overview.counts.warehouses > 0, todo: "Depo oluştur", done_: "Depo hazır", href: "/admin/warehouses" },
     { done: overview.counts.inventoryItems > 0, todo: "Stok ürünlerini ekle", done_: "Stok ürünleri hazır", href: "/admin/inventory" },
@@ -145,17 +145,16 @@ export function TodayPanel({
   return (
     <div className="space-y-8">
       <Section title="Bugün" hint="Bugünün kapanmış satışı, açık işi ve bugüne yazılmış operasyon kayıtları.">
-        <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+        {/* Four, not six. Production and waste are ERP figures a manager reads
+            on the ERP screen when they are working on stock; on the home screen
+            they only competed with the day's sales and the open orders. */}
+        <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
           <Metric label="Bugünkü satış" value={overview ? <Money amount={overview.today.sales} /> : placeholder} icon={TrendingUp} />
-          <Metric label="Açık sipariş" value={overview ? overview.today.openOrders : placeholder} icon={ClipboardList} />
           <Metric label="Bugünkü sipariş adedi" value={overview ? overview.today.orderCount : placeholder} icon={PackageCheck} />
-          <Metric label="Bugünkü üretim" value={overview ? overview.today.production : placeholder} icon={ChefHat} />
-          <Metric label="Bugünkü fire" value={overview ? <Money amount={overview.today.wasteCost} /> : placeholder} icon={AlertTriangle} warning={overview !== null && Number(overview.today.wasteCost) > 0} />
+          <Metric label="Açık sipariş" value={overview ? overview.today.openOrders : placeholder} icon={ClipboardList} />
           <Metric label="Kritik stok" value={overview ? overview.counts.criticalStock : placeholder} icon={Boxes} warning={overview !== null && overview.counts.criticalStock > 0} />
         </div>
       </Section>
-
-      {overview ? <SetupChecklist overview={overview} /> : null}
 
       <Section title="Dikkat gerektirenler" hint="Her uyarı, işin yapıldığı ekrana götürür.">
         {failed ? (
@@ -182,15 +181,26 @@ export function TodayPanel({
           <p className="rounded-xl border bg-muted/35 px-4 py-3 text-sm text-muted-foreground">Şu an dikkat gerektiren bir durum yok.</p>
         )}
       </Section>
-
-      <Section title="Hızlı işlemler" hint="İşlemler ilgili modülde yapılır; burada ikinci bir form tutulmaz.">
-        <div className="flex flex-wrap gap-2">
-          {quickActions.map((action) => (
-            <Button key={action.label} nativeButton={false} variant="outline" size="sm" className="min-h-10" render={<Link href={action.href} />}><action.icon className="size-4" aria-hidden="true" />{action.label}</Button>
-          ))}
-        </div>
-      </Section>
     </div>
+  );
+}
+
+/**
+ * The eleven ERP entry points, rendered only where ERP work is done.
+ *
+ * They used to sit under the manager's home, where ten of the eleven were
+ * things nobody does between lunch and dinner. They are unchanged — still
+ * links into the module that owns the form, never a second copy of it.
+ */
+export function QuickActionsSection() {
+  return (
+    <Section title="Hızlı işlemler" hint="İşlemler ilgili modülde yapılır; burada ikinci bir form tutulmaz.">
+      <div className="flex flex-wrap gap-2">
+        {quickActions.map((action) => (
+          <Button key={action.label} nativeButton={false} variant="outline" size="sm" className="min-h-10" render={<Link href={action.href} />}><action.icon className="size-4" aria-hidden="true" />{action.label}</Button>
+        ))}
+      </div>
+    </Section>
   );
 }
 

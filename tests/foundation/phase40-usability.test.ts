@@ -74,23 +74,38 @@ test("finding a screen does not require knowing which section owns it", () => {
 
 /* ------------------------------------------------ manager home ----------- */
 
-test("the manager lands on today's work, not on a fortnight of charts", () => {
-  const attentionAt = dashboardView.indexOf("<TodayPanel");
-  const analyticsAt = dashboardView.indexOf("14 Günlük Ciro");
-  assert.ok(attentionAt !== -1, "the manager home does not show today's state");
-  assert.ok(analyticsAt !== -1, "the 14-day view was deleted rather than demoted");
-  assert.ok(attentionAt < analyticsAt, "the chart still outranks the work");
+test("the manager lands on today's work, and the fortnight lives in the reports", () => {
+  // The chart used to open this screen, above the day's own figures. It was
+  // not deleted — it moved one screen across, to where history is read. What
+  // the home keeps is today's state and the two panels that act on it.
+  assert.ok(dashboardView.includes("<TodayPanel"), "the manager home does not show today's state");
+  for (const historical of ["14 Günlük Ciro", "DashboardSalesChart", "En çok satanlar"]) {
+    assert.equal(dashboardView.includes(historical), false, `${historical} still outranks today's work`);
+  }
+  const reports = read("components/admin/advanced-reports-view.tsx");
+  assert.match(reports, /DashboardSalesChart/, "the 14-day view was deleted rather than demoted");
+  assert.match(reports, /Son 14 gün/);
 });
 
-test("both manager screens read one panel and one endpoint, not two copies", () => {
-  for (const [name, source] of [["dashboard", dashboardView], ["erp", read("components/admin/erp-operations-manager.tsx")]] as const) {
-    assert.match(source, /TodayPanel/, `${name} does not use the shared panel`);
+test("today is answered once, on the manager's home, and not again on the ERP screen", () => {
+  // Both screens used to open with the same six figures and the same warning
+  // list, so two screens competed to answer one question and a manager had to
+  // remember which one they were reading. Today belongs to Genel Bakış; the ERP
+  // screen is the advanced work and starts with it.
+  const erp = read("components/admin/erp-operations-manager.tsx");
+  assert.match(dashboardView, /<TodayPanel/, "the manager home no longer shows today's state");
+  assert.doesNotMatch(erp, /<TodayPanel/, "the ERP screen repeats the manager home's today block");
+
+  // One reader, one endpoint, still shared: the ERP screen derives its setup
+  // checklist and its critical-stock table from the same single request.
+  for (const [name, source] of [["dashboard", dashboardView], ["erp", erp]] as const) {
     assert.match(source, /readOverview/, `${name} does not use the shared reader`);
     // The warning rules live in the panel; a screen re-deriving them is how the
     // two start disagreeing about what needs attention.
     assert.doesNotMatch(source, /counts\.criticalStock > 0/, `${name} re-derives a warning`);
   }
   assert.match(todayPanel, /function warningsFor\(/);
+  assert.match(todayPanel, /export function TodayPanel/, "the shared panel was deleted rather than un-duplicated");
 });
 
 test("every warning names the screen where the work is actually done", () => {

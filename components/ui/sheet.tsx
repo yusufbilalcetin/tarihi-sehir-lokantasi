@@ -65,8 +65,9 @@ function SheetContent({
             render={
               <Button
                 variant="ghost"
-                className="absolute top-3 right-3"
-                size="icon-sm"
+                // 44px: this is a thumb target on a phone, not a desktop affordance.
+                className="absolute top-2.5 right-2.5 size-11"
+                size="icon"
               />
             }
           >
