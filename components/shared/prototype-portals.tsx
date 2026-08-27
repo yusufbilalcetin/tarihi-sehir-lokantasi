@@ -17,16 +17,18 @@ import { cn } from "@/lib/utils";
 /**
  * The prototype launcher tiles.
  *
- * The customer tile no longer points at a fixed table: where the demo launcher
- * is switched on it opens the picker, which reads the restaurant's live table
+ * The customer tile no longer points at a fixed table: where the launcher is
+ * switched on it opens the picker, which reads the restaurant's live table
  * list. Every other tile is an ordinary link to a panel that guards itself.
  *
- * In production the launcher is off by design — `isDemoLauncherEnabled` keeps
- * `/api/demo/tables` shut so a demo cannot become a second way into a guest
- * session. The tile used to open the picker anyway and the guest was handed
- * "Demo masa seçimi şu anda kullanılamıyor.", an error for a button that could
- * never work. There it is simply not a button: a real guest reaches the menu
- * by scanning the code on their table, so that is what it says.
+ * Whether it is switched on is `isDemoLauncherEnabled`'s decision alone, taken
+ * on the server from that deployment's own switch — this file is a client
+ * component and never looks. Where it is off `/api/demo/tables` is shut too,
+ * and the tile used to open the picker
+ * anyway — the guest pressed it and was handed "Masa seçimi şu anda
+ * kullanılamıyor.", an error for a button that could never work. There it is
+ * simply not a button: a guest reaches the menu by scanning the code on their
+ * table, so that is what it says.
  */
 
 /**

@@ -19,12 +19,14 @@ import type { TableStatus } from "@/lib/domain/status";
 import { cn } from "@/lib/utils";
 
 /**
- * The prototype's way in without a phone camera.
+ * The way in without a phone camera.
  *
  * It lists whatever active tables the restaurant actually has — no count and no
  * table is written into this file — and opening one goes through the ordinary
  * QR flow, so the guest session it produces is the same session a scanned code
- * produces.
+ * produces. Which deployments offer it at all is decided by
+ * `isDemoLauncherEnabled`, not here; the copy stays neutral so the same dialog
+ * reads correctly in a demo and on the live site.
  */
 
 /**
@@ -69,7 +71,9 @@ function statusOf(status: string) {
  *
  * The server's own words for that permanent answer name environment variables
  * and staff roles. They go to the console the developer who can act on them is
- * looking at, never onto a screen a guest may be looking at.
+ * looking at, never onto a screen a guest may be looking at — and the sentence
+ * the guest does read says nothing about demos, because on a production
+ * deployment this dialog is the ordinary way in.
  */
 function diagnose(
   error: unknown,
@@ -77,7 +81,7 @@ function diagnose(
 ): { readonly message: string; readonly retryable: boolean } {
   if (error instanceof ApiClientError && error.status >= 400 && error.status < 500) {
     console.warn("[demo-table-picker]", error.status, error.message);
-    return { message: "Demo masa seçimi şu anda kullanılamıyor.", retryable: false };
+    return { message: "Masa seçimi şu anda kullanılamıyor.", retryable: false };
   }
   return { message: transient, retryable: true };
 }
@@ -121,8 +125,7 @@ export function DemoTablePicker({
             <ScanLine className="size-5 text-burgundy" aria-hidden="true" /> Masa Seçin
           </DialogTitle>
           <DialogDescription>
-            QR menüyü görüntülemek istediğiniz masayı seçin. Bu bir demo masa seçimidir;
-            gerçek müşteri masadaki QR kodu okutur.
+            QR menüyü görüntülemek istediğiniz masayı seçin.
           </DialogDescription>
         </DialogHeader>
 

@@ -50,7 +50,7 @@ test("retry is offered only when trying again could work", () => {
   // A 4xx is the deployment answering, not a hiccup: it is shown as a plain
   // unavailable sentence, with no button that would loop forever.
   assert.match(picker, /error\.status >= 400 && error\.status < 500/);
-  assert.match(picker, /message: "Demo masa seçimi şu anda kullanılamıyor\.", retryable: false/);
+  assert.match(picker, /message: "Masa seçimi şu anda kullanılamıyor\.", retryable: false/);
   assert.match(picker, /retryable: true/);
   assert.match(picker, /diagnosis\.retryable \?/);
   // The server's wording — environment variables, staff roles — is a console
@@ -105,15 +105,10 @@ test("the demo response publishes no tenant identifier", () => {
   );
 });
 
-test("the launcher stays off unless deliberately enabled, and never in production", () => {
+test("the launcher stays off unless deliberately enabled", () => {
   assert.equal(isDemoLauncherEnabled({}), false);
   assert.equal(isDemoLauncherEnabled({ ENABLE_DEMO_LAUNCHER: "1" }), false);
   assert.equal(isDemoLauncherEnabled({ ENABLE_DEMO_LAUNCHER: "true" }), true);
-  // The deployment marker outranks the flag.
-  assert.equal(
-    isDemoLauncherEnabled({ ENABLE_DEMO_LAUNCHER: "true", VERCEL_ENV: "production" }),
-    false,
-  );
   // A disabled deployment does not even admit the route exists.
   assert.match(tablesRoute, /if \(!isDemoLauncherEnabled\(\)\) throw demoLauncherDisabledError\(\)/);
   assert.match(service, /httpStatus: 404/);
@@ -147,12 +142,11 @@ test("the demo picker did not become a way around real QR authorisation", () => 
 /**
  * What the home page offers where the launcher is switched off.
  *
- * The gate above is deliberate: `/api/demo/tables` is shut in production so a
- * demo cannot become a second way into a guest session. The tile opened the
- * picker regardless, so a real guest pressed "Müşteri QR Menü" and was handed
- * "Demo masa seçimi şu anda kullanılamıyor." — an error produced by a button
- * that could never work. A control that is guaranteed to fail should not be a
- * control.
+ * Where it is off `/api/demo/tables` is shut with it, so the picker there can
+ * load nothing. The tile opened it regardless, and a guest who pressed
+ * "Müşteri QR Menü" was handed "Masa seçimi şu anda kullanılamıyor." — an
+ * error produced by a button that could never work. A control that is
+ * guaranteed to fail should not be a control.
  */
 
 test("the deployment decides, on the server, and hands down a plain boolean", () => {
@@ -160,7 +154,12 @@ test("the deployment decides, on the server, and hands down a plain boolean", ()
   assert.match(homePage, /isDemoLauncherEnabled/);
   assert.match(homePage, /<PrototypePortals demoLauncherEnabled=\{isDemoLauncherEnabled\(\)\} \/>/);
   assert.match(portals, /demoLauncherEnabled \}: \{ demoLauncherEnabled: boolean \}/);
-  for (const leak of ["process.env", "VERCEL_ENV", "ENABLE_DEMO_LAUNCHER"]) {
+  for (const leak of [
+    "process.env",
+    "VERCEL_ENV",
+    "ENABLE_DEMO_LAUNCHER",
+    "ENABLE_PRODUCTION_TABLE_PICKER",
+  ]) {
     assert.ok(!portals.includes(leak), `the client tile reads ${leak} itself`);
   }
 });
@@ -194,16 +193,90 @@ test("with the launcher on the tile still opens the real picker", () => {
   assert.match(onBranch, /ArrowRight/);
 });
 
-test("the flag alone opens nothing in a production deployment", () => {
-  // The security gate itself, restated here because the tile now depends on
-  // it: preview and development honour the flag, production never does.
+test("preview and development are opened by the demo flag, and only by it", () => {
   assert.equal(isDemoLauncherEnabled({ ENABLE_DEMO_LAUNCHER: "true", VERCEL_ENV: "preview" }), true);
   assert.equal(isDemoLauncherEnabled({ ENABLE_DEMO_LAUNCHER: "true", VERCEL_ENV: "development" }), true);
   assert.equal(isDemoLauncherEnabled({ ENABLE_DEMO_LAUNCHER: "true" }), true);
-  assert.equal(isDemoLauncherEnabled({ ENABLE_DEMO_LAUNCHER: "true", VERCEL_ENV: "production" }), false);
-  // And without the flag nothing opens anywhere.
+  // And without the flag nothing opens there.
+  assert.equal(isDemoLauncherEnabled({ ENABLE_DEMO_LAUNCHER: "false", VERCEL_ENV: "preview" }), false);
   assert.equal(isDemoLauncherEnabled({ VERCEL_ENV: "preview" }), false);
+  assert.equal(isDemoLauncherEnabled({ VERCEL_ENV: "development" }), false);
   assert.equal(isDemoLauncherEnabled({}), false);
+});
+
+/**
+ * Opening the picker on the live site.
+ *
+ * A visitor there picks their table from the home page instead of scanning the
+ * code printed on it, which is a deliberate decision about that deployment and
+ * so gets its own switch. The preview flag must not carry it: variables get
+ * copied between environments, and one left behind should never be what opens
+ * a second way into a guest session.
+ */
+
+test("a production deployment is opened only by its own explicit flag", () => {
+  assert.equal(
+    isDemoLauncherEnabled({ VERCEL_ENV: "production", ENABLE_PRODUCTION_TABLE_PICKER: "true" }),
+    true,
+  );
+  assert.equal(
+    isDemoLauncherEnabled({ VERCEL_ENV: "production", ENABLE_PRODUCTION_TABLE_PICKER: "false" }),
+    false,
+  );
+  assert.equal(
+    isDemoLauncherEnabled({ VERCEL_ENV: "production", ENABLE_PRODUCTION_TABLE_PICKER: "1" }),
+    false,
+  );
+  // Missing means off: the live site never opens by default.
+  assert.equal(isDemoLauncherEnabled({ VERCEL_ENV: "production" }), false);
+});
+
+test("the two flags cannot stand in for one another", () => {
+  // A preview variable that reached production opens nothing…
+  assert.equal(
+    isDemoLauncherEnabled({ VERCEL_ENV: "production", ENABLE_DEMO_LAUNCHER: "true" }),
+    false,
+  );
+  // …and the production one is inert everywhere else, so enabling it there is
+  // never mistaken for a working preview.
+  assert.equal(
+    isDemoLauncherEnabled({ VERCEL_ENV: "preview", ENABLE_PRODUCTION_TABLE_PICKER: "true" }),
+    false,
+  );
+  assert.equal(isDemoLauncherEnabled({ ENABLE_PRODUCTION_TABLE_PICKER: "true" }), false);
+});
+
+test("both demo endpoints open and shut together, on that one gate", () => {
+  // One endpoint working while the other 404s would be a picker that lists
+  // tables and cannot open any of them.
+  const tableMenuRoute = readFileSync(
+    new URL("../../app/api/demo/table-menu/route.ts", import.meta.url),
+    "utf8",
+  );
+  for (const [name, route] of [["tables", tablesRoute], ["table-menu", tableMenuRoute]] as const) {
+    assert.match(
+      route,
+      /if \(!isDemoLauncherEnabled\(\)\) throw demoLauncherDisabledError\(\)/,
+      `${name} does not consult the shared gate`,
+    );
+    // No second opinion about the environment anywhere near the gate.
+    assert.ok(!route.includes("VERCEL_ENV"), `${name} reads the environment itself`);
+    assert.ok(!route.includes("ENABLE_"), `${name} reads a flag itself`);
+  }
+  const production = { VERCEL_ENV: "production", ENABLE_PRODUCTION_TABLE_PICKER: "true" };
+  assert.equal(isDemoLauncherEnabled(production), true);
+  assert.equal(isDemoLauncherEnabled({ ...production, ENABLE_PRODUCTION_TABLE_PICKER: "false" }), false);
+});
+
+test("the dialog says nothing that is only true of a demo", () => {
+  // On a live deployment this is the ordinary way in, so the copy cannot call
+  // itself a demo or tell the guest what the "real" customer does instead.
+  const dialog = picker.slice(picker.indexOf("<DialogHeader>"), picker.indexOf("{resource.loading ?"));
+  assert.match(dialog, /Masa Seçin/);
+  assert.match(dialog, /QR menüyü görüntülemek istediğiniz masayı seçin\./);
+  assert.doesNotMatch(dialog, /demo|gerçek müşteri/i);
+  // Nor may the unavailable sentence, which a misconfigured live site shows.
+  assert.doesNotMatch(picker, /"Demo masa seçimi/);
 });
 
 test("the endpoints keep refusing on their own, whatever the page renders", () => {
