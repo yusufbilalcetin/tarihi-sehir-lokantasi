@@ -50,7 +50,7 @@ test("retry is offered only when trying again could work", () => {
   // A 4xx is the deployment answering, not a hiccup: it is shown as a plain
   // unavailable sentence, with no button that would loop forever.
   assert.match(picker, /error\.status >= 400 && error\.status < 500/);
-  assert.match(picker, /message: "Masa seçimi şu anda kullanılamıyor\.", retryable: false/);
+  assert.match(picker, /retryable: false/);
   assert.match(picker, /retryable: true/);
   assert.match(picker, /diagnosis\.retryable \?/);
   // The server's wording — environment variables, staff roles — is a console
@@ -287,4 +287,32 @@ test("the endpoints keep refusing on their own, whatever the page renders", () =
     "utf8",
   );
   assert.match(tableMenuRoute, /if \(!isDemoLauncherEnabled\(\)\) throw demoLauncherDisabledError\(\)/);
+});
+
+test("a switched-off picker and a misconfigured one do not read the same", () => {
+  // The live symptom this separates: a deployment with the picker deliberately
+  // ON answered 409 "there is more than one restaurant, name one", and the
+  // dialog reported it as a setup switch — which sent the debugging at the
+  // feature flag instead of the missing slug.
+  assert.match(picker, /error\.status === 404/, "the off case is no longer told apart");
+  assert.match(picker, /Masa seçimi bu sitede açık değil\./);
+  assert.match(picker, /Masa listesi şu anda hazırlanamıyor\./);
+  // Rate limiting is the one 4xx that clears on its own.
+  assert.match(picker, /error\.status === 429/);
+  assert.match(picker, /Çok fazla istek gönderildi\. Birazdan tekrar deneyin\.", retryable: true/);
+  // Still no server wording on a guest's screen.
+  assert.doesNotMatch(picker, /DEMO_RESTAURANT_SLUG/);
+});
+
+test("the public table listing is metered like the route beside it", () => {
+  // It became a production endpoint when the picker was opened there; the POST
+  // it feeds has always been rate limited and the GET was not.
+  assert.match(tablesRoute, /await enforceRateLimit\(request, "QR_VALIDATE"\)/);
+  assert.match(tablesRoute, /export async function GET\(request: Request\)/);
+  // The gate still comes first: an off deployment does not admit the route
+  // exists, and does not spend a rate-limit slot saying so.
+  assert.ok(
+    tablesRoute.indexOf("isDemoLauncherEnabled()") < tablesRoute.indexOf("enforceRateLimit(request"),
+    "the feature gate must be checked before the limiter",
+  );
 });

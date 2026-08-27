@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import { apiFailureFromUnknown, apiSuccess } from "@/lib/api/response";
 import { isDemoLauncherEnabled } from "@/lib/config/demo-launcher";
 import { createLogger } from "@/lib/security/logger";
+import { enforceRateLimit } from "@/lib/security/rate-limit.server";
 import {
   DemoLauncherService,
   demoLauncherDisabledError,
@@ -21,9 +22,12 @@ const logger = createLogger("api.demo.tables");
  * anything about another restaurant. Answers 404 when the launcher is off, so
  * a disabled deployment does not even admit the route exists.
  */
-export async function GET(): Promise<NextResponse> {
+export async function GET(request: Request): Promise<NextResponse> {
   try {
     if (!isDemoLauncherEnabled()) throw demoLauncherDisabledError();
+    // Public on a production deployment, so it is metered like the POST beside
+    // it and on the same bucket: one dialog opening is one request.
+    await enforceRateLimit(request, "QR_VALIDATE");
     const result = await new DemoLauncherService().listTables();
     return NextResponse.json(apiSuccess(result), { status: 200, headers: NO_STORE_HEADERS });
   } catch (error) {

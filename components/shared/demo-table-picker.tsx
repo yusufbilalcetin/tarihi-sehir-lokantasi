@@ -60,20 +60,28 @@ function statusOf(status: string) {
 }
 
 /**
- * Whether trying again could possibly help.
+ * Whether trying again could possibly help, and what to say meanwhile.
  *
- * The launcher fails in two very different ways. A 4xx means the deployment is
- * telling us something it already knows and will keep knowing — the launcher
- * is switched off, or it cannot tell which restaurant to demo. A button that
- * re-asks the same question forever is worse than no button: it hides an
- * answer the server already gave. Anything else — a dropped connection, a
- * 500 — is worth one more try.
+ * This used to collapse every 4xx into one sentence — "Masa seçimi şu anda
+ * kullanılamıyor", under a note calling it a setup switch. That reads as *the
+ * feature is turned off*, and it is only one of the things a 4xx can mean. A
+ * live deployment with the picker deliberately switched **on** answered 409
+ * "there is more than one restaurant, name one" and the dialog still reported
+ * a switch, which sent an afternoon of debugging at the wrong flag.
  *
- * The server's own words for that permanent answer name environment variables
- * and staff roles. They go to the console the developer who can act on them is
- * looking at, never onto a screen a guest may be looking at — and the sentence
- * the guest does read says nothing about demos, because on a production
- * deployment this dialog is the ordinary way in.
+ * So the permanent answers are told apart:
+ *
+ *   404  the picker is not switched on in this deployment
+ *   4xx  it is on, but the deployment cannot answer yet
+ *   429  too many requests — permanent for a moment, then not
+ *
+ * Anything else — a dropped connection, a 500 — is worth one more try.
+ *
+ * The server's own words for these name environment variables and staff roles.
+ * They go to the console the developer who can act on them is looking at, never
+ * onto a screen a guest may be looking at — and nothing the guest reads
+ * mentions a demo, because on a production deployment this dialog is the
+ * ordinary way in.
  */
 function diagnose(
   error: unknown,
@@ -81,7 +89,15 @@ function diagnose(
 ): { readonly message: string; readonly retryable: boolean } {
   if (error instanceof ApiClientError && error.status >= 400 && error.status < 500) {
     console.warn("[demo-table-picker]", error.status, error.message);
-    return { message: "Masa seçimi şu anda kullanılamıyor.", retryable: false };
+    if (error.status === 429) {
+      return { message: "Çok fazla istek gönderildi. Birazdan tekrar deneyin.", retryable: true };
+    }
+    if (error.status === 404) {
+      return { message: "Masa seçimi bu sitede açık değil.", retryable: false };
+    }
+    // On, but something in the deployment's own configuration stops it
+    // answering. Retrying re-asks a question already answered.
+    return { message: "Masa listesi şu anda hazırlanamıyor.", retryable: false };
   }
   return { message: transient, retryable: true };
 }
