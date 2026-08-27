@@ -133,10 +133,10 @@ function ProductForm({
 
           <div className="grid gap-6 px-5 pb-6 sm:px-6">
             <div className="grid gap-4 sm:grid-cols-[180px_minmax(0,1fr)]">
-              <div className="relative aspect-square overflow-hidden rounded-2xl border bg-muted">
+              <div className="relative aspect-square overflow-hidden rounded-xl border bg-muted">
                 <Image src={previewUrl} alt="Ürün görseli önizlemesi" fill sizes="180px" className="object-cover" unoptimized={previewUrl.startsWith("data:")} />
               </div>
-              <div className="flex flex-col justify-center rounded-2xl border border-dashed bg-background p-4">
+              <div className="flex flex-col justify-center rounded-xl border border-dashed bg-background p-4">
                 <UploadCloud className="size-6 text-burgundy" />
                 <p className="mt-2 text-sm font-extrabold">Ürün fotoğrafı</p>
                 <p className="mt-1 text-xs leading-5 text-muted-foreground">JPG, PNG, WebP veya AVIF seçin. En fazla 5 MB.</p>
@@ -173,7 +173,7 @@ function ProductForm({
               </Field>
             </div>
 
-            <div className="rounded-2xl border bg-background p-2">
+            <div className="rounded-xl border bg-background p-2">
               <label className="flex min-h-14 items-center justify-between gap-4 rounded-xl px-3 hover:bg-muted/35">
                 <span><span className="block text-sm font-bold">Aktif ürün</span><span className="text-xs text-muted-foreground">Menüde yayınlanmaya hazır</span></span>
                 <Switch checked={form.active} onCheckedChange={(checked) => update("active", checked)} aria-label="Ürün aktif" />
@@ -327,7 +327,7 @@ export function ProductsManager() {
                       <td className="px-3 py-3 font-semibold">{product.category}</td>
                       <td className="px-3 py-3 font-extrabold tabular-nums">{formatCurrency(product.price)}</td>
                       <td className="px-3 py-3"><StatusBadge status={product.status} /></td>
-                      <td className="px-3 py-3"><div className="flex max-w-56 flex-wrap gap-1">{product.tags.length ? product.tags.slice(0, 2).map((tag) => <Badge key={tag} variant="outline" className="bg-background text-[10px]">{tag}</Badge>) : <span className="text-xs text-muted-foreground">Etiket yok</span>}</div></td>
+                      <td className="px-3 py-3"><div className="flex max-w-56 flex-wrap gap-1">{product.tags.length ? product.tags.slice(0, 2).map((tag) => <Badge key={tag} variant="outline" className="bg-background text-xs">{tag}</Badge>) : <span className="text-xs text-muted-foreground">Etiket yok</span>}</div></td>
                       <td className="px-5 py-3"><div className="flex justify-end gap-1"><Button variant="ghost" size="icon-sm" aria-label={`${product.name} ürününü düzenle`} onClick={() => openEdit(product)}><Edit3 /></Button><Button variant="ghost" size="icon-sm" aria-label={`${product.name} ürününü sil`} className="text-destructive hover:bg-destructive/10 hover:text-destructive" onClick={() => removeProduct(product)}><Trash2 /></Button></div></td>
                     </tr>
                   ))}

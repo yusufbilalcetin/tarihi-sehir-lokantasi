@@ -154,7 +154,10 @@
     "trackStepCurrent": "núverandi skref",
     "trackStepUpcoming": "væntanlegt",
     "orderContents": "Innihald pantan",
-    "placedAt": "Pantað þann"
+    "placedAt": "Pantað þann",
+    "orderCount": "{count} pantanir",
+    "orderSequence": "Pöntun {number}",
+    "orderTrackingStatus": "Þú getur fylgst með stöðu pöntunarinnar hér."
   },
   "categories": {
     "soups": "Súpur",

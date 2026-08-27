@@ -27,15 +27,26 @@ import { cn } from "@/lib/utils";
 
 // The shell is persistent across tabs, so the entry animation is gated on the
 // first mount of the session rather than replaying on every return.
+//
+// Read and written on the client only. It used to be read during render, which
+// on the server meant one guest’s request decided the next guest’s animation:
+// the module survives between requests, so after the first render the server
+// emitted "false" while every fresh browser emitted "true", and React reported
+// a hydration mismatch on every menu load. Deciding after mount makes the two
+// sides agree and puts the flag where the session actually lives.
 let shellEntered = false;
 
 export function RestaurantHeader({ tableName }: { tableName: string }) {
   const { t } = useMenuPreferences();
-  const [enter] = useState(() => {
-    const first = !shellEntered;
+  const headerRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    if (shellEntered) return;
     shellEntered = true;
-    return first;
-  });
+    // The animation is a DOM concern, so it is turned on directly rather than
+    // through state: nothing else in the tree depends on whether it played.
+    headerRef.current?.setAttribute("data-motion-enter", "true");
+  }, []);
 
   const sentinelRef = useRef<HTMLDivElement>(null);
   const [condensed, setCondensed] = useState(false);
@@ -56,8 +67,9 @@ export function RestaurantHeader({ tableName }: { tableName: string }) {
   return (
     <>
       <header
-        data-motion-enter={enter}
-        className="motion-header relative overflow-hidden rounded-b-[1.75rem] bg-[#17130F] px-[var(--menu-gutter)] pb-4 pt-[max(0.875rem,env(safe-area-inset-top))] text-[#FFFDF8] shadow-[0_18px_44px_rgba(37,33,29,0.16)]"
+        ref={headerRef}
+        data-motion-enter="false"
+        className="motion-header relative overflow-hidden rounded-b-xl border-b border-gold/35 bg-sidebar px-[var(--menu-gutter)] pb-4 pt-[max(0.875rem,env(safe-area-inset-top))] text-[#FBF7EF] shadow-[0_8px_24px_rgba(45,32,24,0.13)]"
       >
         <div className="mx-auto flex max-w-5xl items-center gap-3">
           <BrandMark compact className="shrink-0" />
@@ -66,7 +78,7 @@ export function RestaurantHeader({ tableName }: { tableName: string }) {
             <p className="truncate font-heading text-[15px] font-semibold leading-tight sm:text-base">
               Tarihi Şehir Lokantası
             </p>
-            <p className="mt-0.5 flex items-center gap-1.5 text-[11px] text-[#F5EBDD]/60 sm:text-xs">
+            <p className="mt-0.5 flex items-center gap-1.5 text-xs text-[#F5EBDD]/60 sm:text-xs">
               <span className="truncate">
                 {t("yourTable")}: <span className="font-semibold text-[#F5EBDD]/85">{tableName}</span>
               </span>
@@ -90,7 +102,7 @@ export function RestaurantHeader({ tableName }: { tableName: string }) {
 
       <div
         className={cn(
-          "fixed inset-x-0 top-0 z-[var(--z-appbar)] border-b border-white/10 bg-[#17130F]/95 backdrop-blur-md transition-[opacity,transform] duration-200 ease-out",
+          "fixed inset-x-0 top-0 z-[var(--z-appbar)] border-b border-gold/30 bg-sidebar/96 backdrop-blur-md transition-[opacity,transform] duration-[var(--motion-quick)] ease-[var(--ease-out)]",
           "px-[var(--menu-gutter)] pt-[max(0.5rem,env(safe-area-inset-top))] pb-2",
           condensed
             ? "pointer-events-auto translate-y-0 opacity-100"

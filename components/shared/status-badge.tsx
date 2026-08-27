@@ -98,8 +98,8 @@ export function StatusBadge({ status, label, size = "md", className }: StatusBad
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1.5 whitespace-nowrap rounded-full border font-semibold",
-        size === "sm" ? "px-2 py-0.5 text-[11px]" : "px-2.5 py-1 text-xs",
+        "motion-operational-state inline-flex items-center gap-1.5 whitespace-nowrap rounded-md border font-semibold",
+        size === "sm" ? "px-2 py-0.5 text-xs" : "px-2.5 py-1 text-sm",
         TONE_CLASS[config.tone],
         className,
       )}

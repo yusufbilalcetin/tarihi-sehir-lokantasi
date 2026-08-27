@@ -154,7 +154,10 @@
     "trackStepCurrent": "වත්මාන පියවර",
     "trackStepUpcoming": "ඊළඟ",
     "orderContents": "නියෝග අන්තර්ගතය",
-    "placedAt": "තැබූ දිනය"
+    "placedAt": "තැබූ දිනය",
+    "orderCount": "{count} ඇණවුම්",
+    "orderSequence": "ඇණවුම {number}",
+    "orderTrackingStatus": "ඔබට ඔබේ ඇණවුම සිදු වූ තත්වය මෙහි අනුගමනය කළ හැක."
   },
   "categories": {
     "soups": "සුප්",

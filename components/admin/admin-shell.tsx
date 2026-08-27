@@ -75,12 +75,11 @@ const catalogNav: NavItem[] = [
 
 const managementNav: NavItem[] = [
   { label: "İşletme ERP", href: "/admin/erp", icon: Factory },
-  { label: "Personel", href: "/admin/staff", icon: UsersRound },
   { label: "Kasa ve Vardiyalar", href: "/admin/cash-registers", icon: Wallet },
   { label: "Gün Sonu Kasa", href: "/admin/cash-reports", icon: ReceiptText },
   { label: "QR Kodlar", href: "/admin/qr-codes", icon: QrCode },
   { label: "Yazıcılar", href: "/admin/printers", icon: Printer },
-  { label: "Raporlar", href: "/admin/reports", icon: ChartNoAxesCombined },
+  { label: "Entegrasyonlar", href: "/admin/integrations", icon: PlugZap },
   { label: "Ayarlar", href: "/admin/settings", icon: Settings },
 ];
 
@@ -109,6 +108,7 @@ const purchasingNav: NavItem[] = [
 ];
 
 const peopleNav: NavItem[] = [
+  { label: "Personel Listesi", href: "/admin/staff", icon: UsersRound },
   { label: "Puantaj", href: "/admin/attendance", icon: ClipboardCheck },
   { label: "Vardiya Planı", href: "/admin/schedules", icon: CalendarDays },
   { label: "Operasyonel Bordro", href: "/admin/payroll", icon: ReceiptText },
@@ -120,10 +120,10 @@ const guestNav: NavItem[] = [
   { label: "Müşteriler", href: "/admin/customers", icon: UsersRound },
   { label: "Geri Bildirim", href: "/admin/feedback", icon: BookOpen },
   { label: "Sadakat", href: "/admin/loyalty", icon: Wallet },
-  { label: "Entegrasyonlar", href: "/admin/integrations", icon: PlugZap },
 ];
 
 const erpReportsNav: NavItem[] = [
+  { label: "Genel Raporlar", href: "/admin/reports", icon: ChartNoAxesCombined },
   { label: "Satış Raporu", href: "/admin/sales", icon: TrendingUp },
   { label: "Menü Mühendisliği", href: "/admin/menu-engineering", icon: ChartNoAxesCombined },
   { label: "Popüler Ürünler", href: "/admin/popular", icon: PackageCheck },
@@ -151,7 +151,7 @@ const NAV_SECTIONS: readonly NavSection[] = [
   { label: "Stok & Üretim", items: stockNav },
   { label: "Satın Alma & Tedarikçiler", items: purchasingNav },
   { label: "Personel", items: peopleNav },
-  { label: "Müşteri & Operasyon", items: guestNav },
+  { label: "Müşteri & Rezervasyon", items: guestNav },
   { label: "Raporlar", items: erpReportsNav },
   { label: "Yönetim", items: managementNav },
 ];
@@ -213,7 +213,7 @@ function NavGroup({
         onClick={() => setOpen((current) => !current)}
         aria-expanded={open}
         aria-controls={panelId}
-        className="flex min-h-10 w-full items-center gap-2 rounded-xl px-3 text-[11px] font-bold uppercase tracking-[0.14em] text-sidebar-foreground/45 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+        className="motion-press flex min-h-10 w-full items-center gap-2 rounded-md px-3 text-[11px] font-bold uppercase tracking-[0.16em] text-sidebar-foreground/50 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
       >
         <span className="flex-1 text-left">{label}</span>
         {/* A closed section that holds the current page still says so, so the
@@ -232,9 +232,9 @@ function NavGroup({
             onClick={onNavigate}
             aria-current={active ? "page" : undefined}
             className={cn(
-              "group flex min-h-10 items-center gap-3 rounded-xl px-3 text-sm font-semibold transition-colors",
+              "motion-press group relative flex min-h-10 items-center gap-3 rounded-md px-3 text-sm font-semibold transition-colors before:absolute before:inset-y-2 before:left-0 before:w-0.5 before:rounded-full before:bg-sidebar-primary before:opacity-0 before:transition-opacity before:duration-[var(--motion-quick)] [&_svg]:transition-colors [&_svg]:duration-[var(--motion-quick)]",
               active
-                ? "bg-sidebar-primary text-sidebar-primary-foreground shadow-[inset_0_0_0_1px_rgba(255,255,255,0.08)]"
+                ? "bg-sidebar-accent text-sidebar-accent-foreground before:opacity-100 [&_svg]:text-sidebar-primary"
                 : "text-sidebar-foreground/72 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
             )}
           >
@@ -263,7 +263,7 @@ function NavSearch({ pathname, onNavigate }: { pathname: string; onNavigate?: ()
           value={query}
           onChange={(event) => setQuery(event.target.value)}
           placeholder="Ekran ara…"
-          className="min-h-10 w-full rounded-xl border border-sidebar-border bg-sidebar-accent/40 pl-9 pr-3 text-sm font-medium text-sidebar-foreground placeholder:text-sidebar-foreground/40 focus:outline-none focus:ring-2 focus:ring-sidebar-primary"
+          className="min-h-10 w-full rounded-md border border-sidebar-border bg-sidebar-accent/55 pl-9 pr-3 text-sm font-medium text-sidebar-foreground placeholder:text-sidebar-foreground/40 focus:outline-none focus:ring-2 focus:ring-sidebar-primary"
         />
       </label>
       {searching ? (
@@ -275,11 +275,11 @@ function NavSearch({ pathname, onNavigate }: { pathname: string; onNavigate?: ()
                 href={result.item.href}
                 onClick={() => { setQuery(""); onNavigate?.(); }}
                 aria-current={isActivePath(pathname, result.item.href) ? "page" : undefined}
-                className="flex min-h-10 items-center gap-3 rounded-xl px-3 text-sm font-semibold text-sidebar-foreground/80 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+                className="motion-press flex min-h-10 items-center gap-3 rounded-md px-3 text-sm font-semibold text-sidebar-foreground/80 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
               >
                 <result.item.icon className="size-[18px] shrink-0" strokeWidth={1.8} />
                 <span className="min-w-0 flex-1 truncate">{result.item.label}</span>
-                <span className="shrink-0 truncate text-[11px] font-medium text-sidebar-foreground/40">{result.section}</span>
+                <span className="shrink-0 truncate text-xs font-medium text-sidebar-foreground/40">{result.section}</span>
               </Link>
             ))
           ) : (
@@ -298,10 +298,10 @@ function SidebarContent({ pathname, onNavigate }: { pathname: string; onNavigate
   return (
     <div className="flex h-full flex-col bg-sidebar text-sidebar-foreground">
       <div className="flex h-[76px] items-center gap-3 border-b border-sidebar-border px-5">
-        <BrandMark compact className="size-11 shrink-0" />
+        <BrandMark compact className="size-11 shrink-0 bg-sidebar-accent" />
         <div className="min-w-0">
-          <p className="truncate font-heading text-base font-semibold">Tarihi Şehir</p>
-          <p className="truncate text-xs text-sidebar-foreground/55">Yönetim Merkezi</p>
+          <p className="truncate font-heading text-base font-semibold tracking-[-0.01em]">Tarihi Şehir</p>
+          <p className="truncate text-[11px] font-medium uppercase tracking-[0.11em] text-sidebar-primary/80">Yönetim Merkezi</p>
         </div>
       </div>
 
@@ -316,14 +316,14 @@ function SidebarContent({ pathname, onNavigate }: { pathname: string; onNavigate
         <Link
           href="/menu/demo-table"
           onClick={onNavigate}
-          className="flex min-h-11 items-center gap-3 rounded-xl border border-sidebar-border bg-sidebar-accent/55 px-3 text-sm font-semibold text-sidebar-foreground transition-colors hover:bg-sidebar-accent"
+          className="motion-press flex min-h-11 items-center gap-3 rounded-md border border-sidebar-border bg-sidebar-accent/55 px-3 text-sm font-semibold text-sidebar-foreground transition-colors hover:border-sidebar-primary/45 hover:bg-sidebar-accent"
         >
           <Store className="size-[18px] text-sidebar-primary" strokeWidth={1.8} />
           <span className="flex-1">QR Menüyü Gör</span>
           <ChevronDown className="size-4 -rotate-90 opacity-60" />
         </Link>
         <div className="mt-3 flex items-center gap-3 px-2 py-1.5">
-          <div className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-sidebar-primary text-sm font-bold text-sidebar-primary-foreground">
+          <div className="flex size-9 shrink-0 items-center justify-center rounded-md border border-sidebar-primary/35 bg-sidebar-accent text-sm font-bold text-sidebar-primary">
             {getInitials(name)}
           </div>
           <div className="min-w-0 flex-1">
@@ -356,7 +356,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
       </aside>
 
       <div className="lg:pl-[264px]">
-        <header className="sticky top-0 z-30 flex h-16 items-center gap-3 border-b border-border/80 bg-background/95 px-4 backdrop-blur-md sm:px-6 lg:px-8">
+        <header className="sticky top-0 z-30 flex h-16 items-center gap-3 border-b border-border/80 bg-card/96 px-4 shadow-[0_1px_6px_rgba(45,32,24,0.04)] backdrop-blur-md sm:px-6 lg:px-8">
           <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
             <SheetTrigger
               render={
@@ -400,7 +400,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
             <span className="flex size-8 items-center justify-center rounded-lg bg-olive text-xs font-bold text-cream">{getInitials(name)}</span>
             <span className="hidden text-left sm:block">
               <span className="block text-xs font-bold">{name}</span>
-              <span className="block text-[11px] text-muted-foreground">{roleLabel}</span>
+              <span className="block text-xs text-muted-foreground">{roleLabel}</span>
             </span>
           </div>
           <LogoutButton className="text-muted-foreground hover:bg-muted hover:text-foreground" />

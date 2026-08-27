@@ -111,6 +111,19 @@ export function CashDayReportView() {
 
   // Cashiers are offered from the day's own shifts, so the filter can only
   // name someone who actually worked it.
+  /*
+   * Base UI prints the selected value in the trigger unless the root is given
+   * an item map, so these filters showed a database id once a real option was
+   * chosen. The id stays the value; only the trigger's words come from here.
+   */
+  const registerLabels = useMemo(
+    () => ({
+      ALL: "Tümü",
+      ...Object.fromEntries((registers.data?.registers ?? []).map((r) => [r.id, r.name])),
+    }),
+    [registers.data],
+  );
+
   const cashiers = useMemo(() => {
     const seen = new Map<string, string>();
     for (const shift of report?.shifts ?? []) {
@@ -118,6 +131,10 @@ export function CashDayReportView() {
     }
     return [...seen.entries()];
   }, [report]);
+  const cashierLabels = useMemo(
+    () => ({ ALL: "Tümü", ...Object.fromEntries(cashiers) }),
+    [cashiers],
+  );
 
   return (
     <div className="space-y-6">
@@ -144,7 +161,7 @@ export function CashDayReportView() {
             <label className="text-xs font-semibold text-muted-foreground" htmlFor="day-register">
               Kasa
             </label>
-            <Select value={registerId} onValueChange={(value) => setRegisterId(value ?? "ALL")}>
+            <Select items={registerLabels} value={registerId} onValueChange={(value) => setRegisterId(value ?? "ALL")}>
               <SelectTrigger id="day-register" className="mt-1 h-10 w-full">
                 <SelectValue />
               </SelectTrigger>
@@ -162,7 +179,7 @@ export function CashDayReportView() {
             <label className="text-xs font-semibold text-muted-foreground" htmlFor="day-cashier">
               Kasiyer
             </label>
-            <Select value={cashierId} onValueChange={(value) => setCashierId(value ?? "ALL")}>
+            <Select items={cashierLabels} value={cashierId} onValueChange={(value) => setCashierId(value ?? "ALL")}>
               <SelectTrigger id="day-cashier" className="mt-1 h-10 w-full">
                 <SelectValue />
               </SelectTrigger>

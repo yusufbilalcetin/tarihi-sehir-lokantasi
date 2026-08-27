@@ -3,14 +3,8 @@
 import { useCallback } from "react";
 import { Download, Printer } from "lucide-react";
 import { Button, buttonVariants } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Dialog } from "@/components/ui/dialog";
+import { WindowDialogContent } from "@/components/ui/window-dialog";
 import { PrintButton } from "@/components/shared/print-button";
 import { cashierShiftApi } from "@/lib/api/endpoints";
 import type {
@@ -136,21 +130,49 @@ export function ShiftReportDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent
-        className="max-h-[90dvh] overflow-y-auto sm:max-w-lg"
+      <WindowDialogContent
+        size="md"
         data-print-root
+        title={kind === "X" ? "Operasyonel X Raporu" : "Operasyonel Z Raporu"}
+        description={
+          kind === "X"
+            ? "Açık vardiyanın anlık kasa görünümü. Vardiyayı kapatmaz."
+            : "Kapatılmış vardiyanın değişmez kasa kaydı."
+        }
+        footer={
+          <>
+            <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
+              Kapat
+            </Button>
+            {report && shiftId ? (
+              <>
+                {/* The CSV is built and escaped on the server; the browser only
+                    follows the link. */}
+                <a
+                  className={buttonVariants({ variant: "outline" })}
+                  href={`/api/cashier/shifts/${shiftId}/${kind === "X" ? "x-report" : "z-report"}?format=csv`}
+                >
+                  <Download className="size-4" aria-hidden="true" /> CSV
+                </a>
+                {/* A4 / browser printing. */}
+                <Button type="button" variant="outline" onClick={() => window.print()}>
+                  <Printer className="size-4" aria-hidden="true" /> Yazdır
+                </Button>
+                {/* The thermal path: queued for the local agent, so a printer
+                    that is switched off delays paper and nothing else. */}
+                <PrintButton
+                  variant="default"
+                  label="Yazıcıya Gönder"
+                  document={{
+                    documentType: kind === "X" ? "X_REPORT" : "Z_REPORT",
+                    shiftId,
+                  }}
+                />
+              </>
+            ) : null}
+          </>
+        }
       >
-        <DialogHeader data-print-hide>
-          <DialogTitle>
-            {kind === "X" ? "Operasyonel X Raporu" : "Operasyonel Z Raporu"}
-          </DialogTitle>
-          <DialogDescription>
-            {kind === "X"
-              ? "Açık vardiyanın anlık kasa görünümü. Vardiyayı kapatmaz."
-              : "Kapatılmış vardiyanın değişmez kasa kaydı."}
-          </DialogDescription>
-        </DialogHeader>
-
         {resource.loading ? (
           <p className="py-6 text-center text-sm text-muted-foreground">Rapor hazırlanıyor…</p>
         ) : resource.error ? (
@@ -230,38 +252,7 @@ export function ShiftReportDialog({
           </div>
         ) : null}
 
-        <DialogFooter data-print-hide>
-          <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
-            Kapat
-          </Button>
-          {report && shiftId ? (
-            <>
-              {/* The CSV is built and escaped on the server; the browser only
-                  follows the link. */}
-              <a
-                className={buttonVariants({ variant: "outline" })}
-                href={`/api/cashier/shifts/${shiftId}/${kind === "X" ? "x-report" : "z-report"}?format=csv`}
-              >
-                <Download className="size-4" aria-hidden="true" /> CSV
-              </a>
-              {/* A4 / browser printing. */}
-              <Button type="button" variant="outline" onClick={() => window.print()}>
-                <Printer className="size-4" aria-hidden="true" /> Yazdır
-              </Button>
-              {/* The thermal path: queued for the local agent, so a printer
-                  that is switched off delays paper and nothing else. */}
-              <PrintButton
-                variant="default"
-                label="Yazıcıya Gönder"
-                document={{
-                  documentType: kind === "X" ? "X_REPORT" : "Z_REPORT",
-                  shiftId,
-                }}
-              />
-            </>
-          ) : null}
-        </DialogFooter>
-      </DialogContent>
+      </WindowDialogContent>
     </Dialog>
   );
 }

@@ -154,7 +154,10 @@
     "trackStepCurrent": "khoeli ea hajoale",
     "trackStepUpcoming": "e tlang",
     "orderContents": "Lintho tse ka har'a taelo",
-    "placedAt": "E behiloe ka"
+    "placedAt": "E behiloe ka",
+    "orderCount": "{count} ditaelo",
+    "orderSequence": "Taelo {number}",
+    "orderTrackingStatus": "O ka latela boemo ba taelo ea hao mona."
   },
   "categories": {
     "soups": "Maro",

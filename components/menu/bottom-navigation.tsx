@@ -28,17 +28,17 @@ export function BottomNavigation({ active, cartCount, onChange }: { active: Menu
     badgeAnimation.current?.cancel();
     badgeAnimation.current = badge.animate(
       [
-        { transform: "scale(0.92)", offset: 0 },
-        { transform: "scale(1.04)", offset: 0.6 },
+        { transform: "scale(0.97)", offset: 0 },
+        { transform: "scale(1.02)", offset: 0.62 },
         { transform: "scale(1)", offset: 1 },
       ],
-      { duration: 190, delay: 30, easing: "cubic-bezier(0.22, 0.75, 0.25, 1)" },
+      { duration: 170, easing: "cubic-bezier(0.2, 0.8, 0.2, 1)" },
     );
     return () => badgeAnimation.current?.cancel();
   }, [cartCount]);
 
   return (
-    <nav dir={direction} aria-label={t("customerNavigation")} className="fixed inset-x-0 bottom-0 z-40 border-t bg-card/96 pb-[env(safe-area-inset-bottom)] shadow-[0_-12px_36px_rgba(37,33,29,0.1)] backdrop-blur-xl">
+    <nav dir={direction} aria-label={t("customerNavigation")} className="fixed inset-x-0 bottom-0 z-40 border-t bg-card/96 pb-[env(safe-area-inset-bottom)] shadow-[0_-12px_36px_rgba(37,33,29,0.1)] backdrop-blur-sm">
       <div className="relative mx-auto grid h-16 w-full max-w-xl grid-cols-4 px-2">
         <span className="motion-nav-indicator" style={{ "--motion-nav-offset": `${indicatorOffset}%` } as React.CSSProperties} aria-hidden="true" />
         {items.map(({ id, labelKey, icon: Icon }) => (
@@ -47,7 +47,7 @@ export function BottomNavigation({ active, cartCount, onChange }: { active: Menu
             type="button"
             onClick={() => onChange(id)}
             className={cn(
-              "motion-nav-item motion-press motion-ripple relative grid h-16 min-w-0 grid-rows-[1.25rem_1rem] place-items-center content-center gap-1 rounded-xl px-1 text-center text-[11px] font-semibold leading-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+              "motion-nav-item motion-press motion-ripple relative grid h-16 min-w-0 grid-rows-[1.25rem_1rem] place-items-center content-center gap-1 rounded-xl px-1 text-center text-xs font-semibold leading-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
               active === id ? "text-burgundy" : "text-muted-foreground hover:text-foreground",
             )}
             aria-current={active === id ? "page" : undefined}

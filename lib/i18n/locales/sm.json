@@ -154,7 +154,10 @@
     "trackStepCurrent": "laʻasaga o loʻo iai nei",
     "trackStepUpcoming": "laʻasaga o lumanaʻi",
     "orderContents": "Faʻamatalaga o le oka",
-    "placedAt": "Faia i le"
+    "placedAt": "Faia i le",
+    "orderCount": "{count} oka",
+    "orderSequence": "Poloaiga {number}",
+    "orderTrackingStatus": "E mafai ona e mulimuli i le tulaga o lau poloaiga iinei."
   },
   "categories": {
     "soups": "Soup",

@@ -58,3 +58,61 @@ test("the staff shell header reads the signed-in session", () => {
   // The old chip announced a shift window nothing in the session knows about.
   assert.doesNotMatch(source, /10:00 - 18:00/, "invented shift window is back");
 });
+
+/**
+ * The kitchen ran without any "who am I" indicator at all, which is the same
+ * gap the staff shell had — a cook could not tell whose shift the board was
+ * being worked under, and had no way out of the panel from the screen they
+ * spend the service on.
+ *
+ * Structure is asserted, never class strings: this must keep passing when the
+ * header is restyled.
+ */
+test("the kitchen header reads the signed-in session rather than assuming one", () => {
+  const source = readFileSync(
+    path.join(process.cwd(), "components/kitchen/kitchen-board.tsx"),
+    "utf8",
+  );
+  assert.match(source, /useStaffSession\(\)/, "the board must read the real session");
+  assert.match(source, /\{\s*role,\s*name\s*\}/, "the board must take its identity from the session");
+  assert.match(source, /\{name\}/, "the header must print the session's own name");
+  assert.match(source, /getInitials\(name\)/, "initials must come from the shared helper");
+  // The same route is opened by managers and admins; the label follows the
+  // session's role instead of announcing the kitchen to whoever shows up.
+  assert.match(source, /STAFF_ROLE_LABELS\[role\]/, "the role label must follow the real role");
+  assert.doesNotMatch(source, /"Mutfak Şefi"/, "a role was invented for the header");
+});
+
+test("the kitchen logs out through the shared control, not its own fetch", () => {
+  const source = readFileSync(
+    path.join(process.cwd(), "components/kitchen/kitchen-board.tsx"),
+    "utf8",
+  );
+  assert.match(source, /import \{ LogoutButton \}/, "logout must reuse the shared component");
+  assert.match(source, /<LogoutButton\b/);
+  // Re-implementing the call here would drop the busy state and the
+  // repeat-click guard that the shared button already carries.
+  assert.doesNotMatch(source, /api\/staff\/logout/, "the board re-implemented the logout call");
+});
+
+test("the shared logout control keeps its repeat-click guard", () => {
+  const source = readFileSync(
+    path.join(process.cwd(), "components/staff/logout-button.tsx"),
+    "utf8",
+  );
+  assert.match(source, /if \(isLoggingOut\) return;/, "repeated clicks can fire logout twice");
+  assert.match(source, /aria-busy=\{isLoggingOut\}/);
+  assert.match(source, /"\/api\/staff\/logout"/);
+  assert.match(source, /replace\("\/staff\/login"\)/);
+});
+
+test("the kitchen stays a full page and never becomes a window", () => {
+  const source = readFileSync(
+    path.join(process.cwd(), "components/kitchen/kitchen-board.tsx"),
+    "utf8",
+  );
+  assert.match(source, /<main\b/, "the board must remain a page-level surface");
+  for (const windowDependency of ["CenteredAppWindow", "ModuleWindow", "closeHref"]) {
+    assert.ok(!source.includes(windowDependency), `the board pulled in ${windowDependency}`);
+  }
+});

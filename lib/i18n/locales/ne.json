@@ -154,7 +154,10 @@
     "trackStepCurrent": "चरण",
     "trackStepUpcoming": "आउने",
     "orderContents": "अर्डर सामग्रीहरू",
-    "placedAt": "मा राखिएको"
+    "placedAt": "मा राखिएको",
+    "orderCount": "{count} आदेशहरू",
+    "orderSequence": "आर्डर {number}",
+    "orderTrackingStatus": "तपाईं यहाँ आफ्नो आर्डर स्थिति पछ्याउन सक्नुहुन्छ।"
   },
   "categories": {
     "soups": "सूप",

@@ -154,7 +154,10 @@
     "trackStepCurrent": "danho riri kuita",
     "trackStepUpcoming": "rinouya",
     "orderContents": "Zviri muodha",
-    "placedAt": "Yakaiswa pa"
+    "placedAt": "Yakaiswa pa",
+    "orderCount": "{count} maodha",
+    "orderSequence": "Raira {number}",
+    "orderTrackingStatus": "Unogona kutevera mamiriro eodha yako pano."
   },
   "categories": {
     "soups": "Muto",

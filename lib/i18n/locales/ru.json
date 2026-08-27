@@ -154,7 +154,10 @@
     "trackStepCurrent": "текущий шаг",
     "trackStepUpcoming": "следующий",
     "orderContents": "Содержимое заказа",
-    "placedAt": "Размещено в"
+    "placedAt": "Размещено в",
+    "orderCount": "{count} заказов",
+    "orderSequence": "Заказ {number}",
+    "orderTrackingStatus": "Вы можете отслеживать статус вашего заказа здесь."
   },
   "categories": {
     "soups": "Супы",

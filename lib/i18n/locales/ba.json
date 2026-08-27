@@ -154,7 +154,10 @@
     "trackStepCurrent": "хәҙерге этап",
     "trackStepUpcoming": "киләһе",
     "orderContents": "Заказдың эсемдәре",
-    "placedAt": "Билдәләнгән ваҡыты"
+    "placedAt": "Билдәләнгән ваҡыты",
+    "orderCount": "{count} заказ",
+    "orderSequence": "{number} һаны менән заказ",
+    "orderTrackingStatus": "Һеҙ бына заказ Статусын күҙәтә алаһығыҙ."
   },
   "categories": {
     "soups": "Шорпалар",

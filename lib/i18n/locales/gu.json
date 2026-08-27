@@ -154,7 +154,10 @@
     "trackStepCurrent": "વર્તમાન પગલું",
     "trackStepUpcoming": "આવવા પર",
     "orderContents": "ઓર્ડરના મુદ્દાઓ",
-    "placedAt": "સ્થાપિત કર્યું:"
+    "placedAt": "સ્થાપિત કર્યું:",
+    "orderCount": "{count} ઓર્ડર્સ",
+    "orderSequence": "ઓર્ડર {number}",
+    "orderTrackingStatus": "તમે અહીં તમારા ઓર્ડર સ્થિતિનું અનુસરણ કરી શકો છો."
   },
   "categories": {
     "soups": "સૂપ્સ",

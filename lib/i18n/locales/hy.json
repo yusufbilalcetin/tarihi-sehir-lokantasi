@@ -154,7 +154,10 @@
     "trackStepCurrent": "առկա քայլը",
     "trackStepUpcoming": "առաջիկա",
     "orderContents": "Պատվերի պարունակությունը",
-    "placedAt": "Տեղադրվել է"
+    "placedAt": "Տեղադրվել է",
+    "orderCount": "{count} պատվեր",
+    "orderSequence": "Պատվեր {number}",
+    "orderTrackingStatus": "Դուք կարող եք հետևել ձեր կարգի կարգավիճակին այստեղ։"
   },
   "categories": {
     "soups": "Ապուրներ",

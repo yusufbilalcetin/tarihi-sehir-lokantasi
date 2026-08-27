@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, Banknote, CircleDollarSign, Clock3, Grid2X2, ReceiptText, RefreshCw, Utensils } from "lucide-react";
+import { ArrowRight, Banknote, CircleDollarSign, Clock3, ReceiptText, RefreshCw, Utensils } from "lucide-react";
 import { AdminKpi, AdminPageHeader, AdminPanel } from "@/components/admin/admin-ui";
 import { panelState } from "@/components/shared/data-states";
 import { cn } from "@/lib/utils";
@@ -15,7 +15,7 @@ import { StatusBadge } from "@/components/shared/status-badge";
 import { staffOrderToViewModel } from "@/lib/adapters/staff-view-model";
 import { staffApi } from "@/lib/api/endpoints";
 import { useApiResource } from "@/lib/hooks/use-api-resource";
-import { formatCurrency } from "@/lib/format";
+import { formatCurrency, formatElapsed } from "@/lib/format";
 import { useCallback, useMemo } from "react";
 import { readOverview, TodayPanel } from "@/components/admin/today-panel";
 
@@ -114,19 +114,13 @@ export function DashboardView() {
       <TodayPanel overview={overview.data ?? null} error={overview.error} onRetry={() => void overview.refetch()} />
 
       <div>
-        <h3 className="font-heading text-lg font-semibold">Son 14 gün</h3>
+        <h3 className="text-base font-bold">Son 14 gün</h3>
         <p className="text-sm text-muted-foreground">Bugünün ötesindeki eğilim; günlük karar için yukarısı yeterlidir.</p>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="grid gap-4 sm:grid-cols-3">
         <AdminKpi label="14 Günlük Ciro" value={formatCurrency(Number(totals?.revenue ?? 0))} icon={Banknote} inverse />
         <AdminKpi label="Sipariş" value={String(totals?.orderCount ?? 0)} icon={ReceiptText} />
-        <AdminKpi
-          label="Aktif Masa"
-          value={String(activeTables.length)}
-          icon={Grid2X2}
-          helper={`${tables.tableViews.length} masanın ${activeTables.length}'i açık`}
-        />
         <AdminKpi label="Ortalama Sipariş" value={formatCurrency(Number(totals?.averageOrder ?? 0))} icon={CircleDollarSign} />
       </div>
 
@@ -221,7 +215,7 @@ export function DashboardView() {
                     <td className="px-5 py-3.5 font-extrabold">{order.orderNumber}</td>
                     <td className="px-3 py-3.5 font-semibold">{order.tableName}</td>
                     <td className="px-3 py-3.5"><StatusBadge status={order.status} /></td>
-                    <td className="px-3 py-3.5 text-muted-foreground">{order.elapsedMinutes} dk</td>
+                    <td className="px-3 py-3.5 text-muted-foreground">{formatElapsed(order.elapsedMinutes)}</td>
                     <td className="px-5 py-3.5 text-right font-extrabold tabular-nums">{formatCurrency(order.total)}</td>
                   </tr>
                 )) : (
@@ -262,11 +256,11 @@ export function DashboardView() {
             >
               <div className="flex items-start justify-between gap-2">
                 <Utensils className="size-4 text-burgundy" strokeWidth={1.8} />
-                <StatusBadge status={table.status} className="max-w-full overflow-hidden text-[10px]" />
+                <StatusBadge status={table.status} size="sm" className="max-w-full overflow-hidden" />
               </div>
               <p className="mt-3 text-sm font-extrabold">{table.name}</p>
-              <p className="mt-1 flex items-center gap-1 text-[11px] text-muted-foreground">
-                <Clock3 className="size-3" /> {table.activeMinutes ?? 0} dk
+              <p className="mt-1 flex items-center gap-1 text-xs text-muted-foreground">
+                <Clock3 className="size-3" /> {formatElapsed(table.activeMinutes ?? 0)}
               </p>
             </Link>
           )) : (

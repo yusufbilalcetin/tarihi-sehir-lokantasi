@@ -13,14 +13,8 @@ import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Dialog } from "@/components/ui/dialog";
+import { WindowDialogContent } from "@/components/ui/window-dialog";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -340,6 +334,16 @@ function ClosedTill({
   const [registerId, setRegisterId] = useState<string>(registers[0]?.id ?? "");
   const [openingCash, setOpeningCash] = useState("0.00");
   const normalized = useMemo(() => normalizeMoney(openingCash), [openingCash]);
+  /**
+   * The select stores and submits the register id; this is what the cashier
+   * reads instead of it. Without the map Base UI prints the selected value
+   * itself in the trigger, so opening the till asked a cashier to recognise a
+   * UUID. The id remains the value — only the label is looked up.
+   */
+  const registerLabels = useMemo(
+    () => Object.fromEntries(registers.map((register) => [register.id, register.name])),
+    [registers],
+  );
 
   return (
     <Card className="gap-0 border-burgundy/25 py-0">
@@ -375,6 +379,7 @@ function ClosedTill({
                 Kasa
               </label>
               <Select
+                items={registerLabels}
                 value={registerId}
                 onValueChange={(value) => setRegisterId(value ?? "")}
               >
@@ -450,22 +455,35 @@ function MovementDialog({
         onOpenChange(next);
       }}
     >
-      <DialogContent className="sm:max-w-md">
-        <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
+      <WindowDialogContent
+        size="sm"
+        title={
+          <span className="flex items-center gap-2">
             {type === "CASH_IN" ? (
               <ArrowDownToLine className="size-5 text-status-success" aria-hidden="true" />
             ) : (
               <ArrowUpFromLine className="size-5 text-burgundy" aria-hidden="true" />
             )}
             {type === "CASH_IN" ? "Nakit Girişi" : "Nakit Çıkışı"}
-          </DialogTitle>
-          <DialogDescription>
-            Kasa hareketleri sonradan düzeltilemez; hatalı bir kayıt için ters yönde yeni bir
-            hareket girin.
-          </DialogDescription>
-        </DialogHeader>
-
+          </span>
+        }
+        description="Kasa hareketleri sonradan düzeltilemez; hatalı bir kayıt için ters yönde yeni bir hareket girin."
+        footer={
+          <>
+            <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
+              Vazgeç
+            </Button>
+            <Button
+              type="button"
+              disabled={busy || !valid}
+              aria-busy={busy}
+              onClick={() => void onSubmit(normalized!, reason.trim(), note.trim() || undefined)}
+            >
+              Kaydet
+            </Button>
+          </>
+        }
+      >
         <div className="grid gap-3">
           <div>
             <label className="text-xs font-semibold text-muted-foreground" htmlFor="movement-amount">
@@ -508,20 +526,7 @@ function MovementDialog({
           </div>
         </div>
 
-        <DialogFooter>
-          <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
-            Vazgeç
-          </Button>
-          <Button
-            type="button"
-            disabled={busy || !valid}
-            aria-busy={busy}
-            onClick={() => void onSubmit(normalized!, reason.trim(), note.trim() || undefined)}
-          >
-            Kaydet
-          </Button>
-        </DialogFooter>
-      </DialogContent>
+      </WindowDialogContent>
     </Dialog>
   );
 }
@@ -565,15 +570,38 @@ function CloseShiftDialog({
         onOpenChange(next);
       }}
     >
-      <DialogContent className="sm:max-w-lg">
-        <DialogHeader>
-          <DialogTitle>Kasayı Kapat</DialogTitle>
-          <DialogDescription>
-            Çekmecedeki nakdi sayın ve girin. Beklenen tutar ve kasa farkı sunucu tarafından
-            hesaplanır.
-          </DialogDescription>
-        </DialogHeader>
-
+      <WindowDialogContent
+        size="md"
+        title="Kasayı Kapat"
+        description="Çekmecedeki nakdi sayın ve girin. Beklenen tutar ve kasa farkı sunucu tarafından hesaplanır."
+        footer={
+          <div className="flex flex-col-reverse gap-2 sm:w-full sm:flex-row sm:justify-between">
+            <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
+              Vazgeç
+            </Button>
+            {confirming ? (
+              <Button
+                type="button"
+                className="bg-burgundy text-primary-foreground hover:bg-burgundy/90"
+                disabled={busy || !ready}
+                aria-busy={busy}
+                onClick={() => void onSubmit(normalized!, note.trim() || undefined)}
+              >
+                <LockKeyhole className="size-4" aria-hidden="true" /> Onaylıyorum, kapat
+              </Button>
+            ) : (
+              <Button
+                type="button"
+                disabled={!ready}
+                onClick={() => setConfirming(true)}
+              >
+                Devam
+              </Button>
+            )}
+          </div>
+        }
+      >
+        <div className="grid gap-4">
         <div className="rounded-xl border bg-muted/40 px-4 py-3">
           <SummaryRow label="Açılış nakdi" value={money(summary.openingCash)} />
           <SummaryRow label="Nakit tahsilat" value={money(summary.payments.cash)} tone="positive" />
@@ -641,31 +669,8 @@ function CloseShiftDialog({
           ) : null}
         </div>
 
-        <DialogFooter className="sm:justify-between">
-          <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
-            Vazgeç
-          </Button>
-          {confirming ? (
-            <Button
-              type="button"
-              className="bg-burgundy text-primary-foreground hover:bg-burgundy/90"
-              disabled={busy || !ready}
-              aria-busy={busy}
-              onClick={() => void onSubmit(normalized!, note.trim() || undefined)}
-            >
-              <LockKeyhole className="size-4" aria-hidden="true" /> Onaylıyorum, kapat
-            </Button>
-          ) : (
-            <Button
-              type="button"
-              disabled={!ready}
-              onClick={() => setConfirming(true)}
-            >
-              Devam
-            </Button>
-          )}
-        </DialogFooter>
-      </DialogContent>
+        </div>
+      </WindowDialogContent>
     </Dialog>
   );
 }

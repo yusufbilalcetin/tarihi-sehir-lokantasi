@@ -154,7 +154,10 @@
     "trackStepCurrent": "tallaabada hadda jirta",
     "trackStepUpcoming": "soo socda",
     "orderContents": "Waxyaabaha dalabka",
-    "placedAt": "Lagu sameeyey"
+    "placedAt": "Lagu sameeyey",
+    "orderCount": "{count} amarrada",
+    "orderSequence": "Amar {number}",
+    "orderTrackingStatus": "Waxaad halkan ka raaci kartaa xaalada amarkaaga."
   },
   "categories": {
     "soups": "Maraqyo",

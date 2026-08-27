@@ -154,7 +154,10 @@
     "trackStepCurrent": "trenutni korak",
     "trackStepUpcoming": "nadolazeće",
     "orderContents": "Sadržaj narudžbe",
-    "placedAt": "Postavljeno"
+    "placedAt": "Postavljeno",
+    "orderCount": "{count} narudžbi",
+    "orderSequence": "Narudžba {number}",
+    "orderTrackingStatus": "Možete pratiti status vaše narudžbe ovdje."
   },
   "categories": {
     "soups": "Supe",

@@ -154,7 +154,10 @@
     "trackStepCurrent": "ད་ལྟའི་གོམ་རིམ་",
     "trackStepUpcoming": "ལ་ཐོན་གྲབས་ཡོད་པའི་",
     "orderContents": "མངག་ཉོ་ནང་དོན།",
-    "placedAt": "གནས་ཡུལ་དུ་བཞག་པ།"
+    "placedAt": "གནས་ཡུལ་དུ་བཞག་པ།",
+    "orderCount": "{count}བཀའ་རྒྱ།",
+    "orderSequence": "མངག་ཉོ་{number}",
+    "orderTrackingStatus": "ཁྱོད་ཀྱིས་འདི་ནས་ཁྱེད་ཀྱི་མངག་ཉོ་གི་གནས་ཚུལ་ལ་རྗེས་འདེད་བྱས་ཆོག"
   },
   "categories": {
     "soups": "ཁུ་བ་",

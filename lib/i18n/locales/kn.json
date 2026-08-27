@@ -154,7 +154,10 @@
     "trackStepCurrent": "ಪ್ರಸ್ತುತ ಹಂತ",
     "trackStepUpcoming": "ಮುಂದಿನದಾಗಿ",
     "orderContents": "ಆರ್ಡರ್ ವಿಷಯಗಳು",
-    "placedAt": "ಸ್ಥಾಪಿಸಲಾಗಿದೆ"
+    "placedAt": "ಸ್ಥಾಪಿಸಲಾಗಿದೆ",
+    "orderCount": "{count} ಆದೇಶಗಳು",
+    "orderSequence": "ಆಜ್ಞೆ {number}",
+    "orderTrackingStatus": "ನೀವು ನಿಮ್ಮ ಆಜ್ಞೆಯ ಸ್ಥಿತಿಯನ್ನು ಇಲ್ಲಿ ಅನುಸರಿಸಬಹುದು."
   },
   "categories": {
     "soups": "ಸೂಪ್‌ಗಳು",

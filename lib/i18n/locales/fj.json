@@ -154,7 +154,10 @@
     "trackStepCurrent": "tiko edua na iwalewale oqo",
     "trackStepUpcoming": "me yaco mai",
     "orderContents": "iVola ni ivola",
-    "placedAt": "Sa vakatotolo kina ena"
+    "placedAt": "Sa vakatotolo kina ena",
+    "orderCount": "{count} oda",
+    "orderSequence": "Oro {number}",
+    "orderTrackingStatus": "O rawa ni muri na ituvatuva ni nomu oro veiqaravi e oqo."
   },
   "categories": {
     "soups": "Kaukauwa",

@@ -154,7 +154,10 @@
     "trackStepCurrent": ", cari",
     "trackStepUpcoming": "addım gəlir",
     "orderContents": "Sifariş məzmunu",
-    "placedAt": "Yerləşdirilib"
+    "placedAt": "Yerləşdirilib",
+    "orderCount": "{count} sifariş",
+    "orderSequence": "Sifariş {number}",
+    "orderTrackingStatus": "Sifarişinizin vəziyyətini burada izləyə bilərsiniz."
   },
   "categories": {
     "soups": "Şorbalar",

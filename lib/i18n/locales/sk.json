@@ -154,7 +154,10 @@
     "trackStepCurrent": "aktuálny krok",
     "trackStepUpcoming": "nadchádzajúce",
     "orderContents": "Obsah objednávky",
-    "placedAt": "Zadané dňa"
+    "placedAt": "Zadané dňa",
+    "orderCount": "{count} objednávok",
+    "orderSequence": "Objednávka {number}",
+    "orderTrackingStatus": "Stav vašej objednávky môžete sledovať tu."
   },
   "categories": {
     "soups": "Polievky",

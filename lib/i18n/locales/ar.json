@@ -154,7 +154,10 @@
     "trackStepCurrent": "الخطوة الحالية",
     "trackStepUpcoming": "قادم",
     "orderContents": "محتويات الطلب",
-    "placedAt": "وقت الطلب"
+    "placedAt": "وقت الطلب",
+    "orderCount": "{count} طلبات",
+    "orderSequence": "الطلب {number}",
+    "orderTrackingStatus": "يمكنك متابعة حالة طلبك من هنا."
   },
   "categories": {
     "soups": "الشوربات",

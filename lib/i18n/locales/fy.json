@@ -154,7 +154,10 @@
     "trackStepCurrent": "current step",
     "trackStepUpcoming": "upcoming",
     "orderContents": "Order contents",
-    "placedAt": "Placed at"
+    "placedAt": "Placed at",
+    "orderCount": "{count} oarders",
+    "orderSequence": "Oarder {number}",
+    "orderTrackingStatus": "Jo kinne hjir jo oarderstatus folgje."
   },
   "categories": {
     "soups": "Soppen",

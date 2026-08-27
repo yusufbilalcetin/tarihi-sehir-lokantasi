@@ -10,7 +10,7 @@ interface BrandMarkProps {
 export function BrandMark({ compact = false, className, priority = false }: BrandMarkProps) {
   if (compact) {
     return (
-      <div className={cn("flex size-10 items-center justify-center rounded-xl border border-copper/35 bg-olive text-gold shadow-sm", className)} role="img" aria-label="Tarihi Şehir Lokantası">
+      <div className={cn("flex size-10 items-center justify-center rounded-md border border-gold/45 bg-sidebar text-gold shadow-[0_1px_3px_rgba(45,32,24,0.18)]", className)} role="img" aria-label="Tarihi Şehir Lokantası">
         <span className="font-heading text-lg font-semibold">Ş</span>
       </div>
     );

@@ -154,7 +154,10 @@
     "trackStepCurrent": "aktuális lépés",
     "trackStepUpcoming": "következő",
     "orderContents": "Rendelés tartalma",
-    "placedAt": "Leadva"
+    "placedAt": "Leadva",
+    "orderCount": "{count} megrendelés",
+    "orderSequence": "{number} megrendelés",
+    "orderTrackingStatus": "Itt követheti a rendelés állapotát."
   },
   "categories": {
     "soups": "Levesek",

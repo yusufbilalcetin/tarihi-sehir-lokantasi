@@ -154,7 +154,10 @@
     "trackStepCurrent": "cam cyfredol",
     "trackStepUpcoming": "daw",
     "orderContents": "Cynnwys yr archeb",
-    "placedAt": "Wedi'i roi ar"
+    "placedAt": "Wedi'i roi ar",
+    "orderCount": "{count} o archebion",
+    "orderSequence": "Gorchymyn {number}",
+    "orderTrackingStatus": "Gallwch ddilyn statws eich gorchymyn yma."
   },
   "categories": {
     "soups": "Cawsiau",

@@ -154,7 +154,10 @@
     "trackStepCurrent": "אקטואלע שריט",
     "trackStepUpcoming": "קומענד",
     "orderContents": "אינאזיכער פון בארט",
-    "placedAt": "געמאכט אויף"
+    "placedAt": "געמאכט אויף",
+    "orderCount": "{count} בארעלדער",
+    "orderSequence": "באַסטעלונג {number}",
+    "orderTrackingStatus": "איר קענען נאָכפאָלגן דיין באַשטעלונג סטטוס דאָ."
   },
   "categories": {
     "soups": "זופּס",

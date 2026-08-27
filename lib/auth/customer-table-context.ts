@@ -15,6 +15,21 @@ export interface CustomerTableContext {
   readonly tokenVersion: number;
   readonly tableName: string;
   readonly tableNumber: number;
+  /**
+   * Identifies this one guest sitting, not the table.
+   *
+   * The session already mints a random nonce per scan and signs it into the
+   * cookie; it was verified and then thrown away. It is surfaced here so an
+   * order can record which sitting placed it — the missing piece that would
+   * let the customer order view be scoped to "my orders" instead of "every
+   * open order at this table", which is how a later guest can currently see
+   * an earlier one's unsettled order.
+   *
+   * Derived from the signed cookie only. Never accepted from a URL, body,
+   * header or client state, and never a grant on its own: it can only narrow
+   * a query that the restaurant/table checks above have already authorised.
+   */
+  readonly sessionNonce: string;
 }
 function invalidCustomerSession(): DomainError {
   return new DomainError(
@@ -77,5 +92,6 @@ export async function requireCustomerTableContext(): Promise<CustomerTableContex
     tokenVersion: row.tokenVersion,
     tableName: row.tableName,
     tableNumber: row.tableNumber,
+    sessionNonce: claims.nonce,
   };
 }

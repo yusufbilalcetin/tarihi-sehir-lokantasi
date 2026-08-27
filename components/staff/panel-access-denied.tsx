@@ -42,7 +42,7 @@ export function PanelAccessDenied({
     <main className="flex min-h-[100dvh] items-center justify-center bg-olive px-4 py-10 text-[#FFFDF8]">
       <section className="w-full max-w-md rounded-3xl border border-gold/25 bg-[#FFF9EF] p-7 text-center text-foreground shadow-2xl shadow-black/20 sm:p-9">
         <BrandMark className="mx-auto max-w-[17rem]" />
-        <div className="mx-auto mt-7 flex size-14 items-center justify-center rounded-2xl border border-copper/30 bg-copper/10 text-burgundy">
+        <div className="mx-auto mt-7 flex size-14 items-center justify-center rounded-xl border border-copper/30 bg-copper/10 text-burgundy">
           <ShieldAlert className="size-7" aria-hidden="true" />
         </div>
         <h1 className="mt-5 font-heading text-2xl font-semibold">

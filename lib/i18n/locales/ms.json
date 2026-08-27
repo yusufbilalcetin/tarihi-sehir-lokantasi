@@ -154,7 +154,10 @@
     "trackStepCurrent": "langkah semasa",
     "trackStepUpcoming": "akan datang",
     "orderContents": "Kandungan pesanan",
-    "placedAt": "Ditempatkan pada"
+    "placedAt": "Ditempatkan pada",
+    "orderCount": "{count} pesanan",
+    "orderSequence": "Pesanan {number}",
+    "orderTrackingStatus": "Anda boleh mengikuti status pesanan anda di sini."
   },
   "categories": {
     "soups": "Sup",

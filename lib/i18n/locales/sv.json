@@ -154,7 +154,10 @@
     "trackStepCurrent": "nuvarande steg",
     "trackStepUpcoming": "kommer",
     "orderContents": "Beställningens innehåll",
-    "placedAt": "Lagd vid"
+    "placedAt": "Lagd vid",
+    "orderCount": "{count} beställningar",
+    "orderSequence": "Order {number}",
+    "orderTrackingStatus": "Du kan följa din orderstatus här."
   },
   "categories": {
     "soups": "Soppor",

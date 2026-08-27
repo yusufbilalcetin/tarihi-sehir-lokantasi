@@ -154,7 +154,10 @@
     "trackStepCurrent": "kasalukuyang hakbang",
     "trackStepUpcoming": "susunod",
     "orderContents": "Nilalaman ng utos",
-    "placedAt": "Inilagay noong"
+    "placedAt": "Inilagay noong",
+    "orderCount": "{count} na mga order",
+    "orderSequence": "Order {number}",
+    "orderTrackingStatus": "Maaari mong sundan ang katayuan ng iyong order dito."
   },
   "categories": {
     "soups": "Sopas",

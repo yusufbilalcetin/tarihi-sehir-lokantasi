@@ -1,17 +1,17 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { BellRing, CheckCircle2, ChevronLeft, CircleCheck, Loader2, ReceiptText, Search, Send, ShoppingBag, UtensilsCrossed, X } from "lucide-react";
+import { BellRing, CheckCircle2, ChevronLeft, CircleCheck, Loader2, ReceiptText, Send, ShoppingBag, UtensilsCrossed, X } from "lucide-react";
 import { toast } from "sonner";
 import { BottomNavigation, type MenuTab } from "@/components/menu/bottom-navigation";
 import { CartItem } from "@/components/menu/cart-item";
 import { CustomerFeedbackForm } from "@/components/menu/customer-feedback-form";
-import { CategoryChips } from "@/components/menu/category-chips";
-import { CategoryGrid, type MenuCategory } from "@/components/menu/category-grid";
 import { CurrencySelector } from "@/components/menu/currency-selector";
 import { MenuPreferencesProvider, useMenuPreferences } from "@/components/menu/menu-preferences-provider";
 import { MenuStateCard } from "@/components/menu/menu-state-card";
 import { OrderStatusTimeline } from "@/components/menu/order-status-timeline";
+import { OrderDetailsDisclosure, isServableLine } from "@/components/menu/order-details-disclosure";
+import { rememberSessionOrder, useSessionOrderIds } from "@/components/menu/session-orders";
 import { ProductCard } from "@/components/menu/product-card";
 import { ProductDetailSheet } from "@/components/menu/product-detail-sheet";
 import { RestaurantHeader } from "@/components/menu/restaurant-header";
@@ -19,14 +19,14 @@ import { SplashIntro } from "@/components/menu/splash-intro";
 import { EmptyState } from "@/components/shared/data-states";
 import { MotionValue } from "@/components/shared/motion-value";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { menuApiToViewModel, type MenuViewCategory } from "@/lib/adapters/menu-view-model";
 import { ApiClientError, newIdempotencyKey } from "@/lib/api/client";
 import { menuApi, orderApi, type CreateOrderPayload } from "@/lib/api/endpoints";
-import { customerCallStatusTranslationKey, matchesCustomerMenuSearch } from "@/lib/domain/customer-menu";
+import { customerCallStatusTranslationKey } from "@/lib/domain/customer-menu";
+import { addMoney, decimalToMinor, minorToDecimal } from "@/lib/domain/money";
 import { useApiResource } from "@/lib/hooks/use-api-resource";
-import { getMenuCategoryName, getMenuProductDescription, getMenuProductName, getMenuTag } from "@/lib/i18n/menu-content";
+import { getMenuCategoryName, getMenuProductName, getMenuTag } from "@/lib/i18n/menu-content";
 import type { MenuTranslationKey } from "@/lib/i18n/menu-translations";
 import { cn } from "@/lib/utils";
 import type { CartItem as CartItemType, Product, WaiterCallType } from "@/types";
@@ -41,9 +41,7 @@ const waiterOptions: Array<{ type: WaiterCallType; titleKey: MenuTranslationKey;
 ];
 
 const MENU_VIEW_KEY = "tarihiSehirMenuView";
-const MENU_CATEGORY_KEY = "tarihiSehirMenuCategory";
 const MENU_PRODUCT_KEY = "tarihiSehirMenuProduct";
-const MENU_QUERY_KEY = "tarihiSehirMenuQuery";
 
 /** Guests see live menu/order data without ever refreshing the page. */
 const MENU_POLL_MS = 30_000;
@@ -59,7 +57,7 @@ const SESSION_ERROR_CODES = new Set([
   "TABLE_INACTIVE",
 ]);
 
-type MenuHistoryView = "categories" | "products" | "detail";
+type MenuHistoryView = "menu" | "detail";
 
 function currentHistoryState() {
   return (window.history.state ?? {}) as Record<string, unknown>;
@@ -67,7 +65,10 @@ function currentHistoryState() {
 
 function currentHistoryView(): MenuHistoryView | undefined {
   const view = currentHistoryState()[MENU_VIEW_KEY];
-  return view === "categories" || view === "products" || view === "detail" ? view : undefined;
+  if (view === "detail") return "detail";
+  // Treat the previous category-first states as the continuous menu so a tab
+  // restored across this UI update never lands on an obsolete screen.
+  return view === "menu" || view === "categories" || view === "products" ? "menu" : undefined;
 }
 
 /** Server copy is Turkish-only, so guests always see a translated message. */
@@ -106,7 +107,7 @@ function OrderCurrencyPanel({ amount }: { amount: number }) {
       <p className="mt-3 text-sm text-muted-foreground">
         {t("total")}: <strong dir="ltr" className="ms-1 text-base tabular-nums text-burgundy"><MotionValue value={formatPrice(amount)} numericValue={amount} delayMs={20} /></strong>
       </p>
-      {currency !== "TRY" ? <p className="mx-auto mt-2 max-w-md text-[11px] leading-5 text-muted-foreground">{t("approximateCurrency")}</p> : null}
+      {currency !== "TRY" ? <p className="mx-auto mt-2 max-w-md text-xs leading-5 text-muted-foreground">{t("approximateCurrency")}</p> : null}
     </div>
   );
 }
@@ -121,8 +122,6 @@ export function MenuExperience({ tableNumber }: { tableNumber: number }) {
 
 function MenuExperienceContent({ tableNumber }: { tableNumber: number }) {
   const { currency, direction, formatPrice, language, languageDefinition, preferencesReady, t } = useMenuPreferences();
-  const categoryHeadingRef = useRef<HTMLHeadingElement>(null);
-  const productHeadingRef = useRef<HTMLHeadingElement>(null);
   const productTriggerRef = useRef<HTMLElement | null>(null);
   const cartListRef = useRef<HTMLDivElement>(null);
   const historyRestoredRef = useRef(false);
@@ -130,8 +129,6 @@ function MenuExperienceContent({ tableNumber }: { tableNumber: number }) {
   const [introComplete, setIntroComplete] = useState(false);
   const [activeTab, setActiveTab] = useState<MenuTab>("menu");
   const [navigationDirection, setNavigationDirection] = useState<"forward" | "back">("forward");
-  const [activeCategory, setActiveCategory] = useState<string | null>(null);
-  const [search, setSearch] = useState("");
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [storedCart, setCart] = useState<CartItemType[]>([]);
   const [waiterOpen, setWaiterOpen] = useState(false);
@@ -139,8 +136,6 @@ function MenuExperienceContent({ tableNumber }: { tableNumber: number }) {
   const [billSending, setBillSending] = useState(false);
   const [orderResult, setOrderResult] = useState<CreateOrderPayload | null>(null);
   const [submitting, setSubmitting] = useState(false);
-  const hasSearch = Boolean(search.trim());
-
   const loadMenu = useCallback((signal: AbortSignal) => menuApi.get(signal), []);
   const menuResource = useApiResource(loadMenu, { pollMs: MENU_POLL_MS });
   const menu = useMemo(
@@ -153,10 +148,6 @@ function MenuExperienceContent({ tableNumber }: { tableNumber: number }) {
   const orderingEnabled = menu?.settings.orderingEnabled ?? false;
   const menuEnabled = menu?.settings.menuEnabled ?? true;
   const menuReady = Boolean(menu);
-  const activeMenuCategoryIds = useMemo(
-    () => new Set(menuCategories.map((category) => category.id)),
-    [menuCategories],
-  );
 
   const loadActiveOrders = useCallback((signal: AbortSignal) => orderApi.active(signal), []);
   const activeOrders = useApiResource(loadActiveOrders, {
@@ -171,14 +162,77 @@ function MenuExperienceContent({ tableNumber }: { tableNumber: number }) {
   const waiterCall = activeCalls.data?.calls.find((call) => call.type === "WAITER_CALL") ?? null;
   const billRequest = activeCalls.data?.calls.find((call) => call.type === "BILL_REQUEST") ?? null;
   const billRequested = billRequest !== null;
+  /**
+   * Every order this visit placed, newest first.
+   *
+   * The endpoint answers with all unsettled orders at the table, which is not
+   * the same thing: an order the previous party left open is also unsettled.
+   * Intersecting with the ids this browser was handed at creation keeps the
+   * list to the guest's own orders and fails closed on anything else. Once
+   * migration 0017 is applied the server scopes by session nonce and this
+   * filter becomes redundant rather than load-bearing.
+   *
+   * Sorted on the server's own `createdAt`, never a device clock.
+   */
+  const sessionOrderIds = useSessionOrderIds();
+  const sessionOrders = useMemo(() => {
+    const mine = new Set(sessionOrderIds);
+    return (activeOrders.data?.orders ?? [])
+      .filter((order) => mine.has(order.id))
+      .map((order) => ({
+        ...order,
+        /**
+         * Which order of the visit this was, counted from the browser's own
+         * append-only record of what it submitted — not from this array's
+         * length. An earlier order that gets settled drops out of the list,
+         * and numbering by position would silently renumber the rest: the
+         * guest's third order would start calling itself the second.
+         */
+        sequence: sessionOrderIds.indexOf(order.id) + 1,
+      }))
+      .sort((left, right) => right.createdAt.localeCompare(left.createdAt));
+  }, [activeOrders.data, sessionOrderIds]);
+
+  /**
+   * The newest order drives the status timeline; the rest stay in the summary
+   * below it. A freshly submitted order is matched by id so it appears the
+   * instant the server confirms it, without waiting for the next poll.
+   */
   const trackedOrder = useMemo(() => {
-    const orders = activeOrders.data?.orders ?? [];
     if (orderResult) {
-      const matching = orders.find((order) => order.id === orderResult.orderId);
+      const matching = sessionOrders.find((order) => order.id === orderResult.orderId);
       if (matching) return matching;
     }
-    return orders[0] ?? null;
-  }, [activeOrders.data, orderResult]);
+    return sessionOrders[0] ?? null;
+  }, [sessionOrders, orderResult]);
+
+  /**
+   * What the visit adds up to.
+   *
+   * Quantities are summed, not lines: one soup and five ayran is six items.
+   * Money is summed in minor units through the shared helpers — the totals are
+   * each order's own authoritative figure, never rebuilt from the rows on
+   * screen, so discounts, service charge and tax stay exactly as the server
+   * calculated them.
+   */
+  const sessionSummary = useMemo(() => {
+    const itemCount = sessionOrders.reduce(
+      (sum, order) =>
+        sum +
+        order.items
+          .filter(isServableLine)
+          .reduce((lineSum, item) => lineSum + item.quantity, 0),
+      0,
+    );
+    const total = addMoney(
+      ...sessionOrders.map((order) => decimalToMinor(order.amounts.total)),
+    );
+    return {
+      orderCount: sessionOrders.length,
+      itemCount,
+      total: Number(minorToDecimal(total)),
+    };
+  }, [sessionOrders]);
 
   // Single transition system (motion doc §49): the panel enter/exit is driven by
   // the .motion-page CSS animation keyed off this direction. No View Transition
@@ -196,28 +250,15 @@ function MenuExperienceContent({ tableNumber }: { tableNumber: number }) {
     () => t("tableNumber", { number: String(menu?.table?.number ?? tableNumber) }),
     [menu?.table?.number, tableNumber, t],
   );
-  const selectedCategory = menuCategories.find((category) => category.id === activeCategory);
-  const selectedCategoryName = selectedCategory
-    ? getMenuCategoryName(selectedCategory, language)
-    : "";
-
-  const filteredProducts = useMemo(() => {
-    return publicProducts.filter((product) => {
-      const matchesCategory = activeCategory ? product.categoryId === activeCategory : true;
-      if (!matchesCategory) return false;
-      const category = menuCategories.find((item) => item.id === product.categoryId);
-      const categoryName = category ? getMenuCategoryName(category, language) : product.category;
-      return matchesCustomerMenuSearch(
-        search,
-        [
-          getMenuProductName(product, language),
-          getMenuProductDescription(product, language),
-          categoryName,
-        ],
-        languageDefinition.locale,
-      );
-    });
-  }, [activeCategory, language, languageDefinition.locale, menuCategories, publicProducts, search]);
+  const groupedProducts = useMemo(
+    () => menuCategories
+      .map((category) => ({
+        category,
+        products: publicProducts.filter((product) => product.categoryId === category.id),
+      }))
+      .filter((section) => section.products.length > 0),
+    [menuCategories, publicProducts],
+  );
   const featuredProducts = useMemo(
     () => publicProducts.filter((product) => product.featured),
     [publicProducts],
@@ -240,112 +281,63 @@ function MenuExperienceContent({ tableNumber }: { tableNumber: number }) {
 
   const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
   const subtotal = cart.reduce((sum, item) => sum + item.unitPrice * item.quantity, 0);
-  const submittedTotal = orderResult ? Number(orderResult.total) : 0;
+  const sessionTotal = sessionSummary.total;
 
-  // History restore waits for the first payload; before that no product or
-  // category id can be resolved.
+  // History restore waits for the first payload; before that a product id
+  // cannot be resolved.
   useEffect(() => {
     if (!menuReady || historyRestoredRef.current) return;
     historyRestoredRef.current = true;
 
     const restoreTimer = window.setTimeout(() => {
       const state = currentHistoryState();
-      const view = currentHistoryView();
-      const storedCategory = typeof state[MENU_CATEGORY_KEY] === "string" && activeMenuCategoryIds.has(state[MENU_CATEGORY_KEY])
-        ? state[MENU_CATEGORY_KEY]
-        : null;
+      const view = state[MENU_VIEW_KEY];
       const storedProductId = typeof state[MENU_PRODUCT_KEY] === "string" ? state[MENU_PRODUCT_KEY] : null;
-      const storedQuery = typeof state[MENU_QUERY_KEY] === "string" ? state[MENU_QUERY_KEY] : "";
       const storedProduct = storedProductId
         ? publicProducts.find((product) => product.id === storedProductId) ?? null
         : null;
 
       if (view === "detail" && storedProduct) {
-        setActiveCategory(storedCategory);
-        setSearch(storedQuery);
         setSelectedProduct(storedProduct);
-        return;
-      }
-
-      if (view === "products" && (storedCategory || storedQuery.trim())) {
-        setActiveCategory(storedCategory);
-        setSearch(storedQuery);
         return;
       }
 
       window.history.replaceState(
         {
           ...state,
-          [MENU_VIEW_KEY]: "categories",
-          [MENU_CATEGORY_KEY]: null,
+          [MENU_VIEW_KEY]: "menu",
           [MENU_PRODUCT_KEY]: null,
-          [MENU_QUERY_KEY]: "",
         },
         "",
       );
     }, 0);
 
     return () => window.clearTimeout(restoreTimer);
-  }, [activeMenuCategoryIds, menuReady, publicProducts]);
+  }, [menuReady, publicProducts]);
 
   useEffect(() => {
     function handlePopState(event: PopStateEvent) {
       const state = (event.state ?? {}) as Record<string, unknown>;
       const view = state[MENU_VIEW_KEY];
-      const categoryId = typeof state[MENU_CATEGORY_KEY] === "string" && activeMenuCategoryIds.has(state[MENU_CATEGORY_KEY])
-        ? state[MENU_CATEGORY_KEY]
-        : null;
       const productId = typeof state[MENU_PRODUCT_KEY] === "string" ? state[MENU_PRODUCT_KEY] : null;
-      const query = typeof state[MENU_QUERY_KEY] === "string" ? state[MENU_QUERY_KEY] : "";
 
       if (view === "detail" && productId) {
         setActiveTab("menu");
-        setActiveCategory(categoryId);
-        setSearch(query);
         setSelectedProduct(publicProducts.find((product) => product.id === productId) ?? null);
         return;
       }
 
-      if (view === "products") {
-        setNavigationDirection("back");
-        setActiveTab("menu");
-        setActiveCategory(categoryId);
-        setSearch(query);
-        setSelectedProduct(null);
-        window.requestAnimationFrame(() => {
-          if (selectedProduct) {
-            productTriggerRef.current?.focus({ preventScroll: true });
-          } else {
-            productHeadingRef.current?.focus({ preventScroll: true });
-          }
-        });
-        return;
-      }
-
-      if (view === "categories") {
-        const categoryToRestore = activeCategory;
-        navigateWithDirection("back", () => {
-          setActiveTab("menu");
-          setActiveCategory(null);
-          setSearch("");
-          setSelectedProduct(null);
-        });
-        window.requestAnimationFrame(() => {
-          if (categoryToRestore) {
-            document.getElementById(`menu-category-${categoryToRestore}`)?.focus({ preventScroll: true });
-          } else {
-            categoryHeadingRef.current?.focus({ preventScroll: true });
-          }
-        });
-        return;
-      }
-
+      setNavigationDirection("back");
+      setActiveTab("menu");
       setSelectedProduct(null);
+      if (selectedProduct) {
+        window.requestAnimationFrame(() => productTriggerRef.current?.focus({ preventScroll: true }));
+      }
     }
 
     window.addEventListener("popstate", handlePopState);
     return () => window.removeEventListener("popstate", handlePopState);
-  }, [activeCategory, activeMenuCategoryIds, publicProducts, selectedProduct]);
+  }, [publicProducts, selectedProduct]);
 
   function resetIdempotency() {
     idempotencyKeyRef.current = null;
@@ -432,116 +424,15 @@ function MenuExperienceContent({ tableNumber }: { tableNumber: number }) {
     });
   }
 
-  function openCategoryHome() {
-    const historyView = currentHistoryView();
-    if (historyView === "detail") {
-      window.history.go(-2);
-      return;
-    }
-    if (historyView === "products") {
+  function openMenuHome() {
+    if (currentHistoryView() === "detail") {
       window.history.back();
       return;
     }
     navigateWithDirection("back", () => {
       setActiveTab("menu");
-      setActiveCategory(null);
-      setSearch("");
+      setSelectedProduct(null);
     });
-  }
-
-  function selectCategory(category: MenuCategory, focusHeading: boolean) {
-    if (currentHistoryView() === "products" || currentHistoryView() === "detail") return;
-
-    window.history.pushState(
-      {
-        ...currentHistoryState(),
-        [MENU_VIEW_KEY]: "products",
-        [MENU_CATEGORY_KEY]: category.id,
-        [MENU_PRODUCT_KEY]: null,
-        [MENU_QUERY_KEY]: "",
-      },
-      "",
-    );
-    navigateWithDirection("forward", () => {
-      setActiveCategory(category.id);
-      setSearch("");
-    });
-    if (focusHeading) {
-      window.requestAnimationFrame(() => productHeadingRef.current?.focus({ preventScroll: true }));
-    }
-  }
-
-  function returnFromProducts() {
-    if (hasSearch && activeCategory) {
-      setSearch("");
-      window.history.replaceState(
-        {
-          ...currentHistoryState(),
-          [MENU_QUERY_KEY]: "",
-        },
-        "",
-      );
-      window.requestAnimationFrame(() => productHeadingRef.current?.focus());
-      return;
-    }
-    if (currentHistoryView() === "products") {
-      window.history.back();
-      return;
-    }
-    navigateWithDirection("back", () => {
-      setActiveCategory(null);
-      setSearch("");
-    });
-  }
-
-  function handleSearchChange(value: string) {
-    const nextHasSearch = Boolean(value.trim());
-    const historyView = currentHistoryView();
-
-    if (!activeCategory && !hasSearch && nextHasSearch && historyView === "categories") {
-      setNavigationDirection("forward");
-      window.history.pushState(
-        {
-          ...currentHistoryState(),
-          [MENU_VIEW_KEY]: "products",
-          [MENU_CATEGORY_KEY]: null,
-          [MENU_PRODUCT_KEY]: null,
-          [MENU_QUERY_KEY]: value,
-        },
-        "",
-      );
-    } else if (!activeCategory && hasSearch && !nextHasSearch && historyView === "products") {
-      setNavigationDirection("back");
-      setSearch("");
-      window.history.back();
-      return;
-    } else if (historyView === "products") {
-      window.history.replaceState(
-        {
-          ...currentHistoryState(),
-          [MENU_QUERY_KEY]: value,
-        },
-        "",
-      );
-    }
-
-    setSearch(value);
-  }
-
-  function clearSearch() {
-    if (!activeCategory && currentHistoryView() === "products") {
-      window.history.back();
-      return;
-    }
-    setSearch("");
-    window.history.replaceState(
-      {
-        ...currentHistoryState(),
-        [MENU_QUERY_KEY]: "",
-      },
-      "",
-    );
-    window.requestAnimationFrame(() => productHeadingRef.current?.focus());
   }
 
   function openProduct(product: Product) {
@@ -550,9 +441,7 @@ function MenuExperienceContent({ tableNumber }: { tableNumber: number }) {
       {
         ...currentHistoryState(),
         [MENU_VIEW_KEY]: "detail",
-        [MENU_CATEGORY_KEY]: activeCategory,
         [MENU_PRODUCT_KEY]: product.id,
-        [MENU_QUERY_KEY]: search,
       },
       "",
     );
@@ -575,7 +464,7 @@ function MenuExperienceContent({ tableNumber }: { tableNumber: number }) {
       return;
     }
     if (tab === "menu") {
-      openCategoryHome();
+      openMenuHome();
       return;
     }
     const tabOrder: MenuTab[] = ["menu", "order", "waiter", "bill"];
@@ -658,6 +547,8 @@ function MenuExperienceContent({ tableNumber }: { tableNumber: number }) {
       );
       resetIdempotency();
       setCart([]);
+      // The server just told this browser which order is its own.
+      rememberSessionOrder(result.orderId);
       setOrderResult(result);
       toast.success(t("orderSuccess"));
       void activeOrders.refetch();
@@ -696,104 +587,92 @@ function MenuExperienceContent({ tableNumber }: { tableNumber: number }) {
         {activeTab === "menu" ? (
           <>
             <RestaurantHeader tableName={tableName} />
-            <main className="menu-shell pb-6 pt-5">
-              <div className={cn("motion-search relative", !activeCategory && !hasSearch && "mx-auto max-w-3xl")}>
-                <Search className="motion-search-icon pointer-events-none absolute start-3.5 top-1/2 size-5 -translate-y-1/2 text-muted-foreground" />
-                <Input value={search} onChange={(event) => handleSearchChange(event.target.value)} placeholder={t("search")} aria-label={t("searchLabel")} className="h-12 rounded-2xl border-border bg-card ps-11 pe-4 text-base shadow-sm placeholder:text-muted-foreground/70" />
-              </div>
+            <main className="menu-shell pb-6 pt-4">
+              <h1 className="sr-only">{t("menu")}</h1>
               {currency !== "TRY" ? (
-                <p className="mx-auto mt-2 max-w-3xl text-center text-[11px] leading-5 text-[#70665C]">
+                <p className="mx-auto max-w-3xl text-center text-xs leading-5 text-[#70665C]">
                   {t("approximateCurrency")}
                 </p>
               ) : null}
-              {!activeCategory && !hasSearch ? (
-                <section className="motion-page mx-auto w-full max-w-3xl pt-6" data-navigation-direction={navigationDirection} aria-labelledby="category-heading">
-                  {popularProducts.length ? (
-                    <section aria-labelledby="popular-products-title">
-                      <h2 id="popular-products-title" className="mb-3 font-heading text-xl font-semibold text-text-primary">
-                        {getMenuTag("Popüler", language)}
-                      </h2>
-                      <div className="-mx-[var(--menu-gutter)] flex snap-x snap-mandatory gap-3 overflow-x-auto px-[var(--menu-gutter)] pb-2 scrollbar-none">
-                        {popularProducts.map((product, index) => (
-                          <div key={`popular-${product.id}`} className="min-w-[min(86vw,24rem)] snap-start sm:min-w-[22rem]">
-                            <ProductCard product={product} index={index} canOrder={orderingEnabled} onOpen={() => openProduct(product)} onAdd={() => addToCart(product)} />
-                          </div>
-                        ))}
-                      </div>
-                    </section>
-                  ) : null}
-
-                  {featuredProducts.length ? (
-                    <section className="mb-8" aria-labelledby="featured-products-heading">
-                      <h2 id="featured-products-heading" className="mb-3 font-heading text-xl font-semibold sm:text-2xl">
-                        {getMenuTag("Şefin Önerisi", language)}
-                      </h2>
-                      <div className="-mx-[var(--menu-gutter)] flex snap-x snap-mandatory gap-[var(--menu-grid-gap)] overflow-x-auto px-[var(--menu-gutter)] pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-                        {featuredProducts.map((product, index) => (
-                          <div key={product.id} className="min-w-[min(86vw,24rem)] snap-start sm:min-w-[22rem]">
-                            <ProductCard product={product} index={index} canOrder={orderingEnabled} onOpen={() => openProduct(product)} onAdd={() => addToCart(product)} />
-                          </div>
-                        ))}
-                      </div>
-                    </section>
-                  ) : null}
-                  <div className="mb-5 text-center">
-                    <h1 ref={categoryHeadingRef} id="category-heading" tabIndex={-1} className="font-heading text-2xl font-semibold outline-none sm:text-3xl">{t("categories")}</h1>
-                    <p className="mx-auto mt-1 max-w-xl text-sm leading-6 text-[#70665C]">{t("categoryIntro")}</p>
-                  </div>
-                  <CategoryGrid categories={[...menuCategories]} onSelect={selectCategory} />
-                </section>
-              ) : (
-                <section className="motion-page pt-5" data-navigation-direction={navigationDirection}>
-                  <button type="button" onClick={returnFromProducts} className="motion-press motion-ripple -ms-2 inline-flex min-h-11 items-center gap-1.5 rounded-xl px-2 text-sm font-bold text-burgundy hover:bg-burgundy/[0.06] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
-                    <ChevronLeft className={cn("size-4", direction === "rtl" && "rotate-180")} aria-hidden="true" />
-                    {hasSearch && activeCategory ? t("backToCategory", { name: selectedCategoryName }) : t("backToCategories")}
-                  </button>
-                  {/* Course-to-course without a round trip through the grid. */}
-                  <div className="mt-2">
-                    <CategoryChips
-                      categories={menuCategories}
-                      activeCategoryId={activeCategory}
-                      onSelect={selectCategory}
-                    />
-                  </div>
-                  <div className="mb-5 mt-2 grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-end gap-3 text-center">
-                    <div className="col-start-2">
-                      <h1 ref={productHeadingRef} id="product-list-heading" tabIndex={-1} className="font-heading text-2xl font-semibold outline-none sm:text-3xl">{hasSearch ? t("searchResults") : selectedCategoryName}</h1>
-                      <p className="mt-1 text-xs text-[#70665C]" role="status" aria-live="polite">{hasSearch ? t("productsFound", { count: filteredProducts.length }) : t("itemCount", { count: selectedCategory?.productCount ?? filteredProducts.length })}</p>
+              <section className={cn("motion-page", currency !== "TRY" && "pt-3")} data-navigation-direction={navigationDirection}>
+                {popularProducts.length ? (
+                  <section className="mb-8" aria-labelledby="popular-products-title">
+                    <h2 id="popular-products-title" className="mb-3 font-heading text-xl font-semibold text-text-primary">
+                      {getMenuTag("Popüler", language)}
+                    </h2>
+                    <div className="-mx-[var(--menu-gutter)] flex snap-x snap-mandatory gap-3 overflow-x-auto px-[var(--menu-gutter)] pb-2 scrollbar-none">
+                      {popularProducts.map((product, index) => (
+                        <div key={`popular-${product.id}`} className="min-w-[min(86vw,24rem)] snap-start sm:min-w-[22rem]">
+                          <ProductCard product={product} index={index} canOrder={orderingEnabled} onOpen={() => openProduct(product)} onAdd={() => addToCart(product)} />
+                        </div>
+                      ))}
                     </div>
-                    {hasSearch ? <button type="button" onClick={clearSearch} className="col-start-3 min-h-11 justify-self-end text-sm font-semibold text-burgundy">{t("clearSearch")}</button> : null}
+                  </section>
+                ) : null}
+
+                {featuredProducts.length ? (
+                  <section className="mb-8" aria-labelledby="featured-products-heading">
+                    <h2 id="featured-products-heading" className="mb-3 font-heading text-xl font-semibold sm:text-2xl">
+                      {getMenuTag("Şefin Önerisi", language)}
+                    </h2>
+                    <div className="-mx-[var(--menu-gutter)] flex snap-x snap-mandatory gap-[var(--menu-grid-gap)] overflow-x-auto px-[var(--menu-gutter)] pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                      {featuredProducts.map((product, index) => (
+                        <div key={`featured-${product.id}`} className="min-w-[min(86vw,24rem)] snap-start sm:min-w-[22rem]">
+                          <ProductCard product={product} index={index} canOrder={orderingEnabled} onOpen={() => openProduct(product)} onAdd={() => addToCart(product)} />
+                        </div>
+                      ))}
+                    </div>
+                  </section>
+                ) : null}
+
+                {groupedProducts.length ? (
+                  <div data-customer-menu-content="category-sections" className="space-y-10">
+                    {groupedProducts.map(({ category, products }) => (
+                      <section key={category.id} aria-labelledby={`menu-category-${category.id}`}>
+                        <div className="mb-4 flex items-end justify-between gap-4 border-b border-gold/30 pb-2">
+                          <h2 id={`menu-category-${category.id}`} className="font-heading text-2xl font-semibold text-text-primary sm:text-3xl">
+                            {getMenuCategoryName(category, language)}
+                          </h2>
+                          <p className="shrink-0 text-xs font-medium tabular-nums text-[#70665C]">
+                            {t("itemCount", { count: products.length })}
+                          </p>
+                        </div>
+                        <div className="grid gap-[var(--menu-grid-gap)] lg:grid-cols-2">
+                          {products.map((product, index) => (
+                            <ProductCard key={product.id} product={product} index={index} canOrder={orderingEnabled} onOpen={() => openProduct(product)} onAdd={() => addToCart(product)} />
+                          ))}
+                        </div>
+                      </section>
+                    ))}
                   </div>
-                  {filteredProducts.length ? (
-                    <div key={search} data-searching={hasSearch} className="motion-results grid gap-[var(--menu-grid-gap)] lg:grid-cols-2">{filteredProducts.map((product, index) => <ProductCard key={product.id} product={product} index={index} canOrder={orderingEnabled} onOpen={() => openProduct(product)} onAdd={() => addToCart(product)} />)}</div>
-                  ) : <EmptyState icon={UtensilsCrossed} title={t("noResults")} description={t("noResultsDescription")} />}
-                </section>
-              )}
+                ) : <EmptyState icon={UtensilsCrossed} title={t("menuUnavailable")} description={t("somethingWentWrong")} />}
+              </section>
             </main>
           </>
         ) : null}
 
         {activeTab === "order" ? (
           <main className="motion-page menu-shell menu-shell-narrow pb-8 pt-[max(1.5rem,env(safe-area-inset-top))]" data-navigation-direction={navigationDirection}>
-            <div className="relative flex min-h-12 items-center justify-center px-12 text-center"><button type="button" onClick={openCategoryHome} className="motion-press motion-ripple touch-target absolute start-0 flex items-center justify-center rounded-xl" aria-label={t("backToCategories")}><ChevronLeft className={cn(direction === "rtl" && "rotate-180")} /></button><div><h1 className="font-heading text-3xl font-semibold">{t("order")}</h1><p className="text-sm text-muted-foreground">{tableName}</p></div></div>
+            <div className="relative flex min-h-12 items-center justify-center px-12 text-center"><button type="button" onClick={openMenuHome} className="motion-press motion-ripple touch-target absolute start-0 flex items-center justify-center rounded-xl" aria-label={t("menu")}><ChevronLeft className={cn(direction === "rtl" && "rotate-180")} /></button><div><h1 className="font-heading text-3xl font-semibold">{t("order")}</h1><p className="text-sm text-muted-foreground">{tableName}</p></div></div>
             {orderResult ? (
-              <section className="mt-6 rounded-3xl border bg-card p-5 surface-shadow sm:p-6" aria-live="polite">
-                <div className="motion-status flex size-12 items-center justify-center rounded-2xl bg-status-success-tint text-status-success" data-motion-success="true"><CheckCircle2 className="size-6" /></div>
+              <section className="mt-6 rounded-lg border bg-card p-5 surface-shadow sm:p-6" aria-live="polite">
+                <div className="motion-status flex size-12 items-center justify-center rounded-md bg-status-success-tint text-status-success" data-motion-success="true"><CheckCircle2 className="size-6" /></div>
                 <h2 className="mt-4 font-heading text-2xl font-semibold">{t("orderSent")}</h2>
-                <p className="mt-1 text-sm leading-6 text-muted-foreground">{t("orderTracking", { number: orderResult.orderNumber })}</p>
+                <p className="mt-1 text-sm leading-6 text-muted-foreground">{t("orderTrackingStatus")}</p>
                 <OrderStatusTimeline currentStep={ORDER_TIMELINE_STEP[trackedOrder?.status ?? "NEW"] ?? 1} />
                 <div className="mt-5 space-y-2 border-t pt-4">
                   <div className="flex justify-between text-sm text-text-secondary"><span>{t("yourTable")}</span><span className="font-semibold text-text-primary">{tableName}</span></div>
-                  <div className="flex justify-between text-sm text-text-secondary"><span>{t("total")}</span><strong dir="ltr" className="text-lg text-primary"><MotionValue value={formatPrice(submittedTotal)} numericValue={submittedTotal} /></strong></div>
+                  <div className="flex justify-between text-sm text-text-secondary"><span>{t("total")}</span><strong dir="ltr" className="text-lg text-primary"><MotionValue value={formatPrice(sessionTotal)} numericValue={sessionTotal} /></strong></div>
                 </div>
-                <OrderCurrencyPanel amount={submittedTotal} />
+                <OrderDetailsDisclosure orders={sessionOrders} />
+                <OrderCurrencyPanel amount={sessionTotal} />
                 {trackedOrder?.status === "SERVED" ? <CustomerFeedbackForm orderId={trackedOrder.id} /> : null}
-                <Button type="button" variant="outline" onClick={() => { setOrderResult(null); openCategoryHome(); }} className="mt-4 h-11 w-full rounded-xl">{t("newItem")}</Button>
+                <Button type="button" variant="outline" onClick={() => { setOrderResult(null); openMenuHome(); }} className="mt-4 h-11 w-full rounded-xl">{t("newItem")}</Button>
               </section>
             ) : cart.length ? (
               <>
                 <div ref={cartListRef} className="mt-6 space-y-3">{cart.map((item, index) => <CartItem key={item.id} item={item} motionIndex={index} onDecrease={() => updateQuantity(item.id, -1)} onIncrease={() => updateQuantity(item.id, 1)} onRemove={() => removeCartItem(item.id)} />)}</div>
-                <section className="mt-5 rounded-2xl border bg-card p-5">
+                <section className="mt-5 rounded-lg border bg-card p-5 shadow-[var(--shadow-raised)]">
                   <dl className="space-y-3 text-sm"><div className="flex justify-between text-muted-foreground"><dt>{t("subtotal")}</dt><dd dir="ltr"><MotionValue value={formatPrice(subtotal)} numericValue={subtotal} delayMs={20} /></dd></div><div className="flex justify-between text-muted-foreground"><dt>{t("serviceFee")}</dt><dd dir="ltr"><MotionValue value={formatPrice(0)} numericValue={0} delayMs={30} /></dd></div><div className="flex justify-between border-t pt-3 text-base font-bold"><dt>{t("total")}</dt><dd dir="ltr" className="text-burgundy"><MotionValue value={formatPrice(subtotal)} numericValue={subtotal} delayMs={40} /></dd></div></dl>
                   <OrderCurrencyPanel amount={subtotal} />
                   <Button type="button" onClick={() => void sendOrder()} disabled={submitting || !orderingEnabled} aria-busy={submitting} className="motion-cta mt-5 h-12 w-full rounded-xl text-sm font-bold">
@@ -806,23 +685,24 @@ function MenuExperienceContent({ tableNumber }: { tableNumber: number }) {
                 </section>
               </>
             ) : trackedOrder ? (
-              <section className="mt-6 rounded-3xl border bg-card p-5 surface-shadow sm:p-6" aria-live="polite">
-                <div className="motion-status flex size-12 items-center justify-center rounded-2xl bg-status-success-tint text-status-success" data-motion-success="true"><CheckCircle2 className="size-6" /></div>
+              <section className="mt-6 rounded-lg border bg-card p-5 surface-shadow sm:p-6" aria-live="polite">
+                <div className="motion-status flex size-12 items-center justify-center rounded-md bg-status-success-tint text-status-success" data-motion-success="true"><CheckCircle2 className="size-6" /></div>
                 <h2 className="mt-4 font-heading text-2xl font-semibold">{t("orderSent")}</h2>
-                <p className="mt-1 text-sm leading-6 text-muted-foreground">{t("orderTracking", { number: trackedOrder.orderNumber })}</p>
+                <p className="mt-1 text-sm leading-6 text-muted-foreground">{t("orderTrackingStatus")}</p>
                 <OrderStatusTimeline currentStep={ORDER_TIMELINE_STEP[trackedOrder.status] ?? 1} />
-                <div className="mt-5 border-t pt-4"><div className="flex justify-between text-sm text-muted-foreground"><span>{t("total")}</span><strong dir="ltr" className="text-lg text-burgundy"><MotionValue value={formatPrice(Number(trackedOrder.amounts.total))} numericValue={Number(trackedOrder.amounts.total)} /></strong></div></div>
+                <OrderDetailsDisclosure orders={sessionOrders} />
+                <div className="mt-5 border-t pt-4"><div className="flex justify-between text-sm text-muted-foreground"><span>{t("total")}</span><strong dir="ltr" className="text-lg text-burgundy"><MotionValue value={formatPrice(sessionTotal)} numericValue={sessionTotal} /></strong></div></div>
                 {trackedOrder.status === "SERVED" ? <CustomerFeedbackForm orderId={trackedOrder.id} /> : null}
-                <Button type="button" variant="outline" onClick={openCategoryHome} className="mt-4 h-11 w-full rounded-xl">{t("newItem")}</Button>
+                <Button type="button" variant="outline" onClick={openMenuHome} className="mt-4 h-11 w-full rounded-xl">{t("newItem")}</Button>
               </section>
-            ) : <div className="motion-empty mt-6"><EmptyState icon={ShoppingBag} title={t("emptyCart")} description={t("emptyCartDescription")} /><Button type="button" onClick={openCategoryHome} className="mt-4 h-11 w-full rounded-xl">{t("browseMenu")}</Button></div>}
+            ) : <div className="motion-empty mt-6"><EmptyState icon={ShoppingBag} title={t("emptyCart")} description={t("emptyCartDescription")} /><Button type="button" onClick={openMenuHome} className="mt-4 h-11 w-full rounded-xl">{t("browseMenu")}</Button></div>}
           </main>
         ) : null}
 
         {activeTab === "bill" ? (
           <main className="motion-page menu-shell menu-shell-narrow flex min-h-[calc(100dvh-5rem)] items-center py-8" data-navigation-direction={navigationDirection}>
-            <section className="w-full rounded-3xl border bg-card p-6 text-center surface-shadow sm:p-8">
-              <div key={billRequested ? "success" : "idle"} className="motion-status mx-auto flex size-14 items-center justify-center rounded-2xl bg-burgundy/8 text-burgundy" data-motion-success={billRequested}>{billRequested ? <CircleCheck className="size-7" /> : <ReceiptText className="size-7" />}</div>
+            <section className="w-full rounded-lg border bg-card p-6 text-center surface-shadow sm:p-8">
+              <div key={billRequested ? "success" : "idle"} className="motion-status mx-auto flex size-14 items-center justify-center rounded-md bg-burgundy/8 text-burgundy" data-motion-success={billRequested}>{billRequested ? <CircleCheck className="size-7" /> : <ReceiptText className="size-7" />}</div>
               <h1 className="mt-5 font-heading text-2xl font-semibold">{billRequest ? t(customerCallStatusTranslationKey(billRequest.type, billRequest.status)) : t("billConfirm")}</h1>
               <p className="mx-auto mt-2 max-w-sm text-sm leading-6 text-muted-foreground">{billRequested ? t("billSentDescription") : t("billConfirmDescription")}</p>
               <Button
@@ -830,7 +710,7 @@ function MenuExperienceContent({ tableNumber }: { tableNumber: number }) {
                 variant={billRequested ? "outline" : "default"}
                 disabled={billSending}
                 aria-busy={billSending}
-                onClick={billRequested ? openCategoryHome : () => void requestBill()}
+                onClick={billRequested ? openMenuHome : () => void requestBill()}
                 className="motion-cta mt-6 h-12 w-full rounded-xl text-sm font-bold"
               >
                 <span key={billRequested ? "back" : "request"} className="motion-action-label">{billRequested ? t("backToMenu") : t("requestBill")}</span>
@@ -843,25 +723,25 @@ function MenuExperienceContent({ tableNumber }: { tableNumber: number }) {
       <ProductDetailSheet key={selectedProduct?.id ?? "none"} product={selectedProduct} open={Boolean(selectedProduct)} canOrder={orderingEnabled} onOpenChange={(open) => { if (!open) closeProduct(); }} onAdd={addToCart} />
 
       <Dialog open={waiterOpen} onOpenChange={setWaiterOpen}>
-        <DialogContent dir={direction} showCloseButton={false} className="menu-dialog-scroll flex max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] max-w-xl flex-col gap-0 overflow-y-auto rounded-3xl border-border p-0 sm:max-w-xl">
-          <DialogClose className="absolute end-4 top-4 z-10 inline-flex size-10 items-center justify-center rounded-xl text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+        <DialogContent dir={direction} showCloseButton={false} className="menu-dialog-scroll flex max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] max-w-xl flex-col gap-0 overflow-y-auto rounded-xl border-copper/35 p-0 sm:max-w-xl">
+          <DialogClose className="absolute end-4 top-4 z-10 inline-flex size-10 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
             <X className="size-4" aria-hidden="true" />
             <span className="sr-only">{t("close")}</span>
           </DialogClose>
-          <DialogHeader className="items-center px-14 pb-4 pt-6 text-center sm:px-16"><div className="mb-1 flex size-11 items-center justify-center rounded-2xl bg-burgundy/8 text-burgundy"><BellRing className="size-5" /></div><DialogTitle className="font-heading text-2xl font-semibold">{t("waiterHelpTitle")}</DialogTitle><DialogDescription className="mx-auto max-w-md">{t("waiterHelpDescription", { table: tableName })}</DialogDescription></DialogHeader>
+          <DialogHeader className="items-center px-14 pb-4 pt-6 text-center sm:px-16"><div className="mb-1 flex size-11 items-center justify-center rounded-md bg-burgundy/8 text-burgundy"><BellRing className="size-5" /></div><DialogTitle className="font-heading text-2xl font-semibold">{t("waiterHelpTitle")}</DialogTitle><DialogDescription className="mx-auto max-w-md">{t("waiterHelpDescription", { table: tableName })}</DialogDescription></DialogHeader>
           {waiterCall ? (
             /* A request is already with the floor. Re-offering the options
                here would invite a duplicate call for the same table; the
                status shown is the one the server returned, not a guess. */
             <div className="border-t px-5 py-6 text-center sm:px-6" aria-live="polite">
-              <div className="mx-auto flex size-12 items-center justify-center rounded-2xl bg-status-success-tint text-status-success">
+              <div className="mx-auto flex size-12 items-center justify-center rounded-md bg-status-success-tint text-status-success">
                 <CircleCheck className="size-6" aria-hidden="true" />
               </div>
               <p className="mt-3 text-sm font-semibold text-text-primary">{t(customerCallStatusTranslationKey(waiterCall.type, waiterCall.status))}</p>
               <Button type="button" variant="outline" onClick={() => setWaiterOpen(false)} className="mt-5 h-11 w-full rounded-xl">{t("close")}</Button>
             </div>
           ) : (
-          <div className="grid grid-cols-1 gap-3 border-t px-5 py-5 sm:grid-cols-2 sm:px-6">{waiterOptions.map((option) => <button key={option.type} type="button" disabled={waiterSending} aria-busy={waiterSending} onClick={() => void sendWaiterCall(option.type)} className="motion-press motion-ripple motion-hover grid min-h-20 w-full grid-cols-[minmax(0,1fr)_1rem] items-center gap-3 rounded-2xl border bg-card px-4 py-3 text-start hover:border-copper focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-60"><span><span className="block text-sm font-bold">{t(option.titleKey)}</span><span className="mt-0.5 block text-xs leading-5 text-muted-foreground">{t(option.descriptionKey)}</span></span><ChevronLeft className={cn("size-4 text-muted-foreground", direction === "ltr" && "rotate-180")} /></button>)}</div>
+          <div className="grid grid-cols-1 gap-3 border-t px-5 py-5 sm:grid-cols-2 sm:px-6">{waiterOptions.map((option) => <button key={option.type} type="button" disabled={waiterSending} aria-busy={waiterSending} onClick={() => void sendWaiterCall(option.type)} className="motion-press motion-ripple motion-hover grid min-h-20 w-full grid-cols-[minmax(0,1fr)_1rem] items-center gap-3 rounded-lg border bg-card px-4 py-3 text-start hover:border-copper focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-60"><span><span className="block text-sm font-bold">{t(option.titleKey)}</span><span className="mt-0.5 block text-xs leading-5 text-muted-foreground">{t(option.descriptionKey)}</span></span><ChevronLeft className={cn("size-4 text-muted-foreground", direction === "ltr" && "rotate-180")} /></button>)}</div>
           )}
         </DialogContent>
       </Dialog>

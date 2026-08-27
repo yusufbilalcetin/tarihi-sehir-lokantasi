@@ -154,7 +154,10 @@
     "trackStepCurrent": "mataki na yanzu",
     "trackStepUpcoming": "mai zuwa",
     "orderContents": "Abubuwan odar",
-    "placedAt": "An sanya a"
+    "placedAt": "An sanya a",
+    "orderCount": "{count} umarni",
+    "orderSequence": "Oda {number}",
+    "orderTrackingStatus": "Kuna iya bin matsayin odarku a nan."
   },
   "categories": {
     "soups": "Miye-miye",

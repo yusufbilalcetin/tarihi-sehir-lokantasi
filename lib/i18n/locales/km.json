@@ -154,7 +154,10 @@
     "trackStepCurrent": "ជំហានបច្ចុប្បន្ន",
     "trackStepUpcoming": "កំពុងមកដល់",
     "orderContents": "មាតិការបញ្ជាទិញ",
-    "placedAt": "បានដាក់នៅ"
+    "placedAt": "បានដាក់នៅ",
+    "orderCount": "{count} ពាក្យបញ្ជាទិញ",
+    "orderSequence": "ការបញ្ជាទិញ {number}",
+    "orderTrackingStatus": "អ្នកអាចតាមដានស្ថានភាពបញ្ជាទិញរបស់អ្នកនៅទីនេះ។"
   },
   "categories": {
     "soups": "ស៊ុប",

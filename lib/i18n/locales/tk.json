@@ -154,7 +154,10 @@
     "trackStepCurrent": "häzirki ädim",
     "trackStepUpcoming": "geljekki",
     "orderContents": "Tertip mazmuny",
-    "placedAt": "Ýerleşdirilen"
+    "placedAt": "Ýerleşdirilen",
+    "orderCount": "{count} sargyt",
+    "orderSequence": "Sargyt {number}",
+    "orderTrackingStatus": "Siz bu ýerdäki sargyt ýagdaýyňyzy yzarlap bilersiňiz."
   },
   "categories": {
     "soups": "Şorbalaryň",

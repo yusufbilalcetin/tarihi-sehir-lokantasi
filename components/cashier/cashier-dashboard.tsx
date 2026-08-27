@@ -11,7 +11,6 @@ import {
   Ellipsis,
   ReceiptText,
   Split,
-  TrendingUp,
   UsersRound,
   WalletCards,
 } from "lucide-react";
@@ -38,7 +37,7 @@ import { ApiClientError, newIdempotencyKey } from "@/lib/api/client";
 import { cashierShiftApi, ledgerApi, paymentApi, staffApi } from "@/lib/api/endpoints";
 import { useApiResource } from "@/lib/hooks/use-api-resource";
 import { useStaffRealtime } from "@/lib/realtime/use-staff-realtime";
-import { formatCurrency } from "@/lib/format";
+import { formatCurrency, formatElapsed } from "@/lib/format";
 import { cn } from "@/lib/utils";
 import type { Order, Payment, RestaurantTable } from "@/types";
 
@@ -78,22 +77,15 @@ function formatClock(date: Date | null) {
   }).format(date);
 }
 
-function formatDate(date: Date | null) {
-  if (!date) return "Bugün";
-  return new Intl.DateTimeFormat("tr-TR", {
-    weekday: "long",
-    day: "numeric",
-    month: "long",
-  }).format(date);
-}
-
 /**
- * `inWindow` renders the till as a module-window body. The pane structure is
- * untouched: open bills on the left, the selected bill and its payment panel
- * on the right is what the till already does well, and re-cutting a payment
- * surface is not a change to make for visual symmetry alone.
+ * The till.
+ *
+ * Open bills on the left, the selected bill and its payment panel on the right.
+ * That structure is what this screen already does well and is left alone; what
+ * changed is how far down the page the payment button sits, because on a tablet
+ * a cashier was scrolling past summary tiles to reach it mid-service.
  */
-export function CashierDashboard({ inWindow = false }: { inWindow?: boolean } = {}) {
+export function CashierDashboard() {
   const [selectedTableId, setSelectedTableId] = useState<string | null>(null);
   const [collectedTotal, setCollectedTotal] = useState(0);
   const [lastPaid, setLastPaid] = useState<{ tableName: string; method: PaymentMethod } | null>(null);
@@ -201,7 +193,6 @@ export function CashierDashboard({ inWindow = false }: { inWindow?: boolean } = 
       collected: collectedTotal,
       paymentWaiting: openBills.filter((bill) => bill.billRequested).length,
       unpaidCount: openBills.length,
-      average: openBills.length ? outstanding / openBills.length : 0,
     };
   }, [collectedTotal, openBills]);
 
@@ -257,7 +248,7 @@ export function CashierDashboard({ inWindow = false }: { inWindow?: boolean } = 
 
   if (!selectedBill) {
     return (
-      <main className={inWindow ? "p-4 sm:p-6" : "min-h-[100dvh] bg-background p-4 sm:p-6"}>
+      <main className="min-h-[100dvh] bg-background p-4 sm:p-6">
         <div className="mx-auto max-w-3xl">
           {shiftSection}
           <div className="mt-6 text-center">
@@ -287,46 +278,37 @@ export function CashierDashboard({ inWindow = false }: { inWindow?: boolean } = 
   }
 
   return (
-    <main className={inWindow ? "" : "min-h-[100dvh] bg-background"}>
-      {inWindow ? null : (
-      <header className="border-b border-white/10 bg-olive text-[#FFFDF8]">
-        <div className="mx-auto flex max-w-[1600px] items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
+    <main className="min-h-[100dvh] bg-background">
+      {/* One line: the drawer state is the only thing here a cashier acts on. */}
+      <header className="border-b border-sidebar-primary/35 bg-sidebar text-[#FBF7EF]">
+        <div className="mx-auto flex max-w-[1600px] items-center justify-between gap-4 px-4 py-2.5 sm:px-6 lg:px-8">
           <div className="flex min-w-0 items-center gap-3">
-            <BrandMark compact className="size-11 shrink-0 border-gold/35" />
-            <div className="min-w-0">
-              <div className="flex items-center gap-2.5">
-                <h1 className="truncate font-heading text-2xl font-semibold tracking-tight sm:text-3xl">Kasa Paneli</h1>
-                <Badge
-                  className={cn(
-                    "hidden border sm:inline-flex",
-                    shiftOpen
-                      ? "border-gold/30 bg-gold/10 text-[#F7E5C2]"
-                      : "border-white/25 bg-white/5 text-[#F5EBDD]/80",
-                  )}
-                >
-                  {shiftOpen ? "Açık Vardiya" : "Kasa Kapalı"}
-                </Badge>
-              </div>
-              <p className="mt-1 truncate text-sm text-[#F5EBDD]/65">Hesap ve ödeme yönetimi</p>
-            </div>
+            <BrandMark compact className="size-9 shrink-0 border-gold/35" />
+            <h1 className="truncate text-lg font-bold tracking-tight sm:text-xl">Kasa</h1>
+            <Badge
+              className={cn(
+                "border",
+                shiftOpen
+                  ? "border-gold/30 bg-gold/10 text-[#F7E5C2]"
+                  : "border-white/25 bg-white/5 text-[#F5EBDD]/80",
+              )}
+            >
+              {shiftOpen ? "Açık Vardiya" : "Kasa Kapalı"}
+            </Badge>
           </div>
 
-          <div className="shrink-0 text-right">
-            <p className="hidden text-xs font-medium capitalize text-[#F5EBDD]/60 sm:block">{formatDate(now)}</p>
-            <p className="mt-0.5 text-2xl font-extrabold tabular-nums tracking-tight" suppressHydrationWarning>
-              {formatClock(now)}
-            </p>
-          </div>
+          <p className="shrink-0 text-lg font-extrabold tabular-nums tracking-tight" suppressHydrationWarning>
+            {formatClock(now)}
+          </p>
         </div>
       </header>
-      )}
 
-      <div className={inWindow ? "px-4 py-4 sm:px-6" : "mx-auto max-w-[1600px] px-4 py-5 sm:px-6 lg:px-8 lg:py-7"}>
-        <section className="mb-5" aria-label="Kasa vardiyası">
+      <div className="mx-auto max-w-[1600px] px-4 py-4 sm:px-6 lg:px-8">
+        <section className="mb-4" aria-label="Kasa vardiyası">
           {shiftSection}
         </section>
 
-        <section className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4" aria-label="Kasa özeti">
+        <section className="grid gap-3 sm:grid-cols-3" aria-label="Kasa özeti">
           <StatCard
             label="Açık hesap"
             value={formatCurrency(metrics.outstanding)}
@@ -347,15 +329,9 @@ export function CashierDashboard({ inWindow = false }: { inWindow?: boolean } = 
             icon={CircleDollarSign}
             tone="success"
           />
-          <StatCard
-            label="Ortalama hesap"
-            value={formatCurrency(metrics.average)}
-            helper="Açık masalar üzerinden"
-            icon={TrendingUp}
-          />
         </section>
 
-        <div className="mt-5 grid items-start gap-5 lg:grid-cols-[minmax(18rem,0.8fr)_minmax(0,1.5fr)] xl:gap-6">
+        <div className="mt-4 grid items-start gap-4 lg:grid-cols-[minmax(18rem,0.8fr)_minmax(0,1.5fr)] xl:gap-5">
           <Card className="gap-0 py-0">
             <CardHeader className="border-b py-4">
               <div className="flex items-center justify-between gap-3">
@@ -380,7 +356,7 @@ export function CashierDashboard({ inWindow = false }: { inWindow?: boolean } = 
                       onClick={() => setSelectedTableId(table.id)}
                       aria-pressed={isSelected}
                       className={cn(
-                        "min-h-24 rounded-xl border p-3.5 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+                        "motion-press motion-operational-state min-h-24 rounded-xl border p-3.5 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
                         isSelected
                           ? "border-burgundy/35 bg-burgundy/[0.055] shadow-[inset_3px_0_0_#681F25]"
                           : "border-transparent bg-muted/45 hover:border-border hover:bg-muted/70",
@@ -388,9 +364,9 @@ export function CashierDashboard({ inWindow = false }: { inWindow?: boolean } = 
                     >
                       <span className="flex items-start justify-between gap-3">
                         <span>
-                          <span className="block font-heading text-lg font-semibold leading-5 text-foreground">{table.name}</span>
+                          <span className="block text-lg font-extrabold leading-5 text-foreground">{table.name}</span>
                           <span className="mt-1.5 block text-xs font-medium text-muted-foreground">
-                            {order.orderNumber} · {order.elapsedMinutes} dk açık
+                            {order.orderNumber} · {formatElapsed(order.elapsedMinutes)} açık
                           </span>
                         </span>
                         <span className="text-base font-extrabold tabular-nums text-foreground">
@@ -433,7 +409,7 @@ export function CashierDashboard({ inWindow = false }: { inWindow?: boolean } = 
                     <span className="font-semibold text-foreground">{selectedBill.order.orderNumber}</span>
                     <span className="inline-flex items-center gap-1">
                       <Clock3 className="size-3.5" aria-hidden="true" />
-                      {selectedBill.order.elapsedMinutes} dk
+                      {formatElapsed(selectedBill.order.elapsedMinutes)}
                     </span>
                     <span className="inline-flex items-center gap-1">
                       <UsersRound className="size-3.5" aria-hidden="true" />
@@ -442,8 +418,8 @@ export function CashierDashboard({ inWindow = false }: { inWindow?: boolean } = 
                   </p>
                 </div>
                 <div className="sm:text-right">
-                  <p className="text-xs font-medium text-muted-foreground">Ödenecek toplam</p>
-                  <p className="mt-1 text-3xl font-extrabold tabular-nums tracking-tight text-burgundy">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Ödenecek toplam</p>
+                  <p className="mt-0.5 text-4xl font-extrabold tabular-nums tracking-tight text-burgundy">
                     {formatCurrency(selectedBill.order.total)}
                   </p>
                 </div>
@@ -452,7 +428,7 @@ export function CashierDashboard({ inWindow = false }: { inWindow?: boolean } = 
 
             <CardContent className="p-0">
               <div className="border-b border-border px-4 py-4 sm:px-5">
-                <h2 className="font-heading text-lg font-semibold">Sipariş kalemleri</h2>
+                <h2 className="text-base font-bold">Sipariş kalemleri</h2>
                 <Table className="mt-2 min-w-[34rem]">
                   <TableHeader>
                     <TableRow className="hover:bg-transparent">
@@ -495,7 +471,7 @@ export function CashierDashboard({ inWindow = false }: { inWindow?: boolean } = 
                 {(
                   <div>
                     <fieldset>
-                      <legend className="font-heading text-lg font-semibold">Ödeme yöntemi</legend>
+                      <legend className="text-base font-bold">Ödeme yöntemi</legend>
                       <p className="mt-1 text-xs text-muted-foreground">Tahsilat için kullanılacak yöntemi seçin.</p>
                       <div className="mt-3 grid gap-2 sm:grid-cols-3" role="radiogroup" aria-label="Ödeme yöntemi">
                         {paymentMethods.map((method) => {
@@ -510,7 +486,7 @@ export function CashierDashboard({ inWindow = false }: { inWindow?: boolean } = 
                               aria-checked={isActive}
                               onClick={() => selectPaymentMethod(method.id)}
                               className={cn(
-                                "flex min-h-20 items-center gap-3 rounded-xl border px-3.5 py-3 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+                                "motion-press motion-operational-state flex min-h-20 items-center gap-3 rounded-xl border px-3.5 py-3 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
                                 isActive
                                   ? "border-burgundy/45 bg-burgundy/[0.06] text-burgundy"
                                   : "border-border bg-card text-foreground hover:bg-muted/60",

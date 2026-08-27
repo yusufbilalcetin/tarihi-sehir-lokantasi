@@ -27,7 +27,7 @@ function Fact({ label, value }: { label: string; value: string }) {
   return (
     <div className="rounded-lg border border-border bg-card p-3">
       <p className="text-xs font-semibold text-muted-foreground">{label}</p>
-      <p className="mt-0.5 font-heading text-lg font-semibold tabular-nums">{value}</p>
+      <p className="mt-0.5 text-lg font-semibold tabular-nums">{value}</p>
     </div>
   );
 }

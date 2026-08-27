@@ -154,7 +154,10 @@
     "trackStepCurrent": "isinyathelo samanje",
     "trackStepUpcoming": "esizayo",
     "orderContents": "Okuqukethwe kwe-oda",
-    "placedAt": "Kufakwe ngo"
+    "placedAt": "Kufakwe ngo",
+    "orderCount": "{count} ama-oda",
+    "orderSequence": "Oda {number}",
+    "orderTrackingStatus": "Ungalandelela isimo se-oda lakho lapha."
   },
   "categories": {
     "soups": "Isobho",

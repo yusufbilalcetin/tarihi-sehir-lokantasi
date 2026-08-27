@@ -154,7 +154,10 @@
     "trackStepCurrent": "موجودہ مرحلہ",
     "trackStepUpcoming": "آئندہ",
     "orderContents": "آرڈر کے مواد",
-    "placedAt": "پر رکھا گیا"
+    "placedAt": "پر رکھا گیا",
+    "orderCount": "{count} آرڈرز",
+    "orderSequence": "آرڈر {number}",
+    "orderTrackingStatus": "آپ یہاں اپنے آرڈر کی صورتحال دیکھ سکتے ہیں۔"
   },
   "categories": {
     "soups": "سُوپ",

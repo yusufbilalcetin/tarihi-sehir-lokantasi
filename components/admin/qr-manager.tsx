@@ -10,7 +10,7 @@ import { adminApi } from "@/lib/api/endpoints";
 
 function QrPlaceholder({ tableName }: { tableName: string }) {
   return (
-    <div className="relative mx-auto grid aspect-square w-full max-w-48 place-items-center overflow-hidden rounded-2xl border-8 border-card bg-[#fffdf8] ring-1 ring-border">
+    <div className="relative mx-auto grid aspect-square w-full max-w-48 place-items-center overflow-hidden rounded-xl border-8 border-card bg-[#fffdf8] ring-1 ring-border">
       <div
         className="absolute inset-3 opacity-[0.09]"
         style={{ backgroundImage: "repeating-conic-gradient(#25211D 0 25%, transparent 0 50%)", backgroundSize: "12px 12px" }}
@@ -68,7 +68,7 @@ export function QrManager() {
         <RealtimeStatus status={admin.realtimeStatus} />
       </div>
 
-      <div className="rounded-2xl border border-copper/35 bg-copper/8 p-4 sm:flex sm:items-start sm:gap-4">
+      <div className="rounded-xl border border-copper/35 bg-copper/8 p-4 sm:flex sm:items-start sm:gap-4">
         <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-card text-burgundy"><Link2 className="size-5" /></div>
         <div className="mt-3 sm:mt-0">
           <p className="text-sm font-extrabold">Ham QR adresi veritabanında tutulmaz</p>
@@ -81,7 +81,7 @@ export function QrManager() {
       </div>
 
       {admin.error && !admin.tables.length ? (
-        <div className="grid min-h-48 place-items-center rounded-2xl border bg-card p-8 text-center">
+        <div className="grid min-h-48 place-items-center rounded-xl border bg-card p-8 text-center">
           <div>
             <QrCode className="mx-auto size-9 text-muted-foreground" />
             <p className="mt-3 font-bold">Masalar yüklenemedi</p>
@@ -95,26 +95,26 @@ export function QrManager() {
             const active = table.isActive && !table.qrRevoked;
 
             return (
-              <article key={table.id} className="rounded-2xl border bg-card p-4 shadow-[0_12px_35px_rgba(74,40,40,0.05)] sm:p-5">
+              <article key={table.id} className="rounded-lg border bg-card p-4 shadow-[var(--shadow-raised)] sm:p-5">
                 <div className="flex items-start justify-between gap-3">
                   <div>
                     <h2 className="font-heading text-xl font-semibold">{table.name}</h2>
                     <p className="mt-1 text-xs text-muted-foreground">Sürüm v{table.qrTokenVersion}</p>
                   </div>
                   <span className={active
-                    ? "rounded-lg bg-status-success-tint px-2 py-1 text-[10px] font-extrabold text-status-success"
-                    : "rounded-lg bg-status-danger-tint px-2 py-1 text-[10px] font-extrabold text-status-danger"}
+                    ? "rounded-lg bg-status-success-tint px-2 py-1 text-xs font-extrabold text-status-success"
+                    : "rounded-lg bg-status-danger-tint px-2 py-1 text-xs font-extrabold text-status-danger"}
                   >
                     {active ? "AKTİF" : "YENİLENMELİ"}
                   </span>
                 </div>
 
-                <div className="my-5 rounded-2xl bg-background p-4"><QrPlaceholder tableName={table.name} /></div>
+                <div className="my-5 rounded-xl bg-background p-4"><QrPlaceholder tableName={table.name} /></div>
 
                 {rawToken ? (
                   <div className="mb-3 rounded-xl border border-copper/40 bg-copper/8 p-3" role="status">
-                    <p className="text-[11px] font-extrabold">Yeni bağlantı (yalnızca bir kez)</p>
-                    <code className="mt-1 block overflow-x-auto text-[11px]">/menu/{rawToken}</code>
+                    <p className="text-xs font-extrabold">Yeni bağlantı (yalnızca bir kez)</p>
+                    <code className="mt-1 block overflow-x-auto text-xs">/menu/{rawToken}</code>
                   </div>
                 ) : null}
 

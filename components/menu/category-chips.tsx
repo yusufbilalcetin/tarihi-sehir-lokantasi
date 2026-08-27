@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 
 import { useMenuPreferences } from "@/components/menu/menu-preferences-provider";
-import type { MenuCategory } from "@/components/menu/category-grid";
+import type { MenuViewCategory } from "@/lib/adapters/menu-view-model";
 import { getMenuCategoryName } from "@/lib/i18n/menu-content";
 import { cn } from "@/lib/utils";
 
@@ -26,9 +26,9 @@ export function CategoryChips({
   activeCategoryId,
   onSelect,
 }: {
-  readonly categories: readonly MenuCategory[];
+  readonly categories: readonly MenuViewCategory[];
   readonly activeCategoryId: string | null;
-  readonly onSelect: (category: MenuCategory, focusHeading: boolean) => void;
+  readonly onSelect: (category: MenuViewCategory, focusHeading: boolean) => void;
 }) {
   const { language, t } = useMenuPreferences();
   const activeRef = useRef<HTMLButtonElement>(null);

@@ -154,7 +154,10 @@
     "trackStepCurrent": "ขั้นตอนปัจจุบัน",
     "trackStepUpcoming": "ขั้นตอนต่อไป",
     "orderContents": "รายละเอียดคำสั่งซื้อ",
-    "placedAt": "สั่งซื้อเมื่อ"
+    "placedAt": "สั่งซื้อเมื่อ",
+    "orderCount": "{count} คำสั่งซื้อ",
+    "orderSequence": "คำสั่งซื้อ {number}",
+    "orderTrackingStatus": "คุณสามารถติดตามสถานะคำสั่งซื้อของคุณได้ที่นี่"
   },
   "categories": {
     "soups": "ซุป",

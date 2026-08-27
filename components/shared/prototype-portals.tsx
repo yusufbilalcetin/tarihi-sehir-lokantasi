@@ -47,7 +47,7 @@ const staffPortals = [
 ];
 
 const tileClassName =
-  "group flex min-h-44 flex-col justify-between rounded-2xl border border-white/10 bg-white/[0.055] p-5 text-left transition-colors hover:border-copper/60 hover:bg-white/[0.09] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-copper";
+  "group flex min-h-44 flex-col justify-between rounded-xl border border-white/10 bg-white/[0.055] p-5 text-left transition-colors hover:border-copper/60 hover:bg-white/[0.09] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-copper";
 
 export function PrototypePortals() {
   const [pickerOpen, setPickerOpen] = useState(false);

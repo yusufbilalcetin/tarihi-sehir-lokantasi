@@ -105,7 +105,7 @@ function Kpi({
     <div className="rounded-xl border border-border bg-card p-4">
       <p className="text-xs font-semibold text-muted-foreground">{label}</p>
       <div className="mt-1 flex items-baseline justify-between gap-2">
-        <p className="font-heading text-2xl font-semibold tabular-nums">
+        <p className="text-2xl font-semibold tabular-nums">
           {money ? formatCurrency(Number(value)) : Number(value).toLocaleString("tr-TR")}
         </p>
         <TrendBadge trend={trend} />
@@ -365,7 +365,7 @@ export function AdvancedReportsView() {
             <p className="text-xs font-semibold text-muted-foreground">En Yoğun Saat</p>
             {busiest.data?.busiestHour ? (
               <>
-                <p className="mt-1 font-heading text-2xl font-semibold tabular-nums">
+                <p className="mt-1 text-2xl font-semibold tabular-nums">
                   {String(busiest.data.busiestHour.hour).padStart(2, "0")}:00 –{" "}
                   {String((busiest.data.busiestHour.hour + 1) % 24).padStart(2, "0")}:00
                 </p>
@@ -397,7 +397,7 @@ export function AdvancedReportsView() {
           {busiest.data?.busiestDate ? (
             <div className="rounded-xl border border-border bg-card p-4 md:col-span-2">
               <p className="text-xs font-semibold text-muted-foreground">En Yoğun Tarih</p>
-              <p className="mt-1 font-heading text-xl font-semibold tabular-nums">
+              <p className="mt-1 text-xl font-semibold tabular-nums">
                 {busiest.data.busiestDate.date}
               </p>
               <p className="text-sm text-muted-foreground tabular-nums">
@@ -591,7 +591,7 @@ export function AdvancedReportsView() {
           <div className="grid gap-3 sm:grid-cols-3">
             <div className="rounded-xl border border-border bg-card p-4">
               <p className="text-xs font-semibold text-muted-foreground">İptaller</p>
-              <p className="mt-1 font-heading text-xl font-semibold tabular-nums">
+              <p className="mt-1 text-xl font-semibold tabular-nums">
                 {finance.data.cancellations.orderCount} sipariş · {finance.data.cancellations.itemCount} kalem
               </p>
               <p className="text-sm text-muted-foreground tabular-nums">
@@ -600,7 +600,7 @@ export function AdvancedReportsView() {
             </div>
             <div className="rounded-xl border border-border bg-card p-4">
               <p className="text-xs font-semibold text-muted-foreground">Hesaptan Çıkarma</p>
-              <p className="mt-1 font-heading text-xl font-semibold tabular-nums">
+              <p className="mt-1 text-xl font-semibold tabular-nums">
                 {finance.data.voids.count}
               </p>
               <p className="text-sm text-muted-foreground tabular-nums">
@@ -609,7 +609,7 @@ export function AdvancedReportsView() {
             </div>
             <div className="rounded-xl border border-border bg-card p-4">
               <p className="text-xs font-semibold text-muted-foreground">İadeler</p>
-              <p className="mt-1 font-heading text-xl font-semibold tabular-nums">
+              <p className="mt-1 text-xl font-semibold tabular-nums">
                 {finance.data.refunds.count}
               </p>
               <p className="text-sm text-muted-foreground tabular-nums">
@@ -673,7 +673,7 @@ export function AdvancedReportsView() {
                   <td className="px-3 py-2 font-semibold">
                     {row.staffName}
                     {row.isActive ? null : (
-                      <span className="ml-2 rounded bg-muted px-1.5 py-0.5 text-[10px] font-bold text-muted-foreground">
+                      <span className="ml-2 rounded bg-muted px-1.5 py-0.5 text-xs font-bold text-muted-foreground">
                         Pasif
                       </span>
                     )}
@@ -963,7 +963,7 @@ export function AdvancedReportsView() {
               />
               <div className="rounded-xl border border-border bg-card p-4">
                 <p className="text-xs font-semibold text-muted-foreground">En Yoğun Saat</p>
-                <p className="mt-1 font-heading text-2xl font-semibold tabular-nums">
+                <p className="mt-1 text-2xl font-semibold tabular-nums">
                   {kitchen.data.busiestHour
                     ? `${String(kitchen.data.busiestHour.hour).padStart(2, "0")}:00`
                     : "—"}
@@ -981,7 +981,7 @@ export function AdvancedReportsView() {
               <p className="text-xs font-semibold text-muted-foreground">Hazırlama Süresi</p>
               {kitchen.data.duration.supported ? (
                 <>
-                  <p className="mt-1 font-heading text-xl font-semibold tabular-nums">
+                  <p className="mt-1 text-xl font-semibold tabular-nums">
                     Ortalama {seconds(kitchen.data.duration.value.averageSeconds)} · Medyan{" "}
                     {seconds(kitchen.data.duration.value.medianSeconds)} · %90{" "}
                     {seconds(kitchen.data.duration.value.p90Seconds)}
@@ -1022,7 +1022,7 @@ export function AdvancedReportsView() {
                         <td className="px-3 py-2 font-semibold">
                           {row.staffName}
                           {row.isActive ? null : (
-                            <span className="ml-2 rounded bg-muted px-1.5 py-0.5 text-[10px] font-bold text-muted-foreground">
+                            <span className="ml-2 rounded bg-muted px-1.5 py-0.5 text-xs font-bold text-muted-foreground">
                               Pasif
                             </span>
                           )}

@@ -37,9 +37,10 @@ export function AdminPageHeader({
   }
 
   return (
-    <header className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+    <header className="flex flex-col gap-4 border-b border-border/80 pb-5 sm:flex-row sm:items-end sm:justify-between">
       <div className="min-w-0">
-        <h1 className="font-heading text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">{title}</h1>
+        <div className="mb-2 h-px w-9 bg-copper" aria-hidden="true" />
+        <h1 className="font-heading text-2xl font-semibold tracking-[-0.02em] text-foreground sm:text-3xl">{title}</h1>
         <p className="mt-1 max-w-2xl text-sm leading-6 text-muted-foreground">{description}</p>
       </div>
       {actions ? <div className="flex shrink-0 flex-wrap items-center gap-2">{actions}</div> : null}
@@ -63,9 +64,9 @@ export function AdminPanel({
   contentClassName?: string;
 }) {
   return (
-    <section className={cn("overflow-hidden rounded-xl border border-border/80 bg-card", className)}>
+    <section className={cn("overflow-hidden rounded-lg border border-border/80 bg-card shadow-[var(--shadow-raised)]", className)}>
       {title || action ? (
-        <div className="flex items-start justify-between gap-4 border-b px-4 py-4 sm:px-5">
+        <div className="flex items-start justify-between gap-4 border-b border-border/75 bg-muted/25 px-4 py-4 sm:px-5">
           <div>
             {title ? <h2 className="font-heading text-lg font-semibold">{title}</h2> : null}
             {description ? <p className="mt-0.5 text-xs leading-5 text-muted-foreground">{description}</p> : null}
@@ -100,16 +101,16 @@ export function AdminKpi({
   return (
     <article
       className={cn(
-        "relative overflow-hidden rounded-xl border border-border/80 bg-card p-4 sm:p-5",
-        inverse && "border-olive bg-olive text-cream",
+        "relative overflow-hidden rounded-lg border border-border/80 bg-card p-4 shadow-[var(--shadow-raised)] sm:p-5",
+        inverse && "border-copper/45 bg-card text-foreground",
       )}
     >
       <div className="flex items-start justify-between gap-4">
         <div className="min-w-0">
-          <p className={cn("text-sm font-semibold text-muted-foreground", inverse && "text-cream/65")}>{label}</p>
+          <p className={cn("text-sm font-semibold text-muted-foreground")}>{label}</p>
           <p className="mt-2 truncate text-2xl font-extrabold tabular-nums tracking-tight sm:text-[28px]">{value}</p>
         </div>
-        <div className={cn("flex size-10 shrink-0 items-center justify-center rounded-xl bg-burgundy/8 text-burgundy", inverse && "bg-cream/10 text-gold")}>
+        <div className={cn("flex size-10 shrink-0 items-center justify-center rounded-md border border-copper/25 bg-muted/45 text-burgundy", inverse && "text-copper")}>
           <Icon className="size-5" strokeWidth={1.8} />
         </div>
       </div>
@@ -119,13 +120,12 @@ export function AdminKpi({
             className={cn(
               "inline-flex items-center gap-0.5 font-bold",
               positive ? "text-status-success" : "text-status-danger",
-              inverse && (positive ? "text-order-ready-tint" : "text-order-void-tint"),
             )}
           >
             <TrendIcon className="size-3.5" /> %{Math.abs(change).toLocaleString("tr-TR")}
           </span>
         ) : null}
-        <span className={cn("text-muted-foreground", inverse && "text-cream/55")}>{changeLabel ?? helper}</span>
+        <span className="text-muted-foreground">{changeLabel ?? helper}</span>
       </div>
     </article>
   );
@@ -161,7 +161,7 @@ export function DataToolbar({ children }: { children: ReactNode }) {
 
 export function SummaryChip({ label, value }: { label: string; value: string | number }) {
   return (
-    <div className="rounded-xl border bg-background px-3 py-2 text-xs text-muted-foreground">
+    <div className="rounded-md border bg-muted/30 px-3 py-2 text-xs text-muted-foreground">
       {label} <strong className="ml-1 font-extrabold tabular-nums text-foreground">{value}</strong>
     </div>
   );

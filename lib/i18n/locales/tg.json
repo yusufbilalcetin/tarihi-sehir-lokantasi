@@ -154,7 +154,10 @@
     "trackStepCurrent": "қадами ҷорӣ",
     "trackStepUpcoming": "бояд пеш ояд",
     "orderContents": "Мӯҳтавои фармоиш",
-    "placedAt": "Сар карда шуд дар"
+    "placedAt": "Сар карда шуд дар",
+    "orderCount": "{count} фармон",
+    "orderSequence": "Фармоиш {number}",
+    "orderTrackingStatus": "Шумо метавонед вазъияти фармоиши худро дар ин ҷо пайгирӣ кунед."
   },
   "categories": {
     "soups": "Шӯрбоҳо",

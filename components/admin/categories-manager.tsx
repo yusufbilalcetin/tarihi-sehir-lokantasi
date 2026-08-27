@@ -5,14 +5,8 @@ import { ArrowDown, ArrowUp, Edit3, GripVertical, Layers3, Plus, Search, Trash2 
 import { toast } from "sonner";
 import { AdminPageHeader, AdminPanel, DataToolbar, Field, SummaryChip } from "@/components/admin/admin-ui";
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Dialog } from "@/components/ui/dialog";
+import { WindowDialogContent } from "@/components/ui/window-dialog";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { RealtimeStatus } from "@/components/staff/realtime-status";
@@ -142,7 +136,7 @@ export function CategoriesManager() {
               <div key={category.id} className="grid items-center gap-3 p-4 transition-colors hover:bg-muted/20 sm:grid-cols-[auto_minmax(0,1fr)_120px_130px_auto] sm:px-5">
                 <div className="hidden size-9 items-center justify-center rounded-lg text-muted-foreground sm:flex"><GripVertical className="size-4" /></div>
                 <div className="min-w-0">
-                  <div className="flex flex-wrap items-center gap-2"><p className="font-extrabold">{category.name}</p>{!category.active ? <span className="rounded-md bg-muted px-2 py-0.5 text-[10px] font-bold text-muted-foreground">Pasif</span> : null}</div>
+                  <div className="flex flex-wrap items-center gap-2"><p className="font-extrabold">{category.name}</p>{!category.active ? <span className="rounded-md bg-muted px-2 py-0.5 text-xs font-bold text-muted-foreground">Pasif</span> : null}</div>
                   <p className="mt-1 truncate text-xs text-muted-foreground">/{category.slug}</p>
                 </div>
                 <div className="flex items-center gap-2 sm:block"><span className="text-xs text-muted-foreground sm:hidden">Ürün:</span><strong className="text-sm tabular-nums">{category.productCount}</strong></div>
@@ -162,23 +156,24 @@ export function CategoriesManager() {
       </AdminPanel>
 
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="sm:max-w-md">
-          <form onSubmit={handleSubmit}>
-            <DialogHeader>
-              <DialogTitle className="text-xl">{editing ? "Kategoriyi düzenle" : "Yeni kategori"}</DialogTitle>
-              <DialogDescription>Kategori adını, kapak görselini ve QR menü görünürlüğünü belirleyin.</DialogDescription>
-            </DialogHeader>
-            <div className="grid gap-4 py-5">
+        <WindowDialogContent
+          size="sm"
+          title={editing ? "Kategoriyi düzenle" : "Yeni kategori"}
+          description="Kategori adını, kapak görselini ve QR menü görünürlüğünü belirleyin."
+          render={<form onSubmit={handleSubmit} />}
+          footer={
+            <>
+              <Button type="button" variant="outline" onClick={() => setDialogOpen(false)}>Vazgeç</Button>
+              <Button type="submit" disabled={menu.saving} aria-busy={menu.saving}>{editing ? "Kaydet" : "Kategori Ekle"}</Button>
+            </>
+          }
+        >
+            <div className="grid gap-4">
               <Field label="Kategori adı"><Input value={name} onChange={(event) => setName(event.target.value)} placeholder="Örn. Zeytinyağlılar" className="h-10" autoFocus /></Field>
               <Field label="Kapak görseli"><Input value={imageUrl} onChange={(event) => setImageUrl(event.target.value)} placeholder="/images/food/category-corbalar.jpg" className="h-10" /><span className="mt-1 block text-xs text-muted-foreground">Boş bırakılırsa kategori sade bir görselle gösterilir.</span></Field>
               <label className="flex min-h-14 items-center justify-between gap-4 rounded-xl border bg-background px-3"><span><span className="block text-sm font-bold">Aktif</span><span className="text-xs text-muted-foreground">QR menüde göster</span></span><Switch checked={active} onCheckedChange={setActive} aria-label="Kategori aktif" /></label>
             </div>
-            <DialogFooter>
-              <Button type="button" variant="outline" onClick={() => setDialogOpen(false)}>Vazgeç</Button>
-              <Button type="submit" disabled={menu.saving} aria-busy={menu.saving}>{editing ? "Kaydet" : "Kategori Ekle"}</Button>
-            </DialogFooter>
-          </form>
-        </DialogContent>
+        </WindowDialogContent>
       </Dialog>
     </div>
   );

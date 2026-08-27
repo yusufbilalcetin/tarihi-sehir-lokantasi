@@ -154,7 +154,10 @@
     "trackStepCurrent": "etakeli ya sikisiki",
     "trackStepUpcoming": "eya naino",
     "orderContents": "Biloko ya komanda",
-    "placedAt": "Esalemi na"
+    "placedAt": "Esalemi na",
+    "orderCount": "{count} ba commande",
+    "orderSequence": "Mobembo {number}",
+    "orderTrackingStatus": "Oyo okoki koyeba esika mobembo na yo ezali na yango awa."
   },
   "categories": {
     "soups": "Soupe",

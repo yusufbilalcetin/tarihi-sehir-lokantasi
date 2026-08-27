@@ -154,7 +154,10 @@
     "trackStepCurrent": "pašreizējais solis",
     "trackStepUpcoming": "nākamais",
     "orderContents": "Pasūtījuma saturs",
-    "placedAt": "Veikts"
+    "placedAt": "Veikts",
+    "orderCount": "{count} pasūtījumi",
+    "orderSequence": "Pasūtījums {number}",
+    "orderTrackingStatus": "Jūs varat sekot sava pasūtījuma statusam šeit."
   },
   "categories": {
     "soups": "Zupas",

@@ -154,7 +154,10 @@
     "trackStepCurrent": "nykyinen vaihe",
     "trackStepUpcoming": "tuleva",
     "orderContents": "Tilaussisältö",
-    "placedAt": "Tehty"
+    "placedAt": "Tehty",
+    "orderCount": "{count} tilausta",
+    "orderSequence": "Tilaus {number}",
+    "orderTrackingStatus": "Voit seurata tilauksesi tilaa täällä."
   },
   "categories": {
     "soups": "Keitot",

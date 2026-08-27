@@ -74,23 +74,36 @@ test("the journal is ordered, gapless and monotonic in time", () => {
   }
 });
 
-test("the four pending migrations are registered, in order, and last in the set", () => {
+test("every migration in the set is registered, in order", () => {
   const tags = journal().entries.map((entry) => entry.tag);
-  const pending = [
+  // This used to pin the exact four migrations that were pending during phase
+  // 41. Those were applied long ago, so the list was describing history rather
+  // than an invariant, and every later migration broke it. What actually has
+  // to hold is the pairing: one executable file per journal entry, in order.
+  // One executable file per journal entry: the reader and the journal agree on
+  // how many migrations exist and therefore on their order.
+  assert.equal(executable().length, tags.length);
+  // The phase-38/39 set stays present and in its original relative order.
+  const phaseSet = [
     "0013_phase38_erp_core",
     "0014_phase39_fulfillment_items",
     "0015_phase39_order_channel",
     "0016_phase39_stock_movement_time_index",
   ];
-  assert.deepEqual(tags.slice(-4), pending, "the pending set is not the last four journal entries");
-  // And the reader agrees: one executable migration per journal entry.
-  assert.equal(executable().length, tags.length);
+  const positions = phaseSet.map((tag) => tags.indexOf(tag));
+  assert.ok(positions.every((position) => position >= 0), "a phase 38/39 migration left the journal");
+  assert.deepEqual([...positions].sort((a, b) => a - b), positions, "the phase 38/39 set was reordered");
 });
 
 test("0016 carries the index the stock movements report actually needs", () => {
-  const last = executable().at(-1);
-  assert.ok(last, "the migration set is empty");
-  const sql = last.sql.join("\n");
+  const tags = journal().entries.map((entry) => entry.tag);
+  const index = tags.indexOf("0016_phase39_stock_movement_time_index");
+  assert.ok(index >= 0, "0016 left the journal");
+  // Addressed by tag rather than by "last": migrations added after it must not
+  // make this assertion read the wrong file.
+  const target = executable()[index];
+  assert.ok(target, "the migration set is empty");
+  const sql = target.sql.join("\n");
   // The report filters by restaurant and a date range, ordered newest first.
   assert.match(sql, /CREATE INDEX "stock_movements_restaurant_occurred_idx"/);
   assert.match(sql, /ON "stock_movements"/);

@@ -154,7 +154,10 @@
     "trackStepCurrent": "nzụpụta ugbu a",
     "trackStepUpcoming": "na-abịa",
     "orderContents": "Ihe nọ n'ime iwu",
-    "placedAt": "Tinyeere na"
+    "placedAt": "Tinyeere na",
+    "orderCount": "{count} iwu",
+    "orderSequence": "Ụtụ {number}",
+    "orderTrackingStatus": "Ị nwere ike soro ọnọdụ ụtụ gị ebe a."
   },
   "categories": {
     "soups": "Ọkụkọ",

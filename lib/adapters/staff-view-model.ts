@@ -5,6 +5,7 @@ import type {
 import type { StaffCallPayload } from "@/lib/api/endpoints";
 import type { StaffOrderListResult } from "@/lib/services/staff-order-service";
 import type { StaffTableResult } from "@/lib/services/staff-table-service";
+import { formatElapsed } from "@/lib/format";
 import type {
   Order,
   OrderItemStatus,
@@ -71,6 +72,23 @@ export function toApiOrderStatus(status: OrderStatus): DomainOrderStatus {
 
 const clockFormatter = new Intl.DateTimeFormat("tr-TR", { hour: "2-digit", minute: "2-digit" });
 
+/**
+ * A wall-clock time for a screen, or a dash when there is no honest one.
+ *
+ * `Intl.DateTimeFormat.format` throws a RangeError on an invalid Date, and
+ * these adapters fed it the API string directly. A single malformed timestamp
+ * would therefore take down whichever board rendered it — the kitchen ticket
+ * list, the order list or the calls list — rather than losing one line of one
+ * row. Every clock label in this file goes through here.
+ *
+ * The dash is the same convention `Money` uses for a value that is not there:
+ * a missing time is stated as missing, never invented and never "Invalid Date".
+ */
+function clockLabel(iso: string): string {
+  const parsed = Date.parse(iso);
+  return Number.isNaN(parsed) ? "—" : clockFormatter.format(parsed);
+}
+
 function minutesSince(iso: string, now: number): number {
   const started = Date.parse(iso);
   if (Number.isNaN(started)) return 0;
@@ -86,7 +104,7 @@ export function staffOrderToViewModel(
     orderNumber: `#${order.orderNumber}`,
     tableId: order.table?.id ?? null,
     tableName: order.placeLabel,
-    createdAt: clockFormatter.format(new Date(order.createdAt)),
+    createdAt: clockLabel(order.createdAt),
     elapsedMinutes: minutesSince(order.createdAt, now),
     status: ORDER_STATUS_TO_VIEW[order.status] ?? "pending",
     total: Number(order.amounts.total),
@@ -120,12 +138,22 @@ const KNOWN_REQUEST_LABELS = new Set<string>([
   "Diğer",
 ]);
 
+/**
+ * How fresh a request is, in the words the floor actually uses.
+ *
+ * Durations everywhere else go through `formatElapsed`, and this did too — but
+ * `formatElapsed` floors to whole minutes, so a call raised twelve seconds ago
+ * read "0 dk önce" on the one screen whose entire job is making the newest
+ * request stand out. Under a minute the honest answer is that it just
+ * happened; from a minute on, the shared formatter takes over unchanged.
+ *
+ * An unparseable timestamp lands here too: "az önce" is closer to the truth
+ * than a fabricated zero, and it can never read as a stale call.
+ */
 function relativeLabel(iso: string, now: number): string {
-  const seconds = Math.max(0, Math.floor((now - Date.parse(iso)) / 1000));
-  if (seconds < 60) return `${seconds} saniye önce`;
-  const minutes = Math.floor(seconds / 60);
-  if (minutes < 60) return `${minutes} dakika önce`;
-  return `${Math.floor(minutes / 60)} saat önce`;
+  const started = Date.parse(iso);
+  if (Number.isNaN(started) || now - started < 60_000) return "az önce";
+  return `${formatElapsed(minutesSince(iso, now))} önce`;
 }
 
 export function staffCallToViewModel(
@@ -144,7 +172,7 @@ export function staffCallToViewModel(
     tableName: call.table.name,
     type,
     elapsed: relativeLabel(call.createdAt, now),
-    createdAt: clockFormatter.format(new Date(call.createdAt)),
+    createdAt: clockLabel(call.createdAt),
     status: CALL_STATUS_TO_VIEW[call.status] ?? "open",
   };
 }

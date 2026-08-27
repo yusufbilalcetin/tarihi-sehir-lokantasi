@@ -154,7 +154,10 @@
     "trackStepCurrent": "ਕਦਮ",
     "trackStepUpcoming": "ਆਗਾਮੀ ਆਰਡਰ",
     "orderContents": "ਸਮੱਗਰੀ ਨੂੰ",
-    "placedAt": "'ਤੇ ਰੱਖਿਆ ਗਿਆ"
+    "placedAt": "'ਤੇ ਰੱਖਿਆ ਗਿਆ",
+    "orderCount": "{count} ਆਰਡਰ",
+    "orderSequence": "ਆਰਡਰ {number}",
+    "orderTrackingStatus": "ਤੁਸੀਂ ਇੱਥੇ ਆਪਣੇ ਆਰਡਰ ਦੀ ਸਥਿਤੀ ਨੂੰ ਫਾਲੋ ਕਰ ਸਕਦੇ ਹੋ।"
   },
   "categories": {
     "soups": "ਸੂਪ",

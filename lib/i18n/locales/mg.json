@@ -154,7 +154,10 @@
     "trackStepCurrent": "dingana ankehitriny",
     "trackStepUpcoming": "ho avy",
     "orderContents": "Votoatin'ny kaomandy",
-    "placedAt": "Natao tamin'ity fotoana ity"
+    "placedAt": "Natao tamin'ity fotoana ity",
+    "orderCount": "{count} baiko",
+    "orderSequence": "Kaomandy {number}",
+    "orderTrackingStatus": "Azonao arahina eto ny sata ny kaomandinao."
   },
   "categories": {
     "soups": "Lasopy",

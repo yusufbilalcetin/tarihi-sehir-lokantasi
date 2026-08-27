@@ -31,11 +31,11 @@ function StaffHeader({ pathname }: { pathname: string }) {
   const roleLabel = STAFF_ROLE_LABELS[role];
 
   return (
-    <header className="sticky top-0 z-30 border-b border-sidebar-border bg-olive text-sidebar-foreground shadow-[0_8px_28px_rgb(48_56_45/0.12)]">
+    <header className="sticky top-0 z-30 border-b border-sidebar-primary/35 bg-sidebar text-sidebar-foreground shadow-[0_4px_16px_rgba(45,32,24,0.12)]">
       <div className="mx-auto flex h-16 w-full max-w-[1400px] items-center gap-3 px-4 sm:px-6 lg:px-8">
         <Link
           href="/staff/dashboard"
-          className="flex min-h-11 min-w-0 items-center gap-3 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-copper"
+          className="motion-press flex min-h-11 min-w-0 items-center gap-3 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-copper"
           aria-label="Tarihi Şehir Lokantası personel özeti"
         >
           <BrandMark compact className="size-9 shrink-0 border-copper/45 bg-sidebar-accent" />
@@ -43,7 +43,7 @@ function StaffHeader({ pathname }: { pathname: string }) {
             <span className="block truncate font-heading text-sm font-semibold text-card">
               Tarihi Şehir Lokantası
             </span>
-            <span className="block text-[11px] font-medium text-cream/65">{roleLabel} paneli</span>
+            <span className="block text-xs font-medium text-cream/65">{roleLabel} paneli</span>
           </span>
         </Link>
 
@@ -58,8 +58,8 @@ function StaffHeader({ pathname }: { pathname: string }) {
                 href={item.href}
                 aria-current={active ? "page" : undefined}
                 className={cn(
-                  "flex min-h-11 items-center gap-2 rounded-lg px-3 text-sm font-semibold text-cream/70 transition-colors hover:bg-sidebar-accent hover:text-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-copper",
-                  active && "bg-sidebar-accent text-card",
+                  "motion-press relative flex min-h-11 items-center gap-2 rounded-md px-3 text-sm font-semibold text-cream/70 transition-colors after:absolute after:inset-x-3 after:bottom-0 after:h-0.5 after:bg-sidebar-primary after:opacity-0 after:transition-opacity after:duration-[var(--motion-quick)] hover:bg-sidebar-accent hover:text-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-copper",
+                  active && "bg-sidebar-accent text-card after:opacity-100 [&_svg]:text-sidebar-primary",
                 )}
               >
                 <Icon className="size-4" strokeWidth={1.8} />
@@ -72,7 +72,7 @@ function StaffHeader({ pathname }: { pathname: string }) {
         <div className="ml-auto flex items-center gap-2">
           <div className="hidden items-center gap-2 sm:flex">
             <Avatar className="size-9 border border-copper/30">
-              <AvatarFallback className="bg-copper text-olive">{getInitials(name)}</AvatarFallback>
+              <AvatarFallback className="bg-sidebar-accent text-gold">{getInitials(name)}</AvatarFallback>
             </Avatar>
             <div className="hidden leading-tight xl:block">
               <p className="text-sm font-semibold text-card">{name}</p>
@@ -103,7 +103,7 @@ function StaffBottomNavigation({ pathname }: { pathname: string }) {
               href={item.href}
               aria-current={active ? "page" : undefined}
               className={cn(
-                "flex min-h-14 flex-col items-center justify-center gap-1 rounded-lg px-1 text-[11px] font-semibold text-muted-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                "motion-press flex min-h-14 flex-col items-center justify-center gap-1 rounded-lg px-1 text-xs font-semibold text-muted-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
                 active && "bg-burgundy/[0.08] text-burgundy",
               )}
             >

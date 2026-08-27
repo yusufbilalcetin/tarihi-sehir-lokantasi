@@ -529,6 +529,23 @@ export const orders = pgTable(
     notes: varchar("notes", { length: 1000 }),
     createdByType: orderCreatorTypeEnum("created_by_type").notNull(),
     createdByUserId: uuid("created_by_user_id"),
+    /**
+     * Which guest sitting placed this order, for orders a guest placed
+     * themselves from the QR menu.
+     *
+     * The customer order view is otherwise scoped to (restaurant, table) plus
+     * "not yet settled", which is a proxy for the current sitting and not the
+     * sitting itself: an order left unsettled when a party leaves stays
+     * visible to whoever scans that table next. This column is the missing
+     * ownership fact, taken from the nonce the signed table session already
+     * carries.
+     *
+     * Null for staff-created orders, for takeaway and courier orders, and for
+     * every row written before this column existed. Customer-facing reads
+     * must treat null as "not mine" — failing closed — while staff, kitchen
+     * and cashier reads ignore this column entirely.
+     */
+    customerSessionNonce: varchar("customer_session_nonce", { length: 32 }),
     version: integer("version").default(1).notNull(),
     confirmedAt: timestamp("confirmed_at", {
       withTimezone: true,

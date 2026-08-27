@@ -154,7 +154,10 @@
     "trackStepCurrent": "လက်ရှိအဆင့်",
     "trackStepUpcoming": "လာမည့်အဆင့်",
     "orderContents": "အမှာစာအကြောင်းအရာများ",
-    "placedAt": "အမှာစာတင်ပြီးစဉ်"
+    "placedAt": "အမှာစာတင်ပြီးစဉ်",
+    "orderCount": "{count} မှာအမိန့်များ",
+    "orderSequence": "အော်ဒါ {number}",
+    "orderTrackingStatus": "သင်၏အော်ဒါအခြေအနေကို ဤနေရာတွင် ကြည့်ရှုနိုင်သည်။"
   },
   "categories": {
     "soups": "ဆူပ်အိုး",

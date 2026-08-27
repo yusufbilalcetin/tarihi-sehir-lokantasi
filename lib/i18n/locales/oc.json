@@ -154,7 +154,10 @@
     "trackStepCurrent": "passatge actual",
     "trackStepUpcoming": "a venir",
     "orderContents": "Contengut de la comanda",
-    "placedAt": "Plaçat a"
+    "placedAt": "Plaçat a",
+    "orderCount": "{count} comandes",
+    "orderSequence": "Comanda {number}",
+    "orderTrackingStatus": "Pòtz seguir l'estat de vòstre comanda aquí."
   },
   "categories": {
     "soups": "Sopes",

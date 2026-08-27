@@ -122,7 +122,7 @@ export function WaiterCallsList() {
               aria-pressed={active}
               onClick={() => setFilter(item.value)}
               className={cn(
-                "flex min-h-11 shrink-0 items-center gap-2 rounded-lg border px-3 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                "motion-press motion-operational-state flex min-h-11 shrink-0 items-center gap-2 rounded-lg border px-3 text-sm font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
                 active
                   ? "border-burgundy bg-burgundy text-primary-foreground"
                   : "border-border bg-card text-muted-foreground hover:bg-muted hover:text-foreground",
@@ -150,8 +150,9 @@ export function WaiterCallsList() {
             return (
               <article
                 key={call.id}
+                data-motion-enter="true"
                 className={cn(
-                  "flex flex-col gap-4 rounded-xl border border-l-4 bg-card p-4 shadow-[0_8px_24px_rgb(74_40_40/0.045)] sm:flex-row sm:items-center sm:p-5",
+                  "motion-table motion-operational-state flex flex-col gap-4 rounded-xl border border-l-4 bg-card p-4 shadow-[0_8px_24px_rgb(74_40_40/0.045)] sm:flex-row sm:items-center sm:p-5",
                   getCallTone(call),
                 )}
               >

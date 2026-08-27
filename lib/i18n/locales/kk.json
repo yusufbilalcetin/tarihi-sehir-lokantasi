@@ -154,7 +154,10 @@
     "trackStepCurrent": "ағымдағы қадам",
     "trackStepUpcoming": "келе жатыр",
     "orderContents": "Тапсырыс мазмұны",
-    "placedAt": "Жасалған күні"
+    "placedAt": "Жасалған күні",
+    "orderCount": "{count} тапсырыс",
+    "orderSequence": "Тапсырыс {number}",
+    "orderTrackingStatus": "Сіз тапсырысыңыздың мәртебесін мына жерден бақылай аласыз."
   },
   "categories": {
     "soups": "Сорпалар",

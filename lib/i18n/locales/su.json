@@ -154,7 +154,10 @@
     "trackStepCurrent": "léngkah ayeuna",
     "trackStepUpcoming": "nu bakal datang",
     "orderContents": "Eusi pesenan",
-    "placedAt": "Diposisikeun di"
+    "placedAt": "Diposisikeun di",
+    "orderCount": "{count} pesenan",
+    "orderSequence": "Pesenan {number}",
+    "orderTrackingStatus": "Anjeun tiasa nuturkeun status pesenan anjeun di dieu."
   },
   "categories": {
     "soups": "Sup",

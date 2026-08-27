@@ -154,7 +154,10 @@
     "trackStepCurrent": "বৰ্তমান পদক্ষেপ",
     "trackStepUpcoming": "আগামী",
     "orderContents": "অর্ডাৰৰ বিষয়বস্তু",
-    "placedAt": "স্থিতি"
+    "placedAt": "স্থিতি",
+    "orderCount": "{count}টা অ'ৰ্ডাৰ",
+    "orderSequence": "অৱশেষ {number}",
+    "orderTrackingStatus": "আপুনি ইয়াত আপোনাৰ অৱশেষ স্থিতি অনুসৰণ কৰিব পাৰে।"
   },
   "categories": {
     "soups": "সুপ",

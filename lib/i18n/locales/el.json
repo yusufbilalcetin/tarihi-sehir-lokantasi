@@ -154,7 +154,10 @@
     "trackStepCurrent": "τρέχον βήμα",
     "trackStepUpcoming": "επόμενο",
     "orderContents": "Περιεχόμενο παραγγελίας",
-    "placedAt": "Τοποθετήθηκε στις"
+    "placedAt": "Τοποθετήθηκε στις",
+    "orderCount": "{count} παραγγελίες",
+    "orderSequence": "Παραγγελία {number}",
+    "orderTrackingStatus": "Μπορείτε να παρακολουθείτε την κατάσταση της παραγγελίας σας εδώ."
   },
   "categories": {
     "soups": "Σούπες",

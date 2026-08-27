@@ -154,7 +154,10 @@
     "trackStepCurrent": "etap aktyèl",
     "trackStepUpcoming": "kap vini",
     "orderContents": "Kontni lòd la",
-    "placedAt": "Mete nan"
+    "placedAt": "Mete nan",
+    "orderCount": "{count} kòmand",
+    "orderSequence": "Kòmann {number}",
+    "orderTrackingStatus": "Ou ka swiv estati kòmann ou isit la."
   },
   "categories": {
     "soups": "Soup",

@@ -154,7 +154,10 @@
     "trackStepCurrent": ", praegune samm",
     "trackStepUpcoming": "tuleb",
     "orderContents": "Tellimuse sisu",
-    "placedAt": "Esitatud aadressil"
+    "placedAt": "Esitatud aadressil",
+    "orderCount": "{count} tellimust",
+    "orderSequence": "Tellimus {number}",
+    "orderTrackingStatus": "Saate oma tellimuse staatust siin jälgida."
   },
   "categories": {
     "soups": "Supid",

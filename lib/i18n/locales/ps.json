@@ -154,7 +154,10 @@
     "trackStepCurrent": "اوسنی ګام",
     "trackStepUpcoming": "راتلونکی",
     "orderContents": "د سپارښتنې محتوا",
-    "placedAt": "کېښودل شو په"
+    "placedAt": "کېښودل شو په",
+    "orderCount": "{count} فرمایشونه",
+    "orderSequence": "سپارښتنه {number}",
+    "orderTrackingStatus": "تاسو کولی شئ د خپلې سپارښتنې حالت دلته تعقیب کړئ."
   },
   "categories": {
     "soups": "سوپونه",

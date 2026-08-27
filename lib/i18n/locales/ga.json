@@ -154,7 +154,10 @@
     "trackStepCurrent": "céim reatha",
     "trackStepUpcoming": "i ndán don todhchaí",
     "orderContents": "Ábhar an ordaithe",
-    "placedAt": "Cuireadh ar"
+    "placedAt": "Cuireadh ar",
+    "orderCount": "{count} orduithe",
+    "orderSequence": "Ordú {number}",
+    "orderTrackingStatus": "Is féidir leat stádas do ordaithe a leanúint anseo."
   },
   "categories": {
     "soups": "Anraithí",

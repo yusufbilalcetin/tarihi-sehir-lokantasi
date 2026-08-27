@@ -154,7 +154,10 @@
     "trackStepCurrent": "ప్రస్తుత దశ",
     "trackStepUpcoming": "రాబోవు",
     "orderContents": "ఆర్డర్ అంశాలు",
-    "placedAt": "వించబడిన సమయం"
+    "placedAt": "వించబడిన సమయం",
+    "orderCount": "{count} ఆర్డర్స్",
+    "orderSequence": "ఆర్డర్ {number}",
+    "orderTrackingStatus": "మీరు మీ ఆర్డర్ స్థితిని ఇక్కడ అనుసరించవచ్చు."
   },
   "categories": {
     "soups": "సూప్‌లు",

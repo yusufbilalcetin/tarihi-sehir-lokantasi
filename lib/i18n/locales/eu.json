@@ -154,7 +154,10 @@
     "trackStepCurrent": "egungo urratsa",
     "trackStepUpcoming": "hurrengoa",
     "orderContents": "Eskaeraren edukia",
-    "placedAt": "Egin da:"
+    "placedAt": "Egin da:",
+    "orderCount": "{count} eskaera",
+    "orderSequence": "{number} eskaera",
+    "orderTrackingStatus": "Zure eskaeraren egoera hemen jarrai dezakezu."
   },
   "categories": {
     "soups": "Zopak",

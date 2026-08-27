@@ -154,7 +154,10 @@
     "trackStepCurrent": "dabartinis žingsnis",
     "trackStepUpcoming": "artėjantis",
     "orderContents": "Užsakymo turinys",
-    "placedAt": "Užsakytas"
+    "placedAt": "Užsakytas",
+    "orderCount": "{count} užsakymai",
+    "orderSequence": "Užsakymas {number}",
+    "orderTrackingStatus": "Čia galite sekti savo užsakymo būseną."
   },
   "categories": {
     "soups": "Sriubos",

@@ -154,7 +154,10 @@
     "trackStepCurrent": "nuværende trin",
     "trackStepUpcoming": "kommende",
     "orderContents": "Ordreindhold",
-    "placedAt": "Afleveret på"
+    "placedAt": "Afleveret på",
+    "orderCount": "{count} ordrer",
+    "orderSequence": "Ordre {number}",
+    "orderTrackingStatus": "Du kan følge din ordrestatus her."
   },
   "categories": {
     "soups": "Supper",

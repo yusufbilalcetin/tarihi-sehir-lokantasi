@@ -154,7 +154,10 @@
     "trackStepCurrent": "hapi aktual",
     "trackStepUpcoming": "të ardhshme",
     "orderContents": "Përmbajtja e porosisë",
-    "placedAt": "Vendosur në"
+    "placedAt": "Vendosur në",
+    "orderCount": "{count} porosi",
+    "orderSequence": "Porosia {number}",
+    "orderTrackingStatus": "Mund të ndiqni statusin e porosisë tuaj këtu."
   },
   "categories": {
     "soups": "Supat",

@@ -154,7 +154,10 @@
     "trackStepCurrent": "ھازىرقى قەدەمى",
     "trackStepUpcoming": "كېلەركى",
     "orderContents": "زاكاز مەزمۇنى",
-    "placedAt": "بەرگەن ۋاقىت"
+    "placedAt": "بەرگەن ۋاقىت",
+    "orderCount": "{count} بۇيرۇق",
+    "orderSequence": "{number} تىزىملىك",
+    "orderTrackingStatus": "تەرتىپىڭىزنىڭ ئەھۋالىنى بۇ يەردە تەكشۈرەلەيسىز."
   },
   "categories": {
     "soups": "شۇرپىلار",

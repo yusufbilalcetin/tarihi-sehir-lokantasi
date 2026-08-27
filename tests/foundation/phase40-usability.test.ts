@@ -258,7 +258,10 @@ test("the kitchen board does not squeeze three lanes into a tablet portrait", ()
   // At 768px three lanes leave roughly 229px per card, which has to hold a
   // quantity chip, a product name, a note and a touch target. The three-lane
   // layout starts at lg (1024px), where a lane is about 314px.
-  assert.match(kitchenBoard, /grid gap-4 lg:grid-cols-3/);
+  // Asserted as intent, not as one literal class string: what matters is that
+  // the three-lane layout is gated at lg and never earlier.
+  assert.match(kitchenBoard, /className="grid gap-3[^"]*lg:grid-cols-3/);
+  assert.doesNotMatch(kitchenBoard, /(sm|md):grid-cols-3/);
   assert.doesNotMatch(kitchenBoard, /grid gap-4 md:grid-cols-3/);
 });
 

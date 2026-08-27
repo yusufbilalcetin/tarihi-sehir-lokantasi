@@ -154,7 +154,10 @@
     "trackStepCurrent": "pas curent",
     "trackStepUpcoming": "următor",
     "orderContents": "Conținutul comenzii",
-    "placedAt": "Plasată la"
+    "placedAt": "Plasată la",
+    "orderCount": "{count} comenzi",
+    "orderSequence": "Comanda {number}",
+    "orderTrackingStatus": "Puteți urmări starea comenzii dvs. aici."
   },
   "categories": {
     "soups": "Ciorbe",

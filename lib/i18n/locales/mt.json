@@ -154,7 +154,10 @@
     "trackStepCurrent": "pass kurrenti",
     "trackStepUpcoming": "li jmiss",
     "orderContents": "Kontenut tal-ordni",
-    "placedAt": "Intagħżel f'"
+    "placedAt": "Intagħżel f'",
+    "orderCount": "{count} ordnijiet",
+    "orderSequence": "Ordni {number}",
+    "orderTrackingStatus": "Tista' ssegwi l-istatus tal-ordni tiegħek hawn."
   },
   "categories": {
     "soups": "Supplimenti",

@@ -154,7 +154,10 @@
     "trackStepCurrent": "നിലവിലെ ഘട്ടം",
     "trackStepUpcoming": "തിരിക്കുന്നു",
     "orderContents": "ഓർഡറിന്റെ ഉള്ളടക്കം",
-    "placedAt": "വെച്ച തീയതി"
+    "placedAt": "വെച്ച തീയതി",
+    "orderCount": "{count} ഓർഡറുകൾ",
+    "orderSequence": "ഓർഡർ {number}",
+    "orderTrackingStatus": "നിങ്ങളുടെ ഓർഡർ സ്ഥിതി ഇവിടെ പിന്തുടരാം."
   },
   "categories": {
     "soups": "സൂപ്പ്",

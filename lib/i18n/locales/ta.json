@@ -154,7 +154,10 @@
     "trackStepCurrent": "தற்போதைய படி",
     "trackStepUpcoming": "வரும் படிகள்",
     "orderContents": "ஆர்டர் உள்ளடக்கம்",
-    "placedAt": "இடப்பட்டது"
+    "placedAt": "இடப்பட்டது",
+    "orderCount": "{count} ஆர்டர்கள்",
+    "orderSequence": "ஆணை {number}",
+    "orderTrackingStatus": "உங்கள் ஆணை நிலையை இங்கு பின்தொடரலாம்."
   },
   "categories": {
     "soups": "கஞ்சி/சூப் வகைகள்",

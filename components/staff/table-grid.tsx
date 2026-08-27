@@ -54,7 +54,7 @@ import {
   type TableQuickAction,
   type TableQuickActionId,
 } from "@/lib/domain/table-actions";
-import { formatCurrency } from "@/lib/format";
+import { formatCurrency, formatElapsed } from "@/lib/format";
 import { cn } from "@/lib/utils";
 import type { Order, RestaurantTable } from "@/types";
 
@@ -472,7 +472,7 @@ export function TableGrid({
                   <span className="flex items-center gap-1.5">
                     <Clock3 className="size-4" strokeWidth={1.8} />
                     {selectedTable.activeMinutes
-                      ? `${selectedTable.activeMinutes} dakikadır açık`
+                      ? `${formatElapsed(selectedTable.activeMinutes)} açık`
                       : "Şu an boş"}
                   </span>
                 </SheetDescription>
@@ -525,11 +525,11 @@ export function TableGrid({
                   </ul>
                 ) : null}
 
-                <div className="rounded-xl bg-olive p-4 text-card shadow-[0_12px_30px_rgb(48_56_45/0.16)]">
+                <div className="rounded-lg border border-gold/25 bg-sidebar p-4 text-card shadow-[var(--shadow-floating)]">
                   <div className="flex items-end justify-between gap-3">
                     <div>
                       <p className="text-xs font-semibold text-cream/65">Masa toplamı</p>
-                      <p className="mt-1 font-heading text-3xl font-semibold tabular-nums">
+                      <p className="mt-1 text-3xl font-semibold tabular-nums">
                         {formatCurrency(selectedTable.total ?? selectedOrder?.total ?? 0)}
                       </p>
                     </div>

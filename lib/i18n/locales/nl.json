@@ -154,7 +154,10 @@
     "trackStepCurrent": "huidige stap",
     "trackStepUpcoming": "binnenkort",
     "orderContents": "Bestelinhoud",
-    "placedAt": "Geplaatst op"
+    "placedAt": "Geplaatst op",
+    "orderCount": "{count} bestellingen",
+    "orderSequence": "Bestelling {number}",
+    "orderTrackingStatus": "U kunt hier de status van uw bestelling volgen."
   },
   "categories": {
     "soups": "Soepen",

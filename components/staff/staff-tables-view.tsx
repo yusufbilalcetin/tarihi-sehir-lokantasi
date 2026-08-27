@@ -8,11 +8,13 @@ import { useStaffFloor } from "@/components/staff/use-staff-floor";
 import { Badge } from "@/components/ui/badge";
 
 /**
- * `inWindow` is set when this renders inside a ModuleWindow, whose own header
- * already carries the title and description — repeating them inside the body
- * would give the module two headings.
+ * The floor plan, as a page.
+ *
+ * It used to take an `inWindow` flag that suppressed this header, back when the
+ * route was rendered inside a window that carried its own. The route is a page
+ * now, so the header belongs here and there is nothing to suppress.
  */
-export function StaffTablesView({ inWindow = false }: { inWindow?: boolean } = {}) {
+export function StaffTablesView() {
   const floor = useStaffFloor();
 
   const counts = useMemo(() => {
@@ -28,8 +30,8 @@ export function StaffTablesView({ inWindow = false }: { inWindow?: boolean } = {
   }, [floor.tables]);
 
   return (
-    <div className={inWindow ? "space-y-4" : "space-y-6"}>
-      {inWindow ? null : <PageHeader
+    <div className="space-y-6">
+      <PageHeader
         title="Masalar"
         description="Salonun tamamını izle, masa detaylarını aç ve servis işlemlerini hızlıca tamamla."
         action={
@@ -37,7 +39,7 @@ export function StaffTablesView({ inWindow = false }: { inWindow?: boolean } = {
             {floor.tables.length} masa
           </Badge>
         }
-      />}
+      />
 
       <div className="flex flex-wrap gap-2 text-xs font-semibold text-muted-foreground" aria-label="Masa durum özeti">
         {/* Same four tones the table cards use, so the summary and the floor

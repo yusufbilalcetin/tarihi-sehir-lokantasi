@@ -154,7 +154,10 @@
     "trackStepCurrent": "tahap saiki",
     "trackStepUpcoming": "sing bakal teka",
     "orderContents": "Isi pesenan",
-    "placedAt": "Digawe ing"
+    "placedAt": "Digawe ing",
+    "orderCount": "{count} pesenan",
+    "orderSequence": "Pesenan {number}",
+    "orderTrackingStatus": "Kowe bisa ngetutake status pesenanmu ing kene."
   },
   "categories": {
     "soups": "Sup",

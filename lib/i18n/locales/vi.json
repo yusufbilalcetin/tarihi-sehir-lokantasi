@@ -154,7 +154,10 @@
     "trackStepCurrent": "bước hiện tại",
     "trackStepUpcoming": "sắp tới",
     "orderContents": "Nội dung đơn hàng",
-    "placedAt": "Đặt vào lúc"
+    "placedAt": "Đặt vào lúc",
+    "orderCount": "{count} đơn hàng",
+    "orderSequence": "Đơn hàng {number}",
+    "orderTrackingStatus": "Bạn có thể theo dõi trạng thái đơn hàng của mình ở đây."
   },
   "categories": {
     "soups": "Súp",

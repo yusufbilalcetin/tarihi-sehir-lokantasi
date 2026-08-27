@@ -23,7 +23,7 @@ import { staffApi } from "@/lib/api/endpoints";
 import { canRoleTransitionOrderStatus } from "@/lib/domain/status";
 import { useApiResource } from "@/lib/hooks/use-api-resource";
 import { useStaffRealtime } from "@/lib/realtime/use-staff-realtime";
-import { formatCurrency } from "@/lib/format";
+import { formatCurrency, formatElapsed } from "@/lib/format";
 import type { Order, OrderStatus } from "@/types";
 
 const ADMIN_ORDER_POLL_MS = 20_000;
@@ -173,7 +173,7 @@ export function OrdersManager() {
                   <div className="flex items-start justify-between gap-3">
                     <div>
                       <p className="font-extrabold">{order.orderNumber} <span className="font-semibold text-muted-foreground">{order.tableName}</span></p>
-                      <p className="mt-1 flex items-center gap-1 text-xs text-muted-foreground"><Clock3 className="size-3" /> {order.createdAt}, {order.elapsedMinutes} dk önce</p>
+                      <p className="mt-1 flex items-center gap-1 text-xs text-muted-foreground"><Clock3 className="size-3" /> {order.createdAt}, {formatElapsed(order.elapsedMinutes)} önce</p>
                     </div>
                     <strong className="tabular-nums">{formatCurrency(order.total)}</strong>
                   </div>
@@ -209,9 +209,9 @@ export function OrdersManager() {
               </SheetHeader>
               <div className="space-y-5 px-5">
                 <div className="grid grid-cols-3 gap-2">
-                  <div className="rounded-xl border bg-muted/25 p-3"><p className="text-[11px] text-muted-foreground">Süre</p><p className="mt-1 font-extrabold">{selected.elapsedMinutes} dk</p></div>
-                  <div className="rounded-xl border bg-muted/25 p-3"><p className="text-[11px] text-muted-foreground">Garson</p><p className="mt-1 truncate font-extrabold">{selected.waiterName ?? "Atanmadı"}</p></div>
-                  <div className="rounded-xl border bg-muted/25 p-3"><p className="text-[11px] text-muted-foreground">Toplam</p><p className="mt-1 font-extrabold">{formatCurrency(selected.total)}</p></div>
+                  <div className="rounded-xl border bg-muted/25 p-3"><p className="text-xs text-muted-foreground">Süre</p><p className="mt-1 font-extrabold">{formatElapsed(selected.elapsedMinutes)}</p></div>
+                  <div className="rounded-xl border bg-muted/25 p-3"><p className="text-xs text-muted-foreground">Garson</p><p className="mt-1 truncate font-extrabold">{selected.waiterName ?? "Atanmadı"}</p></div>
+                  <div className="rounded-xl border bg-muted/25 p-3"><p className="text-xs text-muted-foreground">Toplam</p><p className="mt-1 font-extrabold">{formatCurrency(selected.total)}</p></div>
                 </div>
 
                 <div>

@@ -154,7 +154,10 @@
     "trackStepCurrent": "passu attuale",
     "trackStepUpcoming": "prussimu",
     "orderContents": "Cuntenutu di l'ordine",
-    "placedAt": "Fattu à"
+    "placedAt": "Fattu à",
+    "orderCount": "{count} urdinazioni",
+    "orderSequence": "Ordine {number}",
+    "orderTrackingStatus": "Pudete seguità quì u statu di u vostru ordine."
   },
   "categories": {
     "soups": "Zuppe",

@@ -154,7 +154,10 @@
     "trackStepCurrent": "текуща стъпка",
     "trackStepUpcoming": "предстоящи",
     "orderContents": "Съдържание на поръчката",
-    "placedAt": "Направена на"
+    "placedAt": "Направена на",
+    "orderCount": "{count} поръчки",
+    "orderSequence": "Поръчка {number}",
+    "orderTrackingStatus": "Можете да проследите статуса на поръчката си тук."
   },
   "categories": {
     "soups": "Супи",

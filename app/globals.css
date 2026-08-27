@@ -9,11 +9,11 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-manrope), system-ui, -apple-system, "Segoe UI", "Noto Sans", Arial, sans-serif;
   --font-heading: var(--font-lora), "Noto Serif", "Times New Roman", serif;
-  --color-cream: #F5EBDD;
-  --color-burgundy: #681F25;
-  --color-olive: #30382D;
-  --color-copper: #B98352;
-  --color-gold: #D8AE68;
+  --color-cream: #F5EFE4;
+  --color-burgundy: #681F27;
+  --color-olive: #46533C;
+  --color-copper: #B98A43;
+  --color-gold: #C29B5B;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -107,50 +107,50 @@
 }
 
 :root {
-  --background: #F5EBDD;
-  --foreground: #25211D;
-  --card: #FFFDF8;
-  --card-foreground: #25211D;
-  --popover: #FFFDF8;
-  --popover-foreground: #25211D;
-  --primary: #681F25;
-  --primary-foreground: #FFFDF8;
-  --secondary: #30382D;
-  --secondary-foreground: #FFFDF8;
-  --muted: #EEE2D3;
-  --muted-foreground: #746B61;
-  --accent: #EAD6C2;
-  --accent-foreground: #4A2828;
-  --destructive: #A13737;
-  --border: #E5D6C4;
-  --input: #DCCBB7;
-  --ring: #B98352;
-  --chart-1: #681F25;
-  --chart-2: #B98352;
-  --chart-3: #30382D;
-  --chart-4: #8C704A;
-  --chart-5: #746B61;
-  --radius: 0.75rem;
+  --background: #F5EFE4;
+  --foreground: #2D2018;
+  --card: #FBF7EF;
+  --card-foreground: #2D2018;
+  --popover: #FBF7EF;
+  --popover-foreground: #2D2018;
+  --primary: #681F27;
+  --primary-foreground: #FBF7EF;
+  --secondary: #3A281D;
+  --secondary-foreground: #FBF7EF;
+  --muted: #E9DECC;
+  --muted-foreground: #776A5C;
+  --accent: #E9DECC;
+  --accent-foreground: #4B171C;
+  --destructive: #8D2C2A;
+  --border: #D7C8B3;
+  --input: #CDBA9F;
+  --ring: #B98A43;
+  --chart-1: #681F27;
+  --chart-2: #B98A43;
+  --chart-3: #46533C;
+  --chart-4: #8B6841;
+  --chart-5: #776A5C;
+  --radius: 0.6875rem;
 
   /* --- Phase 36 semantic values ------------------------------------- */
 
   /* Warm cream ground, with each step up in elevation getting lighter and
      slightly less saturated — the way paper stacks read under warm light. */
-  --surface: #F5EBDD;
-  --surface-raised: #FFFDF8;
-  --surface-elevated: #FFFFFC;
-  --surface-muted: #EEE2D3;
-  --surface-inverse: #262C23;
-  --surface-inverse-raised: #313829;
+  --surface: #F5EFE4;
+  --surface-raised: #FBF7EF;
+  --surface-elevated: #FFFDF8;
+  --surface-muted: #E9DECC;
+  --surface-inverse: #2D2018;
+  --surface-inverse-raised: #3A281D;
 
-  --text-primary: #25211D;
-  --text-secondary: #5C544A;
-  --text-muted: #8A8073;
-  --text-inverse: #F7F1E7;
-  --text-inverse-muted: #B3AB9C;
+  --text-primary: #2D2018;
+  --text-secondary: #625448;
+  --text-muted: #776A5C;
+  --text-inverse: #FBF7EF;
+  --text-inverse-muted: #D7C8B3;
 
-  --border-subtle: #EFE3D3;
-  --border-strong: #CDBAA2;
+  --border-subtle: #E5D9C8;
+  --border-strong: #C5B195;
 
   /* Each status hue is picked to sit inside the brand family: the green leans
      to the olive, the amber to the copper, the red to the burgundy. Only the
@@ -168,8 +168,8 @@
      not yet a problem; preparing borrows the copper; ready is the only green
      on a kitchen screen so it can be found across a room; served and settled
      recede on purpose, because finished work should stop competing. */
-  --order-new: #8C704A;
-  --order-new-tint: #F3E8D8;
+  --order-new: #681F27;
+  --order-new-tint: #F3E3E3;
   --order-preparing: #A8681F;
   --order-preparing-tint: #F8ECD9;
   --order-ready: #3F6B47;
@@ -198,81 +198,69 @@
 
   /* Elevation, warm-tinted rather than neutral grey, so shadows sit on cream
      without turning it muddy. */
-  --shadow-raised: 0 1px 2px rgba(37, 33, 29, 0.05), 0 1px 3px rgba(37, 33, 29, 0.04);
-  --shadow-floating: 0 4px 12px rgba(37, 33, 29, 0.08), 0 2px 4px rgba(37, 33, 29, 0.04);
-  --shadow-window: 0 24px 64px rgba(37, 33, 29, 0.22), 0 8px 20px rgba(37, 33, 29, 0.12);
+  --shadow-raised: 0 1px 2px rgba(45, 32, 24, 0.05), 0 2px 6px rgba(45, 32, 24, 0.035);
+  --shadow-floating: 0 6px 18px rgba(45, 32, 24, 0.09), 0 2px 5px rgba(45, 32, 24, 0.045);
+  --shadow-window: 0 24px 64px rgba(45, 32, 24, 0.24), 0 8px 20px rgba(45, 32, 24, 0.13);
 
-  --sidebar: #2B3228;
-  --sidebar-foreground: #F5EBDD;
-  --sidebar-primary: #B98352;
-  --sidebar-primary-foreground: #25211D;
-  --sidebar-accent: #3B4537;
-  --sidebar-accent-foreground: #FFFDF8;
-  --sidebar-border: #46503F;
-  --sidebar-ring: #B98352;
-  --motion-fast: 140ms;
-  --motion-base: 180ms;
-  --motion-medium: 220ms;
-  --motion-slow: 260ms;
-  --motion-exit: 150ms;
-  --motion-spatial: 220ms;
+  --sidebar: #2D2018;
+  --sidebar-foreground: #F5EFE4;
+  --sidebar-primary: #C29B5B;
+  --sidebar-primary-foreground: #2D2018;
+  --sidebar-accent: #3A281D;
+  --sidebar-accent-foreground: #FBF7EF;
+  --sidebar-border: #5A4130;
+  --sidebar-ring: #B98A43;
+  /* One motion language. Semantic names describe frequency and surface size;
+     the legacy aliases keep existing components on the same system. */
+  --motion-instant: 110ms;
+  --motion-quick: 170ms;
+  --motion-standard: 220ms;
+  --motion-overlay: 260ms;
+  --motion-overlay-exit: 180ms;
+  --motion-fast: var(--motion-instant);
+  --motion-base: var(--motion-quick);
+  --motion-medium: var(--motion-standard);
+  --motion-slow: var(--motion-overlay);
+  --motion-exit: 140ms;
+  --motion-spatial: var(--motion-standard);
   --motion-press-in: 100ms;
   --motion-stagger: 22ms;
-  --ease-standard: cubic-bezier(0.25, 0.8, 0.25, 1);
-  --ease-soft: cubic-bezier(0.22, 0.75, 0.25, 1);
-  --ease-exit: cubic-bezier(0.4, 0, 0.2, 1);
-  --ease-spatial: cubic-bezier(0.25, 0.8, 0.25, 1);
-  --ease-modal: cubic-bezier(0.22, 0.75, 0.25, 1);
-  --motion-release-ease: cubic-bezier(0.25, 0.8, 0.25, 1);
-  --motion-ios-spring-soft: cubic-bezier(0.22, 0.75, 0.25, 1);
-  --motion-ios-spring-snappy: cubic-bezier(0.2, 0.8, 0.25, 1);
-  --motion-ios-enter: cubic-bezier(0.22, 0.75, 0.25, 1);
-  --press-scale: 0.995;
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-balanced: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-standard: var(--ease-out);
+  --ease-soft: var(--ease-out);
+  --ease-exit: var(--ease-out);
+  --ease-spatial: var(--ease-balanced);
+  --ease-modal: var(--ease-out);
+  --motion-release-ease: var(--ease-balanced);
+  --press-scale: 0.985;
   --press-depth: 0px;
-  --card-press-scale: 0.99;
-  --modal-enter-scale: 0.985;
-  --modal-enter-y: 4px;
-  --modal-exit-y: 2px;
+  --card-press-scale: 0.988;
+  --modal-enter-scale: 0.98;
+  --modal-enter-y: 7px;
+  --modal-exit-y: 4px;
 }
 
 html[data-platform="ios"] {
-  --motion-fast: 150ms;
-  --motion-base: 190ms;
-  --motion-medium: 230ms;
-  --motion-slow: 280ms;
+  --motion-instant: 115ms;
+  --motion-quick: 175ms;
+  --motion-standard: 230ms;
+  --motion-overlay: 280ms;
+  --motion-overlay-exit: 190ms;
   --motion-exit: 170ms;
-  --motion-spatial: 230ms;
   --motion-press-in: 110ms;
-  --ease-standard: var(--motion-ios-spring-soft);
-  --ease-soft: var(--motion-ios-enter);
-  --ease-spatial: cubic-bezier(0.25, 0.8, 0.25, 1);
-  --ease-modal: var(--motion-ios-spring-soft);
-  --motion-release-ease: var(--motion-ios-spring-soft);
   --press-scale: 0.988;
-  --press-depth: 0px;
-  --modal-enter-scale: 0.985;
-  --modal-enter-y: 4px;
-  --modal-exit-y: 2px;
 }
 
 html[data-platform="android"] {
-  --motion-fast: 110ms;
-  --motion-base: 160ms;
-  --motion-medium: 200ms;
-  --motion-slow: 220ms;
+  --motion-instant: 90ms;
+  --motion-quick: 150ms;
+  --motion-standard: 200ms;
+  --motion-overlay: 240ms;
+  --motion-overlay-exit: 160ms;
   --motion-exit: 140ms;
-  --motion-spatial: 220ms;
   --motion-press-in: 90ms;
-  --ease-standard: cubic-bezier(0.22, 0.7, 0.3, 1);
-  --ease-soft: cubic-bezier(0.2, 0.75, 0.25, 1);
-  --ease-spatial: cubic-bezier(0.22, 0.7, 0.3, 1);
-  --ease-modal: cubic-bezier(0.2, 0.75, 0.25, 1);
-  --motion-release-ease: cubic-bezier(0.22, 0.7, 0.3, 1);
-  --press-scale: 0.985;
-  --press-depth: 0px;
-  --modal-enter-scale: 0.985;
-  --modal-enter-y: 4px;
-  --modal-exit-y: 2px;
+  --press-scale: 0.982;
 }
 
 @layer base {
@@ -281,7 +269,7 @@ html[data-platform="android"] {
   }
   body {
     @apply text-foreground;
-    background: #120c08;
+    background: var(--background);
   }
   html {
     @apply font-sans;
@@ -290,7 +278,7 @@ html[data-platform="android"] {
 
 @layer components {
   .surface-shadow {
-    box-shadow: 0 18px 50px rgb(74 40 40 / 0.08);
+    box-shadow: var(--shadow-raised);
   }
 
   .touch-target {
@@ -311,12 +299,12 @@ html[data-platform="android"] {
 
   .motion-press > svg,
   .motion-press > .motion-icon-swap {
-    transition: transform var(--motion-fast) var(--motion-release-ease);
+    transition: transform var(--motion-instant) var(--motion-release-ease);
   }
 
   .motion-press:active:not(:disabled) > svg,
   .motion-press:active:not(:disabled) > .motion-icon-swap {
-    transform: scale(0.94);
+    transform: scale(0.97);
   }
 
   .motion-press:active:not(:disabled) [data-icon-kind="trash"] {
@@ -362,38 +350,38 @@ html[data-platform="android"] {
     animation: motion-header-in var(--motion-medium) var(--ease-soft) backwards;
   }
 
+  /* An inline disclosure that expands downward. The animated property is the
+     grid row, so the browser resolves the height itself and nothing measures
+     the DOM per frame the way an animated `height: auto` must. Closing is a
+     touch quicker than opening, which is what makes a fold feel crisp. */
+  .motion-disclosure {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows var(--motion-overlay-exit) var(--ease-out);
+  }
+
+  .motion-disclosure[data-open="true"] {
+    grid-template-rows: 1fr;
+    transition-duration: var(--motion-standard);
+  }
+
   .motion-table[data-motion-enter="true"] {
-    animation: motion-table-in var(--motion-medium) var(--ease-soft) 40ms backwards;
+    animation: motion-table-in var(--motion-quick) var(--ease-out) backwards;
   }
 
-  html[data-motion-ready="true"] .motion-reveal[data-reveal-animate="true"] {
-    opacity: 0;
-    transform: translateY(4px);
-  }
-
+  /* Progressive enhancement: cards are never hidden while waiting for JS or
+     IntersectionObserver. The reveal only adds a brief settle once observed. */
   html[data-motion-ready="true"] .motion-reveal[data-reveal-animate="true"][data-revealed="true"] {
-    opacity: 1;
-    transform: none;
     animation: motion-card-in var(--motion-medium) var(--ease-soft) backwards;
     animation-delay: var(--motion-delay, 0ms);
   }
 
   .motion-product-image {
-    opacity: 0;
-    transition: opacity var(--motion-base) ease;
-  }
-
-  .motion-product-image[data-loaded="true"] {
     opacity: 1;
   }
 
-  .motion-search-icon {
-    transition: transform var(--motion-base) var(--ease-standard), color var(--motion-base) ease;
-  }
-
-  .motion-search:focus-within .motion-search-icon {
-    color: var(--primary);
-    transform: translateY(-50%) scale(1.02);
+  .motion-product-image[data-loaded="true"] {
+    animation: motion-image-settle var(--motion-quick) var(--ease-out) both;
   }
 
   .motion-number {
@@ -436,7 +424,7 @@ html[data-platform="android"] {
   }
 
   .motion-card-hover {
-    transition: transform var(--motion-base) var(--motion-release-ease), border-color var(--motion-base) ease;
+    transition: transform var(--motion-quick) var(--motion-release-ease), border-color var(--motion-quick) ease, background-color var(--motion-quick) ease;
   }
 
   .motion-card-hover:has(.motion-card-trigger:active) {
@@ -531,14 +519,6 @@ html[data-platform="android"] {
     animation: motion-check-stroke var(--motion-medium) var(--ease-soft) 30ms forwards;
   }
 
-  .motion-results {
-    animation: motion-results-in var(--motion-fast) ease both;
-  }
-
-  .motion-results[data-searching="true"] .motion-card {
-    animation: none;
-  }
-
   [data-slot="dialog-close"] {
     transition: transform var(--motion-fast) var(--ease-standard), color var(--motion-base) ease, background-color var(--motion-base) ease;
   }
@@ -549,19 +529,20 @@ html[data-platform="android"] {
 
   .motion-dialog-overlay {
     opacity: 1;
-    transition: opacity var(--motion-medium) var(--ease-soft);
+    transition: opacity var(--motion-overlay) var(--ease-modal);
   }
 
   .motion-dialog-overlay[data-starting-style],
   .motion-dialog-overlay[data-ending-style] {
     opacity: 0;
+    transition-duration: var(--motion-overlay-exit);
   }
 
   .motion-dialog {
     opacity: 1;
     transform: translate(-50%, -50%) translateY(0) scale(1);
     transform-origin: center;
-    transition: opacity var(--motion-medium) var(--ease-modal) 10ms, transform var(--motion-medium) var(--ease-modal) 10ms;
+    transition: opacity var(--motion-overlay) var(--ease-modal), transform var(--motion-overlay) var(--ease-modal);
   }
 
   .motion-dialog[data-starting-style] {
@@ -572,21 +553,16 @@ html[data-platform="android"] {
   .motion-dialog[data-ending-style] {
     opacity: 0;
     transform: translate(-50%, -50%) translateY(var(--modal-exit-y)) scale(var(--modal-enter-scale));
-    transition-duration: var(--motion-exit);
+    transition-duration: var(--motion-overlay-exit);
     transition-timing-function: var(--ease-exit);
     transition-delay: 0ms;
-  }
-
-  .motion-dialog [data-slot="dialog-header"],
-  .motion-dialog .menu-dialog-scroll {
-    animation: motion-modal-content-in var(--motion-base) var(--ease-soft) 15ms backwards;
   }
 
   .motion-popover {
     opacity: 1;
     transform: translateY(0) scale(1);
     transform-origin: var(--transform-origin);
-    transition: opacity var(--motion-base) var(--ease-soft), transform var(--motion-base) var(--ease-soft);
+    transition: opacity var(--motion-quick) var(--ease-out), transform var(--motion-quick) var(--ease-out);
   }
 
   .motion-popover[data-starting-style],
@@ -596,12 +572,23 @@ html[data-platform="android"] {
   }
 
   .motion-sheet[data-ending-style] {
-    transition-duration: var(--motion-exit);
+    transition-duration: var(--motion-overlay-exit);
     transition-timing-function: var(--ease-exit);
   }
 
+  .motion-sheet[data-starting-style],
+  .motion-sheet[data-ending-style],
+  .motion-dialog[data-starting-style],
+  .motion-dialog[data-ending-style] {
+    will-change: transform, opacity;
+  }
+
+  .motion-operational-state {
+    transition: background-color var(--motion-quick) ease, border-color var(--motion-quick) ease, color var(--motion-quick) ease, opacity var(--motion-quick) ease;
+  }
+
   .cn-toast {
-    transition: opacity var(--motion-base) var(--ease-soft), transform var(--motion-base) var(--ease-soft) !important;
+    transition: opacity var(--motion-quick) var(--ease-out), transform var(--motion-quick) var(--ease-out) !important;
   }
 
   .cn-toast[data-sonner-toast]:not([data-mounted="true"]) {
@@ -643,7 +630,7 @@ html[data-platform="android"] {
 
   * {
     scrollbar-width: thin;
-    scrollbar-color: #A77E3E #F1E6D4;
+    scrollbar-color: #B98A43 #E9DECC;
   }
 
   *::-webkit-scrollbar {
@@ -652,7 +639,7 @@ html[data-platform="android"] {
   }
 
   *::-webkit-scrollbar-track {
-    background: #F1E6D4;
+    background: #E9DECC;
   }
 
   *::-webkit-scrollbar-button {
@@ -663,17 +650,17 @@ html[data-platform="android"] {
 
   *::-webkit-scrollbar-thumb {
     min-height: 48px;
-    border: 2px solid #F1E6D4;
+    border: 2px solid #E9DECC;
     border-radius: 999px;
-    background: #A77E3E;
+    background: #B98A43;
   }
 
   *::-webkit-scrollbar-thumb:hover {
-    background: #835F2D;
+    background: #8B6841;
   }
 
   *::-webkit-scrollbar-corner {
-    background: #F1E6D4;
+    background: #E9DECC;
   }
 }
 
@@ -693,7 +680,7 @@ html[data-platform="android"] {
   .motion-card-hover:hover {
     transform: translateY(-1px);
     border-color: color-mix(in srgb, var(--border) 72%, var(--primary));
-    box-shadow: 0 15px 34px rgb(104 31 37 / 0.075);
+    box-shadow: var(--shadow-raised);
   }
 
   .motion-hover:hover:active,
@@ -751,17 +738,13 @@ html[data-platform="android"] {
   --menu-card-padding: clamp(0.875rem, 2.5vw, 1rem);
   --menu-section-gap: clamp(1.25rem, 4vw, 1.75rem);
   --menu-control-height: 3rem;
-  --menu-card-radius: 1rem;
+  --menu-card-radius: 0.75rem;
   min-height: 100dvh;
   background: var(--background);
-  opacity: 0;
-  transform: translateY(6px);
 }
 
 .menu-content-ready {
-  opacity: 1;
-  transform: translateY(0);
-  transition: opacity var(--motion-medium) var(--ease-soft), transform var(--motion-medium) var(--ease-soft);
+  animation: motion-content-settle var(--motion-standard) var(--ease-out) both;
 }
 
 html[data-sehir-intro="seen"] .menu-splash {
@@ -779,22 +762,32 @@ html[data-sehir-intro="seen"] .menu-content {
 }
 
 @keyframes motion-page-in {
-  from { opacity: 0; transform: translateX(var(--motion-page-x, 0)) translateY(2px); }
+  from { opacity: 0.9; transform: translateX(var(--motion-page-x, 0)) translateY(2px); }
   to { opacity: 1; transform: translateX(0) translateY(0); }
 }
 
 @keyframes motion-header-in {
-  from { opacity: 0; transform: translateY(4px); }
+  from { opacity: 0.9; transform: translateY(4px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes motion-table-in {
-  from { opacity: 0; transform: scale(0.98); }
+  from { opacity: 0.92; transform: scale(0.99); }
   to { opacity: 1; transform: scale(1); }
 }
 
 @keyframes motion-card-in {
-  from { opacity: 0; transform: translateY(4px); }
+  from { opacity: 0.86; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes motion-image-settle {
+  from { opacity: 0.78; }
+  to { opacity: 1; }
+}
+
+@keyframes motion-content-settle {
+  from { opacity: 0.92; transform: translateY(4px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
@@ -834,18 +827,8 @@ html[data-sehir-intro="seen"] .menu-content {
   to { stroke-dashoffset: 0; }
 }
 
-@keyframes motion-results-in {
-  from { opacity: 0.45; }
-  to { opacity: 1; }
-}
-
 @keyframes motion-empty-in {
-  from { opacity: 0; transform: translateY(4px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes motion-modal-content-in {
-  from { opacity: 0; transform: translateY(2px); }
+  from { opacity: 0.9; transform: translateY(4px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
@@ -867,7 +850,7 @@ html[data-sehir-intro="seen"] .menu-content {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .menu-splash { animation: menu-splash-out 80ms ease 80ms forwards !important; }
+  .menu-splash { display: none !important; }
   .menu-splash-logo {
     opacity: 1;
     filter: none;
@@ -876,7 +859,13 @@ html[data-sehir-intro="seen"] .menu-content {
   }
   .menu-content,
   .menu-content-ready {
+    opacity: 1;
     transform: none;
+    animation: none;
+    transition: none;
+  }
+
+  .motion-disclosure {
     transition: none;
   }
 
@@ -894,12 +883,9 @@ html[data-sehir-intro="seen"] .menu-content {
   .motion-status,
   [data-motion-success="true"] svg > path,
   [data-motion-success="true"] svg > polyline,
-  .motion-results,
   .motion-empty,
   .motion-error,
   .motion-action-label,
-  .motion-dialog [data-slot="dialog-header"],
-  .motion-dialog .menu-dialog-scroll,
   .motion-cart-exit {
     animation: none !important;
   }
@@ -918,8 +904,7 @@ html[data-sehir-intro="seen"] .menu-content {
 
   .motion-press:active,
   .motion-hover:hover,
-  .motion-card-hover:hover,
-  .motion-search:focus-within .motion-search-icon {
+  .motion-card-hover:hover {
     transform: none;
   }
 
@@ -927,6 +912,37 @@ html[data-sehir-intro="seen"] .menu-content {
   .motion-dialog[data-starting-style],
   .motion-dialog[data-ending-style] {
     transform: translate(-50%, -50%);
+  }
+}
+
+/* Product detail behaves as an edge-connected sheet on phones and as a calm
+   centered dialog on larger screens. Base UI still owns focus and dismissal. */
+@media (max-width: 639px) {
+  .motion-dialog.motion-product-sheet {
+    top: auto;
+    bottom: 0;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    transform: translateX(-50%) translateY(0) scale(1);
+    transform-origin: center bottom;
+  }
+
+  .motion-dialog.motion-product-sheet[data-starting-style] {
+    opacity: 0;
+    transform: translateX(-50%) translateY(8px) scale(0.99);
+  }
+
+  .motion-dialog.motion-product-sheet[data-ending-style] {
+    opacity: 0;
+    transform: translateX(-50%) translateY(5px) scale(0.995);
+  }
+}
+
+@media (max-width: 639px) and (prefers-reduced-motion: reduce) {
+  .motion-dialog.motion-product-sheet,
+  .motion-dialog.motion-product-sheet[data-starting-style],
+  .motion-dialog.motion-product-sheet[data-ending-style] {
+    transform: translateX(-50%);
   }
 }
 
@@ -983,6 +999,12 @@ html[data-sehir-intro="seen"] .menu-content {
   body:has([data-print-root]) [data-slot="dialog-overlay"],
   [data-print-hide] {
     display: none !important;
+  }
+
+  /* A window dialog scrolls its body on screen; on paper it must lay flat. */
+  [data-print-root] [data-slot="window-dialog-body"] {
+    overflow: visible !important;
+    padding: 0 !important;
   }
 
   [data-print-root] {

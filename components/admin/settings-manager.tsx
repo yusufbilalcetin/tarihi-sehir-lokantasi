@@ -16,7 +16,7 @@ import { cn } from "@/lib/utils";
 
 function SettingsSection({ title, description, children }: { title: string; description: string; children: ReactNode }) {
   return (
-    <section className="rounded-2xl border bg-card shadow-[0_12px_35px_rgba(74,40,40,0.05)]">
+    <section className="rounded-lg border bg-card shadow-[var(--shadow-raised)]">
       <div className="border-b px-5 py-4"><h2 className="font-heading text-lg font-semibold">{title}</h2><p className="mt-1 text-xs leading-5 text-muted-foreground">{description}</p></div>
       <div className="grid gap-5 p-5">{children}</div>
     </section>

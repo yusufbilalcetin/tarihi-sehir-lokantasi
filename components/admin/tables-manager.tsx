@@ -5,14 +5,8 @@ import { Armchair, Clock3, Plus, QrCode, Search, UsersRound } from "lucide-react
 import { toast } from "sonner";
 import { AdminPageHeader, DataToolbar, Field, NativeSelect, SummaryChip } from "@/components/admin/admin-ui";
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Dialog } from "@/components/ui/dialog";
+import { WindowDialogContent } from "@/components/ui/window-dialog";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { StatusBadge } from "@/components/shared/status-badge";
@@ -106,7 +100,7 @@ export function TablesManager() {
       </div>
 
       {issuedToken ? (
-        <div className="rounded-2xl border border-copper/40 bg-copper/8 p-4" role="status">
+        <div className="rounded-xl border border-copper/40 bg-copper/8 p-4" role="status">
           <p className="text-sm font-extrabold">{issuedToken.tableName} QR bağlantısı oluşturuldu</p>
           <p className="mt-1 text-xs leading-5 text-muted-foreground">
             Bu adres yalnızca bir kez gösterilir ve veritabanında saklanmaz. Kaydetmezseniz masa için QR Yenile işlemi yapmanız gerekir.
@@ -116,7 +110,7 @@ export function TablesManager() {
         </div>
       ) : null}
 
-      <div className="overflow-hidden rounded-2xl border bg-card shadow-[0_14px_40px_rgba(74,40,40,0.055)]">
+      <div className="overflow-hidden rounded-lg border bg-card shadow-[var(--shadow-raised)]">
         <DataToolbar>
           <div className="relative min-w-0 flex-1 sm:min-w-64">
             <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
@@ -133,7 +127,7 @@ export function TablesManager() {
         ) : filtered.length ? (
           <div className="grid gap-3 p-4 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
             {filtered.map((table) => (
-              <article key={table.id} className="rounded-2xl border bg-background p-4 transition-colors hover:border-copper/55">
+              <article key={table.id} className="rounded-xl border bg-background p-4 transition-colors hover:border-copper/55">
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex size-11 items-center justify-center rounded-xl bg-olive/8 text-olive"><Armchair className="size-5" strokeWidth={1.8} /></div>
                   <StatusBadge status={table.status} />
@@ -164,23 +158,24 @@ export function TablesManager() {
       </div>
 
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="sm:max-w-md">
-          <form onSubmit={addTable}>
-            <DialogHeader>
-              <DialogTitle className="text-xl">Yeni masa oluştur</DialogTitle>
-              <DialogDescription>Salona eklenecek masanın adı, kapasitesi ve QR durumunu belirleyin.</DialogDescription>
-            </DialogHeader>
-            <div className="grid gap-4 py-5 sm:grid-cols-2">
+        <WindowDialogContent
+          size="sm"
+          title="Yeni masa oluştur"
+          description="Salona eklenecek masanın adı, kapasitesi ve QR durumunu belirleyin."
+          render={<form onSubmit={addTable} />}
+          footer={
+            <>
+              <Button type="button" variant="outline" onClick={() => setDialogOpen(false)}>Vazgeç</Button>
+              <Button type="submit" disabled={admin.saving} aria-busy={admin.saving}>Masayı Ekle</Button>
+            </>
+          }
+        >
+            <div className="grid gap-4 sm:grid-cols-2">
               <Field label="Masa adı"><Input value={name} onChange={(event) => setName(event.target.value)} className="h-10" /></Field>
               <Field label="Sandalye"><Input type="number" min="1" max="20" value={seats} onChange={(event) => setSeats(event.target.value)} className="h-10" /></Field>
               <p className="rounded-xl border border-dashed bg-background px-3 py-3 text-xs leading-5 text-muted-foreground sm:col-span-2">Masa oluşturulduğunda QR bağlantısı bir kez gösterilir. Bağlantıyı kaybederseniz QR Kodlar ekranından yenileyin.</p>
             </div>
-            <DialogFooter>
-              <Button type="button" variant="outline" onClick={() => setDialogOpen(false)}>Vazgeç</Button>
-              <Button type="submit" disabled={admin.saving} aria-busy={admin.saving}>Masayı Ekle</Button>
-            </DialogFooter>
-          </form>
-        </DialogContent>
+        </WindowDialogContent>
       </Dialog>
     </div>
   );

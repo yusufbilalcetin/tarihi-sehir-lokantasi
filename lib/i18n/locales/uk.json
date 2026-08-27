@@ -154,7 +154,10 @@
     "trackStepCurrent": "поточний крок",
     "trackStepUpcoming": "майбутнє",
     "orderContents": "Зміст замовлення",
-    "placedAt": "Оформлено"
+    "placedAt": "Оформлено",
+    "orderCount": "{count} замовлень",
+    "orderSequence": "Замовлення {number}",
+    "orderTrackingStatus": "Ви можете відстежувати статус свого замовлення тут."
   },
   "categories": {
     "soups": "Супи",

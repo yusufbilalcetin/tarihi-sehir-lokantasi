@@ -154,7 +154,10 @@
     "trackStepCurrent": "موجوده قدم",
     "trackStepUpcoming": "ايندڙ",
     "orderContents": "آرڊر جون شيون",
-    "placedAt": "ڏنو ويو"
+    "placedAt": "ڏنو ويو",
+    "orderCount": "{count} حڪمناما",
+    "orderSequence": "آرڊر {number}",
+    "orderTrackingStatus": "توهان هتي پنهنجي آرڊر جي حالت ٽريڪ ڪري سگهو ٿا."
   },
   "categories": {
     "soups": "سوپ",

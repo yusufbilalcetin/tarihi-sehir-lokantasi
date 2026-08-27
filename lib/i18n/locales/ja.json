@@ -154,7 +154,10 @@
     "trackStepCurrent": "現在のステップ",
     "trackStepUpcoming": "次に来る",
     "orderContents": "注文内容",
-    "placedAt": "注文日時"
+    "placedAt": "注文日時",
+    "orderCount": "{count} 件の注文",
+    "orderSequence": "注文 {number}",
+    "orderTrackingStatus": "こちらで注文の状況を確認できます。"
   },
   "categories": {
     "soups": "スープ",

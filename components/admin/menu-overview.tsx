@@ -72,7 +72,7 @@ export function MenuOverview() {
       <RealtimeStatus status={menu.realtimeStatus} />
 
       <section className="grid gap-4 lg:grid-cols-[minmax(0,1.25fr)_minmax(320px,0.75fr)]">
-        <div className="overflow-hidden rounded-2xl border border-olive bg-olive p-5 text-cream shadow-[0_14px_40px_rgba(48,56,45,0.14)] sm:p-6">
+        <div className="overflow-hidden rounded-xl border border-olive bg-olive p-5 text-cream shadow-[0_14px_40px_rgba(48,56,45,0.14)] sm:p-6">
           <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
             <div>
               <div className="flex items-center gap-2 text-sm font-semibold text-cream/65"><UtensilsCrossed className="size-4 text-gold" /> QR Menü</div>
@@ -132,7 +132,7 @@ export function MenuOverview() {
       </section>
 
       <div className="grid gap-4 md:grid-cols-2">
-        <Link href="/admin/categories" className="group rounded-2xl border bg-card p-5 shadow-[0_12px_35px_rgba(74,40,40,0.05)] transition-colors hover:border-copper/60">
+        <Link href="/admin/categories" className="group rounded-lg border bg-card p-5 shadow-[var(--shadow-raised)] transition-colors hover:border-copper/60">
           <div className="flex items-start justify-between gap-4">
             <div className="flex size-11 items-center justify-center rounded-xl bg-burgundy/8 text-burgundy"><Tags className="size-5" /></div>
             <ArrowRight className="size-5 text-muted-foreground transition-transform group-hover:translate-x-1" />
@@ -140,7 +140,7 @@ export function MenuOverview() {
           <h2 className="mt-5 font-heading text-xl font-semibold">Kategoriler</h2>
           <p className="mt-1 text-sm leading-6 text-muted-foreground">Sıralama, görünürlük ve kategori adlarını düzenleyin.</p>
         </Link>
-        <Link href="/admin/products" className="group rounded-2xl border bg-card p-5 shadow-[0_12px_35px_rgba(74,40,40,0.05)] transition-colors hover:border-copper/60">
+        <Link href="/admin/products" className="group rounded-lg border bg-card p-5 shadow-[var(--shadow-raised)] transition-colors hover:border-copper/60">
           <div className="flex items-start justify-between gap-4">
             <div className="flex size-11 items-center justify-center rounded-xl bg-olive/8 text-olive"><PackageOpen className="size-5" /></div>
             <ArrowRight className="size-5 text-muted-foreground transition-transform group-hover:translate-x-1" />

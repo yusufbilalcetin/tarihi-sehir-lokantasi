@@ -154,7 +154,10 @@
     "trackStepCurrent": "noverande steg",
     "trackStepUpcoming": "kommande",
     "orderContents": "Innhald i bestillinga",
-    "placedAt": "Lagt inn"
+    "placedAt": "Lagt inn",
+    "orderCount": "{count} bestillingar",
+    "orderSequence": "Bestilling {number}",
+    "orderTrackingStatus": "Du kan følgje statusen på bestillinga di her."
   },
   "categories": {
     "soups": "Supper",

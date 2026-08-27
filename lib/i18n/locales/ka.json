@@ -154,7 +154,10 @@
     "trackStepCurrent": "მიმდინარე ნაბიჯი",
     "trackStepUpcoming": "მომავალი",
     "orderContents": "შეკვეთის შინაარსი",
-    "placedAt": "შეკვეთილია"
+    "placedAt": "შეკვეთილია",
+    "orderCount": "{count} შეკვეთა",
+    "orderSequence": "შეკვეთა {number}",
+    "orderTrackingStatus": "თქვენ შეგიძლიათ აქ გამოიკვლიოთ თქვენი შეკვეთის სტატუსი."
   },
   "categories": {
     "soups": "სუპები",

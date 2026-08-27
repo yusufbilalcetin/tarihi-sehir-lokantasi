@@ -1,0 +1,1 @@
+ALTER TABLE "orders" ADD COLUMN "customer_session_nonce" varchar(32);

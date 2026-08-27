@@ -154,7 +154,10 @@
     "trackStepCurrent": "مرحله کنونی",
     "trackStepUpcoming": "آینده",
     "orderContents": "محتوای سفارش",
-    "placedAt": "ثبت شده در"
+    "placedAt": "ثبت شده در",
+    "orderCount": "{count} سفارش",
+    "orderSequence": "سفارش {number}",
+    "orderTrackingStatus": "می‌توانید وضعیت سفارش خود را اینجا دنبال کنید."
   },
   "categories": {
     "soups": "سوپ‌ها",

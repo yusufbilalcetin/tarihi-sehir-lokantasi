@@ -8,8 +8,8 @@ import { PrototypePortals } from "@/components/shared/prototype-portals";
 export default async function Home() {
   await connection();
   return (
-    <main className="min-h-[100dvh] bg-olive px-4 py-8 text-[#FFFDF8] sm:px-6 lg:py-12">
-      <div className="mx-auto max-w-6xl">
+    <main className="flex min-h-[100dvh] flex-col justify-center bg-olive px-4 py-8 text-[#FFFDF8] sm:px-6 lg:py-12">
+      <div className="mx-auto w-full max-w-6xl">
         <div className="max-w-2xl">
           <BrandMark priority className="max-w-xl" />
           <p className="mt-5 max-w-lg text-sm leading-6 text-[#F5EBDD]/70">

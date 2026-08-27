@@ -154,7 +154,10 @@
     "trackStepCurrent": "inyathelo lamanje",
     "trackStepUpcoming": "elandelayo",
     "orderContents": "Umxholo womyalelo",
-    "placedAt": "Ubeke kwi"
+    "placedAt": "Ubeke kwi",
+    "orderCount": "{count} ii-odolo",
+    "orderSequence": "Oda {number}",
+    "orderTrackingStatus": "Unokulandela imeko ye-oda yakho apha."
   },
   "categories": {
     "soups": "Isuphu",

@@ -20,6 +20,7 @@ import {
 import { toast } from "sonner";
 import { BrandMark } from "@/components/shared/brand-mark";
 import { EmptyState } from "@/components/shared/data-states";
+import { LogoutButton } from "@/components/staff/logout-button";
 import { RealtimeStatus } from "@/components/staff/realtime-status";
 import { useStaffSession } from "@/components/staff/staff-session-provider";
 import { Badge } from "@/components/ui/badge";
@@ -36,16 +37,12 @@ import {
   canRoleTransitionOrderStatus,
   deriveKitchenStage,
 } from "@/lib/domain/status";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Dialog } from "@/components/ui/dialog";
+import { WindowDialogContent } from "@/components/ui/window-dialog";
 import { useApiResource } from "@/lib/hooks/use-api-resource";
 import { useStaffRealtime } from "@/lib/realtime/use-staff-realtime";
+import { STAFF_ROLE_LABELS } from "@/lib/domain/staff-accounts";
+import { formatElapsed, getInitials } from "@/lib/format";
 import { cn } from "@/lib/utils";
 import type { Order, OrderItemStatus, OrderStatus } from "@/types";
 
@@ -98,7 +95,6 @@ const ITEM_STATUS_LABELS: Record<OrderItemStatus, string> = {
 interface StageConfig {
   id: KitchenStage;
   title: string;
-  description: string;
   icon: typeof ReceiptText;
   headerClassName: string;
   countClassName: string;
@@ -110,7 +106,6 @@ const stages: StageConfig[] = [
   {
     id: "confirmed",
     title: "Yeni",
-    description: "Hazırlığa alınacak",
     icon: ReceiptText,
     headerClassName: "border-order-new/25 bg-order-new-tint",
     countClassName: "bg-order-new text-white",
@@ -120,7 +115,6 @@ const stages: StageConfig[] = [
   {
     id: "preparing",
     title: "Hazırlanıyor",
-    description: "Mutfakta işlemde",
     icon: CookingPot,
     headerClassName: "border-order-preparing/25 bg-order-preparing-tint",
     countClassName: "bg-order-preparing text-white",
@@ -130,7 +124,6 @@ const stages: StageConfig[] = [
   {
     id: "ready",
     title: "Hazır",
-    description: "Servis teslimi bekliyor",
     icon: BellRing,
     headerClassName: "border-order-ready/25 bg-order-ready-tint",
     countClassName: "bg-order-ready text-white",
@@ -145,15 +138,6 @@ function formatClock(date: Date | null) {
     hour: "2-digit",
     minute: "2-digit",
     second: "2-digit",
-  }).format(date);
-}
-
-function formatDate(date: Date | null) {
-  if (!date) return "Bugün";
-  return new Intl.DateTimeFormat("tr-TR", {
-    weekday: "long",
-    day: "numeric",
-    month: "long",
   }).format(date);
 }
 
@@ -200,7 +184,7 @@ function getAction(stage: KitchenStage) {
       ariaLabel: "hazır olarak işaretle",
       icon: Check,
       nextStatus: "ready" as const,
-      buttonClassName: "bg-copper text-[#25211D] hover:bg-copper/85",
+      buttonClassName: "bg-copper text-[#2D2018] hover:bg-copper/85",
     };
   }
 
@@ -209,7 +193,7 @@ function getAction(stage: KitchenStage) {
     ariaLabel: "servise teslim et",
     icon: Utensils,
     nextStatus: "served" as const,
-    buttonClassName: "bg-olive text-[#FFFDF8] hover:bg-olive/90",
+    buttonClassName: "bg-status-success text-[#FBF7EF] hover:bg-status-success/90",
   };
 }
 
@@ -268,19 +252,19 @@ function KitchenOrderCard({
   const urgency = getUrgency(elapsedMinutes);
 
   return (
-    <article className="overflow-hidden rounded-xl border border-border bg-card shadow-[0_12px_32px_rgba(74,40,40,0.065)]">
+    <article data-motion-enter="true" className="motion-table motion-operational-state overflow-hidden rounded-lg border border-border bg-card shadow-[var(--shadow-raised)]">
       <div className="border-b border-border px-4 py-3.5">
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
             <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
-              <h3 className="font-heading text-xl font-semibold leading-none text-foreground">
+              <h3 className="text-2xl font-extrabold leading-none tracking-tight text-foreground">
                 {order.tableName}
               </h3>
-              <span className="text-sm font-bold tabular-nums text-burgundy">
+              <span className="text-base font-bold tabular-nums text-burgundy">
                 {order.orderNumber}
               </span>
             </div>
-            <p className="mt-2 text-xs font-medium text-muted-foreground">
+            <p className="mt-1.5 text-xs font-medium text-muted-foreground">
               {order.createdAt} siparişi
               {order.waiterName ? `, ${order.waiterName}` : ", QR menü"}
             </p>
@@ -289,9 +273,9 @@ function KitchenOrderCard({
             </div>
           </div>
           <div className="shrink-0 text-right">
-            <div className={cn("flex items-center justify-end gap-1 text-sm font-extrabold tabular-nums", urgency.timeClassName)}>
+            <div className={cn("flex items-center justify-end gap-1 text-base font-extrabold tabular-nums", urgency.timeClassName)}>
               <Clock3 className="size-4" aria-hidden="true" />
-              {elapsedMinutes} dk
+              {formatElapsed(elapsedMinutes)}
             </div>
             <Badge variant="outline" className={cn("mt-1.5 font-semibold", urgency.className)}>
               {urgency.label}
@@ -319,11 +303,11 @@ function KitchenOrderCard({
             return (
               <li
                 key={item.id}
-                className={cn("grid grid-cols-[2.25rem_1fr] gap-2.5", cancelled && "opacity-55")}
+                className={cn("grid grid-cols-[2.5rem_1fr] gap-2.5", cancelled && "opacity-55")}
               >
                 <span
                   className={cn(
-                    "flex h-8 items-center justify-center rounded-lg text-sm font-extrabold tabular-nums",
+                    "flex h-9 items-center justify-center rounded-lg text-base font-extrabold tabular-nums",
                     cancelled
                       ? "bg-muted/60 text-muted-foreground line-through"
                       : "bg-muted text-foreground",
@@ -335,7 +319,7 @@ function KitchenOrderCard({
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <p
                       className={cn(
-                        "font-semibold leading-5",
+                        "text-base font-semibold leading-6",
                         cancelled
                           ? "text-muted-foreground line-through"
                           : "text-foreground",
@@ -345,7 +329,7 @@ function KitchenOrderCard({
                       {lateAddition ? (
                         <Badge
                           variant="outline"
-                          className="ml-2 border-copper/40 bg-copper/[0.14] align-middle text-[10px] font-bold text-[#6A4526]"
+                          className="ml-2 border-copper/40 bg-copper/[0.14] align-middle text-xs font-bold text-[#6A4526]"
                         >
                           Yeni eklendi
                         </Badge>
@@ -382,7 +366,7 @@ function KitchenOrderCard({
                             {ITEM_ACTION_LABELS[itemStatus] ?? "Güncelle"}
                           </Button>
                         ) : (
-                          <span className="text-[11px] font-semibold text-muted-foreground">
+                          <span className="text-xs font-semibold text-muted-foreground">
                             {ITEM_STATUS_LABELS[itemStatus]}
                           </span>
                         )}
@@ -390,7 +374,7 @@ function KitchenOrderCard({
                     ) : (
                       <span
                         className={cn(
-                          "shrink-0 text-[11px] font-semibold",
+                          "shrink-0 text-xs font-semibold",
                           cancelled ? "text-destructive" : "text-muted-foreground",
                         )}
                       >
@@ -399,8 +383,8 @@ function KitchenOrderCard({
                     )}
                   </div>
                   {item.note ? (
-                    <p className="mt-1.5 flex items-start gap-1.5 rounded-lg bg-burgundy/[0.06] px-2.5 py-2 text-xs font-semibold leading-5 text-burgundy">
-                      <MessageSquareText className="mt-0.5 size-3.5 shrink-0" aria-hidden="true" />
+                    <p className="mt-1.5 flex items-start gap-1.5 rounded-lg bg-burgundy/[0.08] px-2.5 py-2 text-sm font-bold leading-5 text-burgundy">
+                      <MessageSquareText className="mt-0.5 size-4 shrink-0" aria-hidden="true" />
                       <span>{item.note}</span>
                     </p>
                   ) : null}
@@ -418,7 +402,7 @@ function KitchenOrderCard({
             size="lg"
             disabled={pending}
             aria-busy={pending}
-            className={cn("h-11 w-full text-sm font-bold", action.buttonClassName)}
+            className={cn("h-12 w-full text-base font-bold", action.buttonClassName)}
             aria-label={`${order.tableName} ${order.orderNumber} siparişini ${action.ariaLabel}`}
             onClick={() => onAdvance(order.id, action.nextStatus)}
           >
@@ -432,13 +416,15 @@ function KitchenOrderCard({
 }
 
 /**
- * `inWindow` renders the board as a module-window body: the page-level chrome
- * (its own dark bar, clock and ticket count) is suppressed because the window
- * header already carries that context, and two stacked headers would cost the
- * kitchen a strip of screen it needs for tickets.
+ * The kitchen board.
+ *
+ * It owns the whole viewport on purpose. Everything here is read standing up,
+ * often from a couple of metres away, so screen area spent on chrome is screen
+ * area taken from tickets: the bar is one line, the columns scroll on their own
+ * under sticky headings, and nothing is capped to a comfortable reading width.
  */
-export function KitchenBoard({ inWindow = false }: { inWindow?: boolean } = {}) {
-  const { role } = useStaffSession();
+export function KitchenBoard() {
+  const { role, name } = useStaffSession();
   const [now, setNow] = useState<Date | null>(null);
   const [pending, setPending] = useState(false);
   const [rollback, setRollback] = useState<{
@@ -619,48 +605,66 @@ export function KitchenBoard({ inWindow = false }: { inWindow?: boolean } = {}) 
   };
 
   return (
-    <main className={inWindow ? "" : "min-h-[100dvh] bg-background"}>
-      {inWindow ? null : (
-      <header className="border-b border-white/10 bg-olive text-[#FFFDF8]">
-        <div className="mx-auto flex max-w-[1600px] flex-col gap-5 px-4 py-4 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8">
-          <div className="flex items-center gap-3">
-            <BrandMark compact className="size-11 shrink-0 border-gold/35" />
-            <div>
-              <div className="flex flex-wrap items-center gap-2.5">
-                <h1 className="font-heading text-2xl font-semibold tracking-tight sm:text-3xl">
-                  Mutfak Ekranı
-                </h1>
-                <Badge className="border border-gold/30 bg-gold/10 text-[#F7E5C2]">
-                  Canlı operasyon
-                </Badge>
-              </div>
-              <p className="mt-1 text-sm text-[#F5EBDD]/65">Aktif sipariş akışı</p>
-            </div>
+    <main className="flex min-h-[100dvh] flex-col bg-background lg:h-[100dvh]">
+      {/* One line. The date, the badge and the tagline told the kitchen nothing
+          it did not already know, and each cost a row of tickets. */}
+      <header className="shrink-0 border-b border-sidebar-primary/35 bg-sidebar text-[#FBF7EF]">
+        <div className="flex items-center justify-between gap-4 px-4 py-2.5 sm:px-6">
+          <div className="flex min-w-0 items-center gap-3">
+            <BrandMark compact className="size-9 shrink-0 border-gold/35" />
+            <h1 className="truncate text-lg font-bold tracking-tight sm:text-xl">Mutfak</h1>
           </div>
 
-          <div className="flex items-center justify-between gap-5 lg:justify-end">
-            <div className="text-right">
-              <p className="text-xs font-medium capitalize text-[#F5EBDD]/60">{formatDate(now)}</p>
-              <p className="mt-0.5 text-2xl font-extrabold tabular-nums tracking-tight" suppressHydrationWarning>
-                {formatClock(now)}
-              </p>
+          <div className="flex shrink-0 items-center gap-3 sm:gap-4">
+            {/* A live feed that has quietly stopped is the worst failure this
+                screen can have, so its state is never hidden behind a
+                breakpoint. */}
+            <RealtimeStatus status={realtimeStatus} />
+            <div className="flex items-baseline gap-1.5">
+              <span className="text-xs text-[#F5EBDD]/60">Aktif fiş</span>
+              <span className="text-lg font-extrabold tabular-nums">{visibleOrderCount}</span>
             </div>
-            <div className="hidden h-10 w-px bg-white/15 sm:block" aria-hidden="true" />
-            <div className="hidden text-right sm:block">
-              <p className="text-xs text-[#F5EBDD]/60">Aktif fiş</p>
-              <p className="mt-0.5 text-xl font-extrabold tabular-nums">{visibleOrderCount}</p>
+            <p className="text-lg font-extrabold tabular-nums tracking-tight" suppressHydrationWarning>
+              {formatClock(now)}
+            </p>
+
+            <span className="hidden h-8 w-px bg-white/15 sm:block" aria-hidden="true" />
+
+            {/*
+              Who is signed in, at the weight it deserves: a cook needs it to
+              know whose shift the board is being worked under, and never more
+              than that. The tickets stay the loudest thing on the screen.
+
+              The same route is legitimately opened by a manager or an admin, so
+              the role is read from the session and labelled with the product's
+              own mapping rather than assumed to be the kitchen.
+            */}
+            <div className="flex shrink-0 items-center gap-2">
+              <span
+                className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-white/10 text-xs font-bold text-gold"
+                aria-hidden="true"
+              >
+                {getInitials(name)}
+              </span>
+              {/* Below lg the board needs the width more than the name does;
+                  the initials and the logout control stay either way. */}
+              <span className="hidden min-w-0 max-w-40 leading-tight lg:block">
+                <span className="block truncate text-xs font-semibold text-[#FFFDF8]">{name}</span>
+                <span className="block truncate text-xs text-[#F5EBDD]/60">{STAFF_ROLE_LABELS[role]}</span>
+              </span>
+              <LogoutButton className="shrink-0 text-[#F5EBDD]/70 hover:bg-white/10 hover:text-[#FFFDF8]" />
             </div>
-            <RealtimeStatus status={realtimeStatus} className="hidden xl:inline-flex" />
           </div>
         </div>
       </header>
-      )}
 
+      {/* No max width: on a 24-inch pass screen a centred column would throw
+          away a third of the board. */}
       <section
-        className={inWindow ? "px-4 py-4 sm:px-6" : "mx-auto max-w-[1600px] px-4 py-5 sm:px-6 lg:px-8 lg:py-7"}
+        className="min-h-0 flex-1 px-3 py-3 sm:px-4"
         aria-label="Mutfak sipariş panosu"
       >
-        <div className="grid gap-4 lg:grid-cols-3 xl:gap-5">
+        <div className="grid gap-3 lg:h-full lg:min-h-0 lg:grid-cols-3 xl:gap-4">
           {stages.map((stage) => {
             const StageIcon = stage.icon;
             const stageOrders = board
@@ -668,25 +672,26 @@ export function KitchenBoard({ inWindow = false }: { inWindow?: boolean } = {}) 
               .map((entry) => entry.order);
 
             return (
-              <section key={stage.id} className="min-w-0" aria-labelledby={`stage-${stage.id}`}>
-                <div className={cn("mb-3 flex min-h-16 items-center justify-between rounded-xl border px-4 py-3", stage.headerClassName)}>
-                  <div className="flex min-w-0 items-center gap-3">
-                    <div className="flex size-9 shrink-0 items-center justify-center rounded-lg border border-current/10 bg-card/75 text-foreground">
-                      <StageIcon className="size-4.5" strokeWidth={1.8} aria-hidden="true" />
-                    </div>
-                    <div className="min-w-0">
-                      <h2 id={`stage-${stage.id}`} className="font-heading text-lg font-semibold leading-5 text-foreground">
-                        {stage.title}
-                      </h2>
-                      <p className="mt-0.5 truncate text-xs text-muted-foreground">{stage.description}</p>
-                    </div>
+              <section
+                key={stage.id}
+                className="flex min-w-0 flex-col lg:min-h-0"
+                aria-labelledby={`stage-${stage.id}`}
+              >
+                <div className={cn("mb-2 flex shrink-0 items-center justify-between gap-3 rounded-lg border px-3 py-2", stage.headerClassName)}>
+                  <div className="flex min-w-0 items-center gap-2.5">
+                    <StageIcon className="size-5 shrink-0 text-foreground" strokeWidth={2} aria-hidden="true" />
+                    <h2 id={`stage-${stage.id}`} className="truncate text-base font-bold tracking-tight text-foreground">
+                      {stage.title}
+                    </h2>
                   </div>
-                  <span className={cn("ml-3 flex size-8 shrink-0 items-center justify-center rounded-lg text-sm font-extrabold tabular-nums", stage.countClassName)} aria-label={`${counts[stage.id]} sipariş`}>
+                  <span className={cn("flex size-7 shrink-0 items-center justify-center rounded-md text-sm font-extrabold tabular-nums", stage.countClassName)} aria-label={`${counts[stage.id]} sipariş`}>
                     {counts[stage.id]}
                   </span>
                 </div>
 
-                <div className="space-y-3.5">
+                {/* Each column scrolls alone, so a long queue in one stage never
+                    pushes the other two off the screen. */}
+                <div className="space-y-3 lg:min-h-0 lg:flex-1 lg:overflow-y-auto">
                   {stageOrders.length ? (
                     stageOrders.map((order) => (
                       <KitchenOrderCard
@@ -719,16 +724,26 @@ export function KitchenBoard({ inWindow = false }: { inWindow?: boolean } = {}) 
 
       {/* Undoing a step is deliberate: it is confirmed, and it says why. */}
       <Dialog open={rollback !== null} onOpenChange={(open) => !open && setRollback(null)}>
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle>Ürünü geri al</DialogTitle>
-            <DialogDescription>
-              {rollback?.target === "pending"
-                ? "Ürün mutfak listesinde tekrar Yeni olarak görünecek."
-                : "Ürün mutfak listesinde tekrar Hazırlanıyor olarak görünecek."}
-            </DialogDescription>
-          </DialogHeader>
-
+        <WindowDialogContent
+          size="sm"
+          title="Ürünü geri al"
+          description={
+            rollback?.target === "pending"
+              ? "Ürün mutfak listesinde tekrar Yeni olarak görünecek."
+              : "Ürün mutfak listesinde tekrar Hazırlanıyor olarak görünecek."
+          }
+          footer={
+            <>
+              <Button type="button" variant="outline" onClick={() => setRollback(null)}>
+                Vazgeç
+              </Button>
+              <Button type="button" disabled={pending} onClick={confirmRollback}>
+                <Undo2 className="size-4" aria-hidden="true" /> Geri Al
+              </Button>
+            </>
+          }
+        >
+          <div className="grid gap-4">
           {rollback ? (
             <p className="text-sm font-semibold">
               {rollback.item.quantity}× {rollback.item.productName}
@@ -757,15 +772,8 @@ export function KitchenBoard({ inWindow = false }: { inWindow?: boolean } = {}) 
             </div>
           </fieldset>
 
-          <DialogFooter>
-            <Button type="button" variant="outline" onClick={() => setRollback(null)}>
-              Vazgeç
-            </Button>
-            <Button type="button" disabled={pending} onClick={confirmRollback}>
-              <Undo2 className="size-4" aria-hidden="true" /> Geri Al
-            </Button>
-          </DialogFooter>
-        </DialogContent>
+          </div>
+        </WindowDialogContent>
       </Dialog>
     </main>
   );

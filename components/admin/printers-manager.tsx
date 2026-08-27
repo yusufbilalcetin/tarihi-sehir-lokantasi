@@ -7,14 +7,8 @@ import { PageHeader } from "@/components/shared/page-header";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Dialog } from "@/components/ui/dialog";
+import { WindowDialogContent } from "@/components/ui/window-dialog";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -115,9 +109,30 @@ export function PrintersManager() {
   const loadMenu = useCallback((signal: AbortSignal) => adminApi.menu(signal), []);
 
   const agents = useApiResource(loadAgents, { pollMs: 30_000 });
+  /*
+   * Base UI prints the selected *value* in the trigger unless the root is given
+   * an item map, so a select whose value is a database id showed the id. The id
+   * stays the value and stays what gets submitted; this only supplies the words
+   * the trigger shows.
+   */
+  const agentLabels = useMemo(
+    () => Object.fromEntries((agents.data?.agents ?? []).map((agent) => [agent.id, agent.name])),
+    [agents.data],
+  );
   const printers = useApiResource(loadPrinters);
+  const printerLabels = useMemo(
+    () => Object.fromEntries((printers.data?.printers ?? []).map((printer) => [printer.id, printer.name])),
+    [printers.data],
+  );
   const routes = useApiResource(loadRoutes);
   const menu = useApiResource(loadMenu);
+  const routeCategoryLabels = useMemo(
+    () => ({
+      ALL: "Varsayılan (tümü)",
+      ...Object.fromEntries((menu.data?.categories ?? []).map((category) => [category.id, category.name])),
+    }),
+    [menu.data],
+  );
 
   const jobQuery = useMemo(() => {
     const search = new URLSearchParams({ page: "1", pageSize: "20" });
@@ -327,6 +342,7 @@ export function PrintersManager() {
             <div>
               <label className="text-xs font-semibold text-muted-foreground">Agent</label>
               <Select
+                items={agentLabels}
                 value={printerDraft.agentId}
                 onValueChange={(value) =>
                   setPrinterDraft((current) => ({ ...current, agentId: value ?? "" }))
@@ -372,6 +388,7 @@ export function PrintersManager() {
             <div>
               <label className="text-xs font-semibold text-muted-foreground">İstasyon</label>
               <Select
+                items={STATION_LABELS}
                 value={printerDraft.stationType}
                 onValueChange={(value) =>
                   setPrinterDraft((current) => ({ ...current, stationType: value ?? "KITCHEN" }))
@@ -533,6 +550,7 @@ export function PrintersManager() {
             <div>
               <label className="text-xs font-semibold text-muted-foreground">Belge</label>
               <Select
+                items={DOCUMENT_LABELS}
                 value={routeDraft.documentType}
                 onValueChange={(value) =>
                   setRouteDraft((current) => ({ ...current, documentType: value ?? "" }))
@@ -553,6 +571,7 @@ export function PrintersManager() {
             <div>
               <label className="text-xs font-semibold text-muted-foreground">Kategori</label>
               <Select
+                items={routeCategoryLabels}
                 value={routeDraft.categoryId}
                 onValueChange={(value) =>
                   setRouteDraft((current) => ({ ...current, categoryId: value ?? "ALL" }))
@@ -574,6 +593,7 @@ export function PrintersManager() {
             <div>
               <label className="text-xs font-semibold text-muted-foreground">Yazıcı</label>
               <Select
+                items={printerLabels}
                 value={routeDraft.printerId}
                 onValueChange={(value) =>
                   setRouteDraft((current) => ({ ...current, printerId: value ?? "" }))
@@ -658,7 +678,7 @@ export function PrintersManager() {
         <CardHeader className="border-b py-4">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <CardTitle className="text-lg">Yazdırma Kuyruğu</CardTitle>
-            <Select value={statusFilter} onValueChange={(value) => setStatusFilter(value ?? "ALL")}>
+            <Select items={{ ALL: "Tümü", ...STATUS_LABELS }} value={statusFilter} onValueChange={(value) => setStatusFilter(value ?? "ALL")}>
               <SelectTrigger className="h-9 w-44">
                 <SelectValue />
               </SelectTrigger>
@@ -770,40 +790,64 @@ export function PrintersManager() {
 
       {/* The raw token is visible exactly once. */}
       <Dialog open={issuedToken !== null} onOpenChange={() => setIssuedToken(null)}>
-        <DialogContent className="sm:max-w-lg">
-          <DialogHeader>
-            <DialogTitle>Agent Token</DialogTitle>
-            <DialogDescription>
-              Bu token yalnızca şimdi gösterilir. Sunucuda yalnız özeti saklanır; kaybolursa
-              kurtarılamaz, yenilenir.
-            </DialogDescription>
-          </DialogHeader>
-          <p className="text-sm font-semibold">{issuedToken?.name}</p>
-          <code className="block break-all rounded-lg bg-muted px-3 py-2 font-mono text-sm">
-            {issuedToken?.token}
-          </code>
-          <p className="text-xs text-muted-foreground">
-            Agent makinesinde <code>PRINTER_AGENT_TOKEN</code> ortam değişkenine yazın.
-            Yapılandırma dosyasına yazmayın.
-          </p>
-          <DialogFooter>
+        <WindowDialogContent
+          size="md"
+          title="Agent Token"
+          description="Bu token yalnızca şimdi gösterilir. Sunucuda yalnız özeti saklanır; kaybolursa kurtarılamaz, yenilenir."
+          // The only way out is the acknowledgement: a close control in the title
+          // bar invites dismissing a secret that cannot be shown again.
+          showCloseButton={false}
+          footer={
             <Button type="button" onClick={() => setIssuedToken(null)}>
               Kaydettim
             </Button>
-          </DialogFooter>
-        </DialogContent>
+          }
+        >
+          <div className="grid gap-3">
+            <p className="text-sm font-semibold">{issuedToken?.name}</p>
+            <code className="block break-all rounded-lg bg-muted px-3 py-2 font-mono text-sm">
+              {issuedToken?.token}
+            </code>
+            <p className="text-xs text-muted-foreground">
+              Agent makinesinde <code>PRINTER_AGENT_TOKEN</code> ortam değişkenine yazın.
+              Yapılandırma dosyasına yazmayın.
+            </p>
+          </div>
+        </WindowDialogContent>
       </Dialog>
 
       {/* A reprint always says why. */}
       <Dialog open={reprintJob !== null} onOpenChange={() => setReprintJob(null)}>
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle>Yeniden Yazdır</DialogTitle>
-            <DialogDescription>
-              Özgün belge yeniden basılır ve &quot;yeniden yazdırma&quot; olarak işaretlenir.
-              Kayıt üzerine yazılmaz.
-            </DialogDescription>
-          </DialogHeader>
+        <WindowDialogContent
+          size="sm"
+          title="Yeniden Yazdır"
+          description={'Özgün belge yeniden basılır ve "yeniden yazdırma" olarak işaretlenir. Kayıt üzerine yazılmaz.'}
+          footer={
+            <>
+              <Button type="button" variant="outline" onClick={() => setReprintJob(null)}>
+                Vazgeç
+              </Button>
+              <Button
+                type="button"
+                disabled={busy || reprintReason.trim().length === 0}
+                onClick={() => {
+                  const jobId = reprintJob;
+                  if (!jobId) return;
+                  void act(
+                    async () => {
+                      await printerApi.reprintJob(jobId, reprintReason.trim());
+                      setReprintJob(null);
+                    },
+                    "Yeniden yazdırılamadı.",
+                    "Yeniden yazdırma kuyruğa alındı",
+                  );
+                }}
+              >
+                Yazdır
+              </Button>
+            </>
+          }
+        >
           <Textarea
             rows={2}
             maxLength={300}
@@ -811,30 +855,7 @@ export function PrintersManager() {
             placeholder="Örn. fiş yırtıldı"
             onChange={(event) => setReprintReason(event.target.value)}
           />
-          <DialogFooter>
-            <Button type="button" variant="outline" onClick={() => setReprintJob(null)}>
-              Vazgeç
-            </Button>
-            <Button
-              type="button"
-              disabled={busy || reprintReason.trim().length === 0}
-              onClick={() => {
-                const jobId = reprintJob;
-                if (!jobId) return;
-                void act(
-                  async () => {
-                    await printerApi.reprintJob(jobId, reprintReason.trim());
-                    setReprintJob(null);
-                  },
-                  "Yeniden yazdırılamadı.",
-                  "Yeniden yazdırma kuyruğa alındı",
-                );
-              }}
-            >
-              Yazdır
-            </Button>
-          </DialogFooter>
-        </DialogContent>
+        </WindowDialogContent>
       </Dialog>
 
       <p className="text-xs text-muted-foreground">

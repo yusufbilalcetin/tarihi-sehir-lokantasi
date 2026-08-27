@@ -154,7 +154,10 @@
     "trackStepCurrent": "şu anki adım",
     "trackStepUpcoming": "sırada",
     "orderContents": "Sipariş içeriği",
-    "placedAt": "Sipariş zamanı"
+    "placedAt": "Sipariş zamanı",
+    "orderCount": "{count} sipariş",
+    "orderSequence": "Sipariş {number}",
+    "orderTrackingStatus": "Siparişinizin durumunu buradan takip edebilirsiniz."
   },
   "categories": {
     "soups": "Çorbalar",

@@ -154,7 +154,10 @@
     "trackStepCurrent": "taahaa o te inaianei",
     "trackStepUpcoming": "e heke mai ana",
     "orderContents": "Ngā mea o te ota",
-    "placedAt": "I tohua i te"
+    "placedAt": "I tohua i te",
+    "orderCount": "{count} ngā ota",
+    "orderSequence": "Te ota {number}",
+    "orderTrackingStatus": "Ka taea e koe te whai i te tūnga o tō ota i konei."
   },
   "categories": {
     "soups": "Hupa",

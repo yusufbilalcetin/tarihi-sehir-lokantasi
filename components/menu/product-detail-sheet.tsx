@@ -32,13 +32,13 @@ export function ProductDetailSheet({ product, open, canOrder = true, onOpenChang
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent dir={direction} showCloseButton={false} className="flex max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] max-w-2xl flex-col gap-0 overflow-hidden rounded-3xl border-border p-0 sm:max-w-2xl">
-        <DialogClose className="absolute end-3 top-3 z-10 inline-flex size-10 items-center justify-center rounded-xl bg-black/35 text-white backdrop-blur-sm hover:bg-black/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-copper">
+      <DialogContent dir={direction} showCloseButton={false} className="motion-product-sheet flex max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] max-w-2xl flex-col gap-0 overflow-hidden rounded-xl border-copper/35 p-0 sm:max-w-2xl">
+        <DialogClose className="absolute end-3 top-3 z-10 inline-flex size-10 items-center justify-center rounded-md bg-black/35 text-white backdrop-blur-sm hover:bg-black/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-copper">
           <X className="size-4" aria-hidden="true" />
           <span className="sr-only">{t("close")}</span>
         </DialogClose>
         <div className="menu-dialog-scroll min-h-0 flex-1 overflow-y-auto overscroll-contain">
-        <div className="relative aspect-[16/9] min-h-44 shrink-0 overflow-hidden rounded-t-3xl bg-muted sm:min-h-52">
+        <div className="relative aspect-[16/9] min-h-44 shrink-0 overflow-hidden rounded-t-xl bg-muted sm:min-h-52">
           {hasPhoto ? (
             <>
               <Image src={product.image} alt={name} fill sizes="(max-width: 768px) 100vw, 672px" className="motion-product-image object-cover" onLoad={(event) => { event.currentTarget.dataset.loaded = "true"; }} />
@@ -47,7 +47,7 @@ export function ProductDetailSheet({ product, open, canOrder = true, onOpenChang
           ) : (
             /* Same contract as the product card: no photograph means the
                restaurant's own mark, never a stretched stock plate. */
-            <div aria-hidden="true" className="flex h-full w-full items-center justify-center bg-olive">
+            <div aria-hidden="true" className="flex h-full w-full items-center justify-center bg-sidebar">
               <UtensilsCrossed className="size-12 text-gold/70" strokeWidth={1.4} />
             </div>
           )}
@@ -55,7 +55,7 @@ export function ProductDetailSheet({ product, open, canOrder = true, onOpenChang
         <DialogHeader className="items-center px-5 pb-0 pt-5 text-center sm:px-6">
           <div className="flex flex-wrap justify-center gap-2">{product.tags.map((tag) => <Badge key={tag} variant="outline" className="border-copper/40 bg-copper/10 text-burgundy">{getMenuTag(tag, language)}</Badge>)}</div>
           <DialogTitle className="mt-2 font-heading text-3xl font-semibold leading-tight">{name}</DialogTitle>
-          <p dir="ltr" className="mt-2 font-heading text-3xl font-bold tabular-nums text-primary">
+          <p dir="ltr" className="mt-2 text-3xl font-bold tabular-nums text-primary">
             {formatPrice(product.price)}
           </p>
           {soldOut ? (
@@ -66,11 +66,11 @@ export function ProductDetailSheet({ product, open, canOrder = true, onOpenChang
           <DialogDescription className="mx-auto mt-2 max-w-xl text-sm leading-6">{description}</DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 px-5 py-5 sm:grid-cols-2 sm:px-6">
-          <div className="flex items-start gap-3 rounded-2xl border bg-background p-4">
+          <div className="flex items-start gap-3 rounded-lg border bg-muted/25 p-4">
             <Scale className="mt-0.5 size-5 text-copper" />
             <div><p className="text-xs font-semibold text-muted-foreground">{t("portion")}</p><p className="mt-0.5 text-sm font-bold">{product.weight ? getMenuWeight(product.weight, language) : t("standardPortion")}</p></div>
           </div>
-          <div className="flex items-start gap-3 rounded-2xl border bg-background p-4">
+          <div className="flex items-start gap-3 rounded-lg border bg-muted/25 p-4">
             <ShieldAlert className="mt-0.5 size-5 text-copper" />
             <div><p className="text-xs font-semibold text-muted-foreground">{t("allergens")}</p><p className="mt-0.5 text-sm font-bold">{product.allergens.length ? product.allergens.map((item) => getMenuAllergen(item, language)).join(", ") : t("noAllergens")}</p></div>
           </div>

@@ -29,7 +29,7 @@ function Section({ title, hint, children }: { title: string; hint?: string; chil
   return (
     <section className="space-y-3">
       <div>
-        <h3 className="font-heading text-lg font-semibold">{title}</h3>
+        <h3 className="text-base font-bold">{title}</h3>
         {hint ? <p className="text-sm text-muted-foreground">{hint}</p> : null}
       </div>
       {children}
@@ -170,9 +170,9 @@ export function TodayPanel({
         ) : warnings.length ? (
           <div className="grid gap-3 md:grid-cols-2">
             {warnings.map((warning) => (
-              <Card key={warning.key} className="border-amber-500/30 bg-amber-500/5">
+              <Card key={warning.key} className="border-status-warning/30 bg-status-warning-tint/50">
                 <CardContent className="flex flex-wrap items-center justify-between gap-3 p-4">
-                  <span className="flex items-center gap-2 text-sm font-semibold"><AlertTriangle className="size-4 shrink-0 text-amber-700" aria-hidden="true" />{warning.text}</span>
+                  <span className="flex items-center gap-2 text-sm font-semibold"><AlertTriangle className="size-4 shrink-0 text-status-warning" aria-hidden="true" />{warning.text}</span>
                   <Button nativeButton={false} size="sm" variant="outline" render={<Link href={warning.href} />}>{warning.action}</Button>
                 </CardContent>
               </Card>

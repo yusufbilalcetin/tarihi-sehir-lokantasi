@@ -23,14 +23,8 @@ import {
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Dialog } from "@/components/ui/dialog";
+import { WindowDialogContent } from "@/components/ui/window-dialog";
 import { Input } from "@/components/ui/input";
 import {
   Sheet,
@@ -341,7 +335,7 @@ export function StaffManager() {
                       {STAFF_ROLE_LABELS[user.role]}
                     </Badge>
                     {lastAdmin ? (
-                      <span className="mt-1 flex items-center gap-1 text-[11px] font-semibold text-status-warning">
+                      <span className="mt-1 flex items-center gap-1 text-xs font-semibold text-status-warning">
                         <ShieldAlert className="size-3" aria-hidden="true" /> Son yönetici
                       </span>
                     ) : null}
@@ -515,7 +509,7 @@ export function StaffManager() {
                         alınamaz; önce başka bir yönetici tanımlayın.
                       </p>
                     ) : null}
-                    <div className="rounded-2xl border bg-background p-3">
+                    <div className="rounded-xl border bg-background p-3">
                       <p className="text-xs font-bold text-muted-foreground">
                         Erişebildiği ekranlar
                       </p>
@@ -569,46 +563,55 @@ export function StaffManager() {
         open={confirmDeactivate !== null}
         onOpenChange={(open) => !open && setConfirmDeactivate(null)}
       >
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle>Personeli pasife al</DialogTitle>
-            <DialogDescription>
-              Hesap silinmez: geçmiş siparişler, tahsilatlar ve vardiyalar bu kişiye bağlı
-              kalır. Pasif hesap bir sonraki istekte giriş yapamaz ve panellere erişemez.
-            </DialogDescription>
-          </DialogHeader>
-          <DialogFooter>
-            <Button type="button" variant="outline" onClick={() => setConfirmDeactivate(null)}>
-              Vazgeç
-            </Button>
-            <Button
-              type="button"
-              disabled={saving}
-              onClick={() => {
-                const id = confirmDeactivate;
-                if (!id) return;
-                setActive(id, false);
-                setConfirmDeactivate(null);
-                setSelectedId(null);
-              }}
-            >
-              Pasife Al
-            </Button>
-          </DialogFooter>
-        </DialogContent>
+        <WindowDialogContent
+          size="sm"
+          title="Personeli pasife al"
+          description="Hesap silinmez: geçmiş siparişler, tahsilatlar ve vardiyalar bu kişiye bağlı kalır."
+          footer={
+            <>
+              <Button type="button" variant="outline" onClick={() => setConfirmDeactivate(null)}>
+                Vazgeç
+              </Button>
+              <Button
+                type="button"
+                disabled={saving}
+                onClick={() => {
+                  const id = confirmDeactivate;
+                  if (!id) return;
+                  setActive(id, false);
+                  setConfirmDeactivate(null);
+                  setSelectedId(null);
+                }}
+              >
+                Pasife Al
+              </Button>
+            </>
+          }
+        >
+          <p className="text-sm leading-6 text-muted-foreground">
+            Pasif hesap bir sonraki istekte giriş yapamaz ve panellere erişemez.
+          </p>
+        </WindowDialogContent>
       </Dialog>
 
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="sm:max-w-md">
-          <form onSubmit={addStaff}>
-            <DialogHeader>
-              <DialogTitle className="text-xl">Yeni personel</DialogTitle>
-              <DialogDescription>
-                Giriş hesabı ve personel kaydı birlikte oluşturulur. Şifreyi personel,
-                e-postasına gelen kurulum bağlantısıyla kendisi belirler.
-              </DialogDescription>
-            </DialogHeader>
-            <div className="grid gap-4 py-5 sm:grid-cols-2">
+        <WindowDialogContent
+          size="sm"
+          title="Yeni personel"
+          description="Giriş hesabı ve personel kaydı birlikte oluşturulur. Şifreyi personel, e-postasına gelen kurulum bağlantısıyla kendisi belirler."
+          render={<form onSubmit={addStaff} />}
+          footer={
+            <>
+              <Button type="button" variant="outline" onClick={() => setDialogOpen(false)}>
+                Vazgeç
+              </Button>
+              <Button type="submit" disabled={saving} aria-busy={saving}>
+                Personel Ekle
+              </Button>
+            </>
+          }
+        >
+            <div className="grid gap-4 sm:grid-cols-2">
               <Field label="Ad soyad" className="sm:col-span-2">
                 <Input
                   value={newName}
@@ -656,16 +659,7 @@ export function StaffManager() {
                 />
               </Field>
             </div>
-            <DialogFooter>
-              <Button type="button" variant="outline" onClick={() => setDialogOpen(false)}>
-                Vazgeç
-              </Button>
-              <Button type="submit" disabled={saving} aria-busy={saving}>
-                Personel Ekle
-              </Button>
-            </DialogFooter>
-          </form>
-        </DialogContent>
+        </WindowDialogContent>
       </Dialog>
     </div>
   );

@@ -24,3 +24,27 @@ export function getInitials(name: string): string {
     .join("")
     .toLocaleUpperCase("tr-TR");
 }
+
+/**
+ * How long a ticket, table or bill has been open.
+ *
+ * Screens used to print the raw minute count, which is fine at "15 dk" and
+ * unreadable at "15899 dk" — nobody divides by 1440 while carrying plates. The
+ * unit changes with the size of the number so the value stays two glances wide
+ * at most, and precision is dropped only where it has stopped mattering: past a
+ * day, the hours are noise.
+ */
+export function formatElapsed(minutes: number): string {
+  const safe = Number.isFinite(minutes) && minutes > 0 ? Math.floor(minutes) : 0;
+  if (safe < 60) return `${safe} dk`;
+
+  const hours = Math.floor(safe / 60);
+  if (hours < 24) {
+    const rest = safe % 60;
+    return rest === 0 ? `${hours} sa` : `${hours} sa ${rest} dk`;
+  }
+
+  const days = Math.floor(hours / 24);
+  const restHours = hours % 24;
+  return restHours === 0 ? `${days} gün` : `${days} gün ${restHours} sa`;
+}

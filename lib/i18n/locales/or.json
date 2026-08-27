@@ -154,7 +154,10 @@
     "trackStepCurrent": "ବର୍ତ୍ତମାନ ପଦକ୍ଷେପ",
     "trackStepUpcoming": "ଆସନ୍ତା",
     "orderContents": "ଆର୍ଡର୍ ସାମଗ୍ରୀ",
-    "placedAt": "ରଖାଗଲା ତାରିଖ"
+    "placedAt": "ରଖାଗଲା ତାରିଖ",
+    "orderCount": "{count} ଅର୍ଡର୍‍",
+    "orderSequence": "ଅର୍ଡର୍ {number}",
+    "orderTrackingStatus": "ଆପଣ ଏଠାରେ ଆପଣଙ୍କର ଅର୍ଡର୍ ଅବସ୍ଥା ପାଇଁ ଅନୁସରଣ କରିପାରିବେ।"
   },
   "categories": {
     "soups": "ସୁପ୍ସ",

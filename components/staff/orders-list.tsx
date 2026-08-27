@@ -23,7 +23,7 @@ import { staffApi } from "@/lib/api/endpoints";
 import { canRoleTransitionOrderStatus } from "@/lib/domain/status";
 import { useApiResource } from "@/lib/hooks/use-api-resource";
 import { useStaffRealtime } from "@/lib/realtime/use-staff-realtime";
-import { formatCurrency } from "@/lib/format";
+import { formatCurrency, formatElapsed } from "@/lib/format";
 import { cn } from "@/lib/utils";
 import type { Order, OrderStatus } from "@/types";
 
@@ -102,7 +102,7 @@ function OrderCard({
               <span>{order.createdAt}</span>
               <span className="flex items-center gap-1">
                 <Clock3 className="size-3.5" strokeWidth={1.8} />
-                {order.elapsedMinutes} dakikadır açık
+                {formatElapsed(order.elapsedMinutes)} açık
               </span>
               {order.waiterName ? <span>Garson: {order.waiterName}</span> : null}
             </div>
@@ -136,7 +136,7 @@ function OrderCard({
 
         <aside className="flex flex-col border-t border-border pt-4 lg:border-l lg:border-t-0 lg:pl-5 lg:pt-0" aria-label={`${order.orderNumber} özeti`}>
           <p className="text-xs font-semibold text-muted-foreground">Sipariş toplamı</p>
-          <p className="mt-1 font-heading text-2xl font-semibold tabular-nums text-foreground">
+          <p className="mt-1 text-2xl font-semibold tabular-nums text-foreground">
             {formatCurrency(order.total)}
           </p>
           <p className="mt-1 text-xs text-muted-foreground">{order.items.reduce((sum, item) => sum + item.quantity, 0)} ürün</p>

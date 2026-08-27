@@ -57,8 +57,8 @@ export function TableCard({
       type="button"
       onClick={() => onSelect(table)}
       className={cn(
-        "group flex min-h-36 w-full flex-col rounded-2xl border border-l-4 border-border-subtle bg-surface-raised p-4 text-left",
-        "shadow-[var(--shadow-raised)] transition-colors hover:border-copper/50 hover:bg-surface-muted/40",
+        "motion-press motion-operational-state group flex min-h-36 w-full flex-col rounded-xl border border-l-4 border-border-subtle bg-surface-raised p-4 text-left",
+        "shadow-[var(--shadow-raised)] hover:border-copper/50 hover:bg-surface-muted/40",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-surface",
         compact && "min-h-32",
         RAIL[table.status],
@@ -68,7 +68,7 @@ export function TableCard({
       <div className="flex w-full items-start justify-between gap-3">
         <div className="min-w-0">
           {/* Priority one: which table this is, readable at a glance. */}
-          <span className="block truncate font-heading text-2xl font-bold leading-tight tracking-tight text-text-primary">
+          <span className="block truncate text-2xl font-extrabold leading-tight tracking-tight text-text-primary">
             {table.name}
           </span>
           <span className="mt-1 flex items-center gap-1.5 text-xs font-medium text-text-muted">
@@ -84,19 +84,19 @@ export function TableCard({
       {attention ? (
         <span
           className={cn(
-            "mt-3 inline-flex w-fit items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold",
+            "mt-3 inline-flex w-fit items-center gap-1.5 rounded-full px-3 py-1.5 text-sm font-bold",
             attention.tone,
           )}
         >
-          <attention.icon className="size-3.5" strokeWidth={2.2} aria-hidden="true" />
+          <attention.icon className="size-4" strokeWidth={2.2} aria-hidden="true" />
           {attention.label}
         </span>
       ) : null}
 
       <div className="mt-auto flex w-full items-end justify-between gap-3 pt-4">
         <StatusBadge status={table.status} size="sm" className="max-w-full" />
-        <span className="flex shrink-0 items-center gap-1 text-[11px] font-medium text-text-muted">
-          <Clock3 className="size-3" strokeWidth={1.8} aria-hidden="true" />
+        <span className="flex shrink-0 items-center gap-1 text-xs font-medium text-text-muted">
+          <Clock3 className="size-3.5" strokeWidth={1.8} aria-hidden="true" />
           {table.lastActivity}
         </span>
       </div>

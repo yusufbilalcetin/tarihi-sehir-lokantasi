@@ -61,7 +61,7 @@ export function LoadingState({
         <div
           key={index}
           className={cn(
-            "animate-pulse rounded-2xl border border-border-subtle bg-surface-muted/70",
+            "animate-pulse rounded-xl border border-border-subtle bg-surface-muted/70",
             block,
           )}
         />
@@ -86,14 +86,14 @@ export function EmptyState({
   return (
     <div
       className={cn(
-        "flex min-h-52 flex-col items-center justify-center rounded-2xl border border-dashed border-border-strong bg-surface-raised/60 p-8 text-center",
+        "flex min-h-40 flex-col items-center justify-center rounded-xl border border-dashed border-border-strong bg-surface-raised/60 p-6 text-center",
         className,
       )}
     >
-      <div className="flex size-12 items-center justify-center rounded-2xl bg-surface-muted text-text-muted">
+      <div className="flex size-11 items-center justify-center rounded-xl bg-surface-muted text-text-muted">
         <Icon className="size-5" strokeWidth={1.8} aria-hidden="true" />
       </div>
-      <h3 className="mt-4 font-heading text-lg font-semibold text-text-primary">{title}</h3>
+      <h3 className="mt-3 text-base font-bold text-text-primary">{title}</h3>
       <p className="mt-1 max-w-sm text-sm leading-6 text-text-secondary">{description}</p>
       {action ? <div className="mt-4">{action}</div> : null}
     </div>
@@ -115,14 +115,14 @@ export function ErrorState({
     <div
       role="alert"
       className={cn(
-        "flex min-h-52 flex-col items-center justify-center rounded-2xl border border-status-danger/25 bg-status-danger-tint/50 p-8 text-center",
+        "flex min-h-40 flex-col items-center justify-center rounded-xl border border-status-danger/25 bg-status-danger-tint/50 p-6 text-center",
         className,
       )}
     >
-      <div className="flex size-12 items-center justify-center rounded-2xl bg-status-danger-tint text-status-danger">
+      <div className="flex size-11 items-center justify-center rounded-xl bg-status-danger-tint text-status-danger">
         <AlertTriangle className="size-5" strokeWidth={1.8} aria-hidden="true" />
       </div>
-      <h3 className="mt-4 font-heading text-lg font-semibold text-text-primary">{title}</h3>
+      <h3 className="mt-3 text-base font-bold text-text-primary">{title}</h3>
       <p className="mt-1 max-w-sm text-sm leading-6 text-text-secondary">{description}</p>
       {onRetry ? (
         <Button type="button" variant="outline" className="mt-4" onClick={onRetry}>

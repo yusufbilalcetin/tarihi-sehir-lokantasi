@@ -41,7 +41,11 @@ test("the admin header is a web breadcrumb with an accessible current page", () 
   assert.doesNotMatch(adminModule, /shadow-\[var\(--shadow-window\)\]/);
 });
 
-test("operational role windows remain isolated from the admin refinement", () => {
+test("operational roles render as pages, not as floating windows", () => {
+  // This assertion used to say the opposite: Admin was corrected first and the
+  // operational roles were deliberately left as centered windows. That was the
+  // wrong reading of the design intent — a route is a page in every role, and
+  // the window metaphor belongs to overlays a person opens on purpose.
   for (const path of [
     "components/staff/tables-module.tsx",
     "components/staff/orders-module.tsx",
@@ -49,9 +53,54 @@ test("operational role windows remain isolated from the admin refinement", () =>
     "components/kitchen/kitchen-module.tsx",
     "components/cashier/cashier-module.tsx",
   ]) {
-    assert.match(read(path), /ModuleWindow/, `${path} unexpectedly lost its focused operational window`);
+    const source = read(path);
+    for (const windowDependency of ["ModuleWindow", "CenteredAppWindow", "closeHref", "DialogPrimitive", "inWindow"]) {
+      assert.ok(
+        !source.includes(windowDependency),
+        `${path} still renders a route inside a window (${windowDependency})`,
+      );
+    }
   }
-  assert.match(read("components/shared/module-window.tsx"), /CenteredAppWindow/);
+});
+
+test("no route-as-window abstraction exists any more", () => {
+  // Both abstractions that could wrap a route in desktop-window chrome are
+  // gone from the tree, not merely unused: `module-window.tsx` wrapped routes
+  // directly, and `app-window.tsx` was the shell it wrapped them in. An unused
+  // file is a file someone reaches for again.
+  for (const removed of ["components/shared/module-window.tsx", "components/shared/app-window.tsx"]) {
+    assert.throws(() => read(removed), `${removed} came back`);
+  }
+});
+
+test("the window treatment belongs to overlays and nothing else", () => {
+  // The desktop-window look now lives in exactly one place, and that place is
+  // a dialog: it has the backdrop, the popup and the focus semantics.
+  const windowDialog = read("components/ui/window-dialog.tsx");
+  assert.match(windowDialog, /DialogPrimitive\.Popup/, "the overlay lost its dialog semantics");
+  assert.match(windowDialog, /DialogOverlay/);
+  assert.match(windowDialog, /DialogPrimitive\.Title/);
+
+  // Nothing that renders a route may import it.
+  for (const routeSurface of [
+    "components/shared/module-page.tsx",
+    "components/admin/admin-module-window.tsx",
+    "components/admin/admin-shell.tsx",
+    "components/staff/staff-shell.tsx",
+  ]) {
+    assert.ok(
+      !read(routeSurface).includes("ui/window-dialog"),
+      `${routeSurface} is a route surface and must not wear window chrome`,
+    );
+  }
+});
+
+test("the route page surface is plain document flow", () => {
+  const modulePage = read("components/shared/module-page.tsx");
+  for (const windowDependency of ["CenteredAppWindow", "DialogPrimitive", "Backdrop", "closeHref"]) {
+    assert.ok(!modulePage.includes(windowDependency), `the route page surface pulled in ${windowDependency}`);
+  }
+  assert.match(modulePage, /<PageHeader/);
 });
 
 test("representative admin routes all enter the same page surface", () => {
@@ -66,4 +115,71 @@ test("representative admin routes all enter the same page surface", () => {
   ]) {
     assert.match(read(path), /AdminModuleWindow/, `${path} bypasses the integrated admin page surface`);
   }
+});
+
+test("the window-styled dialog is an overlay treatment and nothing else", () => {
+  const windowDialog = read("components/ui/window-dialog.tsx");
+  // It is a dialog first: the focus trap, Escape handling and aria wiring are
+  // the shared primitives, not a hand-rolled panel that merely looks modal.
+  assert.match(windowDialog, /from "@base-ui\/react\/dialog"/);
+  assert.match(windowDialog, /DialogPrimitive\.Popup/);
+  assert.match(windowDialog, /DialogPrimitive\.Title/);
+  assert.match(windowDialog, /DialogOverlay/);
+  // The window chrome that routes must never have: a title bar carrying the
+  // close control, rather than a control floating over the content.
+  assert.match(windowDialog, /DialogPrimitive\.Close/);
+  assert.doesNotMatch(windowDialog, /absolute top-2 right-2/);
+  // Sizes stay dialog-scale. The route-scale width belongs to the old shell.
+  assert.doesNotMatch(windowDialog, /96rem|95vw|100dvh-1rem/);
+});
+
+test("no route shell reaches for the window dialog", () => {
+  // A route is a page. If a layout or a module shell ever imports this, the
+  // whole correction has been undone.
+  for (const path of [
+    "components/shared/module-page.tsx",
+    "components/admin/admin-module-window.tsx",
+    "components/admin/admin-shell.tsx",
+    "components/staff/staff-shell.tsx",
+    "components/staff/tables-module.tsx",
+    "components/staff/orders-module.tsx",
+    "components/staff/calls-module.tsx",
+    "components/kitchen/kitchen-module.tsx",
+    "components/cashier/cashier-module.tsx",
+  ]) {
+    assert.ok(
+      !read(path).includes("window-dialog"),
+      `${path} is a route surface and must not wear window chrome`,
+    );
+  }
+});
+
+test("button-triggered staff and admin dialogs wear the window treatment", () => {
+  // The point of the phase: the treatment exists *and* is what these dialogs
+  // actually use. A styled component with no callers is the defect it replaced.
+  for (const path of [
+    "components/admin/categories-manager.tsx",
+    "components/admin/tables-manager.tsx",
+    "components/admin/staff-manager.tsx",
+    "components/admin/printers-manager.tsx",
+    "components/cashier/shift-panel.tsx",
+    "components/cashier/shift-report-dialog.tsx",
+    "components/kitchen/kitchen-board.tsx",
+  ]) {
+    const source = read(path);
+    assert.match(source, /WindowDialogContent/, `${path} lost the window dialog treatment`);
+    assert.doesNotMatch(
+      source,
+      /<DialogContent/,
+      `${path} still mixes the plain dialog card with the window treatment`,
+    );
+  }
+});
+
+test("a printed cash report carries no window chrome", () => {
+  // The report prints as a document. Title bar and footer are screen furniture.
+  const windowDialog = read("components/ui/window-dialog.tsx");
+  assert.equal((windowDialog.match(/data-print-hide/g) ?? []).length, 2);
+  assert.match(read("app/globals.css"), /\[data-print-root\] \[data-slot="window-dialog-body"\]/);
+  assert.match(read("components/cashier/shift-report-dialog.tsx"), /data-print-root/);
 });

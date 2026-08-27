@@ -154,7 +154,10 @@
     "trackStepCurrent": "hatua ya sasa",
     "trackStepUpcoming": "ijayo",
     "orderContents": "Yaliyomo kwenye oda",
-    "placedAt": "Imewekwa tarehe"
+    "placedAt": "Imewekwa tarehe",
+    "orderCount": "{count} maagizo",
+    "orderSequence": "Agizo {number}",
+    "orderTrackingStatus": "Unaweza kufuatilia hali ya agizo lako hapa."
   },
   "categories": {
     "soups": "Supuu",

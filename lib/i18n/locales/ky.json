@@ -154,7 +154,10 @@
     "trackStepCurrent": "азыркы этап",
     "trackStepUpcoming": "келечектеги",
     "orderContents": "Буйруктун мазмуну",
-    "placedAt": "Буйрук берилген убакыт"
+    "placedAt": "Буйрук берилген убакыт",
+    "orderCount": "{count} буйрутмалар",
+    "orderSequence": "{number} сатып алуу",
+    "orderTrackingStatus": "Сиз бул жерде заказдын абалын текшере аласыз."
   },
   "categories": {
     "soups": "Шорполор",

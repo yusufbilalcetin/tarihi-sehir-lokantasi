@@ -154,7 +154,10 @@
     "trackStepCurrent": "gawo la pano",
     "trackStepUpcoming": "zomwe zikusowa",
     "orderContents": "Zamkati mwa dongosolo",
-    "placedAt": "Yapangidwa pa"
+    "placedAt": "Yapangidwa pa",
+    "orderCount": "{count} ma oda",
+    "orderSequence": "Lamulo {number}",
+    "orderTrackingStatus": "Mungatsatire mkhalidwe wa lamulo lanu apa."
   },
   "categories": {
     "soups": "Zosobwa",

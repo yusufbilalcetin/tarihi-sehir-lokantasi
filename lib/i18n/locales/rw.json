@@ -154,7 +154,10 @@
     "trackStepCurrent": "intambwe iriho ubu",
     "trackStepUpcoming": "ikurikiraho",
     "orderContents": "Ibikubiye mu itegeko",
-    "placedAt": "Ryatanzwe kuri"
+    "placedAt": "Ryatanzwe kuri",
+    "orderCount": "{count} amabwiriza",
+    "orderSequence": "Itumire {number}",
+    "orderTrackingStatus": "Urashobora gukurikirana uko itumire yawe ihagaze hano."
   },
   "categories": {
     "soups": "Isupu",

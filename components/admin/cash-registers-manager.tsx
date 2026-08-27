@@ -69,6 +69,18 @@ export function CashRegistersManager() {
 
   const loadRegisters = useCallback((signal: AbortSignal) => cashRegisterApi.list(signal), []);
   const registers = useApiResource(loadRegisters);
+  /*
+   * Base UI prints the selected value in the trigger unless the root is given
+   * an item map, so these filters showed a database id once a real option was
+   * chosen. The id stays the value; only the trigger's words come from here.
+   */
+  const registerFilterLabels = useMemo(
+    () => ({
+      ALL: "Tümü",
+      ...Object.fromEntries((registers.data?.registers ?? []).map((r) => [r.id, r.name])),
+    }),
+    [registers.data],
+  );
   const refetchRegisters = registers.refetch;
 
   const historyQuery = useMemo(() => {
@@ -241,6 +253,7 @@ export function CashRegistersManager() {
                 Durum
               </label>
               <Select
+                items={{ ALL: "Tümü", OPEN: "Açık", CLOSED: "Kapalı" }}
                 value={status}
                 onValueChange={(value) => {
                   setStatus(value as typeof status);
@@ -262,6 +275,7 @@ export function CashRegistersManager() {
                 Kasa
               </label>
               <Select
+                items={registerFilterLabels}
                 value={registerFilter}
                 onValueChange={(value) => {
                   setRegisterFilter(value ?? "ALL");

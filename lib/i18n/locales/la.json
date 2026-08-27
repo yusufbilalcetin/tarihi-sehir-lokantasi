@@ -154,7 +154,10 @@
     "trackStepCurrent": "gradus currentis",
     "trackStepUpcoming": "futurus",
     "orderContents": "Ordine contenta",
-    "placedAt": "Positum ad"
+    "placedAt": "Positum ad",
+    "orderCount": "{count} iussa",
+    "orderSequence": "Ordo {number}",
+    "orderTrackingStatus": "Hic statum ordinis tui sequi potes."
   },
   "categories": {
     "soups": "Sapores",

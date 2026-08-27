@@ -154,7 +154,10 @@
     "trackStepCurrent": "current step",
     "trackStepUpcoming": "upcoming",
     "orderContents": "Order contents",
-    "placedAt": "Placed at"
+    "placedAt": "Placed at",
+    "orderCount": "{count} Bestellunge",
+    "orderSequence": "Commande {number}",
+    "orderTrackingStatus": "Dir kënnt hei de Status vun Ärer Commande verfolgen."
   },
   "categories": {
     "soups": "Zoppen",

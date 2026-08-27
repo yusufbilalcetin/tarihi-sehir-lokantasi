@@ -172,7 +172,65 @@ test("a bill request keeps its guest-facing label and open state", () => {
   const view = staffCallToViewModel(call, now);
   assert.equal(view.type, "Hesap istiyor");
   assert.equal(view.status, "assigned");
-  assert.equal(view.elapsed, "2 dakika önce");
+  assert.equal(view.elapsed, "2 dk önce");
+});
+
+/**
+ * The regression this locks down: relativeLabel was delegated to formatElapsed,
+ * which floors to whole minutes, so every call younger than a minute rendered
+ * as "0 dk önce" — on the waiter-call screen, whose whole job is making the
+ * newest request obvious. A call that just came in must never read as a
+ * duration of zero.
+ */
+test("a call newer than a minute reads as fresh, never as zero minutes", () => {
+  const callAt = (secondsAgo: number): StaffCallPayload => ({
+    id: "call-fresh",
+    type: "WAITER_CALL",
+    status: "OPEN",
+    requestLabel: null,
+    notes: null,
+    table: { id: "table-a", name: "Masa 12", number: 12 },
+    acknowledgedAt: null,
+    resolvedAt: null,
+    createdAt: new Date(now - secondsAgo * 1_000).toISOString(),
+    updatedAt: new Date(now - secondsAgo * 1_000).toISOString(),
+  });
+
+  const label = (secondsAgo: number) => staffCallToViewModel(callAt(secondsAgo), now).elapsed;
+
+  for (const secondsAgo of [0, 1, 12, 59]) {
+    assert.equal(label(secondsAgo), "az önce", `${secondsAgo}s old call`);
+  }
+
+  // From a minute on, the shared duration formatter takes over unchanged.
+  assert.equal(label(60), "1 dk önce");
+  assert.equal(label(61), "1 dk önce");
+  assert.equal(label(120), "2 dk önce");
+  assert.equal(label(3_600), "1 sa önce");
+
+  // The property that actually matters, stated directly.
+  for (const secondsAgo of [0, 1, 12, 30, 59, 60, 61, 120]) {
+    assert.notEqual(label(secondsAgo), "0 dk önce", `${secondsAgo}s old call read as zero`);
+  }
+});
+
+test("a clock-skewed call timestamp never fabricates a zero duration", () => {
+  // A tablet a few seconds ahead of the server must not report a brand new
+  // call as a measured duration.
+  const future: StaffCallPayload = {
+    id: "call-skewed",
+    type: "WAITER_CALL",
+    status: "OPEN",
+    requestLabel: null,
+    notes: null,
+    table: { id: "table-a", name: "Masa 12", number: 12 },
+    acknowledgedAt: null,
+    resolvedAt: null,
+    createdAt: new Date(now + 5_000).toISOString(),
+    updatedAt: new Date(now + 5_000).toISOString(),
+  };
+
+  assert.equal(staffCallToViewModel(future, now).elapsed, "az önce");
 });
 
 test("an inactive table is never shown as available on the floor", () => {
@@ -233,4 +291,55 @@ test("a product without an image gets the neutral placeholder, never another dis
   // The regression this guards: an image-less product borrowing a real dish photo.
   assert.ok(!withoutImage?.image.startsWith("/images/food/"));
   assert.notEqual(withoutImage?.image, withImage?.image);
+});
+
+/**
+ * A single malformed timestamp used to take down a whole board.
+ *
+ * Intl.DateTimeFormat.format throws RangeError on an invalid Date, and both
+ * adapters handed it the API string unchecked — so one bad `createdAt` crashed
+ * the kitchen ticket list, the staff order list or the calls list, rather than
+ * costing one line of one row. Neither adapter may throw on any input the type
+ * allows.
+ */
+const MALFORMED_TIMESTAMPS = ["", "not-a-date", "2026-13-45T99:99:99Z", "0000-00-00", "undefined"];
+
+test("a malformed call timestamp never crashes the calls board", () => {
+  for (const createdAt of MALFORMED_TIMESTAMPS) {
+    const call: StaffCallPayload = {
+      id: "call-malformed",
+      type: "WAITER_CALL",
+      status: "OPEN",
+      requestLabel: null,
+      notes: null,
+      table: { id: "table-a", name: "Masa 12", number: 12 },
+      acknowledgedAt: null,
+      resolvedAt: null,
+      createdAt,
+      updatedAt: createdAt,
+    };
+
+    const view = staffCallToViewModel(call, now);
+    assert.equal(view.createdAt, "—", `clock label for ${JSON.stringify(createdAt)}`);
+    // Freshness never reads as a measured age it does not have.
+    assert.equal(view.elapsed, "az önce");
+    for (const wrong of ["Invalid Date", "NaN", "0 dk önce"]) {
+      assert.ok(!view.createdAt.includes(wrong), `${wrong} rendered for ${JSON.stringify(createdAt)}`);
+      assert.ok(!view.elapsed.includes(wrong), `${wrong} rendered for ${JSON.stringify(createdAt)}`);
+    }
+    // The row still identifies itself, so the call stays actionable.
+    assert.equal(view.tableName, "Masa 12");
+  }
+});
+
+test("a malformed order timestamp never crashes the kitchen or order boards", () => {
+  for (const createdAt of MALFORMED_TIMESTAMPS) {
+    const view = staffOrderToViewModel({ ...staffOrder, createdAt }, now);
+    assert.equal(view.createdAt, "—");
+    assert.ok(!view.createdAt.includes("Invalid Date"));
+    // An unmeasurable age is zero minutes, not NaN: the urgency banding that
+    // reads this must stay a number.
+    assert.equal(view.elapsedMinutes, 0);
+    assert.equal(view.orderNumber, `#${staffOrder.orderNumber}`);
+  }
 });

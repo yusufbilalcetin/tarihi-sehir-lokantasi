@@ -154,7 +154,10 @@
     "trackStepCurrent": "当前步骤",
     "trackStepUpcoming": "即将到来",
     "orderContents": "订单内容",
-    "placedAt": "下单时间"
+    "placedAt": "下单时间",
+    "orderCount": "{count} 个订单",
+    "orderSequence": "订单 {number}",
+    "orderTrackingStatus": "您可以在这里查看您的订单状态。"
   },
   "categories": {
     "soups": "汤类",

@@ -154,7 +154,10 @@
     "trackStepCurrent": "тековна фаза",
     "trackStepUpcoming": "идно",
     "orderContents": "Содржина на нарачката",
-    "placedAt": "Поставено на"
+    "placedAt": "Поставено на",
+    "orderCount": "{count} нарачки",
+    "orderSequence": "Нарачка {number}",
+    "orderTrackingStatus": "Можете да го следите статусот на вашата нарачка тука."
   },
   "categories": {
     "soups": "Супи",

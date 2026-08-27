@@ -1,23 +1,16 @@
 "use client";
 
-import { BellRing } from "lucide-react";
-
-import { ModuleWindow } from "@/components/shared/module-window";
+import { ModulePage } from "@/components/shared/module-page";
 import { WaiterCallsList } from "@/components/staff/waiter-calls-list";
 
-/** Service requests as an application window. */
+/** Service requests, as a normal page inside the staff shell. */
 export function CallsModule() {
   return (
-    <ModuleWindow
+    <ModulePage
       title="Garson Çağrıları"
       description="Masa taleplerini önem sırasına göre üstlen ve tamamlanan çağrıları kapat."
-      icon={BellRing}
-      size="lg"
-      closeHref="/staff/dashboard"
     >
-      <div className="p-4 sm:p-6">
-        <WaiterCallsList />
-      </div>
-    </ModuleWindow>
+      <WaiterCallsList />
+    </ModulePage>
   );
 }

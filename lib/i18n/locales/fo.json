@@ -154,7 +154,10 @@
     "trackStepCurrent": "nuvandi stig",
     "trackStepUpcoming": "komandi",
     "orderContents": "Innihald í pørtunum",
-    "placedAt": "Settur á"
+    "placedAt": "Settur á",
+    "orderCount": "{count} bíleggingar",
+    "orderSequence": "Koma {number}",
+    "orderTrackingStatus": "Tú kanst fylgja við støðuni á tíni komu her."
   },
   "categories": {
     "soups": "Súpur",

@@ -154,7 +154,10 @@
     "trackStepCurrent": "passo corrente",
     "trackStepUpcoming": "prossimo",
     "orderContents": "Contenuto dell'ordine",
-    "placedAt": "Effettuato il"
+    "placedAt": "Effettuato il",
+    "orderCount": "{count} ordini",
+    "orderSequence": "Ordine {number}",
+    "orderTrackingStatus": "Puoi seguire lo stato del tuo ordine qui."
   },
   "categories": {
     "soups": "Zuppe",

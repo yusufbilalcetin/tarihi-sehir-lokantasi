@@ -154,7 +154,10 @@
     "trackStepCurrent": "বর্তমান ধাপ",
     "trackStepUpcoming": "আসন্ন",
     "orderContents": "অর্ডারের বিষয়বস্তু",
-    "placedAt": "অর্ডার করা হয়েছে"
+    "placedAt": "অর্ডার করা হয়েছে",
+    "orderCount": "{count} টি অর্ডার",
+    "orderSequence": "অর্ডার {number}",
+    "orderTrackingStatus": "আপনি এখানে আপনার অর্ডারের অবস্থা অনুসরণ করতে পারেন।"
   },
   "categories": {
     "soups": "সুপ",

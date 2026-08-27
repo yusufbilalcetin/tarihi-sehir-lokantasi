@@ -154,7 +154,10 @@
     "trackStepCurrent": "joriy qadam",
     "trackStepUpcoming": "keyingi",
     "orderContents": "Buyurtma mazmuni",
-    "placedAt": "Berilgan vaqti"
+    "placedAt": "Berilgan vaqti",
+    "orderCount": "{count} buyurtma",
+    "orderSequence": "{number} raqamli buyurtma",
+    "orderTrackingStatus": "Buyurtmangiz holatini bu yerda kuzatishingiz mumkin."
   },
   "categories": {
     "soups": "Shurvalar",

@@ -154,7 +154,10 @@
     "trackStepCurrent": "aktueller Schritt",
     "trackStepUpcoming": "ausstehend",
     "orderContents": "Bestellinhalt",
-    "placedAt": "Bestellt am"
+    "placedAt": "Bestellt am",
+    "orderCount": "{count} Bestellungen",
+    "orderSequence": "Bestellung {number}",
+    "orderTrackingStatus": "Hier können Sie den Status Ihrer Bestellung verfolgen."
   },
   "categories": {
     "soups": "Suppen",

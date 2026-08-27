@@ -154,7 +154,10 @@
     "trackStepCurrent": "當前步驟",
     "trackStepUpcoming": "即將到來",
     "orderContents": "訂單內容",
-    "placedAt": "下單於"
+    "placedAt": "下單於",
+    "orderCount": "{count} 訂單",
+    "orderSequence": "訂單 {number}",
+    "orderTrackingStatus": "您可以在這裡查看您的訂單狀態。"
   },
   "categories": {
     "soups": "湯類",
