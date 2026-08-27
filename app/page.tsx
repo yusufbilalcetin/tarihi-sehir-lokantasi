@@ -2,6 +2,7 @@ import { connection } from "next/server";
 
 import { BrandMark } from "@/components/shared/brand-mark";
 import { PrototypePortals } from "@/components/shared/prototype-portals";
+import { isDemoLauncherEnabled } from "@/lib/config/demo-launcher";
 
 // Rendered per request so the framework's inline scripts carry the same CSP
 // nonce as the response header; a prerendered shell would be blocked instead.
@@ -17,7 +18,13 @@ export default async function Home() {
             ulaşabilirsiniz.
           </p>
         </div>
-        <PrototypePortals />
+        {/*
+          Read on the server, where the deployment markers actually live, and
+          handed down as a plain boolean. The client never inspects the
+          environment, and the page is already per-request, so this reflects
+          the deployment it is running in.
+        */}
+        <PrototypePortals demoLauncherEnabled={isDemoLauncherEnabled()} />
       </div>
     </main>
   );

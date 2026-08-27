@@ -21,8 +21,10 @@ const picker = readFileSync(new URL("../../components/shared/demo-table-picker.t
 const service = readFileSync(new URL("../../lib/services/demo-launcher-service.ts", import.meta.url), "utf8");
 const tablesRoute = readFileSync(new URL("../../app/api/demo/tables/route.ts", import.meta.url), "utf8");
 
+const portals = readFileSync(new URL("../../components/shared/prototype-portals.tsx", import.meta.url), "utf8");
+const homePage = readFileSync(new URL("../../app/page.tsx", import.meta.url), "utf8");
+
 test("the home page card opens the picker, which reads the demo endpoint", () => {
-  const portals = readFileSync(new URL("../../components/shared/prototype-portals.tsx", import.meta.url), "utf8");
   assert.match(portals, /DemoTablePicker/);
   assert.match(portals, /open=\{pickerOpen\}/);
   assert.match(picker, /demoApi\.tables\(signal\)/);
@@ -140,4 +142,76 @@ test("the demo picker did not become a way around real QR authorisation", () => 
   const context = readFileSync(new URL("../../lib/auth/customer-table-context.ts", import.meta.url), "utf8");
   assert.match(context, /row\.tokenVersion !== claims\.accessVersion/);
   assert.match(context, /row\.tokenRevokedAt/);
+});
+
+/**
+ * What the home page offers where the launcher is switched off.
+ *
+ * The gate above is deliberate: `/api/demo/tables` is shut in production so a
+ * demo cannot become a second way into a guest session. The tile opened the
+ * picker regardless, so a real guest pressed "Müşteri QR Menü" and was handed
+ * "Demo masa seçimi şu anda kullanılamıyor." — an error produced by a button
+ * that could never work. A control that is guaranteed to fail should not be a
+ * control.
+ */
+
+test("the deployment decides, on the server, and hands down a plain boolean", () => {
+  // The client component must not go looking at the environment itself.
+  assert.match(homePage, /isDemoLauncherEnabled/);
+  assert.match(homePage, /<PrototypePortals demoLauncherEnabled=\{isDemoLauncherEnabled\(\)\} \/>/);
+  assert.match(portals, /demoLauncherEnabled \}: \{ demoLauncherEnabled: boolean \}/);
+  for (const leak of ["process.env", "VERCEL_ENV", "ENABLE_DEMO_LAUNCHER"]) {
+    assert.ok(!portals.includes(leak), `the client tile reads ${leak} itself`);
+  }
+});
+
+test("with the launcher off there is nothing to press and nothing to fail", () => {
+  const offBranch = portals
+    .slice(portals.indexOf(") : ("), portals.indexOf("{staffPortals.map"))
+    // Prose describing the choice is not markup: the comment there says the
+    // card is "not disabled", which a naive scan would read as a disabled card.
+    .replace(/\/\*[\s\S]*?\*\//g, "");
+  assert.ok(offBranch.length > 0, "the informational branch is missing");
+  // A plain card: no button, no dialog affordance, no arrow.
+  assert.doesNotMatch(offBranch, /<button|onClick=|aria-haspopup/);
+  assert.doesNotMatch(offBranch, /ArrowRight/);
+  // Not styled as disabled and not styled as an error — an ordinary tile.
+  assert.doesNotMatch(offBranch, /disabled|opacity-|cursor-|text-destructive|border-status-danger/);
+  // It tells the guest how the menu is actually reached.
+  assert.match(offBranch, /Menüyü görüntülemek için masanızdaki QR kodunu okutun\./);
+});
+
+test("the picker is not even mounted where it could load nothing", () => {
+  assert.match(portals, /\{demoLauncherEnabled \? \(\s*<DemoTablePicker/s);
+});
+
+test("with the launcher on the tile still opens the real picker", () => {
+  const onBranch = portals.slice(portals.indexOf("{demoLauncherEnabled ? ("), portals.indexOf(") : ("));
+  assert.match(onBranch, /<button/);
+  assert.match(onBranch, /onClick=\{\(\) => setPickerOpen\(true\)\}/);
+  assert.match(onBranch, /aria-haspopup="dialog"/);
+  assert.match(onBranch, /Aktif masalardan birini seçin/);
+  assert.match(onBranch, /ArrowRight/);
+});
+
+test("the flag alone opens nothing in a production deployment", () => {
+  // The security gate itself, restated here because the tile now depends on
+  // it: preview and development honour the flag, production never does.
+  assert.equal(isDemoLauncherEnabled({ ENABLE_DEMO_LAUNCHER: "true", VERCEL_ENV: "preview" }), true);
+  assert.equal(isDemoLauncherEnabled({ ENABLE_DEMO_LAUNCHER: "true", VERCEL_ENV: "development" }), true);
+  assert.equal(isDemoLauncherEnabled({ ENABLE_DEMO_LAUNCHER: "true" }), true);
+  assert.equal(isDemoLauncherEnabled({ ENABLE_DEMO_LAUNCHER: "true", VERCEL_ENV: "production" }), false);
+  // And without the flag nothing opens anywhere.
+  assert.equal(isDemoLauncherEnabled({ VERCEL_ENV: "preview" }), false);
+  assert.equal(isDemoLauncherEnabled({}), false);
+});
+
+test("the endpoints keep refusing on their own, whatever the page renders", () => {
+  // The tile is a courtesy, never the protection.
+  assert.match(tablesRoute, /if \(!isDemoLauncherEnabled\(\)\) throw demoLauncherDisabledError\(\)/);
+  const tableMenuRoute = readFileSync(
+    new URL("../../app/api/demo/table-menu/route.ts", import.meta.url),
+    "utf8",
+  );
+  assert.match(tableMenuRoute, /if \(!isDemoLauncherEnabled\(\)\) throw demoLauncherDisabledError\(\)/);
 });

@@ -12,13 +12,21 @@ import {
 } from "lucide-react";
 
 import { DemoTablePicker } from "@/components/shared/demo-table-picker";
+import { cn } from "@/lib/utils";
 
 /**
  * The prototype launcher tiles.
  *
- * The customer tile no longer points at a fixed table: it opens the picker,
- * which reads the restaurant's live table list. Every other tile is an ordinary
- * link to a panel that guards itself.
+ * The customer tile no longer points at a fixed table: where the demo launcher
+ * is switched on it opens the picker, which reads the restaurant's live table
+ * list. Every other tile is an ordinary link to a panel that guards itself.
+ *
+ * In production the launcher is off by design — `isDemoLauncherEnabled` keeps
+ * `/api/demo/tables` shut so a demo cannot become a second way into a guest
+ * session. The tile used to open the picker anyway and the guest was handed
+ * "Demo masa seçimi şu anda kullanılamıyor.", an error for a button that could
+ * never work. There it is simply not a button: a real guest reaches the menu
+ * by scanning the code on their table, so that is what it says.
  */
 
 /**
@@ -46,30 +54,50 @@ const staffPortals = [
   },
 ];
 
-const tileClassName =
-  "group flex min-h-44 flex-col justify-between rounded-xl border border-white/10 bg-white/[0.055] p-5 text-left transition-colors hover:border-copper/60 hover:bg-white/[0.09] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-copper";
+/** The card itself, shared by the tiles that act and the one that informs. */
+const tileSurface =
+  "flex min-h-44 flex-col justify-between rounded-xl border border-white/10 bg-white/[0.055] p-5 text-left";
 
-export function PrototypePortals() {
+/** Added only where there is something to press. */
+const tileInteractive =
+  "group transition-colors hover:border-copper/60 hover:bg-white/[0.09] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-copper";
+
+export function PrototypePortals({ demoLauncherEnabled }: { demoLauncherEnabled: boolean }) {
   const [pickerOpen, setPickerOpen] = useState(false);
 
   return (
     <>
       <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
-        <button
-          type="button"
-          onClick={() => setPickerOpen(true)}
-          className={tileClassName}
-          aria-haspopup="dialog"
-        >
-          <ScanLine className="size-6 text-copper" strokeWidth={1.6} aria-hidden="true" />
-          <div>
-            <h2 className="font-heading text-xl font-semibold">Müşteri QR Menü</h2>
-            <div className="mt-2 flex items-center justify-between gap-2 text-xs text-[#F5EBDD]/60">
-              <span>Aktif masalardan birini seçin</span>
-              <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+        {demoLauncherEnabled ? (
+          <button
+            type="button"
+            onClick={() => setPickerOpen(true)}
+            className={cn(tileSurface, tileInteractive)}
+            aria-haspopup="dialog"
+          >
+            <ScanLine className="size-6 text-copper" strokeWidth={1.6} aria-hidden="true" />
+            <div>
+              <h2 className="font-heading text-xl font-semibold">Müşteri QR Menü</h2>
+              <div className="mt-2 flex items-center justify-between gap-2 text-xs text-[#F5EBDD]/60">
+                <span>Aktif masalardan birini seçin</span>
+                <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+              </div>
+            </div>
+          </button>
+        ) : (
+          /* Not a button, not disabled, not an error: an ordinary card that
+             says how the menu is actually reached. No arrow and no pointer,
+             because there is nothing here to press. */
+          <div className={tileSurface}>
+            <ScanLine className="size-6 text-copper" strokeWidth={1.6} aria-hidden="true" />
+            <div>
+              <h2 className="font-heading text-xl font-semibold">Müşteri QR Menü</h2>
+              <p className="mt-2 text-xs leading-5 text-[#F5EBDD]/60">
+                Menüyü görüntülemek için masanızdaki QR kodunu okutun.
+              </p>
             </div>
           </div>
-        </button>
+        )}
 
         {staffPortals.map(({ href, title, description, icon: Icon }) => (
           <Link
@@ -78,7 +106,7 @@ export function PrototypePortals() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label={`${title} (yeni sekmede açılır)`}
-            className={tileClassName}
+            className={cn(tileSurface, tileInteractive)}
           >
             <Icon className="size-6 text-copper" strokeWidth={1.6} aria-hidden="true" />
             <div>
@@ -92,7 +120,10 @@ export function PrototypePortals() {
         ))}
       </div>
 
-      <DemoTablePicker open={pickerOpen} onOpenChange={setPickerOpen} />
+      {/* Never mounted where it could not load anything. */}
+      {demoLauncherEnabled ? (
+        <DemoTablePicker open={pickerOpen} onOpenChange={setPickerOpen} />
+      ) : null}
     </>
   );
 }
