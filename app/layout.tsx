@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import type { ReactNode } from "react";
 import { Lora, Manrope } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
 import { MotionPlatform } from "@/components/shared/motion-platform";
@@ -31,7 +32,16 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+/**
+ * Stated rather than inferred from Next's generated types.
+ *
+ * `LayoutProps<"/">` only exists once `.next/types` has been written, so a
+ * checkout that has never been built — a release worktree, a fresh clone, CI
+ * before the build step — fails `tsc --noEmit` on this line alone. The two
+ * other layouts in this application already name the prop, and this one now
+ * matches them.
+ */
+export default function RootLayout({ children }: { readonly children: ReactNode }) {
   return (
     // The QR menu sets `data-sehir-intro` on <html> from a blocking script so a
     // returning guest never sees the splash again. React did not render that

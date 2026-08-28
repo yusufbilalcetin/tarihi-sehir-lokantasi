@@ -16,7 +16,7 @@ import { toast } from "sonner";
 import { Field } from "@/components/admin/admin-ui";
 import { QrAccessToggle } from "@/components/admin/qr-access-toggle";
 import { TableQrDialog } from "@/components/admin/table-qr-dialog";
-import { useIsDesktop } from "@/components/admin/use-menu-draft";
+import { useIsDesktop } from "@/components/shared/use-is-desktop";
 import { StatusBadge } from "@/components/shared/status-badge";
 import { TableOperationsPanel } from "@/components/staff/table-operations-panel";
 import { Button } from "@/components/ui/button";

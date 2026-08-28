@@ -1,18 +1,11 @@
 import "server-only";
 
-import { getDb } from "@/db";
 import { DomainError } from "@/lib/api/domain-error";
-import { DrizzleTableRepository } from "@/lib/repositories/drizzle-table-repository";
 import {
   CUSTOMER_TABLE_SESSION_TTL_SECONDS,
 } from "@/lib/security/customer-session";
 import { issueCustomerTableSession } from "@/lib/security/customer-session.server";
-import {
-  generateTableQrToken,
-  hashTableQrToken,
-  verifyTableQrToken,
-} from "@/lib/security/qr-token.server";
-import { TableService } from "@/lib/services/table-service";
+import { createTableService } from "@/lib/services/table-service.server";
 import { tableTokenSchema } from "@/lib/validation/common";
 
 export interface EstablishedCustomerTableSession {
@@ -53,12 +46,7 @@ export async function establishCustomerTableSession(
   const parsedToken = tableTokenSchema.safeParse(rawToken);
   if (!parsedToken.success) throw invalidQrToken();
 
-  const tableService = new TableService(new DrizzleTableRepository(getDb()), {
-    generate: generateTableQrToken,
-    hash: hashTableQrToken,
-    verify: verifyTableQrToken,
-  });
-  const tableSession = await tableService.validateToken(parsedToken.data);
+  const tableSession = await createTableService().validateToken(parsedToken.data);
   const signedSession = issueCustomerTableSession({
     restaurantId: tableSession.restaurant.id,
     tableId: tableSession.table.id,

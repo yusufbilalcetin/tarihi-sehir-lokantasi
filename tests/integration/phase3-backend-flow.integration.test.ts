@@ -26,6 +26,7 @@ import {
 import { DomainError } from "../../lib/api/domain-error";
 import type { RestaurantPrincipal } from "../../lib/domain/restaurant-scope";
 import { createCustomerTableSession, verifyCustomerTableSession } from "../../lib/security/customer-session";
+import { deriveQrLinkToken, verifyQrLinkToken } from "../../lib/security/qr-link-token";
 import { generateQrToken, hashQrToken, verifyQrToken } from "../../lib/security/qr-token";
 import { MenuService } from "../../lib/services/menu-service";
 import { OrderService, type CustomerOrderItemInput } from "../../lib/services/order-service";
@@ -203,6 +204,9 @@ if (!readiness.ready) {
         hash: (rawToken) => hashQrToken(rawToken, fixture.pepper),
         verify: (candidate, storedHash) =>
           verifyQrToken(candidate, storedHash, fixture.pepper),
+        deriveLink: (claims) => deriveQrLinkToken(claims, fixture.pepper),
+        verifyLink: (candidate, claims) =>
+          verifyQrLinkToken(candidate, claims, fixture.pepper),
       };
       tableService = new TableService(
         new tableRepositoryModule.DrizzleTableRepository(db),
