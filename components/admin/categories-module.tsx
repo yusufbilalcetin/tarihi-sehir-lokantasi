@@ -1,20 +1,14 @@
 "use client";
 
-import { Layers3 } from "lucide-react";
-
-import { AdminModuleWindow } from "@/components/admin/admin-module-window";
 import { CategoriesManager } from "@/components/admin/categories-manager";
 
-/** Kategoriler as an application window. Size per the module-size contract. */
+/**
+ * The menu routes render their editor straight into the workspace.
+ *
+ * No page heading above it: the shell's own bar already names where you are,
+ * and a second title would push the customer menu — the thing being edited —
+ * down the screen for no information at all.
+ */
 export function CategoriesManagerModule() {
-  return (
-    <AdminModuleWindow
-      title="Kategoriler"
-      description="Menü kategorilerini düzenle ve sıralamayı yönet."
-      icon={Layers3}
-      size="lg"
-    >
-      <CategoriesManager />
-    </AdminModuleWindow>
-  );
+  return <CategoriesManager />;
 }

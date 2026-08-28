@@ -6,7 +6,8 @@ import { toast } from "sonner";
 import { BottomNavigation, type MenuTab } from "@/components/menu/bottom-navigation";
 import { CartBar } from "@/components/menu/cart-bar";
 import { CategoryJump } from "@/components/menu/category-jump";
-import { HighlightCard } from "@/components/menu/highlight-card";
+import { MenuSections } from "@/components/menu/menu-sections";
+import { buildCustomerMenuSections } from "@/lib/adapters/customer-menu-sections";
 import { CartItem } from "@/components/menu/cart-item";
 import { CustomerFeedbackForm } from "@/components/menu/customer-feedback-form";
 import { CurrencySelector } from "@/components/menu/currency-selector";
@@ -15,7 +16,6 @@ import { MenuStateCard } from "@/components/menu/menu-state-card";
 import { OrderStatusTimeline } from "@/components/menu/order-status-timeline";
 import { OrderDetailsDisclosure, isServableLine } from "@/components/menu/order-details-disclosure";
 import { rememberSessionOrder, useSessionOrderIds } from "@/components/menu/session-orders";
-import { ProductCard } from "@/components/menu/product-card";
 import { ProductDetailSheet } from "@/components/menu/product-detail-sheet";
 import { RestaurantHeader } from "@/components/menu/restaurant-header";
 import { SplashIntro } from "@/components/menu/splash-intro";
@@ -29,7 +29,7 @@ import { menuApi, orderApi, type CreateOrderPayload } from "@/lib/api/endpoints"
 import { customerCallStatusTranslationKey } from "@/lib/domain/customer-menu";
 import { addMoney, decimalToMinor, minorToDecimal } from "@/lib/domain/money";
 import { useApiResource } from "@/lib/hooks/use-api-resource";
-import { getMenuCategoryName, getMenuProductName, getMenuTag } from "@/lib/i18n/menu-content";
+import { getMenuProductName } from "@/lib/i18n/menu-content";
 import type { MenuTranslationKey } from "@/lib/i18n/menu-translations";
 import { cn } from "@/lib/utils";
 import type { CartItem as CartItemType, Product, WaiterCallType } from "@/types";
@@ -50,9 +50,6 @@ const MENU_PRODUCT_KEY = "tarihiSehirMenuProduct";
 const MENU_POLL_MS = 30_000;
 const ACTIVE_ORDER_POLL_MS = 12_000;
 const ACTIVE_CALL_POLL_MS = 15_000;
-
-/** Three suggestions is a recommendation; ten is the menu a second time. */
-const MENU_HIGHLIGHT_LIMIT = 3;
 
 const EMPTY_CATEGORIES: readonly MenuViewCategory[] = [];
 const EMPTY_PRODUCTS: readonly Product[] = [];
@@ -263,23 +260,14 @@ function MenuExperienceContent({ tableNumber }: { tableNumber: number }) {
     },
     [menu?.table?.number, tableNumber, t],
   );
-  const groupedProducts = useMemo(
-    () => menuCategories
-      .map((category) => ({
-        category,
-        products: publicProducts.filter((product) => product.categoryId === category.id),
-      }))
-      .filter((section) => section.products.length > 0),
-    [menuCategories, publicProducts],
-  );
-  const featuredProducts = useMemo(
-    () => publicProducts.filter((product) => product.featured),
-    [publicProducts],
-  );
-  const popularProducts = useMemo(
-    () => publicProducts.filter((product) => product.popular),
-    [publicProducts],
-  );
+  // One derivation for the sections, both rails, the category bar and its
+  // popover — and for the administrator's preview, which reads the same
+  // function so what they approve is what a guest gets.
+  const { sections: groupedProducts, featured: featuredProducts, popular: popularProducts } =
+    useMemo(
+      () => buildCustomerMenuSections(menuCategories, publicProducts),
+      [menuCategories, publicProducts],
+    );
 
   // A live menu can retire a product while it sits in the cart. Deriving the
   // orderable list keeps a sold-out item out of checkout without an effect.
@@ -609,65 +597,17 @@ function MenuExperienceContent({ tableNumber }: { tableNumber: number }) {
                 </p>
               ) : null}
               <section className={cn("motion-page pt-4", currency !== "TRY" && "pt-3")} data-navigation-direction={navigationDirection}>
-                {/*
-                  Discovery, capped at three.
-
-                  These rails used to carry full-size product cards, so the top
-                  of the menu was a second copy of dishes the guest was about to
-                  meet again under their own category. Three small suggestions
-                  is a recommendation; ten full cards is the menu twice.
-                */}
-                {popularProducts.length ? (
-                  <section className="mb-7" aria-labelledby="popular-products-title">
-                    <h2 id="popular-products-title" className="mb-2.5 font-heading text-lg font-semibold text-text-primary">
-                      {getMenuTag("Popüler", language)}
-                    </h2>
-                    <div className="-mx-[var(--menu-gutter)] flex snap-x snap-mandatory gap-2.5 overflow-x-auto px-[var(--menu-gutter)] pb-1 scrollbar-none">
-                      {popularProducts.slice(0, MENU_HIGHLIGHT_LIMIT).map((product) => (
-                        <div key={`popular-${product.id}`} className="w-[17rem] shrink-0 snap-start">
-                          <HighlightCard product={product} onOpen={() => openProduct(product)} />
-                        </div>
-                      ))}
-                    </div>
-                  </section>
-                ) : null}
-
-                {featuredProducts.length ? (
-                  <section className="mb-7" aria-labelledby="featured-products-heading">
-                    <h2 id="featured-products-heading" className="mb-2.5 font-heading text-lg font-semibold text-text-primary">
-                      {getMenuTag("Şefin Önerisi", language)}
-                    </h2>
-                    <div className="-mx-[var(--menu-gutter)] flex snap-x snap-mandatory gap-2.5 overflow-x-auto px-[var(--menu-gutter)] pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-                      {featuredProducts.slice(0, MENU_HIGHLIGHT_LIMIT).map((product) => (
-                        <div key={`featured-${product.id}`} className="w-[17rem] shrink-0 snap-start">
-                          <HighlightCard product={product} onOpen={() => openProduct(product)} />
-                        </div>
-                      ))}
-                    </div>
-                  </section>
-                ) : null}
-
-                {groupedProducts.length ? (
-                  <div data-customer-menu-content="category-sections" className="space-y-7">
-                    {groupedProducts.map(({ category, products }) => (
-                      <section key={category.id} aria-labelledby={`menu-category-${category.id}`}>
-                        <div className="mb-3 flex items-end justify-between gap-4 border-b border-border/50 pb-2">
-                          <h2 id={`menu-category-${category.id}`} className="font-heading text-[22px] font-semibold text-text-primary sm:text-3xl">
-                            {getMenuCategoryName(category, language)}
-                          </h2>
-                          <p className="shrink-0 text-xs font-medium tabular-nums text-[#70665C]">
-                            {t("itemCount", { count: products.length })}
-                          </p>
-                        </div>
-                        <div className="grid gap-2 lg:grid-cols-2 lg:gap-3">
-                          {products.map((product, index) => (
-                            <ProductCard key={product.id} product={product} index={index} canOrder={orderingEnabled} onOpen={() => openProduct(product)} onAdd={() => addToCart(product)} />
-                          ))}
-                        </div>
-                      </section>
-                    ))}
-                  </div>
-                ) : <EmptyState icon={UtensilsCrossed} title={t("menuUnavailable")} description={t("somethingWentWrong")} />}
+                <MenuSections
+                  sections={groupedProducts}
+                  featured={featuredProducts}
+                  popular={popularProducts}
+                  canOrder={orderingEnabled}
+                  onOpenProduct={openProduct}
+                  onAddProduct={addToCart}
+                  emptyState={
+                    <EmptyState icon={UtensilsCrossed} title={t("menuUnavailable")} description={t("somethingWentWrong")} />
+                  }
+                />
               </section>
             </main>
           </>

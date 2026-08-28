@@ -3,7 +3,11 @@ import { existsSync, readdirSync, readFileSync } from "node:fs";
 import path from "node:path";
 import test from "node:test";
 
-import { createCategoryBodySchema, updateCategoryBodySchema } from "../../lib/validation/admin-menu";
+import {
+  createCategoryBodySchema,
+  createProductBodySchema,
+  updateCategoryBodySchema,
+} from "../../lib/validation/admin-menu";
 
 /**
  * Phase 42D — the admin API surface, guarded where TypeScript cannot look.
@@ -82,7 +86,13 @@ test("every literal payload the admin client sends is accepted by its schema", a
   // Extracted from source rather than hand-listed, so a new call site that
   // invents a field fails here instead of in front of a user.
   const { updateProductBodySchema } = await import("../../lib/validation/admin-menu");
-  const managers = ["categories-manager", "products-manager", "staff-manager", "tables-manager"];
+  const managers = [
+    "customer-menu-editor",
+    "categories-manager",
+    "products-manager",
+    "staff-manager",
+    "tables-manager",
+  ];
   const seen: string[] = [];
   for (const name of managers) {
     const source = read(`components/admin/${name}.tsx`);
@@ -91,7 +101,7 @@ test("every literal payload the admin client sends is accepted by its schema", a
       if (keys.length === 0) continue;
       const schema = match[2] === "Category"
         ? (match[1] === "update" ? updateCategoryBodySchema : createCategoryBodySchema)
-        : updateProductBodySchema;
+        : (match[1] === "update" ? updateProductBodySchema : createProductBodySchema);
       const shape = Object.keys((schema as unknown as { shape: object }).shape ?? {});
       for (const key of keys) {
         seen.push(key);
@@ -99,7 +109,8 @@ test("every literal payload the admin client sends is accepted by its schema", a
       }
     }
   }
-  assert.ok(seen.includes("imageUrl"), "the extraction stopped finding the field that caused the bug");
+  assert.ok(seen.includes("name"), "the extraction stopped finding current create payloads");
+  assert.ok(seen.includes("categoryId"), "the extraction stopped finding the product create payload");
 });
 
 /* ------------------------------------------------ button semantics ------- */

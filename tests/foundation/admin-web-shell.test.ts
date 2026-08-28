@@ -103,11 +103,21 @@ test("the route page surface is plain document flow", () => {
   assert.match(modulePage, /<PageHeader/);
 });
 
-test("representative admin routes all enter the same page surface", () => {
+test("menu management has one canonical integrated page surface", () => {
+  const menuPage = read("app/admin/menu/page.tsx");
+  const menuModule = read("components/admin/menu-module.tsx");
+  assert.match(menuPage, /MenuOverviewModule/);
+  assert.match(menuModule, /MenuOverview/);
+  assert.doesNotMatch(menuModule, /AdminModuleWindow/, "the menu editor regained window chrome");
+
+  for (const path of ["app/admin/categories/page.tsx", "app/admin/products/page.tsx"]) {
+    const legacyPage = read(path);
+    assert.match(legacyPage, /redirect\("\/admin\/menu"\)/, `${path} is not canonicalized`);
+    assert.doesNotMatch(legacyPage, /ManagerModule|CustomerMenuEditor/, `${path} still mounts a second editor`);
+  }
+
   for (const path of [
     "components/admin/dashboard-module.tsx",
-    "components/admin/menu-module.tsx",
-    "components/admin/products-module.tsx",
     "components/admin/tables-module.tsx",
     "components/admin/reports-module.tsx",
     "components/admin/erp-operations-module.tsx",
@@ -115,6 +125,19 @@ test("representative admin routes all enter the same page surface", () => {
   ]) {
     assert.match(read(path), /AdminModuleWindow/, `${path} bypasses the integrated admin page surface`);
   }
+});
+
+test("the sidebar exposes menu as one ordinary destination", () => {
+  const shell = read("components/admin/admin-shell.tsx");
+  const navStart = shell.indexOf("const NAV_SECTIONS");
+  const navEnd = shell.indexOf("const SEARCHABLE", navStart);
+  const navigation = shell.slice(navStart, navEnd);
+
+  assert.equal((navigation.match(/label: "Menü"/g) ?? []).length, 1);
+  assert.match(navigation, /\{ label: "Menü", href: "\/admin\/menu", icon: BookOpen \}/);
+  assert.doesNotMatch(navigation, /label: "Menü", items:/, "Menü is still expandable");
+  assert.doesNotMatch(shell, /const menuNav/);
+  assert.doesNotMatch(shell, /Menü Genel Bakış|\/admin\/categories|\/admin\/products/);
 });
 
 test("the window-styled dialog is an overlay treatment and nothing else", () => {
@@ -158,7 +181,9 @@ test("button-triggered staff and admin dialogs wear the window treatment", () =>
   // The point of the phase: the treatment exists *and* is what these dialogs
   // actually use. A styled component with no callers is the defect it replaced.
   for (const path of [
-    "components/admin/categories-manager.tsx",
+    // The menu editor's own panels; the three menu managers are now one line
+    // each and delegate every dialog here.
+    "components/admin/menu-editor-dialogs.tsx",
     "components/admin/tables-manager.tsx",
     "components/admin/staff-manager.tsx",
     "components/admin/printers-manager.tsx",

@@ -74,6 +74,21 @@ export interface SaveProductCommand {
   readonly requestId?: string;
 }
 
+/** One row's new place in the menu. */
+export interface MenuOrderEntry {
+  readonly id: string;
+  readonly sortOrder: number;
+}
+
+export interface ReorderMenuCommand {
+  readonly categories?: readonly MenuOrderEntry[];
+  readonly products?: readonly MenuOrderEntry[];
+  readonly requestId?: string;
+}
+
+/** Enough rows for a very large menu, and a ceiling on a hostile payload. */
+const MAX_REORDER_ENTRIES = 500;
+
 export interface AdminMenuServiceOptions {
   readonly clock?: () => Date;
 }
@@ -94,6 +109,42 @@ export function toSlug(value: string): string {
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "");
   return normalized || "menu";
+}
+
+/**
+ * PostgreSQL reports a unique-index violation as 23505.
+ *
+ * Both `categories` and `products` carry a unique slug per restaurant, and the
+ * slug is derived from the name — so two rows given the same name collide.
+ * Without this the collision left the transaction as a bare driver error and
+ * the administrator was told the server had failed, which is both untrue and
+ * unactionable.
+ */
+function isUniqueViolation(error: unknown): boolean {
+  // The driver's error is usually wrapped by the query builder, so the code is
+  // looked for along the cause chain rather than only on the surface.
+  let current: unknown = error;
+  for (let depth = 0; current && depth < 5; depth += 1) {
+    if (typeof current !== "object") return false;
+    const candidate = current as { code?: unknown; cause?: unknown };
+    if (candidate.code === "23505") return true;
+    current = candidate.cause;
+  }
+  return false;
+}
+
+async function rejectDuplicateName<TResult>(
+  work: () => Promise<TResult>,
+  message: string,
+): Promise<TResult> {
+  try {
+    return await work();
+  } catch (error) {
+    if (isUniqueViolation(error)) {
+      throw new DomainError("CONFLICT", message, { httpStatus: 409 });
+    }
+    throw error;
+  }
 }
 
 function toCategoryResult(record: AdminCategoryRecord): AdminCategoryResult {
@@ -167,6 +218,89 @@ export class AdminMenuService {
     };
   }
 
+  /**
+   * Writes a whole new running order in one transaction.
+   *
+   * Reordering used to be a pair of PATCHes that swapped two rows' sort values,
+   * which needed every row to already hold a distinct value and left the menu
+   * half-reordered if the second call failed. This renumbers the list the
+   * administrator actually sees, so a menu seeded with a column full of zeroes
+   * sorts correctly from the first drag.
+   *
+   * Rows are scoped to the principal's restaurant by the same predicate every
+   * other update uses; an id from another tenant simply matches nothing.
+   */
+  async reorderMenu(
+    principal: RestaurantPrincipal | null | undefined,
+    command: ReorderMenuCommand,
+  ): Promise<{ readonly categories: number; readonly products: number }> {
+    const actor = this.authorize(principal);
+    const categoryEntries = command.categories ?? [];
+    const productEntries = command.products ?? [];
+    if (categoryEntries.length + productEntries.length === 0) {
+      throw new DomainError("VALIDATION_ERROR", "Sıralanacak öğe gönderin.", {
+        httpStatus: 400,
+      });
+    }
+    if (categoryEntries.length > MAX_REORDER_ENTRIES || productEntries.length > MAX_REORDER_ENTRIES) {
+      throw new DomainError("VALIDATION_ERROR", "Çok fazla öğe gönderildi.", {
+        httpStatus: 400,
+      });
+    }
+    const at = this.clock();
+
+    return this.repository.transaction(async (transaction) => {
+      let categoryCount = 0;
+      for (const entry of categoryEntries) {
+        const updated = await transaction.updateCategory({
+          restaurantId: actor.restaurantId,
+          categoryId: entry.id,
+          sortOrder: entry.sortOrder,
+          at,
+        });
+        if (!updated) {
+          throw new DomainError("NOT_FOUND", "Kategori bulunamadı.", { httpStatus: 404 });
+        }
+        categoryCount += 1;
+      }
+
+      let productCount = 0;
+      for (const entry of productEntries) {
+        const updated = await transaction.updateProduct({
+          restaurantId: actor.restaurantId,
+          productId: entry.id,
+          sortOrder: entry.sortOrder,
+          at,
+        });
+        if (!updated) {
+          throw new DomainError("PRODUCT_NOT_FOUND", "Ürün bulunamadı.", { httpStatus: 404 });
+        }
+        productCount += 1;
+      }
+
+      // One audit entry for the whole running order rather than one per row:
+      // the change an administrator made was "this is the new order".
+      await this.record(
+        transaction,
+        actor,
+        "menu.reordered",
+        "MENU",
+        actor.restaurantId,
+        null,
+        { categories: categoryCount, products: productCount },
+        command.requestId,
+        "MENU_REORDERED",
+        {
+          categories: categoryCount,
+          products: productCount,
+          updatedAt: at.toISOString(),
+        },
+      );
+
+      return { categories: categoryCount, products: productCount };
+    });
+  }
+
   async saveCategory(
     principal: RestaurantPrincipal | null | undefined,
     command: SaveCategoryCommand,
@@ -174,7 +308,7 @@ export class AdminMenuService {
     const actor = this.authorize(principal);
     const at = this.clock();
 
-    return this.repository.transaction(async (transaction) => {
+    return rejectDuplicateName(() => this.repository.transaction(async (transaction) => {
       if (!command.categoryId) {
         if (!command.name?.trim()) {
           throw new DomainError("VALIDATION_ERROR", "Kategori adı gereklidir.", { httpStatus: 400 });
@@ -244,7 +378,7 @@ export class AdminMenuService {
         },
       );
       return toCategoryResult(updated);
-    });
+    }), "Bu adda bir kategori zaten var.");
   }
 
   async saveProduct(
@@ -254,7 +388,7 @@ export class AdminMenuService {
     const actor = this.authorize(principal);
     const at = this.clock();
 
-    return this.repository.transaction(async (transaction) => {
+    return rejectDuplicateName(() => this.repository.transaction(async (transaction) => {
       if (!command.productId) {
         if (!command.name?.trim() || !command.categoryId || !command.price) {
           throw new DomainError("VALIDATION_ERROR", "Ürün adı, kategori ve fiyat gereklidir.", {
@@ -381,7 +515,7 @@ export class AdminMenuService {
         this.productEventPayload(updated, at),
       );
       return toProductResult(updated);
-    });
+    }), "Bu adda bir ürün zaten var.");
   }
 
   private productEventPayload(product: AdminProductRecord, at: Date) {

@@ -13,13 +13,25 @@ const customerMenuUi = readFileSync(
   "utf8",
 );
 
+/** The grouping the menu, its category bar and the admin editor all read. */
+const menuSections = readFileSync(
+  new URL("../../lib/adapters/customer-menu-sections.ts", import.meta.url),
+  "utf8",
+);
+
+/** The body both the guest's menu and the administrator's editor render. */
+const menuSectionsUi = readFileSync(
+  new URL("../../components/menu/menu-sections.tsx", import.meta.url),
+  "utf8",
+);
+
 test("customer QR menu browses category sections without a search or filter toolbar", () => {
   assert.doesNotMatch(customerMenuUi, /<Input\b/);
   assert.doesNotMatch(customerMenuUi, /<Category(?:Chips|Grid)\b/);
-  assert.match(customerMenuUi, /data-customer-menu-content="category-sections"/);
-  assert.match(customerMenuUi, /groupedProducts\.map\(\(\{ category, products \}\)/);
-  assert.match(customerMenuUi, /getMenuCategoryName\(category, language\)/);
-  assert.match(customerMenuUi, /products\.map\(\(product, index\).*<ProductCard/s);
+  assert.match(menuSectionsUi, /data-customer-menu-content="category-sections"/);
+  assert.match(menuSectionsUi, /sections\.map\(\(\{ category, products \}\)/);
+  assert.match(menuSectionsUi, /getMenuCategoryName\(category, language\)/);
+  assert.match(menuSectionsUi, /products\.map\(\(product, index\).*<ProductCard/s);
 });
 
 test("customer menu search is Turkish-case and diacritic insensitive", () => {
@@ -60,13 +72,13 @@ test("customer call states map to translated copy keys without raw enums", () =>
 test("each category is its own titled chapter with a semantic heading", () => {
   // A heading, not a styled div: the section is navigable by screen reader and
   // anchored by a stable id.
-  assert.match(customerMenuUi, /<h2 id={`menu-category-\$\{category\.id\}`}/);
-  assert.match(customerMenuUi, /aria-labelledby={`menu-category-\$\{category\.id\}`}/);
+  assert.match(menuSectionsUi, /id={`menu-category-\$\{category\.id\}`}/);
+  assert.match(menuSectionsUi, /aria-labelledby={`menu-category-\$\{category\.id\}`}/);
   // A visible rule under the heading is what separates one chapter from the next.
   // The rule stays; its colour is not this test's business — gold was pulled
   // back to being an accent rather than the colour of every line on the menu.
-  const headingAt = customerMenuUi.indexOf("<h2 id={`menu-category-");
-  const chapterWrapper = customerMenuUi.slice(Math.max(0, headingAt - 220), headingAt);
+  const headingAt = menuSectionsUi.indexOf("id={`menu-category-");
+  const chapterWrapper = menuSectionsUi.slice(Math.max(0, headingAt - 260), headingAt);
   assert.match(chapterWrapper, /border-b border-/, "the rule between one chapter and the next is gone");
 });
 
@@ -79,18 +91,20 @@ test("the menu never names a category in code", () => {
       `${category} is hardcoded into the menu render path`,
     );
   }
-  // Scoped to the category grouping. The screen does sort elsewhere — the
-  // guest's own orders are listed newest first — and a file-wide ban on
-  // `.sort(` would have banned that too while proving nothing about
-  // categories. What must hold is that this grouping walks `menuCategories`
-  // in the order the API supplied.
-  const grouping = customerMenuUi.slice(
-    customerMenuUi.indexOf("const groupedProducts = useMemo"),
-    customerMenuUi.indexOf("const featuredProducts = useMemo"),
-  );
-  assert.ok(grouping.length > 0, "the category grouping moved");
-  assert.match(grouping, /menuCategories\s*\.map\(/);
-  assert.doesNotMatch(grouping, /\.sort\(/, "the menu re-orders the categories the API sent");
+  // The grouping now lives in the module the menu, its category bar and the
+  // administrator's preview all read, so the ban follows it there. The screen
+  // itself does sort elsewhere — the guest's own orders are listed newest
+  // first — which is why this is scoped to the grouping rather than being a
+  // file-wide ban on `.sort(` that would prove nothing about categories.
+  for (const category of ["Çorbalar", "Izgaralar", "Ana Yemekler", "Tatlılar", "İçecekler", "Kebaplar"]) {
+    assert.ok(
+      !menuSections.includes(`"${category}"`),
+      `${category} is hardcoded into the shared menu derivation`,
+    );
+  }
+  assert.match(customerMenuUi, /buildCustomerMenuSections\(menuCategories, publicProducts\)/);
+  assert.match(menuSections, /categories\s*\.map\(/);
+  assert.doesNotMatch(menuSections, /\.sort\(/, "the menu re-orders the categories the API sent");
 });
 
 test("the search field stays gone in every form", () => {

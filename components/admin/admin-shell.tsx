@@ -60,12 +60,6 @@ interface NavItem {
   icon: LucideIcon;
 }
 
-const menuNav: NavItem[] = [
-  { label: "Menü Genel Bakış", href: "/admin/menu", icon: BookOpen },
-  { label: "Kategoriler", href: "/admin/categories", icon: Boxes },
-  { label: "Ürünler", href: "/admin/products", icon: PackageOpen },
-];
-
 const tableNav: NavItem[] = [
   { label: "Masa Planı", href: "/admin/tables", icon: Grid2X2 },
   { label: "QR Kodlar", href: "/admin/qr-codes", icon: QrCode },
@@ -168,7 +162,7 @@ interface NavSection {
 const NAV_SECTIONS: readonly NavSection[] = [
   { label: "Genel Bakış", href: "/admin/dashboard", icon: LayoutDashboard },
   { label: "Siparişler", href: "/admin/orders", icon: ClipboardList },
-  { label: "Menü", items: menuNav },
+  { label: "Menü", href: "/admin/menu", icon: BookOpen },
   { label: "Masalar", items: tableNav },
   { label: "Personel", items: peopleNav },
   { label: "Kasa", items: cashNav },

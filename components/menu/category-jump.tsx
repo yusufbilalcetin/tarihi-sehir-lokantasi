@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import { Menu as MenuPrimitive } from "@base-ui/react/menu";
 import { Check, ChevronDown, Menu } from "lucide-react";
 
@@ -50,9 +50,20 @@ const SMOOTH_SCROLL_LIMIT_PX = 2400;
 export function CategoryJump({
   sections,
   stickyTopClass = QR_MENU_STICKY_TOP,
+  renderItemActions,
 }: {
   readonly sections: readonly { category: MenuViewCategory; products: readonly unknown[] }[];
   readonly stickyTopClass?: string;
+  /**
+   * Administrator-only controls at the end of each row — reordering and an
+   * edit affordance. Absent on the public menu, which is what keeps this one
+   * popover serving both without a second implementation of it.
+   */
+  readonly renderItemActions?: (
+    category: MenuViewCategory,
+    index: number,
+    total: number,
+  ) => ReactNode;
 }) {
   const { language, t } = useMenuPreferences();
   const [open, setOpen] = useState(false);
@@ -219,17 +230,28 @@ export function CategoryJump({
             // `--transform-origin` is set by the positioner from side + align,
             // so aligned to the end of a bottom-side anchor it resolves to the
             // top right: the panel grows out of the words it belongs to.
-            className="motion-popover motion-menu-popover w-[min(17rem,calc(100vw-1.5rem))] min-w-[14.5rem] origin-(--transform-origin) overflow-hidden rounded-2xl border border-border-subtle bg-popover py-1 text-popover-foreground shadow-[var(--shadow-floating)]"
+            className={cn(
+              "motion-popover motion-menu-popover origin-(--transform-origin) overflow-hidden rounded-2xl border border-border-subtle bg-popover py-1 text-popover-foreground shadow-[var(--shadow-floating)]",
+              renderItemActions
+                // Reorder controls need room and a 44px touch target each, so
+                // the administrator's panel is wider than the guest's.
+                ? "w-[min(22rem,calc(100vw-1.5rem))] min-w-[17rem]"
+                : "w-[min(17rem,calc(100vw-1.5rem))] min-w-[14.5rem]",
+            )}
           >
-            {sections.map(({ category, products }) => {
+            {sections.map(({ category, products }, index) => {
               const name = getMenuCategoryName(category, language);
               const current = category.id === active.category.id;
-              return (
+              const actions = renderItemActions?.(category, index, sections.length);
+              const row = (
                 <MenuPrimitive.Item
                   key={category.id}
                   onClick={() => jumpTo(category.id)}
                   aria-current={current ? "true" : undefined}
-                  className="motion-press flex h-12 w-full cursor-default items-center gap-2.5 px-3 text-start outline-none select-none data-highlighted:bg-accent/45"
+                  className={cn(
+                    "motion-press flex w-full cursor-default items-center gap-2.5 px-3 text-start outline-none select-none data-highlighted:bg-accent/45",
+                    actions ? "h-12 flex-1" : "h-12",
+                  )}
                 >
                   {/* A mark, not a filled pill: the current row is stated, not
                       highlighted. */}
@@ -250,6 +272,16 @@ export function CategoryJump({
                     {products.length}
                   </span>
                 </MenuPrimitive.Item>
+              );
+              // The controls sit beside the row rather than inside it, so a tap
+              // on "move up" never also jumps the page to that category.
+              return actions ? (
+                <div key={category.id} className="flex items-center pe-1.5">
+                  {row}
+                  {actions}
+                </div>
+              ) : (
+                row
               );
             })}
           </MenuPrimitive.Popup>

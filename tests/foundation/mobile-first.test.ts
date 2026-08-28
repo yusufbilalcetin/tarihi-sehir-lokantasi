@@ -24,6 +24,8 @@ const bottomNavigation = read("components/menu/bottom-navigation.tsx");
 const productDetail = read("components/menu/product-detail-sheet.tsx");
 const highlightCard = read("components/menu/highlight-card.tsx");
 const restaurantHeader = read("components/menu/restaurant-header.tsx");
+/** The one body both the guest menu and the admin editor render. */
+const menuSectionsSource = read("components/menu/menu-sections.tsx");
 const languageSelector = read("components/menu/language-selector.tsx");
 const globalsCss = read("app/globals.css");
 
@@ -47,7 +49,11 @@ test("a long menu can be navigated by category without hiding any dish", () => {
   for (const [name, source] of [["QR menu", menuExperience], ["public ordering", guestOrder]] as const) {
     assert.match(source, /<CategoryJump/, `${name} has no category jump control`);
     // The sections themselves are untouched by the control.
-    assert.match(source, /id=\{`menu-category-\$\{category\.id\}`\}/, `${name} lost its category anchors`);
+    assert.match(
+      menuSectionsSource,
+      /id=\{`menu-category-\$\{category\.id\}`\}/,
+      "the shared menu body lost its category anchors",
+    );
   }
 });
 
@@ -162,10 +168,15 @@ test("the button that spends money never scrolls away", () => {
 
 test("a recommendation is a few suggestions, not the menu a second time", () => {
   // The rails used to render full product cards, so the top of the menu was a
-  // duplicate of dishes appearing again under their own category.
-  assert.match(menuExperience, /const MENU_HIGHLIGHT_LIMIT = 3;/);
-  assert.equal((menuExperience.match(/slice\(0, MENU_HIGHLIGHT_LIMIT\)/g) ?? []).length, 2);
-  assert.match(menuExperience, /<HighlightCard/);
+  // duplicate of dishes appearing again under their own category. The cap now
+  // lives with the derivation both the guest menu and the admin preview read,
+  // so neither can quietly draw a fourth.
+  const sections = read("lib/adapters/customer-menu-sections.ts");
+  assert.match(sections, /export const MENU_HIGHLIGHT_LIMIT = 3;/);
+  assert.equal((sections.match(/slice\(0, MENU_HIGHLIGHT_LIMIT\)/g) ?? []).length, 2);
+  assert.match(menuExperience, /buildCustomerMenuSections\(menuCategories, publicProducts\)/);
+  assert.doesNotMatch(menuExperience, /const MENU_HIGHLIGHT_LIMIT/, "the cap was copied back");
+  assert.match(menuSectionsSource, /<HighlightCard/);
   assert.doesNotMatch(highlightCard, /<Button/, "the suggestion grew a second add control");
 });
 

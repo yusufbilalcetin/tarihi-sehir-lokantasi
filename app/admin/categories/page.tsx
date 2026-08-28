@@ -1,8 +1,5 @@
-import type { Metadata } from "next";
-import { CategoriesManagerModule } from "@/components/admin/categories-module";
+import { redirect } from "next/navigation";
 
-export const metadata: Metadata = { title: "Kategoriler" };
-
-export default function AdminCategoriesManagerPage() {
-  return <CategoriesManagerModule />;
+export default function AdminCategoriesLegacyPage() {
+  redirect("/admin/menu");
 }

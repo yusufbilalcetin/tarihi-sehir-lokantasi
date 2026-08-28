@@ -1001,6 +1001,34 @@ html[data-sehir-intro="seen"] .menu-content {
 
 /* Printable management report: the page becomes the document, so navigation,
    filters and action buttons drop out and tables are allowed to break. */
+/* Table QR cards are rendered to images and portalled into <body> only while a
+   print is in flight; the flag on <body> is what hands the sheet the page. */
+#qr-print-root {
+  display: none;
+}
+
+@media print {
+  body[data-qr-print="true"] > *:not(#qr-print-root) {
+    display: none !important;
+  }
+
+  body[data-qr-print="true"] #qr-print-root {
+    display: block !important;
+  }
+
+  /* The card carries its own physical width and height inline, chosen in the
+     print designer; only pagination belongs here. */
+  #qr-print-root img {
+    display: block;
+    margin: 0;
+    break-after: page;
+  }
+
+  #qr-print-root img:last-child {
+    break-after: auto;
+  }
+}
+
 @media print {
   aside,
   nav,

@@ -39,8 +39,16 @@ const cashier = read("components/cashier/cashier-dashboard.tsx");
 /* ------------------------------------------------ navigation ------------- */
 
 test("the admin sidebar presents sections, not forty links at once", () => {
-  const sections = [...adminShell.matchAll(/\{ label: "([^"]+)", items: \w+ \}/g)].map((match) => match[1]);
-  assert.ok(sections.length >= 6 && sections.length <= 9, `expected a handful of sections, found ${sections.length}`);
+  const navigation = adminShell.slice(
+    adminShell.indexOf("const NAV_SECTIONS"),
+    adminShell.indexOf("const SEARCHABLE"),
+  );
+  const groups = [...navigation.matchAll(/\{ label: "([^"]+)", items: \w+ \}/g)].map((match) => match[1]);
+  const direct = [...navigation.matchAll(/\{ label: "([^"]+)", href: "\/admin\/[^"]+", icon: \w+ \}/g)]
+    .map((match) => match[1]);
+  assert.ok(groups.length >= 5 && groups.length <= 8, `expected a handful of groups, found ${groups.length}`);
+  assert.deepEqual(direct.slice(0, 3), ["Genel Bakış", "Siparişler", "Menü"]);
+  assert.ok(groups.length + direct.slice(0, 3).length <= 11, "the resting sidebar presents too many choices");
   // Collapsed by default, except the one holding the current page — so the
   // resting state of the menu is the section count, not the link count.
   assert.match(adminShell, /const holdsCurrentPage = items\.some\(\(item\) => isActivePath\(pathname, item\.href\)\)/);
@@ -50,11 +58,17 @@ test("the admin sidebar presents sections, not forty links at once", () => {
 });
 
 test("no route was deleted to achieve that grouping", () => {
-  // Every admin page on disk must still be reachable from the menu.
+  // Every admin page on disk is either in the menu or redirects to a target
+  // that is. Compatibility URLs do not need to become duplicate sidebar rows.
   const pages = readdirSync(new URL("../../app/admin", import.meta.url), { withFileTypes: true })
     .filter((entry) => entry.isDirectory())
     .map((entry) => `/admin/${entry.name}`);
-  const missing = pages.filter((href) => !adminShell.includes(`"${href}"`) && !href.includes("["));
+  const missing = pages.filter((href) => {
+    if (href.includes("[") || adminShell.includes(`"${href}"`)) return false;
+    const page = read(`app${href}/page.tsx`);
+    const redirectTarget = page.match(/redirect\("([^"]+)"\)/)?.[1];
+    return !redirectTarget || !adminShell.includes(`"${redirectTarget}"`);
+  });
   assert.deepEqual(missing, [], "an admin route exists with no way to navigate to it");
 });
 

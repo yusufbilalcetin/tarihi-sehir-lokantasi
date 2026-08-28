@@ -78,3 +78,19 @@ export const updateProductBodySchema = z
 
 export const categoryIdParamsSchema = z.object({ categoryId: entityIdSchema }).strict();
 export const productIdParamsSchema = z.object({ productId: entityIdSchema }).strict();
+
+/** A new running order for the menu: ids paired with their new place. */
+const menuOrderEntrySchema = z
+  .object({ id: entityIdSchema, sortOrder: z.number().int().min(0).max(10_000) })
+  .strict();
+
+export const reorderMenuBodySchema = z
+  .object({
+    categories: z.array(menuOrderEntrySchema).max(500).optional(),
+    products: z.array(menuOrderEntrySchema).max(500).optional(),
+  })
+  .strict()
+  .refine(
+    (value) => (value.categories?.length ?? 0) + (value.products?.length ?? 0) > 0,
+    "Sıralanacak öğe gönderin.",
+  );
