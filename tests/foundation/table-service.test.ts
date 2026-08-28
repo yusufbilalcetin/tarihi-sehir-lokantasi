@@ -51,6 +51,18 @@ class FakeTableRepository implements TableRepository {
   async findSessionByTokenHash(tokenHash: string): Promise<TableSessionRecord | null> {
     return this.session?.qrTokenHash === tokenHash ? this.session : null;
   }
+  async findSessionByTableRef(
+    restaurantSlug: string,
+    tableNumber: number,
+  ): Promise<TableSessionRecord | null> {
+    return this.session?.restaurantSlug === restaurantSlug &&
+      this.session.tableNumber === tableNumber
+      ? this.session
+      : null;
+  }
+  async listSessionsForRestaurant(restaurantId: string): Promise<readonly TableSessionRecord[]> {
+    return this.session?.restaurantId === restaurantId ? [this.session] : [];
+  }
   async createWithAudit(input: CreateManagedTableRecordInput): Promise<ManagedTableRecord> {
     return { ...this.managed, name: input.name, tableNumber: input.tableNumber, seats: input.seats };
   }
@@ -68,11 +80,25 @@ class FakeTableRepository implements TableRepository {
     };
     return this.managed;
   }
+  async pauseQrAccessWithAudit(input: ChangeTableTokenRecordInput): Promise<ManagedTableRecord | null> {
+    if (input.restaurantId !== this.managed.restaurantId) return null;
+    const pausedAt = new Date("2026-08-28T12:00:00.000Z");
+    this.managed = { ...this.managed, qrTokenRevokedAt: pausedAt };
+    if (this.session) this.session = { ...this.session, qrTokenRevokedAt: pausedAt };
+    return this.managed;
+  }
+  async resumeQrAccessWithAudit(input: ChangeTableTokenRecordInput): Promise<ManagedTableRecord | null> {
+    if (input.restaurantId !== this.managed.restaurantId) return null;
+    this.managed = { ...this.managed, qrTokenRevokedAt: null };
+    if (this.session) this.session = { ...this.session, qrTokenRevokedAt: null };
+    return this.managed;
+  }
   async updateWithAudit(input: UpdateManagedTableRecordInput): Promise<ManagedTableRecord | null> {
     if (input.restaurantId !== this.managed.restaurantId) return null;
     this.managed = {
       ...this.managed,
       name: input.name ?? this.managed.name,
+      tableNumber: input.tableNumber ?? this.managed.tableNumber,
       seats: input.seats ?? this.managed.seats,
       isActive: input.isActive ?? this.managed.isActive,
     };
@@ -93,6 +119,12 @@ function codec(): TableTokenCodec {
     },
     verify(rawToken, storedHash) {
       return typeof rawToken === "string" && storedHash === `hash:${rawToken}`;
+    },
+    deriveLink(claims) {
+      return `l1.${claims.restaurantSlug}.${claims.tableNumber}.v${claims.accessVersion}`;
+    },
+    verifyLink(candidate, claims) {
+      return candidate === this.deriveLink(claims);
     },
   };
 }
@@ -161,9 +193,11 @@ test("TableService rejects a blank rename and scopes updates to the restaurant",
     restaurantId: "restaurant-1",
     tableId: "table-1",
     name: "  Bahçe 2  ",
+    tableNumber: 7,
     isActive: false,
   });
   assert.equal(updated.name, "Bahçe 2");
+  assert.equal(updated.tableNumber, 7);
   assert.equal(updated.isActive, false);
 
   await assert.rejects(

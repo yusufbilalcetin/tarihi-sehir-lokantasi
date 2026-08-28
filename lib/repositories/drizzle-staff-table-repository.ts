@@ -1,9 +1,9 @@
 import "server-only";
 
-import { and, asc, desc, eq, inArray, sql } from "drizzle-orm";
+import { and, asc, desc, eq, inArray } from "drizzle-orm";
 
 import type { Database } from "@/db";
-import { orders, restaurantTables, waiterCalls } from "@/db/schema";
+import { orderItems, orders, restaurantTables, waiterCalls } from "@/db/schema";
 import type {
   StaffTableRecord,
   StaffTableRepository,
@@ -15,17 +15,35 @@ const OPEN_ORDER_STATUSES = ["NEW", "CONFIRMED", "PREPARING", "READY", "SERVED"]
 export class DrizzleStaffTableRepository implements StaffTableRepository {
   constructor(private readonly db: Database) {}
 
-  listTables(restaurantId: string): Promise<readonly StaffTableRecord[]> {
-    // One lateral join per table instead of a query per row keeps the floor
-    // view a single round trip.
-    const latestOrder = this.db
+  async listTables(restaurantId: string): Promise<readonly StaffTableRecord[]> {
+    // These are bounded set queries for the whole restaurant, never one query
+    // per table. Calls and orders can run together; items follow only after the
+    // open order ids are known.
+    const [tableRows, orderRows, callRows] = await Promise.all([
+      this.db
+        .select({
+          id: restaurantTables.id,
+          name: restaurantTables.name,
+          tableNumber: restaurantTables.tableNumber,
+          seats: restaurantTables.seats,
+          isActive: restaurantTables.isActive,
+          currentStatus: restaurantTables.currentStatus,
+          qrTokenVersion: restaurantTables.qrTokenVersion,
+          qrTokenRevokedAt: restaurantTables.qrTokenRevokedAt,
+          updatedAt: restaurantTables.updatedAt,
+        })
+        .from(restaurantTables)
+        .where(eq(restaurantTables.restaurantId, restaurantId))
+        .orderBy(asc(restaurantTables.tableNumber), desc(restaurantTables.createdAt)),
+      this.db
       .select({
         tableId: orders.tableId,
         id: orders.id,
         orderNumber: orders.orderNumber,
+        status: orders.status,
         total: orders.total,
         createdAt: orders.createdAt,
-        rank: sql<number>`row_number() over (partition by ${orders.tableId} order by ${orders.createdAt} desc)`.as("rank"),
+        updatedAt: orders.updatedAt,
       })
       .from(orders)
       .where(
@@ -34,12 +52,16 @@ export class DrizzleStaffTableRepository implements StaffTableRepository {
           inArray(orders.status, [...OPEN_ORDER_STATUSES]),
         ),
       )
-      .as("latest_order");
-
-    const openCalls = this.db
+      .orderBy(desc(orders.createdAt)),
+      this.db
       .select({
         tableId: waiterCalls.tableId,
-        openCallCount: sql<number>`count(*)::int`.as("open_call_count"),
+        id: waiterCalls.id,
+        type: waiterCalls.type,
+        status: waiterCalls.status,
+        requestLabel: waiterCalls.requestLabel,
+        createdAt: waiterCalls.createdAt,
+        updatedAt: waiterCalls.updatedAt,
       })
       .from(waiterCalls)
       .where(
@@ -48,33 +70,48 @@ export class DrizzleStaffTableRepository implements StaffTableRepository {
           inArray(waiterCalls.status, ["OPEN", "ACKNOWLEDGED"]),
         ),
       )
-      .groupBy(waiterCalls.tableId)
-      .as("open_calls");
+      .orderBy(desc(waiterCalls.createdAt)),
+    ]);
 
-    return this.db
-      .select({
-        id: restaurantTables.id,
-        name: restaurantTables.name,
-        tableNumber: restaurantTables.tableNumber,
-        seats: restaurantTables.seats,
-        isActive: restaurantTables.isActive,
-        currentStatus: restaurantTables.currentStatus,
-        qrTokenVersion: restaurantTables.qrTokenVersion,
-        qrTokenRevokedAt: restaurantTables.qrTokenRevokedAt,
-        updatedAt: restaurantTables.updatedAt,
-        activeOrderId: latestOrder.id,
-        activeOrderNumber: latestOrder.orderNumber,
-        activeOrderTotal: latestOrder.total,
-        activeOrderCreatedAt: latestOrder.createdAt,
-        openCallCount: sql<number>`coalesce(${openCalls.openCallCount}, 0)`,
-      })
-      .from(restaurantTables)
-      .leftJoin(
-        latestOrder,
-        and(eq(latestOrder.tableId, restaurantTables.id), eq(latestOrder.rank, 1)),
-      )
-      .leftJoin(openCalls, eq(openCalls.tableId, restaurantTables.id))
-      .where(eq(restaurantTables.restaurantId, restaurantId))
-      .orderBy(asc(restaurantTables.tableNumber), desc(restaurantTables.createdAt));
+    const orderIds = orderRows.map((order) => order.id);
+    const itemRows = orderIds.length
+      ? await this.db
+          .select({
+            id: orderItems.id,
+            orderId: orderItems.orderId,
+            productName: orderItems.productNameSnapshot,
+            quantity: orderItems.quantity,
+            status: orderItems.status,
+          })
+          .from(orderItems)
+          .where(
+            and(
+              eq(orderItems.restaurantId, restaurantId),
+              inArray(orderItems.orderId, orderIds),
+            ),
+          )
+          .orderBy(asc(orderItems.sortOrder), asc(orderItems.createdAt))
+      : [];
+
+    const itemsByOrder = Map.groupBy(itemRows, (item) => item.orderId);
+    const ordersByTable = Map.groupBy(
+      orderRows.filter((order): order is typeof order & { tableId: string } => Boolean(order.tableId)),
+      (order) => order.tableId,
+    );
+    const callsByTable = Map.groupBy(callRows, (call) => call.tableId);
+
+    return tableRows.map((table) => ({
+      ...table,
+      activeOrders: (ordersByTable.get(table.id) ?? []).map((order) => ({
+        id: order.id,
+        orderNumber: order.orderNumber,
+        status: order.status,
+        total: order.total,
+        createdAt: order.createdAt,
+        updatedAt: order.updatedAt,
+        items: (itemsByOrder.get(order.id) ?? []).map(({ orderId: _orderId, ...item }) => item),
+      })),
+      activeCalls: (callsByTable.get(table.id) ?? []).map(({ tableId: _tableId, ...call }) => call),
+    }));
   }
 }

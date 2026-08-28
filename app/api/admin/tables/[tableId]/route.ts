@@ -12,6 +12,7 @@ const paramsSchema = z.object({ tableId: entityIdSchema }).strict();
 const bodySchema = z
   .object({
     name: z.string().trim().min(1).max(80).optional(),
+    tableNumber: z.number().int().min(1).max(100_000).optional(),
     seats: z.number().int().min(1).max(100).optional(),
     isActive: z.boolean().optional(),
   })
