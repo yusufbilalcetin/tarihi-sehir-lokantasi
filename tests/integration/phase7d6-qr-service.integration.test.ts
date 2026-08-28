@@ -10,6 +10,7 @@ import {
   createCustomerTableSession,
   verifyCustomerTableSession,
 } from "../../lib/security/customer-session";
+import { deriveTableQrLink, verifyTableQrLink } from "../../lib/security/qr-link-token.server";
 import { generateQrToken, hashQrToken } from "../../lib/security/qr-token";
 import {
   generateTableQrToken,
@@ -97,6 +98,8 @@ if (!readiness.ready) {
         generate: generateTableQrToken,
         hash: hashTableQrToken,
         verify: verifyTableQrToken,
+        deriveLink: deriveTableQrLink,
+        verifyLink: verifyTableQrLink,
       });
       calls = new StaffCallService(new DrizzleStaffCallRepository(db));
 

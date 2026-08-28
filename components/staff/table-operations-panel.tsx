@@ -47,17 +47,25 @@ export function TableOperationsPanel({
   const targets = useMemo(
     () =>
       tables.filter(
-        (candidate) => candidate.id !== table.id && candidate.status !== "inactive",
+        (candidate) =>
+          candidate.id !== table.id &&
+          candidate.status !== "inactive" &&
+          (open === "TRANSFER"
+            ? candidate.status === "available"
+            : open === "MERGE"
+              ? candidate.status !== "available"
+              : true),
       ),
-    [table.id, tables],
+    [open, table.id, tables],
   );
 
   const available = useMemo(
     () =>
       (["TRANSFER", "MERGE", "RESET"] as const).filter((operation) =>
-        canRoleRunTableOperation(role, operation),
+        canRoleRunTableOperation(role, operation) &&
+        (operation === "RESET" || !["available", "inactive"].includes(table.status)),
       ),
-    [role],
+    [role, table.status],
   );
 
   if (available.length === 0) return null;

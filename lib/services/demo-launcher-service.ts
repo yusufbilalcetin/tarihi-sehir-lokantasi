@@ -3,15 +3,9 @@ import "server-only";
 import { and, asc, eq, isNull } from "drizzle-orm";
 
 import { getDb, type Database } from "@/db";
-import { restaurantTables, restaurants, staffProfiles } from "@/db/schema";
+import { restaurantTables, restaurants } from "@/db/schema";
 import { DomainError } from "@/lib/api/domain-error";
-import { DrizzleTableRepository } from "@/lib/repositories/drizzle-table-repository";
-import {
-  generateTableQrToken,
-  hashTableQrToken,
-  verifyTableQrToken,
-} from "@/lib/security/qr-token.server";
-import { TableService } from "@/lib/services/table-service";
+import { deriveTableQrLink } from "@/lib/security/qr-link-token.server";
 
 /**
  * The prototype table launcher.
@@ -23,10 +17,9 @@ import { TableService } from "@/lib/services/table-service";
  * that token, still issues the signed HttpOnly session, still binds it to the
  * table's access version, and still expires it on the usual schedule.
  *
- * Two things it deliberately does not do: store a raw token anywhere, and mint
- * a new one on every click. The token it mints is kept in this process's memory
- * and re-verified against the stored hash before reuse, so repeated demos of
- * the same table neither rotate the credential nor invalidate a live session.
+ * It stores no raw token and mints nothing: the address it hands over is the
+ * table's current QR link, re-derived on demand, so demoing a table neither
+ * rotates its credential nor voids the code printed on it.
  */
 
 export function demoLauncherDisabledError(): DomainError {
@@ -49,13 +42,6 @@ export interface DemoTableList {
   readonly restaurant: { readonly name: string; readonly slug: string };
   readonly tables: readonly DemoTable[];
 }
-
-/**
- * Raw tokens minted by this launcher, by table id. Process memory only: it is
- * lost on restart (which simply costs one more rotation) and never written
- * anywhere.
- */
-const mintedTokens = new Map<string, string>();
 
 export class DemoLauncherService {
   constructor(private readonly db: Database = getDb()) {}
@@ -129,14 +115,15 @@ export class DemoLauncherService {
   /**
    * Returns a working `/menu/<token>` path for one active table.
    *
-   * The token is reused while it still verifies against the stored hash, so a
-   * second demo of the same table changes nothing; otherwise a fresh one is
-   * minted through the ordinary rotation path and only its hash is stored.
+   * It re-derives the table's current QR link — the same string printed on the
+   * table's card — instead of minting a credential. Previously it rotated the
+   * token whenever this process had not already minted one, which quietly
+   * invalidated the printed card on every cold start; deriving costs nothing
+   * and changes nothing.
    */
   async menuPathForTable(tableId: string): Promise<{
     readonly path: string;
     readonly table: DemoTable;
-    readonly rotated: boolean;
   }> {
     const restaurant = await this.resolveRestaurant();
     const [table] = await this.db
@@ -146,7 +133,7 @@ export class DemoLauncherService {
         tableNumber: restaurantTables.tableNumber,
         seats: restaurantTables.seats,
         status: restaurantTables.currentStatus,
-        qrTokenHash: restaurantTables.qrTokenHash,
+        qrTokenVersion: restaurantTables.qrTokenVersion,
         revokedAt: restaurantTables.qrTokenRevokedAt,
       })
       .from(restaurantTables)
@@ -164,59 +151,14 @@ export class DemoLauncherService {
       throw new DomainError("NOT_FOUND", "Masa bulunamadı.", { httpStatus: 404 });
     }
 
-    const cached = mintedTokens.get(table.id);
-    if (cached && verifyTableQrToken(cached, table.qrTokenHash)) {
-      return {
-        path: `/menu/${cached}`,
-        table: {
-          id: table.id,
-          name: table.name,
-          tableNumber: table.tableNumber,
-          seats: table.seats,
-          status: table.status,
-        },
-        rotated: false,
-      };
-    }
-
-    const service = new TableService(new DrizzleTableRepository(this.db), {
-      generate: generateTableQrToken,
-      hash: hashTableQrToken,
-      verify: verifyTableQrToken,
+    const token = deriveTableQrLink({
+      restaurantSlug: restaurant.slug,
+      tableNumber: table.tableNumber,
+      accessVersion: table.qrTokenVersion,
     });
-    // Rotation is an audited action, so it is attributed to the restaurant's
-    // own administrator rather than to nobody — and the audit says the demo
-    // launcher was the source. Without an administrator it simply does not run.
-    const [administrator] = await this.db
-      .select({ id: staffProfiles.id })
-      .from(staffProfiles)
-      .where(
-        and(
-          eq(staffProfiles.restaurantId, restaurant.id),
-          eq(staffProfiles.role, "ADMIN"),
-          eq(staffProfiles.isActive, true),
-          isNull(staffProfiles.deletedAt),
-        ),
-      )
-      .limit(1);
-    if (!administrator) {
-      throw new DomainError("CONFLICT", "Demo için yönetici hesabı gerekiyor.", {
-        httpStatus: 409,
-      });
-    }
-    const rotated = await service.rotateToken(
-      {
-        userId: administrator.id,
-        restaurantId: restaurant.id,
-        role: "ADMIN",
-        isActive: true,
-      },
-      { restaurantId: restaurant.id, tableId: table.id },
-    );
-    mintedTokens.set(table.id, rotated.rawToken);
 
     return {
-      path: `/menu/${rotated.rawToken}`,
+      path: `/menu/${token}`,
       table: {
         id: table.id,
         name: table.name,
@@ -224,7 +166,6 @@ export class DemoLauncherService {
         seats: table.seats,
         status: table.status,
       },
-      rotated: true,
     };
   }
 }
