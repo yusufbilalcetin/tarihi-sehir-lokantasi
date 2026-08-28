@@ -202,9 +202,7 @@ export function staffTableToViewModel(
     openedAt: activeOrder?.createdAt,
     activeMinutes: activeOrder ? minutesSince(activeOrder.createdAt, now) : undefined,
     total: activeOrder ? Number(activeOrder.total) : undefined,
-    // QR access is independently pausable; table service and QR state must not
-    // collapse into one switch.
-    qrAvailable: !table.qrRevoked,
+    qrAvailable: table.isActive && !table.qrRevoked,
     lastActivity: relativeLabel(table.lastActivityAt, now),
     orderId: activeOrder?.id,
   };

@@ -23,22 +23,6 @@ import type {
   AdminStaffResult,
 } from "@/lib/services/admin-staff-service";
 import type { ManagedTableResult } from "@/lib/services/table-service";
-
-export interface TableQrCodeRow {
-  readonly tableId: string;
-  readonly tableName: string;
-  readonly tableNumber: number;
-  readonly seats: number;
-  readonly isActive: boolean;
-  readonly revoked: boolean;
-  /** Absolute, production-correct `/menu/<token>` address. */
-  readonly menuUrl: string;
-}
-
-export interface TableQrCodesResult {
-  readonly restaurantName: string;
-  readonly tables: readonly TableQrCodeRow[];
-}
 import type { CustomerActiveOrderResult } from "@/lib/services/customer-order-query-service";
 import type { PublicMenuResult } from "@/lib/services/menu-service";
 import type { OrderChecksResult } from "@/lib/services/order-check-service";
@@ -360,18 +344,6 @@ export const adminApi = {
       formData,
     });
   },
-  /** Read-only. Re-derives every table's current QR address; rotates nothing. */
-  tableQrCodes: (signal?: AbortSignal) =>
-    apiRequest<TableQrCodesResult>("/api/admin/tables/qr-codes", { signal }),
-  /** One transactional write of the whole running order. */
-  reorderMenu: (body: {
-    categories?: readonly { id: string; sortOrder: number }[];
-    products?: readonly { id: string; sortOrder: number }[];
-  }) =>
-    apiRequest<{ categories: number; products: number }>("/api/admin/menu/order", {
-      method: "PATCH",
-      body,
-    }),
   createTable: (body: { name: string; tableNumber: number; seats: number }) =>
     apiRequest<{ table: ManagedTableResult; rawToken: string }>("/api/admin/tables", {
       method: "POST",
@@ -386,16 +358,6 @@ export const adminApi = {
     ),
   revokeTableToken: (tableId: string) =>
     apiRequest<ManagedTableResult>(`/api/admin/tables/${tableId}/qr/revoke`, {
-      method: "POST",
-      body: {},
-    }),
-  pauseTableQr: (tableId: string) =>
-    apiRequest<ManagedTableResult>(`/api/admin/tables/${tableId}/qr/pause`, {
-      method: "POST",
-      body: {},
-    }),
-  resumeTableQr: (tableId: string) =>
-    apiRequest<ManagedTableResult>(`/api/admin/tables/${tableId}/qr/resume`, {
       method: "POST",
       body: {},
     }),

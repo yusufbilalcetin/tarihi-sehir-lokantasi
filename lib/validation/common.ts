@@ -14,20 +14,11 @@ export const orderItemIdSchema = entityIdSchema;
 export const waiterCallIdSchema = entityIdSchema;
 
 /** QR tokens are opaque base64url values; sequential table ids are rejected. */
-/**
- * Both QR credentials: the random 43-character token and the derived
- * `l1.<slug>.<number>.<mac>` link. Shape only — the pepper decides validity.
- */
 export const tableTokenSchema = z
   .string()
   .trim()
-  .max(200, "Masa bağlantısı geçersiz.")
-  .refine(
-    (value) =>
-      /^[A-Za-z0-9_-]{43}$/.test(value) ||
-      /^l1\.[a-z0-9]+(?:-[a-z0-9]+)*\.[1-9][0-9]{0,6}\.[A-Za-z0-9_-]{43}$/.test(value),
-    "Masa bağlantısı geçersiz.",
-  );
+  .length(43, "Masa bağlantısı geçersiz.")
+  .regex(/^[A-Za-z0-9_-]{43}$/, "Masa bağlantısı geçersiz.");
 
 export const idempotencyKeySchema = z
   .string()

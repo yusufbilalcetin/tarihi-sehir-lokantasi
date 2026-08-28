@@ -10,7 +10,7 @@ export function QrManagerModule() {
   return (
     <AdminModuleWindow
       title="QR Kodlar"
-      description="Masa QR menülerini görüntüle, indir ve yazdır."
+      description="Masa QR kodlarını oluştur, yenile ve iptal et."
       icon={QrCode}
       size="xl"
     >

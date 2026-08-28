@@ -90,22 +90,11 @@ export function deriveTableStatus(input: {
   readonly isActive: boolean;
   readonly openOrderCount: number;
   readonly activeCallTypes: readonly WaiterCallType[];
-  /**
-   * The persisted service phase is written by order/payment workflows. It is
-   * considered only after active requests, and only while its prerequisite
-   * (an open order, or the cleaning phase itself) still exists.
-   */
-  readonly currentStatus?: TableStatus;
 }): TableStatus {
   if (!input.isActive) return "INACTIVE";
   if (input.activeCallTypes.includes("BILL_REQUEST")) return "BILL_REQUESTED";
   if (input.activeCallTypes.includes("WAITER_CALL")) return "WAITER_CALL";
-  if (input.openOrderCount > 0) {
-    return input.currentStatus && ["OCCUPIED", "ORDERING", "WAITING", "DINING"].includes(input.currentStatus)
-      ? input.currentStatus
-      : "OCCUPIED";
-  }
-  return input.currentStatus === "CLEANING" ? "CLEANING" : "AVAILABLE";
+  return input.openOrderCount > 0 ? "OCCUPIED" : "AVAILABLE";
 }
 
 export const TABLE_RESET_BLOCK_MESSAGES: Readonly<Record<TableResetBlockReason, string>> = {

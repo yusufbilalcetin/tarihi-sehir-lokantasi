@@ -2,7 +2,6 @@ import "server-only";
 
 import { getDb } from "@/db";
 import { DrizzleTableRepository } from "@/lib/repositories/drizzle-table-repository";
-import { deriveTableQrLink, verifyTableQrLink } from "@/lib/security/qr-link-token.server";
 import {
   generateTableQrToken,
   hashTableQrToken,
@@ -15,7 +14,5 @@ export function createTableService(): TableService {
     generate: generateTableQrToken,
     hash: hashTableQrToken,
     verify: verifyTableQrToken,
-    deriveLink: deriveTableQrLink,
-    verifyLink: verifyTableQrLink,
   });
 }

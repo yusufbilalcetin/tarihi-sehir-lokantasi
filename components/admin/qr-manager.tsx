@@ -1,197 +1,141 @@
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
-import { Printer, QrCode, Search } from "lucide-react";
-
-import { AdminPageHeader, NativeSelect, SummaryChip } from "@/components/admin/admin-ui";
-import { QrAccessToggle } from "@/components/admin/qr-access-toggle";
-import { QrPrintDesigner } from "@/components/admin/qr-print-designer";
-import { TableQrDialog } from "@/components/admin/table-qr-dialog";
+import { useState } from "react";
+import { Link2, Printer, QrCode, RefreshCw, ShieldOff } from "lucide-react";
+import { AdminPageHeader, SummaryChip } from "@/components/admin/admin-ui";
 import { useAdminTables } from "@/components/admin/use-admin-tables";
-import { useTableQrCodes } from "@/components/admin/use-table-qr-codes";
-import { BrandedTableQr } from "@/components/shared/branded-table-qr";
 import { RealtimeStatus } from "@/components/staff/realtime-status";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { adminApi } from "@/lib/api/endpoints";
+
+function QrPlaceholder({ tableName }: { tableName: string }) {
+  return (
+    <div className="relative mx-auto grid aspect-square w-full max-w-48 place-items-center overflow-hidden rounded-xl border-8 border-card bg-[#fffdf8] ring-1 ring-border">
+      <div
+        className="absolute inset-3 opacity-[0.09]"
+        style={{ backgroundImage: "repeating-conic-gradient(#25211D 0 25%, transparent 0 50%)", backgroundSize: "12px 12px" }}
+        aria-hidden
+      />
+      <div className="relative grid size-20 place-items-center rounded-xl border-4 border-foreground bg-card text-foreground shadow-sm">
+        <QrCode className="size-14" strokeWidth={1.8} />
+      </div>
+      <span className="sr-only">{tableName} QR kod alanı</span>
+    </div>
+  );
+}
 
 export function QrManager() {
   const admin = useAdminTables();
-  const qrCodes = useTableQrCodes();
-  const [selectedTableId, setSelectedTableId] = useState<string | null>(null);
-  const [bulkOpen, setBulkOpen] = useState(false);
-  const [query, setQuery] = useState("");
-  const [status, setStatus] = useState<"all" | "active" | "stopped">("all");
-  const refetchTables = admin.refetch;
-  const refetchQrCodes = qrCodes.refetch;
+  const [issued, setIssued] = useState<Record<string, string>>({});
 
-  const selected = selectedTableId
-    ? admin.tables.find((table) => table.id === selectedTableId) ?? null
-    : null;
+  function printCodes() {
+    window.setTimeout(() => window.print(), 250);
+  }
 
-  const refreshAll = useCallback(async () => {
-    await Promise.all([refetchTables(), refetchQrCodes()]);
-  }, [refetchQrCodes, refetchTables]);
+  function rotate(tableId: string, tableName: string) {
+    void admin
+      .run(() => adminApi.rotateTableToken(tableId), `${tableName} QR bağlantısı yenilendi.`)
+      .then((result) => {
+        if (result) setIssued((current) => ({ ...current, [tableId]: result.rawToken }));
+      });
+  }
 
-  const printable = qrCodes.codes.filter((code) => code.isActive && !code.revoked);
-  const activeQrCount = qrCodes.codes.filter((code) => !code.revoked).length;
-  const filtered = useMemo(() => {
-    const normalized = query.trim().toLocaleLowerCase("tr-TR");
-    return qrCodes.codes.filter((code) => {
-      const active = !code.revoked;
-      return (
-        (!normalized || code.tableName.toLocaleLowerCase("tr-TR").includes(normalized) || String(code.tableNumber).includes(normalized))
-        && (status === "all" || (status === "active" ? active : !active))
-      );
-    });
-  }, [qrCodes.codes, query, status]);
-
-  /**
-   * The whole room in one run. It reprints the codes that already exist —
-   * nothing here rotates — through the same designer, so every card in the
-   * batch comes out at the size the administrator chose once.
-   */
-  const bulkCards = useMemo(
-    () => printable.map((code) => ({ tableName: code.tableName, menuUrl: code.menuUrl })),
-    [printable],
-  );
+  function revoke(tableId: string, tableName: string) {
+    void admin
+      .run(() => adminApi.revokeTableToken(tableId), `${tableName} QR bağlantısı iptal edildi.`)
+      .then((result) => {
+        if (!result) return;
+        setIssued((current) => {
+          const next = { ...current };
+          delete next[tableId];
+          return next;
+        });
+      });
+  }
 
   return (
     <div className="space-y-6">
       <AdminPageHeader
         title="QR Kodlar"
-        description="Her masanın QR menüsünü görüntüleyin, indirin ve yazdırın."
-        actions={
-          <Button
-            variant="outline"
-            className="h-10 bg-card"
-            disabled={printable.length === 0}
-            onClick={() => setBulkOpen(true)}
-          >
-            <Printer /> Tüm Masa QR&apos;larını Yazdır
-          </Button>
-        }
+        description="Her masanın menü bağlantısını yönetin. Bağlantı yalnızca yenileme anında bir kez gösterilir."
+        actions={<Button variant="outline" className="h-10 bg-card" onClick={printCodes}><Printer /> Tümünü Yazdır</Button>}
       />
 
       <div className="flex flex-wrap gap-2">
         <SummaryChip label="Toplam masa" value={admin.tables.length} />
-        <SummaryChip label="QR aktif" value={activeQrCount} />
-        <SummaryChip
-          label="Durdurulmuş"
-          value={qrCodes.codes.filter((code) => code.revoked).length}
-        />
+        <SummaryChip label="QR aktif" value={admin.tables.filter((table) => !table.qrRevoked && table.isActive).length} />
+        <SummaryChip label="Yenilenmeli" value={admin.tables.filter((table) => table.qrRevoked).length} />
         <RealtimeStatus status={admin.realtimeStatus} />
       </div>
 
-      <div className="flex flex-col gap-3 rounded-lg border bg-card p-3 sm:flex-row">
-        <div className="relative min-w-0 flex-1">
-          <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
-          <Input className="h-11 pl-9" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Masa ara" aria-label="QR kodlarında masa ara" />
+      <div className="rounded-xl border border-copper/35 bg-copper/8 p-4 sm:flex sm:items-start sm:gap-4">
+        <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-card text-burgundy"><Link2 className="size-5" /></div>
+        <div className="mt-3 sm:mt-0">
+          <p className="text-sm font-extrabold">Ham QR adresi veritabanında tutulmaz</p>
+          <p className="mt-1 text-xs leading-5 text-muted-foreground">
+            Bir masanın bağlantısını sonradan görüntüleyemezsiniz. Bağlantı kaybolduysa
+            <strong className="mx-1">QR Yenile</strong>
+            ile yeni bir adres üretin; eski QR anında geçersiz olur.
+          </p>
         </div>
-        <NativeSelect className="h-11 sm:w-48" value={status} onChange={(event) => setStatus(event.target.value as "all" | "active" | "stopped")} aria-label="QR kodu durum filtresi">
-          <option value="all">Tümü</option>
-          <option value="active">Aktif</option>
-          <option value="stopped">Durdurulmuş</option>
-        </NativeSelect>
       </div>
 
-      {qrCodes.error && qrCodes.codes.length === 0 ? (
+      {admin.error && !admin.tables.length ? (
         <div className="grid min-h-48 place-items-center rounded-xl border bg-card p-8 text-center">
           <div>
             <QrCode className="mx-auto size-9 text-muted-foreground" />
-            <p className="mt-3 font-bold">QR kodu şu anda görüntülenemiyor.</p>
-            <Button variant="outline" className="mt-4" onClick={() => void qrCodes.refetch()}>
-              Tekrar Dene
-            </Button>
+            <p className="mt-3 font-bold">Masalar yüklenemedi</p>
+            <p className="mt-1 text-sm text-muted-foreground">{admin.error.message}</p>
           </div>
         </div>
       ) : (
-        <section
-          className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4"
-          aria-label="Masa QR kodları"
-        >
-          {filtered.map((code) => {
-            const active = !code.revoked;
+        <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4" aria-label="Masa QR kodları">
+          {admin.tables.map((table) => {
+            const rawToken = issued[table.id];
+            const active = table.isActive && !table.qrRevoked;
+
             return (
-              <article
-                key={code.tableId}
-                className="rounded-lg border bg-card p-4 shadow-[var(--shadow-raised)] sm:p-5"
-              >
+              <article key={table.id} className="rounded-lg border bg-card p-4 shadow-[var(--shadow-raised)] sm:p-5">
                 <div className="flex items-start justify-between gap-3">
                   <div>
-                    <h2 className="font-heading text-xl font-semibold">{code.tableName}</h2>
-                    {!code.isActive ? <p className="mt-1 text-xs text-muted-foreground">Masa servisi kapalı</p> : null}
+                    <h2 className="font-heading text-xl font-semibold">{table.name}</h2>
+                    <p className="mt-1 text-xs text-muted-foreground">Sürüm v{table.qrTokenVersion}</p>
                   </div>
-                  <span
-                    className={
-                      active
-                        ? "rounded-lg bg-status-success-tint px-2 py-1 text-xs font-extrabold text-status-success"
-                        : "rounded-lg bg-status-danger-tint px-2 py-1 text-xs font-extrabold text-status-danger"
-                    }
+                  <span className={active
+                    ? "rounded-lg bg-status-success-tint px-2 py-1 text-xs font-extrabold text-status-success"
+                    : "rounded-lg bg-status-danger-tint px-2 py-1 text-xs font-extrabold text-status-danger"}
                   >
-                    {active ? "AKTİF" : "DURDURULDU"}
+                    {active ? "AKTİF" : "YENİLENMELİ"}
                   </span>
                 </div>
 
-                <div className="my-5 rounded-xl border border-gold/35 bg-[#FBF6EC] p-4">
-                  <BrandedTableQr
-                    menuUrl={code.menuUrl}
-                    className="mx-auto max-w-44"
-                    title={`${code.tableName} QR menü kodu`}
-                  />
-                </div>
+                <div className="my-5 rounded-xl bg-background p-4"><QrPlaceholder tableName={table.name} /></div>
 
-                <div className="grid gap-2">
-                  {active ? (
-                    <Button disabled={!code.isActive} onClick={() => setSelectedTableId(code.tableId)}>
-                      <QrCode /> {code.isActive ? "QR Menüyü Gör" : "Masa servisi kapalı"}
-                    </Button>
-                  ) : (
-                    <QrAccessToggle
-                      tableId={code.tableId}
-                      tableName={code.tableName}
-                      paused
-                      onChanged={refreshAll}
-                    />
-                  )}
-                  <Button variant="outline" className="min-h-11" onClick={() => setSelectedTableId(code.tableId)}>
-                    <QrCode /> {active ? "İndir / Yazdır" : "Durdurulan QR'ı Gör"}
+                {rawToken ? (
+                  <div className="mb-3 rounded-xl border border-copper/40 bg-copper/8 p-3" role="status">
+                    <p className="text-xs font-extrabold">Yeni bağlantı (yalnızca bir kez)</p>
+                    <code className="mt-1 block overflow-x-auto text-xs">/menu/{rawToken}</code>
+                  </div>
+                ) : null}
+
+                <div className="grid grid-cols-2 gap-2">
+                  <Button variant="outline" disabled={admin.saving} onClick={() => rotate(table.id, table.name)}>
+                    <RefreshCw /> QR Yenile
                   </Button>
-                  {active ? (
-                    <QrAccessToggle
-                      tableId={code.tableId}
-                      tableName={code.tableName}
-                      paused={false}
-                      onChanged={refreshAll}
-                    />
-                  ) : null}
+                  <Button
+                    variant="outline"
+                    disabled={admin.saving || table.qrRevoked}
+                    className="text-destructive hover:bg-destructive/10 hover:text-destructive"
+                    onClick={() => revoke(table.id, table.name)}
+                  >
+                    <ShieldOff /> İptal Et
+                  </Button>
                 </div>
               </article>
             );
           })}
         </section>
       )}
-
-      {!qrCodes.error && qrCodes.codes.length > 0 && filtered.length === 0 ? (
-        <div className="grid min-h-40 place-items-center rounded-xl border bg-card p-8 text-center">
-          <div><QrCode className="mx-auto size-8 text-muted-foreground" /><p className="mt-3 font-bold">Masa bulunamadı.</p><p className="mt-1 text-sm text-muted-foreground">Arama veya filtreyi değiştirin.</p></div>
-        </div>
-      ) : null}
-
-      <TableQrDialog
-        open={Boolean(selectedTableId)}
-        onOpenChange={(open) => setSelectedTableId(open ? selectedTableId : null)}
-        restaurantName={qrCodes.restaurantName}
-        table={selected ? { id: selected.id, name: selected.name } : null}
-        qr={selectedTableId ? qrCodes.byTableId(selectedTableId) : null}
-        onRotated={refreshAll}
-      />
-
-      <QrPrintDesigner
-        open={bulkOpen && bulkCards.length > 0}
-        onOpenChange={setBulkOpen}
-        cards={bulkCards}
-        restaurantName={qrCodes.restaurantName}
-      />
     </div>
   );
 }

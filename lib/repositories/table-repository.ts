@@ -54,7 +54,6 @@ export interface UpdateManagedTableRecordInput {
   readonly tableId: string;
   readonly actorUserId: string;
   readonly name?: string;
-  readonly tableNumber?: number;
   readonly seats?: number;
   readonly isActive?: boolean;
   readonly audit?: AuditRequestContext;
@@ -62,21 +61,8 @@ export interface UpdateManagedTableRecordInput {
 
 export interface TableRepository {
   findSessionByTokenHash(tokenHash: string): Promise<TableSessionRecord | null>;
-  /**
-   * Resolves the row a derived QR link points at. The pair is unique
-   * (`restaurants.slug`, then `restaurant_tables_restaurant_number_key`), so
-   * this is a keyed read rather than a scan.
-   */
-  findSessionByTableRef(
-    restaurantSlug: string,
-    tableNumber: number,
-  ): Promise<TableSessionRecord | null>;
-  /** Every table of one restaurant, for re-deriving its QR links. */
-  listSessionsForRestaurant(restaurantId: string): Promise<readonly TableSessionRecord[]>;
   createWithAudit(input: CreateManagedTableRecordInput): Promise<ManagedTableRecord | null>;
   rotateTokenWithAudit(input: ChangeTableTokenRecordInput): Promise<ManagedTableRecord | null>;
-  pauseQrAccessWithAudit(input: ChangeTableTokenRecordInput): Promise<ManagedTableRecord | null>;
-  resumeQrAccessWithAudit(input: ChangeTableTokenRecordInput): Promise<ManagedTableRecord | null>;
   revokeTokenWithAudit(input: ChangeTableTokenRecordInput): Promise<ManagedTableRecord | null>;
   updateWithAudit(input: UpdateManagedTableRecordInput): Promise<ManagedTableRecord | null>;
 }

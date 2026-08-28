@@ -4,7 +4,6 @@ import {
   type RestaurantPrincipal,
 } from "@/lib/domain/restaurant-scope";
 import { USER_ROLES } from "@/lib/domain/status";
-import { deriveTableStatus } from "@/lib/domain/table-operations";
 import type { StaffTableRepository } from "@/lib/repositories/staff-table-repository";
 
 export interface StaffTableResult {
@@ -18,27 +17,11 @@ export interface StaffTableResult {
   readonly qrRevoked: boolean;
   readonly openCallCount: number;
   readonly lastActivityAt: string;
-  readonly activeCalls?: readonly {
-    readonly id: string;
-    readonly type: "WAITER_CALL" | "BILL_REQUEST" | "OTHER";
-    readonly status: string;
-    readonly requestLabel: string | null;
-    readonly createdAt: string;
-  }[];
   readonly activeOrder: {
     readonly id: string;
     readonly orderNumber: string;
     readonly total: string;
     readonly createdAt: string;
-    readonly status?: string;
-    readonly orderCount?: number;
-    readonly itemCount?: number;
-    readonly items?: readonly {
-      readonly id: string;
-      readonly productName: string;
-      readonly quantity: number;
-      readonly status: string;
-    }[];
   } | null;
 }
 
@@ -61,58 +44,25 @@ export class StaffTableService {
     }
 
     const records = await this.repository.listTables(decision.principal.restaurantId);
-    return records.map((table) => {
-      const latestOrder = table.activeOrders[0] ?? null;
-      const activityTimes = [
-        table.updatedAt,
-        ...table.activeOrders.map((order) => order.updatedAt),
-        ...table.activeCalls.map((call) => call.updatedAt),
-      ];
-      const lastActivityAt = activityTimes.reduce(
-        (latest, candidate) => candidate > latest ? candidate : latest,
-        table.updatedAt,
-      );
-      return {
+    return records.map((table) => ({
       id: table.id,
       name: table.name,
       number: table.tableNumber,
       seats: table.seats,
       isActive: table.isActive,
-      status: deriveTableStatus({
-        isActive: table.isActive,
-        openOrderCount: table.activeOrders.length,
-        activeCallTypes: table.activeCalls.map((call) => call.type),
-        currentStatus: table.currentStatus,
-      }),
+      status: table.currentStatus,
       qrTokenVersion: table.qrTokenVersion,
       qrRevoked: Boolean(table.qrTokenRevokedAt),
-      openCallCount: table.activeCalls.length,
-      lastActivityAt: lastActivityAt.toISOString(),
-      activeCalls: table.activeCalls.map((call) => ({
-        id: call.id,
-        type: call.type,
-        status: call.status,
-        requestLabel: call.requestLabel,
-        createdAt: call.createdAt.toISOString(),
-      })),
-      activeOrder: latestOrder
+      openCallCount: Number(table.openCallCount ?? 0),
+      lastActivityAt: table.updatedAt.toISOString(),
+      activeOrder: table.activeOrderId && table.activeOrderNumber && table.activeOrderTotal && table.activeOrderCreatedAt
         ? {
-            id: latestOrder.id,
-            orderNumber: latestOrder.orderNumber,
-            status: latestOrder.status,
-            total: table.activeOrders
-              .reduce((sum, order) => sum + Number(order.total), 0)
-              .toFixed(2),
-            createdAt: table.activeOrders.at(-1)?.createdAt.toISOString() ?? latestOrder.createdAt.toISOString(),
-            orderCount: table.activeOrders.length,
-            itemCount: table.activeOrders.reduce(
-              (sum, order) => sum + order.items.reduce((count, item) => count + item.quantity, 0),
-              0,
-            ),
-            items: table.activeOrders.flatMap((order) => order.items),
+            id: table.activeOrderId,
+            orderNumber: table.activeOrderNumber,
+            total: table.activeOrderTotal,
+            createdAt: table.activeOrderCreatedAt.toISOString(),
           }
         : null,
-      };
-    });
+    }));
   }
 }
