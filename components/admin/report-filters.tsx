@@ -57,14 +57,14 @@ export function ReportFilters({
 }) {
   return (
     <div className="print:hidden space-y-3 rounded-xl border border-border bg-card p-4">
-      <div className="flex flex-wrap items-end gap-3">
-        <div className="space-y-1.5">
+      <div className="flex flex-col items-stretch gap-3 sm:flex-row sm:flex-wrap sm:items-end">
+        <div className="w-full space-y-1.5 sm:w-auto">
           <label className="text-sm font-semibold" htmlFor="report-range">
             Dönem
           </label>
           <select
             id="report-range"
-            className={selectClass}
+            className={cn(selectClass, "w-full sm:w-auto")}
             value={state.range}
             onChange={(event) =>
               onChange({ ...state, range: event.target.value as ReportRangePreset })
@@ -80,7 +80,7 @@ export function ReportFilters({
 
         {state.range === "CUSTOM" ? (
           <>
-            <div className="space-y-1.5">
+            <div className="w-full space-y-1.5 sm:w-auto">
               <label className="text-sm font-semibold" htmlFor="report-from">
                 Başlangıç
               </label>
@@ -92,7 +92,7 @@ export function ReportFilters({
                 onChange={(event) => onChange({ ...state, from: event.target.value })}
               />
             </div>
-            <div className="space-y-1.5">
+            <div className="w-full space-y-1.5 sm:w-auto">
               <label className="text-sm font-semibold" htmlFor="report-to">
                 Bitiş
               </label>
@@ -107,13 +107,13 @@ export function ReportFilters({
           </>
         ) : null}
 
-        <div className="space-y-1.5">
+        <div className="w-full space-y-1.5 sm:w-auto">
           <label className="text-sm font-semibold" htmlFor="report-comparison">
             Karşılaştır
           </label>
           <select
             id="report-comparison"
-            className={selectClass}
+            className={cn(selectClass, "w-full sm:w-auto")}
             value={state.comparison}
             onChange={(event) =>
               onChange({ ...state, comparison: event.target.value as ReportComparison })
@@ -127,7 +127,7 @@ export function ReportFilters({
           </select>
         </div>
 
-        <div className="ml-auto flex gap-2">
+        <div className="grid w-full grid-cols-2 gap-2 sm:ml-auto sm:flex sm:w-auto">
           <Button
             type="button"
             variant="outline"

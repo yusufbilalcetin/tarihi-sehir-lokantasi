@@ -125,7 +125,7 @@ export function ErpOperationsManager() {
 
           <div className="space-y-4">
             <Card><CardHeader><CardTitle>Tedarikçi borcu</CardTitle><CardDescription>Açık ve kısmi ödenmiş operasyonel faturalar.</CardDescription></CardHeader><CardContent><Money amount={overview?.outstandingSupplierPayable ?? "0.00"} className="text-2xl font-bold" /><p className="mt-2 text-xs text-muted-foreground">{overview?.counts.openSupplierInvoices ?? 0} açık belge</p></CardContent></Card>
-            <Card><CardHeader><CardTitle>Yaklaşan operasyon</CardTitle></CardHeader><CardContent className="grid grid-cols-2 gap-3 text-sm">
+            <Card><CardHeader><CardTitle>Yaklaşan operasyon</CardTitle></CardHeader><CardContent className="grid grid-cols-1 gap-3 text-sm min-[380px]:grid-cols-2">
               <div className="rounded-xl bg-muted/45 p-3"><strong className="block text-lg tabular-nums">{overview?.counts.upcomingReservations ?? 0}</strong><span className="text-muted-foreground">Yaklaşan rezervasyon</span></div>
               <div className="rounded-xl bg-muted/45 p-3"><strong className="block text-lg tabular-nums">{overview?.counts.openPurchaseOrders ?? 0}</strong><span className="text-muted-foreground">Açık satın alma</span></div>
               <div className="rounded-xl bg-muted/45 p-3"><strong className="block text-lg tabular-nums">{overview?.counts.activeRecipes ?? 0}</strong><span className="text-muted-foreground">Aktif reçete</span></div>

@@ -123,7 +123,35 @@ export function DashboardView() {
           }
           contentClassName="p-0 sm:p-0"
         >
-          <div className="overflow-x-auto">
+          <div className="divide-y sm:hidden">
+            {orders.length ? orders.slice(0, 6).map((order) => (
+              <article key={order.id} className="space-y-3 px-4 py-4">
+                <div className="flex min-w-0 items-start justify-between gap-3">
+                  <div className="min-w-0">
+                    <p className="truncate font-extrabold">{order.orderNumber}</p>
+                    <p className="mt-0.5 truncate text-xs font-semibold text-muted-foreground">{order.tableName}</p>
+                  </div>
+                  <strong className="shrink-0 tabular-nums">{formatCurrency(order.total)}</strong>
+                </div>
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <StatusBadge status={order.status} />
+                  <span className="text-xs text-muted-foreground">{formatElapsed(order.elapsedMinutes)}</span>
+                </div>
+              </article>
+            )) : (
+              <PanelNotice
+                className="px-4"
+                loading={orderResource.loading}
+                error={orderResource.error}
+                empty={orders.length === 0}
+                loadingText="SipariÅŸler yÃ¼kleniyorâ€¦"
+                errorText="SipariÅŸ listesi alÄ±namadÄ±."
+                emptyText="AÃ§Ä±k sipariÅŸ yok."
+                onRetry={() => void orderResource.refetch()}
+              />
+            )}
+          </div>
+          <div className="hidden overflow-x-auto sm:block">
             <table className="w-full min-w-[620px] text-left text-sm">
               <thead className="border-b bg-muted/30 text-xs text-muted-foreground">
                 <tr>

@@ -397,7 +397,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
     .find(([href]) => isActivePath(pathname, href))?.[1] ?? "Yönetim";
 
   return (
-    <div className="min-h-[100dvh] bg-background">
+    <div data-admin-shell className="min-h-[100dvh] min-w-0 overflow-x-clip bg-background">
       <a href="#admin-content" className="sr-only fixed left-4 top-4 z-50 rounded-lg bg-foreground px-4 py-2 text-sm font-semibold text-background focus:not-sr-only">
         Ana içeriğe geç
       </a>
@@ -456,7 +456,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
           <LogoutButton className="text-muted-foreground hover:bg-muted hover:text-foreground" />
         </header>
 
-        <main id="admin-content" className="min-w-0 w-full p-4 sm:p-6 lg:p-8 xl:p-10">{children}</main>
+        <main id="admin-content" className="w-full min-w-0 p-3 min-[430px]:p-4 sm:p-6 lg:p-8 xl:p-10">{children}</main>
       </div>
     </div>
   );

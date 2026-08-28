@@ -32,7 +32,7 @@ export function AdminPageHeader({
 
   if (pageHeadingAlreadyRendered) {
     return actions ? (
-      <div className="flex flex-wrap items-center justify-end gap-2">{actions}</div>
+      <div className="flex w-full flex-col items-stretch gap-2 min-[430px]:flex-row min-[430px]:flex-wrap min-[430px]:items-center sm:w-auto sm:justify-end">{actions}</div>
     ) : null;
   }
 
@@ -43,7 +43,7 @@ export function AdminPageHeader({
         <h1 className="font-heading text-2xl font-semibold tracking-[-0.02em] text-foreground sm:text-3xl">{title}</h1>
         <p className="mt-1 max-w-2xl text-sm leading-6 text-muted-foreground">{description}</p>
       </div>
-      {actions ? <div className="flex shrink-0 flex-wrap items-center gap-2">{actions}</div> : null}
+      {actions ? <div className="flex w-full flex-col items-stretch gap-2 min-[430px]:flex-row min-[430px]:flex-wrap min-[430px]:items-center sm:w-auto sm:shrink-0">{actions}</div> : null}
     </header>
   );
 }
@@ -66,12 +66,12 @@ export function AdminPanel({
   return (
     <section className={cn("overflow-hidden rounded-lg border border-border/80 bg-card shadow-[var(--shadow-raised)]", className)}>
       {title || action ? (
-        <div className="flex items-start justify-between gap-4 border-b border-border/75 bg-muted/25 px-4 py-4 sm:px-5">
-          <div>
+        <div className="flex flex-col gap-3 border-b border-border/75 bg-muted/25 px-4 py-4 min-[430px]:flex-row min-[430px]:items-start min-[430px]:justify-between sm:gap-4 sm:px-5">
+          <div className="min-w-0">
             {title ? <h2 className="font-heading text-lg font-semibold">{title}</h2> : null}
             {description ? <p className="mt-0.5 text-xs leading-5 text-muted-foreground">{description}</p> : null}
           </div>
-          {action}
+          {action ? <div className="flex min-w-0 flex-wrap items-center gap-2">{action}</div> : null}
         </div>
       ) : null}
       <div className={cn("p-4 sm:p-5", contentClassName)}>{children}</div>
@@ -156,7 +156,7 @@ export function NativeSelect({ className, children, ...props }: React.ComponentP
 }
 
 export function DataToolbar({ children }: { children: ReactNode }) {
-  return <div className="flex flex-col gap-3 border-b bg-card/60 p-4 sm:flex-row sm:flex-wrap sm:items-center">{children}</div>;
+  return <div className="flex min-w-0 flex-col gap-3 border-b bg-card/60 p-3 [&>*]:min-w-0 min-[430px]:p-4 sm:flex-row sm:flex-wrap sm:items-center">{children}</div>;
 }
 
 export function SummaryChip({ label, value }: { label: string; value: string | number }) {

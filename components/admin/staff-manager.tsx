@@ -456,7 +456,7 @@ export function StaffManager() {
                 </div>
               </SheetHeader>
               <div className="space-y-6 px-5">
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 gap-3 min-[380px]:grid-cols-2">
                   <div className="rounded-xl border bg-background p-3">
                     <Mail className="size-4 text-burgundy" />
                     <p className="mt-2 text-xs text-muted-foreground">E-posta</p>

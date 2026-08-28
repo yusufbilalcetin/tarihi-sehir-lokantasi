@@ -999,6 +999,27 @@ html[data-sehir-intro="seen"] .menu-content {
   }
 }
 
+/* Admin is an operational surface: compact desktop controls keep their
+   density, while phone controls retain a thumb-sized hit area. The rule is
+   deliberately scoped so the public menu and print layouts do not change. */
+@media (max-width: 639px) {
+  [data-admin-shell] [data-slot="button"] {
+    min-width: 2.75rem;
+    min-height: 2.75rem;
+  }
+
+  [data-admin-shell] input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
+  [data-admin-shell] select,
+  [data-admin-shell] [data-slot="select-trigger"] {
+    min-height: 2.75rem;
+  }
+
+  [data-admin-shell] [data-slot="table-container"] {
+    max-width: 100%;
+    overscroll-behavior-inline: contain;
+  }
+}
+
 /* Printable management report: the page becomes the document, so navigation,
    filters and action buttons drop out and tables are allowed to break. */
 /* Table QR cards are rendered to images and portalled into <body> only while a

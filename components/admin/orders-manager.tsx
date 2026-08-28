@@ -208,7 +208,7 @@ export function OrdersManager() {
                 <SheetDescription>{selected.tableName}, {selected.createdAt} saatinde oluşturuldu.</SheetDescription>
               </SheetHeader>
               <div className="space-y-5 px-5">
-                <div className="grid grid-cols-3 gap-2">
+                <div className="grid grid-cols-1 gap-2 min-[380px]:grid-cols-3">
                   <div className="rounded-xl border bg-muted/25 p-3"><p className="text-xs text-muted-foreground">Süre</p><p className="mt-1 font-extrabold">{formatElapsed(selected.elapsedMinutes)}</p></div>
                   <div className="rounded-xl border bg-muted/25 p-3"><p className="text-xs text-muted-foreground">Garson</p><p className="mt-1 truncate font-extrabold">{selected.waiterName ?? "Atanmadı"}</p></div>
                   <div className="rounded-xl border bg-muted/25 p-3"><p className="text-xs text-muted-foreground">Toplam</p><p className="mt-1 font-extrabold">{formatCurrency(selected.total)}</p></div>
@@ -237,7 +237,7 @@ export function OrdersManager() {
                 ) : null}
               </div>
               <SheetFooter className="sticky bottom-0 border-t bg-card">
-                <div className="grid grid-cols-2 gap-2">
+                <div className="grid grid-cols-1 gap-2 min-[380px]:grid-cols-2">
                   <Button
                     variant="outline"
                     disabled={pending || !canApply(selected, "preparing")}
