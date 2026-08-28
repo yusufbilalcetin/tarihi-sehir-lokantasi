@@ -7,12 +7,6 @@ import type { UserRole } from "@/lib/domain/status";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 
 import { resolveStaffPrincipal, type StaffPrincipal } from "./foundation";
-import {
-  isSimpleTestLoginEnabled,
-  isTestUsername,
-  resolveTestAccount,
-} from "./simple-test-login";
-import { signInTestAccount } from "./simple-test-login.server";
 import { DrizzleStaffIdentityRepository } from "./foundation/server";
 import { selectStaffAuthProvider, type StaffAuthProvider } from "./provider-selection";
 import { staffHomeForRole } from "./role-access";
@@ -116,21 +110,6 @@ export async function authenticateStaff(
   // tenant-scoped. Missing DB config is an explicit failure, never a reason to
   // downgrade to environment credentials.
   getServerEnvironment(["database"]);
-
-  // The demonstration usernames, where a deployment has asked for them. A
-  // username that is not one of them falls straight through to the ordinary
-  // login, and with the flag off this branch does not exist at all.
-  if (isSimpleTestLoginEnabled() && isTestUsername(identifier)) {
-    const account = resolveTestAccount(identifier, password);
-    const principal = account ? await signInTestAccount(account) : null;
-    if (!principal) return { success: false, provider, reason: "INVALID_CREDENTIALS" };
-    return {
-      success: true,
-      provider,
-      redirectTo: staffHomeForRole(principal.role),
-      principal,
-    };
-  }
 
   const credential = await resolveSupabasePasswordCredential(identifier, password);
   const supabase = await createSupabaseServerClient();

@@ -8,29 +8,29 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 interface LoginValues {
-  username: string;
-  password: string;
+  code: string;
+  pin: string;
 }
 
 interface LoginErrors {
-  username?: string;
-  password?: string;
+  code?: string;
+  pin?: string;
   form?: string;
 }
 
 export function LoginForm() {
   const router = useRouter();
-  const [values, setValues] = useState<LoginValues>({ username: "", password: "" });
+  const [values, setValues] = useState<LoginValues>({ code: "", pin: "" });
   const [errors, setErrors] = useState<LoginErrors>({});
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPin, setShowPin] = useState(false);
   const [submitting, setSubmitting] = useState(false);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     const nextErrors: LoginErrors = {};
-    if (!values.username.trim()) nextErrors.username = "Kullanıcı adınızı girin.";
-    if (!values.password) nextErrors.password = "Şifrenizi girin.";
+    if (!values.code.trim()) nextErrors.code = "E-posta veya personel kodunuzu girin.";
+    if (!values.pin.trim()) nextErrors.pin = "Şifre veya PIN kodunuzu girin.";
 
     if (Object.keys(nextErrors).length > 0) {
       setErrors(nextErrors);
@@ -46,26 +46,14 @@ export function LoginForm() {
       const response = await fetch("/api/staff/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        // The server decides what the username stands for; nothing about the
-        // identity behind it is known here.
-        body: JSON.stringify({
-          identifier: values.username.trim(),
-          password: values.password,
-        }),
+        body: JSON.stringify(values),
       });
       const payload = (await response.json().catch(() => null)) as
         | { redirectTo?: string; error?: string }
         | null;
 
       if (!response.ok || !payload?.redirectTo) {
-        // One message for every rejection: a wrong password and an unknown
-        // user must not be distinguishable from out here.
-        setErrors({
-          form:
-            response.status === 401 || response.status === 400
-              ? "Kullanıcı adı veya şifre hatalı."
-              : payload?.error ?? "Giriş yapılamadı. Lütfen tekrar deneyin.",
-        });
+        setErrors({ form: payload?.error ?? "Giriş yapılamadı. Lütfen tekrar deneyin." });
         setSubmitting(false);
         return;
       }
@@ -101,72 +89,71 @@ export function LoginForm() {
                 Personel girişi
               </h1>
               <p className="mt-1 text-sm leading-6 text-muted-foreground">
-                Kullanıcı adınız ve şifrenizle giriş yapın.
+                Vardiyanıza devam etmek için bilgilerinizi girin.
               </p>
             </div>
           </div>
 
           <form className="space-y-5" onSubmit={handleSubmit} noValidate>
             <div className="grid gap-2">
-              <label htmlFor="staff-username" className="text-sm font-semibold text-foreground">
-                Kullanıcı Adı
+              <label htmlFor="staff-code" className="text-sm font-semibold text-foreground">
+                E-posta / Personel Kodu
               </label>
               <div className="relative">
                 <UserRound className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" strokeWidth={1.8} />
                 <Input
-                  id="staff-username"
-                  name="username"
+                  id="staff-code"
+                  name="staff-code"
                   type="text"
                   inputMode="text"
                   autoComplete="username"
-                  autoCapitalize="none"
-                  autoCorrect="off"
-                  spellCheck={false}
                   maxLength={320}
-                  value={values.username}
-                  onChange={(event) => setField("username", event.target.value)}
-                  aria-invalid={Boolean(errors.username || errors.form)}
-                  aria-describedby={errors.username ? "staff-username-error" : undefined}
+                  value={values.code}
+                  onChange={(event) => setField("code", event.target.value)}
+                  aria-invalid={Boolean(errors.code || errors.form)}
+                  aria-describedby={errors.code ? "staff-code-error" : undefined}
                   className="h-12 bg-background pl-10 text-base"
+                  placeholder="ornek@lokanta.com veya kod"
                 />
               </div>
-              {errors.username ? (
-                <p id="staff-username-error" className="text-sm font-medium text-destructive">
-                  {errors.username}
+              {errors.code ? (
+                <p id="staff-code-error" className="text-sm font-medium text-destructive">
+                  {errors.code}
                 </p>
               ) : null}
             </div>
 
             <div className="grid gap-2">
-              <label htmlFor="staff-password" className="text-sm font-semibold text-foreground">
-                Şifre
+              <label htmlFor="staff-pin" className="text-sm font-semibold text-foreground">
+                Şifre / PIN
               </label>
               <div className="relative">
                 <KeyRound className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" strokeWidth={1.8} />
                 <Input
-                  id="staff-password"
-                  name="password"
-                  type={showPassword ? "text" : "password"}
+                  id="staff-pin"
+                  name="staff-pin"
+                  type={showPin ? "text" : "password"}
                   autoComplete="current-password"
                   maxLength={1024}
-                  value={values.password}
-                  onChange={(event) => setField("password", event.target.value)}
-                  aria-invalid={Boolean(errors.password || errors.form)}
-                  aria-describedby={errors.password ? "staff-password-error" : undefined}
+                  value={values.pin}
+                  onChange={(event) => setField("pin", event.target.value)}
+                  aria-invalid={Boolean(errors.pin || errors.form)}
+                  aria-describedby={errors.pin ? "staff-pin-error" : undefined}
                   className="h-12 bg-background px-10 text-base"
+                  placeholder="Şifreniz veya PIN kodunuz"
                 />
                 <button
                   type="button"
-                  onClick={() => setShowPassword((visible) => !visible)}
+                  onClick={() => setShowPin((visible) => !visible)}
                   className="absolute right-0 top-1/2 flex size-11 -translate-y-1/2 items-center justify-center rounded-lg text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                  aria-label={showPassword ? "Şifreyi gizle" : "Şifreyi göster"}
+                  aria-label={showPin ? "Şifreyi gizle" : "Şifreyi göster"}
                 >
-                  {showPassword ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
+                  {showPin ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
                 </button>
               </div>
-              {errors.password ? (
-                <p id="staff-password-error" className="text-sm font-medium text-destructive">
-                  {errors.password}
+              {errors.pin ? (
+                <p id="staff-pin-error" className="text-sm font-medium text-destructive">
+                  {errors.pin}
                 </p>
               ) : null}
             </div>
