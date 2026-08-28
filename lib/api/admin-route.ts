@@ -58,6 +58,23 @@ export function parseParams<TValue>(
 }
 
 /**
+ * What a 5xx actually was, in development only.
+ *
+ * A logged `errorName: "TypeError"` names the species and not the animal: it
+ * cost a whole investigation to find out which call threw. Outside development
+ * the stack stays out of the log, because a stack names internal paths.
+ */
+function errorDiagnostics(error: unknown): Record<string, unknown> {
+  if (process.env.NODE_ENV === "production") return {};
+  const cause = error instanceof Error ? error.cause : undefined;
+  return {
+    errorMessage: error instanceof Error ? error.message : String(error),
+    errorStack: error instanceof Error ? error.stack : undefined,
+    ...(cause ? { errorCause: cause instanceof Error ? cause.stack : String(cause) } : {}),
+  };
+}
+
+/**
  * Every admin mutation shares the same envelope: trusted origin, ADMIN/MANAGER
  * principal, audited request id, and a redacted failure response.
  */
@@ -88,6 +105,7 @@ export async function adminMutation<TResult>(
       logger.error("mutation_failed", "Admin mutation could not be applied.", {
         requestId,
         errorName: error instanceof Error ? error.name : "UnknownError",
+        ...errorDiagnostics(error),
       });
     }
     return NextResponse.json(failure.body, {
@@ -121,6 +139,7 @@ export async function adminRead<TResult>(
       logger.error("read_failed", "Admin read could not be served.", {
         requestId,
         errorName: error instanceof Error ? error.name : "UnknownError",
+        ...errorDiagnostics(error),
       });
     }
     return NextResponse.json(failure.body, {
