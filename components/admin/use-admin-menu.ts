@@ -24,6 +24,8 @@ export function adminProductStatus(product: AdminProductResult): ProductStatus {
 export interface AdminMenuState {
   readonly categories: readonly AdminCategoryResult[];
   readonly products: readonly AdminProductResult[];
+  /** False when this deployment has no translation provider configured. */
+  readonly autoTranslateAvailable: boolean;
   /** Fixture-shaped projections so the existing admin tables render unchanged. */
   readonly categoryViews: readonly Category[];
   readonly productViews: readonly Product[];
@@ -51,6 +53,7 @@ export function useAdminMenu(): AdminMenuState {
   // Stable empty references keep the memo dependencies from changing per render.
   const categories = resource.data?.categories ?? EMPTY_CATEGORIES;
   const products = resource.data?.products ?? EMPTY_PRODUCTS;
+  const autoTranslateAvailable = resource.data?.autoTranslateAvailable ?? false;
 
   const categoryViews = useMemo<Category[]>(
     () =>
@@ -107,6 +110,7 @@ export function useAdminMenu(): AdminMenuState {
   return {
     categories,
     products,
+    autoTranslateAvailable,
     categoryViews,
     productViews,
     loading: resource.loading,

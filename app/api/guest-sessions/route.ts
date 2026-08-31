@@ -8,6 +8,8 @@ import { DomainError, isDomainError, validationError } from "@/lib/api/domain-er
 import { apiFailureFromUnknown, apiSuccess } from "@/lib/api/response";
 import { createLogger } from "@/lib/security/logger";
 import { assertTrustedMutationOrigin } from "@/lib/security/origin";
+import { enforceRateLimit } from "@/lib/security/rate-limit.server";
+import { retryAfterHeader } from "@/lib/security/rate-limit-response";
 import {
   GUEST_ORDER_SESSION_COOKIE,
   GUEST_ORDER_SESSION_TTL_SECONDS,
@@ -39,6 +41,12 @@ const logger = createLogger("api.guest.sessions");
 export async function POST(request: Request): Promise<NextResponse> {
   try {
     assertTrustedMutationOrigin(request);
+    // The same budget the table-side entry point spends: this is the other
+    // door into an ordering session, and it is the only public endpoint that
+    // queries the database before anything has been authenticated. Keyed by
+    // client address, because there is no session to key it by yet.
+    await enforceRateLimit(request, "QR_VALIDATE");
+
     let body: unknown;
     try {
       body = await request.json();
@@ -104,7 +112,7 @@ export async function POST(request: Request): Promise<NextResponse> {
     const failure = apiFailureFromUnknown(error);
     return NextResponse.json(failure.body, {
       status: failure.status,
-      headers: NO_STORE_HEADERS,
+      headers: { ...NO_STORE_HEADERS, ...retryAfterHeader(error) },
     });
   }
 }

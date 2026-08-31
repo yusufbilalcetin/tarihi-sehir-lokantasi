@@ -157,6 +157,9 @@ export const cashierShiftStatusEnum = pgEnum("cashier_shift_status", [
   "CLOSED",
 ]);
 
+/** A drawer is counted when it is opened and again when it is closed. */
+export const cashCountPhaseEnum = pgEnum("cash_count_phase", ["OPENING", "CLOSING"]);
+
 export const cashMovementTypeEnum = pgEnum("cash_movement_type", [
   "CASH_IN",
   "CASH_OUT",
@@ -405,6 +408,84 @@ export const products = pgTable(
     check(
       "products_slug_format_check",
       sql`${table.slug} ~ '^[a-z0-9]+(?:-[a-z0-9]+)*$'`,
+    ),
+  ],
+);
+
+export const categoryTranslations = pgTable(
+  "category_translations",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    restaurantId: uuid("restaurant_id").notNull(),
+    categoryId: uuid("category_id").notNull(),
+    locale: varchar("locale", { length: 16 }).notNull(),
+    name: varchar("name", { length: 120 }).notNull(),
+    description: text("description"),
+    createdAt: createdAt(),
+    updatedAt: updatedAt(),
+  },
+  (table) => [
+    foreignKey({
+      name: "category_translations_restaurant_category_fk",
+      columns: [table.restaurantId, table.categoryId],
+      foreignColumns: [categories.restaurantId, categories.id],
+    }).onDelete("cascade"),
+    unique("category_translations_restaurant_category_locale_key").on(
+      table.restaurantId,
+      table.categoryId,
+      table.locale,
+    ),
+    index("category_translations_restaurant_locale_idx").on(
+      table.restaurantId,
+      table.locale,
+      table.categoryId,
+    ),
+    check(
+      "category_translations_locale_format_check",
+      sql`${table.locale} ~ '^[A-Za-z]{2,3}(?:-[A-Za-z0-9]{2,8})?$'`,
+    ),
+    check(
+      "category_translations_name_not_blank_check",
+      sql`length(btrim(${table.name})) > 0`,
+    ),
+  ],
+);
+
+export const productTranslations = pgTable(
+  "product_translations",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    restaurantId: uuid("restaurant_id").notNull(),
+    productId: uuid("product_id").notNull(),
+    locale: varchar("locale", { length: 16 }).notNull(),
+    name: varchar("name", { length: 180 }).notNull(),
+    description: text("description"),
+    createdAt: createdAt(),
+    updatedAt: updatedAt(),
+  },
+  (table) => [
+    foreignKey({
+      name: "product_translations_restaurant_product_fk",
+      columns: [table.restaurantId, table.productId],
+      foreignColumns: [products.restaurantId, products.id],
+    }).onDelete("cascade"),
+    unique("product_translations_restaurant_product_locale_key").on(
+      table.restaurantId,
+      table.productId,
+      table.locale,
+    ),
+    index("product_translations_restaurant_locale_idx").on(
+      table.restaurantId,
+      table.locale,
+      table.productId,
+    ),
+    check(
+      "product_translations_locale_format_check",
+      sql`${table.locale} ~ '^[A-Za-z]{2,3}(?:-[A-Za-z0-9]{2,8})?$'`,
+    ),
+    check(
+      "product_translations_name_not_blank_check",
+      sql`length(btrim(${table.name})) > 0`,
     ),
   ],
 );
@@ -1010,6 +1091,74 @@ export const cashierShifts = pgTable(
       .where(sql`${table.zReportSnapshot} is not null`),
   ],
 );
+
+/**
+ * A physically counted drawer, one row per denomination.
+ *
+ * Normalised rather than a JSON blob because this is an auditable financial
+ * record: a row here is a statement that a named cashier counted N pieces of a
+ * named face value at a named moment, and a reviewer must be able to query
+ * across shifts ("how often is the ₺200 tray short?") without unpacking JSON.
+ *
+ * `subtotal_minor` is stored even though it is derivable, because it is the
+ * server's own arithmetic frozen at the time of counting. If a denomination is
+ * ever redefined, history must keep the number that was actually agreed.
+ *
+ * Amounts are integer minor units — kuruş, cent — never a float. The three
+ * currencies are separate inventories and are never summed across rows.
+ */
+export const cashierShiftCashCounts = pgTable(
+  "cashier_shift_cash_counts",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    restaurantId: uuid("restaurant_id").notNull(),
+    shiftId: uuid("shift_id").notNull(),
+    phase: cashCountPhaseEnum("phase").notNull(),
+    /** ISO-4217, constrained to the currencies the drawer may be counted in. */
+    currency: varchar("currency", { length: 3 }).notNull(),
+    /** Face value in minor units; the denomination's identity. */
+    denominationMinor: integer("denomination_minor").notNull(),
+    pieceCount: integer("piece_count").notNull(),
+    /** Server-computed denomination_minor * piece_count, frozen at count time. */
+    subtotalMinor: bigint("subtotal_minor", { mode: "number" }).notNull(),
+    countedByStaffId: uuid("counted_by_staff_id").notNull(),
+    createdAt: createdAt(),
+  },
+  (table) => [
+    foreignKey({
+      name: "cashier_shift_cash_counts_shift_fk",
+      columns: [table.restaurantId, table.shiftId],
+      foreignColumns: [cashierShifts.restaurantId, cashierShifts.id],
+    }).onDelete("cascade"),
+    foreignKey({
+      name: "cashier_shift_cash_counts_staff_fk",
+      columns: [table.restaurantId, table.countedByStaffId],
+      foreignColumns: [staffProfiles.restaurantId, staffProfiles.id],
+    }).onDelete("restrict"),
+    // One row per denomination per phase: a retried write cannot silently
+    // double a drawer.
+    unique("cashier_shift_cash_counts_unique_key").on(
+      table.shiftId,
+      table.phase,
+      table.currency,
+      table.denominationMinor,
+    ),
+    index("cashier_shift_cash_counts_shift_phase_idx").on(
+      table.restaurantId,
+      table.shiftId,
+      table.phase,
+    ),
+    check("cashier_shift_cash_counts_currency_check", sql`${table.currency} in ('TRY', 'EUR', 'USD')`),
+    check("cashier_shift_cash_counts_denomination_check", sql`${table.denominationMinor} > 0`),
+    // Zero-count rows are not written at all, so a stored row is real money.
+    check("cashier_shift_cash_counts_piece_check", sql`${table.pieceCount} > 0 and ${table.pieceCount} <= 100000`),
+    check(
+      "cashier_shift_cash_counts_subtotal_check",
+      sql`${table.subtotalMinor} = ${table.denominationMinor}::bigint * ${table.pieceCount}::bigint`,
+    ),
+  ],
+);
+
 
 /**
  * Physical cash entering or leaving the drawer for reasons other than a

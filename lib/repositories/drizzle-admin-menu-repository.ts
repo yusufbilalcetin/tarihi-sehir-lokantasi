@@ -3,7 +3,14 @@ import "server-only";
 import { and, asc, eq, sql } from "drizzle-orm";
 
 import type { Database } from "@/db";
-import { auditLogs, categories, outboxEvents, products } from "@/db/schema";
+import {
+  auditLogs,
+  categories,
+  categoryTranslations,
+  outboxEvents,
+  products,
+  productTranslations,
+} from "@/db/schema";
 import type {
   AdminCategoryRecord,
   AdminMenuAuditInput,
@@ -183,6 +190,70 @@ class DrizzleAdminMenuTransactionRepository implements AdminMenuTransactionRepos
     return rows[0] ?? null;
   }
 
+  async upsertCategoryTranslations(input: {
+    restaurantId: string;
+    categoryId: string;
+    translations: readonly import("@/lib/i18n/catalog-localization").CatalogTranslationInput[];
+    at: Date;
+  }): Promise<void> {
+    if (!input.translations.length) return;
+    await this.db
+      .insert(categoryTranslations)
+      .values(input.translations.map((translation) => ({
+          restaurantId: input.restaurantId,
+          categoryId: input.categoryId,
+          locale: translation.locale,
+          name: translation.name,
+          description: translation.description ?? null,
+          createdAt: input.at,
+          updatedAt: input.at,
+        })))
+      .onConflictDoUpdate({
+        target: [
+          categoryTranslations.restaurantId,
+          categoryTranslations.categoryId,
+          categoryTranslations.locale,
+        ],
+        set: {
+          name: sql`excluded.name`,
+          description: sql`excluded.description`,
+          updatedAt: input.at,
+        },
+      });
+  }
+
+  async upsertProductTranslations(input: {
+    restaurantId: string;
+    productId: string;
+    translations: readonly import("@/lib/i18n/catalog-localization").CatalogTranslationInput[];
+    at: Date;
+  }): Promise<void> {
+    if (!input.translations.length) return;
+    await this.db
+      .insert(productTranslations)
+      .values(input.translations.map((translation) => ({
+          restaurantId: input.restaurantId,
+          productId: input.productId,
+          locale: translation.locale,
+          name: translation.name,
+          description: translation.description ?? null,
+          createdAt: input.at,
+          updatedAt: input.at,
+        })))
+      .onConflictDoUpdate({
+        target: [
+          productTranslations.restaurantId,
+          productTranslations.productId,
+          productTranslations.locale,
+        ],
+        set: {
+          name: sql`excluded.name`,
+          description: sql`excluded.description`,
+          updatedAt: input.at,
+        },
+      });
+  }
+
   async insertAuditLog(input: AdminMenuAuditInput): Promise<void> {
     await this.db.insert(auditLogs).values({
       restaurantId: input.restaurantId,
@@ -218,6 +289,32 @@ export class DrizzleAdminMenuRepository implements AdminMenuRepository {
       .from(products)
       .where(eq(products.restaurantId, restaurantId))
       .orderBy(asc(products.sortOrder), asc(products.name));
+  }
+
+  listCategoryTranslations(restaurantId: string) {
+    return this.db
+      .select({
+        categoryId: categoryTranslations.categoryId,
+        locale: categoryTranslations.locale,
+        name: categoryTranslations.name,
+        description: categoryTranslations.description,
+      })
+      .from(categoryTranslations)
+      .where(eq(categoryTranslations.restaurantId, restaurantId))
+      .orderBy(asc(categoryTranslations.categoryId), asc(categoryTranslations.locale));
+  }
+
+  listProductTranslations(restaurantId: string) {
+    return this.db
+      .select({
+        productId: productTranslations.productId,
+        locale: productTranslations.locale,
+        name: productTranslations.name,
+        description: productTranslations.description,
+      })
+      .from(productTranslations)
+      .where(eq(productTranslations.restaurantId, restaurantId))
+      .orderBy(asc(productTranslations.productId), asc(productTranslations.locale));
   }
 
   transaction<TResult>(

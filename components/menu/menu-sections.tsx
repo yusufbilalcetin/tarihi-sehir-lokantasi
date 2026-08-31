@@ -64,7 +64,7 @@ function Rail({
       </div>
       <div className="-mx-[var(--menu-gutter)] flex snap-x snap-mandatory gap-2.5 overflow-x-auto px-[var(--menu-gutter)] pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         {products.map((product) => (
-          <div key={`${idPrefix}-${product.id}`} className="w-[17rem] shrink-0 snap-start">
+          <div key={`${idPrefix}-${product.id}`} className="h-full w-[17rem] shrink-0 snap-start">
             <HighlightCard product={product} onOpen={() => onOpen(product)} />
           </div>
         ))}
@@ -128,7 +128,7 @@ export function MenuSections({
               <div className="flex min-w-0 items-center gap-2">
                 <h2
                   id={`menu-category-${category.id}`}
-                  className="font-heading text-[22px] font-semibold text-text-primary sm:text-3xl"
+                  className="min-w-0 [overflow-wrap:anywhere] font-heading text-[22px] font-semibold text-text-primary sm:text-3xl"
                 >
                   {getMenuCategoryName(category, language)}
                 </h2>
@@ -138,7 +138,7 @@ export function MenuSections({
                 {t("itemCount", { count: products.length })}
               </p>
             </div>
-            <div className="grid gap-2 lg:grid-cols-2 lg:gap-3">
+            <div className="grid items-stretch gap-2 md:grid-cols-2 md:gap-3">
               {products.map((product, index) => {
                 const card = (
                   <ProductCard
@@ -151,12 +151,12 @@ export function MenuSections({
                 );
                 const action = renderProductAction?.(product, index, products.length);
                 return action ? (
-                  <div key={product.id} className="group/edit relative">
+                  <div key={product.id} className="group/edit relative h-full">
                     {card}
                     {action}
                   </div>
                 ) : (
-                  <div key={product.id}>{card}</div>
+                  <div key={product.id} className="h-full">{card}</div>
                 );
               })}
             </div>
@@ -172,7 +172,7 @@ export function MenuSections({
                 <h2
                   id={`menu-category-${category.id}`}
                   className={cn(
-                    "font-heading text-[22px] font-semibold text-text-primary sm:text-3xl",
+                    "min-w-0 [overflow-wrap:anywhere] font-heading text-[22px] font-semibold text-text-primary sm:text-3xl",
                     "opacity-55",
                   )}
                 >

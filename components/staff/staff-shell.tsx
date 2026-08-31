@@ -3,7 +3,7 @@
 import { type ReactNode } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BellRing, ReceiptText, TableProperties } from "lucide-react";
+import { BellRing, ReceiptText, TableProperties, UserRound } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { BrandMark } from "@/components/shared/brand-mark";
 import { LogoutButton } from "@/components/staff/logout-button";
@@ -24,6 +24,9 @@ const navigation = [
   { href: "/staff/tables", label: "Masalar", icon: TableProperties, alias: "/staff/dashboard" },
   { href: "/staff/orders", label: "Siparişler", icon: ReceiptText, alias: null },
   { href: "/staff/calls", label: "Çağrılar", icon: BellRing, alias: null },
+  // A tablet has no bottom bar, so this is the only way to a waiter's own
+  // timesheet once the personal cards left the tables screen.
+  { href: "/staff/profile", label: "Profil", icon: UserRound, alias: null },
 ] as const;
 
 function isCurrent(pathname: string, item: (typeof navigation)[number]) {
@@ -123,16 +126,29 @@ function StaffBottomNavigation({ pathname }: { pathname: string }) {
   );
 }
 
+/**
+ * The service cockpit carries its own four-tab bar and its own bottom padding,
+ * so the shell steps out of its way on those routes rather than stacking a
+ * second bar under the first.
+ */
+const COCKPIT_ROUTES = new Set(["/staff/tables", "/staff/dashboard"]);
+
 export function StaffShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
+  const cockpit = COCKPIT_ROUTES.has(pathname);
 
   return (
     <div className="min-h-[100dvh] bg-background">
       <StaffHeader pathname={pathname} />
-      <main className="mx-auto w-full max-w-[1400px] px-4 py-6 pb-24 sm:px-6 sm:py-8 md:pb-8 lg:px-8">
+      <main
+        className={cn(
+          "mx-auto w-full max-w-[1400px] px-4 py-6 sm:px-6 sm:py-8 lg:px-8",
+          cockpit ? "md:pb-8" : "pb-24 md:pb-8",
+        )}
+      >
         {children}
       </main>
-      <StaffBottomNavigation pathname={pathname} />
+      {cockpit ? null : <StaffBottomNavigation pathname={pathname} />}
     </div>
   );
 }

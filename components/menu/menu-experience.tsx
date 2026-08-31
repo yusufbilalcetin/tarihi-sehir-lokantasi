@@ -1,11 +1,12 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { BellRing, CheckCircle2, ChevronLeft, CircleCheck, Loader2, ReceiptText, Send, ShoppingBag, UtensilsCrossed, X } from "lucide-react";
+import { BellRing, CheckCircle2, ChevronLeft, CircleCheck, Loader2, ReceiptText, Search, Send, ShoppingBag, UtensilsCrossed, X } from "lucide-react";
 import { toast } from "sonner";
 import { BottomNavigation, type MenuTab } from "@/components/menu/bottom-navigation";
 import { CartBar } from "@/components/menu/cart-bar";
 import { CategoryJump } from "@/components/menu/category-jump";
+import { MenuLoadingSkeleton } from "@/components/menu/menu-loading-skeleton";
 import { MenuSections } from "@/components/menu/menu-sections";
 import { buildCustomerMenuSections } from "@/lib/adapters/customer-menu-sections";
 import { CartItem } from "@/components/menu/cart-item";
@@ -22,14 +23,16 @@ import { SplashIntro } from "@/components/menu/splash-intro";
 import { EmptyState } from "@/components/shared/data-states";
 import { MotionValue } from "@/components/shared/motion-value";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { menuApiToViewModel, type MenuViewCategory } from "@/lib/adapters/menu-view-model";
 import { ApiClientError, newIdempotencyKey } from "@/lib/api/client";
 import { menuApi, orderApi, type CreateOrderPayload } from "@/lib/api/endpoints";
-import { customerCallStatusTranslationKey } from "@/lib/domain/customer-menu";
+import { playSound } from "@/lib/audio/sound-effects";
+import { customerCallStatusTranslationKey, matchesCustomerMenuSearch } from "@/lib/domain/customer-menu";
 import { addMoney, decimalToMinor, minorToDecimal } from "@/lib/domain/money";
 import { useApiResource } from "@/lib/hooks/use-api-resource";
-import { getMenuProductName } from "@/lib/i18n/menu-content";
+import { getMenuCategoryName, getMenuProductDescription, getMenuProductName } from "@/lib/i18n/menu-content";
 import type { MenuTranslationKey } from "@/lib/i18n/menu-translations";
 import { cn } from "@/lib/utils";
 import type { CartItem as CartItemType, Product, WaiterCallType } from "@/types";
@@ -133,6 +136,7 @@ function MenuExperienceContent({ tableNumber }: { tableNumber: number }) {
   const [activeTab, setActiveTab] = useState<MenuTab>("menu");
   const [navigationDirection, setNavigationDirection] = useState<"forward" | "back">("forward");
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [menuQuery, setMenuQuery] = useState("");
   const [storedCart, setCart] = useState<CartItemType[]>([]);
   const [waiterOpen, setWaiterOpen] = useState(false);
   const [waiterSending, setWaiterSending] = useState(false);
@@ -263,10 +267,28 @@ function MenuExperienceContent({ tableNumber }: { tableNumber: number }) {
   // One derivation for the sections, both rails, the category bar and its
   // popover — and for the administrator's preview, which reads the same
   // function so what they approve is what a guest gets.
+  const visibleProducts = useMemo(() => {
+    if (!menuQuery.trim()) return publicProducts;
+    const categoriesById = new Map(menuCategories.map((category) => [category.id, category]));
+    return publicProducts.filter((product) => {
+      const category = categoriesById.get(product.categoryId);
+      return matchesCustomerMenuSearch(
+        menuQuery,
+        [
+          getMenuProductName(product, language),
+          getMenuProductDescription(product, language),
+          category ? getMenuCategoryName(category, language) : "",
+          product.name,
+        ],
+        languageDefinition.locale,
+      );
+    });
+  }, [language, languageDefinition.locale, menuCategories, menuQuery, publicProducts]);
+
   const { sections: groupedProducts, featured: featuredProducts, popular: popularProducts } =
     useMemo(
-      () => buildCustomerMenuSections(menuCategories, publicProducts),
-      [menuCategories, publicProducts],
+      () => buildCustomerMenuSections(menuCategories, visibleProducts),
+      [menuCategories, visibleProducts],
     );
 
   // A live menu can retire a product while it sits in the cart. Deriving the
@@ -474,6 +496,7 @@ function MenuExperienceContent({ tableNumber }: { tableNumber: number }) {
   }
 
   function reportFailure(error: unknown) {
+    void playSound("error");
     const unavailableId = unavailableProductId(error);
     const unavailable = unavailableId
       ? publicProducts.find((product) => product.id === unavailableId)
@@ -546,6 +569,7 @@ function MenuExperienceContent({ tableNumber }: { tableNumber: number }) {
         undefined,
         idempotencyKeyRef.current,
       );
+      void playSound("customer-order-success");
       resetIdempotency();
       setCart([]);
       // The server just told this browser which order is its own.
@@ -582,7 +606,7 @@ function MenuExperienceContent({ tableNumber }: { tableNumber: number }) {
     <>
       <SplashIntro onComplete={finishIntro} />
       {introComplete && !contentReady ? (
-        <div className="fixed inset-0 z-[90] min-h-[100dvh] bg-[#120c08]" role="status" aria-label={t("loadingLanguage")} />
+        <MenuLoadingSkeleton label={t("loadingLanguage")} />
       ) : null}
       <div dir={direction} lang={languageDefinition.locale} className={cn("menu-content min-h-[100dvh]", cartCount > 0 ? "pb-[9.5rem]" : "pb-24", contentReady && "menu-content-ready")} aria-hidden={!contentReady} inert={!contentReady}>
         {activeTab === "menu" ? (
@@ -590,6 +614,27 @@ function MenuExperienceContent({ tableNumber }: { tableNumber: number }) {
             <RestaurantHeader tableName={tableName} />
             <main className="menu-shell pb-6">
               <h1 className="sr-only">{t("menu")}</h1>
+              <div className="relative mx-auto mb-3 max-w-3xl">
+                <Search className="pointer-events-none absolute start-3 top-1/2 size-5 -translate-y-1/2 text-muted-foreground" aria-hidden="true" />
+                <Input
+                  type="search"
+                  value={menuQuery}
+                  onChange={(event) => setMenuQuery(event.target.value)}
+                  placeholder={t("search")}
+                  aria-label={t("searchLabel")}
+                  className="h-11 ps-10 pe-11 text-base"
+                />
+                {menuQuery ? (
+                  <button
+                    type="button"
+                    onClick={() => setMenuQuery("")}
+                    className="absolute end-0 top-0 flex size-11 items-center justify-center rounded-lg text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                    aria-label={t("clearSearch")}
+                  >
+                    <X className="size-4" aria-hidden="true" />
+                  </button>
+                ) : null}
+              </div>
               <CategoryJump sections={groupedProducts} />
               {currency !== "TRY" ? (
                 <p className="mx-auto max-w-3xl text-center text-xs leading-5 text-[#70665C]">
@@ -605,7 +650,9 @@ function MenuExperienceContent({ tableNumber }: { tableNumber: number }) {
                   onOpenProduct={openProduct}
                   onAddProduct={addToCart}
                   emptyState={
-                    <EmptyState icon={UtensilsCrossed} title={t("menuUnavailable")} description={t("somethingWentWrong")} />
+                    menuQuery.trim()
+                      ? <EmptyState icon={Search} title={t("noResults")} description={t("noResultsDescription")} />
+                      : <EmptyState icon={UtensilsCrossed} title={t("menuUnavailable")} description={t("somethingWentWrong")} />
                   }
                 />
               </section>

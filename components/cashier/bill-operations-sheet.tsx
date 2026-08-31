@@ -20,6 +20,7 @@ import { PrintButton } from "@/components/shared/print-button";
 import { CheckEditPanel } from "@/components/cashier/check-edit-panel";
 import { ProductSplitPanel } from "@/components/cashier/product-split-panel";
 import { checkApi, paymentApi } from "@/lib/api/endpoints";
+import { playSound } from "@/lib/audio/sound-effects";
 import {
   displayLabel,
   PAYMENT_METHOD_LABELS,
@@ -140,6 +141,7 @@ export function BillOperationsSheet({
       reset();
       toast.success(message);
     } catch (error) {
+      void playSound("error");
       const apiError = error instanceof ApiClientError ? error : null;
       // Another till may have moved the bill under us. Never leave the panel
       // holding state the server has already rejected: reload and say so.
@@ -172,6 +174,7 @@ export function BillOperationsSheet({
         },
         paymentApi.newIdempotencyKey(),
       );
+      void playSound("payment-success");
       return `${formatCurrency(Number(payment.amount))} tahsil edildi.`;
     });
   }

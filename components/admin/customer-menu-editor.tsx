@@ -447,6 +447,7 @@ export function CustomerMenuEditor({ focus = "all" }: { readonly focus?: MenuEdi
           categories={draft.categories}
           featuredCount={draft.featuredCount}
           saving={menu.saving}
+          autoTranslateAvailable={menu.autoTranslateAvailable}
           onOpenChange={(open) => {
             if (open) return;
             setEditingProductId(null);
@@ -463,6 +464,7 @@ export function CustomerMenuEditor({ focus = "all" }: { readonly focus?: MenuEdi
           category={editingCategory}
           productCount={draft.products.filter((item) => item.categoryId === editingCategory.id).length}
           saving={menu.saving}
+          autoTranslateAvailable={menu.autoTranslateAvailable}
           onOpenChange={(open) => {
             if (open) return;
             setEditingCategoryId(null);

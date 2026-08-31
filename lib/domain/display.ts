@@ -441,6 +441,8 @@ export const ERROR_CODE_MESSAGES: Readonly<Record<string, string>> = {
   UNSUPPORTED_PRINT_PAYLOAD: "Bu belge yazdırılamıyor.",
   UNSUPPORTED_PRINTER_ENCODING: "Yazıcı bu karakter setini desteklemiyor.",
   PRINTER_AGENT_UNAUTHORIZED: "Yazıcı aracısı yetkilendirilemedi.",
+  TRANSLATION_PROVIDER_UNAVAILABLE: "Otomatik çeviri sağlayıcısı yapılandırılmamış.",
+  TRANSLATION_IN_FLIGHT: "Bu kayıt için çeviri zaten sürüyor.",
 };
 
 /**

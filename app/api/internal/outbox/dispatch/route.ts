@@ -93,11 +93,9 @@ async function dispatch(request: Request): Promise<NextResponse> {
 
 export const POST = dispatch;
 /**
- * Vercel Cron can only issue GET, and it sends `Authorization: Bearer
- * $CRON_SECRET`. Setting CRON_SECRET to the same value as
- * OUTBOX_DISPATCH_SECRET therefore makes the scheduled request satisfy the
- * check above unchanged — the POST contract other callers use is untouched.
- * Both verbs run the same authenticated worker; neither is reachable without
- * the secret, so exposing GET adds no surface.
+ * The Supabase cron job POSTs, so GET is only kept for schedulers that can
+ * issue nothing else (Vercel Cron among them, were one ever configured). Both
+ * verbs run the same authenticated worker; neither is reachable without the
+ * secret, so exposing GET adds no surface.
  */
 export const GET = dispatch;

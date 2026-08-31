@@ -365,3 +365,94 @@ test("simple login changes who may sign in, never what they may do", () => {
   // Role-based landing stays the one the application already had.
   assert.match(read("lib/auth/staff-login.ts"), /redirectTo: staffHomeForRole\(principal\.role\)/);
 });
+
+/**
+ * The five demonstration credentials have a published password. On a real
+ * restaurant's deployment `admin` / `admin1234` would be the whole front door,
+ * so production is not a place that may opt in — not through this flag, and
+ * not through any other.
+ */
+test("simple test login can never be enabled in production", async () => {
+  const { isSimpleTestLoginEnabled } = await import("../../lib/auth/simple-test-login");
+  const env = (values: Record<string, string>) => values as unknown as NodeJS.ProcessEnv;
+
+  // The case this test exists for: somebody sets the flag on the live system.
+  assert.equal(
+    isSimpleTestLoginEnabled(env({ VERCEL_ENV: "production", ENABLE_SIMPLE_TEST_LOGIN: "true" })),
+    false,
+    "a flag set in production must change nothing",
+  );
+  assert.equal(
+    isSimpleTestLoginEnabled(env({ VERCEL_ENV: "production", ENABLE_SIMPLE_TEST_LOGIN: "false" })),
+    false,
+  );
+  assert.equal(isSimpleTestLoginEnabled(env({ VERCEL_ENV: "production" })), false);
+
+  // Self-hosted: no VERCEL_ENV at all, so NODE_ENV is what says "this is live".
+  assert.equal(
+    isSimpleTestLoginEnabled(env({ NODE_ENV: "production", ENABLE_SIMPLE_TEST_LOGIN: "true" })),
+    false,
+    "a self-hosted production process must be closed too",
+  );
+
+  // A Vercel preview builds with NODE_ENV=production but is not production, and
+  // is exactly where demonstrations happen.
+  assert.equal(
+    isSimpleTestLoginEnabled(
+      env({ VERCEL_ENV: "preview", NODE_ENV: "production", ENABLE_SIMPLE_TEST_LOGIN: "true" }),
+    ),
+    true,
+    "previews must keep working, or the flag has no purpose left",
+  );
+  assert.equal(
+    isSimpleTestLoginEnabled(env({ VERCEL_ENV: "preview", NODE_ENV: "production" })),
+    false,
+  );
+
+  // Development still needs the flag said out loud.
+  assert.equal(
+    isSimpleTestLoginEnabled(env({ NODE_ENV: "development", ENABLE_SIMPLE_TEST_LOGIN: "true" })),
+    true,
+  );
+  assert.equal(isSimpleTestLoginEnabled(env({ NODE_ENV: "development" })), false);
+  assert.equal(
+    isSimpleTestLoginEnabled(env({ NODE_ENV: "development", ENABLE_SIMPLE_TEST_LOGIN: "false" })),
+    false,
+  );
+});
+
+test("the login API cannot reach the simple-login branch past that gate", () => {
+  const login = read("lib/auth/staff-login.ts");
+  const guard = read("lib/auth/simple-test-login.ts");
+
+  // One gate, and it is the hardened function — not a route-level check that a
+  // future caller could forget, and not a client-side condition.
+  assert.match(login, /if \(isSimpleTestLoginEnabled\(\) && isTestUsername\(identifier\)\)/);
+  assert.equal((login.match(/isSimpleTestLoginEnabled\(/g) ?? []).length, 1);
+  assert.match(guard, /if \(isProductionRuntime\(environment\)\) return false;/);
+
+  // The production decision is made before the flag is even read.
+  const body = guard.slice(guard.indexOf("export function isSimpleTestLoginEnabled"));
+  assert.ok(
+    body.indexOf("isProductionRuntime") < body.indexOf("ENABLE_SIMPLE_TEST_LOGIN"),
+    "production must be ruled out before the flag is consulted",
+  );
+
+  // POST /api/staff/login owns no simple-login logic of its own to diverge.
+  const route = read("app/api/staff/login/route.ts");
+  assert.doesNotMatch(route, /SIMPLE_TEST_LOGIN|resolveTestAccount|isTestUsername/);
+  assert.match(route, /authenticateStaff/);
+});
+
+test("hardening the demo login leaves the real staff login alone", () => {
+  const login = read("lib/auth/staff-login.ts");
+  // The Supabase password path is not inside the flag's branch: it is what runs
+  // when the branch is skipped, which in production is always.
+  assert.match(login, /resolveSupabasePasswordCredential/);
+  assert.match(login, /createSupabaseServerClient/);
+  // The gate module decides a flag and nothing else: it imports no client and
+  // authenticates nobody, so it has no way to affect the real login path.
+  const guard = read("lib/auth/simple-test-login.ts");
+  assert.doesNotMatch(guard, /^import .*(supabase|createClient)/im);
+  assert.doesNotMatch(guard, /signInWithPassword|verifyOtp|generateLink/);
+});

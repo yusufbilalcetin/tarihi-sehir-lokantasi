@@ -225,7 +225,8 @@ test("sections, category bar, popover and editor all read one derivation", () =>
 
   // The customer menu derives once and hands the same array to the sticky
   // category bar, which owns both the popover and the scroll-spy.
-  assert.match(experience, /buildCustomerMenuSections\(menuCategories, publicProducts\)/);
+  assert.match(experience, /buildCustomerMenuSections\(menuCategories, visibleProducts\)/);
+  assert.match(experience, /matchesCustomerMenuSearch/);
   assert.match(experience, /<CategoryJump sections=\{groupedProducts\}/);
   assert.match(editor, /buildCustomerMenuSections\(model\.categories, model\.products\)/);
   assert.match(editor, /<CategoryJump\s+sections=\{sections\}/);

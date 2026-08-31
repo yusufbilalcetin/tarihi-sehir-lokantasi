@@ -5,6 +5,8 @@ import test from "node:test";
 import { isDemoLauncherEnabled } from "../../lib/config/demo-launcher";
 import { TABLE_STATUS_LABELS } from "../../lib/domain/display";
 import { TABLE_STATUSES } from "../../lib/domain/status";
+import { deriveQrLinkToken } from "../../lib/security/qr-link-token";
+import { tableTokenSchema } from "../../lib/validation/common";
 
 /**
  * The home page's demo table picker.
@@ -315,4 +317,44 @@ test("the public table listing is metered like the route beside it", () => {
     tablesRoute.indexOf("isDemoLauncherEnabled()") < tablesRoute.indexOf("enforceRateLimit(request"),
     "the feature gate must be checked before the limiter",
   );
+});
+
+/**
+ * The two halves of the picker's own address.
+ *
+ * The dialog listed every table correctly and each one opened "QR bağlantısı
+ * doğrulanamadı", because the build serving the menu accepted only the legacy
+ * 43-character token while the launcher was handing out a derived `l1` link.
+ * Neither half is wrong on its own, which is why neither half's own test
+ * caught it — so the string one produces is checked against the schema the
+ * other validates with.
+ */
+test("the address the picker hands out is one the customer gate accepts", () => {
+  const token = deriveQrLinkToken(
+    { restaurantSlug: "tarihi-sehir-lokantasi", tableNumber: 12, accessVersion: 25 },
+    "p".repeat(48),
+  );
+  assert.equal(tableTokenSchema.safeParse(token).success, true);
+  assert.match(service, /path: `\/menu\/\$\{token}`/);
+});
+
+/**
+ * Opening a table is a read.
+ *
+ * An earlier launcher minted a credential whenever this process had not
+ * already minted one, which rotated the table's QR on every cold start and
+ * quietly voided the card printed on it. Deriving costs nothing and changes
+ * nothing, and only the access state — not the operational status a guest is
+ * shown — decides whether a table can be opened at all.
+ */
+test("choosing a table derives its existing QR and rotates nothing", () => {
+  assert.match(service, /deriveTableQrLink\(\{/);
+  assert.match(service, /accessVersion: table\.qrTokenVersion/);
+  for (const mutation of [/rotateToken\(/, /generateTableQrToken/, /\.update\(/, /\.insert\(/]) {
+    assert.doesNotMatch(service, mutation, "the launcher must not write");
+  }
+  // Only `isActive` and the revocation flag gate a table; `currentStatus` is
+  // read for display and never filtered on.
+  assert.match(service, /isNull\(restaurantTables\.qrTokenRevokedAt\)/);
+  assert.doesNotMatch(service, /eq\(restaurantTables\.currentStatus/);
 });

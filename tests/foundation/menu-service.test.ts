@@ -60,6 +60,48 @@ test("MenuService groups one bounded repository result without changing exact pr
   assert.equal(menu.settings.orderingEnabled, false);
 });
 
+test("MenuService resolves a requested staff locale in one bounded repository read", async () => {
+  let calls = 0;
+  const repository: MenuRepository = {
+    async findPublicMenuByRestaurantId() {
+      calls += 1;
+      return {
+        restaurant: {
+          id: "restaurant-1", name: "Restaurant", slug: "restaurant", logoUrl: null,
+          phone: null, address: null, currency: "TRY", timezone: "Europe/Istanbul",
+          defaultLocale: "tr-TR",
+        },
+        settings: null,
+        categories: [{
+          id: "category-1", name: "Çorbalar", slug: "corbalar", description: null,
+          imageUrl: null, sortOrder: 1,
+        }],
+        products: [{
+          id: "product-1", categoryId: "category-1", name: "Mercimek Çorbası",
+          slug: "missing-static-key", description: "Günlük.", price: "250.00",
+          imageUrl: null, weightLabel: null, isAvailable: true, isFeatured: false,
+          isSpicy: false, isVegetarian: true, allergens: [], tags: [], sortOrder: 1,
+          version: 1,
+        }],
+        categoryTranslations: [
+          { categoryId: "category-1", locale: "en", name: "Soups", description: null },
+        ],
+        productTranslations: [
+          { productId: "product-1", locale: "en", name: "Lentil Soup", description: "Daily." },
+        ],
+      };
+    },
+  };
+
+  const menu = await new MenuService(repository).getPublicMenu("restaurant-1", "en");
+  assert.equal(calls, 1);
+  assert.equal(menu.categories[0]?.name, "Soups");
+  assert.equal(menu.categories[0]?.products[0]?.name, "Lentil Soup");
+  assert.equal(menu.categories[0]?.products[0]?.description, "Daily.");
+  assert.equal(menu.categories[0]?.products[0]?.id, "product-1");
+  assert.equal(menu.categories[0]?.products[0]?.price, "250.00");
+});
+
 test("MenuService fails closed when the restaurant menu is disabled", async () => {
   const repository: MenuRepository = {
     async findPublicMenuByRestaurantId() {

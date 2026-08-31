@@ -67,13 +67,26 @@ export interface CustomerActiveOrderResult {
 export class CustomerOrderQueryService {
   constructor(private readonly repository: CustomerOrderQueryRepository) {}
 
+  /**
+   * `sessionNonce` must come from the caller's verified table session. It is
+   * an extra narrowing on an already-authorised restaurant/table pair, never a
+   * grant, and it is never echoed back in the result.
+   */
   async getActiveOrders(
     restaurantId: string,
     tableId: string,
+    sessionNonce: string,
   ): Promise<readonly CustomerActiveOrderResult[]> {
+    // A missing sitting would otherwise widen the query back to the table.
+    if (!sessionNonce) {
+      throw new DomainError("INVALID_TABLE_TOKEN", "Masa oturumu geçersiz.", {
+        httpStatus: 401,
+      });
+    }
     const records = await this.repository.findActiveByTable(
       restaurantId,
       tableId,
+      sessionNonce,
     );
     const itemsByOrder = new Map<
       string,

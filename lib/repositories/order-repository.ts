@@ -100,6 +100,12 @@ export interface InsertOrderRecordInput {
   readonly notes: string | null;
   readonly createdByType: "CUSTOMER" | "STAFF" | "SYSTEM";
   readonly createdByUserId: string | null;
+  /**
+   * Which guest sitting placed this, taken from the signed table session and
+   * never from the request. Null for staff, takeaway and courier orders, which
+   * have no sitting; customer reads treat null as "not mine".
+   */
+  readonly customerSessionNonce: string | null;
 }
 
 export interface InsertOrderItemRecordInput {

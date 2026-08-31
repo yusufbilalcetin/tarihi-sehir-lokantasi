@@ -10,6 +10,7 @@ import type {
   AdminCategoryResult,
   AdminProductResult,
 } from "@/lib/services/admin-menu-service";
+import type { CatalogTranslations } from "@/lib/i18n/catalog-localization";
 
 /**
  * The administrator's working copy of the menu.
@@ -26,6 +27,7 @@ import type {
 export type CategoryDraft = {
   name?: string;
   description?: string | null;
+  translations?: CatalogTranslations;
   isActive?: boolean;
   sortOrder?: number;
 };
@@ -33,6 +35,7 @@ export type CategoryDraft = {
 export type ProductDraft = {
   name?: string;
   description?: string | null;
+  translations?: CatalogTranslations;
   price?: string;
   categoryId?: string;
   weightLabel?: string | null;
@@ -43,6 +46,48 @@ export type ProductDraft = {
   allergens?: readonly string[];
   sortOrder?: number;
 };
+
+/** Server rows with the staged edits laid over them, in menu order. */
+export function orderProducts(
+  serverProducts: readonly AdminProductResult[],
+  drafts: Readonly<Record<string, ProductDraft>>,
+): AdminProductResult[] {
+  return serverProducts
+    .map((product) => ({ ...product, ...drafts[product.id] }))
+    .sort((a, b) => a.sortOrder - b.sortOrder || a.name.localeCompare(b.name, "tr"));
+}
+
+/**
+ * One step of a product's move, as a pure function of the drafts it starts
+ * from — never of the rendered list. Two taps in a row have to compose, and
+ * the render between them has not happened yet, so the second step must read
+ * the first step's drafts rather than the order still on screen.
+ */
+export function reorderProductDrafts(
+  serverProducts: readonly AdminProductResult[],
+  drafts: Readonly<Record<string, ProductDraft>>,
+  productId: string,
+  direction: -1 | 1,
+): Record<string, ProductDraft> {
+  const ordered = orderProducts(serverProducts, drafts);
+  const product = ordered.find((item) => item.id === productId);
+  if (!product) return drafts;
+  // Only within its own category: that is the only place the order means
+  // anything, because the guest's menu groups first and sorts second.
+  const siblings = ordered.filter((item) => item.categoryId === product.categoryId);
+  const index = siblings.findIndex((item) => item.id === productId);
+  const target = index + direction;
+  if (index === -1 || target < 0 || target >= siblings.length) return drafts;
+  const ids = siblings.map((item) => item.id);
+  [ids[index], ids[target]] = [ids[target], ids[index]];
+  // Renumbering the whole category, not swapping two values: a menu seeded
+  // with a column full of zeroes has nothing to swap.
+  const next = { ...drafts };
+  ids.forEach((id, position) => {
+    next[id] = { ...next[id], sortOrder: position + 1 };
+  });
+  return next;
+}
 
 export interface MenuDraft {
   readonly menu: AdminMenuState;
@@ -98,10 +143,7 @@ export function useMenuDraft(): MenuDraft {
   }, [categoryDrafts, categoryOrder, serverCategories]);
 
   const products = useMemo<AdminProductResult[]>(
-    () =>
-      serverProducts
-        .map((product) => ({ ...product, ...productDrafts[product.id] }))
-        .sort((a, b) => a.sortOrder - b.sortOrder || a.name.localeCompare(b.name, "tr")),
+    () => orderProducts(serverProducts, productDrafts),
     [productDrafts, serverProducts],
   );
 
@@ -159,27 +201,14 @@ export function useMenuDraft(): MenuDraft {
 
   const moveProduct = useCallback(
     (productId: string, direction: -1 | 1) => {
-      const product = products.find((item) => item.id === productId);
-      if (!product) return;
-      // Only within its own category: that is the only place the order means
-      // anything, because the guest's menu groups first and sorts second.
-      const siblings = products.filter((item) => item.categoryId === product.categoryId);
-      const index = siblings.findIndex((item) => item.id === productId);
-      const target = index + direction;
-      if (index === -1 || target < 0 || target >= siblings.length) return;
-      const ids = siblings.map((item) => item.id);
-      [ids[index], ids[target]] = [ids[target], ids[index]];
-      // Renumbering the whole category, not swapping two values: a menu seeded
-      // with a column full of zeroes has nothing to swap.
-      setProductDrafts((current) => {
-        const next = { ...current };
-        ids.forEach((id, position) => {
-          next[id] = { ...next[id], sortOrder: position + 1 };
-        });
-        return next;
-      });
+      // Composed from the previous drafts rather than the rendered list, so two
+      // taps in a row move a product two places: the render between them has
+      // not happened yet.
+      setProductDrafts((current) =>
+        reorderProductDrafts(serverProducts, current, productId, direction),
+      );
     },
-    [products],
+    [serverProducts],
   );
 
   const discard = useCallback(() => {
@@ -199,7 +228,12 @@ export function useMenuDraft(): MenuDraft {
       for (const [categoryId, change] of Object.entries(categoryDrafts)) {
         const { sortOrder: _order, ...fields } = change;
         if (Object.keys(fields).length > 0) {
-          await adminApi.updateCategory(categoryId, fields);
+          await adminApi.updateCategory(categoryId, {
+            ...fields,
+            translations: fields.translations
+              ? Object.entries(fields.translations).map(([locale, value]) => ({ locale, ...value }))
+              : undefined,
+          });
         }
       }
       for (const [productId, change] of Object.entries(productDrafts)) {
@@ -209,6 +243,9 @@ export function useMenuDraft(): MenuDraft {
             ...fields,
             tags: fields.tags ? [...fields.tags] : undefined,
             allergens: fields.allergens ? [...fields.allergens] : undefined,
+            translations: fields.translations
+              ? Object.entries(fields.translations).map(([locale, value]) => ({ locale, ...value }))
+              : undefined,
           });
         }
       }

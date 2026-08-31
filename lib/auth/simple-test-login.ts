@@ -37,13 +37,48 @@ export interface TestAccount {
 }
 
 /**
- * Off unless a deployment says otherwise, in as many words. A missing or
- * misspelt value leaves the ordinary login in place rather than opening this
- * one, which is the safe direction for a flag like this to fail in.
+ * Whether this deployment is serving a real restaurant.
+ *
+ * The project's existing answer is `VERCEL_ENV === "production"` — see
+ * `isDemoLauncherEnabled`. That is kept, and extended for the case Vercel does
+ * not describe: a self-hosted Node process has no `VERCEL_ENV` at all, so
+ * `NODE_ENV` decides there instead. The order matters. A Vercel *preview* is
+ * built with `NODE_ENV=production` while `VERCEL_ENV=preview`, so reading
+ * `NODE_ENV` first would shut demonstrations out of the previews they exist
+ * for; `VERCEL_ENV` is therefore authoritative whenever it is present.
+ */
+function isProductionRuntime(
+  environment: Readonly<Record<string, string | undefined>>,
+): boolean {
+  const vercelEnvironment = environment.VERCEL_ENV?.trim();
+  if (vercelEnvironment) return vercelEnvironment === "production";
+  return environment.NODE_ENV?.trim() === "production";
+}
+
+/**
+ * Off unless a deployment says otherwise — and off in production whatever it
+ * says.
+ *
+ * These five credentials have a published password. On a real restaurant's
+ * system `admin` / `admin1234` is not a convenience, it is the whole of the
+ * front door: the menu, the staff list, the settings and the takings. So
+ * unlike the table launcher, which production may open through a second
+ * deliberately-named flag, there is no way to open this one there. A variable
+ * copied from a preview environment, left behind by an old configuration, or
+ * set by mistake changes nothing on a live deployment.
+ *
+ * The check lives here rather than in the login route because this is the only
+ * gate the simple-login branch has; hardening it hardens `POST /api/staff/login`
+ * and anything else that might ever call it, by construction rather than by
+ * remembering to.
+ *
+ * A missing or misspelt value leaves the ordinary Supabase login in place,
+ * which is the safe direction for a flag like this to fail in.
  */
 export function isSimpleTestLoginEnabled(
   environment: NodeJS.ProcessEnv = process.env,
 ): boolean {
+  if (isProductionRuntime(environment)) return false;
   return environment.ENABLE_SIMPLE_TEST_LOGIN?.trim() === "true";
 }
 

@@ -2,12 +2,14 @@ import { createHmac } from "node:crypto";
 
 export const RATE_LIMIT_ACTIONS = [
   "STAFF_LOGIN",
+  "STAFF_LOGIN_IP",
   "QR_VALIDATE",
   "ORDER_CREATE",
   "WAITER_CALL",
   "BILL_REQUEST",
   "PRINTER_AGENT",
   "STAFF_PASSWORD_RESET",
+  "MENU_AUTO_TRANSLATE",
 ] as const;
 
 export type RateLimitAction = (typeof RATE_LIMIT_ACTIONS)[number];
@@ -21,6 +23,15 @@ export interface RateLimitPolicy {
 
 export const RATE_LIMIT_POLICIES = {
   STAFF_LOGIN: { limit: 5, windowMs: 15 * 60_000 },
+  // The same login seen from the network address rather than the account.
+  //
+  // A restaurant is one public address: every phone and till behind the counter
+  // shares it, and a shift change is a burst of correct logins from that single
+  // address. Sizing this bucket like the per-account one locked the sixth
+  // member of staff out of their own till for fifteen minutes. It is a ceiling
+  // on somebody working through a list of usernames from one machine, and the
+  // per-account limit above is what actually stops a password being guessed.
+  STAFF_LOGIN_IP: { limit: 30, windowMs: 15 * 60_000 },
   QR_VALIDATE: { limit: 30, windowMs: 60_000 },
   ORDER_CREATE: { limit: 5, windowMs: 60_000 },
   WAITER_CALL: { limit: 1, windowMs: 30_000 },
@@ -33,6 +44,9 @@ export const RATE_LIMIT_POLICIES = {
   // Per target staff member: an administrator may re-send a setup link a few
   // times, but cannot use the button to mail-bomb a colleague.
   STAFF_PASSWORD_RESET: { limit: 3, windowMs: 15 * 60_000 },
+  // Per administrator. One press covers up to 108 languages and may cost a
+  // vendor call for each, so this is a spend ceiling as much as an abuse one.
+  MENU_AUTO_TRANSLATE: { limit: 10, windowMs: 10 * 60_000 },
 } as const satisfies Record<RateLimitAction, RateLimitPolicy>;
 
 export interface RateLimitIdentity {

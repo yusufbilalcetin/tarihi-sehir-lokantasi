@@ -25,8 +25,9 @@ const menuSectionsUi = readFileSync(
   "utf8",
 );
 
-test("customer QR menu browses category sections without a search or filter toolbar", () => {
-  assert.doesNotMatch(customerMenuUi, /<Input\b/);
+test("customer QR menu searches localized text and still browses the same category sections", () => {
+  assert.match(customerMenuUi, /<Input\b/);
+  assert.match(customerMenuUi, /matchesCustomerMenuSearch/);
   assert.doesNotMatch(customerMenuUi, /<Category(?:Chips|Grid)\b/);
   assert.match(menuSectionsUi, /data-customer-menu-content="category-sections"/);
   assert.match(menuSectionsUi, /sections\.map\(\(\{ category, products \}\)/);
@@ -102,15 +103,17 @@ test("the menu never names a category in code", () => {
       `${category} is hardcoded into the shared menu derivation`,
     );
   }
-  assert.match(customerMenuUi, /buildCustomerMenuSections\(menuCategories, publicProducts\)/);
+  assert.match(customerMenuUi, /buildCustomerMenuSections\(menuCategories, visibleProducts\)/);
   assert.match(menuSections, /categories\s*\.map\(/);
   assert.doesNotMatch(menuSections, /\.sort\(/, "the menu re-orders the categories the API sent");
 });
 
-test("the search field stays gone in every form", () => {
-  for (const remnant of ["Menüde ara", "searchPlaceholder", "setSearch", "hasSearch", "clearSearch"]) {
-    assert.ok(!customerMenuUi.includes(remnant), `the removed search surface is back: ${remnant}`);
-  }
+test("the catalog search uses the selected language without changing product identity", () => {
+  assert.match(customerMenuUi, /matchesCustomerMenuSearch/);
+  assert.match(customerMenuUi, /getMenuProductName\(product, language\)/);
+  assert.match(customerMenuUi, /getMenuProductDescription\(product, language\)/);
+  assert.match(customerMenuUi, /product\.name/);
+  assert.match(customerMenuUi, /productId === product\.id/);
 });
 
 /**

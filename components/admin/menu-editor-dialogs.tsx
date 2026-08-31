@@ -6,6 +6,7 @@ import { ChefHat, ImagePlus, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 
 import { Field, NativeSelect } from "@/components/admin/admin-ui";
+import { CatalogTranslationEditor } from "@/components/admin/catalog-translation-editor";
 import {
   MENU_HIGHLIGHT_LIMIT,
   useIsDesktop,
@@ -17,7 +18,6 @@ import { Dialog } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Switch } from "@/components/ui/switch";
-import { Textarea } from "@/components/ui/textarea";
 import { WindowDialogContent } from "@/components/ui/window-dialog";
 import { MENU_PLACEHOLDER_IMAGE } from "@/lib/adapters/menu-view-model";
 import { adminApi } from "@/lib/api/endpoints";
@@ -26,6 +26,7 @@ import type {
   AdminCategoryResult,
   AdminProductResult,
 } from "@/lib/services/admin-menu-service";
+import type { CatalogTranslations } from "@/lib/i18n/catalog-localization";
 
 /**
  * The panels that open when an administrator touches something on the menu.
@@ -103,6 +104,7 @@ export function ProductEditDialog({
   categories,
   featuredCount,
   saving,
+  autoTranslateAvailable,
   onOpenChange,
   onStage,
   onArchived,
@@ -111,12 +113,15 @@ export function ProductEditDialog({
   readonly categories: readonly AdminCategoryResult[];
   readonly featuredCount: number;
   readonly saving: boolean;
+  readonly autoTranslateAvailable: boolean;
   readonly onOpenChange: (open: boolean) => void;
   readonly onStage: (change: ProductDraft) => void;
   readonly onArchived: () => void;
 }) {
   const [name, setName] = useState(product.name);
   const [description, setDescription] = useState(product.description ?? "");
+  const [activeLocale, setActiveLocale] = useState("tr");
+  const [translations, setTranslations] = useState<CatalogTranslations>(product.translations ?? {});
   const [price, setPrice] = useState(product.price);
   const [categoryId, setCategoryId] = useState(product.categoryId);
   const [weight, setWeight] = useState(product.weightLabel ?? "");
@@ -164,6 +169,10 @@ export function ProductEditDialog({
       toast.error("Bir kategori seçin.");
       return;
     }
+    if (Object.values(translations).some((translation) => !translation.name.trim())) {
+      toast.error("Çeviri açıklaması olan her dil için ürün adı girin.");
+      return;
+    }
 
     setBusy(true);
     try {
@@ -203,6 +212,9 @@ export function ProductEditDialog({
     if (isActive !== product.isActive) next.isActive = isActive;
     if (isAvailable !== product.isAvailable) next.isAvailable = isAvailable;
     if (isFeatured !== product.isFeatured) next.isFeatured = isFeatured;
+    if (JSON.stringify(translations) !== JSON.stringify(product.translations ?? {})) {
+      next.translations = translations;
+    }
 
     if (Object.keys(next).length > 0) onStage(next);
     onOpenChange(false);
@@ -249,15 +261,7 @@ export function ProductEditDialog({
           </label>
         </div>
 
-        <div className="grid gap-4">
-          <Field label="Ürün Adı">
-            <Input
-              value={name}
-              onChange={(event) => setName(event.target.value)}
-              className="h-11 text-base"
-              autoFocus
-            />
-          </Field>
+        <div className="grid content-start gap-4">
           <div className="grid gap-4 sm:grid-cols-2">
             <Field label="Fiyat">
               <div className="relative">
@@ -297,14 +301,20 @@ export function ProductEditDialog({
         </div>
       </div>
 
-      <Field label="Açıklama">
-        <Textarea
-          value={description}
-          onChange={(event) => setDescription(event.target.value)}
-          rows={3}
-          className="text-base"
-        />
-      </Field>
+      <CatalogTranslationEditor
+        entityLabel="Ürün"
+        entityType="PRODUCT"
+        entityId={product.id}
+        autoTranslateAvailable={autoTranslateAvailable}
+        activeLocale={activeLocale}
+        onActiveLocaleChange={setActiveLocale}
+        baseName={name}
+        baseDescription={description}
+        translations={translations}
+        onBaseNameChange={setName}
+        onBaseDescriptionChange={setDescription}
+        onTranslationsChange={setTranslations}
+      />
 
       <div className="grid gap-4 sm:grid-cols-2">
         <Field label="Etiketler" hint="Virgülle ayırın.">
@@ -390,6 +400,7 @@ export function CategoryEditDialog({
   category,
   productCount,
   saving,
+  autoTranslateAvailable,
   onOpenChange,
   onStage,
   onArchived,
@@ -397,12 +408,15 @@ export function CategoryEditDialog({
   readonly category: AdminCategoryResult;
   readonly productCount: number;
   readonly saving: boolean;
+  readonly autoTranslateAvailable: boolean;
   readonly onOpenChange: (open: boolean) => void;
   readonly onStage: (change: CategoryDraft) => void;
   readonly onArchived: () => void;
 }) {
   const [name, setName] = useState(category.name);
   const [description, setDescription] = useState(category.description ?? "");
+  const [activeLocale, setActiveLocale] = useState("tr");
+  const [translations, setTranslations] = useState<CatalogTranslations>(category.translations ?? {});
   const [isActive, setIsActive] = useState(category.isActive);
 
   function submit(event: FormEvent<HTMLFormElement>) {
@@ -411,12 +425,19 @@ export function CategoryEditDialog({
       toast.error("Kategori adı boş bırakılamaz.");
       return;
     }
+    if (Object.values(translations).some((translation) => !translation.name.trim())) {
+      toast.error("Çeviri açıklaması olan her dil için kategori adı girin.");
+      return;
+    }
     // Same rule as a dish: only what actually changed travels.
     const next: CategoryDraft = {};
     const nextDescription = description.trim() || null;
     if (name.trim() !== category.name) next.name = name.trim();
     if (nextDescription !== category.description) next.description = nextDescription;
     if (isActive !== category.isActive) next.isActive = isActive;
+    if (JSON.stringify(translations) !== JSON.stringify(category.translations ?? {})) {
+      next.translations = translations;
+    }
 
     if (Object.keys(next).length > 0) onStage(next);
     onOpenChange(false);
@@ -440,22 +461,20 @@ export function CategoryEditDialog({
         </>
       }
     >
-      <Field label="Kategori Adı">
-        <Input
-          value={name}
-          onChange={(event) => setName(event.target.value)}
-          className="h-11 text-base"
-          autoFocus
-        />
-      </Field>
-      <Field label="Açıklama">
-        <Textarea
-          value={description}
-          onChange={(event) => setDescription(event.target.value)}
-          rows={2}
-          className="text-base"
-        />
-      </Field>
+      <CatalogTranslationEditor
+        entityLabel="Kategori"
+        entityType="CATEGORY"
+        entityId={category.id}
+        autoTranslateAvailable={autoTranslateAvailable}
+        activeLocale={activeLocale}
+        onActiveLocaleChange={setActiveLocale}
+        baseName={name}
+        baseDescription={description}
+        translations={translations}
+        onBaseNameChange={setName}
+        onBaseDescriptionChange={setDescription}
+        onTranslationsChange={setTranslations}
+      />
       <label className="flex min-h-14 items-center justify-between gap-4 rounded-xl border bg-background px-3">
         <span>
           <span className="block text-sm font-bold">Müşteri Menüsünde Göster</span>

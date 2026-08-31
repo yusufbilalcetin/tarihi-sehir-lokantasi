@@ -6,6 +6,7 @@ import { apiFailureFromUnknown, apiSuccess } from "@/lib/api/response";
 import { DrizzleMenuRepository } from "@/lib/repositories/drizzle-menu-repository";
 import { createLogger } from "@/lib/security/logger";
 import { MenuService } from "@/lib/services/menu-service";
+import { normalizeMenuLocale } from "@/lib/i18n/catalog-localization";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -16,11 +17,15 @@ const RESPONSE_HEADERS = {
 } as const;
 const logger = createLogger("api.customer.menu");
 
-export async function GET(): Promise<NextResponse> {
+export async function GET(request: Request): Promise<NextResponse> {
   try {
     const context = await requireCustomerTableContext();
     const service = new MenuService(new DrizzleMenuRepository(getDb()));
-    const menu = await service.getPublicMenu(context.restaurantId);
+    const localeParam = new URL(request.url).searchParams.get("locale");
+    const menu = await service.getPublicMenu(
+      context.restaurantId,
+      localeParam ? normalizeMenuLocale(localeParam) : undefined,
+    );
     return NextResponse.json(
       apiSuccess({
         table: {

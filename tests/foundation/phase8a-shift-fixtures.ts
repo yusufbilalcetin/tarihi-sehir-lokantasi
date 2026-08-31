@@ -11,6 +11,7 @@ import type {
   CashierShiftRepository,
   CashierShiftTransactionRepository,
   CloseShiftInput,
+  InsertCashCountInput,
   InsertCashMovementInput,
   OpenShiftInput,
   ShiftHistoryPage,
@@ -124,6 +125,10 @@ export class FakeShiftRepository implements CashierShiftRepository {
   outbox: InsertOutboxEventInput[] = [];
   audits: InsertAuditLogInput[] = [];
   closes: CloseShiftInput[] = [];
+  /** What was counted into the drawer, in write order. */
+  cashCounts: InsertCashCountInput[] = [];
+  /** Set to make the denomination write fail, to test atomicity. */
+  failCashCounts = false;
   private sequence = 0;
 
   private transactionRepository: CashierShiftTransactionRepository = {
@@ -184,6 +189,16 @@ export class FakeShiftRepository implements CashierShiftRepository {
       this.shifts[index] = closed;
       return closed;
     },
+    /**
+     * Records what was written so a test can assert the drawer count landed in
+     * the same transaction as the shift, and can make that write fail.
+     */
+    listCashCounts: async (restaurantId: string, shiftId: string) =>
+      this.listCashCounts(restaurantId, shiftId),
+    insertCashCounts: async (input: InsertCashCountInput) => {
+      if (this.failCashCounts) throw new Error("cash count insert failed");
+      this.cashCounts.push(input);
+    },
     insertMovement: async (input: InsertCashMovementInput) => {
       const movement: CashDrawerMovementRecord = {
         id: `movement-${this.movements.length + 1}`,
@@ -243,6 +258,21 @@ export class FakeShiftRepository implements CashierShiftRepository {
 
   async listMovements() {
     return this.movements;
+  }
+
+  /** Reads back what insertCashCounts recorded, scoped the way the real one is. */
+  async listCashCounts(restaurantId: string, shiftId: string) {
+    return this.cashCounts
+      .filter((entry) => entry.restaurantId === restaurantId && entry.shiftId === shiftId)
+      .flatMap((entry) =>
+        entry.lines.map((line) => ({
+          phase: entry.phase,
+          currency: line.currency,
+          denominationMinor: line.denominationMinor,
+          pieceCount: line.pieceCount,
+          subtotalMinor: line.subtotalMinor,
+        })),
+      );
   }
 
   async listShifts(query: ShiftHistoryQuery): Promise<ShiftHistoryPage> {

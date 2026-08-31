@@ -1,29 +1,15 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
-import {
-  BellRing,
-  Check,
-  ChefHat,
-  CircleCheckBig,
-  Clock3,
-  CookingPot,
-  MessageSquareText,
-  Play,
-  Printer,
-  PrinterCheck,
-  Undo2,
-  ReceiptText,
-  TriangleAlert,
-  Utensils,
-} from "lucide-react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { ChefHat, CircleCheckBig, TriangleAlert, Undo2 } from "lucide-react";
 import { toast } from "sonner";
 import { BrandMark } from "@/components/shared/brand-mark";
 import { EmptyState } from "@/components/shared/data-states";
+import { KitchenFilters, type KitchenFilter } from "@/components/kitchen/kitchen-filters";
+import { SoundControl } from "@/components/shared/sound-control";
 import { LogoutButton } from "@/components/staff/logout-button";
 import { RealtimeStatus } from "@/components/staff/realtime-status";
 import { useStaffSession } from "@/components/staff/staff-session-provider";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   staffOrderToViewModel,
@@ -32,6 +18,9 @@ import {
 } from "@/lib/adapters/staff-view-model";
 import { ApiClientError } from "@/lib/api/client";
 import { printApi, staffApi } from "@/lib/api/endpoints";
+import { NewEntityTracker } from "@/lib/audio/new-entity-tracker";
+import { resolveTicketUrgency, sortKitchenTickets } from "@/lib/domain/kitchen-board";
+import { playSound } from "@/lib/audio/sound-effects";
 import {
   canRoleTransitionOrderItemStatus,
   canRoleTransitionOrderStatus,
@@ -42,12 +31,17 @@ import { WindowDialogContent } from "@/components/ui/window-dialog";
 import { useApiResource } from "@/lib/hooks/use-api-resource";
 import { useStaffRealtime } from "@/lib/realtime/use-staff-realtime";
 import { STAFF_ROLE_LABELS } from "@/lib/domain/staff-accounts";
-import { formatElapsed, getInitials } from "@/lib/format";
+import { getInitials } from "@/lib/format";
 import { cn } from "@/lib/utils";
 import type { Order, OrderItemStatus, OrderStatus } from "@/types";
 
-type KitchenStage = Extract<OrderStatus, "confirmed" | "preparing" | "ready">;
-type PrintTicketStatus = "PENDING" | "PRINTED" | "FAILED";
+import {
+  KitchenOrderCard,
+  getAction,
+  stages,
+  type KitchenStage,
+  type PrintTicketStatus,
+} from "@/components/kitchen/kitchen-ticket";
 
 const KITCHEN_POLL_MS = 15_000;
 
@@ -77,61 +71,6 @@ const ROLLBACK_REASONS: { value: string; label: string }[] = [
   { value: "OTHER", label: "Diğer" },
 ];
 
-const ITEM_ACTION_LABELS: Partial<Record<OrderItemStatus, string>> = {
-  pending: "Başla",
-  preparing: "Hazır",
-  ready: "Servis",
-};
-
-const ITEM_STATUS_LABELS: Record<OrderItemStatus, string> = {
-  pending: "Bekliyor",
-  preparing: "Hazırlanıyor",
-  ready: "Hazır",
-  served: "Servis edildi",
-  cancelled: "İptal",
-  voided: "Hesaptan çıkarıldı",
-};
-
-interface StageConfig {
-  id: KitchenStage;
-  title: string;
-  icon: typeof ReceiptText;
-  headerClassName: string;
-  countClassName: string;
-  emptyTitle: string;
-  emptyDescription: string;
-}
-
-const stages: StageConfig[] = [
-  {
-    id: "confirmed",
-    title: "Yeni",
-    icon: ReceiptText,
-    headerClassName: "border-order-new/25 bg-order-new-tint",
-    countClassName: "bg-order-new text-white",
-    emptyTitle: "Yeni sipariş yok",
-    emptyDescription: "Gelen siparişler burada görünecek.",
-  },
-  {
-    id: "preparing",
-    title: "Hazırlanıyor",
-    icon: CookingPot,
-    headerClassName: "border-order-preparing/25 bg-order-preparing-tint",
-    countClassName: "bg-order-preparing text-white",
-    emptyTitle: "Hazırlık sırası boş",
-    emptyDescription: "Başlatılan siparişler burada izlenir.",
-  },
-  {
-    id: "ready",
-    title: "Hazır",
-    icon: BellRing,
-    headerClassName: "border-order-ready/25 bg-order-ready-tint",
-    countClassName: "bg-order-ready text-white",
-    emptyTitle: "Teslim bekleyen yok",
-    emptyDescription: "Hazır siparişler servis için burada bekler.",
-  },
-];
-
 function formatClock(date: Date | null) {
   if (!date) return "--:--";
   return new Intl.DateTimeFormat("tr-TR", {
@@ -139,280 +78,6 @@ function formatClock(date: Date | null) {
     minute: "2-digit",
     second: "2-digit",
   }).format(date);
-}
-
-function getUrgency(minutes: number) {
-  if (minutes >= 15) {
-    return {
-      label: "Gecikti",
-      className: "border-status-danger/25 bg-status-danger-tint text-status-danger",
-      timeClassName: "text-status-danger",
-    };
-  }
-
-  if (minutes >= 8) {
-    return {
-      label: "Öncelikli",
-      className: "border-status-warning/25 bg-status-warning-tint text-status-warning",
-      timeClassName: "text-status-warning",
-    };
-  }
-
-  return {
-    label: "Zamanında",
-    // Deliberately quiet: green already means "ready" on this board, and a
-    // ticket that is merely on schedule must not compete with one that is not.
-    className: "border-border-strong bg-surface-muted text-text-secondary",
-    timeClassName: "text-text-secondary",
-  };
-}
-
-function getAction(stage: KitchenStage) {
-  if (stage === "confirmed") {
-    return {
-      label: "Hazırlamaya başla",
-      ariaLabel: "hazırlamaya başlat",
-      icon: Play,
-      nextStatus: "preparing" as const,
-      buttonClassName: "bg-order-preparing text-white hover:bg-order-preparing/90",
-    };
-  }
-
-  if (stage === "preparing") {
-    return {
-      label: "Hazır olarak işaretle",
-      ariaLabel: "hazır olarak işaretle",
-      icon: Check,
-      nextStatus: "ready" as const,
-      buttonClassName: "bg-copper text-[#2D2018] hover:bg-copper/85",
-    };
-  }
-
-  return {
-    label: "Servise teslim et",
-    ariaLabel: "servise teslim et",
-    icon: Utensils,
-    nextStatus: "served" as const,
-    buttonClassName: "bg-status-success text-[#FBF7EF] hover:bg-status-success/90",
-  };
-}
-
-/**
- * The ticket's own progress, kept deliberately quiet: it sits next to the
- * order number and never competes with the cooking status. "Yazdırıldı" means
- * the bytes reached the printer, not that anyone tore the paper off.
- */
-const PRINT_STATUS: Record<
-  PrintTicketStatus,
-  { label: string; icon: typeof Printer; className: string }
-> = {
-  PENDING: { label: "Yazdırma bekliyor", icon: Printer, className: "text-muted-foreground" },
-  PRINTED: { label: "Yazdırıldı", icon: PrinterCheck, className: "text-status-success" },
-  FAILED: { label: "Yazdırılamadı", icon: TriangleAlert, className: "text-burgundy" },
-};
-
-function PrintStatusNote({ status }: { status: PrintTicketStatus | undefined }) {
-  if (!status) return null;
-  const view = PRINT_STATUS[status];
-  const Icon = view.icon;
-  return (
-    <span className={cn("flex items-center gap-1 text-xs font-medium", view.className)}>
-      <Icon className="size-3.5" aria-hidden="true" />
-      {view.label}
-    </span>
-  );
-}
-
-function KitchenOrderCard({
-  order,
-  elapsedMinutes,
-  canAdvance,
-  pending,
-  printStatus,
-  itemAction,
-  itemRollback,
-  onAdvance,
-  onAdvanceItem,
-  onRollbackItem,
-}: {
-  order: Order;
-  elapsedMinutes: number;
-  printStatus: PrintTicketStatus | undefined;
-  canAdvance: boolean;
-  pending: boolean;
-  itemAction: (order: Order, item: Order["items"][number]) => OrderItemStatus | null;
-  itemRollback: (item: Order["items"][number]) => OrderItemStatus | null;
-  onAdvance: (orderId: string, nextStatus: OrderStatus) => void;
-  onAdvanceItem: (itemId: string, nextStatus: OrderItemStatus) => void;
-  onRollbackItem: (item: Order["items"][number], target: OrderItemStatus) => void;
-}) {
-  const stage = order.status as KitchenStage;
-  const action = getAction(stage);
-  const ActionIcon = action.icon;
-  const urgency = getUrgency(elapsedMinutes);
-
-  return (
-    <article data-motion-enter="true" className="motion-table motion-operational-state overflow-hidden rounded-lg border border-border bg-card shadow-[var(--shadow-raised)]">
-      <div className="border-b border-border px-4 py-3.5">
-        <div className="flex items-start justify-between gap-3">
-          <div className="min-w-0">
-            <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
-              <h3 className="text-2xl font-extrabold leading-none tracking-tight text-foreground">
-                {order.tableName}
-              </h3>
-              <span className="text-base font-bold tabular-nums text-burgundy">
-                {order.orderNumber}
-              </span>
-            </div>
-            <p className="mt-1.5 text-xs font-medium text-muted-foreground">
-              {order.createdAt} siparişi
-              {order.waiterName ? `, ${order.waiterName}` : ", QR menü"}
-            </p>
-            <div className="mt-1">
-              <PrintStatusNote status={printStatus} />
-            </div>
-          </div>
-          <div className="shrink-0 text-right">
-            <div className={cn("flex items-center justify-end gap-1 text-base font-extrabold tabular-nums", urgency.timeClassName)}>
-              <Clock3 className="size-4" aria-hidden="true" />
-              {formatElapsed(elapsedMinutes)}
-            </div>
-            <Badge variant="outline" className={cn("mt-1.5 font-semibold", urgency.className)}>
-              {urgency.label}
-            </Badge>
-          </div>
-        </div>
-      </div>
-
-      <div className="px-4 py-3">
-        <ul className="space-y-3" aria-label={`${order.tableName} sipariş kalemleri`}>
-          {order.items.map((item) => {
-            const itemStatus = item.status ?? "pending";
-            const nextItemStatus = itemAction(order, item);
-            const previousItemStatus = itemRollback(item);
-            // A voided line was served then written off; either way the kitchen
-            // has no work left on it.
-            const cancelled = itemStatus === "cancelled" || itemStatus === "voided";
-            // A line still pending while the order is already being cooked or
-            // plated is a later addition, so it needs to stand out.
-            const lateAddition =
-              !cancelled &&
-              itemStatus === "pending" &&
-              (order.status === "preparing" || order.status === "ready");
-
-            return (
-              <li
-                key={item.id}
-                className={cn("grid grid-cols-[2.5rem_1fr] gap-2.5", cancelled && "opacity-55")}
-              >
-                <span
-                  className={cn(
-                    "flex h-9 items-center justify-center rounded-lg text-base font-extrabold tabular-nums",
-                    cancelled
-                      ? "bg-muted/60 text-muted-foreground line-through"
-                      : "bg-muted text-foreground",
-                  )}
-                >
-                  {item.quantity}×
-                </span>
-                <div className="min-w-0 pt-1">
-                  <div className="flex flex-wrap items-center justify-between gap-2">
-                    <p
-                      className={cn(
-                        "text-base font-semibold leading-6",
-                        cancelled
-                          ? "text-muted-foreground line-through"
-                          : "text-foreground",
-                      )}
-                    >
-                      {item.productName}
-                      {lateAddition ? (
-                        <Badge
-                          variant="outline"
-                          className="ml-2 border-copper/40 bg-copper/[0.14] align-middle text-xs font-bold text-[#6A4526]"
-                        >
-                          Yeni eklendi
-                        </Badge>
-                      ) : null}
-                    </p>
-                    {nextItemStatus || previousItemStatus ? (
-                      <span className="flex shrink-0 items-center gap-1.5">
-                        {previousItemStatus ? (
-                          <Button
-                            type="button"
-                            size="sm"
-                            variant="ghost"
-                            disabled={pending}
-                            aria-busy={pending}
-                            className="h-8 px-2 text-xs font-semibold text-muted-foreground hover:text-foreground"
-                            title="Bir önceki aşamaya döndür"
-                            aria-label={`${item.productName}: geri al`}
-                            onClick={() => onRollbackItem(item, previousItemStatus)}
-                          >
-                            <Undo2 className="size-3.5" aria-hidden="true" /> Geri Al
-                          </Button>
-                        ) : null}
-                        {nextItemStatus ? (
-                          <Button
-                            type="button"
-                            size="sm"
-                            variant="outline"
-                            disabled={pending}
-                            aria-busy={pending}
-                            className="h-8 px-2.5 text-xs font-bold"
-                            aria-label={`${item.productName}: ${ITEM_ACTION_LABELS[itemStatus] ?? "Güncelle"}`}
-                            onClick={() => onAdvanceItem(item.id, nextItemStatus)}
-                          >
-                            {ITEM_ACTION_LABELS[itemStatus] ?? "Güncelle"}
-                          </Button>
-                        ) : (
-                          <span className="text-xs font-semibold text-muted-foreground">
-                            {ITEM_STATUS_LABELS[itemStatus]}
-                          </span>
-                        )}
-                      </span>
-                    ) : (
-                      <span
-                        className={cn(
-                          "shrink-0 text-xs font-semibold",
-                          cancelled ? "text-destructive" : "text-muted-foreground",
-                        )}
-                      >
-                        {ITEM_STATUS_LABELS[itemStatus]}
-                      </span>
-                    )}
-                  </div>
-                  {item.note ? (
-                    <p className="mt-1.5 flex items-start gap-1.5 rounded-lg bg-burgundy/[0.08] px-2.5 py-2 text-sm font-bold leading-5 text-burgundy">
-                      <MessageSquareText className="mt-0.5 size-4 shrink-0" aria-hidden="true" />
-                      <span>{item.note}</span>
-                    </p>
-                  ) : null}
-                </div>
-              </li>
-            );
-          })}
-        </ul>
-      </div>
-
-      {canAdvance ? (
-        <div className="border-t border-border bg-muted/35 p-3">
-          <Button
-            type="button"
-            size="lg"
-            disabled={pending}
-            aria-busy={pending}
-            className={cn("h-12 w-full text-base font-bold", action.buttonClassName)}
-            aria-label={`${order.tableName} ${order.orderNumber} siparişini ${action.ariaLabel}`}
-            onClick={() => onAdvance(order.id, action.nextStatus)}
-          >
-            <ActionIcon className="size-4" aria-hidden="true" />
-            {action.label}
-          </Button>
-        </div>
-      ) : null}
-    </article>
-  );
 }
 
 /**
@@ -432,6 +97,8 @@ export function KitchenBoard() {
     target: OrderItemStatus;
   } | null>(null);
   const [rollbackReason, setRollbackReason] = useState<string>("MARKED_BY_MISTAKE");
+  const [mobileFilter, setMobileFilter] = useState<KitchenFilter>("all");
+  const newOrderTracker = useRef(new NewEntityTracker());
 
   // Only what the kitchen still owes a table: the list is newest-first and
   // capped, so settled orders would use up the rows a ticket that is still
@@ -446,6 +113,14 @@ export function KitchenBoard() {
     onEvent: useCallback(() => void refetch(), [refetch]),
     onResync: useCallback(() => void refetch(), [refetch]),
   });
+
+  useEffect(() => {
+    const orders = resource.data?.orders;
+    if (!orders) return;
+    if (newOrderTracker.current.update(orders.map((order) => order.id))) {
+      void playSound("new-order");
+    }
+  }, [resource.data?.orders]);
 
   useEffect(() => {
     // Deferred so the ticking clock never sets state inside the effect body.
@@ -517,6 +192,53 @@ export function KitchenBoard() {
 
   const visibleOrderCount = counts.confirmed + counts.preparing + counts.ready;
 
+  /**
+   * The phone's single column.
+   *
+   * "Geciken" cuts across the three stages rather than being a fourth one: on a
+   * phone the question is "what is going cold", not "what stage is it in". The
+   * board itself is untouched — this only decides which of its tickets are in
+   * the column.
+   */
+  const lateCount = useMemo(
+    () =>
+      board.filter((entry) => resolveTicketUrgency(entry.order.elapsedMinutes) === "late").length,
+    [board],
+  );
+
+  const filterOptions = useMemo(
+    () => [
+      { id: "all" as const, label: "Tümü", count: visibleOrderCount },
+      { id: "confirmed" as const, label: "Yeni", count: counts.confirmed },
+      { id: "preparing" as const, label: "Hazırlanıyor", count: counts.preparing },
+      { id: "ready" as const, label: "Hazır", count: counts.ready },
+      { id: "late" as const, label: "Geciken", count: lateCount, urgent: true },
+    ],
+    [counts, lateCount, visibleOrderCount],
+  );
+
+  const mobileTickets = useMemo(() => {
+    const matching = board.filter((entry) => {
+      if (mobileFilter === "all") return true;
+      if (mobileFilter === "late") {
+        return resolveTicketUrgency(entry.order.elapsedMinutes) === "late";
+      }
+      return entry.column === mobileFilter;
+    });
+    return sortKitchenTickets(matching.map((entry) => entry.order));
+  }, [board, mobileFilter]);
+
+  const mobileEmpty =
+    mobileFilter === "late"
+      ? { title: "Geciken sipariş yok", description: "Bütün fişler süresinde ilerliyor." }
+      : mobileFilter === "all"
+        ? { title: "Bekleyen sipariş yok", description: "Gelen siparişler burada görünecek." }
+        : {
+            title: stages.find((stage) => stage.id === mobileFilter)?.emptyTitle ?? "Sipariş yok",
+            description:
+              stages.find((stage) => stage.id === mobileFilter)?.emptyDescription ?? "",
+          };
+
   const canAdvanceOrder = useCallback(
     (order: Order) => {
       const action = getAction(order.status as KitchenStage);
@@ -569,6 +291,7 @@ export function KitchenBoard() {
       await work();
       await refetch();
     } catch (error) {
+      void playSound("error");
       toast.error(error instanceof ApiClientError ? error.message : "İşlem tamamlanamadı.");
     } finally {
       setPending(false);
@@ -620,10 +343,22 @@ export function KitchenBoard() {
                 screen can have, so its state is never hidden behind a
                 breakpoint. */}
             <RealtimeStatus status={realtimeStatus} />
+            <SoundControl />
             <div className="flex items-baseline gap-1.5">
-              <span className="text-xs text-[#F5EBDD]/60">Aktif fiş</span>
+              <span className="hidden text-xs text-[#F5EBDD]/60 sm:inline">Aktif fiş</span>
               <span className="text-lg font-extrabold tabular-nums">{visibleOrderCount}</span>
             </div>
+            {/* The one count that changes what a cook does next, so it is on
+                the bar at every width rather than only inside the filter rail. */}
+            {lateCount > 0 ? (
+              <span
+                className="flex items-center gap-1.5 rounded-md bg-status-danger px-2 py-1 text-xs font-extrabold text-white"
+                aria-label={lateCount + " geciken sipariş"}
+              >
+                <TriangleAlert className="size-3.5" strokeWidth={2.4} aria-hidden="true" />
+                {lateCount} geciken
+              </span>
+            ) : null}
             <p className="text-lg font-extrabold tabular-nums tracking-tight" suppressHydrationWarning>
               {formatClock(now)}
             </p>
@@ -658,18 +393,66 @@ export function KitchenBoard() {
         </div>
       </header>
 
-      {/* No max width: on a 24-inch pass screen a centred column would throw
-          away a third of the board. */}
+      {/*
+        Three layouts, one ticket.
+
+        A phone gets one column and a filter rail, because three lanes on a
+        390px screen is three unreadable 110px columns. A tablet gets the lanes
+        stacked but its tickets two-up, so a 768px board is not one tall
+        ribbon. A pass screen gets the real thing: three lanes, each scrolling
+        alone under its own heading.
+      */}
+
+      {/* --------------------------------- phone --------------------------- */}
+      <section className="min-h-0 flex-1 px-3 py-3 lg:hidden" aria-label="Mutfak sipariş panosu">
+        <KitchenFilters
+          className="mb-3"
+          options={filterOptions}
+          active={mobileFilter}
+          onChange={setMobileFilter}
+        />
+        {mobileTickets.length ? (
+          <div className="grid content-start gap-3 md:grid-cols-2">
+            {mobileTickets.map((order) => (
+              <KitchenOrderCard
+                key={order.id}
+                order={order}
+                elapsedMinutes={order.elapsedMinutes}
+                canAdvance={canAdvanceOrder(order)}
+                pending={pending}
+                printStatus={printStatuses[order.id]}
+                itemAction={itemAction}
+                itemRollback={itemRollback}
+                onAdvance={advanceOrder}
+                onAdvanceItem={advanceItem}
+                onRollbackItem={requestRollback}
+              />
+            ))}
+          </div>
+        ) : (
+          <EmptyState
+            icon={mobileFilter === "ready" ? CircleCheckBig : ChefHat}
+            title={mobileEmpty.title}
+            description={mobileEmpty.description}
+          />
+        )}
+      </section>
+
+      {/* ------------------------------ pass screen ------------------------ */}
+      {/* No max width: on a 24-inch board a centred column throws away a third
+          of the screen. */}
       <section
-        className="min-h-0 flex-1 px-3 py-3 sm:px-4"
-        aria-label="Mutfak sipariş panosu"
+        className="hidden min-h-0 flex-1 px-4 py-3 lg:block"
+        aria-label="Mutfak sipariş panosu (lane görünümü)"
       >
         <div className="grid gap-3 lg:h-full lg:min-h-0 lg:grid-cols-3 xl:gap-4">
           {stages.map((stage) => {
             const StageIcon = stage.icon;
-            const stageOrders = board
-              .filter((entry) => entry.column === stage.id)
-              .map((entry) => entry.order);
+            // Oldest first: the feed arrives newest-first under a row limit,
+            // which is the right query and the wrong reading order.
+            const stageOrders = sortKitchenTickets(
+              board.filter((entry) => entry.column === stage.id).map((entry) => entry.order),
+            );
 
             return (
               <section
@@ -689,9 +472,11 @@ export function KitchenBoard() {
                   </span>
                 </div>
 
-                {/* Each column scrolls alone, so a long queue in one stage never
-                    pushes the other two off the screen. */}
-                <div className="space-y-3 lg:min-h-0 lg:flex-1 lg:overflow-y-auto">
+                {/* Each lane scrolls alone, so a long queue in one stage never
+                    pushes the other two off the screen. A lane is ~620px on a
+                    24-inch board, so tickets flow two-up once it can hold two
+                    readable ones. */}
+                <div className="grid content-start gap-3 lg:min-h-0 lg:flex-1 lg:overflow-y-auto 2xl:grid-cols-2">
                   {stageOrders.length ? (
                     stageOrders.map((order) => (
                       <KitchenOrderCard
@@ -709,11 +494,13 @@ export function KitchenBoard() {
                       />
                     ))
                   ) : (
-                    <EmptyState
-                      icon={stage.id === "ready" ? CircleCheckBig : ChefHat}
-                      title={stage.emptyTitle}
-                      description={stage.emptyDescription}
-                    />
+                    <div className="2xl:col-span-2">
+                      <EmptyState
+                        icon={stage.id === "ready" ? CircleCheckBig : ChefHat}
+                        title={stage.emptyTitle}
+                        description={stage.emptyDescription}
+                      />
+                    </div>
                   )}
                 </div>
               </section>

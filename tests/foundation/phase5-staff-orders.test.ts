@@ -249,12 +249,16 @@ test("a guest order keeps the customer attribution and writes no staff audit", a
     restaurantId: "restaurant-1",
     tableId: "table-3",
     tableAccessVersion: 5,
+    sessionNonce: "Zm9vYmFyYmF6cXV4MTIzNA",
     idempotencyKey: "guest-order-key-1",
     items: [{ productId: "product-soup", quantity: 2 }],
   });
 
   assert.equal(fakeState.orders[0]?.createdByType, "CUSTOMER");
   assert.equal(fakeState.orders[0]?.createdByUserId, null);
+  // The sitting is recorded too, which is what later lets this guest — and
+  // only this guest — read the order back.
+  assert.equal(fakeState.orders[0]?.customerSessionNonce, "Zm9vYmFyYmF6cXV4MTIzNA");
   assert.equal(fakeState.audits.length, 0);
 });
 
@@ -298,6 +302,7 @@ test("staff ordering survives the guest self-service switch being off", async ()
         restaurantId: "restaurant-1",
         tableId: "table-3",
         tableAccessVersion: 5,
+        sessionNonce: "Zm9vYmFyYmF6cXV4MTIzNA",
         idempotencyKey: "guest-order-key-2",
         items: [{ productId: "product-soup", quantity: 2 }],
       }),

@@ -3,6 +3,7 @@ import type {
   AdminProductResult,
 } from "@/lib/services/admin-menu-service";
 import type { AdminReportsResult } from "@/lib/services/admin-reports-service";
+import type { AutoTranslateResult } from "@/lib/services/menu-auto-translate-service";
 import type { ReviewReport } from "@/lib/domain/report-review";
 import type {
   BusiestReport,
@@ -172,7 +173,11 @@ export const guestApi = {
       method: "POST",
       body: { restaurantSlug },
     }),
-  menu: (signal?: AbortSignal) => apiRequest<PublicMenuResult>("/api/guest-menu", { signal }),
+  menu: (signal?: AbortSignal, locale?: string) =>
+    apiRequest<PublicMenuResult>(
+      locale ? `/api/guest-menu?locale=${encodeURIComponent(locale)}` : "/api/guest-menu",
+      { signal },
+    ),
   createOrder: (
     input: {
       readonly channel: "TAKEAWAY" | "DELIVERY";
@@ -275,8 +280,8 @@ export const staffApi = {
     requestLabel?: string;
     notes?: string;
   }) => apiRequest<StaffCallPayload>("/api/staff/calls", { method: "POST", body }),
-  menu: (signal?: AbortSignal) =>
-    apiRequest<PublicMenuResult>("/api/staff/menu", { signal }),
+  menu: (signal?: AbortSignal, locale?: string) =>
+    apiRequest<PublicMenuResult>(`/api/staff/menu${locale ? `?locale=${encodeURIComponent(locale)}` : ""}`, { signal }),
   createOrder: (
     body: {
       tableId: string;
@@ -337,7 +342,24 @@ export const adminApi = {
     apiRequest<{
       categories: readonly AdminCategoryResult[];
       products: readonly AdminProductResult[];
+      /** False when no translation provider is configured for this deployment. */
+      autoTranslateAvailable: boolean;
     }>("/api/admin/menu", { signal }),
+  /**
+   * Fills in the other languages for one already-saved row. Never sent as part
+   * of a save: the dish is committed first, and this may fail on its own.
+   */
+  autoTranslate: (body: {
+    entityType: "CATEGORY" | "PRODUCT";
+    entityId: string;
+    sourceLocale?: string;
+    targetLocales?: readonly string[];
+    overwrite?: boolean;
+  }) =>
+    apiRequest<AutoTranslateResult>("/api/admin/menu/translations/auto", {
+      method: "POST",
+      body,
+    }),
   createCategory: (body: Record<string, unknown>) =>
     apiRequest<AdminCategoryResult>("/api/admin/categories", { method: "POST", body }),
   updateCategory: (categoryId: string, body: Record<string, unknown>) =>
@@ -510,7 +532,16 @@ export const paymentApi = {
 export const cashierShiftApi = {
   current: (signal?: AbortSignal) =>
     apiRequest<CurrentShiftResult>("/api/cashier/shifts/current", { signal }),
-  open: (body: { cashRegisterId: string; openingCash: string }) =>
+  open: (body: {
+    cashRegisterId: string;
+    openingCash: string;
+    /** A counted drawer. The server reprices it and ignores any client total. */
+    cashCounts?: readonly {
+      currency: string;
+      denominationMinor: number;
+      count: number;
+    }[];
+  }) =>
     apiRequest<ShiftDetailResult>("/api/cashier/shifts", { method: "POST", body }),
   close: (shiftId: string, body: { countedCash: string; note?: string }) =>
     apiRequest<ShiftDetailResult>(`/api/cashier/shifts/${shiftId}/close`, {

@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
+import { DomainError } from "../../lib/api/domain-error";
 import type {
   CustomerActiveOrderRecords,
   CustomerOrderQueryRepository,
@@ -8,15 +9,16 @@ import type {
 import { CustomerOrderQueryService } from "../../lib/services/customer-order-query-service";
 
 class ScopedOrderQueryRepository implements CustomerOrderQueryRepository {
-  calls: Array<{ restaurantId: string; tableId: string }> = [];
+  calls: Array<{ restaurantId: string; tableId: string; sessionNonce: string }> = [];
 
   constructor(private readonly result: CustomerActiveOrderRecords) {}
 
   async findActiveByTable(
     restaurantId: string,
     tableId: string,
+    sessionNonce: string,
   ): Promise<CustomerActiveOrderRecords> {
-    this.calls.push({ restaurantId, tableId });
+    this.calls.push({ restaurantId, tableId, sessionNonce });
     return this.result;
   }
 
@@ -61,10 +63,12 @@ test("active order query preserves table scope and exact decimal snapshots", asy
   });
   const service = new CustomerOrderQueryService(repository);
 
-  const result = await service.getActiveOrders("restaurant-a", "table-a");
+  const result = await service.getActiveOrders("restaurant-a", "table-a", "sitting-a");
 
+  // The sitting reaches the repository intact: the query is scoped to one
+  // guest's orders, not to every open order at the table.
   assert.deepEqual(repository.calls, [
-    { restaurantId: "restaurant-a", tableId: "table-a" },
+    { restaurantId: "restaurant-a", tableId: "table-a", sessionNonce: "sitting-a" },
   ]);
   assert.equal(result.length, 1);
   assert.equal(result[0]?.amounts.total, "125.00");
@@ -77,8 +81,19 @@ test("active order query returns an empty list without leaking another table", a
   const repository = new ScopedOrderQueryRepository({ orders: [], items: [] });
   const service = new CustomerOrderQueryService(repository);
 
-  assert.deepEqual(await service.getActiveOrders("restaurant-a", "table-b"), []);
+  assert.deepEqual(await service.getActiveOrders("restaurant-a", "table-b", "sitting-a"), []);
   assert.deepEqual(repository.calls, [
-    { restaurantId: "restaurant-a", tableId: "table-b" },
+    { restaurantId: "restaurant-a", tableId: "table-b", sessionNonce: "sitting-a" },
   ]);
+});
+
+test("a missing sitting is refused instead of widening back to the table", async () => {
+  const repository = new ScopedOrderQueryRepository({ orders: [], items: [] });
+  const service = new CustomerOrderQueryService(repository);
+
+  await assert.rejects(
+    () => service.getActiveOrders("restaurant-a", "table-a", ""),
+    (error: unknown) => error instanceof DomainError && error.code === "INVALID_TABLE_TOKEN",
+  );
+  assert.deepEqual(repository.calls, [], "no query may be issued without a sitting");
 });

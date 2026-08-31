@@ -168,6 +168,28 @@ export const DATA_RETENTION: readonly TableRetentionPolicy[] = [
     ),
   },
   {
+    table: "category_translations",
+    category: "MASTER_DATA",
+    purpose: "Localized category display names and descriptions.",
+    growthDriver: "Categories x configured menu locales.",
+    tenantScoped: true,
+    historyDependency: false,
+    autoDelete: never(
+      "Localized category content is live master data and follows its category lifecycle through the tenant-safe foreign key.",
+    ),
+  },
+  {
+    table: "product_translations",
+    category: "MASTER_DATA",
+    purpose: "Localized product display names and descriptions.",
+    growthDriver: "Products x configured menu locales.",
+    tenantScoped: true,
+    historyDependency: false,
+    autoDelete: never(
+      "Localized product content is live master data and follows its product lifecycle through the tenant-safe foreign key.",
+    ),
+  },
+  {
     table: "restaurant_tables",
     category: "MASTER_DATA",
     purpose: "Physical table plus its QR token hash.",
@@ -311,6 +333,21 @@ export const DATA_RETENTION: readonly TableRetentionPolicy[] = [
       "The cash record. Payments and refunds are attributed to it, the counted " +
         "drawer and its variance exist nowhere else, and a closed shift carries " +
         "its operational Z report as a frozen snapshot that is never recomputed.",
+    ),
+  },
+  {
+    table: "cashier_shift_cash_counts",
+    category: "PERMANENT_BUSINESS_HISTORY",
+    purpose:
+      "The physically counted drawer, one row per denomination and phase: what " +
+      "a named cashier counted, in which currency, at which face value.",
+    growthDriver: "denominations x currencies x phases x shifts_per_day x 365 x years.",
+    tenantScoped: true,
+    historyDependency: true,
+    autoDelete: never(
+      "The evidence behind an opening float and a closing variance. Deleting a " +
+        "row would leave a shift total that nothing in the system can account " +
+        "for, and cash discrepancies are investigated long after the day ends.",
     ),
   },
   {

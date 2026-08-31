@@ -107,6 +107,11 @@
 }
 
 :root {
+  /* Keep production builds deterministic and offline-capable. The operational
+     UI uses the platform's variable sans where available, while headings keep
+     the restaurant's editorial serif contrast without a runtime font request. */
+  --font-manrope: "Segoe UI Variable", Aptos, "Segoe UI", "Noto Sans", Arial, sans-serif;
+  --font-lora: Georgia, "Noto Serif", "Times New Roman", serif;
   --background: #F5EFE4;
   --foreground: #2D2018;
   --card: #FBF7EF;

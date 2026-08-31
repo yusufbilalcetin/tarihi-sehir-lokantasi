@@ -32,6 +32,15 @@ test("the root layout names its own props instead of a generated global", () => 
   }
 });
 
+test("the release does not need a font network request to compile", () => {
+  const layout = read("app/layout.tsx");
+  const css = read("app/globals.css");
+
+  assert.doesNotMatch(layout, /next\/font\/google/);
+  assert.match(css, /--font-manrope:/);
+  assert.match(css, /--font-lora:/);
+});
+
 test("the table and QR screens do not import the menu editor", () => {
   // `use-menu-draft` belongs to the WYSIWYG menu editor. A shipped table/QR
   // screen reaching into it makes the release depend on unfinished work.

@@ -1,10 +1,28 @@
 import { z } from "zod";
 
 import { entityIdSchema } from "./common";
+import { supportedMenuLocale } from "@/lib/i18n/catalog-localization";
 
-const nameSchema = z.string().trim().min(1).max(180);
+const categoryNameSchema = z.string().trim().min(1).max(120);
+const productNameSchema = z.string().trim().min(1).max(180);
 const descriptionSchema = z.string().trim().max(2000).nullish();
 const labelListSchema = z.array(z.string().trim().min(1).max(80)).max(20);
+const localeSchema = z.string().trim().refine(
+  (locale) => supportedMenuLocale(locale) !== null,
+  "Desteklenmeyen katalog dili.",
+);
+const categoryTranslationSchema = z.object({
+  locale: localeSchema,
+  name: categoryNameSchema,
+  description: descriptionSchema,
+}).strict();
+const productTranslationSchema = z.object({
+  locale: localeSchema,
+  name: productNameSchema,
+  description: descriptionSchema,
+}).strict();
+const categoryTranslationsSchema = z.array(categoryTranslationSchema).max(109).optional();
+const productTranslationsSchema = z.array(productTranslationSchema).max(109).optional();
 
 /** Server-formatted decimal string; the client never sends minor units. */
 const priceSchema = z
@@ -15,23 +33,25 @@ const priceSchema = z
 
 export const createCategoryBodySchema = z
   .object({
-    name: nameSchema,
+    name: categoryNameSchema,
     description: descriptionSchema,
     /** Categories carry a cover image, exactly as products do. */
     imageUrl: z.string().trim().max(2000).nullish(),
     sortOrder: z.number().int().min(0).max(10_000).optional(),
     isActive: z.boolean().optional(),
+    translations: categoryTranslationsSchema,
   })
   .strict();
 
 export const updateCategoryBodySchema = z
   .object({
-    name: nameSchema.optional(),
+    name: categoryNameSchema.optional(),
     description: descriptionSchema,
     imageUrl: z.string().trim().max(2000).nullish(),
     sortOrder: z.number().int().min(0).max(10_000).optional(),
     isActive: z.boolean().optional(),
     archived: z.boolean().optional(),
+    translations: categoryTranslationsSchema,
   })
   .strict()
   .refine((value) => Object.keys(value).length > 0, "Güncellenecek alan gönderin.");
@@ -39,7 +59,7 @@ export const updateCategoryBodySchema = z
 export const createProductBodySchema = z
   .object({
     categoryId: entityIdSchema,
-    name: nameSchema,
+    name: productNameSchema,
     description: descriptionSchema,
     price: priceSchema,
     imageUrl: z.string().trim().max(2000).nullish(),
@@ -52,13 +72,14 @@ export const createProductBodySchema = z
     allergens: labelListSchema.optional(),
     tags: labelListSchema.optional(),
     sortOrder: z.number().int().min(0).max(10_000).optional(),
+    translations: productTranslationsSchema,
   })
   .strict();
 
 export const updateProductBodySchema = z
   .object({
     categoryId: entityIdSchema.optional(),
-    name: nameSchema.optional(),
+    name: productNameSchema.optional(),
     description: descriptionSchema,
     price: priceSchema.optional(),
     imageUrl: z.string().trim().max(2000).nullish(),
@@ -72,9 +93,28 @@ export const updateProductBodySchema = z
     tags: labelListSchema.optional(),
     sortOrder: z.number().int().min(0).max(10_000).optional(),
     archived: z.boolean().optional(),
+    translations: productTranslationsSchema,
   })
   .strict()
   .refine((value) => Object.keys(value).length > 0, "Güncellenecek alan gönderin.");
+
+/**
+ * A request to fill in the other languages for one already-saved row.
+ *
+ * `targetLocales` is an allow-list checked here and again in the service: an
+ * unknown code is a rejected request, never a quietly dropped language.
+ * `overwrite` stays off by default so a bulk run cannot erase a translation an
+ * administrator typed by hand.
+ */
+export const autoTranslateBodySchema = z
+  .object({
+    entityType: z.enum(["CATEGORY", "PRODUCT"]),
+    entityId: entityIdSchema,
+    sourceLocale: localeSchema.optional(),
+    targetLocales: z.array(localeSchema).min(1).max(109).optional(),
+    overwrite: z.boolean().optional(),
+  })
+  .strict();
 
 export const categoryIdParamsSchema = z.object({ categoryId: entityIdSchema }).strict();
 export const productIdParamsSchema = z.object({ productId: entityIdSchema }).strict();

@@ -80,6 +80,12 @@ export interface CreateCustomerOrderCommand {
   readonly tableId: string;
   /** Signed customer session access version, checked against the locked table row. */
   readonly tableAccessVersion: number;
+  /**
+   * The nonce of the signed table session, identifying this one sitting.
+   * Supplied by the route from the verified cookie; a caller-supplied value
+   * would let anyone claim another party's orders.
+   */
+  readonly sessionNonce: string;
   readonly idempotencyKey: string;
   readonly items: readonly CustomerOrderItemInput[];
   readonly notes?: string;
@@ -112,7 +118,11 @@ export interface CreateStaffOrderCommand {
 }
 
 type OrderCreator =
-  | { readonly kind: "CUSTOMER"; readonly tableAccessVersion: number }
+  | {
+      readonly kind: "CUSTOMER";
+      readonly tableAccessVersion: number;
+      readonly sessionNonce: string;
+    }
   | { readonly kind: "STAFF"; readonly staffUserId: string }
   /**
    * Someone ordering takeaway or courier from the public page. They are a
@@ -318,7 +328,11 @@ function validateBasicCommand(command: CreateOrderCommand): readonly NormalizedO
   if (
     command.creator.kind === "CUSTOMER" &&
     (!Number.isSafeInteger(command.creator.tableAccessVersion) ||
-      command.creator.tableAccessVersion < 1)
+      command.creator.tableAccessVersion < 1 ||
+      // An order stamped with a blank sitting would be invisible to the guest
+      // who placed it and visible to nobody, so it is refused rather than
+      // written. The route only ever passes a verified cookie nonce.
+      !command.creator.sessionNonce)
   ) {
     throw new DomainError("INVALID_TABLE_TOKEN", "Masa oturumu geçersiz.", {
       httpStatus: 401,
@@ -782,7 +796,7 @@ export class OrderService {
     return this.create({
       ...command,
       channel: "DINE_IN",
-      creator: { kind: "CUSTOMER", tableAccessVersion: command.tableAccessVersion },
+      creator: { kind: "CUSTOMER", tableAccessVersion: command.tableAccessVersion, sessionNonce: command.sessionNonce },
     });
   }
 
@@ -852,6 +866,14 @@ export class OrderService {
       tableId: command.tableId,
       tableAccessVersion:
         command.creator.kind === "CUSTOMER" ? command.creator.tableAccessVersion : 0,
+      // The sitting is part of what makes a request the same request. Two
+      // parties at one table share a `CUSTOMER_ORDER:<tableId>` scope, so
+      // without this the second one reusing the first one's key would be
+      // handed the first one's order back as a replay — someone else's order
+      // number and total. With it that is an IDEMPOTENCY_CONFLICT instead.
+      // Hashed before storage, so the nonce itself is never persisted.
+      sessionNonce:
+        command.creator.kind === "CUSTOMER" ? command.creator.sessionNonce : null,
       staffUserId: staffCreator?.staffUserId ?? null,
       fulfillment: command.fulfillment
         ? {
@@ -994,6 +1016,11 @@ export class OrderService {
         notes: normalizedOrderNotes,
         createdByType: staffCreator ? "STAFF" : "CUSTOMER",
         createdByUserId: staffCreator?.staffUserId ?? null,
+        // Only a table sitting owns an order this way. Staff orders and the
+        // takeaway/courier channels stay null, which is what keeps the
+        // customer read failing closed for them.
+        customerSessionNonce:
+          command.creator.kind === "CUSTOMER" ? command.creator.sessionNonce : null,
       });
       const eventPayload: RepositoryJsonObject = {
         orderId: inserted.id,

@@ -6,6 +6,10 @@ import {
   CASHIER_SHIFT_STATUSES,
   SHIFT_NOTE_MAX_LENGTH,
 } from "@/lib/domain/cashier-shift";
+import {
+  CASH_COUNT_CURRENCIES,
+  MAX_DENOMINATION_COUNT,
+} from "@/lib/domain/cash-denominations";
 import { entityIdSchema, moneyDecimalSchema } from "./common";
 
 /**
@@ -15,11 +19,51 @@ import { entityIdSchema, moneyDecimalSchema } from "./common";
  * is not its own.
  */
 
+
+/**
+ * One counted denomination as it arrives from the browser.
+ *
+ * Only the currency, the face value and how many pieces were counted are
+ * accepted. A subtotal is deliberately *not* part of the shape: the server
+ * recomputes every amount from its own denomination table, so a client has
+ * nothing to claim. `.strict()` makes an extra field a rejection rather than
+ * something quietly ignored.
+ */
+export const cashCountEntrySchema = z
+  .object({
+    currency: z.enum(CASH_COUNT_CURRENCIES),
+    denominationMinor: z
+      .number()
+      .int("Kupür değeri tam sayı olmalıdır.")
+      .positive("Kupür değeri pozitif olmalıdır."),
+    count: z
+      .number()
+      .int("Adet tam sayı olmalıdır.")
+      .min(0, "Adet negatif olamaz.")
+      .max(MAX_DENOMINATION_COUNT, "Adet çok yüksek."),
+  })
+  .strict();
+
+/** The whole drawer. The domain rejects unknown or duplicated denominations. */
+export const cashCountSchema = z
+  .array(cashCountEntrySchema)
+  .max(
+    CASH_COUNT_CURRENCIES.length * 40,
+    "Kupür listesi beklenenden uzun.",
+  );
+
 export const openShiftBodySchema = z
   .object({
     cashRegisterId: entityIdSchema,
     /** `0.00` is a legitimate opening float; a negative one is not expressible. */
     openingCash: moneyDecimalSchema,
+    /**
+     * Optional: a drawer counted denomination by denomination. When present the
+     * server recomputes the TRY subtotal from it and that becomes the opening
+     * cash, so the typed figure and the counted drawer cannot disagree. When
+     * absent the shift opens exactly as it always has.
+     */
+    cashCounts: cashCountSchema.optional(),
   })
   .strict();
 
@@ -85,6 +129,7 @@ export const updateCashRegisterBodySchema = z
   });
 
 export type OpenShiftBody = z.infer<typeof openShiftBodySchema>;
+export type CashCountEntry = z.infer<typeof cashCountEntrySchema>;
 export type CloseShiftBody = z.infer<typeof closeShiftBodySchema>;
 export type CashMovementBody = z.infer<typeof cashMovementBodySchema>;
 export type ShiftHistoryQuery = z.infer<typeof shiftHistoryQuerySchema>;

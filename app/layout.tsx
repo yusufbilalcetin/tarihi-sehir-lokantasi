@@ -1,19 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
-import { Lora, Manrope } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
 import { MotionPlatform } from "@/components/shared/motion-platform";
 import "./globals.css";
-
-const manrope = Manrope({
-  variable: "--font-manrope",
-  subsets: ["latin"],
-});
-
-const lora = Lora({
-  variable: "--font-lora",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   title: {
@@ -50,7 +39,7 @@ export default function RootLayout({ children }: { readonly children: ReactNode 
     <html
       lang="tr"
       suppressHydrationWarning
-      className={`${manrope.variable} ${lora.variable} h-full antialiased`}
+      className="h-full antialiased"
     >
       <body className="min-h-full text-foreground">
         <MotionPlatform />

@@ -78,6 +78,8 @@ export function menuApiToViewModel(payload: CustomerMenuPayload | PublicMenuResu
       active: true,
       sortOrder: category.sortOrder,
       image: imageOrPlaceholder(category.imageUrl, categoryImages[key] ?? MENU_PLACEHOLDER_IMAGE),
+      translations: category.translations,
+      defaultLocale: payload.restaurant.defaultLocale,
     };
   });
 
@@ -99,6 +101,8 @@ export function menuApiToViewModel(payload: CustomerMenuPayload | PublicMenuResu
       status: product.isAvailable ? "active" : "sold-out",
       featured: product.isFeatured,
       popular: product.isPopular === true,
+      translations: product.translations,
+      defaultLocale: payload.restaurant.defaultLocale,
     })),
   );
 
@@ -181,7 +185,9 @@ export function adminMenuToViewModel(input: {
           tags: product.tags,
           sortOrder: product.sortOrder,
           version: product.version,
+          translations: product.translations,
         })),
+      translations: category.translations,
     })),
   } satisfies PublicMenuResult);
 }

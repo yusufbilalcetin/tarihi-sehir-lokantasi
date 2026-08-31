@@ -56,6 +56,10 @@ export const API_ERROR_CODES = [
   "UNSUPPORTED_PRINT_PAYLOAD",
   "UNSUPPORTED_PRINTER_ENCODING",
   "PRINTER_AGENT_UNAUTHORIZED",
+  // Phase 43 — catalog auto translation. The provider is a separate concern
+  // from the menu itself, so its absence has its own name and never a 500.
+  "TRANSLATION_PROVIDER_UNAVAILABLE",
+  "TRANSLATION_IN_FLIGHT",
 ] as const;
 
 export type ApiErrorCode = (typeof API_ERROR_CODES)[number];

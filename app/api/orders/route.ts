@@ -102,6 +102,10 @@ export async function POST(request: Request): Promise<NextResponse> {
       restaurantId: context.restaurantId,
       tableId: context.tableId,
       tableAccessVersion: context.tokenVersion,
+      // From the verified cookie via `requireCustomerTableContext`. The request
+      // body schema is `.strict()` and has no field for this, so a caller
+      // cannot name the sitting an order is stamped with.
+      sessionNonce: context.sessionNonce,
       idempotencyKey: idempotency.data,
       items: parsed.data.items,
       notes: parsed.data.notes ?? parsed.data.note,

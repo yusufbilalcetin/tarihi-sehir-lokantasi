@@ -3,26 +3,20 @@
 import { useSyncExternalStore } from "react";
 
 /**
- * The orders this browser actually placed.
+ * The orders this browser actually placed, in the order it placed them.
  *
- * The server still answers with every unsettled order at the table, because
- * `orders` has no column saying which guest sitting created one — that is
- * `orders.customer_session_nonce`, prepared in migration 0017 and not yet
- * applied. Until it is, the only thing that provably distinguishes "my order"
- * from "the order the last party left open" is that the server handed *this*
- * browser the id when it created it.
+ * Ownership itself is settled on the server: an order records the sitting that
+ * created it in `orders.customer_session_nonce`, and `/api/orders/active`
+ * answers with that sitting's orders rather than the table's. This is not that
+ * boundary and never was — it is a display scope, and it fails closed the same
+ * way: an id this browser never saw is never shown.
  *
- * So this remembers those ids and the screen shows their intersection with the
- * server's list. It is a display scope, not an authorisation boundary — the
- * data still reaches the browser — but it is strictly narrower than what the
- * screen did before, which was to show whichever order happened to be first at
- * the table. It fails closed: an id this browser never saw is never shown.
+ * What it still carries on its own is the ordinal. "Your second order" is a
+ * fact about what this browser submitted, not about what is still unsettled,
+ * so it has to survive an earlier order being paid for and leaving the list —
+ * which only an append-only local record can do.
  *
- * When 0017 is applied the server filters by nonce and this becomes redundant.
- *
- * Session storage, so it survives a reload but not the visit. Cross-table
- * bleed is impossible regardless: the server list is table-scoped, so an id
- * from another table intersects with nothing.
+ * Session storage, so it survives a reload but not the visit.
  */
 
 const STORAGE_KEY = "sehir-session-orders";

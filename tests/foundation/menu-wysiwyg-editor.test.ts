@@ -16,7 +16,10 @@ function read(relativePath: string): string {
 }
 
 const editor = read("components/admin/customer-menu-editor.tsx");
-const dialogs = read("components/admin/menu-editor-dialogs.tsx");
+const dialogs = [
+  read("components/admin/menu-editor-dialogs.tsx"),
+  read("components/admin/catalog-translation-editor.tsx"),
+].join("\n");
 const draft = read("components/admin/use-menu-draft.ts");
 const sections = read("components/menu/menu-sections.tsx");
 const experience = read("components/menu/menu-experience.tsx");

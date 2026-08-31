@@ -21,8 +21,8 @@ import { MotionValue } from "@/components/shared/motion-value";
  *   the border, which is gone; rows separate by their own warm surface
  *   the badges, which were filled pills sitting *above* the dish name, so the
  *     first thing the eye met on every row was the word "Popüler"
- *   the empty band in the middle, left by pinning the price to the bottom of a
- *     card taller than its own contents
+ *   the oversized empty band in the middle, replaced by compact two-line text
+ *     lanes that keep neighbouring prices aligned without making a tall tile
  *
  * What is left, in reading order, is the plate, the name, what it is, and what
  * it costs. The one control is the add button, and it is the only filled thing
@@ -55,7 +55,7 @@ export function ProductCard({
       ref={ref}
       data-revealed={revealed}
       data-reveal-animate={animate}
-      className="motion-reveal motion-card-hover group relative flex gap-3 rounded-xl bg-card p-3"
+      className="motion-reveal motion-card-hover group relative flex h-full gap-3 rounded-xl bg-card p-3"
       style={{ "--motion-delay": `${Math.min(index * 20, 80)}ms` } as React.CSSProperties}
     >
       <button
@@ -71,7 +71,7 @@ export function ProductCard({
             src={product.image}
             alt={name}
             fill
-            sizes="(max-width: 640px) 92px, 112px"
+            sizes="92px"
             className={`motion-product-image object-cover ${soldOut ? "grayscale-[0.55]" : ""}`}
             onLoad={(event) => {
               event.currentTarget.dataset.loaded = "true";
@@ -91,29 +91,38 @@ export function ProductCard({
 
       <div className="pointer-events-none relative flex min-w-0 flex-1 flex-col">
         {/* The dish leads. Everything under it is what the dish is. */}
-        <h2 className="line-clamp-2 font-heading text-[17px] font-semibold leading-snug text-foreground sm:text-lg">
+        <h2
+          title={name}
+          className="line-clamp-2 min-h-10 font-heading text-[17px] font-semibold leading-5 text-foreground sm:text-lg"
+        >
           {name}
         </h2>
 
-        {badges.length || soldOut ? (
-          <p className="mt-1 flex flex-wrap items-center gap-1">
-            {badges.map((tag) => (
-              <span
-                key={tag}
-                className="rounded border border-copper/30 px-1.5 text-[10px] font-semibold uppercase tracking-[0.04em] leading-4 text-text-secondary"
-              >
-                {getMenuTag(tag, language)}
-              </span>
-            ))}
-            {soldOut ? (
-              <span className="rounded border border-order-void/30 px-1.5 text-[10px] font-semibold uppercase tracking-[0.04em] leading-4 text-order-void">
-                {t("soldOut")}
-              </span>
-            ) : null}
-          </p>
-        ) : null}
+        <div className="mt-1 flex h-5 min-w-0 items-center gap-1 overflow-hidden">
+          {badges.length || soldOut ? (
+            <p className="flex min-w-0 items-center gap-1 overflow-hidden">
+              {badges.map((tag) => (
+                <span
+                  key={tag}
+                  title={getMenuTag(tag, language)}
+                  className="min-w-0 truncate rounded border border-copper/30 px-1.5 text-[10px] font-semibold uppercase tracking-[0.04em] leading-4 text-text-secondary"
+                >
+                  {getMenuTag(tag, language)}
+                </span>
+              ))}
+              {soldOut ? (
+                <span className="rounded border border-order-void/30 px-1.5 text-[10px] font-semibold uppercase tracking-[0.04em] leading-4 text-order-void">
+                  {t("soldOut")}
+                </span>
+              ) : null}
+            </p>
+          ) : null}
+        </div>
 
-        <p className="mt-1 line-clamp-2 text-xs leading-5 text-muted-foreground sm:text-sm">
+        <p
+          title={description}
+          className="mt-1 line-clamp-2 min-h-10 text-xs leading-5 text-muted-foreground sm:text-sm"
+        >
           {description}
         </p>
 
@@ -121,19 +130,19 @@ export function ProductCard({
           value={formatPrice(product.price)}
           numericValue={product.price}
           delayMs={Math.min(index * 10, 40)}
-          className="mt-1.5 text-base font-extrabold tabular-nums text-burgundy sm:text-lg"
+          className="mt-auto pt-1.5 text-base font-extrabold tabular-nums text-burgundy sm:text-lg"
         />
       </div>
 
-      {/* Its own column, centred against the row. Sharing a line with the price
-          left a 44px band of nothing under every short description. */}
+      {/* Its own column, aligned with the price row. Sharing a line with the
+          price makes both controls drift when a title wraps. */}
       <Button
         type="button"
         size="icon"
         disabled={soldOut || !canOrder}
         onClick={onAdd}
         aria-label={`${name}: ${t("addToCart")}`}
-        className="pointer-events-auto relative z-10 size-11 shrink-0 self-center rounded-full shadow-none"
+        className="pointer-events-auto relative z-10 size-11 shrink-0 self-end rounded-full shadow-none"
       >
         <Plus className="size-5" strokeWidth={2.2} />
       </Button>

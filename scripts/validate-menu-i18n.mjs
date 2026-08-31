@@ -57,6 +57,7 @@ const content = loadTypeScriptModule("lib/i18n/menu-content.ts", {
   "./menu-translations": translations,
   "./menu-catalog": { getLoadedMenuCatalog: () => undefined },
   "./languages": { getMenuLanguage: () => undefined },
+  "./catalog-localization": { normalizeMenuLocale: (value) => value ?? "tr" },
 });
 /**
  * The catalogue this validator measures every locale against.

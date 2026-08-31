@@ -14,13 +14,20 @@ import {
   type CashMovementType,
   type ShiftMoneySummary,
 } from "@/lib/domain/cashier-shift";
-import { decimalToMinor } from "@/lib/domain/money";
+import {
+  InvalidCashCountError,
+  summariseCashCount,
+  totalForCurrency,
+  type CountedDenomination,
+} from "@/lib/domain/cash-denominations";
+import { decimalToMinor, minorToDecimal } from "@/lib/domain/money";
 import {
   authorizeRestaurantAccess,
   type RestaurantPrincipal,
 } from "@/lib/domain/restaurant-scope";
 import type { UserRole } from "@/lib/domain/status";
 import type {
+  CashCountRecord,
   CashDrawerMovementRecord,
   CashierShiftRepository,
   CashierShiftRecord,
@@ -49,6 +56,17 @@ import type {
 export interface OpenShiftCommand {
   readonly cashRegisterId: string;
   readonly openingCash: string;
+  /**
+   * A physically counted drawer. When present it is authoritative: the server
+   * recomputes every subtotal from its own denomination table and derives the
+   * opening cash from the TRY total, so a typed figure cannot disagree with
+   * what was counted. Absent means a shift opens the way it always has.
+   */
+  readonly cashCounts?: readonly {
+    readonly currency: string;
+    readonly denominationMinor: number;
+    readonly count: number;
+  }[];
   readonly requestId?: string;
 }
 
@@ -84,8 +102,29 @@ export interface ShiftView {
   readonly closeNote: string | null;
 }
 
+/**
+ * A counted drawer as it is read back, grouped per currency.
+ *
+ * `null` for a shift opened before this feature, or one opened without a
+ * count: history is never back-filled with a reconstructed breakdown, because
+ * a plausible-looking invented drawer is worse than an honest absence.
+ */
+export interface CashCountView {
+  readonly phase: "OPENING" | "CLOSING";
+  readonly currency: string;
+  readonly totalMinor: number;
+  readonly pieceCount: number;
+  readonly lines: readonly {
+    readonly denominationMinor: number;
+    readonly pieceCount: number;
+    readonly subtotalMinor: number;
+  }[];
+}
+
 export interface ShiftDetailResult {
   readonly shift: ShiftView;
+  /** Absent on a legacy shift; never invented. */
+  readonly cashCounts: readonly CashCountView[] | null;
   /**
    * Live for an OPEN shift, historical for a CLOSED one. For a closed shift
    * `expectedCash` is the stored snapshot, never a recomputation.
@@ -95,6 +134,8 @@ export interface ShiftDetailResult {
 }
 
 export interface CurrentShiftResult {
+  /** The open shift's counted drawer, or null when it was opened without one. */
+  readonly cashCounts?: readonly CashCountView[] | null;
   readonly shift: ShiftView | null;
   readonly summary: ShiftMoneySummary | null;
   readonly movements: readonly CashDrawerMovementRecord[];
@@ -137,6 +178,45 @@ function shiftNotFound(): DomainError {
   return new DomainError("NOT_FOUND", "Vardiya bulunamadı.", { httpStatus: 404 });
 }
 
+
+/**
+ * Group stored rows for display. Every figure here is the one the server wrote
+ * at counting time — nothing is recomputed, so a later change to the
+ * denomination table can never rewrite history.
+ */
+function toCashCountViews(
+  rows: readonly CashCountRecord[],
+): readonly CashCountView[] | null {
+  if (rows.length === 0) return null;
+  const grouped = new Map<string, CashCountView>();
+  for (const row of rows) {
+    const key = `${row.phase}:${row.currency}`;
+    const existing = grouped.get(key);
+    const line = {
+      denominationMinor: row.denominationMinor,
+      pieceCount: row.pieceCount,
+      subtotalMinor: row.subtotalMinor,
+    };
+    if (existing) {
+      grouped.set(key, {
+        ...existing,
+        totalMinor: existing.totalMinor + row.subtotalMinor,
+        pieceCount: existing.pieceCount + row.pieceCount,
+        lines: [...existing.lines, line],
+      });
+    } else {
+      grouped.set(key, {
+        phase: row.phase,
+        currency: row.currency,
+        totalMinor: row.subtotalMinor,
+        pieceCount: row.pieceCount,
+        lines: [line],
+      });
+    }
+  }
+  return [...grouped.values()];
+}
+
 export class CashierShiftService {
   private readonly clock: () => Date;
 
@@ -157,6 +237,40 @@ export class CashierShiftService {
       throw new DomainError("VALIDATION_ERROR", "Açılış nakdi negatif olamaz.", {
         httpStatus: 400,
       });
+    }
+
+    /*
+     * The counted drawer, priced by the server.
+     *
+     * Nothing the client computed is read. `summariseCashCount` rejects an
+     * unknown currency, an unknown face value, a duplicated denomination and a
+     * count that is negative, fractional or absurd, and it multiplies in integer
+     * minor units so no total can drift. It runs before the transaction opens,
+     * so a bad payload never gets as far as a shift row.
+     */
+    let countedLines: readonly CountedDenomination[] = [];
+    let openingCash = command.openingCash;
+    if (command.cashCounts) {
+      try {
+        const summary = summariseCashCount(
+          command.cashCounts.map((entry) => ({
+            currency: entry.currency,
+            minorValue: entry.denominationMinor,
+            count: entry.count,
+          })),
+        );
+        countedLines = summary.lines;
+        // TRY is the drawer's accounting currency, so its counted total is the
+        // opening cash the rest of the system already understands. EUR and USD
+        // are separate physical inventory and are never folded into it.
+        openingCash = minorToDecimal(totalForCurrency(summary.totals, "TRY"));
+      } catch (error) {
+        throw new DomainError(
+          "VALIDATION_ERROR",
+          error instanceof InvalidCashCountError ? error.message : "Kasa sayımı geçersiz.",
+          { httpStatus: 400 },
+        );
+      }
     }
 
     return this.repository.transaction(async (transaction) => {
@@ -187,7 +301,7 @@ export class CashierShiftService {
         cashRegisterId: register.id,
         registerNameSnapshot: register.name,
         openedByStaffId: actor.userId,
-        openingCash: command.openingCash,
+        openingCash,
         at,
       });
       if (!shift) {
@@ -196,6 +310,24 @@ export class CashierShiftService {
           "Bu kasada zaten açık bir vardiya var.",
           { httpStatus: 409 },
         );
+      }
+
+      // Same transaction as the shift row: a shift cannot exist with half a
+      // drawer count, and a failed count write rolls the shift back with it.
+      if (countedLines.length > 0) {
+        await transaction.insertCashCounts({
+          restaurantId: actor.restaurantId,
+          shiftId: shift.id,
+          phase: "OPENING",
+          countedByStaffId: actor.userId,
+          at,
+          lines: countedLines.map((line) => ({
+            currency: line.currency,
+            denominationMinor: line.minorValue,
+            pieceCount: line.count,
+            subtotalMinor: line.subtotalMinor,
+          })),
+        });
       }
 
       const payload = {
@@ -228,6 +360,11 @@ export class CashierShiftService {
       const totals = await transaction.ledgerTotals(actor.restaurantId, shift.id);
       return {
         shift: toView(shift),
+        // A drawer counted for this shift, or null on a legacy one. Read
+        // back rather than recomputed, so history stays what was agreed.
+        cashCounts: toCashCountViews(
+          await this.repository.listCashCounts(actor.restaurantId, shift.id),
+        ),
         summary: totalsToSummary(shift.openingCash, totals),
         movements: [],
       };
@@ -417,8 +554,11 @@ export class CashierShiftService {
       // holds one connection, so an outer query here would wait for the very
       // connection this transaction is holding and hang the request forever.
       const movements = await transaction.listMovements(actor.restaurantId, shift.id);
+      const counts = await transaction.listCashCounts(actor.restaurantId, shift.id);
       return {
         shift: toView({ ...closed }),
+        // Read on this connection for the same reason movements are.
+        cashCounts: toCashCountViews(counts),
         // The stored snapshot is authoritative from here on.
         summary: { ...summary, expectedCash: closed.expectedCashAtClose ?? summary.expectedCash },
         movements,
@@ -530,6 +670,11 @@ export class CashierShiftService {
     ]);
     return {
       shift: toView(shift),
+      // A drawer counted for this shift, or null on a legacy one. Read
+      // back rather than recomputed, so history stays what was agreed.
+      cashCounts: toCashCountViews(
+        await this.repository.listCashCounts(actor.restaurantId, shift.id),
+      ),
       summary: totalsToSummary(shift.openingCash, totals),
       movements,
       availableRegisters,
@@ -558,6 +703,11 @@ export class CashierShiftService {
     const summary = totalsToSummary(shift.openingCash, totals);
     return {
       shift: toView(shift),
+      // A drawer counted for this shift, or null on a legacy one. Read
+      // back rather than recomputed, so history stays what was agreed.
+      cashCounts: toCashCountViews(
+        await this.repository.listCashCounts(actor.restaurantId, shift.id),
+      ),
       // A closed shift reports the drawer it was counted against, not a figure
       // recomputed from rows that may have moved since.
       summary:

@@ -33,6 +33,10 @@ const adminShell = read("components/admin/admin-shell.tsx");
 const todayPanel = read("components/admin/today-panel.tsx");
 const dashboardView = read("components/admin/dashboard-view.tsx");
 const kitchenBoard = read("components/kitchen/kitchen-board.tsx");
+// The ticket became its own module when the board grew a phone layout and a
+// pass-screen layout; the contracts below moved with the markup, unchanged.
+const kitchenTicket = read("components/kitchen/kitchen-ticket.tsx");
+const kitchenFilters = read("components/kitchen/kitchen-filters.tsx");
 const staffShell = read("components/staff/staff-shell.tsx");
 const cashier = read("components/cashier/cashier-dashboard.tsx");
 
@@ -230,7 +234,7 @@ test("no screen asks 'emin misiniz' where it could say what will happen", () => 
 });
 
 test("moving an order forward in the kitchen is one tap, with no dialog", () => {
-  assert.match(kitchenBoard, /onClick=\{\(\) => onAdvance\(order\.id, action\.nextStatus\)\}/);
+  assert.match(kitchenTicket, /onClick=\{\(\) => onAdvance\(order\.id, action\.nextStatus\)\}/);
   // The only dialog on this screen is the deliberate backwards step, which also
   // collects a reason.
   const dialogs = [...kitchenBoard.matchAll(/<Dialog\s/g)];
@@ -295,9 +299,22 @@ test("the kitchen board does not squeeze three lanes into a tablet portrait", ()
 });
 
 test("staff surfaces keep touch-sized controls", () => {
-  for (const [name, source] of [["kitchen", kitchenBoard], ["cashier", cashier], ["staff shell", staffShell]] as const) {
+  // The board delegates every control it has to these modules, so they are
+  // where the sizes live. The board is checked separately for not rolling its
+  // own undersized one.
+  for (const [name, source] of [
+    ["kitchen ticket", kitchenTicket],
+    ["kitchen filters", kitchenFilters],
+    ["cashier", cashier],
+    ["staff shell", staffShell],
+  ] as const) {
     assert.match(source, /min-h-1[012]|h-1[124]|size-1[12]/, `${name} has no touch-sized control`);
   }
+  assert.doesNotMatch(
+    kitchenBoard,
+    /className="[^"]*(?:h-[5-9]|size-[5-9]|min-h-[5-9])[^"]*"/,
+    "the kitchen board grew a control smaller than a finger",
+  );
 });
 
 /* ------------------------------------------------ role focus ------------- */

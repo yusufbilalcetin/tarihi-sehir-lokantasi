@@ -1,13 +1,16 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   Banknote,
   Check,
+  ChevronLeft,
   CircleCheckBig,
+  TriangleAlert,
   Clock3,
   CreditCard,
   Ellipsis,
+  Printer,
   ReceiptText,
   Split,
   UsersRound,
@@ -15,23 +18,20 @@ import {
 import { toast } from "sonner";
 import { BrandMark } from "@/components/shared/brand-mark";
 import { StatusBadge } from "@/components/shared/status-badge";
+import { SoundControl } from "@/components/shared/sound-control";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import { CashierBillItems } from "@/components/cashier/cashier-bill-items";
 import { BillOperationsSheet } from "@/components/cashier/bill-operations-sheet";
 import { ShiftPanel } from "@/components/cashier/shift-panel";
 import { RealtimeStatus } from "@/components/staff/realtime-status";
 import { staffOrderToViewModel, staffTableToViewModel } from "@/lib/adapters/staff-view-model";
 import { ApiClientError, newIdempotencyKey } from "@/lib/api/client";
-import { cashierShiftApi, ledgerApi, paymentApi, staffApi } from "@/lib/api/endpoints";
+import { cashierShiftApi, ledgerApi, paymentApi, staffApi, printApi } from "@/lib/api/endpoints";
+import { NewEntityTracker } from "@/lib/audio/new-entity-tracker";
+import { resolveCashierSelection, sortCashierBills } from "@/lib/domain/cashier-queue";
+import { playSound } from "@/lib/audio/sound-effects";
 import { useApiResource } from "@/lib/hooks/use-api-resource";
 import { useStaffRealtime } from "@/lib/realtime/use-staff-realtime";
 import { formatCurrency, formatElapsed } from "@/lib/format";
@@ -84,11 +84,16 @@ function formatClock(date: Date | null) {
  */
 export function CashierDashboard() {
   const [selectedTableId, setSelectedTableId] = useState<string | null>(null);
-  const [lastPaid, setLastPaid] = useState<{ tableName: string; method: PaymentMethod } | null>(null);
+  const [lastPaid, setLastPaid] = useState<
+    | { tableName: string; method: PaymentMethod; paymentId: string; amount: string }
+    | null
+  >(null);
+  const [printingReceipt, setPrintingReceipt] = useState(false);
   const [methodsByTable, setMethodsByTable] = useState<Record<string, PaymentMethod>>({});
   const [collecting, setCollecting] = useState(false);
   const [operationsOpen, setOperationsOpen] = useState(false);
   const [now, setNow] = useState<Date | null>(null);
+  const notificationTracker = useRef(new NewEntityTracker());
 
   const loadCashier = useCallback(async (signal: AbortSignal) => {
     const [tables, orders, calls] = await Promise.all([
@@ -116,6 +121,26 @@ export function CashierDashboard() {
   });
 
   useEffect(() => {
+    const data = resource.data;
+    if (!data) return;
+    const notificationIds = [
+      ...data.orders
+        .filter((order) => order.status.toUpperCase() === "SERVED")
+        .map((order) => `order:${order.id}`),
+      ...data.calls
+        .filter(
+          (call) =>
+            call.type === "BILL_REQUEST" &&
+            (call.status === "OPEN" || call.status === "ACKNOWLEDGED"),
+        )
+        .map((call) => `bill-request:${call.id}`),
+    ];
+    if (notificationTracker.current.update(notificationIds)) {
+      void playSound("cashier-notification");
+    }
+  }, [resource.data]);
+
+  useEffect(() => {
     const timer = window.setTimeout(() => setNow(new Date()), 0);
     const interval = window.setInterval(() => setNow(new Date()), 30_000);
     return () => {
@@ -124,7 +149,7 @@ export function CashierDashboard() {
     };
   }, []);
 
-  const openBills = useMemo<OpenBill[]>(() => {
+  const openBills = useMemo<readonly OpenBill[]>(() => {
     const tables = (resource.data?.tables ?? []).map((table) => staffTableToViewModel(table));
     const orders = (resource.data?.orders ?? []).map((order) => staffOrderToViewModel(order));
     const billRequestTableIds = new Set(
@@ -137,19 +162,41 @@ export function CashierDashboard() {
         .map((call) => call.table.id),
     );
 
-    return tables.flatMap((table) => {
-      // Only a served order is collectable; the API rejects anything earlier.
-      const order = orders.find(
-        (candidate) => candidate.tableId === table.id && candidate.status === "served",
-      );
-      return order ? [{ table, order, billRequested: billRequestTableIds.has(table.id) }] : [];
-    });
+    // Whoever asked to pay comes first, then whoever has waited longest. The
+    // list used to render in table order while only the fallback selection
+    // preferred a requester, so a guest who pressed "hesap" could sit below
+    // three tables who had not.
+    return sortCashierBills(
+      tables.flatMap((table) => {
+        // Only a served order is collectable; the API rejects anything earlier.
+        const order = orders.find(
+          (candidate) => candidate.tableId === table.id && candidate.status === "served",
+        );
+        return order ? [{ table, order, billRequested: billRequestTableIds.has(table.id) }] : [];
+      }),
+    );
   }, [resource.data]);
 
-  const selectedBill =
-    openBills.find((bill) => bill.table.id === selectedTableId) ??
-    openBills.find((bill) => bill.billRequested) ??
-    openBills[0];
+  /**
+   * A chosen table that leaves the counter clears the panel instead of falling
+   * through to another bill. A poll landing between reading a total and
+   * pressing Ödemeyi Tamamla could otherwise swap the panel to a different
+   * table under the cashier's hand, and payment is not a place to guess.
+   */
+  const selection = useMemo(
+    () => resolveCashierSelection(openBills, selectedTableId),
+    [openBills, selectedTableId],
+  );
+  const selectedBill = selection.bill ?? undefined;
+  /**
+   * A phone shows one step at a time.
+   *
+   * Below lg the two panels used to stack, so reaching a check meant scrolling
+   * past every open table first. The step is derived from the selection that
+   * already exists — an explicit pick is "show me this check", no pick is
+   * "show me the counter" — so no second source of truth was added.
+   */
+  const mobileShowsDetail = selection.reason === "explicit";
   const selectedMethod = selectedBill ? methodsByTable[selectedBill.table.id] ?? "card" : "card";
   const visibleBills = openBills;
 
@@ -205,7 +252,13 @@ export function CashierDashboard() {
         { orderId: bill.order.id, method: API_PAYMENT_METHOD[selectedMethod] },
         newIdempotencyKey(),
       );
-      setLastPaid({ tableName: bill.table.name, method: selectedMethod });
+      void playSound("payment-success");
+      setLastPaid({
+        tableName: bill.table.name,
+        method: selectedMethod,
+        paymentId: payment.paymentId,
+        amount: payment.amount,
+      });
       setSelectedTableId(null);
       await refetch();
       await refetchShift();
@@ -214,6 +267,7 @@ export function CashierDashboard() {
       });
     } catch (error) {
       // Never show a paid state for a rejected collection.
+      void playSound("error");
       toast.error(error instanceof ApiClientError ? error.message : "Ödeme alınamadı.");
       // A conflict means the bill or the drawer moved under us — already paid,
       // shift closed, check settled elsewhere. Re-read both so the operator is
@@ -224,6 +278,20 @@ export function CashierDashboard() {
       }
     } finally {
       setCollecting(false);
+    }
+  }
+
+  async function printReceipt(paymentId: string) {
+    if (printingReceipt) return;
+    setPrintingReceipt(true);
+    try {
+      await printApi.send({ documentType: "PAYMENT_RECEIPT", paymentId });
+      toast.success("Makbuz yazıcıya gönderildi.");
+    } catch (error) {
+      // Never rolls back the collection: the money was taken, the paper was not.
+      toast.error(error instanceof ApiClientError ? error.message : "Makbuz yazdırılamadı.");
+    } finally {
+      setPrintingReceipt(false);
     }
   }
 
@@ -241,17 +309,31 @@ export function CashierDashboard() {
   ) : null;
 
   if (!selectedBill) {
+    // "Gone" is not "empty": other tables are still owing. The check this
+    // cashier had chosen was settled, reopened or split somewhere else, and
+    // saying so is the whole point of refusing to silently pick another one.
+    const selectionLost = selection.reason === "gone";
     return (
       <main className="min-h-[100dvh] bg-background p-4 sm:p-6">
         <div className="mx-auto max-w-3xl">
           {shiftSection}
           <div className="mt-6 text-center">
-            <CircleCheckBig className="mx-auto size-10 text-olive" aria-hidden="true" />
+            {selectionLost ? (
+              <TriangleAlert className="mx-auto size-10 text-status-warning" aria-hidden="true" />
+            ) : (
+              <CircleCheckBig className="mx-auto size-10 text-olive" aria-hidden="true" />
+            )}
             <h1 className="mt-4 font-heading text-2xl font-semibold">
-              {resource.loading ? "Hesaplar yükleniyor…" : "Açık hesap bulunmuyor"}
+              {selectionLost
+                ? "Seçili hesap artık açık değil"
+                : resource.loading
+                  ? "Hesaplar yükleniyor…"
+                  : "Açık hesap bulunmuyor"}
             </h1>
             <p className="mt-2 text-sm text-muted-foreground">
-              {resource.error
+              {selectionLost
+                ? "Bu hesap başka bir yerde kapatılmış, bölünmüş veya yeniden açılmış olabilir. Ödeme almadan önce listeden tekrar seçin."
+                : resource.error
                 ? resource.error.message
                 : resource.loading
                   ? // While the first read is still in flight nothing is known
@@ -262,7 +344,16 @@ export function CashierDashboard() {
                     ? `${lastPaid.tableName} hesabı kapatıldı. Yeni bir masa hesabı açıldığında burada görünecek.`
                     : "Servis edilen bir sipariş oluştuğunda burada görünecek."}
             </p>
-            <div className="mt-4 flex justify-center">
+            <div className="mt-4 flex flex-col items-center gap-3">
+              {selectionLost ? (
+                <Button
+                  type="button"
+                  className="h-12 min-w-52 text-base font-bold"
+                  onClick={() => setSelectedTableId(null)}
+                >
+                  Hesap listesine dön
+                </Button>
+              ) : null}
               <RealtimeStatus status={realtimeStatus} />
             </div>
           </div>
@@ -291,9 +382,12 @@ export function CashierDashboard() {
             </Badge>
           </div>
 
-          <p className="shrink-0 text-lg font-extrabold tabular-nums tracking-tight" suppressHydrationWarning>
-            {formatClock(now)}
-          </p>
+          <div className="flex shrink-0 items-center gap-3">
+            <SoundControl />
+            <p className="text-lg font-extrabold tabular-nums tracking-tight" suppressHydrationWarning>
+              {formatClock(now)}
+            </p>
+          </div>
         </div>
       </header>
 
@@ -306,7 +400,7 @@ export function CashierDashboard() {
             already say — the open total, how many bills, which ones asked for
             the cheque — and pushed the collect button further down a tablet. */}
         <div className="grid items-start gap-4 lg:grid-cols-[minmax(18rem,0.8fr)_minmax(0,1.5fr)] xl:gap-5">
-          <Card className="gap-0 py-0">
+          <Card className={cn("gap-0 py-0", mobileShowsDetail && "hidden lg:block")}>
             <CardHeader className="border-b py-4">
               <div className="flex items-center justify-between gap-3">
                 <div>
@@ -374,10 +468,19 @@ export function CashierDashboard() {
             </CardContent>
           </Card>
 
-          <Card className="gap-0 py-0">
+          <Card className={cn("gap-0 py-0", !mobileShowsDetail && "hidden lg:block")}>
             <CardHeader className="border-b px-4 py-4 sm:px-5">
               <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                 <div>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    className="-ms-2 mb-1 h-11 gap-1.5 px-2 text-sm font-semibold lg:hidden"
+                    onClick={() => setSelectedTableId(null)}
+                  >
+                    <ChevronLeft className="size-4" aria-hidden="true" />
+                    Hesaplar
+                  </Button>
                   <div className="flex flex-wrap items-center gap-2.5">
                     <CardTitle className="text-2xl">{selectedBill.table.name}</CardTitle>
                     <StatusBadge status="pending" label="Ödeme Bekliyor" />
@@ -407,31 +510,7 @@ export function CashierDashboard() {
             <CardContent className="p-0">
               <div className="border-b border-border px-4 py-4 sm:px-5">
                 <h2 className="text-base font-bold">Sipariş kalemleri</h2>
-                <Table className="mt-2 min-w-[34rem]">
-                  <TableHeader>
-                    <TableRow className="hover:bg-transparent">
-                      <TableHead className="pl-0">Ürün</TableHead>
-                      <TableHead className="w-20 text-center">Adet</TableHead>
-                      <TableHead className="w-28 text-right">Birim</TableHead>
-                      <TableHead className="w-28 pr-0 text-right">Tutar</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {selectedBill.order.items.map((item) => (
-                      <TableRow key={item.id}>
-                        <TableCell className="pl-0 whitespace-normal">
-                          <span className="font-semibold text-foreground">{item.productName}</span>
-                          {item.note ? <span className="mt-0.5 block text-xs text-burgundy">Not: {item.note}</span> : null}
-                        </TableCell>
-                        <TableCell className="text-center font-bold tabular-nums">{item.quantity}</TableCell>
-                        <TableCell className="text-right tabular-nums text-muted-foreground">{formatCurrency(item.unitPrice)}</TableCell>
-                        <TableCell className="pr-0 text-right font-bold tabular-nums">
-                          {formatCurrency(item.quantity * item.unitPrice)}
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
+                <CashierBillItems items={selectedBill.order.items} />
               </div>
 
               <div className="px-4 py-4 sm:px-5 sm:py-5">
@@ -441,9 +520,38 @@ export function CashierDashboard() {
                       <CircleCheckBig className="size-5" aria-hidden="true" />
                     </div>
                     <h2 className="mt-2 font-heading text-lg font-semibold text-status-success">Ödeme alındı</h2>
+                    <p className="mt-1 text-2xl font-extrabold tabular-nums text-status-success">
+                      {formatCurrency(Number(lastPaid.amount))}
+                    </p>
                     <p className="mt-1 max-w-sm text-sm leading-6 text-status-success">
                       {lastPaid.tableName} hesabı {lastPaid.method === "cash" ? "nakit olarak" : lastPaid.method === "card" ? "kartla" : "diğer yöntemle"} kapatıldı.
                     </p>
+                    {/* Printing is best-effort: a receipt that fails to queue
+                        does not un-collect the money that was just taken. */}
+                    <div className="mt-3 flex w-full flex-col gap-2 sm:w-auto sm:flex-row">
+                      <Button
+                        type="button"
+                        variant="outline"
+                        disabled={printingReceipt}
+                        aria-busy={printingReceipt}
+                        className="h-11 font-semibold"
+                        onClick={() => void printReceipt(lastPaid.paymentId)}
+                      >
+                        <Printer className="size-4" aria-hidden="true" />
+                        Makbuz Yazdır
+                      </Button>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        className="h-11 font-semibold"
+                        onClick={() => {
+                          setLastPaid(null);
+                          setSelectedTableId(null);
+                        }}
+                      >
+                        Hesaplara Dön
+                      </Button>
+                    </div>
                   </div>
                 ) : null}
                 {(
@@ -493,12 +601,17 @@ export function CashierDashboard() {
                         Kasa kapalı. Tahsilat ve iade için önce kasayı açın.
                       </p>
                     ) : null}
+                    {/* On a phone the check can be long, and the button that
+                        takes the money should not be somewhere below it. It
+                        sticks to the bottom edge above the home indicator; from
+                        lg it sits in the flow, where the panel is short. */}
+                    <div className="sticky bottom-0 -mx-4 mt-4 border-t border-border bg-card/95 px-4 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-3 backdrop-blur sm:-mx-5 sm:px-5 lg:static lg:m-0 lg:border-0 lg:bg-transparent lg:p-0 lg:pt-0 lg:backdrop-blur-none">
                     <Button
                       type="button"
                       size="lg"
                       disabled={collecting || !shiftOpen}
                       aria-busy={collecting}
-                      className="mt-4 h-12 w-full bg-burgundy text-base font-bold text-primary-foreground hover:bg-burgundy/90"
+                      className="h-12 w-full bg-burgundy text-base font-bold text-primary-foreground hover:bg-burgundy/90 lg:mt-4"
                       onClick={() => void takePayment()}
                     >
                       <Check className="size-5" aria-hidden="true" />
@@ -515,8 +628,9 @@ export function CashierDashboard() {
                       onClick={() => setOperationsOpen(true)}
                     >
                       <Split className="size-4" aria-hidden="true" />
-                      Hesap İşlemleri
+                      Hesabı Böl · Kısmi Ödeme · İade
                     </Button>
+                    </div>
                   </div>
                 )}
               </div>

@@ -25,6 +25,7 @@ export async function GET(): Promise<NextResponse> {
     const orders = await service.getActiveOrders(
       context.restaurantId,
       context.tableId,
+      context.sessionNonce,
     );
     return NextResponse.json(apiSuccess({ orders }), {
       status: 200,

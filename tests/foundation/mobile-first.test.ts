@@ -31,14 +31,13 @@ const globalsCss = read("app/globals.css");
 
 /* ------------------------------------------------ customer discovery ----- */
 
-test("the customer menu still refuses a search box and a permanent chip rail", () => {
-  // Two settled product decisions. A search box asks a guest to name a dish
-  // they have not read yet; a chip rail spends a strip of every screen on
-  // navigation the guest needs twice a meal.
+test("the customer menu offers localized search without restoring a permanent chip rail", () => {
+  // Search is now a catalog requirement, but category navigation remains a
+  // compact sheet so it does not spend a permanent strip of every screen.
   for (const [name, source] of [["QR menu", menuExperience], ["public ordering", guestOrder]] as const) {
     assert.equal(source.includes("CategoryChips"), false, `${name} brought the chip rail back`);
-    assert.equal(source.includes('t("searchLabel")'), false, `${name} brought the search box back`);
   }
+  assert.equal(menuExperience.includes('t("searchLabel")'), true, "QR menu lost localized search");
 });
 
 test("a long menu can be navigated by category without hiding any dish", () => {
@@ -174,7 +173,7 @@ test("a recommendation is a few suggestions, not the menu a second time", () => 
   const sections = read("lib/adapters/customer-menu-sections.ts");
   assert.match(sections, /export const MENU_HIGHLIGHT_LIMIT = 3;/);
   assert.equal((sections.match(/slice\(0, MENU_HIGHLIGHT_LIMIT\)/g) ?? []).length, 2);
-  assert.match(menuExperience, /buildCustomerMenuSections\(menuCategories, publicProducts\)/);
+  assert.match(menuExperience, /buildCustomerMenuSections\(menuCategories, visibleProducts\)/);
   assert.doesNotMatch(menuExperience, /const MENU_HIGHLIGHT_LIMIT/, "the cap was copied back");
   assert.match(menuSectionsSource, /<HighlightCard/);
   assert.doesNotMatch(highlightCard, /<Button/, "the suggestion grew a second add control");
@@ -206,7 +205,7 @@ test("a dish is a row on a menu, not a card in a dashboard", () => {
   assert.match(productCard, /rounded-xl bg-card p-3/);
   // A square plate at phone size, and the image request agrees with it.
   assert.match(productCard, /size-23 shrink-0 overflow-hidden rounded-lg/);
-  assert.match(productCard, /sizes="\(max-width: 640px\) 92px, 112px"/, "the image request disagrees with the frame");
+  assert.match(productCard, /sizes="92px"/, "the image request disagrees with the fixed frame");
   // A recipe paragraph in the feed is what made the menu twelve thousand pixels long.
   assert.match(productCard, /line-clamp-2/, "the feed description lost its two-line clamp");
 });
@@ -235,12 +234,25 @@ test("the add control is a thumb target and the only filled thing on the card", 
 
 /* ------------------------------------------------ operations ------------- */
 
-test("the waiter's floor is one column on a phone", () => {
-  // Two columns at 390px truncated the table name to "M…", which is the one
-  // thing the card exists to say.
-  const grid = read("components/staff/table-grid.tsx");
-  assert.match(grid, /grid grid-cols-1 gap-3 sm:grid-cols-2/);
-  assert.doesNotMatch(grid, /"grid grid-cols-2/, "the floor went back to two columns on a phone");
+test("the waiter's floor keeps the table name readable on a phone", () => {
+  // Two columns used to truncate the table name to "M…" — the one thing the
+  // card exists to say — because the card carried a 2xl name, badges and a
+  // 144px body. The service card is compact by design, so two columns is now
+  // the intent: the name is still the first and largest element, it truncates
+  // rather than wrapping the layout, and the status line wraps under it.
+  const card = read("components/staff/cockpit/service-table-card.tsx");
+  assert.match(
+    card,
+    /min-w-0 truncate text-\[17px\] font-extrabold/,
+    "the table name lost its emphasis or its ability to shrink",
+  );
+  assert.match(
+    card,
+    /mt-auto flex flex-wrap items-center justify-between/,
+    "the status line cannot wrap under the name",
+  );
+  const cockpit = read("components/staff/cockpit/service-cockpit.tsx");
+  assert.match(cockpit, /board=\{renderBoard\(parts, "grid-cols-2 sm:grid-cols-3"\)\}/, "the board lost its phone grid");
 });
 
 test("the kitchen board does not force its lanes side by side on a phone", () => {

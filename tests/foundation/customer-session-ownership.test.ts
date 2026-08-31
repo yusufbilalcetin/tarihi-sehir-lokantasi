@@ -3,19 +3,19 @@ import { readFileSync } from "node:fs";
 import test from "node:test";
 
 /**
- * The gap these guard, and the half-built state they keep honest.
+ * Who owns a guest's orders, and what keeps that answer honest.
  *
- * A guest's orders are currently owned by `(restaurant, table)` plus "not yet
+ * A guest's orders used to be owned by `(restaurant, table)` plus "not yet
  * settled". That is a proxy for one sitting, not the sitting itself: an order
- * left unsettled when a party leaves stays visible to whoever scans that table
- * next. The signed table session already mints a per-scan nonce, so the
- * ownership fact exists — it was simply never recorded on the order.
+ * left unsettled when a party left stayed visible to whoever scanned that
+ * table next. The signed table session already mints a per-scan nonce, so the
+ * ownership fact existed — it was simply never recorded on the order, and
+ * never asked for when reading one back.
  *
- * The column and the migration are prepared; the stamping and the query
- * predicate are deliberately NOT wired, because writing or reading a column
- * the database does not have yet would take the ordering flow down. These
- * tests hold both halves of that: what is ready, and what must stay unwired
- * until the migration is authorised and applied.
+ * Migration 0017 added the column; these tests hold the wiring around it. The
+ * shape of the guarantee is: the nonce is minted server-side, travels only in
+ * the HttpOnly cookie, is stamped onto the order at creation, is required to
+ * read one back, and is never sent anywhere a guest or a log can see it.
  */
 
 function read(relativePath: string): string {
@@ -27,7 +27,11 @@ const schema = read("db/schema.ts");
 const migration = read("db/migrations/0017_customer_session_order_ownership.sql");
 const journal = read("db/migrations/meta/_journal.json");
 const orderRoute = read("app/api/orders/route.ts");
+const activeRoute = read("app/api/orders/active/route.ts");
+const orderService = read("lib/services/order-service.ts");
 const customerRepo = read("lib/repositories/drizzle-customer-order-query-repository.ts");
+const queryService = read("lib/services/customer-order-query-service.ts");
+const gate = read("proxy.ts");
 
 test("the session nonce comes from the signed cookie and nowhere else", () => {
   assert.match(context, /readonly sessionNonce: string/);
@@ -71,23 +75,93 @@ test("the migration is additive only", () => {
   assert.match(journal, /0017_customer_session_order_ownership/);
 });
 
-test("nothing reads or writes the column while the database lacks it", () => {
-  // This is the runtime-safety contract. Until the migration is applied, an
-  // INSERT naming this column or a SELECT projecting it would throw 42703 and
-  // take down ordering or the customer order view.
+test("order creation stamps the sitting from the verified context, never the body", () => {
+  // The route reads it off `requireCustomerTableContext`, which is the cookie.
+  assert.match(orderRoute, /sessionNonce: context\.sessionNonce/);
+  // And the request body has no field that could carry one: the schema is
+  // strict, so an extra key is a 400 rather than an override.
+  assert.match(orderRoute, /\.strict\(\)/);
   assert.ok(
-    !orderRoute.includes("customerSessionNonce"),
-    "order creation stamps a column the database may not have yet",
+    !/parsed\.data\.\w*[Nn]once/.test(orderRoute),
+    "order creation reads a nonce out of the request body",
   );
-  assert.ok(
-    !customerRepo.includes("customerSessionNonce"),
-    "the customer query selects a column the database may not have yet",
+
+  // Only a table sitting owns an order this way; staff and takeaway stay null.
+  assert.match(
+    orderService,
+    /customerSessionNonce:\s*\n?\s*command\.creator\.kind === "CUSTOMER" \? command\.creator\.sessionNonce : null,/,
+  );
+  // A blank sitting is refused rather than written as an order nobody can read.
+  assert.match(orderService, /!command\.creator\.sessionNonce/);
+});
+
+test("the customer read requires the sitting and fails closed without one", () => {
+  assert.match(activeRoute, /context\.sessionNonce/);
+  // Exact equality. `orders.customer_session_nonce = $1` is null for a staff
+  // order and for every pre-migration row, and a null comparison is not true,
+  // so those rows drop out without a second predicate.
+  assert.match(customerRepo, /eq\(orders\.customerSessionNonce, sessionNonce\)/);
+  // The service refuses to issue the query at all rather than letting an empty
+  // nonce widen it back to the whole table.
+  assert.match(queryService, /if \(!sessionNonce\)/);
+  assert.match(queryService, /INVALID_TABLE_TOKEN/);
+});
+
+test("the customer order query is still tenant and table scoped", () => {
+  // The sitting is an addition to these, not a replacement: a nonce guessed or
+  // replayed across tenants still meets a restaurant and a table predicate.
+  assert.match(customerRepo, /eq\(orders\.restaurantId, restaurantId\)/);
+  assert.match(customerRepo, /eq\(orders\.tableId, tableId\)/);
+  assert.match(customerRepo, /inArray\(orders\.status, \[\.\.\.ACTIVE_ORDER_STATUSES\]\)/);
+});
+
+test("the sitting is part of what makes a request the same request", () => {
+  // Two parties at one table share the `CUSTOMER_ORDER:<tableId>` idempotency
+  // scope. Without the sitting in the fingerprint, the second party reusing
+  // the first party's key would be handed the first party's order back as a
+  // successful replay — someone else's order number and total.
+  assert.match(
+    orderService,
+    /sessionNonce:\s*\n?\s*command\.creator\.kind === "CUSTOMER" \? command\.creator\.sessionNonce : null,/,
+  );
+  assert.match(orderService, /const requestHash = sha256\(requestMaterial\)/);
+});
+
+test("the nonce is never sent to the browser and never logged", () => {
+  // It is a bearer value for the sitting: anything that echoes it hands the
+  // next party at the table the key to the previous party's orders.
+  const projected = customerRepo.match(/customerSessionNonce/g) ?? [];
+  assert.equal(
+    projected.length,
+    1,
+    "the ownership column appears outside the where clause — it may be projected",
+  );
+  for (const [name, source] of [
+    ["the create route", orderRoute],
+    ["the active-order route", activeRoute],
+  ] as const) {
+    assert.ok(
+      !/logger\.\w+\([^)]*[Nn]once/s.test(source),
+      `${name} passes the nonce to a log line`,
+    );
+  }
+  // Nothing the guest receives carries it: neither the row the repository
+  // hands back nor the shape the route serialises has a field for it.
+  assert.doesNotMatch(
+    read("lib/repositories/customer-order-query-repository.ts"),
+    /readonly (customerSessionNonce|sessionNonce)/,
+    "a customer-facing record type carries the sitting nonce",
+  );
+  assert.doesNotMatch(
+    queryService,
+    /readonly (customerSessionNonce|sessionNonce)/,
+    "the customer-facing result type carries the sitting nonce",
   );
 });
 
 test("no query on orders projects every column", () => {
-  // The column above is only inert because every read names its columns. A
-  // bare `select()` would start returning it and fail before the migration.
+  // A bare `select()` would start returning the ownership column to whichever
+  // surface ran it, which is how a bearer value leaks by accident.
   for (const path of [
     "lib/repositories/drizzle-customer-order-query-repository.ts",
     "lib/repositories/drizzle-order-repository.ts",
@@ -101,8 +175,16 @@ test("no query on orders projects every column", () => {
   }
 });
 
-test("the customer order query is still tenant and table scoped", () => {
-  assert.match(customerRepo, /eq\(orders\.restaurantId, restaurantId\)/);
-  assert.match(customerRepo, /eq\(orders\.tableId, tableId\)/);
-  assert.match(customerRepo, /inArray\(orders\.status, \[\.\.\.ACTIVE_ORDER_STATUSES\]\)/);
+test("a reload keeps the sitting instead of minting a new one", () => {
+  // The guest never leaves `/menu/<token>`, so the gate re-runs on every
+  // refresh. Re-minting the session there would re-mint the nonce, and the
+  // guest would be disowned from the order they had just placed.
+  assert.match(gate, /if \(!sessionAlreadyOpen\(request, established\)\) \{/);
+  assert.match(gate, /claims\.restaurantId === established\.restaurant\.id/);
+  assert.match(gate, /claims\.tableId === established\.table\.id/);
+  // A rotated or revoked QR code moves the access version, so the old cookie
+  // is not reused: revocation still ends the sitting immediately.
+  assert.match(gate, /claims\.accessVersion === established\.table\.accessVersion/);
+  // And the QR token itself is still validated first, every time.
+  assert.match(gate, /await establishCustomerTableSession\(token\)/);
 });

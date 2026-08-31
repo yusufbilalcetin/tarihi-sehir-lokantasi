@@ -65,9 +65,18 @@ export interface CustomerTrackedOrderRecord {
 }
 
 export interface CustomerOrderQueryRepository {
+  /**
+   * The active orders of one guest sitting — never of the table.
+   *
+   * `sessionNonce` is the nonce of the caller's verified table session. Rows
+   * whose `customerSessionNonce` is null (staff orders, and everything written
+   * before the column existed) belong to no sitting and must not come back
+   * here, so the comparison is exact equality and null fails closed.
+   */
   findActiveByTable(
     restaurantId: string,
     tableId: string,
+    sessionNonce: string,
   ): Promise<CustomerActiveOrderRecords>;
   /** Scoped to the restaurant the capability names; null when it is not there. */
   findTrackedOrder(

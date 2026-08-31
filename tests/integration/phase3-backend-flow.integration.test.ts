@@ -274,6 +274,9 @@ if (!readiness.ready) {
         restaurantId: fixture.restaurantId,
         tableId: fixture.tableId,
         tableAccessVersion: 1,
+        // The sitting as the signed cookie minted it, not a value the caller
+        // invented: this is exactly what the route reads back out of it.
+        sessionNonce: customerSession.claims.nonce,
         idempotencyKey: `phase3-${randomBytes(12).toString("hex")}`,
         items: [tamperedItem],
         notes: "Integration order",

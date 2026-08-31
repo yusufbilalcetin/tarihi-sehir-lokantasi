@@ -31,6 +31,9 @@ export interface Category {
   imageUrl?: string | null;
   /** Stable translation-catalog key; database rows use UUID ids. */
   i18nKey?: string;
+  /** Sparse database translations keyed by the shared supported locale code. */
+  translations?: import("@/lib/i18n/catalog-localization").CatalogTranslations;
+  defaultLocale?: string;
 }
 
 export interface Product {
@@ -50,6 +53,9 @@ export interface Product {
   popular?: boolean;
   /** Stable translation-catalog key; database rows use UUID ids. */
   i18nKey?: string;
+  /** Sparse database translations keyed by the shared supported locale code. */
+  translations?: import("@/lib/i18n/catalog-localization").CatalogTranslations;
+  defaultLocale?: string;
 }
 
 export type OrderItemStatus =

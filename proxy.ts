@@ -12,6 +12,7 @@ import {
   CUSTOMER_TABLE_SESSION_COOKIE,
   CUSTOMER_TABLE_SESSION_TTL_SECONDS,
 } from "@/lib/security/customer-session";
+import { readCustomerTableSession } from "@/lib/security/customer-session.server";
 import { createLogger } from "@/lib/security/logger";
 import { enforceRateLimit } from "@/lib/security/rate-limit.server";
 
@@ -153,6 +154,40 @@ function invalidMenuRedirect(request: NextRequest): NextResponse {
 }
 
 /**
+ * True when the browser already holds a valid session for exactly the sitting
+ * this scan would open: same tenant, same table, same QR generation.
+ *
+ * The guest never leaves `/menu/<token>`, so every reload re-runs this gate.
+ * Minting a fresh session each time would also mint a fresh nonce, and the
+ * nonce is what says which orders are theirs — a refresh would silently
+ * disown the order they just placed. Keeping the cookie keeps the sitting.
+ *
+ * It cannot extend access: the QR token was validated first, and a rotated or
+ * revoked code moves `accessVersion`, which makes this false and re-mints.
+ * The cookie's own expiry is not refreshed either, so a sitting still ends
+ * when its session does.
+ */
+function sessionAlreadyOpen(
+  request: NextRequest,
+  established: { restaurant: { id: string }; table: { id: string; accessVersion: number } },
+): boolean {
+  let claims;
+  try {
+    claims = readCustomerTableSession(
+      request.cookies.get(CUSTOMER_TABLE_SESSION_COOKIE)?.value,
+    );
+  } catch {
+    return false;
+  }
+  return Boolean(
+    claims &&
+      claims.restaurantId === established.restaurant.id &&
+      claims.tableId === established.table.id &&
+      claims.accessVersion === established.table.accessVersion,
+  );
+}
+
+/**
  * The QR URL credential is exchanged at the network boundary. Downstream UI
  * receives only the non-sensitive table number plus a signed HttpOnly cookie.
  */
@@ -171,15 +206,17 @@ export async function handleSecureMenuGate(
       String(established.table.tableNumber),
     );
     const response = NextResponse.next({ request: { headers: requestHeaders } });
-    response.cookies.set({
-      name: CUSTOMER_TABLE_SESSION_COOKIE,
-      value: established.sessionToken,
-      httpOnly: true,
-      sameSite: "lax",
-      secure: process.env.NODE_ENV === "production",
-      path: "/",
-      maxAge: CUSTOMER_TABLE_SESSION_TTL_SECONDS,
-    });
+    if (!sessionAlreadyOpen(request, established)) {
+      response.cookies.set({
+        name: CUSTOMER_TABLE_SESSION_COOKIE,
+        value: established.sessionToken,
+        httpOnly: true,
+        sameSite: "lax",
+        secure: process.env.NODE_ENV === "production",
+        path: "/",
+        maxAge: CUSTOMER_TABLE_SESSION_TTL_SECONDS,
+      });
+    }
     response.headers.set("Cache-Control", "private, no-store, max-age=0");
     return response;
   } catch (error) {

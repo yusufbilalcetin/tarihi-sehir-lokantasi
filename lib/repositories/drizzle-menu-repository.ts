@@ -5,7 +5,9 @@ import { and, asc, eq, isNull, sql } from "drizzle-orm";
 import type { Database } from "../../db";
 import {
   categories,
+  categoryTranslations,
   products,
+  productTranslations,
   popularProductSnapshots,
   restaurants,
   restaurantSettings,
@@ -16,7 +18,14 @@ export class DrizzleMenuRepository implements MenuRepository {
   constructor(private readonly db: Database) {}
 
   async findPublicMenuByRestaurantId(restaurantId: string): Promise<PublicMenuRecords> {
-    const [restaurantRows, settingsRows, categoryRows, productRows] = await Promise.all([
+    const [
+      restaurantRows,
+      settingsRows,
+      categoryRows,
+      productRows,
+      categoryTranslationRows,
+      productTranslationRows,
+    ] = await Promise.all([
       this.db
         .select({
           id: restaurants.id,
@@ -110,6 +119,26 @@ export class DrizzleMenuRepository implements MenuRepository {
           ),
         )
         .orderBy(asc(products.sortOrder), asc(products.name)),
+      this.db
+        .select({
+          categoryId: categoryTranslations.categoryId,
+          locale: categoryTranslations.locale,
+          name: categoryTranslations.name,
+          description: categoryTranslations.description,
+        })
+        .from(categoryTranslations)
+        .where(eq(categoryTranslations.restaurantId, restaurantId))
+        .orderBy(asc(categoryTranslations.categoryId), asc(categoryTranslations.locale)),
+      this.db
+        .select({
+          productId: productTranslations.productId,
+          locale: productTranslations.locale,
+          name: productTranslations.name,
+          description: productTranslations.description,
+        })
+        .from(productTranslations)
+        .where(eq(productTranslations.restaurantId, restaurantId))
+        .orderBy(asc(productTranslations.productId), asc(productTranslations.locale)),
     ]);
 
     return {
@@ -117,6 +146,8 @@ export class DrizzleMenuRepository implements MenuRepository {
       settings: settingsRows[0] ?? null,
       categories: categoryRows,
       products: productRows,
+      categoryTranslations: categoryTranslationRows,
+      productTranslations: productTranslationRows,
     };
   }
 }

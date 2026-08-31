@@ -50,3 +50,13 @@ tools/printer-agent/*.journal.json
 
 # Personal editor state, not project configuration.
 .vscode/
+
+# Local database/verification scratch: pg_dump artefacts, the pg client
+# environment file and one-off scripts. Root-anchored so nothing inside
+# reference/ or .claude/ is affected.
+/.pgenv
+/*.dump
+/*.backup
+/*.toc
+/tmp-*.mjs
+/p2-guard.mjs

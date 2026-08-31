@@ -1,6 +1,6 @@
 "use client";
 
-import { useSyncExternalStore } from "react";
+import { useCallback, useSyncExternalStore } from "react";
 
 /**
  * Whether this viewport is wide enough for a centred window rather than a sheet.
@@ -18,6 +18,9 @@ import { useSyncExternalStore } from "react";
 
 /** Tailwind's `lg`. Kept in one place so the two shapes never disagree. */
 export const DESKTOP_MEDIA_QUERY = "(min-width: 1024px)";
+
+/** Tailwind's `md`: where the waiter panel becomes a three-column cockpit. */
+export const TABLET_MEDIA_QUERY = "(min-width: 768px)";
 
 function subscribe(onChange: () => void): () => void {
   const query = window.matchMedia(DESKTOP_MEDIA_QUERY);
@@ -40,4 +43,26 @@ function getServerSnapshot(): boolean {
 
 export function useIsDesktop(): boolean {
   return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+}
+
+/**
+ * The same contract for any breakpoint.
+ *
+ * `serverDefault` decides which shape is rendered before the browser answers.
+ * It is a real choice, not a detail: the waiter panel is used on phones, so it
+ * asks for the phone shape and lets a tablet correct on hydration. Guessing
+ * "wide" there paints a product grid underneath the table board on a phone for
+ * one frame, which is the exact stacking the layout exists to prevent.
+ */
+export function useMediaQuery(query: string, serverDefault = true): boolean {
+  const subscribeToQuery = useCallback(
+    (onChange: () => void) => {
+      const list = window.matchMedia(query);
+      list.addEventListener("change", onChange);
+      return () => list.removeEventListener("change", onChange);
+    },
+    [query],
+  );
+  const snapshot = useCallback(() => window.matchMedia(query).matches, [query]);
+  return useSyncExternalStore(subscribeToQuery, snapshot, () => serverDefault);
 }
