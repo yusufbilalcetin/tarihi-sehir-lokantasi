@@ -325,9 +325,11 @@ if (!readiness.ready) {
 
       await shifts.recordMovement(cashier(), {
         shiftId, type: "CASH_IN", amount: "50.00", reason: `${PREFIX}Bozuk para`,
+        idempotencyKey: `${PREFIX}cash-in-1`,
       });
       const after = await shifts.recordMovement(cashier(), {
         shiftId, type: "CASH_OUT", amount: "20.00", reason: `${PREFIX}Tedarikci`,
+        idempotencyKey: `${PREFIX}cash-out-1`,
       });
       check(
         after.summary.expectedCash === "810.00",
@@ -514,6 +516,7 @@ if (!readiness.ready) {
           code(() =>
             shifts.recordMovement(otherCashier(), {
               shiftId, type: "CASH_OUT", amount: "25.00", reason: `${PREFIX}race`,
+              idempotencyKey: `${PREFIX}race-movement`,
             }),
           ),
         ]);
@@ -605,6 +608,7 @@ if (!readiness.ready) {
         });
         await scoped.recordMovement(otherCashier(), {
           shiftId: opened.shift.id, type: "CASH_IN", amount: "5.00", reason: `${PREFIX}tek baglanti`,
+          idempotencyKey: `${PREFIX}single-connection`,
         });
         const closed = await scoped.close(otherCashier(), {
           shiftId: opened.shift.id,
@@ -784,6 +788,7 @@ if (!readiness.ready) {
         (await code(() =>
           shifts.recordMovement(foreign, {
             shiftId, type: "CASH_IN", amount: "1.00", reason: "x",
+            idempotencyKey: `${run}-foreign-movement`,
           }),
         )) === "NOT_FOUND",
         "movement",

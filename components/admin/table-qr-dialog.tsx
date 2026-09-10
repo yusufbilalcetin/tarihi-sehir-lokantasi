@@ -9,7 +9,7 @@ import { BrandedTableQr } from "@/components/shared/branded-table-qr";
 import { Button } from "@/components/ui/button";
 import { Dialog } from "@/components/ui/dialog";
 import { WindowDialogContent } from "@/components/ui/window-dialog";
-import { ApiClientError } from "@/lib/api/client";
+import { userErrorMessage } from "@/lib/api/error-message";
 import { adminApi, type TableQrCodeRow } from "@/lib/api/endpoints";
 
 export interface TableQrDialogTable {
@@ -66,7 +66,7 @@ export function TableQrDialog({
       });
     } catch (error) {
       toast.error(
-        error instanceof ApiClientError ? error.message : "QR kodu yenilenemedi.",
+        userErrorMessage(error, "QR kodu yenilenemedi."),
       );
     } finally {
       setBusy(false);

@@ -31,6 +31,9 @@ export interface Category {
   imageUrl?: string | null;
   /** Stable translation-catalog key; database rows use UUID ids. */
   i18nKey?: string;
+  /** Sparse database translations keyed by the shared supported locale code. */
+  translations?: import("@/lib/i18n/catalog-localization").CatalogTranslations;
+  defaultLocale?: string;
 }
 
 export interface Product {
@@ -50,6 +53,9 @@ export interface Product {
   popular?: boolean;
   /** Stable translation-catalog key; database rows use UUID ids. */
   i18nKey?: string;
+  /** Sparse database translations keyed by the shared supported locale code. */
+  translations?: import("@/lib/i18n/catalog-localization").CatalogTranslations;
+  defaultLocale?: string;
 }
 
 export type OrderItemStatus =
@@ -84,6 +90,14 @@ export interface Order {
   tableName: string;
   createdAt: string;
   elapsedMinutes: number;
+  /** The optimistic-lock version an item command has to send back. */
+  version: number;
+  /**
+   * What this order still owes, as the server derived it. A decimal string,
+   * kept as one so no screen turns money into a float on the way in. Null when
+   * the balance was not requested — which is not the same as owing nothing.
+   */
+  outstanding: string | null;
   items: OrderItem[];
   status: OrderStatus;
   total: number;

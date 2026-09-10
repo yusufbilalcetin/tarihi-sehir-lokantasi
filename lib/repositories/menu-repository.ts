@@ -30,6 +30,13 @@ export interface MenuCategoryRecord {
   readonly sortOrder: number;
 }
 
+export interface MenuCategoryTranslationRecord {
+  readonly categoryId: string;
+  readonly locale: string;
+  readonly name: string;
+  readonly description: string | null;
+}
+
 export interface MenuProductRecord {
   readonly id: string;
   readonly categoryId: string;
@@ -52,11 +59,20 @@ export interface MenuProductRecord {
   readonly version: number;
 }
 
+export interface MenuProductTranslationRecord {
+  readonly productId: string;
+  readonly locale: string;
+  readonly name: string;
+  readonly description: string | null;
+}
+
 export interface PublicMenuRecords {
   readonly restaurant: MenuRestaurantRecord | null;
   readonly settings: MenuSettingsRecord | null;
   readonly categories: readonly MenuCategoryRecord[];
   readonly products: readonly MenuProductRecord[];
+  readonly categoryTranslations?: readonly MenuCategoryTranslationRecord[];
+  readonly productTranslations?: readonly MenuProductTranslationRecord[];
 }
 
 export interface MenuRepository {

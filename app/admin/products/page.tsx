@@ -1,8 +1,5 @@
-import type { Metadata } from "next";
-import { ProductsManagerModule } from "@/components/admin/products-module";
+import { redirect } from "next/navigation";
 
-export const metadata: Metadata = { title: "Ürünler" };
-
-export default function AdminProductsManagerPage() {
-  return <ProductsManagerModule />;
+export default function AdminProductsLegacyPage() {
+  redirect("/admin/menu");
 }

@@ -1,5 +1,6 @@
 import "server-only";
 
+import { addDays, formatDay, toLocalDay } from "@/lib/domain/report-range";
 import { and, eq, gt, inArray, lt, ne, sql } from "drizzle-orm";
 
 import type { Database } from "@/db";
@@ -120,12 +121,18 @@ export class DrizzleErpWorkspaceRepository implements ErpWorkspaceRepository {
     const status = query.status;
     const category = query.category;
     const warehouseId = query.warehouseId;
-    const today = new Date().toISOString().slice(0, 10);
+    // The restaurant's calendar day, not UTC's. `toISOString()` here made
+    // 00:00-02:59 in Istanbul — while a late service is still trading — default
+    // every ERP list to yesterday and silently drop the current day's rows. The
+    // sibling overview repository already carries this fix; the workspace did
+    // not. `report-range` owns the offset so there is one place to change it.
+    const now = new Date();
+    const today = formatDay(toLocalDay(now));
     // The window is clamped here rather than in the query schema: a hand-edited
     // `dateFrom` of 1970-01-01 is a valid date, and only the server decides how
     // much history a single report is allowed to scan.
     const bounded = boundWorkspaceRange(
-      dateValue(query.dateFrom, new Date(Date.now() - 30 * 86_400_000).toISOString().slice(0, 10)),
+      dateValue(query.dateFrom, formatDay(addDays(toLocalDay(now), -30))),
       dateValue(query.dateTo, today),
     );
     const from = bounded.from;

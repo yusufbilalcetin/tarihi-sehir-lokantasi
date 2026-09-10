@@ -1,51 +1,60 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   Banknote,
+  CalendarCheck,
   Check,
+  ChevronLeft,
   CircleCheckBig,
-  Clock3,
   CreditCard,
   Ellipsis,
+  Printer,
   ReceiptText,
+  ShoppingBag,
   Split,
-  UsersRound,
+  Store,
+  TriangleAlert,
+  WalletCards,
 } from "lucide-react";
 import { toast } from "sonner";
-import { BrandMark } from "@/components/shared/brand-mark";
 import { StatusBadge } from "@/components/shared/status-badge";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import { Card, CardContent } from "@/components/ui/card";
+import { CashierBillItems } from "@/components/cashier/cashier-bill-items";
 import { BillOperationsSheet } from "@/components/cashier/bill-operations-sheet";
 import { ShiftPanel } from "@/components/cashier/shift-panel";
-import { RealtimeStatus } from "@/components/staff/realtime-status";
+import {
+  OperationalBackdrop,
+  OperationalAction,
+  OperationalActionGrid,
+  OperationalHero,
+  OperationalHome,
+  OperationalMetric,
+  OperationalMetricGrid,
+  OperationalSectionHeading,
+  OperationalTopBar,
+} from "@/components/staff/operational-ui";
+import { useStaffSession } from "@/components/staff/staff-session-provider";
 import { staffOrderToViewModel, staffTableToViewModel } from "@/lib/adapters/staff-view-model";
 import { ApiClientError, newIdempotencyKey } from "@/lib/api/client";
-import { cashierShiftApi, ledgerApi, paymentApi, staffApi } from "@/lib/api/endpoints";
+import { cashierShiftApi, ledgerApi, paymentApi, staffApi, printApi } from "@/lib/api/endpoints";
+import { NewEntityTracker } from "@/lib/audio/new-entity-tracker";
+import {
+  buildCashierBills,
+  resolveCashierSelection,
+  sortCashierBills,
+  summariseCashierMoney,
+  type CashierBill,
+} from "@/lib/domain/cashier-queue";
+import { playSound } from "@/lib/audio/sound-effects";
 import { useApiResource } from "@/lib/hooks/use-api-resource";
 import { useStaffRealtime } from "@/lib/realtime/use-staff-realtime";
 import { formatCurrency, formatElapsed } from "@/lib/format";
 import { cn } from "@/lib/utils";
-import type { Order, Payment, RestaurantTable } from "@/types";
+import type { Payment } from "@/types";
 
 type PaymentMethod = Payment["method"];
-
-interface OpenBill {
-  table: RestaurantTable;
-  order: Order;
-  /** True when the guest has already asked for the bill from the QR menu. */
-  billRequested: boolean;
-}
 
 const CASHIER_POLL_MS = 15_000;
 
@@ -83,18 +92,28 @@ function formatClock(date: Date | null) {
  * a cashier was scrolling past summary tiles to reach it mid-service.
  */
 export function CashierDashboard() {
-  const [selectedTableId, setSelectedTableId] = useState<string | null>(null);
-  const [lastPaid, setLastPaid] = useState<{ tableName: string; method: PaymentMethod } | null>(null);
-  const [methodsByTable, setMethodsByTable] = useState<Record<string, PaymentMethod>>({});
+  const { name } = useStaffSession();
+  // The payable entity is the order. A table can owe two of them at once,
+  // and a takeaway order owes one without being a table at all.
+  const [selectedOrderId, setSelectedOrderId] = useState<string | null>(null);
+  const [lastPaid, setLastPaid] = useState<
+    | { tableName: string; method: PaymentMethod; paymentId: string; amount: string }
+    | null
+  >(null);
+  const [printingReceipt, setPrintingReceipt] = useState(false);
+  const [methodsByOrder, setMethodsByOrder] = useState<Record<string, PaymentMethod>>({});
   const [collecting, setCollecting] = useState(false);
   const [operationsOpen, setOperationsOpen] = useState(false);
   const [now, setNow] = useState<Date | null>(null);
+  const notificationTracker = useRef(new NewEntityTracker());
 
   const loadCashier = useCallback(async (signal: AbortSignal) => {
     const [tables, orders, calls] = await Promise.all([
       staffApi.tables(signal),
-      // The till only ever collects a served, unsettled order.
-      staffApi.orders({ open: true }, signal),
+      // The till only ever collects a served, unsettled order, and it is the
+      // one screen that needs each order's money position: the server derives
+      // it, so the counter never adds up payments itself.
+      staffApi.orders({ open: true, withBalance: true }, signal),
       staffApi.calls(undefined, signal),
     ]);
     return { tables: tables.tables, orders: orders.orders, calls: calls.calls };
@@ -110,10 +129,29 @@ export function CashierDashboard() {
   const refetchShift = shiftResource.refetch;
   const shiftOpen = Boolean(shiftResource.data?.shift);
 
-  const realtimeStatus = useStaffRealtime({
-    onEvent: useCallback(() => void refetch(), [refetch]),
-    onResync: useCallback(() => void refetch(), [refetch]),
-  });
+  useEffect(() => {
+    const data = resource.data;
+    if (!data) return;
+    const notificationIds = [
+      ...data.orders
+        .filter((order) => order.status.toUpperCase() === "SERVED")
+        .map((order) => `order:${order.id}`),
+      ...data.calls
+        .filter(
+          (call) =>
+            call.type === "BILL_REQUEST" &&
+            (call.status === "OPEN" || call.status === "ACKNOWLEDGED"),
+        )
+        .map((call) => `bill-request:${call.id}`),
+    ];
+    if (notificationTracker.current.update(notificationIds)) {
+      void playSound("cashier-notification");
+    }
+  }, [resource.data]);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "auto" });
+  }, [selectedOrderId]);
 
   useEffect(() => {
     const timer = window.setTimeout(() => setNow(new Date()), 0);
@@ -124,7 +162,7 @@ export function CashierDashboard() {
     };
   }, []);
 
-  const openBills = useMemo<OpenBill[]>(() => {
+  const openBills = useMemo<readonly CashierBill[]>(() => {
     const tables = (resource.data?.tables ?? []).map((table) => staffTableToViewModel(table));
     const orders = (resource.data?.orders ?? []).map((order) => staffOrderToViewModel(order));
     const billRequestTableIds = new Set(
@@ -137,37 +175,57 @@ export function CashierDashboard() {
         .map((call) => call.table.id),
     );
 
-    return tables.flatMap((table) => {
-      // Only a served order is collectable; the API rejects anything earlier.
-      const order = orders.find(
-        (candidate) => candidate.tableId === table.id && candidate.status === "served",
-      );
-      return order ? [{ table, order, billRequested: billRequestTableIds.has(table.id) }] : [];
-    });
+    // Whoever asked to pay comes first, then whoever has waited longest. The
+    // list used to render in table order while only the fallback selection
+    // preferred a requester, so a guest who pressed "hesap" could sit below
+    // three tables who had not.
+    return sortCashierBills(buildCashierBills(tables, orders, billRequestTableIds));
   }, [resource.data]);
 
-  const selectedBill =
-    openBills.find((bill) => bill.table.id === selectedTableId) ??
-    openBills.find((bill) => bill.billRequested) ??
-    openBills[0];
-  const selectedMethod = selectedBill ? methodsByTable[selectedBill.table.id] ?? "card" : "card";
+  /**
+   * A chosen order that leaves the counter clears the panel instead of falling
+   * through to another bill. Keyed by table, settling one round silently handed
+   * the panel to the table's next round; payment is not a place to guess.
+   */
+  const selection = useMemo(
+    () => resolveCashierSelection(openBills, selectedOrderId),
+    [openBills, selectedOrderId],
+  );
+  // Landing on the till is a Home Screen, not an implicit payment decision.
+  // A payable only becomes the payment workspace after an explicit order-id
+  // selection; resolveCashierSelection still detects a stale chosen order.
+  const selectedBill = selectedOrderId ? selection.bill ?? undefined : undefined;
+  /**
+   * A phone shows one step at a time.
+   *
+   * Below lg the two panels used to stack, so reaching a check meant scrolling
+   * past every open table first. The step is derived from the selection that
+   * already exists — an explicit pick is "show me this check", no pick is
+   * "show me the counter" — so no second source of truth was added.
+   */
+  const selectedMethod = selectedBill ? methodsByOrder[selectedBill.order.id] ?? "card" : "card";
   const visibleBills = openBills;
 
   // The ledger is the server's money view of the selected bill; the counter
   // never derives collected or refunded figures itself.
-  const selectedOrderId = selectedBill?.order.id ?? null;
+  const ledgerOrderId = selectedBill?.order.id ?? null;
   const loadLedger = useCallback(
     (signal: AbortSignal) =>
-      selectedOrderId
-        ? ledgerApi.get(selectedOrderId, signal)
-        : Promise.resolve(null),
-    [selectedOrderId],
+      ledgerOrderId ? ledgerApi.get(ledgerOrderId, signal) : Promise.resolve(null),
+    [ledgerOrderId],
   );
-  const ledger = useApiResource(loadLedger, { enabled: Boolean(selectedOrderId) });
+  const ledger = useApiResource(loadLedger, { enabled: Boolean(ledgerOrderId) });
   const refetchLedger = ledger.refetch;
+  const currentLedger = ledger.data?.orderId === ledgerOrderId ? ledger.data : null;
+  const refreshFinancialState = useCallback(() => {
+    void refetch();
+    void refetchLedger();
+    void refetchShift();
+  }, [refetch, refetchLedger, refetchShift]);
+  const realtimeStatus = useStaffRealtime({ onEvent: refreshFinancialState, onResync: refreshFinancialState });
   const ledgerPayments = useMemo(
     () =>
-      (ledger.data?.payments ?? [])
+      (currentLedger?.payments ?? [])
         .filter((payment) => payment.status === "COMPLETED")
         .map((payment) => ({
           id: payment.id,
@@ -179,25 +237,61 @@ export function CashierDashboard() {
             minute: "2-digit",
           }).format(new Date(payment.processedAt)),
         })),
-    [ledger.data],
+    [currentLedger],
   );
 
-  const metrics = useMemo(() => {
-    const outstanding = openBills.reduce((sum, bill) => sum + bill.order.total, 0);
-    return {
-      outstanding,
-      paymentWaiting: openBills.filter((bill) => bill.billRequested).length,
-      unpaidCount: openBills.length,
-    };
-  }, [openBills]);
+  // The balances the server derived, added up — not the gross of the orders,
+  // and not netted across directions. Null when any bill's balance is missing:
+  // a partial answer is not a total, and is not shown as one.
+  const money = useMemo(() => summariseCashierMoney(openBills), [openBills]);
+  const cashierReady = resource.data !== null;
+  const shiftReady = shiftResource.data !== null;
+
+  const statusSummary = (
+    <OperationalMetricGrid ariaLabel="Canlı kasa durumu">
+      <OperationalMetric
+        label="Bekleyen Hesap"
+        value={money?.unpaidCount ?? "—"}
+        icon={ReceiptText}
+        tone="amber"
+        ready={cashierReady && money !== null}
+        loading={resource.loading}
+      />
+      <OperationalMetric
+        label="Vardiya Tahsilatı"
+        value={shiftResource.data?.summary ? formatCurrency(Number(shiftResource.data.summary.netCollected)) : "—"}
+        icon={WalletCards}
+        tone="green"
+        ready={Boolean(shiftResource.data?.summary)}
+        loading={shiftResource.loading}
+      />
+      <OperationalMetric
+        label="Kasa"
+        value={shiftResource.data?.shift?.register.name ?? "Kapalı"}
+        icon={Store}
+        tone="teal"
+        ready={shiftReady}
+        loading={shiftResource.loading}
+      />
+      <OperationalMetric
+        label="Vardiya"
+        value={shiftOpen ? "Açık" : "Kapalı"}
+        icon={Banknote}
+        tone={shiftOpen ? "blue" : "neutral"}
+        ready={shiftReady}
+        loading={shiftResource.loading}
+      />
+    </OperationalMetricGrid>
+  );
 
   const selectPaymentMethod = (method: PaymentMethod) => {
     if (!selectedBill || collecting) return;
-    setMethodsByTable((current) => ({ ...current, [selectedBill.table.id]: method }));
+    setMethodsByOrder((current) => ({ ...current, [selectedBill.order.id]: method }));
   };
 
   async function takePayment() {
     if (!selectedBill || collecting || !shiftOpen) return;
+    if (!currentLedger || ledger.error) return;
     setCollecting(true);
     const bill = selectedBill;
     try {
@@ -205,15 +299,24 @@ export function CashierDashboard() {
         { orderId: bill.order.id, method: API_PAYMENT_METHOD[selectedMethod] },
         newIdempotencyKey(),
       );
-      setLastPaid({ tableName: bill.table.name, method: selectedMethod });
-      setSelectedTableId(null);
+      void playSound("payment-success");
+      setLastPaid({
+        // Already in words on the order: a table name, "Paket Sipariş" or
+        // "Kurye Siparişi". The till never reaches for a table it may not have.
+        tableName: bill.order.tableName,
+        method: selectedMethod,
+        paymentId: payment.paymentId,
+        amount: payment.amount,
+      });
+      setSelectedOrderId(null);
       await refetch();
       await refetchShift();
-      toast.success(`${bill.table.name} ödemesi alındı`, {
+      toast.success(`${bill.order.tableName} ödemesi alındı`, {
         description: `${formatCurrency(Number(payment.amount))} tahsil edildi.`,
       });
     } catch (error) {
       // Never show a paid state for a rejected collection.
+      void playSound("error");
       toast.error(error instanceof ApiClientError ? error.message : "Ödeme alınamadı.");
       // A conflict means the bill or the drawer moved under us — already paid,
       // shift closed, check settled elsewhere. Re-read both so the operator is
@@ -224,6 +327,20 @@ export function CashierDashboard() {
       }
     } finally {
       setCollecting(false);
+    }
+  }
+
+  async function printReceipt(paymentId: string) {
+    if (printingReceipt) return;
+    setPrintingReceipt(true);
+    try {
+      await printApi.send({ documentType: "PAYMENT_RECEIPT", paymentId });
+      toast.success("Makbuz yazıcıya gönderildi.");
+    } catch (error) {
+      // Never rolls back the collection: the money was taken, the paper was not.
+      toast.error(error instanceof ApiClientError ? error.message : "Makbuz yazdırılamadı.");
+    } finally {
+      setPrintingReceipt(false);
     }
   }
 
@@ -238,200 +355,214 @@ export function CashierDashboard() {
         await refetch();
       }}
     />
-  ) : null;
+  ) : shiftResource.error ? (
+    <p
+      className="rounded-[20px] border border-status-warning/25 bg-status-warning-tint/75 px-4 py-3 text-sm font-semibold text-status-warning"
+      role="alert"
+    >
+      Kasa durumu alınamadı: {shiftResource.error.message}
+    </p>
+  ) : (
+    // Never a heading over nothing: until the drawer answers, the panel is a
+    // placeholder that says it is loading rather than an empty promise.
+    <div
+      className="h-40 animate-pulse rounded-[24px] border border-[#6B4A32]/10 bg-white/48 motion-reduce:animate-none"
+      aria-label="Kasa durumu yükleniyor"
+    />
+  );
 
   if (!selectedBill) {
+    // "Gone" is not "empty": other tables are still owing. The check this
+    // cashier had chosen was settled, reopened or split somewhere else, and
+    // saying so is the whole point of refusing to silently pick another one.
+    const selectionLost = selection.reason === "gone";
     return (
-      <main className="min-h-[100dvh] bg-background p-4 sm:p-6">
-        <div className="mx-auto max-w-3xl">
-          {shiftSection}
-          <div className="mt-6 text-center">
-            <CircleCheckBig className="mx-auto size-10 text-olive" aria-hidden="true" />
-            <h1 className="mt-4 font-heading text-2xl font-semibold">
-              {resource.loading ? "Hesaplar yükleniyor…" : "Açık hesap bulunmuyor"}
-            </h1>
-            <p className="mt-2 text-sm text-muted-foreground">
-              {resource.error
-                ? resource.error.message
-                : resource.loading
-                  ? // While the first read is still in flight nothing is known
-                    // yet, so the empty-state sentence below would be a claim
-                    // rather than a fact.
-                    "Açık masa hesapları getiriliyor."
-                  : lastPaid
-                    ? `${lastPaid.tableName} hesabı kapatıldı. Yeni bir masa hesabı açıldığında burada görünecek.`
-                    : "Servis edilen bir sipariş oluştuğunda burada görünecek."}
+      <OperationalBackdrop>
+        <OperationalTopBar
+          title="Kasa"
+          homeHref="/cashier"
+          realtimeStatus={realtimeStatus}
+          sound
+        />
+        <OperationalHome role="cashier">
+          <OperationalHero
+            title="Kasa"
+            person={name}
+            description="Tahsilat ana ekranı"
+            aside={<span className="hidden text-sm font-bold tabular-nums text-[#5D493B] sm:block" suppressHydrationWarning>{formatClock(now)}</span>}
+          />
+
+          <section aria-labelledby="cashier-live-title">
+            <h2 id="cashier-live-title" className="sr-only">Canlı kasa durumu</h2>
+            {statusSummary}
+          </section>
+
+          {resource.error ? (
+            <p className="mt-3 rounded-xl border border-status-warning/25 bg-status-warning-tint/75 px-3 py-2 text-sm font-semibold text-status-warning" role="alert">
+              {cashierReady
+                ? "Hesap listesi yenilenemedi; son alınan durum gösteriliyor."
+                : `Hesaplar yüklenemedi: ${resource.error.message}`}
             </p>
-            <div className="mt-4 flex justify-center">
-              <RealtimeStatus status={realtimeStatus} />
-            </div>
-          </div>
-        </div>
-      </main>
+          ) : null}
+
+          <section className="mt-6" aria-labelledby="cashier-apps-title">
+            <OperationalSectionHeading id="cashier-apps-title" title="Kasa uygulamaları" />
+            <OperationalActionGrid className="max-w-md grid-cols-3" ariaLabel="Kasa uygulamaları">
+              <OperationalAction label="Bekleyen Hesaplar" icon={ReceiptText} iconClassName="bg-[#E27432]" href="#cashier-payables" badge={money?.unpaidCount || undefined} />
+              <OperationalAction label="Kasa İşlemleri" icon={Store} iconClassName="bg-[#7A3040]" href="#cashier-shift" />
+              <OperationalAction label="Gün Sonu" icon={CalendarCheck} iconClassName="bg-[#397FC5]" href="#cashier-shift" />
+            </OperationalActionGrid>
+          </section>
+
+          {!shiftOpen ? (
+            <section id="cashier-shift" className="mt-6 scroll-mt-24" aria-labelledby="cashier-shift-title">
+              <OperationalSectionHeading
+                id="cashier-shift-title"
+                title={shiftReady ? "Kasayı aç" : "Kasa durumu"}
+              />
+              {shiftSection}
+            </section>
+          ) : null}
+
+          <section id="cashier-payables" className="mt-6 scroll-mt-24" aria-labelledby="cashier-payables-title">
+            <OperationalSectionHeading
+              id="cashier-payables-title"
+              title="Ödeme bekleyenler"
+              detail={
+                !cashierReady || money === null
+                  ? "—"
+                  : `Tahsil edilecek ${formatCurrency(Number(money.toCollect))}`
+              }
+            />
+
+            {selectionLost ? (
+              <div className="mb-4 flex flex-wrap items-center justify-between gap-3 rounded-[20px] border border-status-warning/25 bg-status-warning-tint/76 px-4 py-3" role="alert">
+                <span className="flex items-center gap-2 text-sm font-semibold text-status-warning">
+                  <TriangleAlert className="size-5 shrink-0" aria-hidden="true" />
+                  Seçili hesap başka bir yerde değişti. Güncel listeden tekrar seçin.
+                </span>
+                <Button type="button" variant="outline" className="min-h-11" onClick={() => setSelectedOrderId(null)}>Tamam</Button>
+              </div>
+            ) : null}
+
+            {!cashierReady ? (
+              resource.loading ? (
+                <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3" aria-label="Hesaplar yükleniyor">
+                  {Array.from({ length: 6 }, (_, index) => (
+                    <div key={index} className="h-40 animate-pulse rounded-[24px] border border-[#6B4A32]/10 bg-white/48 motion-reduce:animate-none" />
+                  ))}
+                </div>
+              ) : null
+            ) : visibleBills.length ? (
+              <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3" aria-label="Ödeme bekleyen hesaplar">
+                {visibleBills.map(({ table, order, billRequested }) => (
+                  <button
+                    key={order.id}
+                    type="button"
+                    onClick={() => setSelectedOrderId(order.id)}
+                    className="motion-press group min-h-40 rounded-[24px] border border-white/65 bg-white/62 p-4 text-start shadow-[0_14px_34px_rgba(67,45,29,0.075)] backdrop-blur-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7A3040] focus-visible:ring-offset-2"
+                    aria-label={`${order.tableName}, ${order.orderNumber}, hesabı aç`}
+                  >
+                    <span className="flex items-start justify-between gap-3">
+                      <span className="flex min-w-0 items-center gap-3">
+                        <span className="flex size-12 shrink-0 items-center justify-center rounded-[16px] bg-[#E27432] text-white shadow-[0_7px_16px_rgba(43,33,29,0.14)]">
+                          {table ? <ReceiptText className="size-6" aria-hidden="true" /> : <ShoppingBag className="size-6" aria-hidden="true" />}
+                        </span>
+                        <span className="min-w-0">
+                          <span className="block truncate text-xl font-extrabold tracking-tight text-[#2B211D]">{order.tableName}</span>
+                          <span className="mt-0.5 block text-xs font-medium text-[#706156]">{order.orderNumber} · {formatElapsed(order.elapsedMinutes)}</span>
+                        </span>
+                      </span>
+                      <span className="shrink-0 text-xl font-extrabold tabular-nums text-burgundy">
+                        {order.outstanding === null ? "—" : formatCurrency(Number(order.outstanding))}
+                      </span>
+                    </span>
+                    <span className="mt-5 flex items-end justify-between gap-3">
+                      <span className="min-w-0 text-xs font-semibold text-[#6E5F54]">
+                        <span className="block">{order.items.length} kalem · Servis tamamlandı</span>
+                        {billRequested ? <span className="mt-1 block text-status-warning">Hesap istiyor</span> : null}
+                      </span>
+                      <span className="shrink-0 rounded-xl bg-[#3D2A20] px-3 py-2 text-xs font-bold text-[#FFF9EF]">Hesabı aç</span>
+                    </span>
+                  </button>
+                ))}
+              </div>
+            ) : (
+              <div className="rounded-[24px] border border-white/60 bg-white/56 px-5 py-10 text-center backdrop-blur-sm">
+                <CircleCheckBig className="mx-auto size-10 text-status-success" aria-hidden="true" />
+                <h3 className="mt-3 text-xl font-bold">Açık hesap bulunmuyor</h3>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  {lastPaid ? `${lastPaid.tableName} hesabı kapatıldı.` : "Servis edilen siparişler burada görünecek."}
+                </p>
+              </div>
+            )}
+          </section>
+
+          {shiftOpen ? (
+            <section id="cashier-shift" className="mt-8 scroll-mt-24" aria-labelledby="cashier-shift-title">
+              <OperationalSectionHeading id="cashier-shift-title" title="Kasa işlemleri" />
+              {shiftSection}
+            </section>
+          ) : null}
+        </OperationalHome>
+      </OperationalBackdrop>
     );
   }
 
   return (
-    <main className="min-h-[100dvh] bg-background">
-      {/* One line: the drawer state is the only thing here a cashier acts on. */}
-      <header className="border-b border-sidebar-primary/35 bg-sidebar text-[#FBF7EF]">
-        <div className="mx-auto flex max-w-[1600px] items-center justify-between gap-4 px-4 py-2.5 sm:px-6 lg:px-8">
-          <div className="flex min-w-0 items-center gap-3">
-            <BrandMark compact className="size-9 shrink-0 border-gold/35" />
-            <h1 className="truncate text-lg font-bold tracking-tight sm:text-xl">Kasa</h1>
-            <Badge
-              className={cn(
-                "border",
-                shiftOpen
-                  ? "border-gold/30 bg-gold/10 text-[#F7E5C2]"
-                  : "border-white/25 bg-white/5 text-[#F5EBDD]/80",
-              )}
-            >
-              {shiftOpen ? "Açık Vardiya" : "Kasa Kapalı"}
-            </Badge>
-          </div>
-
-          <p className="shrink-0 text-lg font-extrabold tabular-nums tracking-tight" suppressHydrationWarning>
+    <OperationalBackdrop>
+      <OperationalTopBar
+        title="Kasa"
+        homeHref="/cashier"
+        realtimeStatus={realtimeStatus}
+        sound
+        end={
+          <p className="hidden text-sm font-extrabold tabular-nums text-[#5D493B] sm:block" suppressHydrationWarning>
             {formatClock(now)}
           </p>
-        </div>
-      </header>
+        }
+      />
 
-      <div className="mx-auto max-w-[1600px] px-4 py-4 sm:px-6 lg:px-8">
-        <section className="mb-4" aria-label="Kasa vardiyası">
-          {shiftSection}
-        </section>
+      <OperationalHome role="cashier" className="max-w-[1120px]">
+        <Button
+          type="button"
+          variant="ghost"
+          className="mb-3 min-h-11 gap-1.5 px-2 text-sm font-semibold"
+          onClick={() => setSelectedOrderId(null)}
+        >
+          <ChevronLeft className="size-4" aria-hidden="true" />
+          Tahsilat ana ekranı
+        </Button>
+        <OperationalHero
+          title={selectedBill.order.tableName}
+          person={selectedBill.order.outstanding === null ? "Bakiye alınıyor" : `${formatCurrency(Number(selectedBill.order.outstanding))} ödenecek`}
+          description={[
+            selectedBill.order.orderNumber,
+            `${formatElapsed(selectedBill.order.elapsedMinutes)} açık`,
+            // A takeaway or courier order seats nobody.
+            selectedBill.table ? `${selectedBill.table.seats} kişilik` : null,
+          ]
+            .filter(Boolean)
+            .join(" · ")}
+          aside={<StatusBadge status="pending" label="Ödeme Bekliyor" />}
+        />
 
-        {/* The three tiles that used to sit here said what the two panels below
-            already say — the open total, how many bills, which ones asked for
-            the cheque — and pushed the collect button further down a tablet. */}
-        <div className="grid items-start gap-4 lg:grid-cols-[minmax(18rem,0.8fr)_minmax(0,1.5fr)] xl:gap-5">
-          <Card className="gap-0 py-0">
-            <CardHeader className="border-b py-4">
-              <div className="flex items-center justify-between gap-3">
-                <div>
-                  <CardTitle className="text-lg">Açık masalar</CardTitle>
-                  {/* The one figure the tiles carried that nothing else did. */}
-                  <p className="mt-1 text-xs text-muted-foreground">
-                    Toplam {formatCurrency(metrics.outstanding)}
-                    {metrics.paymentWaiting > 0 ? ` · ${metrics.paymentWaiting} masa hesap istiyor` : ""}
-                  </p>
-                </div>
-                <Badge variant="outline" className="border-olive/20 bg-olive/[0.06] text-olive">
-                  {metrics.unpaidCount} hesap
-                </Badge>
-              </div>
-            </CardHeader>
-            <CardContent className="p-2.5">
-              <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-1" aria-label="Açık masa hesapları">
-                {visibleBills.length ? visibleBills.map(({ table, order, billRequested }) => {
-                  const isSelected = table.id === selectedBill.table.id;
+        {resource.error ? (
+          <p className="mt-3 rounded-xl border border-status-warning/25 bg-status-warning-tint/75 px-3 py-2 text-sm font-semibold text-status-warning" role="alert">
+            {cashierReady
+              ? "Hesap listesi yenilenemedi; son alınan durum gösteriliyor."
+              : `Hesaplar yüklenemedi: ${resource.error.message}`}
+          </p>
+        ) : null}
 
-                  return (
-                    <button
-                      key={table.id}
-                      type="button"
-                      onClick={() => setSelectedTableId(table.id)}
-                      aria-pressed={isSelected}
-                      className={cn(
-                        "motion-press motion-operational-state min-h-24 rounded-xl border p-3.5 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
-                        isSelected
-                          ? "border-burgundy/35 bg-burgundy/[0.055] shadow-[inset_3px_0_0_#681F25]"
-                          : "border-transparent bg-muted/45 hover:border-border hover:bg-muted/70",
-                      )}
-                    >
-                      <span className="flex items-start justify-between gap-3">
-                        <span>
-                          <span className="block text-lg font-extrabold leading-5 text-foreground">{table.name}</span>
-                          <span className="mt-1.5 block text-xs font-medium text-muted-foreground">
-                            {order.orderNumber} · {formatElapsed(order.elapsedMinutes)} açık
-                          </span>
-                        </span>
-                        <span className="text-base font-extrabold tabular-nums text-foreground">
-                          {formatCurrency(order.total)}
-                        </span>
-                      </span>
-                      <span className="mt-3 flex items-center justify-between gap-2">
-                        {billRequested ? (
-                          <Badge variant="outline" className="border-status-warning/25 bg-status-warning-tint text-status-warning">
-                            <ReceiptText className="size-3" aria-hidden="true" /> Hesap istiyor
-                          </Badge>
-                        ) : (
-                          <StatusBadge status={table.status} />
-                        )}
-                        <span className="text-xs text-muted-foreground">{table.seats} kişilik</span>
-                      </span>
-                    </button>
-                  );
-                }) : (
-                  <div className="rounded-xl border border-status-success/25 bg-status-success-tint px-4 py-6 text-center">
-                    <CircleCheckBig className="mx-auto size-7 text-status-success" aria-hidden="true" />
-                    <p className="mt-2 text-sm font-bold text-status-success">Tüm açık hesaplar kapandı</p>
-                    <p className="mt-1 text-xs text-status-success">Yeni hesap talepleri burada görünecek.</p>
-                  </div>
-                )}
-              </div>
-            </CardContent>
-          </Card>
+        {!shiftOpen ? <section className="mb-4" aria-label="Kasa vardiyası">{shiftSection}</section> : null}
 
-          <Card className="gap-0 py-0">
-            <CardHeader className="border-b px-4 py-4 sm:px-5">
-              <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-                <div>
-                  <div className="flex flex-wrap items-center gap-2.5">
-                    <CardTitle className="text-2xl">{selectedBill.table.name}</CardTitle>
-                    <StatusBadge status="pending" label="Ödeme Bekliyor" />
-                    <RealtimeStatus status={realtimeStatus} />
-                  </div>
-                  <p className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-muted-foreground">
-                    <span className="font-semibold text-foreground">{selectedBill.order.orderNumber}</span>
-                    <span className="inline-flex items-center gap-1">
-                      <Clock3 className="size-3.5" aria-hidden="true" />
-                      {formatElapsed(selectedBill.order.elapsedMinutes)}
-                    </span>
-                    <span className="inline-flex items-center gap-1">
-                      <UsersRound className="size-3.5" aria-hidden="true" />
-                      {selectedBill.table.seats} kişilik
-                    </span>
-                  </p>
-                </div>
-                <div className="sm:text-right">
-                  <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Ödenecek toplam</p>
-                  <p className="mt-0.5 text-4xl font-extrabold tabular-nums tracking-tight text-burgundy">
-                    {formatCurrency(selectedBill.order.total)}
-                  </p>
-                </div>
-              </div>
-            </CardHeader>
-
+        <div className="mx-auto max-w-4xl">
+          <Card className="gap-0 overflow-hidden rounded-[28px] border-white/65 bg-white/68 py-0 shadow-[0_20px_50px_rgba(67,45,29,0.09)] backdrop-blur-md">
             <CardContent className="p-0">
               <div className="border-b border-border px-4 py-4 sm:px-5">
                 <h2 className="text-base font-bold">Sipariş kalemleri</h2>
-                <Table className="mt-2 min-w-[34rem]">
-                  <TableHeader>
-                    <TableRow className="hover:bg-transparent">
-                      <TableHead className="pl-0">Ürün</TableHead>
-                      <TableHead className="w-20 text-center">Adet</TableHead>
-                      <TableHead className="w-28 text-right">Birim</TableHead>
-                      <TableHead className="w-28 pr-0 text-right">Tutar</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {selectedBill.order.items.map((item) => (
-                      <TableRow key={item.id}>
-                        <TableCell className="pl-0 whitespace-normal">
-                          <span className="font-semibold text-foreground">{item.productName}</span>
-                          {item.note ? <span className="mt-0.5 block text-xs text-burgundy">Not: {item.note}</span> : null}
-                        </TableCell>
-                        <TableCell className="text-center font-bold tabular-nums">{item.quantity}</TableCell>
-                        <TableCell className="text-right tabular-nums text-muted-foreground">{formatCurrency(item.unitPrice)}</TableCell>
-                        <TableCell className="pr-0 text-right font-bold tabular-nums">
-                          {formatCurrency(item.quantity * item.unitPrice)}
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
+                <CashierBillItems items={selectedBill.order.items} />
               </div>
 
               <div className="px-4 py-4 sm:px-5 sm:py-5">
@@ -441,9 +572,38 @@ export function CashierDashboard() {
                       <CircleCheckBig className="size-5" aria-hidden="true" />
                     </div>
                     <h2 className="mt-2 font-heading text-lg font-semibold text-status-success">Ödeme alındı</h2>
+                    <p className="mt-1 text-2xl font-extrabold tabular-nums text-status-success">
+                      {formatCurrency(Number(lastPaid.amount))}
+                    </p>
                     <p className="mt-1 max-w-sm text-sm leading-6 text-status-success">
                       {lastPaid.tableName} hesabı {lastPaid.method === "cash" ? "nakit olarak" : lastPaid.method === "card" ? "kartla" : "diğer yöntemle"} kapatıldı.
                     </p>
+                    {/* Printing is best-effort: a receipt that fails to queue
+                        does not un-collect the money that was just taken. */}
+                    <div className="mt-3 flex w-full flex-col gap-2 sm:w-auto sm:flex-row">
+                      <Button
+                        type="button"
+                        variant="outline"
+                        disabled={printingReceipt}
+                        aria-busy={printingReceipt}
+                        className="h-11 font-semibold"
+                        onClick={() => void printReceipt(lastPaid.paymentId)}
+                      >
+                        <Printer className="size-4" aria-hidden="true" />
+                        Makbuz Yazdır
+                      </Button>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        className="h-11 font-semibold"
+                        onClick={() => {
+                          setLastPaid(null);
+                          setSelectedOrderId(null);
+                        }}
+                      >
+                        Hesaplara Dön
+                      </Button>
+                    </div>
                   </div>
                 ) : null}
                 {(
@@ -483,6 +643,14 @@ export function CashierDashboard() {
                       </div>
                     </fieldset>
 
+                    {ledger.error ? (
+                      <div className="mt-4 text-sm text-burgundy" role="alert">
+                        <p>Bakiye yüklenemedi. Tahsilat öncesinde tekrar deneyin.</p>
+                        <Button type="button" variant="outline" className="mt-2" onClick={() => void refetchLedger()}>
+                          Bakiyeyi yeniden yükle
+                        </Button>
+                      </div>
+                    ) : null}
                     {/* Disabling the button is convenience only: the backend
                         refuses a collection without an open shift regardless. */}
                     {!shiftOpen ? (
@@ -493,16 +661,21 @@ export function CashierDashboard() {
                         Kasa kapalı. Tahsilat ve iade için önce kasayı açın.
                       </p>
                     ) : null}
+                    {/* On a phone the check can be long, and the button that
+                        takes the money should not be somewhere below it. It
+                        sticks to the bottom edge above the home indicator; from
+                        lg it sits in the flow, where the panel is short. */}
+                    <div className="sticky bottom-0 -mx-4 mt-4 border-t border-border bg-card/95 px-4 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-3 backdrop-blur sm:-mx-5 sm:px-5 lg:static lg:m-0 lg:border-0 lg:bg-transparent lg:p-0 lg:pt-0 lg:backdrop-blur-none">
                     <Button
                       type="button"
                       size="lg"
-                      disabled={collecting || !shiftOpen}
+                      disabled={collecting || !shiftOpen || !currentLedger || Boolean(ledger.error)}
                       aria-busy={collecting}
-                      className="mt-4 h-12 w-full bg-burgundy text-base font-bold text-primary-foreground hover:bg-burgundy/90"
+                      className="h-12 w-full bg-burgundy text-base font-bold text-primary-foreground hover:bg-burgundy/90 lg:mt-4"
                       onClick={() => void takePayment()}
                     >
                       <Check className="size-5" aria-hidden="true" />
-                      {formatCurrency(selectedBill.order.total)} tahsil et
+                      {currentLedger ? `${formatCurrency(Number(currentLedger.balance.outstanding))} tahsil et` : "Bakiye yükleniyor…"}
                     </Button>
 
                     {/* Split bills, part payments and refunds live in a sheet so
@@ -511,27 +684,31 @@ export function CashierDashboard() {
                       type="button"
                       variant="outline"
                       className="mt-2 h-11 w-full font-semibold"
-                      disabled={!shiftOpen}
+                      disabled={!shiftOpen || !currentLedger || Boolean(ledger.error)}
                       onClick={() => setOperationsOpen(true)}
                     >
                       <Split className="size-4" aria-hidden="true" />
-                      Hesap İşlemleri
+                      Hesabı Böl · Kısmi Ödeme · İade
                     </Button>
+                    </div>
                   </div>
                 )}
               </div>
             </CardContent>
           </Card>
         </div>
-      </div>
 
-      {selectedBill ? (
+        {shiftOpen ? <section className="mt-4" aria-label="Kasa vardiyası">{shiftSection}</section> : null}
+      </OperationalHome>
+
+      {selectedBill && currentLedger && !ledger.error ? (
         <BillOperationsSheet
+          key={selectedBill.order.id}
           open={operationsOpen}
           orderId={selectedBill.order.id}
           orderNumber={selectedBill.order.orderNumber}
-          tableName={selectedBill.table.name}
-          orderTotal={selectedBill.order.total.toFixed(2)}
+          tableName={selectedBill.order.tableName}
+          orderTotal={currentLedger.balance.payableTotal}
           payments={ledgerPayments}
           onOpenChange={setOperationsOpen}
           onChanged={async () => {
@@ -542,6 +719,6 @@ export function CashierDashboard() {
           }}
         />
       ) : null}
-    </main>
+    </OperationalBackdrop>
   );
 }

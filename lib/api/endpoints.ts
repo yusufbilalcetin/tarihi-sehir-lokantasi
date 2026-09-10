@@ -3,6 +3,7 @@ import type {
   AdminProductResult,
 } from "@/lib/services/admin-menu-service";
 import type { AdminReportsResult } from "@/lib/services/admin-reports-service";
+import type { AutoTranslateResult } from "@/lib/services/menu-auto-translate-service";
 import type { ReviewReport } from "@/lib/domain/report-review";
 import type {
   BusiestReport,
@@ -18,6 +19,7 @@ import type {
   TableReportRow,
 } from "@/lib/domain/report-contracts";
 import type { RestaurantSettingsResult } from "@/lib/services/admin-settings-service";
+import type { AuditLogPage } from "@/lib/domain/audit-log";
 import type {
   AdminStaffPage,
   AdminStaffResult,
@@ -172,7 +174,11 @@ export const guestApi = {
       method: "POST",
       body: { restaurantSlug },
     }),
-  menu: (signal?: AbortSignal) => apiRequest<PublicMenuResult>("/api/guest-menu", { signal }),
+  menu: (signal?: AbortSignal, locale?: string) =>
+    apiRequest<PublicMenuResult>(
+      locale ? `/api/guest-menu?locale=${encodeURIComponent(locale)}` : "/api/guest-menu",
+      { signal },
+    ),
   createOrder: (
     input: {
       readonly channel: "TAKEAWAY" | "DELIVERY";
@@ -222,7 +228,14 @@ export const orderApi = {
 
 export const staffApi = {
   orders: (
-    params?: { status?: string; tableId?: string; date?: string; open?: boolean },
+    params?: {
+      status?: string;
+      tableId?: string;
+      date?: string;
+      open?: boolean;
+      /** The till asks for each order's money position; other screens do not. */
+      withBalance?: boolean;
+    },
     signal?: AbortSignal,
   ) => {
     const search = new URLSearchParams();
@@ -232,6 +245,7 @@ export const staffApi = {
     // Live-service screens pass this so settled orders cannot use up the row
     // budget a still-open ticket needs.
     if (params?.open) search.set("open", "true");
+    if (params?.withBalance) search.set("withBalance", "true");
     const query = search.toString();
     return apiRequest<{ orders: readonly StaffOrderListResult[] }>(
       query ? `/api/staff/orders?${query}` : "/api/staff/orders",
@@ -256,7 +270,7 @@ export const staffApi = {
   updateOrderItemStatus: (
     orderItemId: string,
     status: string,
-    reason?: { reasonCode?: string; reasonNote?: string },
+    reason: { expectedOrderVersion: number; reasonCode?: string; reasonNote?: string },
   ) =>
     apiRequest<{ orderItemId: string; status: string; reverted: boolean }>(
       `/api/order-items/${orderItemId}/status`,
@@ -275,8 +289,8 @@ export const staffApi = {
     requestLabel?: string;
     notes?: string;
   }) => apiRequest<StaffCallPayload>("/api/staff/calls", { method: "POST", body }),
-  menu: (signal?: AbortSignal) =>
-    apiRequest<PublicMenuResult>("/api/staff/menu", { signal }),
+  menu: (signal?: AbortSignal, locale?: string) =>
+    apiRequest<PublicMenuResult>(`/api/staff/menu${locale ? `?locale=${encodeURIComponent(locale)}` : ""}`, { signal }),
   createOrder: (
     body: {
       tableId: string;
@@ -332,12 +346,34 @@ export const staffApi = {
   newIdempotencyKey,
 };
 
+/** The audit page plus the people who appear in it, for the actor filter. */
+export type AuditLogPageResult = AuditLogPage & {
+  readonly actors: readonly { readonly id: string; readonly name: string }[];
+};
+
 export const adminApi = {
   menu: (signal?: AbortSignal) =>
     apiRequest<{
       categories: readonly AdminCategoryResult[];
       products: readonly AdminProductResult[];
+      /** False when no translation provider is configured for this deployment. */
+      autoTranslateAvailable: boolean;
     }>("/api/admin/menu", { signal }),
+  /**
+   * Fills in the other languages for one already-saved row. Never sent as part
+   * of a save: the dish is committed first, and this may fail on its own.
+   */
+  autoTranslate: (body: {
+    entityType: "CATEGORY" | "PRODUCT";
+    entityId: string;
+    sourceLocale?: string;
+    targetLocales?: readonly string[];
+    overwrite?: boolean;
+  }) =>
+    apiRequest<AutoTranslateResult>("/api/admin/menu/translations/auto", {
+      method: "POST",
+      body,
+    }),
   createCategory: (body: Record<string, unknown>) =>
     apiRequest<AdminCategoryResult>("/api/admin/categories", { method: "POST", body }),
   updateCategory: (categoryId: string, body: Record<string, unknown>) =>
@@ -399,6 +435,8 @@ export const adminApi = {
       method: "POST",
       body: {},
     }),
+  auditLogs: (query: string, signal?: AbortSignal) =>
+    apiRequest<AuditLogPageResult>(`/api/admin/audit-logs?${query}`, { signal }),
   settings: (signal?: AbortSignal) =>
     apiRequest<RestaurantSettingsResult>("/api/admin/settings", { signal }),
   updateSettings: (body: Record<string, unknown>) =>
@@ -510,20 +548,37 @@ export const paymentApi = {
 export const cashierShiftApi = {
   current: (signal?: AbortSignal) =>
     apiRequest<CurrentShiftResult>("/api/cashier/shifts/current", { signal }),
-  open: (body: { cashRegisterId: string; openingCash: string }) =>
+  open: (body: {
+    cashRegisterId: string;
+    openingCash: string;
+    /** A counted drawer. The server reprices it and ignores any client total. */
+    cashCounts?: readonly {
+      currency: string;
+      denominationMinor: number;
+      count: number;
+    }[];
+  }) =>
     apiRequest<ShiftDetailResult>("/api/cashier/shifts", { method: "POST", body }),
   close: (shiftId: string, body: { countedCash: string; note?: string }) =>
     apiRequest<ShiftDetailResult>(`/api/cashier/shifts/${shiftId}/close`, {
       method: "POST",
       body,
     }),
+  /**
+   * The key is the caller's, not this function's.
+   *
+   * Minting it here would defeat the point: a retry would arrive with a fresh
+   * key and be written as a second movement. The panel holds one key for one
+   * intended movement and reuses it across retries.
+   */
   recordMovement: (
     shiftId: string,
     body: { type: "CASH_IN" | "CASH_OUT"; amount: string; reason: string; note?: string },
+    idempotencyKey: string,
   ) =>
     apiRequest<{ movement: CashDrawerMovementRecord; summary: ShiftMoneySummary }>(
       `/api/cashier/shifts/${shiftId}/movements`,
-      { method: "POST", body },
+      { method: "POST", idempotencyKey, body },
     ),
   detail: (shiftId: string, signal?: AbortSignal) =>
     apiRequest<ShiftDetailResult>(`/api/cashier/shifts/${shiftId}`, { signal }),

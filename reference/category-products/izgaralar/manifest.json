@@ -1,0 +1,112 @@
+{
+  "source": "https://tarihi-sehir-lokantasi.vercel.app/menu/demo-table",
+  "category": "Izgaralar",
+  "slug": "izgaralar",
+  "productCount": 4,
+  "declaredCount": 4,
+  "categoryCover": {
+    "assetType": "category-cover",
+    "sourcePath": "reference/live/assets/images/food/izgara-kofte.jpg",
+    "file": "izgara-kofte.jpg",
+    "width": 1200,
+    "height": 800,
+    "format": "jpeg",
+    "fileSize": 178853,
+    "sha256": "964e0febe72c2bf696cb62b89be44542282b9450d46b90808be66696ded804ef"
+  },
+  "products": [
+    {
+      "name": "Izgara Köfte",
+      "description": "Kasap usulü dana köfte, közlenmiş biber ve domates ile.",
+      "price": "₺350",
+      "badges": [
+        "Yeni"
+      ],
+      "availability": "available",
+      "image": {
+        "assetType": "product-image",
+        "file": "izgaralar/images/izgara-kofte.webp",
+        "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/izgara-kofte.webp",
+        "sourceType": "existing-reference",
+        "originalReference": "reference/live/assets/images/food/izgara-kofte.webp",
+        "renamedFrom": null,
+        "width": 1200,
+        "height": 800,
+        "format": "webp",
+        "fileSize": 161626,
+        "sha256": "112b04b68f81ef9e56a30b35fa57b75567141664e0bb03bae5c2bc9cc38fd002"
+      },
+      "sharedImage": false
+    },
+    {
+      "name": "Tavuk Şiş",
+      "description": "Özel baharatlarla marine edilmiş tavuk parçaları, köz biber ve domates eşliğinde.",
+      "price": "₺310",
+      "badges": [
+        "Popüler"
+      ],
+      "availability": "available",
+      "image": {
+        "assetType": "product-image",
+        "file": "izgaralar/images/tavuk-sis.webp",
+        "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/tavuk-sis.webp",
+        "sourceType": "existing-reference",
+        "originalReference": "reference/live/assets/images/food/tavuk-sis.webp",
+        "renamedFrom": null,
+        "width": 1200,
+        "height": 800,
+        "format": "webp",
+        "fileSize": 167752,
+        "sha256": "2dfaad669647a65ed907c2fe76420453f1ebaf3ad31960b31781a1501b000f13"
+      },
+      "sharedImage": false
+    },
+    {
+      "name": "Kasap Sucuk",
+      "description": "Odun kömüründe pişirilen baharatlı dana sucuk, közlenmiş sebzeler ve sumaklı soğanla.",
+      "price": "₺330",
+      "badges": [
+        "Acılı"
+      ],
+      "availability": "available",
+      "image": {
+        "assetType": "product-image",
+        "file": "izgaralar/images/kasap-sucuk.webp",
+        "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/kasap-sucuk.webp",
+        "sourceType": "existing-reference",
+        "originalReference": "reference/live/assets/images/food/kasap-sucuk.webp",
+        "renamedFrom": null,
+        "width": 1200,
+        "height": 800,
+        "format": "webp",
+        "fileSize": 161730,
+        "sha256": "2493728629bd3cb8d96d230558419ddd86907ad37c791e2ec75a58e15fb33d31"
+      },
+      "sharedImage": false
+    },
+    {
+      "name": "Karışık Izgara",
+      "description": "Köfte, tavuk şiş, kuzu pirzola ve sucuktan oluşan bol çeşitli ızgara tabağı.",
+      "price": "₺560",
+      "badges": [
+        "Şefin Önerisi",
+        "Paylaşmalık"
+      ],
+      "availability": "available",
+      "image": {
+        "assetType": "product-image",
+        "file": "izgaralar/images/karisik-izgara.webp",
+        "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/karisik-izgara.webp",
+        "sourceType": "existing-reference",
+        "originalReference": "reference/live/assets/images/food/karisik-izgara.webp",
+        "renamedFrom": null,
+        "width": 1200,
+        "height": 800,
+        "format": "webp",
+        "fileSize": 189440,
+        "sha256": "3b2bbfb4c5e376ccfcee87f457935f52ad1f0df4479a04b02943fa13b4da03c8"
+      },
+      "sharedImage": false
+    }
+  ]
+}

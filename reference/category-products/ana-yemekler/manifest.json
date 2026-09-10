@@ -1,0 +1,229 @@
+{
+  "source": "https://tarihi-sehir-lokantasi.vercel.app/menu/demo-table",
+  "category": "Ana Yemekler",
+  "slug": "ana-yemekler",
+  "productCount": 9,
+  "declaredCount": 9,
+  "categoryCover": {
+    "assetType": "category-cover",
+    "sourcePath": "reference/live/assets/images/food/etli-kuru-fasulye.jpg",
+    "file": "etli-kuru-fasulye.jpg",
+    "width": 1200,
+    "height": 800,
+    "format": "jpeg",
+    "fileSize": 182722,
+    "sha256": "6f3c18fc17d448831ea30697d0641a33acf8c623397f8fbf0be3ecc420b78a58"
+  },
+  "products": [
+    {
+      "name": "Pirinç Pilavı",
+      "description": "Tereyağlı, tane tane Baldo pirinç pilavı.",
+      "price": "₺90",
+      "badges": [
+        "Vejetaryen"
+      ],
+      "availability": "available",
+      "image": {
+        "assetType": "product-image",
+        "file": "ana-yemekler/images/pirinc-pilavi.webp",
+        "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/pirinc-pilavi.webp",
+        "sourceType": "existing-reference",
+        "originalReference": "reference/live/assets/images/food/pirinc-pilavi.webp",
+        "renamedFrom": null,
+        "width": 1200,
+        "height": 800,
+        "format": "webp",
+        "fileSize": 131278,
+        "sha256": "2b6cb3ce80123c81e4cbff4f21737b9d12210c0dd05c96c00b6f652afbe04b2a"
+      },
+      "sharedImage": false
+    },
+    {
+      "name": "Etli Kuru Fasulye",
+      "description": "İspir fasulyesi, kuşbaşı dana eti ve sade lokanta salçasıyla.",
+      "price": "₺260",
+      "badges": [
+        "Günün Yemeği",
+        "Bugün Tükendi"
+      ],
+      "availability": "sold-out",
+      "image": {
+        "assetType": "product-image",
+        "file": "ana-yemekler/images/etli-kuru-fasulye.webp",
+        "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/etli-kuru-fasulye.webp",
+        "sourceType": "existing-reference",
+        "originalReference": "reference/live/assets/images/food/etli-kuru-fasulye.webp",
+        "renamedFrom": null,
+        "width": 1200,
+        "height": 800,
+        "format": "webp",
+        "fileSize": 102906,
+        "sha256": "5ff457203ab23206cd4566d4c3b286ba0c5a2d3f11a0254b7279c4e91b08e7d8"
+      },
+      "sharedImage": false
+    },
+    {
+      "name": "Etli Nohut Yemeği",
+      "description": "Koçbaşı nohut ve kuşbaşı dana etiyle bakır tencerede ağır ağır pişirilen ev yemeği.",
+      "price": "₺250",
+      "badges": [
+        "Günün Yemeği"
+      ],
+      "availability": "available",
+      "image": {
+        "assetType": "product-image",
+        "file": "ana-yemekler/images/etli-nohut-yemegi.webp",
+        "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/etli-nohut-yemegi.webp",
+        "sourceType": "existing-reference",
+        "originalReference": "reference/live/assets/images/food/etli-nohut-yemegi.webp",
+        "renamedFrom": null,
+        "width": 1200,
+        "height": 800,
+        "format": "webp",
+        "fileSize": 125522,
+        "sha256": "e0a70bc6eba33fe9a0dbe58ee0f2bb25976a53e2c7091a22d73f143253d7e21c"
+      },
+      "sharedImage": false
+    },
+    {
+      "name": "Patlıcan Musakka",
+      "description": "Kızarmış patlıcan, dana kıyma ve domates sosla fırında pişirilen lokanta usulü musakka.",
+      "price": "₺270",
+      "badges": [
+        "Ev Yemeği"
+      ],
+      "availability": "available",
+      "image": {
+        "assetType": "product-image",
+        "file": "ana-yemekler/images/patlican-musakka.webp",
+        "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/patlican-musakka.webp",
+        "sourceType": "existing-reference",
+        "originalReference": "reference/live/assets/images/food/patlican-musakka.webp",
+        "renamedFrom": null,
+        "width": 1200,
+        "height": 800,
+        "format": "webp",
+        "fileSize": 143856,
+        "sha256": "551990ef3333d1a71dbe2b84050440973cb6aee273d03656808b6759b0dbfc60"
+      },
+      "sharedImage": false
+    },
+    {
+      "name": "Zeytinyağlı Taze Fasulye",
+      "description": "Taze fasulye, domates ve soğanla zeytinyağında pişirilen serin servis edilen klasik.",
+      "price": "₺220",
+      "badges": [
+        "Vegan",
+        "Zeytinyağlı"
+      ],
+      "availability": "available",
+      "image": {
+        "assetType": "product-image",
+        "file": "ana-yemekler/images/zeytinyagli-taze-fasulye.webp",
+        "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/zeytinyagli-taze-fasulye.webp",
+        "sourceType": "existing-reference",
+        "originalReference": "reference/live/assets/images/food/zeytinyagli-taze-fasulye.webp",
+        "renamedFrom": null,
+        "width": 1200,
+        "height": 800,
+        "format": "webp",
+        "fileSize": 160338,
+        "sha256": "dc007a77f73e0946b946ad84b492e38c78289c12a3f469cccc0414a203e8d782"
+      },
+      "sharedImage": false
+    },
+    {
+      "name": "Tavuk Sote",
+      "description": "Tavuk parçaları, renkli biberler, mantar ve domatesle yüksek ateşte sotelenir.",
+      "price": "₺285",
+      "badges": [
+        "Günün Yemeği"
+      ],
+      "availability": "available",
+      "image": {
+        "assetType": "product-image",
+        "file": "ana-yemekler/images/tavuk-sote.webp",
+        "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/tavuk-sote.webp",
+        "sourceType": "existing-reference",
+        "originalReference": "reference/live/assets/images/food/tavuk-sote.webp",
+        "renamedFrom": null,
+        "width": 1200,
+        "height": 800,
+        "format": "webp",
+        "fileSize": 149346,
+        "sha256": "444e63d522ddcfb02246ea9d7bbebbbc5bdf37f8bac3aa70fe01e39e1d42a3d1"
+      },
+      "sharedImage": false
+    },
+    {
+      "name": "İzmir Köfte",
+      "description": "Dana köfte, patates ve biberin domates sosunda fırınlandığı geleneksel ana yemek.",
+      "price": "₺300",
+      "badges": [
+        "Lokanta Klasiği"
+      ],
+      "availability": "available",
+      "image": {
+        "assetType": "product-image",
+        "file": "ana-yemekler/images/izmir-kofte.webp",
+        "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/izmir-kofte.webp",
+        "sourceType": "existing-reference",
+        "originalReference": "reference/live/assets/images/food/izmir-kofte.webp",
+        "renamedFrom": null,
+        "width": 1200,
+        "height": 800,
+        "format": "webp",
+        "fileSize": 142230,
+        "sha256": "347e934fda7ba20ce07aa3dd97d6618e08b933041062deaa9d97d612bc245334"
+      },
+      "sharedImage": false
+    },
+    {
+      "name": "Etli Bezelye",
+      "description": "Kuşbaşı dana eti, bezelye, havuç ve patatesle tencere usulü pişirilen günlük yemek.",
+      "price": "₺280",
+      "badges": [
+        "Ev Yemeği"
+      ],
+      "availability": "available",
+      "image": {
+        "assetType": "product-image",
+        "file": "ana-yemekler/images/etli-bezelye.webp",
+        "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/etli-bezelye.webp",
+        "sourceType": "existing-reference",
+        "originalReference": "reference/live/assets/images/food/etli-bezelye.webp",
+        "renamedFrom": null,
+        "width": 1200,
+        "height": 800,
+        "format": "webp",
+        "fileSize": 126646,
+        "sha256": "c757935ed4dc1aaf0317949469679803259feecd665aecdf3274d193609933ce"
+      },
+      "sharedImage": false
+    },
+    {
+      "name": "Patlıcan Oturtma",
+      "description": "Dilim patlıcan, baharatlı kıyma ve sarımsaklı domates sosla fırında hazırlanır.",
+      "price": "₺275",
+      "badges": [
+        "Ev Yemeği",
+        "Bugün Tükendi"
+      ],
+      "availability": "sold-out",
+      "image": {
+        "assetType": "product-image",
+        "file": "ana-yemekler/images/patlican-oturtma.webp",
+        "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/patlican-oturtma.webp",
+        "sourceType": "existing-reference",
+        "originalReference": "reference/live/assets/images/food/patlican-oturtma.webp",
+        "renamedFrom": null,
+        "width": 1200,
+        "height": 800,
+        "format": "webp",
+        "fileSize": 172864,
+        "sha256": "ef66f1010e1ecbcf54b3654537b7bf5d63f829e52d7deea66c481d3002bb02a8"
+      },
+      "sharedImage": false
+    }
+  ]
+}

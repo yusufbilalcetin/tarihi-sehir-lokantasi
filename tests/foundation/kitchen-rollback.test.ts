@@ -153,10 +153,11 @@ test("undoing one line of a ready ticket takes the whole ticket back", () => {
 // -------------------------------------------------------------- validation
 
 test("the status body accepts the undo targets and an optional reason", () => {
-  assert.equal(staffOrderItemStatusBodySchema.safeParse({ status: "PENDING" }).success, true);
-  assert.equal(staffOrderItemStatusBodySchema.safeParse({ status: "PREPARING" }).success, true);
+  assert.equal(staffOrderItemStatusBodySchema.safeParse({ status: "PENDING", expectedOrderVersion: 1 }).success, true);
+  assert.equal(staffOrderItemStatusBodySchema.safeParse({ status: "PREPARING", expectedOrderVersion: 1 }).success, true);
+  assert.equal(staffOrderItemStatusBodySchema.safeParse({ status: "PREPARING" }).success, false);
   assert.equal(
-    staffOrderItemStatusBodySchema.safeParse({ status: "READY", reasonCode: "REHEAT" }).success,
+    staffOrderItemStatusBodySchema.safeParse({ status: "READY", reasonCode: "REHEAT", expectedOrderVersion: 1 }).success,
     true,
   );
   assert.equal(
@@ -164,22 +165,23 @@ test("the status body accepts the undo targets and an optional reason", () => {
       status: "PREPARING",
       reasonCode: "MARKED_BY_MISTAKE",
       reasonNote: "Yanlış masaya bakıldı",
+      expectedOrderVersion: 1,
     }).success,
     true,
   );
 
   // What it must not accept: a financial correction, an unknown reason, or a
   // client trying to tell the server where the line is coming from.
-  assert.equal(staffOrderItemStatusBodySchema.safeParse({ status: "CANCELLED" }).success, false);
-  assert.equal(staffOrderItemStatusBodySchema.safeParse({ status: "VOIDED" }).success, false);
+  assert.equal(staffOrderItemStatusBodySchema.safeParse({ status: "CANCELLED", expectedOrderVersion: 1 }).success, false);
+  assert.equal(staffOrderItemStatusBodySchema.safeParse({ status: "VOIDED", expectedOrderVersion: 1 }).success, false);
   assert.equal(
-    staffOrderItemStatusBodySchema.safeParse({ status: "PREPARING", reasonCode: "BECAUSE" })
+    staffOrderItemStatusBodySchema.safeParse({ status: "PREPARING", reasonCode: "BECAUSE", expectedOrderVersion: 1 })
       .success,
     false,
   );
   for (const field of ["fromStatus", "restaurantId", "actorId", "userId"]) {
     assert.equal(
-      staffOrderItemStatusBodySchema.safeParse({ status: "PREPARING", [field]: "x" }).success,
+      staffOrderItemStatusBodySchema.safeParse({ status: "PREPARING", expectedOrderVersion: 1, [field]: "x" }).success,
       false,
       `${field} must not be accepted from the client`,
     );

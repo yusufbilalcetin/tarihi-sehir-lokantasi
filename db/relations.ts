@@ -4,6 +4,7 @@ import {
   auditLogs,
   apiRateLimits,
   categories,
+  categoryTranslations,
   idempotencyKeys,
   kitchenTickets,
   orderEvents,
@@ -12,6 +13,7 @@ import {
   outboxEvents,
   payments,
   products,
+  productTranslations,
   restaurantCounters,
   restaurantSettings,
   restaurants,
@@ -28,7 +30,9 @@ void apiRateLimits;
 export const restaurantsRelations = relations(restaurants, ({ many, one }) => ({
   staffProfiles: many(staffProfiles),
   categories: many(categories),
+  categoryTranslations: many(categoryTranslations),
   products: many(products),
+  productTranslations: many(productTranslations),
   tables: many(restaurantTables),
   orders: many(orders),
   orderItems: many(orderItems),
@@ -67,7 +71,22 @@ export const categoriesRelations = relations(categories, ({ many, one }) => ({
     references: [restaurants.id],
   }),
   products: many(products),
+  translations: many(categoryTranslations),
 }));
+
+export const categoryTranslationsRelations = relations(
+  categoryTranslations,
+  ({ one }) => ({
+    restaurant: one(restaurants, {
+      fields: [categoryTranslations.restaurantId],
+      references: [restaurants.id],
+    }),
+    category: one(categories, {
+      fields: [categoryTranslations.restaurantId, categoryTranslations.categoryId],
+      references: [categories.restaurantId, categories.id],
+    }),
+  }),
+);
 
 export const productsRelations = relations(products, ({ many, one }) => ({
   restaurant: one(restaurants, {
@@ -79,7 +98,22 @@ export const productsRelations = relations(products, ({ many, one }) => ({
     references: [categories.restaurantId, categories.id],
   }),
   orderItems: many(orderItems),
+  translations: many(productTranslations),
 }));
+
+export const productTranslationsRelations = relations(
+  productTranslations,
+  ({ one }) => ({
+    restaurant: one(restaurants, {
+      fields: [productTranslations.restaurantId],
+      references: [restaurants.id],
+    }),
+    product: one(products, {
+      fields: [productTranslations.restaurantId, productTranslations.productId],
+      references: [products.restaurantId, products.id],
+    }),
+  }),
+);
 
 export const restaurantTablesRelations = relations(
   restaurantTables,

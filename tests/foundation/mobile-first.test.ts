@@ -24,19 +24,20 @@ const bottomNavigation = read("components/menu/bottom-navigation.tsx");
 const productDetail = read("components/menu/product-detail-sheet.tsx");
 const highlightCard = read("components/menu/highlight-card.tsx");
 const restaurantHeader = read("components/menu/restaurant-header.tsx");
+/** The one body both the guest menu and the admin editor render. */
+const menuSectionsSource = read("components/menu/menu-sections.tsx");
 const languageSelector = read("components/menu/language-selector.tsx");
 const globalsCss = read("app/globals.css");
 
 /* ------------------------------------------------ customer discovery ----- */
 
-test("the customer menu still refuses a search box and a permanent chip rail", () => {
-  // Two settled product decisions. A search box asks a guest to name a dish
-  // they have not read yet; a chip rail spends a strip of every screen on
-  // navigation the guest needs twice a meal.
+test("the customer menu offers localized search without restoring a permanent chip rail", () => {
+  // Search is now a catalog requirement, but category navigation remains a
+  // compact sheet so it does not spend a permanent strip of every screen.
   for (const [name, source] of [["QR menu", menuExperience], ["public ordering", guestOrder]] as const) {
     assert.equal(source.includes("CategoryChips"), false, `${name} brought the chip rail back`);
-    assert.equal(source.includes('t("searchLabel")'), false, `${name} brought the search box back`);
   }
+  assert.equal(menuExperience.includes('t("searchLabel")'), true, "QR menu lost localized search");
 });
 
 test("a long menu can be navigated by category without hiding any dish", () => {
@@ -47,7 +48,11 @@ test("a long menu can be navigated by category without hiding any dish", () => {
   for (const [name, source] of [["QR menu", menuExperience], ["public ordering", guestOrder]] as const) {
     assert.match(source, /<CategoryJump/, `${name} has no category jump control`);
     // The sections themselves are untouched by the control.
-    assert.match(source, /id=\{`menu-category-\$\{category\.id\}`\}/, `${name} lost its category anchors`);
+    assert.match(
+      menuSectionsSource,
+      /id=\{`menu-category-\$\{category\.id\}`\}/,
+      "the shared menu body lost its category anchors",
+    );
   }
 });
 
@@ -162,10 +167,15 @@ test("the button that spends money never scrolls away", () => {
 
 test("a recommendation is a few suggestions, not the menu a second time", () => {
   // The rails used to render full product cards, so the top of the menu was a
-  // duplicate of dishes appearing again under their own category.
-  assert.match(menuExperience, /const MENU_HIGHLIGHT_LIMIT = 3;/);
-  assert.equal((menuExperience.match(/slice\(0, MENU_HIGHLIGHT_LIMIT\)/g) ?? []).length, 2);
-  assert.match(menuExperience, /<HighlightCard/);
+  // duplicate of dishes appearing again under their own category. The cap now
+  // lives with the derivation both the guest menu and the admin preview read,
+  // so neither can quietly draw a fourth.
+  const sections = read("lib/adapters/customer-menu-sections.ts");
+  assert.match(sections, /export const MENU_HIGHLIGHT_LIMIT = 3;/);
+  assert.equal((sections.match(/slice\(0, MENU_HIGHLIGHT_LIMIT\)/g) ?? []).length, 2);
+  assert.match(menuExperience, /buildCustomerMenuSections\(menuCategories, visibleProducts\)/);
+  assert.doesNotMatch(menuExperience, /const MENU_HIGHLIGHT_LIMIT/, "the cap was copied back");
+  assert.match(menuSectionsSource, /<HighlightCard/);
   assert.doesNotMatch(highlightCard, /<Button/, "the suggestion grew a second add control");
 });
 
@@ -195,7 +205,7 @@ test("a dish is a row on a menu, not a card in a dashboard", () => {
   assert.match(productCard, /rounded-xl bg-card p-3/);
   // A square plate at phone size, and the image request agrees with it.
   assert.match(productCard, /size-23 shrink-0 overflow-hidden rounded-lg/);
-  assert.match(productCard, /sizes="\(max-width: 640px\) 92px, 112px"/, "the image request disagrees with the frame");
+  assert.match(productCard, /sizes="92px"/, "the image request disagrees with the fixed frame");
   // A recipe paragraph in the feed is what made the menu twelve thousand pixels long.
   assert.match(productCard, /line-clamp-2/, "the feed description lost its two-line clamp");
 });
@@ -224,32 +234,77 @@ test("the add control is a thumb target and the only filled thing on the card", 
 
 /* ------------------------------------------------ operations ------------- */
 
-test("the waiter's floor is one column on a phone", () => {
-  // Two columns at 390px truncated the table name to "M…", which is the one
-  // thing the card exists to say.
-  const grid = read("components/staff/table-grid.tsx");
-  assert.match(grid, /grid grid-cols-1 gap-3 sm:grid-cols-2/);
-  assert.doesNotMatch(grid, /"grid grid-cols-2/, "the floor went back to two columns on a phone");
+test("the waiter's floor keeps the table name readable on a phone", () => {
+  // Two columns used to truncate the table name to "M…" — the one thing the
+  // card exists to say — because the card carried a 2xl name, badges and a
+  // 144px body. The service card is compact by design, so two columns is now
+  // the intent: the name is still the first and largest element, it truncates
+  // rather than wrapping the layout, and the status line wraps under it.
+  const card = read("components/staff/cockpit/service-table-card.tsx");
+  assert.match(
+    card,
+    /min-w-0 truncate text-\[18px\] font-extrabold/,
+    "the table name lost its emphasis or its ability to shrink",
+  );
+  assert.match(
+    card,
+    /mt-auto flex flex-wrap items-center justify-between/,
+    "the status line cannot wrap under the name",
+  );
+  const cockpit = read("components/staff/cockpit/service-cockpit.tsx");
+  assert.match(
+    cockpit,
+    /grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5/,
+    "the board lost its phone grid",
+  );
 });
 
-test("the kitchen board does not force its lanes side by side on a phone", () => {
+test("the kitchen board does not force lanes side by side on a phone", () => {
   const board = read("components/kitchen/kitchen-board.tsx");
-  assert.match(board, /className="grid gap-3[^"]*lg:grid-cols-3/);
-  assert.doesNotMatch(board, /(sm|md):grid-cols-3/, "three lanes before lg is a side-scrolling board");
+  // One ticket column on a phone; the second arrives at md, the third at xl.
+  assert.match(board, /className="grid content-start gap-4 md:grid-cols-2 xl:grid-cols-3"/);
+  assert.doesNotMatch(board, /(sm|md|lg):grid-cols-3/, "the grid widens before a ticket stays readable");
 });
 
 test("no operational shell keeps a sidebar open on a phone", () => {
+  // The admin shell has no sidebar at all now: one top bar, and below `md` a
+  // dock under the thumb is the way around the panel.
   const adminShell = read("components/admin/admin-shell.tsx");
-  assert.match(adminShell, /hidden w-\[264px\][^"]*lg:block|hidden[^"]*lg:block/);
-  assert.match(adminShell, /aria-label="Yönetim menüsünü aç"/, "there is no way into the menu on a phone");
+  assert.doesNotMatch(adminShell, /<aside\b/, "a sidebar came back");
+  assert.doesNotMatch(adminShell, /\bSidebarRail\b/, "the sidebar rail came back");
+  assert.doesNotMatch(adminShell, /\bSidebarContent\b/, "the sidebar content came back");
+  assert.doesNotMatch(adminShell, /<Sheet\b|\bSheetContent\b/, "a sheet drawer came back");
+  assert.doesNotMatch(adminShell, /Yönetim menüsünü aç/, "the old drawer trigger came back");
+
+  // The dock is rendered, and its nav is phone-only.
+  assert.match(adminShell, /<MobileDock pathname=\{pathname\} onOpen=\{setDialog\} \/>/, "the dock is not rendered");
+  const dock = adminShell.slice(adminShell.indexOf("function MobileDock"));
+  assert.match(
+    dock,
+    /<nav\s+aria-label="Genel gezinme"\s+className="fixed inset-x-0 bottom-0[^"]*\bmd:hidden\b/,
+    "the dock nav is not phone-only",
+  );
+
+  // Search and the apps are both a thumb away.
+  assert.match(adminShell, /\["search", "Ara", Search\]/, "the dock lost its search");
+  assert.match(adminShell, /\["apps", "Uygulamalar", LayoutGrid\]/, "the dock lost its way into the apps");
+
+  // Home is a real link, and it says so.
+  assert.match(
+    dock,
+    /<Link\s+href=\{ADMIN_HOME\.href\}[^>]*>[\s\S]*?\bBugün\s*<\/Link>/,
+    "the dock's home is not a real link that says Bugün",
+  );
 });
 
-test("the till stacks instead of squeezing a split pane onto a phone", () => {
+test("the till is two screens instead of a split pane at any width", () => {
   const cashier = read("components/cashier/cashier-dashboard.tsx");
-  // The two-pane layout is gated at lg; below it the bill list and the payment
-  // panel are one column each.
-  assert.match(cashier, /lg:grid-cols-\[minmax\(18rem,0\.8fr\)_minmax\(0,1\.5fr\)\]/);
-  assert.doesNotMatch(cashier, /(sm|md):grid-cols-\[minmax\(18rem/);
+  // No pane at all now: the counter home and the payment workspace are two
+  // returns from the same component, so a phone never carries both.
+  assert.doesNotMatch(cashier, /grid-cols-\[minmax\(18rem/, "the split pane came back");
+  assert.match(cashier, /if \(!selectedBill\) \{/);
+  // The payable board itself is a plain responsive grid of large cards.
+  assert.match(cashier, /className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3"/);
 });
 
 /* ------------------------------------------------ category navigation ---- */

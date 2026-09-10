@@ -1,3 +1,5 @@
+import { isProductionRuntime } from "@/lib/config/runtime-environment";
+
 /**
  * Whether the table launcher exists in this deployment.
  *
@@ -10,11 +12,17 @@
  * production — or left behind by an old configuration — cannot open a second
  * way into a guest session. Opening it there is its own decision, spelled out
  * by its own name.
+ *
+ * "A production deployment" is `isProductionRuntime`, shared with the staff
+ * test-login gate. It used to be `VERCEL_ENV === "production"` written out
+ * here, which missed the self-hosted case: with no `VERCEL_ENV` to read, a
+ * stale `ENABLE_DEMO_LAUNCHER=true` opened the picker on a live server — the
+ * precise thing the paragraph above says cannot happen.
  */
 export function isDemoLauncherEnabled(
   environment: Readonly<Record<string, string | undefined>> = process.env,
 ): boolean {
-  if (environment.VERCEL_ENV === "production") {
+  if (isProductionRuntime(environment)) {
     return environment.ENABLE_PRODUCTION_TABLE_PICKER === "true";
   }
   return environment.ENABLE_DEMO_LAUNCHER === "true";

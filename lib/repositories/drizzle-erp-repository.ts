@@ -22,6 +22,7 @@ import {
   recipeIngredients,
   recipeVersions,
   reservations,
+  restaurants,
   staffSchedules,
   stockMovements,
   supplierPayments,
@@ -56,14 +57,17 @@ export class DrizzleErpRepository implements ErpRepository {
    * than a scan the client then adds up.
    */
   async overview(restaurantId: string): Promise<ErpOverview> {
-    const today = new Date().toISOString().slice(0, 10);
     const now = new Date();
+    // The database owns the clock and the restaurant owns its timezone. Using
+    // UTC's calendar date here made 00:00–02:59 in Istanbul report yesterday.
+    const restaurantTimezone = sql`coalesce((select ${restaurants.timezone} from ${restaurants} where ${restaurants.id} = ${restaurantId}), 'Europe/Istanbul')`;
+    const today = sql`(now() at time zone ${restaurantTimezone})::date`;
     // Today as a half-open window on the raw timestamp column. Writing this as
     // `(created_at at time zone 'Europe/Istanbul')::date = today` reads better
     // and is unusable by an index: the planner would cast every row of the
     // restaurant's history. The bounds are computed once, here.
-    const dayStart = sql`${today}::date::timestamp at time zone 'Europe/Istanbul'`;
-    const dayEnd = sql`(${today}::date + 1)::timestamp at time zone 'Europe/Istanbul'`;
+    const dayStart = sql`${today}::timestamp at time zone ${restaurantTimezone}`;
+    const dayEnd = sql`(${today} + 1)::timestamp at time zone ${restaurantTimezone}`;
     const [criticalRows, warehouseCount, recipeCount, inventoryCount, supplierCount, productionRows, purchaseRows, invoiceRows, reservationRows, attendanceCount, salesRows, wasteRows] = await Promise.all([
       this.db.execute(sql`
         select i.id::text as id, i.name, i.category, i.base_unit as base_unit,
@@ -84,7 +88,7 @@ export class DrizzleErpRepository implements ErpRepository {
       this.db.select({
         total: count(),
         incomplete: sql<number>`count(*) filter (where ${productionBatches.status} in ('PLANNED','IN_PROGRESS'))::int`,
-      }).from(productionBatches).where(and(eq(productionBatches.restaurantId, restaurantId), eq(productionBatches.businessDate, today), inArray(productionBatches.status, ["PLANNED", "IN_PROGRESS", "COMPLETED"]))),
+      }).from(productionBatches).where(and(eq(productionBatches.restaurantId, restaurantId), sql`${productionBatches.businessDate} = ${today}`, inArray(productionBatches.status, ["PLANNED", "IN_PROGRESS", "COMPLETED"]))),
       this.db.select({
         open: count(),
         pendingReceipt: sql<number>`count(*) filter (where ${purchaseOrders.status} in ('SENT','PARTIALLY_RECEIVED'))::int`,

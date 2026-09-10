@@ -1,3 +1,4 @@
+import { isProductionRuntime } from "@/lib/config/runtime-environment";
 import type { UserRole } from "@/lib/domain/status";
 
 /**
@@ -36,14 +37,35 @@ export interface TestAccount {
   readonly role: UserRole;
 }
 
+
 /**
- * Off unless a deployment says otherwise, in as many words. A missing or
- * misspelt value leaves the ordinary login in place rather than opening this
- * one, which is the safe direction for a flag like this to fail in.
+ * Off unless a deployment says otherwise — and off in production whatever it
+ * says.
+ *
+ * These five credentials have a published password. On a real restaurant's
+ * system `admin` / `admin1234` is not a convenience, it is the whole of the
+ * front door: the menu, the staff list, the settings and the takings. So
+ * unlike the table launcher, which production may open through a second
+ * deliberately-named flag, there is no way to open this one there. A variable
+ * copied from a preview environment, left behind by an old configuration, or
+ * set by mistake changes nothing on a live deployment.
+ *
+ * The check lives here rather than in the login route because this is the only
+ * gate the simple-login branch has; hardening it hardens `POST /api/staff/login`
+ * and anything else that might ever call it, by construction rather than by
+ * remembering to.
+ *
+ * A missing or misspelt value leaves the ordinary Supabase login in place,
+ * which is the safe direction for a flag like this to fail in.
  */
 export function isSimpleTestLoginEnabled(
-  environment: NodeJS.ProcessEnv = process.env,
+  // The same shape the launcher gate and `isProductionRuntime` take. It reads
+  // string keys and nothing else, and `NodeJS.ProcessEnv` insists on a
+  // `NODE_ENV` narrowed to three literals — which makes the deployment shapes
+  // these gates exist to distinguish awkward to state in a test.
+  environment: Readonly<Record<string, string | undefined>> = process.env,
 ): boolean {
+  if (isProductionRuntime(environment)) return false;
   return environment.ENABLE_SIMPLE_TEST_LOGIN?.trim() === "true";
 }
 

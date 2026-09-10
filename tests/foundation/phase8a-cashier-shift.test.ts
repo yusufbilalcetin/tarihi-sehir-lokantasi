@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import { test } from "node:test";
 
 import { DomainError } from "../../lib/api/domain-error";
@@ -249,7 +250,7 @@ test("a closed shift is frozen: no re-close and no movement", async () => {
         type: "CASH_IN",
         amount: "10.00",
         reason: "Sonradan",
-      }),
+        idempotencyKey: "legacy-movement-key-1" }),
     ),
     "CASHIER_SHIFT_CLOSED",
   );
@@ -308,11 +309,11 @@ test("cash in and cash out both move the drawer, and both need a reason", async 
 
   await service.recordMovement(principal("CASHIER"), {
     shiftId: "shift-1", type: "CASH_IN", amount: "50.00", reason: "Bozuk para takviyesi",
-  });
+    idempotencyKey: "legacy-movement-key-2" });
   repository.totals = { ...ZERO_TOTALS, cashIn: "50.00" };
   await service.recordMovement(principal("CASHIER"), {
     shiftId: "shift-1", type: "CASH_OUT", amount: "20.00", reason: "Tedarikçi ödemesi",
-  });
+    idempotencyKey: "legacy-movement-key-3" });
   repository.totals = { ...ZERO_TOTALS, cashIn: "50.00", cashOut: "20.00" };
 
   assert.equal(repository.movements.length, 2);
@@ -321,7 +322,7 @@ test("cash in and cash out both move the drawer, and both need a reason", async 
 
   const { summary } = await service.recordMovement(principal("CASHIER"), {
     shiftId: "shift-1", type: "CASH_IN", amount: "0.01", reason: "Yuvarlama",
-  });
+    idempotencyKey: "legacy-movement-key-4" });
   assert.equal(summary.expectedCash, "530.00", "500 float + 50 in − 20 out");
 });
 
@@ -342,7 +343,7 @@ test("an unexplained or non-positive movement is refused", async () => {
           shiftId: "shift-1",
           type: "CASH_OUT",
           ...invalid,
-        }),
+          idempotencyKey: "legacy-movement-key-5" }),
       ),
       "VALIDATION_ERROR",
       `${JSON.stringify(invalid)} must be refused`,
@@ -359,7 +360,7 @@ test("a cashier cannot move cash in a colleague's drawer", async () => {
     await failure(() =>
       shiftService(repository).recordMovement(principal("CASHIER"), {
         shiftId: "shift-1", type: "CASH_OUT", amount: "100.00", reason: "Alma",
-      }),
+        idempotencyKey: "legacy-movement-key-6" }),
     ),
     "NOT_FOUND",
   );
@@ -368,7 +369,7 @@ test("a cashier cannot move cash in a colleague's drawer", async () => {
   // A supervisor may, because they are accountable for the whole floor.
   const allowed = await shiftService(repository).recordMovement(principal("MANAGER"), {
     shiftId: "shift-1", type: "CASH_OUT", amount: "100.00", reason: "Kasa devri",
-  });
+    idempotencyKey: "legacy-movement-key-7" });
   assert.equal(allowed.movement.amount, "100.00");
 });
 
@@ -391,7 +392,7 @@ test("another restaurant's shift simply is not there", async () => {
     await failure(() =>
       service.recordMovement(foreign, {
         shiftId: "shift-1", type: "CASH_IN", amount: "1.00", reason: "x",
-      }),
+        idempotencyKey: "legacy-movement-key-8" }),
     ),
     "NOT_FOUND",
   );
@@ -513,6 +514,62 @@ test("a refund is attributed to the refunding shift, not the collecting one", as
     "shift-evening",
     "the money left today's drawer, so today's shift is accountable",
   );
+});
+
+test("payment and refund writes lock the drawer before business rows", async () => {
+  const repository = new FakePaymentRepository();
+  const payments = paymentService(repository);
+  const transaction = repository.transactionRepository;
+  const payment = await payments.collect(paymentPrincipal("CASHIER"), {
+    orderId: "order-a",
+    method: "CASH",
+    amount: "100.00",
+    idempotencyKey: "lock-order-collect",
+  });
+
+  assert.ok(
+    transaction.lockCalls.indexOf("shift") < transaction.lockCalls.indexOf("order"),
+    `collection lock order was ${transaction.lockCalls.join(" -> ")}`,
+  );
+
+  transaction.lockCalls.length = 0;
+  await payments.refund(paymentPrincipal("CASHIER"), {
+    paymentId: payment.paymentId,
+    amount: "10.00",
+    reasonCode: "OTHER",
+    note: "lock order",
+    idempotencyKey: "lock-order-refund",
+  });
+  assert.ok(
+    transaction.lockCalls.indexOf("shift") < transaction.lockCalls.indexOf("payment"),
+    `refund lock order was ${transaction.lockCalls.join(" -> ")}`,
+  );
+});
+
+test("ledger reads do not invert the refund payment -> order lock order", () => {
+  const source = readFileSync("lib/repositories/drizzle-payment-repository.ts", "utf8");
+  const ledger = source.slice(source.indexOf("  async listPaymentsForOrder("), source.indexOf("  async findPaymentByIdempotencyKey("));
+  assert.doesNotMatch(ledger, /\.for\("update"/);
+});
+
+test("completed payment and refund replay after shift closure without new writes", async () => {
+  const repository = new FakePaymentRepository();
+  const service = paymentService(repository);
+  const actor = paymentPrincipal("CASHIER");
+  const command = { orderId: "order-a", method: "CASH" as const, idempotencyKey: "closed-replay-payment" };
+  const payment = await service.collect(actor, command);
+  const refundCommand = { paymentId: payment.paymentId, amount: "1.00", reasonCode: "OTHER", idempotencyKey: "closed-replay-refund" };
+  const refund = await service.refund(actor, refundCommand);
+  const transaction = repository.transactionRepository;
+  transaction.activeShift = null;
+  transaction.lockCalls.length = 0;
+  assert.equal((await service.collect(actor, command)).paymentId, payment.paymentId);
+  assert.equal((await service.refund(actor, refundCommand)).refundId, refund.refundId);
+  assert.equal(await failure(() => service.collect(actor, { ...command, method: "CARD" })), "IDEMPOTENCY_CONFLICT");
+  assert.equal(await failure(() => service.refund(actor, { ...refundCommand, amount: "2.00" })), "IDEMPOTENCY_CONFLICT");
+  assert.equal(transaction.lockCalls.includes("shift"), false);
+  assert.equal(transaction.payments.length, 1);
+  assert.equal(transaction.refunds.length, 1);
 });
 
 test("a client cannot name the shift its money lands in", async () => {

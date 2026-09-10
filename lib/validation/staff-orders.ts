@@ -24,6 +24,12 @@ export const staffOrderListQuerySchema = z
      * the list — and off the kitchen screen.
      */
     open: z.enum(["true", "false"]).optional(),
+    /**
+     * The till asks for each order's money position. Opt-in, because the pass
+     * and the floor have no use for it and should not be made to carry it —
+     * nor should a kitchen screen be handed the restaurant's takings.
+     */
+    withBalance: z.enum(["true", "false"]).optional(),
     limit: z.coerce.number().int().min(1).max(100).default(50),
   })
   .strict();
@@ -54,6 +60,7 @@ export const staffOrderItemStatusBodySchema = z
     // PENDING and PREPARING are reachable backwards: the kitchen correcting its
     // own step. The role and stage rules decide who may actually do it.
     status: z.enum(["PENDING", "PREPARING", "READY", "SERVED"]),
+    expectedOrderVersion: z.number().int().min(1),
     reasonCode: z.enum(ORDER_ITEM_ROLLBACK_REASONS).optional(),
     reasonNote: z.string().trim().max(200).optional(),
   })

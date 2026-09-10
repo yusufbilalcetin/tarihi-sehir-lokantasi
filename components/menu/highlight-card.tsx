@@ -31,15 +31,15 @@ export function HighlightCard({ product, onOpen }: { product: Product; onOpen: (
       type="button"
       onClick={onOpen}
       aria-label={t("productDetails", { name })}
-      className="motion-press flex h-[4.75rem] w-full items-center gap-3 overflow-hidden rounded-xl border border-border/60 bg-card pe-3 text-start focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring"
+      className="motion-press flex h-24 w-full items-stretch gap-3 overflow-hidden rounded-xl border border-border/60 bg-card pe-3 text-start focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring"
     >
-      <span className="relative h-full w-[4.75rem] shrink-0 overflow-hidden bg-muted">
+      <span className="relative aspect-square h-full shrink-0 overflow-hidden bg-muted">
         {hasPhoto ? (
           <Image
             src={product.image}
             alt=""
             fill
-            sizes="76px"
+            sizes="96px"
             className={`object-cover ${soldOut ? "grayscale-[0.55]" : ""}`}
           />
         ) : (
@@ -48,11 +48,11 @@ export function HighlightCard({ product, onOpen }: { product: Product; onOpen: (
           </span>
         )}
       </span>
-      <span className="flex min-w-0 flex-1 flex-col">
-        <span className="truncate font-heading text-[15px] font-semibold leading-tight text-foreground">
+      <span className="flex min-w-0 flex-1 flex-col py-3">
+        <span title={name} className="line-clamp-2 min-h-10 font-heading text-[15px] font-semibold leading-5 text-foreground">
           {name}
         </span>
-        <span className="mt-1 text-sm font-extrabold tabular-nums text-burgundy">
+        <span className="mt-auto text-sm font-extrabold tabular-nums text-burgundy">
           {formatPrice(product.price)}
         </span>
       </span>

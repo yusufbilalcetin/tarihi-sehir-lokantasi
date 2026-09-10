@@ -1,3 +1,9 @@
+import type {
+  ClaimIdempotencyInput,
+  IdempotencyClaim,
+  RestartIdempotencyInput,
+} from "./order-repository";
+import type { CompleteIdempotencyInput } from "./drizzle-idempotency";
 import type { MethodTotals } from "@/lib/domain/cashier-report";
 import type {
   CashMovementType,
@@ -91,6 +97,32 @@ export interface OpenShiftInput {
   readonly at: Date;
 }
 
+/**
+ * One counted denomination, already validated and priced by the domain. The
+ * repository stores what it is handed; it never computes money itself.
+ */
+export interface InsertCashCountInput {
+  readonly restaurantId: string;
+  readonly shiftId: string;
+  readonly phase: "OPENING" | "CLOSING";
+  readonly countedByStaffId: string;
+  readonly at: Date;
+  readonly lines: readonly {
+    readonly currency: string;
+    readonly denominationMinor: number;
+    readonly pieceCount: number;
+    readonly subtotalMinor: number;
+  }[];
+}
+
+export interface CashCountRecord {
+  readonly phase: "OPENING" | "CLOSING";
+  readonly currency: string;
+  readonly denominationMinor: number;
+  readonly pieceCount: number;
+  readonly subtotalMinor: number;
+}
+
 export interface CloseShiftInput {
   readonly restaurantId: string;
   readonly shiftId: string;
@@ -143,6 +175,17 @@ export interface ShiftHistoryPage {
 }
 
 export interface CashierShiftTransactionRepository {
+  /**
+   * The same idempotency protocol the order path uses, on the same table.
+   *
+   * A drawer movement is money and there is deliberately no PATCH or DELETE to
+   * undo one, so a double-tap or a retry after a swallowed 201 must not append
+   * a second row. Claimed inside this transaction, so the claim and the
+   * movement commit or roll back together.
+   */
+  claimIdempotency(input: ClaimIdempotencyInput): Promise<IdempotencyClaim>;
+  restartIdempotency(input: RestartIdempotencyInput): Promise<void>;
+  completeIdempotency(input: CompleteIdempotencyInput): Promise<void>;
   findRegisterForUpdate(
     restaurantId: string,
     registerId: string,
@@ -161,6 +204,8 @@ export interface CashierShiftTransactionRepository {
     staffId: string,
   ): Promise<CashierShiftRecord | null>;
   insertShift(input: OpenShiftInput): Promise<CashierShiftRecord | null>;
+  /** Written inside the shift transaction, so a half-counted shift cannot exist. */
+  insertCashCounts(input: InsertCashCountInput): Promise<void>;
   closeShift(input: CloseShiftInput): Promise<CashierShiftRecord | null>;
   insertMovement(input: InsertCashMovementInput): Promise<CashDrawerMovementRecord>;
   ledgerTotals(restaurantId: string, shiftId: string): Promise<ShiftLedgerTotals>;
@@ -174,6 +219,11 @@ export interface CashierShiftTransactionRepository {
     restaurantId: string,
     shiftId: string,
   ): Promise<readonly CashDrawerMovementRecord[]>;
+  /** Same reason as listMovements: read it on this connection, not the outer one. */
+  listCashCounts(
+    restaurantId: string,
+    shiftId: string,
+  ): Promise<readonly CashCountRecord[]>;
   findSnapshotContext(
     restaurantId: string,
     openedByStaffId: string,
@@ -246,9 +296,21 @@ export interface CashierShiftRepository {
     restaurantId: string,
     shiftId: string,
   ): Promise<readonly CashDrawerMovementRecord[]>;
+  /** The counted drawer for one shift. Scoped by restaurant, like every read. */
+  listCashCounts(
+    restaurantId: string,
+    shiftId: string,
+  ): Promise<readonly CashCountRecord[]>;
   listShifts(query: ShiftHistoryQuery): Promise<ShiftHistoryPage>;
   listOpenRegisters(restaurantId: string): Promise<readonly CashRegisterRecord[]>;
-  findRestaurantName(restaurantId: string): Promise<string | null>;
+  /**
+   * The restaurant's name for the report header and its zone for the day
+   * boundary — one row, because a day-end report needs both and reading them
+   * separately is how the two drift.
+   */
+  findRestaurantProfile(
+    restaurantId: string,
+  ): Promise<{ readonly name: string; readonly timezone: string } | null>;
   /** Every daily figure below is aggregated in SQL, never in the browser. */
   dailyTotals(window: DailyWindow): Promise<DailyMoneyTotals>;
   dailyByRegister(window: DailyWindow): Promise<readonly DailyGroupTotals[]>;

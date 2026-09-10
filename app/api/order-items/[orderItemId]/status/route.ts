@@ -59,6 +59,7 @@ export async function PATCH(
       restaurantId: principal.restaurantId,
       orderItemId: parsedParams.data.orderItemId,
       nextStatus: parsedBody.data.status,
+      expectedOrderVersion: parsedBody.data.expectedOrderVersion,
       reasonCode: parsedBody.data.reasonCode,
       reasonNote: parsedBody.data.reasonNote,
       requestId: auditRequestId(request),

@@ -1,0 +1,1245 @@
+{
+  "source": "https://tarihi-sehir-lokantasi.vercel.app/menu/demo-table",
+  "extractedAt": "2026-08-16",
+  "method": "Canlı QR menüde her kategori gerçek tıklama ile açıldı; ürün kartları DOM'dan (img src / next-image url parametresi) okundu.",
+  "counts": {
+    "categories": 6,
+    "products": 48,
+    "productImages": 48,
+    "uniqueImages": 48,
+    "duplicateImages": 0,
+    "fromExistingReference": 48,
+    "downloadedFromLive": 0,
+    "screenshotFallback": 0,
+    "missingImages": 0
+  },
+  "categories": [
+    {
+      "name": "Çorbalar",
+      "slug": "corbalar",
+      "productCount": 12,
+      "declaredCount": 12,
+      "categoryCover": {
+        "assetType": "category-cover",
+        "sourcePath": "reference/live/assets/images/food/mercimek-corbasi.jpg",
+        "file": "mercimek-corbasi.jpg",
+        "width": 1200,
+        "height": 800,
+        "format": "jpeg",
+        "fileSize": 139139,
+        "sha256": "6d912e2cff366bf54154532e1c40f890d830834983df78a994756ce4dfc33f4c"
+      },
+      "products": [
+        {
+          "name": "Mercimek Çorbası",
+          "description": "Klasik usulde hazırlanan, tereyağlı sosla tamamlanan ev yapımı mercimek çorbası.",
+          "price": "₺120",
+          "badges": [
+            "Popüler",
+            "Vejetaryen"
+          ],
+          "availability": "available",
+          "image": {
+            "assetType": "product-image",
+            "file": "corbalar/images/mercimek-corbasi.webp",
+            "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/mercimek-corbasi.webp",
+            "sourceType": "existing-reference",
+            "originalReference": "reference/live/assets/images/food/mercimek-corbasi.webp",
+            "renamedFrom": null,
+            "width": 1200,
+            "height": 800,
+            "format": "webp",
+            "fileSize": 89400,
+            "sha256": "9ae4e4f8b728d3ac5505aac40dbb2b800c295c005cceedb928d9ff8e4396d8ca"
+          },
+          "sharedImage": false
+        },
+        {
+          "name": "Ezogelin Çorbası",
+          "description": "Kırmızı mercimek, bulgur ve pirincin nane ile buluştuğu geleneksel lokanta çorbası.",
+          "price": "₺125",
+          "badges": [
+            "Acılı",
+            "Vejetaryen"
+          ],
+          "availability": "available",
+          "image": {
+            "assetType": "product-image",
+            "file": "corbalar/images/ezogelin-corbasi.webp",
+            "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/ezogelin-corbasi.webp",
+            "sourceType": "existing-reference",
+            "originalReference": "reference/live/assets/images/food/ezogelin-corbasi.webp",
+            "renamedFrom": null,
+            "width": 1200,
+            "height": 800,
+            "format": "webp",
+            "fileSize": 127780,
+            "sha256": "62236954332700ee958b7e91304f17ed9e9d6225910586075cdbfce9f74c5fd0"
+          },
+          "sharedImage": false
+        },
+        {
+          "name": "Tarhana Çorbası",
+          "description": "Ev yapımı tarhana, domates ve kuru nane ile ağır ağır pişirilen Anadolu klasiği.",
+          "price": "₺115",
+          "badges": [
+            "Ev Yapımı"
+          ],
+          "availability": "available",
+          "image": {
+            "assetType": "product-image",
+            "file": "corbalar/images/tarhana-corbasi.webp",
+            "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/tarhana-corbasi.webp",
+            "sourceType": "existing-reference",
+            "originalReference": "reference/live/assets/images/food/tarhana-corbasi.webp",
+            "renamedFrom": null,
+            "width": 1200,
+            "height": 800,
+            "format": "webp",
+            "fileSize": 103706,
+            "sha256": "6303c3159f87bdc5350483aac3e7d3524bbf9dfd608de79c94f6644c7bd66f2f"
+          },
+          "sharedImage": false
+        },
+        {
+          "name": "Yayla Çorbası",
+          "description": "Yoğurt, pirinç ve kuru naneyle hazırlanan ferah ve kıvamlı yayla çorbası.",
+          "price": "₺125",
+          "badges": [
+            "Vejetaryen"
+          ],
+          "availability": "available",
+          "image": {
+            "assetType": "product-image",
+            "file": "corbalar/images/yayla-corbasi.webp",
+            "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/yayla-corbasi.webp",
+            "sourceType": "existing-reference",
+            "originalReference": "reference/live/assets/images/food/yayla-corbasi.webp",
+            "renamedFrom": null,
+            "width": 1200,
+            "height": 800,
+            "format": "webp",
+            "fileSize": 114988,
+            "sha256": "429c03b78f3dde7f1f712ad536b7d639c8db8805b4c4ac771f5153c0aa966a94"
+          },
+          "sharedImage": false
+        },
+        {
+          "name": "İşkembe Çorbası",
+          "description": "Terbiyesi ve sarımsaklı sirkesiyle servis edilen usulüne uygun dana işkembe çorbası.",
+          "price": "₺180",
+          "badges": [
+            "Lokanta Klasiği"
+          ],
+          "availability": "available",
+          "image": {
+            "assetType": "product-image",
+            "file": "corbalar/images/iskembe-corbasi.webp",
+            "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/iskembe-corbasi.webp",
+            "sourceType": "existing-reference",
+            "originalReference": "reference/live/assets/images/food/iskembe-corbasi.webp",
+            "renamedFrom": null,
+            "width": 1200,
+            "height": 800,
+            "format": "webp",
+            "fileSize": 108324,
+            "sha256": "e449e084ecc58490e6af4371c9fdbecb98f738f99cbf4c030664accbd04f9ae3"
+          },
+          "sharedImage": false
+        },
+        {
+          "name": "Düğün Çorbası",
+          "description": "Didiklenmiş kuzu eti ve limonlu terbiyeyle hazırlanan geleneksel düğün çorbası.",
+          "price": "₺145",
+          "badges": [
+            "Günün Çorbası"
+          ],
+          "availability": "available",
+          "image": {
+            "assetType": "product-image",
+            "file": "corbalar/images/dugun-corbasi.webp",
+            "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/dugun-corbasi.webp",
+            "sourceType": "existing-reference",
+            "originalReference": "reference/live/assets/images/food/dugun-corbasi.webp",
+            "renamedFrom": null,
+            "width": 1200,
+            "height": 800,
+            "format": "webp",
+            "fileSize": 123386,
+            "sha256": "f5f88d008f4a8a9f1083b1e8ea430f31bbed9a01ca4559b2aedef8d12c263242"
+          },
+          "sharedImage": false
+        },
+        {
+          "name": "Tavuk Suyu Çorbası",
+          "description": "Kemik suyunda pişen tel şehriye ve didik tavuk etiyle hazırlanan şifalı çorba.",
+          "price": "₺155",
+          "badges": [
+            "Şefin Önerisi"
+          ],
+          "availability": "available",
+          "image": {
+            "assetType": "product-image",
+            "file": "corbalar/images/tavuk-suyu-corbasi.webp",
+            "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/tavuk-suyu-corbasi.webp",
+            "sourceType": "existing-reference",
+            "originalReference": "reference/live/assets/images/food/tavuk-suyu-corbasi.webp",
+            "renamedFrom": null,
+            "width": 1200,
+            "height": 800,
+            "format": "webp",
+            "fileSize": 87250,
+            "sha256": "46e3d86a64334412fddb77a69e14dea93392509f31419f34b3da293cae3c4df6"
+          },
+          "sharedImage": false
+        },
+        {
+          "name": "Domates Çorbası",
+          "description": "Olgun domates, tereyağı ve fesleğenle pişirilip kaşarla tamamlanan yoğun lezzet.",
+          "price": "₺120",
+          "badges": [
+            "Vejetaryen"
+          ],
+          "availability": "available",
+          "image": {
+            "assetType": "product-image",
+            "file": "corbalar/images/domates-corbasi.webp",
+            "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/domates-corbasi.webp",
+            "sourceType": "existing-reference",
+            "originalReference": "reference/live/assets/images/food/domates-corbasi.webp",
+            "renamedFrom": null,
+            "width": 1200,
+            "height": 800,
+            "format": "webp",
+            "fileSize": 106116,
+            "sha256": "5c7e6ece6cac85517c14535461133f3a79a565823a19b034b116c5cd239c8389"
+          },
+          "sharedImage": false
+        },
+        {
+          "name": "Sebze Çorbası",
+          "description": "Mevsim sebzeleri, zeytinyağı ve taze otlarla hazırlanan hafif lokanta çorbası.",
+          "price": "₺120",
+          "badges": [
+            "Vegan",
+            "Hafif"
+          ],
+          "availability": "available",
+          "image": {
+            "assetType": "product-image",
+            "file": "corbalar/images/sebze-corbasi.webp",
+            "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/sebze-corbasi.webp",
+            "sourceType": "existing-reference",
+            "originalReference": "reference/live/assets/images/food/sebze-corbasi.webp",
+            "renamedFrom": null,
+            "width": 1200,
+            "height": 800,
+            "format": "webp",
+            "fileSize": 114382,
+            "sha256": "31010760e74ab568131cb5c9996328e995aa5f6028753218c9bc0c14d59828f3"
+          },
+          "sharedImage": false
+        },
+        {
+          "name": "Beyran Çorbası",
+          "description": "Kuzu eti, pirinç, sarımsak ve acı biberle yüksek ateşte hazırlanan yöresel çorba.",
+          "price": "₺240",
+          "badges": [
+            "Acılı",
+            "Yöresel"
+          ],
+          "availability": "available",
+          "image": {
+            "assetType": "product-image",
+            "file": "corbalar/images/beyran-corbasi.webp",
+            "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/beyran-corbasi.webp",
+            "sourceType": "existing-reference",
+            "originalReference": "reference/live/assets/images/food/beyran-corbasi.webp",
+            "renamedFrom": null,
+            "width": 1200,
+            "height": 800,
+            "format": "webp",
+            "fileSize": 162600,
+            "sha256": "c2f4e116c3268ce478c92334fa4f840c7ce3a598449dda121e65ccb70d8141c6"
+          },
+          "sharedImage": false
+        },
+        {
+          "name": "Kelle Paça Çorbası",
+          "description": "Uzun saatler kaynatılan dana paça ve kelle etiyle hazırlanan yoğun kemik suyu çorbası.",
+          "price": "₺220",
+          "badges": [
+            "Lokanta Klasiği",
+            "Bugün Tükendi"
+          ],
+          "availability": "sold-out",
+          "image": {
+            "assetType": "product-image",
+            "file": "corbalar/images/kelle-paca-corbasi.webp",
+            "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/kelle-paca-corbasi.webp",
+            "sourceType": "existing-reference",
+            "originalReference": "reference/live/assets/images/food/kelle-paca-corbasi.webp",
+            "renamedFrom": null,
+            "width": 1200,
+            "height": 800,
+            "format": "webp",
+            "fileSize": 121870,
+            "sha256": "a9b3a1adb9f2c8d64a85aaff1953da24031cc279e62cd0cb70fb906d59d83bb3"
+          },
+          "sharedImage": false
+        },
+        {
+          "name": "Şehriye Çorbası",
+          "description": "Domatesli tavuk suyunda tel şehriye ve maydanozla hazırlanan günlük çorba.",
+          "price": "₺115",
+          "badges": [
+            "Günün Çorbası"
+          ],
+          "availability": "available",
+          "image": {
+            "assetType": "product-image",
+            "file": "corbalar/images/sehriye-corbasi.webp",
+            "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/sehriye-corbasi.webp",
+            "sourceType": "existing-reference",
+            "originalReference": "reference/live/assets/images/food/sehriye-corbasi.webp",
+            "renamedFrom": null,
+            "width": 1200,
+            "height": 800,
+            "format": "webp",
+            "fileSize": 96310,
+            "sha256": "f48936e673ace9e8ba2be8a580a2d070ca1afee3c5c9f30efd1fbc3247063834"
+          },
+          "sharedImage": false
+        }
+      ]
+    },
+    {
+      "name": "Izgaralar",
+      "slug": "izgaralar",
+      "productCount": 4,
+      "declaredCount": 4,
+      "categoryCover": {
+        "assetType": "category-cover",
+        "sourcePath": "reference/live/assets/images/food/izgara-kofte.jpg",
+        "file": "izgara-kofte.jpg",
+        "width": 1200,
+        "height": 800,
+        "format": "jpeg",
+        "fileSize": 178853,
+        "sha256": "964e0febe72c2bf696cb62b89be44542282b9450d46b90808be66696ded804ef"
+      },
+      "products": [
+        {
+          "name": "Izgara Köfte",
+          "description": "Kasap usulü dana köfte, közlenmiş biber ve domates ile.",
+          "price": "₺350",
+          "badges": [
+            "Yeni"
+          ],
+          "availability": "available",
+          "image": {
+            "assetType": "product-image",
+            "file": "izgaralar/images/izgara-kofte.webp",
+            "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/izgara-kofte.webp",
+            "sourceType": "existing-reference",
+            "originalReference": "reference/live/assets/images/food/izgara-kofte.webp",
+            "renamedFrom": null,
+            "width": 1200,
+            "height": 800,
+            "format": "webp",
+            "fileSize": 161626,
+            "sha256": "112b04b68f81ef9e56a30b35fa57b75567141664e0bb03bae5c2bc9cc38fd002"
+          },
+          "sharedImage": false
+        },
+        {
+          "name": "Tavuk Şiş",
+          "description": "Özel baharatlarla marine edilmiş tavuk parçaları, köz biber ve domates eşliğinde.",
+          "price": "₺310",
+          "badges": [
+            "Popüler"
+          ],
+          "availability": "available",
+          "image": {
+            "assetType": "product-image",
+            "file": "izgaralar/images/tavuk-sis.webp",
+            "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/tavuk-sis.webp",
+            "sourceType": "existing-reference",
+            "originalReference": "reference/live/assets/images/food/tavuk-sis.webp",
+            "renamedFrom": null,
+            "width": 1200,
+            "height": 800,
+            "format": "webp",
+            "fileSize": 167752,
+            "sha256": "2dfaad669647a65ed907c2fe76420453f1ebaf3ad31960b31781a1501b000f13"
+          },
+          "sharedImage": false
+        },
+        {
+          "name": "Kasap Sucuk",
+          "description": "Odun kömüründe pişirilen baharatlı dana sucuk, közlenmiş sebzeler ve sumaklı soğanla.",
+          "price": "₺330",
+          "badges": [
+            "Acılı"
+          ],
+          "availability": "available",
+          "image": {
+            "assetType": "product-image",
+            "file": "izgaralar/images/kasap-sucuk.webp",
+            "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/kasap-sucuk.webp",
+            "sourceType": "existing-reference",
+            "originalReference": "reference/live/assets/images/food/kasap-sucuk.webp",
+            "renamedFrom": null,
+            "width": 1200,
+            "height": 800,
+            "format": "webp",
+            "fileSize": 161730,
+            "sha256": "2493728629bd3cb8d96d230558419ddd86907ad37c791e2ec75a58e15fb33d31"
+          },
+          "sharedImage": false
+        },
+        {
+          "name": "Karışık Izgara",
+          "description": "Köfte, tavuk şiş, kuzu pirzola ve sucuktan oluşan bol çeşitli ızgara tabağı.",
+          "price": "₺560",
+          "badges": [
+            "Şefin Önerisi",
+            "Paylaşmalık"
+          ],
+          "availability": "available",
+          "image": {
+            "assetType": "product-image",
+            "file": "izgaralar/images/karisik-izgara.webp",
+            "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/karisik-izgara.webp",
+            "sourceType": "existing-reference",
+            "originalReference": "reference/live/assets/images/food/karisik-izgara.webp",
+            "renamedFrom": null,
+            "width": 1200,
+            "height": 800,
+            "format": "webp",
+            "fileSize": 189440,
+            "sha256": "3b2bbfb4c5e376ccfcee87f457935f52ad1f0df4479a04b02943fa13b4da03c8"
+          },
+          "sharedImage": false
+        }
+      ]
+    },
+    {
+      "name": "Ana Yemekler",
+      "slug": "ana-yemekler",
+      "productCount": 9,
+      "declaredCount": 9,
+      "categoryCover": {
+        "assetType": "category-cover",
+        "sourcePath": "reference/live/assets/images/food/etli-kuru-fasulye.jpg",
+        "file": "etli-kuru-fasulye.jpg",
+        "width": 1200,
+        "height": 800,
+        "format": "jpeg",
+        "fileSize": 182722,
+        "sha256": "6f3c18fc17d448831ea30697d0641a33acf8c623397f8fbf0be3ecc420b78a58"
+      },
+      "products": [
+        {
+          "name": "Pirinç Pilavı",
+          "description": "Tereyağlı, tane tane Baldo pirinç pilavı.",
+          "price": "₺90",
+          "badges": [
+            "Vejetaryen"
+          ],
+          "availability": "available",
+          "image": {
+            "assetType": "product-image",
+            "file": "ana-yemekler/images/pirinc-pilavi.webp",
+            "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/pirinc-pilavi.webp",
+            "sourceType": "existing-reference",
+            "originalReference": "reference/live/assets/images/food/pirinc-pilavi.webp",
+            "renamedFrom": null,
+            "width": 1200,
+            "height": 800,
+            "format": "webp",
+            "fileSize": 131278,
+            "sha256": "2b6cb3ce80123c81e4cbff4f21737b9d12210c0dd05c96c00b6f652afbe04b2a"
+          },
+          "sharedImage": false
+        },
+        {
+          "name": "Etli Kuru Fasulye",
+          "description": "İspir fasulyesi, kuşbaşı dana eti ve sade lokanta salçasıyla.",
+          "price": "₺260",
+          "badges": [
+            "Günün Yemeği",
+            "Bugün Tükendi"
+          ],
+          "availability": "sold-out",
+          "image": {
+            "assetType": "product-image",
+            "file": "ana-yemekler/images/etli-kuru-fasulye.webp",
+            "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/etli-kuru-fasulye.webp",
+            "sourceType": "existing-reference",
+            "originalReference": "reference/live/assets/images/food/etli-kuru-fasulye.webp",
+            "renamedFrom": null,
+            "width": 1200,
+            "height": 800,
+            "format": "webp",
+            "fileSize": 102906,
+            "sha256": "5ff457203ab23206cd4566d4c3b286ba0c5a2d3f11a0254b7279c4e91b08e7d8"
+          },
+          "sharedImage": false
+        },
+        {
+          "name": "Etli Nohut Yemeği",
+          "description": "Koçbaşı nohut ve kuşbaşı dana etiyle bakır tencerede ağır ağır pişirilen ev yemeği.",
+          "price": "₺250",
+          "badges": [
+            "Günün Yemeği"
+          ],
+          "availability": "available",
+          "image": {
+            "assetType": "product-image",
+            "file": "ana-yemekler/images/etli-nohut-yemegi.webp",
+            "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/etli-nohut-yemegi.webp",
+            "sourceType": "existing-reference",
+            "originalReference": "reference/live/assets/images/food/etli-nohut-yemegi.webp",
+            "renamedFrom": null,
+            "width": 1200,
+            "height": 800,
+            "format": "webp",
+            "fileSize": 125522,
+            "sha256": "e0a70bc6eba33fe9a0dbe58ee0f2bb25976a53e2c7091a22d73f143253d7e21c"
+          },
+          "sharedImage": false
+        },
+        {
+          "name": "Patlıcan Musakka",
+          "description": "Kızarmış patlıcan, dana kıyma ve domates sosla fırında pişirilen lokanta usulü musakka.",
+          "price": "₺270",
+          "badges": [
+            "Ev Yemeği"
+          ],
+          "availability": "available",
+          "image": {
+            "assetType": "product-image",
+            "file": "ana-yemekler/images/patlican-musakka.webp",
+            "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/patlican-musakka.webp",
+            "sourceType": "existing-reference",
+            "originalReference": "reference/live/assets/images/food/patlican-musakka.webp",
+            "renamedFrom": null,
+            "width": 1200,
+            "height": 800,
+            "format": "webp",
+            "fileSize": 143856,
+            "sha256": "551990ef3333d1a71dbe2b84050440973cb6aee273d03656808b6759b0dbfc60"
+          },
+          "sharedImage": false
+        },
+        {
+          "name": "Zeytinyağlı Taze Fasulye",
+          "description": "Taze fasulye, domates ve soğanla zeytinyağında pişirilen serin servis edilen klasik.",
+          "price": "₺220",
+          "badges": [
+            "Vegan",
+            "Zeytinyağlı"
+          ],
+          "availability": "available",
+          "image": {
+            "assetType": "product-image",
+            "file": "ana-yemekler/images/zeytinyagli-taze-fasulye.webp",
+            "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/zeytinyagli-taze-fasulye.webp",
+            "sourceType": "existing-reference",
+            "originalReference": "reference/live/assets/images/food/zeytinyagli-taze-fasulye.webp",
+            "renamedFrom": null,
+            "width": 1200,
+            "height": 800,
+            "format": "webp",
+            "fileSize": 160338,
+            "sha256": "dc007a77f73e0946b946ad84b492e38c78289c12a3f469cccc0414a203e8d782"
+          },
+          "sharedImage": false
+        },
+        {
+          "name": "Tavuk Sote",
+          "description": "Tavuk parçaları, renkli biberler, mantar ve domatesle yüksek ateşte sotelenir.",
+          "price": "₺285",
+          "badges": [
+            "Günün Yemeği"
+          ],
+          "availability": "available",
+          "image": {
+            "assetType": "product-image",
+            "file": "ana-yemekler/images/tavuk-sote.webp",
+            "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/tavuk-sote.webp",
+            "sourceType": "existing-reference",
+            "originalReference": "reference/live/assets/images/food/tavuk-sote.webp",
+            "renamedFrom": null,
+            "width": 1200,
+            "height": 800,
+            "format": "webp",
+            "fileSize": 149346,
+            "sha256": "444e63d522ddcfb02246ea9d7bbebbbc5bdf37f8bac3aa70fe01e39e1d42a3d1"
+          },
+          "sharedImage": false
+        },
+        {
+          "name": "İzmir Köfte",
+          "description": "Dana köfte, patates ve biberin domates sosunda fırınlandığı geleneksel ana yemek.",
+          "price": "₺300",
+          "badges": [
+            "Lokanta Klasiği"
+          ],
+          "availability": "available",
+          "image": {
+            "assetType": "product-image",
+            "file": "ana-yemekler/images/izmir-kofte.webp",
+            "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/izmir-kofte.webp",
+            "sourceType": "existing-reference",
+            "originalReference": "reference/live/assets/images/food/izmir-kofte.webp",
+            "renamedFrom": null,
+            "width": 1200,
+            "height": 800,
+            "format": "webp",
+            "fileSize": 142230,
+            "sha256": "347e934fda7ba20ce07aa3dd97d6618e08b933041062deaa9d97d612bc245334"
+          },
+          "sharedImage": false
+        },
+        {
+          "name": "Etli Bezelye",
+          "description": "Kuşbaşı dana eti, bezelye, havuç ve patatesle tencere usulü pişirilen günlük yemek.",
+          "price": "₺280",
+          "badges": [
+            "Ev Yemeği"
+          ],
+          "availability": "available",
+          "image": {
+            "assetType": "product-image",
+            "file": "ana-yemekler/images/etli-bezelye.webp",
+            "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/etli-bezelye.webp",
+            "sourceType": "existing-reference",
+            "originalReference": "reference/live/assets/images/food/etli-bezelye.webp",
+            "renamedFrom": null,
+            "width": 1200,
+            "height": 800,
+            "format": "webp",
+            "fileSize": 126646,
+            "sha256": "c757935ed4dc1aaf0317949469679803259feecd665aecdf3274d193609933ce"
+          },
+          "sharedImage": false
+        },
+        {
+          "name": "Patlıcan Oturtma",
+          "description": "Dilim patlıcan, baharatlı kıyma ve sarımsaklı domates sosla fırında hazırlanır.",
+          "price": "₺275",
+          "badges": [
+            "Ev Yemeği",
+            "Bugün Tükendi"
+          ],
+          "availability": "sold-out",
+          "image": {
+            "assetType": "product-image",
+            "file": "ana-yemekler/images/patlican-oturtma.webp",
+            "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/patlican-oturtma.webp",
+            "sourceType": "existing-reference",
+            "originalReference": "reference/live/assets/images/food/patlican-oturtma.webp",
+            "renamedFrom": null,
+            "width": 1200,
+            "height": 800,
+            "format": "webp",
+            "fileSize": 172864,
+            "sha256": "ef66f1010e1ecbcf54b3654537b7bf5d63f829e52d7deea66c481d3002bb02a8"
+          },
+          "sharedImage": false
+        }
+      ]
+    },
+    {
+      "name": "İçecekler",
+      "slug": "icecekler",
+      "productCount": 10,
+      "declaredCount": 10,
+      "categoryCover": {
+        "assetType": "category-cover",
+        "sourcePath": "reference/live/assets/images/food/yayik-ayrani.jpg",
+        "file": "yayik-ayrani.jpg",
+        "width": 1200,
+        "height": 800,
+        "format": "jpeg",
+        "fileSize": 125422,
+        "sha256": "37e285a2c2ac6189daf813f7cb22feb0291639d1b4421244aad5842a956a2519"
+      },
+      "products": [
+        {
+          "name": "Yayık Ayranı",
+          "description": "Bol köpüklü, günlük yoğurtla hazırlanan geleneksel yayık ayranı.",
+          "price": "₺55",
+          "badges": [],
+          "availability": "available",
+          "image": {
+            "assetType": "product-image",
+            "file": "icecekler/images/yayik-ayrani.webp",
+            "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/yayik-ayrani.webp",
+            "sourceType": "existing-reference",
+            "originalReference": "reference/live/assets/images/food/yayik-ayrani.webp",
+            "renamedFrom": null,
+            "width": 1200,
+            "height": 800,
+            "format": "webp",
+            "fileSize": 160914,
+            "sha256": "495d16b68854b695599d453a906649a8d02a5d44715da57159ca64a66c979b3a"
+          },
+          "sharedImage": false
+        },
+        {
+          "name": "Şalgam Suyu",
+          "description": "Mor havuç ve bulgur mayasıyla fermente edilmiş geleneksel acılı şalgam suyu.",
+          "price": "₺50",
+          "badges": [
+            "Acılı"
+          ],
+          "availability": "available",
+          "image": {
+            "assetType": "product-image",
+            "file": "icecekler/images/salgam-suyu.webp",
+            "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/salgam-suyu.webp",
+            "sourceType": "existing-reference",
+            "originalReference": "reference/live/assets/images/food/salgam-suyu.webp",
+            "renamedFrom": null,
+            "width": 1200,
+            "height": 800,
+            "format": "webp",
+            "fileSize": 120190,
+            "sha256": "7df369ffcb6d7c50671a793edbfc5a6d4339c4a9ce5db5d5c8b7b63015dc948b"
+          },
+          "sharedImage": false
+        },
+        {
+          "name": "Maden Suyu",
+          "description": "Soğuk servis edilen doğal mineralli sade maden suyu.",
+          "price": "₺35",
+          "badges": [],
+          "availability": "available",
+          "image": {
+            "assetType": "product-image",
+            "file": "icecekler/images/maden-suyu.webp",
+            "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/maden-suyu.webp",
+            "sourceType": "existing-reference",
+            "originalReference": "reference/live/assets/images/food/maden-suyu.webp",
+            "renamedFrom": null,
+            "width": 1200,
+            "height": 800,
+            "format": "webp",
+            "fileSize": 134780,
+            "sha256": "2ce6a3201c7b6ee47f2b5682d9f210fb250225db65221ac863860f4abf717a7d"
+          },
+          "sharedImage": false
+        },
+        {
+          "name": "Doğal Kaynak Suyu",
+          "description": "Cam şişede soğuk servis edilen doğal kaynak suyu.",
+          "price": "₺25",
+          "badges": [],
+          "availability": "available",
+          "image": {
+            "assetType": "product-image",
+            "file": "icecekler/images/dogal-kaynak-suyu.webp",
+            "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/dogal-kaynak-suyu.webp",
+            "sourceType": "existing-reference",
+            "originalReference": "reference/live/assets/images/food/dogal-kaynak-suyu.webp",
+            "renamedFrom": null,
+            "width": 1200,
+            "height": 800,
+            "format": "webp",
+            "fileSize": 123852,
+            "sha256": "0e5727572d5a5cbf423756b793a81a7e0c3a3f122b8bf164c5b7dadb7f7b6013"
+          },
+          "sharedImage": false
+        },
+        {
+          "name": "Kola",
+          "description": "Buz gibi servis edilen klasik gazlı içecek.",
+          "price": "₺60",
+          "badges": [],
+          "availability": "available",
+          "image": {
+            "assetType": "product-image",
+            "file": "icecekler/images/kola.webp",
+            "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/kola.webp",
+            "sourceType": "existing-reference",
+            "originalReference": "reference/live/assets/images/food/kola.webp",
+            "renamedFrom": null,
+            "width": 1200,
+            "height": 800,
+            "format": "webp",
+            "fileSize": 109220,
+            "sha256": "1c669d144fc9da7a9306370bcc36d01740b92d1ab9da21375d24e4e7fcd95bd5"
+          },
+          "sharedImage": false
+        },
+        {
+          "name": "Sade Gazoz",
+          "description": "Geleneksel aromalı, ferahlatıcı ve soğuk servis edilen sade gazoz.",
+          "price": "₺55",
+          "badges": [
+            "Nostaljik"
+          ],
+          "availability": "available",
+          "image": {
+            "assetType": "product-image",
+            "file": "icecekler/images/sade-gazoz.webp",
+            "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/sade-gazoz.webp",
+            "sourceType": "existing-reference",
+            "originalReference": "reference/live/assets/images/food/sade-gazoz.webp",
+            "renamedFrom": null,
+            "width": 1200,
+            "height": 800,
+            "format": "webp",
+            "fileSize": 144690,
+            "sha256": "a17dd3b8f0c40fba497a5f9c0df3af7efe5fb46668b3eabc8a4973cea784d722"
+          },
+          "sharedImage": false
+        },
+        {
+          "name": "Türk Kahvesi",
+          "description": "Bakır cezvede ağır ateşte pişirilen köpüklü geleneksel Türk kahvesi.",
+          "price": "₺75",
+          "badges": [
+            "Geleneksel"
+          ],
+          "availability": "available",
+          "image": {
+            "assetType": "product-image",
+            "file": "icecekler/images/turk-kahvesi.webp",
+            "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/turk-kahvesi.webp",
+            "sourceType": "existing-reference",
+            "originalReference": "reference/live/assets/images/food/turk-kahvesi.webp",
+            "renamedFrom": null,
+            "width": 1200,
+            "height": 800,
+            "format": "webp",
+            "fileSize": 97000,
+            "sha256": "5516cb3ee0c2ad1501c593009936ddb83ebf6fd85230bdb6b94dcd975f99d7a9"
+          },
+          "sharedImage": false
+        },
+        {
+          "name": "Demleme Çay",
+          "description": "İnce belli bardakta taze demlenmiş sıcak Rize çayı.",
+          "price": "₺25",
+          "badges": [],
+          "availability": "available",
+          "image": {
+            "assetType": "product-image",
+            "file": "icecekler/images/demleme-cay.webp",
+            "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/demleme-cay.webp",
+            "sourceType": "existing-reference",
+            "originalReference": "reference/live/assets/images/food/demleme-cay.webp",
+            "renamedFrom": null,
+            "width": 1200,
+            "height": 800,
+            "format": "webp",
+            "fileSize": 84024,
+            "sha256": "36b2914f399e7ca1b7bfde52a36e37bd51a4ffe0904bdaa0b34c9e4d50ea8a50"
+          },
+          "sharedImage": false
+        },
+        {
+          "name": "Ev Yapımı Limonata",
+          "description": "Taze limon, nane ve az şekerle günlük hazırlanan ferahlatıcı limonata.",
+          "price": "₺85",
+          "badges": [
+            "Ev Yapımı"
+          ],
+          "availability": "available",
+          "image": {
+            "assetType": "product-image",
+            "file": "icecekler/images/ev-yapimi-limonata.webp",
+            "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/ev-yapimi-limonata.webp",
+            "sourceType": "existing-reference",
+            "originalReference": "reference/live/assets/images/food/ev-yapimi-limonata.webp",
+            "renamedFrom": null,
+            "width": 1200,
+            "height": 800,
+            "format": "webp",
+            "fileSize": 93140,
+            "sha256": "555f4772f807d04f71d06a875850382029896c7dbfe6b7011a7fb0bcdc1151b1"
+          },
+          "sharedImage": false
+        },
+        {
+          "name": "Günlük Hoşaf",
+          "description": "Mevsimine göre kuru üzüm, kayısı veya erikle günlük kaynatılan ev hoşafı.",
+          "price": "₺70",
+          "badges": [
+            "Ev Yapımı"
+          ],
+          "availability": "available",
+          "image": {
+            "assetType": "product-image",
+            "file": "icecekler/images/gunluk-hosaf.webp",
+            "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/gunluk-hosaf.webp",
+            "sourceType": "existing-reference",
+            "originalReference": "reference/live/assets/images/food/gunluk-hosaf.webp",
+            "renamedFrom": null,
+            "width": 1200,
+            "height": 800,
+            "format": "webp",
+            "fileSize": 120196,
+            "sha256": "7a2896aaf7d544c2aa572ce521814d6e765efcc8b59be3bea6ad8234589a34b1"
+          },
+          "sharedImage": false
+        }
+      ]
+    },
+    {
+      "name": "Kebaplar",
+      "slug": "kebaplar",
+      "productCount": 3,
+      "declaredCount": 3,
+      "categoryCover": {
+        "assetType": "category-cover",
+        "sourcePath": "reference/live/assets/images/food/kuzu-tandir.jpg",
+        "file": "kuzu-tandir.jpg",
+        "width": 1200,
+        "height": 800,
+        "format": "jpeg",
+        "fileSize": 182549,
+        "sha256": "45f7f5b08674c7dd5e801a4ecebfd0019641d9b55bcfa40d750951bf4fb09b49"
+      },
+      "products": [
+        {
+          "name": "Tas Kebabı",
+          "description": "Dana eti, mevsim sebzeleri ve lokantamızın ağır pişmiş özel sosu.",
+          "price": "₺320",
+          "badges": [
+            "Şefin Önerisi",
+            "Günün Yemeği"
+          ],
+          "availability": "available",
+          "image": {
+            "assetType": "product-image",
+            "file": "kebaplar/images/tas-kebabi.webp",
+            "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/tas-kebabi.webp",
+            "sourceType": "existing-reference",
+            "originalReference": "reference/live/assets/images/food/tas-kebabi.webp",
+            "renamedFrom": null,
+            "width": 1200,
+            "height": 800,
+            "format": "webp",
+            "fileSize": 141646,
+            "sha256": "312cab25277bfa3105c5e3eb4a87f985a4c22802c4bcb8a970273618e5281afd"
+          },
+          "sharedImage": false
+        },
+        {
+          "name": "Kuzu Tandır",
+          "description": "Ağır ateşte uzun süre pişirilmiş, lokantamızın imza kuzu tandırı.",
+          "price": "₺420",
+          "badges": [
+            "Şefin Önerisi",
+            "Popüler"
+          ],
+          "availability": "available",
+          "image": {
+            "assetType": "product-image",
+            "file": "kebaplar/images/kuzu-tandir.webp",
+            "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/kuzu-tandir.webp",
+            "sourceType": "existing-reference",
+            "originalReference": "reference/live/assets/images/food/kuzu-tandir.webp",
+            "renamedFrom": null,
+            "width": 1200,
+            "height": 800,
+            "format": "webp",
+            "fileSize": 171254,
+            "sha256": "215b8fe9183936f83698845c5aa5589d6a677ec76b3468acb8a4b0f209383af7"
+          },
+          "sharedImage": false
+        },
+        {
+          "name": "Bursa İskender Kebabı",
+          "description": "Tırnak pide üzerinde döner, domates sosu, kızgın tereyağı ve yoğurtla servis edilir.",
+          "price": "₺395",
+          "badges": [
+            "Bursa Lezzeti",
+            "Şefin Önerisi"
+          ],
+          "availability": "available",
+          "image": {
+            "assetType": "product-image",
+            "file": "kebaplar/images/bursa-iskender-kebabi.webp",
+            "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/bursa-iskender-kebabi.webp",
+            "sourceType": "existing-reference",
+            "originalReference": "reference/live/assets/images/food/bursa-iskender-kebabi.webp",
+            "renamedFrom": null,
+            "width": 1200,
+            "height": 800,
+            "format": "webp",
+            "fileSize": 141612,
+            "sha256": "d0454f0c9ea35e1f104fb401148d79ca023ad5fd22763a2d972a0b649512c450"
+          },
+          "sharedImage": false
+        }
+      ]
+    },
+    {
+      "name": "Tatlılar",
+      "slug": "tatlilar",
+      "productCount": 10,
+      "declaredCount": 10,
+      "categoryCover": {
+        "assetType": "category-cover",
+        "sourcePath": "reference/live/assets/images/food/firin-sutlac.jpg",
+        "file": "firin-sutlac.jpg",
+        "width": 1200,
+        "height": 800,
+        "format": "jpeg",
+        "fileSize": 165485,
+        "sha256": "7743ebb10d02745268295e3dde4db6fd4218a7897f711b14ddf14e0eb86e5573"
+      },
+      "products": [
+        {
+          "name": "Fırın Sütlaç",
+          "description": "Geleneksel usulde fırınlanmış, günlük manda sütüyle hazırlanan sütlaç.",
+          "price": "₺140",
+          "badges": [
+            "Popüler"
+          ],
+          "availability": "available",
+          "image": {
+            "assetType": "product-image",
+            "file": "tatlilar/images/firin-sutlac.webp",
+            "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/firin-sutlac.webp",
+            "sourceType": "existing-reference",
+            "originalReference": "reference/live/assets/images/food/firin-sutlac.webp",
+            "renamedFrom": null,
+            "width": 1200,
+            "height": 800,
+            "format": "webp",
+            "fileSize": 105240,
+            "sha256": "485b58b9f343b6f7fe3c8600230b1ae581e81881d9b9c43117cc65381b205da9"
+          },
+          "sharedImage": false
+        },
+        {
+          "name": "Kazandibi",
+          "description": "Altı usulünce karamelize edilmiş, ipeksi kıvamlı geleneksel sütlü tatlı.",
+          "price": "₺140",
+          "badges": [
+            "Sütlü Tatlı"
+          ],
+          "availability": "available",
+          "image": {
+            "assetType": "product-image",
+            "file": "tatlilar/images/kazandibi.webp",
+            "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/kazandibi.webp",
+            "sourceType": "existing-reference",
+            "originalReference": "reference/live/assets/images/food/kazandibi.webp",
+            "renamedFrom": null,
+            "width": 1200,
+            "height": 800,
+            "format": "webp",
+            "fileSize": 136062,
+            "sha256": "1757fb06a773c8d22996c74075fbbde83d64fa987927a2cc4dc39cb300408193"
+          },
+          "sharedImage": false
+        },
+        {
+          "name": "Tavuk Göğsü",
+          "description": "Geleneksel reçeteyle hazırlanan, tarçınla servis edilen hafif ve lifli sütlü tatlı.",
+          "price": "₺145",
+          "badges": [
+            "Sütlü Tatlı"
+          ],
+          "availability": "available",
+          "image": {
+            "assetType": "product-image",
+            "file": "tatlilar/images/tavuk-gogsu.webp",
+            "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/tavuk-gogsu.webp",
+            "sourceType": "existing-reference",
+            "originalReference": "reference/live/assets/images/food/tavuk-gogsu.webp",
+            "renamedFrom": null,
+            "width": 1200,
+            "height": 800,
+            "format": "webp",
+            "fileSize": 108938,
+            "sha256": "92cb19479cd995be099e01ba5efaa103ee575cddf5d093d3662cf2b69ffb0c90"
+          },
+          "sharedImage": false
+        },
+        {
+          "name": "Keşkül",
+          "description": "Badem aroması ve Hindistan ceviziyle tamamlanan Osmanlı usulü sütlü tatlı.",
+          "price": "₺145",
+          "badges": [
+            "Sütlü Tatlı"
+          ],
+          "availability": "available",
+          "image": {
+            "assetType": "product-image",
+            "file": "tatlilar/images/keskul.webp",
+            "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/keskul.webp",
+            "sourceType": "existing-reference",
+            "originalReference": "reference/live/assets/images/food/keskul.webp",
+            "renamedFrom": null,
+            "width": 1200,
+            "height": 800,
+            "format": "webp",
+            "fileSize": 122328,
+            "sha256": "8b507ca084ab0755099cc8948035ac201eeb2906f79be2ab25bc1ec1f76bdb19"
+          },
+          "sharedImage": false
+        },
+        {
+          "name": "İrmik Helvası",
+          "description": "Tereyağı ve çam fıstığıyla kavrulan, sıcak servis edilen tane tane irmik helvası.",
+          "price": "₺130",
+          "badges": [
+            "Sıcak Tatlı"
+          ],
+          "availability": "available",
+          "image": {
+            "assetType": "product-image",
+            "file": "tatlilar/images/irmik-helvasi.webp",
+            "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/irmik-helvasi.webp",
+            "sourceType": "existing-reference",
+            "originalReference": "reference/live/assets/images/food/irmik-helvasi.webp",
+            "renamedFrom": null,
+            "width": 1200,
+            "height": 800,
+            "format": "webp",
+            "fileSize": 151326,
+            "sha256": "1fdeb56925841f0e4222711fa809cca600cb187d1f65a286a7d4dddae6e0d7fa"
+          },
+          "sharedImage": false
+        },
+        {
+          "name": "Tahinli Kabak Tatlısı",
+          "description": "Kendi suyunda ağır ağır pişen bal kabağı, tahin ve cevizle servis edilir.",
+          "price": "₺160",
+          "badges": [
+            "Vegan",
+            "Mevsimlik"
+          ],
+          "availability": "available",
+          "image": {
+            "assetType": "product-image",
+            "file": "tatlilar/images/tahinli-kabak-tatlisi.webp",
+            "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/tahinli-kabak-tatlisi.webp",
+            "sourceType": "existing-reference",
+            "originalReference": "reference/live/assets/images/food/tahinli-kabak-tatlisi.webp",
+            "renamedFrom": null,
+            "width": 1200,
+            "height": 800,
+            "format": "webp",
+            "fileSize": 137862,
+            "sha256": "ed24864a52d10b613d8fad9f95a6591c9b60287074cd8cbb2c25c488bdbc758c"
+          },
+          "sharedImage": false
+        },
+        {
+          "name": "Ayva Tatlısı",
+          "description": "Karanfil ve tarçınla pişirilen ayva, kaymak ve ceviz eşliğinde servis edilir.",
+          "price": "₺175",
+          "badges": [
+            "Mevsimlik",
+            "Bugün Tükendi"
+          ],
+          "availability": "sold-out",
+          "image": {
+            "assetType": "product-image",
+            "file": "tatlilar/images/ayva-tatlisi.webp",
+            "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/ayva-tatlisi.webp",
+            "sourceType": "existing-reference",
+            "originalReference": "reference/live/assets/images/food/ayva-tatlisi.webp",
+            "renamedFrom": null,
+            "width": 1200,
+            "height": 800,
+            "format": "webp",
+            "fileSize": 131870,
+            "sha256": "91f9c4470856e2f3f85552cd912e4a152fb474e973e2e1039231d4dc3d17700d"
+          },
+          "sharedImage": false
+        },
+        {
+          "name": "Revani",
+          "description": "İrmikli yumuşak kekin limon kokulu şerbetle buluştuğu klasik lokanta tatlısı.",
+          "price": "₺135",
+          "badges": [
+            "Şerbetli"
+          ],
+          "availability": "available",
+          "image": {
+            "assetType": "product-image",
+            "file": "tatlilar/images/revani.webp",
+            "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/revani.webp",
+            "sourceType": "existing-reference",
+            "originalReference": "reference/live/assets/images/food/revani.webp",
+            "renamedFrom": null,
+            "width": 1200,
+            "height": 800,
+            "format": "webp",
+            "fileSize": 131152,
+            "sha256": "eaf2389f2dc49e38696e007271c7086787f5f448436029f87bc32f8d50dcfa37"
+          },
+          "sharedImage": false
+        },
+        {
+          "name": "Kaymaklı Ekmek Kadayıfı",
+          "description": "Karamelize şerbetle dinlendirilen ekmek kadayıfı, manda kaymağıyla servis edilir.",
+          "price": "₺180",
+          "badges": [
+            "Bursa Lezzeti",
+            "Şerbetli"
+          ],
+          "availability": "available",
+          "image": {
+            "assetType": "product-image",
+            "file": "tatlilar/images/kaymakli-ekmek-kadayifi.webp",
+            "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/kaymakli-ekmek-kadayifi.webp",
+            "sourceType": "existing-reference",
+            "originalReference": "reference/live/assets/images/food/kaymakli-ekmek-kadayifi.webp",
+            "renamedFrom": null,
+            "width": 1200,
+            "height": 800,
+            "format": "webp",
+            "fileSize": 125932,
+            "sha256": "6832328d086115be31b109c60dc42904f8f5028755838be63e1acf12664ed653"
+          },
+          "sharedImage": false
+        },
+        {
+          "name": "Cevizli Baklava",
+          "description": "İncecik açılmış katlar, bol ceviz ve sade yağla hazırlanan çıtır baklava.",
+          "price": "₺220",
+          "badges": [
+            "Şerbetli",
+            "Paylaşmalık"
+          ],
+          "availability": "available",
+          "image": {
+            "assetType": "product-image",
+            "file": "tatlilar/images/cevizli-baklava.webp",
+            "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/cevizli-baklava.webp",
+            "sourceType": "existing-reference",
+            "originalReference": "reference/live/assets/images/food/cevizli-baklava.webp",
+            "renamedFrom": null,
+            "width": 1200,
+            "height": 800,
+            "format": "webp",
+            "fileSize": 153406,
+            "sha256": "f6afd5137de27dff6855b1bde0d36e3d21b72693d21a283a086b581041add55f"
+          },
+          "sharedImage": false
+        }
+      ]
+    }
+  ],
+  "duplicateGroups": [],
+  "unusedFoodAssets": [
+    "pirinc-pilavi.jpg",
+    "tas-kebabi.jpg"
+  ],
+  "problems": [
+    "Kullanılmayan asset (hiçbir ürün veya kategoride referans yok): pirinc-pilavi.jpg",
+    "Kullanılmayan asset (hiçbir ürün veya kategoride referans yok): tas-kebabi.jpg"
+  ]
+}

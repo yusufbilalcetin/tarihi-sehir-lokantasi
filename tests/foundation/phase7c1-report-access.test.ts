@@ -52,6 +52,7 @@ function principal(role: UserRole, restaurantId = "restaurant-a"): StaffPrincipa
       name: "Tarihi Şehir Lokantası",
       slug: "tarihi-sehir-lokantasi",
       isActive: true,
+      timezone: "Europe/Istanbul",
     },
     role,
     userId: "staff-1",

@@ -19,10 +19,11 @@ import {
 } from "@/lib/domain/cashier-shift";
 import { addMoney, decimalToMinor, minorToDecimal, subtractMoney } from "@/lib/domain/money";
 import {
+  DEFAULT_RESTAURANT_TIME_ZONE,
   addDays,
   parseDay,
   startOfLocalDay,
-  RESTAURANT_UTC_OFFSET_MINUTES,
+  zoneOffsetForDay,
 } from "@/lib/domain/report-range";
 import {
   authorizeRestaurantAccess,
@@ -154,10 +155,11 @@ export class CashierReportService {
       );
     }
 
-    const [totals, restaurantName] = await Promise.all([
+    const [totals, restaurant] = await Promise.all([
       this.repository.ledgerTotals(actor.restaurantId, shift.id),
-      this.repository.findRestaurantName(actor.restaurantId),
+      this.repository.findRestaurantProfile(actor.restaurantId),
     ]);
+    const restaurantName = restaurant?.name ?? null;
     const summary = summaryFromMethodTotals({
       openingCash: shift.openingCash,
       paymentsByMethod: totals.paymentsByMethod,
@@ -258,22 +260,26 @@ export class CashierReportService {
   ): Promise<DailyCashReport> {
     const actor = this.authorize(principal, SHIFT_SUPERVISOR_ROLES, "Gün sonu raporu");
     const day = parseDay(query.date);
+    // The calendar day is the restaurant's own, so the boundary has to be read
+    // before the window is built rather than assumed to be +03:00.
+    const restaurant = await this.repository.findRestaurantProfile(actor.restaurantId);
+    const timeZone = restaurant?.timezone ?? DEFAULT_RESTAURANT_TIME_ZONE;
+    const restaurantName = restaurant?.name ?? null;
     const window: DailyWindow = {
       restaurantId: actor.restaurantId,
-      start: startOfLocalDay(day),
-      endExclusive: startOfLocalDay(addDays(day, 1)),
+      start: startOfLocalDay(day, timeZone),
+      endExclusive: startOfLocalDay(addDays(day, 1), timeZone),
       cashRegisterId: query.registerId,
       cashierId: query.cashierId,
     };
 
-    const [totals, byRegister, byCashier, shifts, exceptions, restaurantName] =
+    const [totals, byRegister, byCashier, shifts, exceptions] =
       await Promise.all([
         this.repository.dailyTotals(window),
         this.repository.dailyByRegister(window),
         this.repository.dailyByCashier(window),
         this.repository.dailyShifts(window),
         this.repository.dailyExceptions(window),
-        this.repository.findRestaurantName(actor.restaurantId),
       ]);
 
     const payments = toMethodBreakdown(totals.paymentsByMethod);
@@ -310,7 +316,9 @@ export class CashierReportService {
       restaurantId: actor.restaurantId,
       restaurantName: restaurantName ?? "",
       businessDate: query.date,
-      timezoneOffsetMinutes: RESTAURANT_UTC_OFFSET_MINUTES,
+      // The offset that actually applied on this day in this zone, so a report
+      // read months later still says what the clock said at the time.
+      timezoneOffsetMinutes: zoneOffsetForDay(day, timeZone),
       generatedAt: new Date().toISOString(),
       paymentMethodBreakdown: payments,
       grossCollected: gross,

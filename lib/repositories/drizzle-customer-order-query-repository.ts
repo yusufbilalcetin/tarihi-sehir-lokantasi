@@ -29,6 +29,7 @@ export class DrizzleCustomerOrderQueryRepository
   async findActiveByTable(
     restaurantId: string,
     tableId: string,
+    sessionNonce: string,
   ): Promise<CustomerActiveOrderRecords> {
     const orderRows = await this.db
       .select({
@@ -56,6 +57,11 @@ export class DrizzleCustomerOrderQueryRepository
         and(
           eq(orders.restaurantId, restaurantId),
           eq(orders.tableId, tableId),
+          // The sitting, not the table. `=` against a null column is null and
+          // the row drops out, so a staff order and every pre-column row are
+          // excluded without a second predicate — which is the fail-closed
+          // behaviour the schema comment promises.
+          eq(orders.customerSessionNonce, sessionNonce),
           inArray(orders.status, [...ACTIVE_ORDER_STATUSES]),
         ),
       )

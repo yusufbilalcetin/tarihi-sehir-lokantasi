@@ -1,8 +1,8 @@
 "use client";
 
 import { useCallback, useMemo, useState } from "react";
+import { useStaffSession } from "@/components/staff/staff-session-provider";
 import { Download, Printer, TriangleAlert } from "lucide-react";
-import { PageHeader } from "@/components/shared/page-header";
 import { Badge } from "@/components/ui/badge";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -26,6 +26,7 @@ import { adminApi, cashRegisterApi } from "@/lib/api/endpoints";
 import type { MethodBreakdownRow } from "@/lib/domain/cashier-report";
 import { paymentMethodLabel } from "@/lib/domain/display";
 import { useApiResource } from "@/lib/hooks/use-api-resource";
+import { restaurantToday } from "@/lib/domain/report-range";
 import { formatCurrency } from "@/lib/format";
 import { cn } from "@/lib/utils";
 
@@ -41,11 +42,9 @@ function money(value: string | null): string {
   return value === null ? "—" : formatCurrency(Number(value));
 }
 
-/** Today in the restaurant's own timezone (fixed UTC+3), not the browser's. */
-function localToday(): string {
-  const shifted = new Date(Date.now() + 180 * 60_000);
-  return shifted.toISOString().slice(0, 10);
-}
+/** Shared with the manager's home so the two cannot name different days. */
+/** Shared with the manager's home so the two cannot name different days. */
+const localToday = (timeZone: string) => restaurantToday(timeZone);
 
 function Figure({
   label,
@@ -88,7 +87,10 @@ function MethodRows({ rows }: { rows: readonly MethodBreakdownRow[] }) {
 }
 
 export function CashDayReportView() {
-  const [date, setDate] = useState(localToday());
+  // The restaurant's own day, not the browser's: a report opened from a laptop
+  // in another zone must still mean the day the restaurant worked.
+  const { restaurantTimezone } = useStaffSession();
+  const [date, setDate] = useState(() => localToday(restaurantTimezone));
   const [registerId, setRegisterId] = useState("ALL");
   const [cashierId, setCashierId] = useState("ALL");
 
@@ -138,11 +140,6 @@ export function CashDayReportView() {
 
   return (
     <div className="space-y-6">
-      <PageHeader
-        title="Gün Sonu Kasa Raporu"
-        description="Seçilen güne ait tahsilat, iade ve kasa hareketleri."
-      />
-
       <Card className="gap-0 py-0" data-print-hide>
         <CardContent className="grid gap-3 p-4 sm:grid-cols-4 sm:items-end sm:p-5">
           <div>

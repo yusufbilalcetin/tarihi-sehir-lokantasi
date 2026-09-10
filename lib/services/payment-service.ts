@@ -2,6 +2,7 @@ import { createHash } from "node:crypto";
 
 import { DomainError, internalError } from "@/lib/api/domain-error";
 import {
+  PAYMENT_ROLES,
   REFUND_ROLES,
   calculateOrderBalance,
   checkPaymentAmount,
@@ -9,6 +10,7 @@ import {
   refundableAmount,
   type OrderBalance,
 } from "@/lib/domain/financial-operations";
+import { createIdempotencyFingerprint } from "@/lib/domain/idempotency";
 import { addMoney, decimalToMinor, minorToDecimal } from "@/lib/domain/money";
 import {
   authorizeRestaurantAccess,
@@ -20,7 +22,7 @@ import type {
   PaymentTransactionRepository,
 } from "@/lib/repositories/payment-repository";
 
-const PAYMENT_ROLES = ["ADMIN", "MANAGER", "CASHIER"] as const satisfies readonly UserRole[];
+
 
 export interface CreatePaymentCommand {
   readonly orderId: string;
@@ -91,6 +93,44 @@ function hashKey(value: string): string {
   return createHash("sha256").update(value, "utf8").digest("hex");
 }
 
+function hashIntent(value: unknown): string {
+  return hashKey(createIdempotencyFingerprint(value));
+}
+
+function paymentIntent(command: CreatePaymentCommand): string {
+  return hashIntent({
+    orderId: command.orderId,
+    method: command.method,
+    amount: command.amount ?? null,
+    checkId: command.checkId ?? null,
+  });
+}
+
+function refundIntent(command: RefundCommand): string {
+  return hashIntent({
+    paymentId: command.paymentId,
+    amount: command.amount,
+    reasonCode: command.reasonCode,
+    note: command.note ?? null,
+  });
+}
+
+function assertSameIdempotencyIntent(
+  storedRequestHash: string | null,
+  requestHash: string,
+): void {
+  // Legacy rows did not record enough information to prove that two payloads
+  // are equal. Fail closed instead of replaying a possibly different money
+  // instruction as a successful receipt.
+  if (!storedRequestHash || storedRequestHash !== requestHash) {
+    throw new DomainError(
+      "IDEMPOTENCY_CONFLICT",
+      "Bu istek anahtarı farklı işlem bilgileriyle kullanıldı.",
+      { httpStatus: 409 },
+    );
+  }
+}
+
 /** A refund whose payment or order vanished mid-transaction is a bug, not input. */
 function internalRefundError(): DomainError {
   return internalError();
@@ -108,12 +148,14 @@ function internalRefundError(): DomainError {
 async function requireActiveShift(
   transaction: PaymentTransactionRepository,
   actor: RestaurantPrincipal,
+  onMissing?: () => Promise<void>,
 ): Promise<string> {
   const shift = await transaction.findActiveShiftForUpdate(
     actor.restaurantId,
     actor.userId,
   );
   if (!shift) {
+    await onMissing?.();
     throw new DomainError(
       "CASHIER_SHIFT_REQUIRED",
       "Bu işlem için açık bir kasa vardiyanız olmalıdır.",
@@ -159,8 +201,38 @@ export class PaymentService {
     }
     const actor = decision.principal;
     const keyHash = hashKey(command.idempotencyKey);
+    const requestHash = paymentIntent(command);
 
     return this.repository.transaction(async (transaction) => {
+      // A completed retry must remain replayable after its original shift has
+      // closed. This lookup takes no business-row lock; a fresh write still
+      // acquires the shift lock first below.
+      const completedReplay = await transaction.findPaymentByIdempotencyKey(
+        actor.restaurantId,
+        keyHash,
+      );
+      if (completedReplay) {
+        assertSameIdempotencyIntent(completedReplay.idempotencyRequestHash, requestHash);
+        const replayOrder = await transaction.findPayableOrderForUpdate(
+          actor.restaurantId,
+          command.orderId,
+        );
+        if (!replayOrder) {
+          throw new DomainError("ORDER_NOT_FOUND", "Sipariş bulunamadı.", { httpStatus: 404 });
+        }
+        const ledger = await this.balanceOf(transaction, actor.restaurantId, replayOrder);
+        return this.paymentResult(replayOrder, completedReplay, ledger, true);
+      }
+
+      // Shift close takes this same row first. Keeping one global lock order
+      // means a close either includes this payment or commits before it and
+      // makes the write fail cleanly; the two transactions cannot deadlock.
+      const cashierShiftId = await requireActiveShift(transaction, actor, async () => {
+        // No shift was locked and this path cannot write. Preserve scoped 404s.
+        if (!await transaction.findPayableOrderForUpdate(actor.restaurantId, command.orderId)) {
+          throw new DomainError("ORDER_NOT_FOUND", "Sipariş bulunamadı.", { httpStatus: 404 });
+        }
+      });
       const order = await transaction.findPayableOrderForUpdate(actor.restaurantId, command.orderId);
       if (!order) {
         throw new DomainError("ORDER_NOT_FOUND", "Sipariş bulunamadı.", { httpStatus: 404 });
@@ -169,13 +241,7 @@ export class PaymentService {
       // A retried request replays its own receipt rather than collecting twice.
       const replay = await transaction.findPaymentByIdempotencyKey(actor.restaurantId, keyHash);
       if (replay) {
-        if (replay.orderId !== order.id) {
-          throw new DomainError(
-            "IDEMPOTENCY_CONFLICT",
-            "Bu istek anahtarı başka bir sipariş için kullanıldı.",
-            { httpStatus: 409 },
-          );
-        }
+        assertSameIdempotencyIntent(replay.idempotencyRequestHash, requestHash);
         const ledger = await this.balanceOf(transaction, actor.restaurantId, order);
         return this.paymentResult(order, replay, ledger, true);
       }
@@ -195,8 +261,8 @@ export class PaymentService {
 
       const before = await this.balanceOf(transaction, actor.restaurantId, order);
 
-      // A collection against a split check is capped by that check's own
-      // remainder, not by the whole order's.
+      // A split collection must respect both the check and order remainders:
+      // unallocated payments can reduce the order without reducing this check.
       let checkCeiling: string | null = null;
       if (command.checkId) {
         const check = await transaction.findCheckForUpdate(
@@ -227,7 +293,9 @@ export class PaymentService {
 
       // No amount means "settle the rest", which keeps the single-payment flow
       // identical to Phase 4 without the client ever naming a figure.
-      const ceiling = checkCeiling ?? before.outstanding;
+      const ceiling = checkCeiling === null ? before.outstanding : minorToDecimal(
+        Math.min(decimalToMinor(checkCeiling), decimalToMinor(before.outstanding)),
+      );
       const requested = command.amount ?? ceiling;
       const failure = checkPaymentAmount(requested, ceiling);
       if (failure === "NOT_POSITIVE") {
@@ -245,13 +313,6 @@ export class PaymentService {
         );
       }
 
-      // Resolved last, so a cross-tenant or missing order still answers
-      // "not found" exactly as it did before shifts existed. Taking the shift
-      // lock here is what serialises this collection against a shift close: if
-      // the close committed first the shift is no longer OPEN and this is
-      // refused, and if it did not, the close waits and counts this payment.
-      const cashierShiftId = await requireActiveShift(transaction, actor);
-
       const at = this.clock();
       const payment = await transaction.insertPayment({
         restaurantId: actor.restaurantId,
@@ -263,12 +324,14 @@ export class PaymentService {
         createdByUserId: actor.userId,
         cashierShiftId,
         idempotencyKeyHash: keyHash,
+        idempotencyRequestHash: requestHash,
         at,
       });
       if (!payment) {
         // The idempotency index rejected it; the winner's row is the truth.
         const raced = await transaction.findPaymentByIdempotencyKey(actor.restaurantId, keyHash);
         if (raced) {
+          assertSameIdempotencyIntent(raced.idempotencyRequestHash, requestHash);
           const ledger = await this.balanceOf(transaction, actor.restaurantId, order);
           return this.paymentResult(order, raced, ledger, true);
         }
@@ -399,10 +462,12 @@ export class PaymentService {
   ): Promise<RefundResult> {
     const actor = this.authorize(principal, REFUND_ROLES, "İade");
     const keyHash = hashKey(command.idempotencyKey);
+    const requestHash = refundIntent(command);
 
     return this.repository.transaction(async (transaction) => {
       const existing = await transaction.findRefundByIdempotencyKey(actor.restaurantId, keyHash);
       if (existing) {
+        assertSameIdempotencyIntent(existing.idempotencyRequestHash, requestHash);
         const payment = await transaction.findPaymentForUpdate(
           actor.restaurantId,
           existing.paymentId,
@@ -421,6 +486,11 @@ export class PaymentService {
         };
       }
 
+      const cashierShiftId = await requireActiveShift(transaction, actor, async () => {
+        if (!await transaction.findPaymentForUpdate(actor.restaurantId, command.paymentId)) {
+          throw new DomainError("PAYMENT_NOT_FOUND", "Ödeme bulunamadı.", { httpStatus: 404 });
+        }
+      });
       const payment = await transaction.findPaymentForUpdate(
         actor.restaurantId,
         command.paymentId,
@@ -456,10 +526,6 @@ export class PaymentService {
         );
       }
 
-      // The refund belongs to the shift giving the money back, which is very
-      // often not the (already closed) shift that collected it.
-      const cashierShiftId = await requireActiveShift(transaction, actor);
-
       const at = this.clock();
       const refund = await transaction.insertRefund({
         restaurantId: actor.restaurantId,
@@ -471,6 +537,7 @@ export class PaymentService {
         note: command.note ?? null,
         createdByUserId: actor.userId,
         idempotencyKeyHash: keyHash,
+        idempotencyRequestHash: requestHash,
         at,
       });
       if (!refund) {

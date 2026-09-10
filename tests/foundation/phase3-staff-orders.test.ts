@@ -3,7 +3,7 @@ import test from "node:test";
 
 import { DomainError } from "../../lib/api/domain-error";
 import type { RestaurantPrincipal } from "../../lib/domain/restaurant-scope";
-import { OPEN_ORDER_STATUSES } from "../../lib/domain/status";
+import { OPEN_ORDER_STATUSES, deriveOrderStatusFromItems } from "../../lib/domain/status";
 import type {
   InsertAuditLogInput,
   InsertOrderEventInput,
@@ -26,6 +26,7 @@ import {
 import { staffOrderItemStatusBodySchema } from "../../lib/validation/staff-orders";
 
 interface FakeStaffState {
+  otherItems?: { status: MutableOrderItemRecord["status"] }[];
   item: MutableOrderItemRecord | null;
   updatedItems: UpdateOrderItemStatusRecordInput[];
   events: InsertOrderEventInput[];
@@ -68,6 +69,14 @@ class FakeStaffOrderRepository implements StaffOrderRepository {
           state.item = { ...state.item, status: input.nextStatus };
           return true;
         },
+        async syncOrderStatusFromItems() {
+          if (state.item) state.item = {
+            ...state.item,
+            orderStatus: deriveOrderStatusFromItems(state.item.orderStatus, [state.item, ...state.otherItems ?? []]),
+            orderVersion: state.item.orderVersion + 1,
+          };
+          return { status: state.item!.orderStatus, version: state.updatedItems.length + 1 };
+        },
         async insertOrderEvent(input) {
           state.events.push(input);
         },
@@ -101,6 +110,7 @@ function state(overrides: Partial<FakeStaffState> = {}): FakeStaffState {
       orderId: "order-1",
       orderNumber: "ORD-000001",
       orderStatus: "CONFIRMED",
+      orderVersion: 1,
       productName: "Mercimek Çorbası",
       status: "PENDING",
     },
@@ -113,6 +123,54 @@ function state(overrides: Partial<FakeStaffState> = {}): FakeStaffState {
     ...overrides,
   };
 }
+
+test("item-only preparation reaches ready and service without a separate parent command", async () => {
+  const fake = state();
+  const service = new StaffOrderService(new FakeStaffOrderRepository(fake));
+  const command = { restaurantId: "restaurant-a", orderItemId: "item-1" };
+  await service.updateItemStatus(principal("KITCHEN"), { ...command, nextStatus: "PREPARING" });
+  await service.updateItemStatus(principal("KITCHEN"), { ...command, nextStatus: "READY" });
+  await service.updateItemStatus(principal("WAITER"), { ...command, nextStatus: "SERVED" });
+  assert.equal(fake.item?.orderStatus, "SERVED");
+});
+
+test("partial preparation, cancelled lines and rollback derive only operational state", () => {
+  const derive = (statuses: Parameters<typeof deriveOrderStatusFromItems>[1][number]["status"][]) =>
+    deriveOrderStatusFromItems("PREPARING", statuses.map((status) => ({ status })));
+  assert.equal(derive(["READY", "PREPARING"]), "PREPARING");
+  assert.equal(derive(["READY", "CANCELLED", "VOIDED"]), "READY");
+  assert.equal(derive(["READY", "SERVED"]), "READY");
+  assert.equal(derive(["SERVED", "CANCELLED"]), "SERVED");
+  assert.equal(derive(["PENDING", "PENDING"]), "CONFIRMED");
+  assert.equal(deriveOrderStatusFromItems("READY", [{ status: "PREPARING" }]), "PREPARING");
+  assert.equal(deriveOrderStatusFromItems("COMPLETED", [{ status: "PREPARING" }]), "COMPLETED");
+  assert.equal(deriveOrderStatusFromItems("CANCELLED", [{ status: "READY" }]), "CANCELLED");
+});
+
+test("an old device cannot reinterpret its start command as preparation rollback", async () => {
+  const fake = state();
+  const service = new StaffOrderService(new FakeStaffOrderRepository(fake));
+  const command = { restaurantId: "restaurant-a", orderItemId: "item-1", expectedOrderVersion: 1 };
+  await service.updateItemStatus(principal("KITCHEN"), { ...command, nextStatus: "PREPARING" });
+  await service.updateItemStatus(principal("KITCHEN"), { ...command, expectedOrderVersion: 2, nextStatus: "READY" });
+  await assert.rejects(
+    () => service.updateItemStatus(principal("KITCHEN"), { ...command, nextStatus: "PREPARING" }),
+    (error: unknown) => error instanceof DomainError && error.code === "CONFLICT",
+  );
+  assert.equal(fake.item?.status, "READY");
+});
+
+test("a ready line can be served while other lines are still preparing", async () => {
+  const fake = state();
+  fake.item = { ...fake.item!, status: "READY", orderStatus: "PREPARING" };
+  fake.otherItems = [{ status: "PREPARING" }];
+  const service = new StaffOrderService(new FakeStaffOrderRepository(fake));
+  await service.updateItemStatus(principal("WAITER"), {
+    restaurantId: "restaurant-a", orderItemId: "item-1", nextStatus: "SERVED",
+  });
+  assert.equal(fake.item?.status, "SERVED");
+  assert.equal(fake.item?.orderStatus, "PREPARING");
+});
 
 test("staff order transition permissions are edge-based", () => {
   assert.equal(canRoleTransitionOrderStatus("WAITER", "NEW", "CONFIRMED"), true);
@@ -144,7 +202,7 @@ test("item transitions cannot move ahead of their locked parent order", () => {
   assert.equal(isOrderStageCompatibleWithItemTransition("CONFIRMED", "PENDING", "PREPARING"), true);
   assert.equal(isOrderStageCompatibleWithItemTransition("CONFIRMED", "PREPARING", "READY"), false);
   assert.equal(isOrderStageCompatibleWithItemTransition("PREPARING", "PREPARING", "READY"), true);
-  assert.equal(isOrderStageCompatibleWithItemTransition("PREPARING", "READY", "SERVED"), false);
+  assert.equal(isOrderStageCompatibleWithItemTransition("PREPARING", "READY", "SERVED"), true);
   assert.equal(isOrderStageCompatibleWithItemTransition("READY", "READY", "SERVED"), true);
 });
 
@@ -181,6 +239,7 @@ test("item status event, outbox, and audit are committed atomically", async () =
     /simulated audit failure/,
   );
   assert.equal(failing.item?.status, "PENDING");
+  assert.equal(failing.item?.orderStatus, "CONFIRMED");
   assert.equal(failing.events.length, 0);
   assert.equal(failing.outbox.length, 0);
   assert.equal(failing.audits.length, 0);

@@ -132,3 +132,48 @@ export function ErrorState({
     </div>
   );
 }
+
+/**
+ * The same four states, said inside a table cell.
+ *
+ * `ErrorState` is a bordered panel and cannot sit in a `<td>`, so tables wrote
+ * their own two-branch version instead: `loading ? "Yükleniyor…" : "no rows"`.
+ * That is the bug `panelState` exists to prevent, and it had reached the shift
+ * history and the print queue — `useApiResource` marks the resource loaded in a
+ * `finally`, so after a failed GET `loading` is false and the empty message
+ * renders. A manager investigating a till discrepancy was told the filter
+ * matched no shifts when the query had actually failed.
+ *
+ * Emptiness and failure are different answers; a cell is not a reason to
+ * conflate them.
+ */
+export function TableStateCell({
+  loading,
+  error,
+  emptyText,
+  errorText,
+  onRetry,
+}: {
+  readonly loading: boolean;
+  readonly error: unknown;
+  readonly emptyText: string;
+  readonly errorText: string;
+  readonly onRetry?: () => void;
+}) {
+  if (panelState({ loading, error, empty: true }) === "loading") {
+    return <>Yükleniyor…</>;
+  }
+  if (error) {
+    return (
+      <span role="alert" className="inline-flex flex-wrap items-center justify-center gap-2 text-status-danger">
+        {errorText}
+        {onRetry ? (
+          <Button type="button" size="sm" variant="outline" onClick={onRetry}>
+            <RefreshCw className="size-3.5" aria-hidden="true" /> Tekrar dene
+          </Button>
+        ) : null}
+      </span>
+    );
+  }
+  return <>{emptyText}</>;
+}

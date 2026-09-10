@@ -223,9 +223,11 @@ if (!readiness.ready) {
       });
       await shifts.recordMovement(cashier(), {
         shiftId, type: "CASH_IN", amount: "50.00", reason: `${PREFIX}Bozuk para`,
+        idempotencyKey: `${run}-x-movement-in`,
       });
       await shifts.recordMovement(cashier(), {
         shiftId, type: "CASH_OUT", amount: "200.00", reason: `${PREFIX}Tedarikci`,
+        idempotencyKey: `${run}-x-movement-out`,
       });
 
       const report = await reports.xReport(cashier(), shiftId);
@@ -597,6 +599,7 @@ if (!readiness.ready) {
             shifts.recordMovement(otherCashier(), {
               shiftId: movementShift.shift.id, type: "CASH_OUT", amount: "25.00",
               reason: `${PREFIX}race`,
+              idempotencyKey: `${run}-movement-race-${attempt}`,
             }),
           ),
         ]);
@@ -739,6 +742,7 @@ if (!readiness.ready) {
       });
       await shiftsAt(localTime(DAY, 10)).recordMovement(cashier(), {
         shiftId: first.shift.id, type: "CASH_OUT", amount: "30.00", reason: `${PREFIX}gider`,
+        idempotencyKey: `${run}-day-movement-a`,
       });
       await shiftsAt(localTime(DAY, 12)).close(cashier(), {
         shiftId: first.shift.id, countedCash: "470.00",

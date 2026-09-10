@@ -60,14 +60,19 @@ import {
 /** Revenue counts orders that actually reached the guest. */
 const REVENUE_ORDER_STATUSES = ["SERVED", "COMPLETED"] as const;
 
-/** Postgres renders timestamps in the restaurant's own day, not UTC. */
 /**
- * Türkiye is a fixed UTC+3 with no DST, expressed as an interval on purpose.
- * `AT TIME ZONE '+03:00'` must not be used: PostgreSQL reads a bare offset
- * string with the POSIX sign convention, so '+03:00' shifts UTC *back* three
- * hours and every local hour, weekday and calendar day comes out wrong.
+ * Postgres renders timestamps in the restaurant's own day, not UTC.
+ *
+ * The zone is the restaurant's IANA name, taken from the range that already
+ * bounded the period in it, and passed as a bound parameter -- never
+ * interpolated. A bare offset must not be used here: `AT TIME ZONE '+03:00'`
+ * is read with the POSIX sign convention and shifts UTC *back* three hours,
+ * and a fixed `interval '3 hours'` is wrong for every zone that keeps daylight
+ * saving. An IANA name is right on both sides of a clock change.
  */
-const LOCAL_TZ = sql.raw(`interval '3 hours'`);
+function localTimeZone(range: ResolvedReportRange): SQL {
+  return sql`${range.timeZone}`;
+}
 
 function money(value: unknown): string {
   return Number(value ?? 0).toFixed(2);
@@ -397,7 +402,7 @@ export class ReportAnalyticsService {
       this.inRange(orders.createdAt, range),
       inArray(orders.status, [...REVENUE_ORDER_STATUSES]),
     );
-    const localTime = sql`(${orders.createdAt} at time zone ${LOCAL_TZ})`;
+    const localTime = sql`(${orders.createdAt} at time zone ${localTimeZone(range)})`;
 
     const [hourly, weekday, daily] = await Promise.all([
       this.db
@@ -408,8 +413,13 @@ export class ReportAnalyticsService {
         })
         .from(orders)
         .where(scope)
-        .groupBy(sql`extract(hour from ${localTime})`)
-        .orderBy(sql`extract(hour from ${localTime})`),
+        // Grouped by output position, not by repeating the expression. The zone
+        // is a bound parameter, and PostgreSQL binds each occurrence as its own
+        // placeholder, so a repeated expression is not the *same* expression to
+        // the grouping check and the query fails with 42803. The old fixed
+        // `interval '3 hours'` was a literal, which is why it could be repeated.
+        .groupBy(sql`1`)
+        .orderBy(sql`1`),
       this.db
         .select({
           weekday: sql<number>`extract(dow from ${localTime})::int`,
@@ -418,8 +428,8 @@ export class ReportAnalyticsService {
         })
         .from(orders)
         .where(scope)
-        .groupBy(sql`extract(dow from ${localTime})`)
-        .orderBy(sql`extract(dow from ${localTime})`),
+        .groupBy(sql`1`)
+        .orderBy(sql`1`),
       this.db
         .select({
           date: sql<string>`to_char(${localTime}, 'YYYY-MM-DD')`,
@@ -428,12 +438,12 @@ export class ReportAnalyticsService {
         })
         .from(orders)
         .where(scope)
-        .groupBy(sql`to_char(${localTime}, 'YYYY-MM-DD')`)
-        .orderBy(sql`to_char(${localTime}, 'YYYY-MM-DD')`),
+        .groupBy(sql`1`)
+        .orderBy(sql`1`),
     ]);
 
-    const paymentLocal = sql`(${payments.createdAt} at time zone ${LOCAL_TZ})`;
-    const refundLocal = sql`(${paymentRefunds.createdAt} at time zone ${LOCAL_TZ})`;
+    const paymentLocal = sql`(${payments.createdAt} at time zone ${localTimeZone(range)})`;
+    const refundLocal = sql`(${paymentRefunds.createdAt} at time zone ${localTimeZone(range)})`;
     const [dailyCollected, dailyRefunded] = await Promise.all([
       this.db
         .select({
@@ -448,7 +458,7 @@ export class ReportAnalyticsService {
             this.inRange(payments.createdAt, range),
           ),
         )
-        .groupBy(sql`to_char(${paymentLocal}, 'YYYY-MM-DD')`),
+        .groupBy(sql`1`),
       this.db
         .select({
           date: sql<string>`to_char(${refundLocal}, 'YYYY-MM-DD')`,
@@ -462,7 +472,7 @@ export class ReportAnalyticsService {
             this.inRange(paymentRefunds.createdAt, range),
           ),
         )
-        .groupBy(sql`to_char(${refundLocal}, 'YYYY-MM-DD')`),
+        .groupBy(sql`1`),
     ]);
 
     const topHour = [...hourly].sort((left, right) => right.orderCount - left.orderCount)[0];

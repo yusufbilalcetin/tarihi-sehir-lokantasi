@@ -114,8 +114,8 @@ test("the module is reachable: registered, described and routed", () => {
   assert.ok(ERP_UI_CONFIG.fulfillment.columns.length > 0);
   const page = readFileSync(new URL("../../app/admin/fulfillment/page.tsx", import.meta.url), "utf8");
   assert.match(page, /module="fulfillment"/);
-  const shell = readFileSync(new URL("../../components/admin/admin-shell.tsx", import.meta.url), "utf8");
-  assert.match(shell, /\/admin\/fulfillment/);
+  const navigation = readFileSync(new URL("../../components/admin/admin-navigation.ts", import.meta.url), "utf8");
+  assert.match(navigation, /\/admin\/fulfillment/);
 });
 
 test("no raw enum reaches the fulfillment table: every value it can show has a word", () => {
@@ -187,12 +187,12 @@ test("linked requests read their total from the order, not from their own lines"
 
 test("every registered ERP module is actually reachable: read, screen, route and nav", () => {
   const repo = readFileSync(new URL("../../lib/repositories/drizzle-erp-workspace-repository.ts", import.meta.url), "utf8");
-  const shell = readFileSync(new URL("../../components/admin/admin-shell.tsx", import.meta.url), "utf8");
+  const navigation = readFileSync(new URL("../../components/admin/admin-navigation.ts", import.meta.url), "utf8");
   const readBlock = repo.slice(repo.indexOf("switch (query.module)"));
   for (const name of ERP_WORKSPACE_MODULES) {
     assert.ok(readBlock.includes(`case "${name}":`), `${name} has no read branch`);
     assert.ok(ERP_UI_CONFIG[name].columns.length > 0 || name === "loyalty", `${name} has no columns`);
-    assert.ok(shell.includes(`/admin/${name}"`), `${name} is not in the admin navigation`);
+    assert.ok(navigation.includes(`/admin/${name}"`), `${name} is not in the admin navigation`);
   }
 });
 

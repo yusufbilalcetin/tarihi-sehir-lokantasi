@@ -1,0 +1,239 @@
+{
+  "source": "https://tarihi-sehir-lokantasi.vercel.app/menu/demo-table",
+  "category": "İçecekler",
+  "slug": "icecekler",
+  "productCount": 10,
+  "declaredCount": 10,
+  "categoryCover": {
+    "assetType": "category-cover",
+    "sourcePath": "reference/live/assets/images/food/yayik-ayrani.jpg",
+    "file": "yayik-ayrani.jpg",
+    "width": 1200,
+    "height": 800,
+    "format": "jpeg",
+    "fileSize": 125422,
+    "sha256": "37e285a2c2ac6189daf813f7cb22feb0291639d1b4421244aad5842a956a2519"
+  },
+  "products": [
+    {
+      "name": "Yayık Ayranı",
+      "description": "Bol köpüklü, günlük yoğurtla hazırlanan geleneksel yayık ayranı.",
+      "price": "₺55",
+      "badges": [],
+      "availability": "available",
+      "image": {
+        "assetType": "product-image",
+        "file": "icecekler/images/yayik-ayrani.webp",
+        "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/yayik-ayrani.webp",
+        "sourceType": "existing-reference",
+        "originalReference": "reference/live/assets/images/food/yayik-ayrani.webp",
+        "renamedFrom": null,
+        "width": 1200,
+        "height": 800,
+        "format": "webp",
+        "fileSize": 160914,
+        "sha256": "495d16b68854b695599d453a906649a8d02a5d44715da57159ca64a66c979b3a"
+      },
+      "sharedImage": false
+    },
+    {
+      "name": "Şalgam Suyu",
+      "description": "Mor havuç ve bulgur mayasıyla fermente edilmiş geleneksel acılı şalgam suyu.",
+      "price": "₺50",
+      "badges": [
+        "Acılı"
+      ],
+      "availability": "available",
+      "image": {
+        "assetType": "product-image",
+        "file": "icecekler/images/salgam-suyu.webp",
+        "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/salgam-suyu.webp",
+        "sourceType": "existing-reference",
+        "originalReference": "reference/live/assets/images/food/salgam-suyu.webp",
+        "renamedFrom": null,
+        "width": 1200,
+        "height": 800,
+        "format": "webp",
+        "fileSize": 120190,
+        "sha256": "7df369ffcb6d7c50671a793edbfc5a6d4339c4a9ce5db5d5c8b7b63015dc948b"
+      },
+      "sharedImage": false
+    },
+    {
+      "name": "Maden Suyu",
+      "description": "Soğuk servis edilen doğal mineralli sade maden suyu.",
+      "price": "₺35",
+      "badges": [],
+      "availability": "available",
+      "image": {
+        "assetType": "product-image",
+        "file": "icecekler/images/maden-suyu.webp",
+        "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/maden-suyu.webp",
+        "sourceType": "existing-reference",
+        "originalReference": "reference/live/assets/images/food/maden-suyu.webp",
+        "renamedFrom": null,
+        "width": 1200,
+        "height": 800,
+        "format": "webp",
+        "fileSize": 134780,
+        "sha256": "2ce6a3201c7b6ee47f2b5682d9f210fb250225db65221ac863860f4abf717a7d"
+      },
+      "sharedImage": false
+    },
+    {
+      "name": "Doğal Kaynak Suyu",
+      "description": "Cam şişede soğuk servis edilen doğal kaynak suyu.",
+      "price": "₺25",
+      "badges": [],
+      "availability": "available",
+      "image": {
+        "assetType": "product-image",
+        "file": "icecekler/images/dogal-kaynak-suyu.webp",
+        "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/dogal-kaynak-suyu.webp",
+        "sourceType": "existing-reference",
+        "originalReference": "reference/live/assets/images/food/dogal-kaynak-suyu.webp",
+        "renamedFrom": null,
+        "width": 1200,
+        "height": 800,
+        "format": "webp",
+        "fileSize": 123852,
+        "sha256": "0e5727572d5a5cbf423756b793a81a7e0c3a3f122b8bf164c5b7dadb7f7b6013"
+      },
+      "sharedImage": false
+    },
+    {
+      "name": "Kola",
+      "description": "Buz gibi servis edilen klasik gazlı içecek.",
+      "price": "₺60",
+      "badges": [],
+      "availability": "available",
+      "image": {
+        "assetType": "product-image",
+        "file": "icecekler/images/kola.webp",
+        "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/kola.webp",
+        "sourceType": "existing-reference",
+        "originalReference": "reference/live/assets/images/food/kola.webp",
+        "renamedFrom": null,
+        "width": 1200,
+        "height": 800,
+        "format": "webp",
+        "fileSize": 109220,
+        "sha256": "1c669d144fc9da7a9306370bcc36d01740b92d1ab9da21375d24e4e7fcd95bd5"
+      },
+      "sharedImage": false
+    },
+    {
+      "name": "Sade Gazoz",
+      "description": "Geleneksel aromalı, ferahlatıcı ve soğuk servis edilen sade gazoz.",
+      "price": "₺55",
+      "badges": [
+        "Nostaljik"
+      ],
+      "availability": "available",
+      "image": {
+        "assetType": "product-image",
+        "file": "icecekler/images/sade-gazoz.webp",
+        "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/sade-gazoz.webp",
+        "sourceType": "existing-reference",
+        "originalReference": "reference/live/assets/images/food/sade-gazoz.webp",
+        "renamedFrom": null,
+        "width": 1200,
+        "height": 800,
+        "format": "webp",
+        "fileSize": 144690,
+        "sha256": "a17dd3b8f0c40fba497a5f9c0df3af7efe5fb46668b3eabc8a4973cea784d722"
+      },
+      "sharedImage": false
+    },
+    {
+      "name": "Türk Kahvesi",
+      "description": "Bakır cezvede ağır ateşte pişirilen köpüklü geleneksel Türk kahvesi.",
+      "price": "₺75",
+      "badges": [
+        "Geleneksel"
+      ],
+      "availability": "available",
+      "image": {
+        "assetType": "product-image",
+        "file": "icecekler/images/turk-kahvesi.webp",
+        "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/turk-kahvesi.webp",
+        "sourceType": "existing-reference",
+        "originalReference": "reference/live/assets/images/food/turk-kahvesi.webp",
+        "renamedFrom": null,
+        "width": 1200,
+        "height": 800,
+        "format": "webp",
+        "fileSize": 97000,
+        "sha256": "5516cb3ee0c2ad1501c593009936ddb83ebf6fd85230bdb6b94dcd975f99d7a9"
+      },
+      "sharedImage": false
+    },
+    {
+      "name": "Demleme Çay",
+      "description": "İnce belli bardakta taze demlenmiş sıcak Rize çayı.",
+      "price": "₺25",
+      "badges": [],
+      "availability": "available",
+      "image": {
+        "assetType": "product-image",
+        "file": "icecekler/images/demleme-cay.webp",
+        "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/demleme-cay.webp",
+        "sourceType": "existing-reference",
+        "originalReference": "reference/live/assets/images/food/demleme-cay.webp",
+        "renamedFrom": null,
+        "width": 1200,
+        "height": 800,
+        "format": "webp",
+        "fileSize": 84024,
+        "sha256": "36b2914f399e7ca1b7bfde52a36e37bd51a4ffe0904bdaa0b34c9e4d50ea8a50"
+      },
+      "sharedImage": false
+    },
+    {
+      "name": "Ev Yapımı Limonata",
+      "description": "Taze limon, nane ve az şekerle günlük hazırlanan ferahlatıcı limonata.",
+      "price": "₺85",
+      "badges": [
+        "Ev Yapımı"
+      ],
+      "availability": "available",
+      "image": {
+        "assetType": "product-image",
+        "file": "icecekler/images/ev-yapimi-limonata.webp",
+        "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/ev-yapimi-limonata.webp",
+        "sourceType": "existing-reference",
+        "originalReference": "reference/live/assets/images/food/ev-yapimi-limonata.webp",
+        "renamedFrom": null,
+        "width": 1200,
+        "height": 800,
+        "format": "webp",
+        "fileSize": 93140,
+        "sha256": "555f4772f807d04f71d06a875850382029896c7dbfe6b7011a7fb0bcdc1151b1"
+      },
+      "sharedImage": false
+    },
+    {
+      "name": "Günlük Hoşaf",
+      "description": "Mevsimine göre kuru üzüm, kayısı veya erikle günlük kaynatılan ev hoşafı.",
+      "price": "₺70",
+      "badges": [
+        "Ev Yapımı"
+      ],
+      "availability": "available",
+      "image": {
+        "assetType": "product-image",
+        "file": "icecekler/images/gunluk-hosaf.webp",
+        "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/gunluk-hosaf.webp",
+        "sourceType": "existing-reference",
+        "originalReference": "reference/live/assets/images/food/gunluk-hosaf.webp",
+        "renamedFrom": null,
+        "width": 1200,
+        "height": 800,
+        "format": "webp",
+        "fileSize": 120196,
+        "sha256": "7a2896aaf7d544c2aa572ce521814d6e765efcc8b59be3bea6ad8234589a34b1"
+      },
+      "sharedImage": false
+    }
+  ]
+}

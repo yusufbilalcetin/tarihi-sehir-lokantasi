@@ -106,6 +106,8 @@ export function staffOrderToViewModel(
     tableName: order.placeLabel,
     createdAt: clockLabel(order.createdAt),
     elapsedMinutes: minutesSince(order.createdAt, now),
+    version: order.version,
+    outstanding: order.outstanding,
     status: ORDER_STATUS_TO_VIEW[order.status] ?? "pending",
     total: Number(order.amounts.total),
     note: order.notes ?? undefined,

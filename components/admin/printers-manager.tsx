@@ -3,8 +3,8 @@
 import { useCallback, useMemo, useState } from "react";
 import { Plus, Printer, RefreshCw, Route, ShieldAlert, Wifi, WifiOff } from "lucide-react";
 import { toast } from "sonner";
-import { PageHeader } from "@/components/shared/page-header";
 import { Badge } from "@/components/ui/badge";
+import { TableStateCell } from "@/components/shared/data-states";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog } from "@/components/ui/dialog";
@@ -26,7 +26,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { ApiClientError } from "@/lib/api/client";
+import { userErrorMessage } from "@/lib/api/error-message";
 import { adminApi, printerApi } from "@/lib/api/endpoints";
 import { displayLabel, printErrorLabel } from "@/lib/domain/display";
 import { PRINT_DOCUMENT_TYPES, PRINTER_STATION_TYPES } from "@/lib/domain/print-document";
@@ -68,7 +68,7 @@ const STATION_LABELS: Record<string, string> = {
 };
 
 function message(error: unknown, fallback: string): string {
-  return error instanceof ApiClientError ? error.message : fallback;
+  return userErrorMessage(error, fallback);
 }
 
 function moment(value: string | null): string {
@@ -162,11 +162,6 @@ export function PrintersManager() {
 
   return (
     <div className="space-y-6">
-      <PageHeader
-        title="Yazıcılar"
-        description="Yerel yazdırma agentları, yazıcılar, yönlendirme ve kuyruk."
-      />
-
       {/* ------------------------------------------------------------ agents */}
       <Card className="gap-0 py-0">
         <CardHeader className="border-b py-4">
@@ -299,7 +294,13 @@ export function PrintersManager() {
                 {(agents.data?.agents.length ?? 0) === 0 ? (
                   <TableRow>
                     <TableCell colSpan={5} className="py-6 text-center text-sm text-muted-foreground">
-                      {agents.loading ? "Yükleniyor…" : "Henüz yazdırma bilgisayarı tanımlanmamış."}
+                      <TableStateCell
+                            loading={agents.loading}
+                            error={agents.error}
+                            emptyText="Henüz yazdırma bilgisayarı tanımlanmamış."
+                            errorText="Yazdırma bilgisayarları yüklenemedi."
+                            onRetry={() => void agents.refetch()}
+                          />
                     </TableCell>
                   </TableRow>
                 ) : null}
@@ -512,7 +513,13 @@ export function PrintersManager() {
                 {(printers.data?.printers.length ?? 0) === 0 ? (
                   <TableRow>
                     <TableCell colSpan={7} className="py-6 text-center text-sm text-muted-foreground">
-                      {printers.loading ? "Yükleniyor…" : "Henüz yazıcı tanımlanmamış."}
+                      <TableStateCell
+                            loading={printers.loading}
+                            error={printers.error}
+                            emptyText="Henüz yazıcı tanımlanmamış."
+                            errorText="Yazıcı listesi yüklenemedi."
+                            onRetry={() => void printers.refetch()}
+                          />
                     </TableCell>
                   </TableRow>
                 ) : null}
@@ -774,7 +781,13 @@ export function PrintersManager() {
                 {(jobs.data?.rows.length ?? 0) === 0 ? (
                   <TableRow>
                     <TableCell colSpan={6} className="py-6 text-center text-sm text-muted-foreground">
-                      {jobs.loading ? "Yükleniyor…" : "Kuyrukta iş yok."}
+                      <TableStateCell
+                            loading={jobs.loading}
+                            error={jobs.error}
+                            emptyText="Kuyrukta iş yok."
+                            errorText="Baskı kuyruğu yüklenemedi."
+                            onRetry={() => void jobs.refetch()}
+                          />
                     </TableCell>
                   </TableRow>
                 ) : null}

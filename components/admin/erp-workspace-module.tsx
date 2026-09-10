@@ -4,6 +4,7 @@ import { BadgeDollarSign, BarChart3, Boxes, Building2, CalendarClock, CalendarDa
 
 import { AdminModuleWindow } from "@/components/admin/admin-module-window";
 import { ErpWorkspaceManager } from "@/components/admin/erp-workspace-manager";
+import { PersonnelWorkspaceManager } from "@/components/admin/personnel-workspace-manager";
 import { ERP_UI_CONFIG } from "@/lib/domain/erp-ui";
 import type { ErpWorkspaceModule } from "@/lib/domain/erp-workspaces";
 
@@ -20,5 +21,12 @@ const icons: Record<ErpWorkspaceModule, LucideIcon> = {
 export function ErpWorkspaceModule({ module }: { readonly module: ErpWorkspaceModule }) {
   const config = ERP_UI_CONFIG[module];
   const Icon = icons[module] ?? PackageOpen;
-  return <AdminModuleWindow title={config.title} description={config.description} icon={Icon} size="workspace"><ErpWorkspaceManager module={module} icon={Icon} /></AdminModuleWindow>;
+  const personnelModule = module === "attendance" || module === "schedules" || module === "payroll";
+  return (
+    <AdminModuleWindow title={config.title} description={config.description} icon={Icon} size="workspace">
+      {personnelModule
+        ? <PersonnelWorkspaceManager module={module} />
+        : <ErpWorkspaceManager module={module} icon={Icon} />}
+    </AdminModuleWindow>
+  );
 }

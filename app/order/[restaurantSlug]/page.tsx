@@ -5,7 +5,7 @@ import { GuestOrderExperience } from "@/components/guest/guest-order-experience"
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Paket ve Kurye Siparişi | Tarihi Şehir Lokantası",
+  title: "Paket ve Kurye Siparişi",
   description: "Tarihi Şehir Lokantası'ndan paket veya kurye siparişi verin.",
 };
 

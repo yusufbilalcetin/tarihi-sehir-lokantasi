@@ -30,6 +30,12 @@ export interface StaffRestaurantIdentity {
   readonly name: string;
   readonly slug: string;
   readonly isActive: boolean;
+  /**
+   * The restaurant's own IANA zone. Every "today" and every report boundary is
+   * measured in it, so it travels with the identity rather than being looked up
+   * again — or assumed — by each screen that needs a date.
+   */
+  readonly timezone: string;
 }
 
 /** Safe application user DTO derived from the staff profile. */

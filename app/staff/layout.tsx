@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { DEFAULT_RESTAURANT_TIME_ZONE } from "@/lib/domain/report-range";
 import { StaffSessionProvider } from "@/components/staff/staff-session-provider";
 import { StaffShell } from "@/components/staff/staff-shell";
 import { PanelAccessDenied } from "@/components/staff/panel-access-denied";
@@ -23,6 +24,8 @@ export default async function StaffLayout({ children }: { children: ReactNode })
   return (
     <StaffSessionProvider
       restaurantId={context.restaurantId}
+      restaurantName={context.restaurant?.name ?? null}
+      restaurantTimezone={context.restaurant?.timezone ?? DEFAULT_RESTAURANT_TIME_ZONE}
       role={context.role}
       name={context.name}
       staffId={context.userId}

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { DEFAULT_RESTAURANT_TIME_ZONE } from "@/lib/domain/report-range";
 import { KitchenModule } from "@/components/kitchen/kitchen-module";
 import { StaffSessionProvider } from "@/components/staff/staff-session-provider";
 import { PanelAccessDenied } from "@/components/staff/panel-access-denied";
@@ -26,6 +27,8 @@ export default async function KitchenPage() {
   return (
     <StaffSessionProvider
       restaurantId={context.restaurantId}
+      restaurantName={context.restaurant?.name ?? null}
+      restaurantTimezone={context.restaurant?.timezone ?? DEFAULT_RESTAURANT_TIME_ZONE}
       role={context.role}
       name={context.name}
       staffId={context.userId}

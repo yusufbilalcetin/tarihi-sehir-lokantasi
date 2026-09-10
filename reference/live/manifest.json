@@ -1,0 +1,98 @@
+{
+  "meta": {
+    "source": "https://tarihi-sehir-lokantasi.vercel.app",
+    "capturedAt": "2026-08-16",
+    "capturedWith": "Chrome browser automation (viewport 1568x726 / 1568x772 logical, JPEG full-view + PNG zoom crops)",
+    "purpose": "Canlı sürümün birebir görsel referansı. Yeni sistem uygulanırken bu görünüm korunacak.",
+    "notes": [
+      "Tam sayfa (full-page) capture desteklenmediği için uzun ekranlar scroll bölümleri hâlinde alındı.",
+      "Modallar tam ekran JPEG'de backdrop-filter yüzünden solgun çıkıyor; net halleri PNG zoom crop olarak components/ altında.",
+      "Assetler canlıdan indirildi ve repo'daki public/ ile byte-byte aynı olduğu diff ile doğrulandı."
+    ]
+  },
+
+  "screenshots": [
+    { "file": "screenshots/01-menu-splash-intro.jpg", "route": "/menu/[tableToken]", "represents": "Açılış splash — koyu zemin üzerinde altın wordmark", "state": "intro / ilk yükleme", "preserve": "birebir" },
+    { "file": "screenshots/02-menu-hero-top.jpg", "route": "/menu/[tableToken]", "represents": "QR menü hero: wordmark, slogan, konum/saat, masa kartı, dil + döviz seçici, arama", "state": "varsayılan", "preserve": "birebir" },
+    { "file": "screenshots/03-menu-categories-grid.jpg", "route": "/menu/[tableToken]", "represents": "Kategori grid — 2 kolon, görsel üstte, başlık + ürün sayısı altta", "state": "dolu", "preserve": "birebir" },
+    { "file": "screenshots/04-menu-categories-bottom.jpg", "route": "/menu/[tableToken]", "represents": "Kategori grid alt kısmı (6 kategori tamamı) + alt navigasyon", "state": "dolu", "preserve": "birebir" },
+    { "file": "screenshots/05-menu-category-detail-kebaplar.jpg", "route": "/menu/[tableToken] → Kebaplar", "represents": "Kategori detay / ürün listesi — yatay ürün kartları, rozetler, fiyat, yuvarlak + butonu", "state": "dolu", "preserve": "birebir" },
+    { "file": "screenshots/06-product-detail-sheet.jpg", "route": "/menu/[tableToken] → ürün", "represents": "Ürün detay modal/sheet — kapak görseli, rozetler, porsiyon/alerjen kutuları, ürün notu, adet + Sepete Ekle", "state": "açık, adet=1", "preserve": "birebir" },
+    { "file": "screenshots/07-cart-siparisim-filled.jpg", "route": "/menu/[tableToken] → Siparişim", "represents": "Sepet — ürün satırı, ara toplam/servis/genel toplam, para birimi seçici, Siparişi Gönder", "state": "dolu (1 ürün)", "preserve": "birebir" },
+    { "file": "screenshots/08-hesap-bill-request.jpg", "route": "/menu/[tableToken] → Hesap", "represents": "Hesap isteme onay ekranı — ikon rozeti, başlık, açıklama, tek birincil buton", "state": "onay bekliyor", "preserve": "birebir" },
+    { "file": "screenshots/09-search-results.jpg", "route": "/menu/[tableToken] → arama", "represents": "Arama sonuçları — sonuç sayısı, 'Aramayı temizle', ürün kartları", "state": "dolu (3 sonuç, sorgu: kebap)", "preserve": "birebir" },
+    { "file": "screenshots/10-home-launcher.jpg", "route": "/", "represents": "Portal seçimi — koyu zeytin yeşili zemin, 5 panel kartı (QR Menü, Garson, Mutfak, Kasa, Yönetici)", "state": "varsayılan", "preserve": "referans (prototip launcher; yeni sistemde kalmayabilir)" },
+    { "file": "screenshots/11-staff-login.jpg", "route": "/staff/login", "represents": "Personel girişi — kod + PIN, göz ikonu, demo bilgi kutusu", "state": "boş form", "preserve": "birebir (demo bilgi kutusu hariç)" },
+    { "file": "screenshots/12-admin-dashboard.jpg", "route": "/admin/dashboard", "represents": "Yönetim dashboard — sidebar, KPI kartları, satış grafiği, en çok satanlar", "state": "dolu", "preserve": "birebir" },
+    { "file": "screenshots/13-kitchen-board.jpg", "route": "/kitchen", "represents": "Mutfak ekranı — 3 kolonlu kanban (Yeni / Hazırlanıyor / Hazır), fiş kartları, canlı saat", "state": "dolu", "preserve": "birebir" },
+    { "file": "screenshots/14-cashier-panel.jpg", "route": "/cashier", "represents": "Kasa paneli — KPI şeridi, açık masa listesi, sipariş kalemleri tablosu, ödeme yöntemi seçimi", "state": "dolu, Masa 5 seçili", "preserve": "birebir" },
+    { "file": "screenshots/15-staff-dashboard.jpg", "route": "/staff/dashboard", "represents": "Garson özet — üst nav, 4 KPI kartı, salon durumu masa kartları", "state": "dolu", "preserve": "birebir" },
+    { "file": "screenshots/16-staff-tables.jpg", "route": "/staff/tables", "represents": "Masalar — durum filtresi çipleri, 12 masa kartı, sol kenar renk kodu", "state": "dolu", "preserve": "birebir" },
+    { "file": "screenshots/17-staff-orders.jpg", "route": "/staff/orders", "represents": "Siparişler — arama, durum filtre çipleri, sipariş kartı + kalem listesi + aksiyon kolonu", "state": "dolu (8 sipariş)", "preserve": "birebir" },
+    { "file": "screenshots/18-staff-calls.jpg", "route": "/staff/calls", "represents": "Garson çağrıları — tip ikonu, durum rozeti, sol kenar renk kodu, Üstlen/Tamamlandı butonu", "state": "dolu (4 çağrı)", "preserve": "birebir" },
+    { "file": "screenshots/19-admin-orders.jpg", "route": "/admin/orders", "represents": "Sipariş tablosu — özet çipleri, arama + select filtre, satır bazlı durum rozetleri", "state": "dolu", "preserve": "birebir" },
+    { "file": "screenshots/20-admin-tables.jpg", "route": "/admin/tables", "represents": "Masa yönetimi — kart başına durum rozeti, son aktivite, QR durumu, durum değiştir select", "state": "dolu", "preserve": "birebir" },
+    { "file": "screenshots/21-admin-menu.jpg", "route": "/admin/menu", "represents": "Menü yönetimi — koyu yayın durumu kartı, toggle'lar, kısayol kartları, içerik kontrolü", "state": "yayında", "preserve": "birebir" },
+    { "file": "screenshots/22-admin-products.jpg", "route": "/admin/products", "represents": "Ürün tablosu — thumbnail, kategori, fiyat, durum rozeti, etiket çipleri, satır aksiyonları", "state": "dolu (48 ürün)", "preserve": "birebir" },
+    { "file": "screenshots/23-admin-categories.jpg", "route": "/admin/categories", "represents": "Kategori listesi — sürükle tutamacı, slug, ürün sayısı, aktif toggle, sıralama okları", "state": "dolu (6 kategori)", "preserve": "birebir" },
+    { "file": "screenshots/24-admin-staff.jpg", "route": "/admin/staff", "represents": "Personel listesi — baş harf avatarı, rol rozeti, vardiya, telefon, aktif toggle, Yetkiler", "state": "dolu (5 personel)", "preserve": "birebir" },
+    { "file": "screenshots/25-admin-qr-codes.jpg", "route": "/admin/qr-codes", "represents": "QR kod kartları — masa başına QR önizleme, HAZIR rozeti, İndir/Yazdır", "state": "dolu (12 masa)", "preserve": "birebir" },
+    { "file": "screenshots/26-admin-reports.jpg", "route": "/admin/reports", "represents": "Raporlar — dönem sekmeleri, 5 KPI kartı, satış trendi grafiği", "state": "dolu (Bu Hafta)", "preserve": "birebir" },
+    { "file": "screenshots/27-admin-settings.jpg", "route": "/admin/settings", "represents": "Ayarlar — sekmeli form (İşletme/Menü/Sipariş/Bildirim/Görünüm), input stilleri, logo yükleme", "state": "İşletme sekmesi", "preserve": "birebir" },
+    { "file": "screenshots/28-404-not-found.jpg", "route": "/admin/cash-registers (canlıda yok)", "represents": "404 ekranı — ortalanmış kart, ikon rozeti, 404 etiketi, dönüş butonu", "state": "hata", "preserve": "birebir" }
+  ],
+
+  "components": [
+    { "file": "components/bottom-nav-with-badge.png", "route": "/menu/[tableToken]", "represents": "Alt navigasyon — 4 sekme, aktif sekmede altı çizgi + bordo renk, sepet sayaç rozeti", "state": "Menü aktif, sepette 1 ürün", "preserve": "birebir" },
+    { "file": "components/modal-currency-selector.png", "route": "/menu/[tableToken] → Döviz Seç", "represents": "Para birimi modalı — TRY/USD/EUR, madeni para & banknot görselleri, seçilide tik + bordo çerçeve", "state": "TRY seçili", "preserve": "birebir" },
+    { "file": "components/modal-language-selector.png", "route": "/menu/[tableToken] → Dil Seç", "represents": "Dil modalı — arama alanı, 'TÜM DİLLER' başlığı, 2 kolonlu bayrak + isim listesi", "state": "açık, filtresiz", "preserve": "birebir (içerik hariç — bkz. bilinen sorunlar)" },
+    { "file": "components/modal-waiter-call.png", "route": "/menu/[tableToken] → Garson", "represents": "Garson çağrı modalı — ikon rozeti, 6 seçenek kartı (2 kolon), chevron ipucu", "state": "açık", "preserve": "birebir" },
+    { "file": "components/chart-sales-area.png", "route": "/admin/dashboard", "represents": "Satış area chart — bordo çizgi, açık bordo dolgu, kesikli yatay grid, gün etiketleri", "state": "tam çizilmiş (resize ile tetiklendi)", "preserve": "birebir" }
+  ],
+
+  "stateVariants": [
+    { "file": "state-variants/cart-empty-state.jpg", "route": "/menu/[tableToken] → Siparişim", "represents": "Boş sepet", "state": "boş", "preserve": "birebir" },
+    { "file": "state-variants/search-no-results-empty-state.jpg", "route": "/menu/[tableToken] → arama", "represents": "Sonuç bulunamadı boş state'i", "state": "boş (sorgu: kofte)", "preserve": "birebir" },
+    { "file": "state-variants/search-input-focused-empty.jpg", "route": "/menu/[tableToken]", "represents": "Arama inputu focus halkası", "state": "focus, boş", "preserve": "birebir" },
+    { "file": "state-variants/menu-category-card-hover.jpg", "route": "/menu/[tableToken]", "represents": "Kategori kartı hover", "state": "hover", "preserve": "birebir" },
+    { "file": "state-variants/menu-categories-scroll-reveal-pre.jpg", "route": "/menu/[tableToken]", "represents": "Scroll reveal öncesi — kartlar düşük opaklıkta", "state": "reveal öncesi", "preserve": "birebir (motion imzası)" },
+    { "file": "state-variants/menu-hero-enter-fade.jpg", "route": "/menu/[tableToken]", "represents": "Hero giriş fade'i", "state": "enter geçişi", "preserve": "referans" },
+    { "file": "state-variants/product-detail-sheet-image-loading.jpg", "route": "/menu/[tableToken] → ürün", "represents": "Ürün görseli yüklenirken düz renk placeholder", "state": "loading", "preserve": "birebir" },
+    { "file": "state-variants/menu-category-detail-cart-badge-1.jpg", "route": "/menu/[tableToken] → Kebaplar", "represents": "Sepete ekleme sonrası rozet 1'e çıkmış; ayrıca tükenmiş ürün kartı (Tas Kebabı soluk)", "state": "sepet=1", "preserve": "birebir" },
+    { "file": "state-variants/cart-enter-transition.jpg", "route": "/menu/[tableToken] → Siparişim", "represents": "Sepet ekranı giriş geçişi", "state": "enter geçişi", "preserve": "referans" },
+    { "file": "state-variants/hesap-enter-transition.jpg", "route": "/menu/[tableToken] → Hesap", "represents": "Hesap ekranı giriş geçişi", "state": "enter geçişi", "preserve": "referans" },
+    { "file": "state-variants/bottom-nav-focus-ring.jpg", "route": "/menu/[tableToken]", "represents": "Alt nav sekmesinde klavye focus halkası", "state": "focus-visible", "preserve": "birebir (erişilebilirlik)" },
+    { "file": "state-variants/currency-trigger-focus-ring.jpg", "route": "/menu/[tableToken] → Siparişim", "represents": "Para birimi tetikleyicisinde focus halkası", "state": "focus-visible", "preserve": "birebir (erişilebilirlik)" },
+    { "file": "state-variants/language-modal-backdrop-blur.jpg", "route": "/menu/[tableToken] → Dil Seç", "represents": "Dil modalı açıkken arka plan blur/karartma katmanı", "state": "modal açık", "preserve": "birebir (backdrop davranışı)" },
+    { "file": "state-variants/menu-invalid-table-token.jpg", "route": "/menu/invalid", "represents": "Geçersiz masa token'ı — menü yine render ediliyor, masa adı 'İnvalid' görünüyor", "state": "hatalı giriş", "preserve": "referans (bkz. bilinen sorunlar)" },
+    { "file": "state-variants/chart-animation-stalled.png", "route": "/admin/dashboard", "represents": "Grafik animasyonu takılı — eksen/grid var, seri çizilmemiş", "state": "bozuk render", "preserve": "referans (düzeltilmeli, kopyalanmamalı)" }
+  ],
+
+  "assets": [
+    { "path": "assets/images/brand/", "count": 2, "represents": "Wordmark logo (wordmark.png, wordmark-transparent.png — 2172x724)", "preserve": "birebir", "note": "Transparan sürüm üst bilgide kullanılıyor; en yüksek kaliteli olan bu." },
+    { "path": "assets/icons/", "count": 3, "represents": "PWA ikonları (192, 512, maskable-512)", "preserve": "birebir" },
+    { "path": "assets/images/currency/", "count": 3, "represents": "Döviz modalındaki madeni para / banknot görselleri (TRY, USD, EUR — webp)", "preserve": "birebir" },
+    { "path": "assets/images/flags/", "count": 106, "represents": "Dil seçici bayrak SVG seti (hampusborgos/country-flags kaynaklı)", "preserve": "birebir" },
+    { "path": "assets/images/food/", "count": 56, "represents": "Ürün ve kategori kapak görselleri (51 webp + 5 jpg ikizi)", "preserve": "birebir", "note": "Aynı yemeğin hem .webp hem .jpg sürümü var; webp daha yeni/optimize, jpg'ler artık." },
+    { "path": "assets/fonts/", "count": 4, "represents": "next/font ile self-host edilen woff2 dosyaları (Lora + Manrope alt kümeleri)", "preserve": "birebir" },
+    { "path": "assets/*.svg", "count": 5, "represents": "Next.js şablonundan kalan kullanılmayan SVG'ler (file, globe, next, vercel, window)", "preserve": "kullanılmıyor — yeni sisteme taşımayın" }
+  ],
+
+  "missing": [
+    { "item": "Mobil viewport (390-430px) ekran görüntüleri", "reason": "Tarayıcı penceresi maximized; resize_window etkisiz kaldı, cihaz emülasyonu bu araç setinde yok.", "workaround": "Chrome DevTools cihaz modunda manuel çekim ya da Playwright ile deviceScaleFactor'lü capture." },
+    { "item": "Toast / bildirim bileşeni", "reason": "Sepete ekleme akışında toast tetiklenmedi (sonner kurulu ama bu akışta görünmedi).", "workaround": "Toast üreten bir akış (ör. sipariş gönderme, hata) tetiklenmeli." },
+    { "item": "Sipariş gönderildikten sonraki ekranlar (onay, sipariş takibi, hesap talebi sonrası)", "reason": "Gerçek sipariş/hesap talebi personel ekranlarına düşeceği için bilerek tetiklenmedi.", "workaround": "Test masası üzerinde bilinçli olarak tetiklenip çekilebilir." },
+    { "item": "Dropdown / yan menü", "reason": "Uygulamada klasik dropdown yok; dil ve döviz seçimleri tam ekran modal, admin filtreleri native <select>. Yan menü yerine admin'de sabit sidebar var.", "workaround": "—" },
+    { "item": "Dark mode", "reason": "globals.css'te 'dark' varyantı tanımlı ama token bloğu yok; canlıda tek (açık/sıcak) tema.", "workaround": "—" },
+    { "item": "/admin/cash-registers, /admin/cash-reports, /admin/printers", "reason": "Canlıda 404 — repo'da mevcut fakat henüz deploy edilmemiş.", "workaround": "Deploy sonrası ya da local dev sunucusunda çekilmeli." },
+    { "item": "Tam sayfa (full-page) tek parça görüntüler", "reason": "Araç yalnızca viewport capture yapıyor.", "workaround": "Uzun ekranlar için scroll bölümleri kullanıldı." }
+  ],
+
+  "knownIssues": [
+    { "where": "/admin/dashboard, /admin/reports", "issue": "Recharts serisi ilk render'da çizilmiyor; grafik boş görünüyor. window resize event'i sonrası doğru çiziliyor.", "evidence": "state-variants/chart-animation-stalled.png vs components/chart-sales-area.png" },
+    { "where": "Dil Seç modalı", "issue": "Bazı diller yerelleştirilmemiş placeholder olarak listeleniyor ('ba', 'bo' gibi kod adları isim yerine geçmiş).", "evidence": "components/modal-language-selector.png" },
+    { "where": "/menu/invalid", "issue": "Geçersiz masa token'ı için ayrı hata ekranı yerine normal menü render ediliyor; masa adı olarak 'İnvalid' yazıyor.", "evidence": "state-variants/menu-invalid-table-token.jpg" },
+    { "where": "/staff/login", "issue": "Demo kod ve PIN sayfada açıkça yazıyor (Kod: 1042, PIN: 1234).", "evidence": "screenshots/11-staff-login.jpg" },
+    { "where": "Tüm panel route'ları", "issue": "Canlıda /admin, /kitchen, /cashier, /staff/* giriş yapmadan doğrudan erişilebiliyor.", "evidence": "screenshots/12,13,14,15..." }
+  ]
+}

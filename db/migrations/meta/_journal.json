@@ -127,6 +127,20 @@
       "when": 1787796501889,
       "tag": "0017_customer_session_order_ownership",
       "breakpoints": true
+    },
+    {
+      "idx": 18,
+      "version": "7",
+      "when": 1788111880113,
+      "tag": "0018_cash_drawer_denomination_counts",
+      "breakpoints": true
+    },
+    {
+      "idx": 19,
+      "version": "7",
+      "when": 1788119034446,
+      "tag": "0019_breezy_iceman",
+      "breakpoints": true
     }
   ]
 }

@@ -2,9 +2,12 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import test from "node:test";
 
+import { isSimpleTestLoginEnabled } from "../../lib/auth/simple-test-login";
 import { isDemoLauncherEnabled } from "../../lib/config/demo-launcher";
 import { TABLE_STATUS_LABELS } from "../../lib/domain/display";
 import { TABLE_STATUSES } from "../../lib/domain/status";
+import { deriveQrLinkToken } from "../../lib/security/qr-link-token";
+import { tableTokenSchema } from "../../lib/validation/common";
 
 /**
  * The home page's demo table picker.
@@ -315,4 +318,164 @@ test("the public table listing is metered like the route beside it", () => {
     tablesRoute.indexOf("isDemoLauncherEnabled()") < tablesRoute.indexOf("enforceRateLimit(request"),
     "the feature gate must be checked before the limiter",
   );
+});
+
+/**
+ * The two halves of the picker's own address.
+ *
+ * The dialog listed every table correctly and each one opened "QR bağlantısı
+ * doğrulanamadı", because the build serving the menu accepted only the legacy
+ * 43-character token while the launcher was handing out a derived `l1` link.
+ * Neither half is wrong on its own, which is why neither half's own test
+ * caught it — so the string one produces is checked against the schema the
+ * other validates with.
+ */
+test("the address the picker hands out is one the customer gate accepts", () => {
+  const token = deriveQrLinkToken(
+    { restaurantSlug: "tarihi-sehir-lokantasi", tableNumber: 12, accessVersion: 25 },
+    "p".repeat(48),
+  );
+  assert.equal(tableTokenSchema.safeParse(token).success, true);
+  assert.match(service, /path: `\/menu\/\$\{token}`/);
+});
+
+/**
+ * Opening a table is a read.
+ *
+ * An earlier launcher minted a credential whenever this process had not
+ * already minted one, which rotated the table's QR on every cold start and
+ * quietly voided the card printed on it. Deriving costs nothing and changes
+ * nothing, and only the access state — not the operational status a guest is
+ * shown — decides whether a table can be opened at all.
+ */
+test("choosing a table derives its existing QR and rotates nothing", () => {
+  assert.match(service, /deriveTableQrLink\(\{/);
+  assert.match(service, /accessVersion: table\.qrTokenVersion/);
+  for (const mutation of [/rotateToken\(/, /generateTableQrToken/, /\.update\(/, /\.insert\(/]) {
+    assert.doesNotMatch(service, mutation, "the launcher must not write");
+  }
+  // Only `isActive` and the revocation flag gate a table; `currentStatus` is
+  // read for display and never filtered on.
+  assert.match(service, /isNull\(restaurantTables\.qrTokenRevokedAt\)/);
+  assert.doesNotMatch(service, /eq\(restaurantTables\.currentStatus/);
+});
+
+/**
+ * The admin sidebar's "QR Menüyü Gör".
+ *
+ * It linked at `/menu/demo-table` in both the tablet rail and the full
+ * sidebar, and in the PWA manifest. That string is not a QR token — the token
+ * test below asserts the verifier rejects it — so the proxy's menu gate sent
+ * every press to `/menu/invalid`: a dead control, and a dead-end screen with
+ * no way forward. The panel now opens the same picker the home page uses, and
+ * only where the launcher is switched on; where it is off there is no valid
+ * link to offer and the entry is absent rather than broken.
+ */
+
+const adminShell = readFileSync(new URL("../../components/admin/admin-shell.tsx", import.meta.url), "utf8");
+const profileDialog = readFileSync(new URL("../../components/admin/admin-profile-dialog.tsx", import.meta.url), "utf8");
+const adminLayout = readFileSync(new URL("../../app/admin/layout.tsx", import.meta.url), "utf8");
+const manifest = readFileSync(new URL("../../app/manifest.ts", import.meta.url), "utf8");
+
+test("no admin surface links at the placeholder QR token any more", () => {
+  for (const [name, source] of [
+    ["admin shell", adminShell],
+    ["admin layout", adminLayout],
+    ["manifest", manifest],
+  ] as const) {
+    assert.equal(
+      /href[=:]\s*["'{]?\s*\/menu\/demo-table/.test(source),
+      false,
+      `${name} still links at /menu/demo-table`,
+    );
+    assert.equal(
+      /url:\s*"\/menu\/demo-table"/.test(source),
+      false,
+      `${name} still lists /menu/demo-table`,
+    );
+  }
+});
+
+test("the account dialog's QR entry opens the picker, and only when the launcher is on", () => {
+  // The flag is read on the server and handed down; the shell never guesses.
+  assert.match(adminLayout, /isDemoLauncherEnabled/);
+  assert.match(adminLayout, /<AdminShell demoLauncherEnabled=\{isDemoLauncherEnabled\(\)\}>/);
+  assert.match(adminShell, /demoLauncherEnabled: boolean/);
+
+  // Switched off, there is no control at all rather than one that cannot work.
+  assert.match(adminShell, /const onOpenQrMenu = demoLauncherEnabled \? \(\) => setQrMenuOpen\(true\) : null;/);
+  assert.match(adminShell, /\{demoLauncherEnabled \? \(\s*<DemoTablePicker open=\{qrMenuOpen\} onOpenChange=\{setQrMenuOpen\} \/>/);
+
+  // The sidebar and rail are gone; the one entry left is in the account
+  // dialog, reached from the bar and the dock alike, and it takes the same
+  // nullable handler so switched off means absent there too.
+  assert.match(adminShell, /<AdminProfileDialog \{\.\.\.dialogProps\("account"\)\} onOpenQrMenu=\{onOpenQrMenu\} \/>/);
+  assert.equal(profileDialog.match(/onOpenQrMenu \?/g)?.length, 1);
+  assert.match(profileDialog, /onOpenQrMenu: \(\(\) => void\) \| null;/);
+  // The account dialog closes itself first, then hands over to the picker.
+  assert.match(profileDialog, /onOpenChange\(false\);\s*onOpenQrMenu\(\);/, "the dialog does not close right before opening the picker");
+  assert.match(profileDialog, /onOpenQrMenu\(\);[\s\S]{0,800}QR Menüyü Gör/);
+  assert.doesNotMatch(profileDialog, /href[=:]\s*["'{]?\s*\/menu\//, "the entry became a link again");
+});
+
+test("the placeholder token is still rejected by the verifier itself", () => {
+  // The reason the link could never work, asserted where it is decided rather
+  // than only in the markup that used to carry it: the shape check rejects the
+  // placeholder before any verifier is reached, so the gate can only redirect.
+  assert.equal(tableTokenSchema.safeParse("demo-table").success, false);
+  const realToken = deriveQrLinkToken(
+    { restaurantSlug: "tarihi-sehir-lokantasi", tableNumber: 2, accessVersion: 1 },
+    "pepper-for-this-test-at-least-32-bytes-long",
+  );
+  assert.notEqual(realToken, "demo-table");
+});
+
+/**
+ * The launcher gate and the test-login gate must agree on what "production" is.
+ *
+ * They did not. `isSimpleTestLoginEnabled` knew that a self-hosted Node process
+ * carries no `VERCEL_ENV` and fell back to `NODE_ENV`; `isDemoLauncherEnabled`
+ * tested `VERCEL_ENV === "production"` alone. So on a self-hosted production
+ * server a stale `ENABLE_DEMO_LAUNCHER=true` still opened the public table
+ * picker — and that picker mints a real, validated guest table session for any
+ * table id, which is a way past the QR scan the gate exists to require.
+ *
+ * The flag being copied from a preview, or left behind by an old configuration,
+ * is the exact case both switches are written to survive. Both now derive
+ * "production" from `isProductionRuntime`, and this pins the case no test
+ * covered: the two gates are asserted together, so they cannot drift apart
+ * again without failing here.
+ */
+test("both public-surface gates close on a self-hosted production server", () => {
+  const staleFlags = {
+    ENABLE_DEMO_LAUNCHER: "true",
+    ENABLE_SIMPLE_TEST_LOGIN: "true",
+  } as const;
+
+  // The case that was open: no VERCEL_ENV to read, NODE_ENV says production.
+  const selfHosted = { ...staleFlags, NODE_ENV: "production" };
+  assert.equal(isDemoLauncherEnabled(selfHosted), false);
+  assert.equal(isSimpleTestLoginEnabled(selfHosted), false);
+
+  // Vercel production was already closed; it stays closed.
+  const vercel = { ...staleFlags, VERCEL_ENV: "production" };
+  assert.equal(isDemoLauncherEnabled(vercel), false);
+  assert.equal(isSimpleTestLoginEnabled(vercel), false);
+
+  // Opening it on a live server stays a separate, explicitly named decision.
+  assert.equal(
+    isDemoLauncherEnabled({ NODE_ENV: "production", ENABLE_PRODUCTION_TABLE_PICKER: "true" }),
+    true,
+  );
+  // ...and that decision does not also hand out staff logins.
+  assert.equal(
+    isSimpleTestLoginEnabled({ NODE_ENV: "production", ENABLE_PRODUCTION_TABLE_PICKER: "true" }),
+    false,
+  );
+
+  // A preview is still a preview: NODE_ENV is "production" there too, and
+  // VERCEL_ENV must keep winning or demonstrations break.
+  const preview = { ...staleFlags, VERCEL_ENV: "preview", NODE_ENV: "production" };
+  assert.equal(isDemoLauncherEnabled(preview), true);
+  assert.equal(isSimpleTestLoginEnabled(preview), true);
 });

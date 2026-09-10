@@ -4,7 +4,7 @@ import { after, before, describe, test } from "node:test";
 
 import { createDb, type Database } from "../../db";
 import type { StaffPrincipal } from "../../lib/auth/foundation";
-import { RESTAURANT_UTC_OFFSET_MINUTES, resolveReportRange } from "../../lib/domain/report-range";
+import { DEFAULT_RESTAURANT_TIME_ZONE, resolveReportRange, zoneOffsetForDay } from "../../lib/domain/report-range";
 import { generateQrToken } from "../../lib/security/qr-token";
 import { ReportAnalyticsService } from "../../lib/services/report-analytics-service";
 import { ReportDetailService } from "../../lib/services/report-detail-service";
@@ -26,7 +26,8 @@ const readiness = readSupabaseIntegrationEnvironment({ requireDatabaseUrl: true 
 function localTime(day: string, hour: number, minute = 0): string {
   const [year, month, date] = day.split("-").map(Number);
   return new Date(
-    Date.UTC(year, month - 1, date, hour, minute) - RESTAURANT_UTC_OFFSET_MINUTES * 60_000,
+    Date.UTC(year, month - 1, date, hour, minute) -
+      zoneOffsetForDay({ year, month, day: date }, DEFAULT_RESTAURANT_TIME_ZONE) * 60_000,
   ).toISOString();
 }
 
@@ -80,7 +81,14 @@ if (!readiness.ready) {
 
   // Reference days, chosen relative to "now" so presets stay meaningful.
   const today = new Date();
-  const localToday = new Date(today.getTime() + RESTAURANT_UTC_OFFSET_MINUTES * 60_000);
+  const localToday = new Date(
+    today.getTime() +
+      zoneOffsetForDay(
+        { year: today.getUTCFullYear(), month: today.getUTCMonth() + 1, day: today.getUTCDate() },
+        DEFAULT_RESTAURANT_TIME_ZONE,
+      ) *
+        60_000,
+  );
   const dayString = (offset: number): string => {
     const d = new Date(localToday);
     d.setUTCDate(d.getUTCDate() - offset);
@@ -112,7 +120,7 @@ if (!readiness.ready) {
       authUser: { id: authUserId, email: undefined, app_metadata: {}, user_metadata: {} },
       restaurant: {
         id: ids.restaurantA, name: `${PREFIX}Tenant A`,
-        slug: `phase7d2-a-${run}`, isActive: true,
+        slug: `phase7d2-a-${run}`, isActive: true, timezone: "Europe/Istanbul",
       },
       role, userId: ids.staffManager, restaurantId: ids.restaurantA, isActive: true,
     };

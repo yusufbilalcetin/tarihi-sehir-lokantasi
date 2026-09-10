@@ -117,6 +117,7 @@ if (!readiness.ready) {
         name: `${PREFIX}Tenant A`,
         slug: `phase7d-iso-a-${run}`,
         isActive: true,
+        timezone: "Europe/Istanbul",
       },
       role,
       userId: ids.A.staff,

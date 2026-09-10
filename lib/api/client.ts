@@ -16,6 +16,22 @@ export class ApiClientError extends Error {
   }
 }
 
+/**
+ * True when a mutation may have reached the server even though the client did
+ * not receive a usable final answer. Callers must retain their idempotency key
+ * in these cases so the next submit can safely discover/replay the first one.
+ */
+export function isUnknownMutationOutcome(error: unknown): boolean {
+  if (!(error instanceof ApiClientError)) return true;
+  return (
+    error.code === "NETWORK_ERROR" ||
+    error.code === "IDEMPOTENCY_IN_FLIGHT" ||
+    error.status === 0 ||
+    error.status >= 500 ||
+    (error.status >= 200 && error.status < 300)
+  );
+}
+
 export interface ApiRequestOptions {
   readonly method?: "GET" | "POST" | "PATCH" | "PUT" | "DELETE";
   readonly body?: unknown;

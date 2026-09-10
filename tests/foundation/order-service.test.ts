@@ -124,14 +124,24 @@ class FakeOrderRepository implements OrderRepository {
       async markTableWaiting() {
         state.tableMarkedWaiting = true;
       },
-      async findOrderForUpdate(restaurantId, orderId) {
-        return state.mutableOrder?.restaurantId === restaurantId && state.mutableOrder.id === orderId
-          ? state.mutableOrder
-          : null;
-      },
-      // Phase 6 surface; this suite only exercises creation and status changes.
-      async findOrderWithItemsForUpdate() {
-        return null;
+      // This suite exercises creation and status changes; the money fields and
+      // the lines a whole-order command sweeps belong to the Phase 6 fixtures.
+      async findOrderWithItemsForUpdate(restaurantId, orderId) {
+        const record = state.mutableOrder;
+        if (record?.restaurantId !== restaurantId || record.id !== orderId) return null;
+        return {
+          ...record,
+          subtotal: "0.00",
+          serviceChargeTotal: "0.00",
+          taxTotal: "0.00",
+          total: "0.00",
+          serviceFeeRate: null,
+          taxRate: null,
+          currency: "TRY",
+          hasSettledPayment: false,
+          hasPendingPayment: false,
+          items: [],
+        };
       },
       async updateOrderAmounts() {
         return false;
@@ -141,6 +151,9 @@ class FakeOrderRepository implements OrderRepository {
       },
       async voidOrderItem() {
         return false;
+      },
+      async advanceOrderItems() {
+        return [];
       },
       async updateOrderStatus(input: UpdateOrderStatusInput) {
         if (!state.mutableOrder) return false;
@@ -223,6 +236,7 @@ function command(overrides: Partial<CreateCustomerOrderCommand> = {}): CreateCus
     restaurantId: "restaurant-1",
     tableId: "table-3",
     tableAccessVersion: 5,
+    sessionNonce: "c2l0dGluZy1vbmUtMTIzNA",
     idempotencyKey: "request-key-123",
     items: [{ productId: "product-soup", quantity: 2 }],
     ...overrides,
@@ -289,6 +303,37 @@ test("OrderService replays completed idempotent requests and conflicts on change
     () => service.createOrder(command({ items: [{ productId: "product-soup", quantity: 3 }] })),
     (error: unknown) => error instanceof DomainError && error.code === "IDEMPOTENCY_CONFLICT",
   );
+});
+
+test("a second sitting reusing the first one's key is a conflict, not a replay", async () => {
+  // Both parties sit at `table-3`, so they share the `CUSTOMER_ORDER:table-3`
+  // idempotency scope. Without the sitting in the request fingerprint the
+  // second one would be handed the first one's order back — its number, its
+  // total — as a successful replay.
+  const fakeState = state();
+  const service = new OrderService(new FakeOrderRepository(fakeState), { clock: fixedClock });
+  await service.createOrder(command());
+
+  await assert.rejects(
+    () => service.createOrder(command({ sessionNonce: "c2l0dGluZy10d28tNTY3OA" })),
+    (error: unknown) => error instanceof DomainError && error.code === "IDEMPOTENCY_CONFLICT",
+  );
+  assert.equal(fakeState.orders.length, 1);
+  assert.equal(fakeState.orders[0]?.customerSessionNonce, "c2l0dGluZy1vbmUtMTIzNA");
+});
+
+test("an order is stamped with the sitting, and a blank one is refused", async () => {
+  const fakeState = state();
+  const service = new OrderService(new FakeOrderRepository(fakeState), { clock: fixedClock });
+  await service.createOrder(command());
+  assert.equal(fakeState.orders[0]?.customerSessionNonce, "c2l0dGluZy1vbmUtMTIzNA");
+
+  // Nothing may be written that no sitting owns and no guest can read back.
+  await assert.rejects(
+    () => service.createOrder(command({ sessionNonce: "", idempotencyKey: "request-key-999" })),
+    (error: unknown) => error instanceof DomainError && error.code === "INVALID_TABLE_TOKEN",
+  );
+  assert.equal(fakeState.orders.length, 1);
 });
 
 test("OrderService validates table access version and role-scoped status flow", async () => {

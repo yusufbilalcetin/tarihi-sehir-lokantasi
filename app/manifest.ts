@@ -18,7 +18,6 @@ export default function manifest(): MetadataRoute.Manifest {
       { src: "/icons/icon-maskable-512.png", sizes: "512x512", type: "image/png", purpose: "maskable" },
     ],
     shortcuts: [
-      { name: "QR Menü", short_name: "Menü", url: "/menu/demo-table" },
       { name: "Garson Paneli", short_name: "Garson", url: "/staff/dashboard" },
       { name: "Mutfak", short_name: "Mutfak", url: "/kitchen" },
     ],

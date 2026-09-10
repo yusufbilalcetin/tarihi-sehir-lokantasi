@@ -114,6 +114,10 @@ test("a category without an uploaded image falls back to local artwork", () => {
 });
 
 const staffOrder: StaffOrderListResult = {
+  version: 1,
+  // This fixture does not ask for a balance, so it carries none — which the
+  // view model must render as "unknown", never as "nothing owed".
+  outstanding: null,
   id: "order-a",
   orderNumber: "1042",
   status: "READY",

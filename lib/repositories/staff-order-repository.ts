@@ -1,3 +1,4 @@
+import type { PaymentStatus } from "../domain/status";
 import type { OrderChannel, OrderItemStatus, OrderStatus } from "../domain/status";
 import type {
   InsertAuditLogInput,
@@ -12,7 +13,16 @@ export interface StaffOrderListFilters {
   readonly date?: string;
   /** Only orders the restaurant still owes a table: not completed, not cancelled. */
   readonly openOnly?: boolean;
+  /** Read each order's collections too, so its balance can be derived server-side. */
+  readonly withBalance?: boolean;
   readonly limit: number;
+}
+
+/** One collection against an order, exactly as stored. */
+export interface StaffOrderPaymentRecord {
+  readonly amount: string;
+  readonly refundedAmount: string;
+  readonly status: PaymentStatus;
 }
 
 export interface StaffOrderListItemRecord {
@@ -27,6 +37,7 @@ export interface StaffOrderListItemRecord {
 }
 
 export interface StaffOrderListRecord {
+  readonly version: number;
   readonly id: string;
   readonly orderNumber: string;
   readonly status: OrderStatus;
@@ -43,9 +54,16 @@ export interface StaffOrderListRecord {
   readonly createdAt: Date;
   readonly updatedAt: Date;
   readonly items: readonly StaffOrderListItemRecord[];
+  /**
+   * Null when the caller did not ask for a balance — which is not the same as
+   * an order that has taken no money. The service keeps the two apart so a
+   * screen can never read "nothing collected" out of "not requested".
+   */
+  readonly payments: readonly StaffOrderPaymentRecord[] | null;
 }
 
 export interface MutableOrderItemRecord {
+  readonly orderVersion: number;
   readonly id: string;
   readonly restaurantId: string;
   readonly orderId: string;
@@ -69,6 +87,8 @@ export interface StaffOrderTransactionRepository {
     orderItemId: string,
   ): Promise<MutableOrderItemRecord | null>;
   updateOrderItemStatus(input: UpdateOrderItemStatusRecordInput): Promise<boolean>;
+  /** Called under the parent lock, after changing a line, in the same transaction. */
+  syncOrderStatusFromItems(restaurantId: string, orderId: string, at: Date): Promise<{ status: OrderStatus; version: number }>;
   insertOrderEvent(input: InsertOrderEventInput): Promise<void>;
   insertOutboxEvent(input: InsertOutboxEventInput): Promise<void>;
   insertAuditLog(input: InsertAuditLogInput): Promise<void>;

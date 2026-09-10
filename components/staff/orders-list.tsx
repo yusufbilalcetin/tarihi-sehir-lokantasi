@@ -119,7 +119,12 @@ function OrderCard({
               <div key={item.id} className="flex gap-3 py-2.5 first:pt-0 last:pb-0">
                 <span className="min-w-8 font-bold tabular-nums text-burgundy">{item.quantity} ×</span>
                 <div className="min-w-0 flex-1">
-                  <p className="font-semibold text-foreground">{item.productName}</p>
+                  <div className="flex flex-wrap items-center gap-2">
+                    <p className="font-semibold text-foreground">{item.productName}</p>
+                    {/* Where the line is, not where the order is: a plated dish
+                        under a still-cooking round is invisible otherwise. */}
+                    <StatusBadge status={item.status ?? "pending"} size="sm" />
+                  </div>
                   {item.note ? (
                     <p className="mt-1 rounded-md bg-status-warning-tint px-2 py-1 text-xs font-medium leading-5 text-status-warning">
                       Mutfak notu: {item.note}

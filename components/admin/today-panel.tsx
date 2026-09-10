@@ -21,7 +21,7 @@ import type { ErpOverview } from "@/lib/repositories/erp-repository";
 async function readOverview(signal: AbortSignal): Promise<ErpOverview> {
   const response = await fetch("/api/admin/erp", { credentials: "same-origin", cache: "no-store", signal });
   const payload = await response.json() as ApiResult<ErpOverview>;
-  if (!response.ok || !payload.success) throw new Error(payload.success ? "ERP özeti alınamadı." : payload.error.message);
+  if (!response.ok || !payload.success) throw new Error(payload.success ? "İşletme özeti alınamadı." : payload.error.message);
   return payload.data;
 }
 
@@ -126,10 +126,17 @@ export function TodayPanel({
   overview,
   error,
   onRetry,
+  showToday = true,
 }: {
   readonly overview: ErpOverview | null;
   readonly error?: unknown;
   readonly onRetry?: () => void;
+  /**
+   * The manager's home draws its own figures — the day's takings and what the
+   * floor is doing — and only wants the warnings from here. The ERP screen
+   * keeps both. One component either way, so the two cannot drift.
+   */
+  readonly showToday?: boolean;
 }) {
   const warnings = overview ? warningsFor(overview) : [];
   // A figure that has not arrived is not a figure of zero, and a figure that
@@ -144,6 +151,7 @@ export function TodayPanel({
 
   return (
     <div className="space-y-8">
+      {showToday ? (
       <Section title="Bugün" hint="Bugünün kapanmış satışı, açık işi ve bugüne yazılmış operasyon kayıtları.">
         {/* Four, not six. Production and waste are ERP figures a manager reads
             on the ERP screen when they are working on stock; on the home screen
@@ -155,6 +163,7 @@ export function TodayPanel({
           <Metric label="Kritik stok" value={overview ? overview.counts.criticalStock : placeholder} icon={Boxes} warning={overview !== null && overview.counts.criticalStock > 0} />
         </div>
       </Section>
+      ) : null}
 
       <Section title="Dikkat gerektirenler" hint="Her uyarı, işin yapıldığı ekrana götürür.">
         {failed ? (

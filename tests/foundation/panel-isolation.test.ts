@@ -106,18 +106,31 @@ test("the refusal screen is not a panel and offers a way out", () => {
 });
 
 test("the till's loading state does not assert an empty till", () => {
-  // "Hesaplar yükleniyor…" paired with "Servis edilen bir sipariş oluştuğunda
-  // burada görünecek." told the operator the till was empty before the first
-  // read had returned. Loading and empty are different facts.
+  // "Hesaplar yükleniyor…" paired with an empty-till sentence told the operator
+  // the till was empty before the first read had returned. Loading and empty
+  // are different facts, so the loading branch is checked first and the empty
+  // sentence lives only in the branch after it.
   const source = read("components/cashier/cashier-dashboard.tsx");
-  const block = source.slice(source.indexOf("Hesaplar yükleniyor"));
-  const loadingBranch = block.indexOf("resource.loading");
-  const emptyClaim = block.indexOf("Servis edilen bir sipariş oluştuğunda");
-  assert.ok(loadingBranch > 0, "the description must branch on the loading state");
+  const loadingBranch = source.indexOf("{!cashierReady ? (");
+  const emptyClaim = source.indexOf("Açık hesap bulunmuyor");
+  assert.ok(loadingBranch > 0, "the payable board must branch on the loading state");
   assert.ok(
     loadingBranch < emptyClaim,
     "the empty-state sentence must sit behind the loading check",
   );
+  // The skeleton says it is loading rather than showing a bare empty grid, and
+  // a first read that FAILED renders neither — the alert above speaks instead.
+  assert.match(source, /aria-label="Hesaplar yükleniyor"/);
+  assert.match(
+    source,
+    /!cashierReady \? \(\s*resource\.loading \? \([\s\S]{0,400}\) : null\s*\) :/,
+    "a failed first read still claims the till is empty",
+  );
+  // The drawer panel is never a heading over nothing either.
+  assert.match(source, /aria-label="Kasa durumu yükleniyor"/);
+  assert.match(source, /title=\{shiftReady \? "Kasayı aç" : "Kasa durumu"\}/);
+  // And an unknown figure is a dash, never a fabricated zero.
+  assert.match(source, /money\?\.unpaidCount \?\? "—"/);
 });
 
 test("the refusal screen cannot navigate on its own", () => {

@@ -307,7 +307,7 @@ export function QrPrintDesigner({
               </Field>
 
               {presetId === "custom" ? (
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 gap-3 min-[380px]:grid-cols-2">
                   <Field label="Genişlik (cm)">
                     <Input
                       inputMode="decimal"
@@ -327,7 +327,7 @@ export function QrPrintDesigner({
                     />
                   </Field>
                   {sizeError ? (
-                    <p role="alert" className="col-span-2 text-xs font-bold text-destructive">
+                    <p role="alert" className="text-xs font-bold text-destructive min-[380px]:col-span-2">
                       {sizeError}
                     </p>
                   ) : null}

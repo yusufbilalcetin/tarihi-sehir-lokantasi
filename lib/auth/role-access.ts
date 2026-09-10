@@ -28,6 +28,10 @@ const PROTECTED_STAFF_PREFIXES = [
   "/staff/orders",
   "/staff/tables",
   "/staff/calls",
+  // The waiter's own page: clocking in, their shifts, their account. Its APIs
+  // guard themselves, so an expired session leaked nothing — it just landed on
+  // a dead shell of a page instead of on the login form.
+  "/staff/profile",
 ] as const;
 
 export function isProtectedStaffPath(pathname: string): boolean {

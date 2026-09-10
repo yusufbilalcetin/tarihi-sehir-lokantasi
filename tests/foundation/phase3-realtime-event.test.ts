@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import test from "node:test";
 
 import type { ClaimedOutboxEvent } from "../../lib/repositories/outbox-repository";
@@ -12,6 +13,26 @@ import {
 const RESTAURANT_ID = "f47ac10b-58cc-4372-a567-0e02b2c3d479";
 const ORDER_ID = "7c9e6679-7425-40de-944b-e07fc1f90ae7";
 const EVENT_ID = "6ba7b810-9dad-41d1-80b4-00c04fd430c8";
+
+test("the actual subscription callback resyncs both first connection and reconnect", () => {
+  // Execute the production callback with a fake transport, not a copied policy.
+  // This does not claim to exercise a real Supabase socket or React lifecycle.
+  const source = readFileSync("lib/realtime/use-staff-realtime.ts", "utf8");
+  const body = source.match(/channel\.subscribe\(\(channelStatus\) => \{([\s\S]*?)\n    \}\);/)?.[1];
+  assert.ok(body, "subscription callback must be found");
+  let snapshots = 0;
+  const statuses: string[] = [];
+  const callback = new Function("setStatus", "handlersRef", `let connectedOnce = false; return (channelStatus) => {${body}};`)(
+    (status: string) => statuses.push(status),
+    { current: { onResync: () => { snapshots += 1; } } },
+  );
+  callback("SUBSCRIBED");
+  assert.equal(snapshots, 1, "cover events missed between initial snapshot and subscription");
+  callback("CHANNEL_ERROR");
+  callback("SUBSCRIBED");
+  assert.equal(snapshots, 2);
+  assert.deepEqual(statuses, ["connected", "reconnecting", "connected"]);
+});
 
 function orderEvent(): ClaimedOutboxEvent {
   return {

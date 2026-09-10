@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useMemo, useState } from "react";
+import Link from "next/link";
 import { Printer, QrCode, Search } from "lucide-react";
 
 import { AdminPageHeader, NativeSelect, SummaryChip } from "@/components/admin/admin-ui";
@@ -10,6 +11,7 @@ import { TableQrDialog } from "@/components/admin/table-qr-dialog";
 import { useAdminTables } from "@/components/admin/use-admin-tables";
 import { useTableQrCodes } from "@/components/admin/use-table-qr-codes";
 import { BrandedTableQr } from "@/components/shared/branded-table-qr";
+import { EmptyState, ErrorState, LoadingState, panelState } from "@/components/shared/data-states";
 import { RealtimeStatus } from "@/components/staff/realtime-status";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -31,6 +33,23 @@ export function QrManager() {
   const refreshAll = useCallback(async () => {
     await Promise.all([refetchTables(), refetchQrCodes()]);
   }, [refetchQrCodes, refetchTables]);
+
+  /**
+   * Which of the four answers this screen is giving.
+   *
+   * It used to give two. The error branch below was the only one that existed,
+   * so every other case fell through to the card grid — and an empty `codes`
+   * renders an empty grid, which is a blank page. That covered both the wait
+   * for the first response and a restaurant that has no tables yet: the
+   * manager was shown nothing at all, with nothing to wait for and nothing to
+   * press. `panelState` is in the codebase for exactly this and orders the
+   * branches so failure can never be reported as emptiness.
+   */
+  const state = panelState({
+    loading: qrCodes.loading,
+    error: qrCodes.error,
+    empty: qrCodes.codes.length === 0,
+  });
 
   const printable = qrCodes.codes.filter((code) => code.isActive && !code.revoked);
   const activeQrCount = qrCodes.codes.filter((code) => !code.revoked).length;
@@ -94,16 +113,25 @@ export function QrManager() {
         </NativeSelect>
       </div>
 
-      {qrCodes.error && qrCodes.codes.length === 0 ? (
-        <div className="grid min-h-48 place-items-center rounded-xl border bg-card p-8 text-center">
-          <div>
-            <QrCode className="mx-auto size-9 text-muted-foreground" />
-            <p className="mt-3 font-bold">QR kodu şu anda görüntülenemiyor.</p>
-            <Button variant="outline" className="mt-4" onClick={() => void qrCodes.refetch()}>
-              Tekrar Dene
+      {state === "loading" ? (
+        <LoadingState rows={6} variant="grid" />
+      ) : state === "error" ? (
+        <ErrorState
+          title="QR kodu şu anda görüntülenemiyor."
+          description="Bağlantı kurulamadı. Lütfen tekrar deneyin."
+          onRetry={() => void qrCodes.refetch()}
+        />
+      ) : state === "empty" ? (
+        <EmptyState
+          icon={QrCode}
+          title="Henüz masa yok."
+          description="QR kodu bir masaya aittir. Önce masaları tanımlayın, kodlar burada oluşur."
+          action={
+            <Button nativeButton={false} render={<Link href="/admin/tables" />}>
+              Masa Planına Git
             </Button>
-          </div>
-        </div>
+          }
+        />
       ) : (
         <section
           className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4"

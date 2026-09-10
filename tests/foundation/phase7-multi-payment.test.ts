@@ -228,6 +228,30 @@ test("reusing a key against a different order is a conflict", async () => {
   );
 });
 
+test("reusing a payment key with a different payload is a conflict", async () => {
+  const repository = bill();
+  const cashier = service(repository);
+  await cashier.collect(principal("CASHIER"), {
+    orderId: "order-a",
+    method: "CASH",
+    amount: "500.00",
+    idempotencyKey: "pay-key-0001",
+  });
+
+  await assert.rejects(
+    () =>
+      cashier.collect(principal("CASHIER"), {
+        orderId: "order-a",
+        method: "CARD",
+        amount: "500.00",
+        idempotencyKey: "pay-key-0001",
+      }),
+    (error: unknown) =>
+      error instanceof DomainError && error.code === "IDEMPOTENCY_CONFLICT",
+  );
+  assert.equal(repository.transactionRepository.payments.length, 1);
+});
+
 test("the payment carries the check it settled when one is named", async () => {
   const repository = bill();
   repository.transactionRepository.checks = [
@@ -241,6 +265,26 @@ test("the payment carries the check it settled when one is named", async () => {
     idempotencyKey: "pay-key-0001",
   });
   assert.equal(repository.transactionRepository.payments[0]?.checkId, "check-a");
+});
+
+test("a split check cannot exceed the order remainder after an unallocated payment", async () => {
+  const repository = bill();
+  repository.transactionRepository.checks = [
+    { id: "check-a", orderId: "order-a", label: "Hesap 1", status: "OPEN", total: "500.00" },
+  ];
+  const payments = service(repository);
+  await payments.collect(principal("CASHIER"), {
+    orderId: "order-a", method: "CASH", amount: "1400.00", idempotencyKey: "unallocated-payment",
+  });
+  await assert.rejects(() => payments.collect(principal("CASHIER"), {
+    orderId: "order-a", method: "CARD", amount: "200.00", checkId: "check-a", idempotencyKey: "over-check-remainder",
+  }), (error: unknown) => error instanceof DomainError && error.code === "PAYMENT_EXCEEDS_BALANCE");
+  assert.equal(repository.transactionRepository.payments.length, 1);
+  const remainder = await payments.collect(principal("CASHIER"), {
+    orderId: "order-a", method: "CARD", checkId: "check-a", idempotencyKey: "settle-check-remainder",
+  });
+  assert.equal(remainder.amount, "100.00");
+  assert.equal(remainder.balance.outstanding, "0.00");
 });
 
 test("a payment naming an unknown check is refused", async () => {

@@ -33,6 +33,7 @@ test("the panels that must stay behind the gate still are", () => {
     "/staff/orders",
     "/staff/tables",
     "/staff/calls",
+    "/staff/profile",
   ]) {
     assert.equal(isProtectedStaffPath(pathname), true, `${pathname} must stay protected`);
   }

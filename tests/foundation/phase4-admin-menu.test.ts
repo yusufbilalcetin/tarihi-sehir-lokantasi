@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import test from "node:test";
 
 import { DomainError } from "../../lib/api/domain-error";
@@ -57,6 +58,8 @@ class FakeTransaction implements AdminMenuTransactionRepository {
   categoryWrites: UpsertCategoryInput[] = [];
   audits: AdminMenuAuditInput[] = [];
   outbox: AdminMenuOutboxInput[] = [];
+  categoryTranslations: Array<{ locale: string; name: string; description?: string | null }> = [];
+  productTranslations: Array<{ locale: string; name: string; description?: string | null }> = [];
 
   async findCategoryForUpdate(restaurantId: string, categoryId: string) {
     if (!this.category) return null;
@@ -91,6 +94,7 @@ class FakeTransaction implements AdminMenuTransactionRepository {
       id: "product-new",
       name: input.name ?? "",
       slug: input.slug ?? "",
+      description: input.description ?? null,
       price: input.price ?? "0.00",
       version: 1,
     };
@@ -117,6 +121,14 @@ class FakeTransaction implements AdminMenuTransactionRepository {
   async insertOutboxEvent(input: AdminMenuOutboxInput) {
     this.outbox.push(input);
   }
+
+  async upsertCategoryTranslations(input: Parameters<AdminMenuTransactionRepository["upsertCategoryTranslations"]>[0]) {
+    this.categoryTranslations.push(...input.translations);
+  }
+
+  async upsertProductTranslations(input: Parameters<AdminMenuTransactionRepository["upsertProductTranslations"]>[0]) {
+    this.productTranslations.push(...input.translations);
+  }
 }
 
 class FakeRepository implements AdminMenuRepository {
@@ -128,6 +140,14 @@ class FakeRepository implements AdminMenuRepository {
 
   async listProducts() {
     return [product];
+  }
+
+  async listCategoryTranslations() {
+    return [];
+  }
+
+  async listProductTranslations() {
+    return [];
   }
 
   transaction<TResult>(
@@ -232,4 +252,76 @@ test("creating a category derives its slug and emits CATEGORY_UPDATED", async ()
   assert.equal(result.slug, "zeytinyaglilar");
   assert.equal(repository.transactionRepository.outbox[0]?.eventType, "CATEGORY_UPDATED");
   assert.equal(repository.transactionRepository.audits[0]?.action, "category.created");
+  assert.deepEqual(repository.transactionRepository.categoryTranslations, [
+    { locale: "tr", name: "Zeytinyağlılar", description: null },
+  ]);
+});
+
+test("creating a product writes core and optional translations in the same repository transaction", async () => {
+  const repository = new FakeRepository();
+  const result = await service(repository).saveProduct(principal("ADMIN"), {
+    categoryId: "category-a",
+    name: "Mercimek Çorbası",
+    description: "Günlük hazırlanır.",
+    price: "180.00",
+    translations: [
+      { locale: "en", name: "Lentil Soup", description: "Prepared daily." },
+    ],
+  });
+
+  assert.equal(repository.transactionRepository.inserted.length, 1);
+  assert.deepEqual(repository.transactionRepository.productTranslations, [
+    { locale: "en", name: "Lentil Soup", description: "Prepared daily." },
+    { locale: "tr", name: "Mercimek Çorbası", description: "Günlük hazırlanır." },
+  ]);
+  assert.equal(result.translations?.en?.name, "Lentil Soup");
+  assert.equal(result.price, "180.00");
+});
+
+test("editing one locale keeps the core name and price unchanged", async () => {
+  const repository = new FakeRepository();
+  const result = await service(repository).saveProduct(principal("MANAGER"), {
+    productId: "product-a",
+    translations: [{ locale: "en", name: "White Bean Stew", description: null }],
+  });
+
+  assert.equal(result.name, product.name);
+  assert.equal(result.price, product.price);
+  assert.equal(repository.transactionRepository.productTranslations[0]?.name, "White Bean Stew");
+});
+
+/**
+ * QR Kodlar distinguishes all four data states.
+ *
+ * It shipped with two branches: an error card, and otherwise the card grid.
+ * An empty `codes` array renders an empty grid, so both the wait for the first
+ * response and a restaurant with no tables produced a blank page region — no
+ * skeleton, no explanation, nothing to press. `panelState` exists in this
+ * codebase to make that shape impossible; this asserts the screen uses it.
+ */
+test("the QR codes screen separates loading, error, empty and ready", () => {
+  const qrManager = readFileSync(
+    new URL("../../components/admin/qr-manager.tsx", import.meta.url),
+    "utf8",
+  );
+
+  assert.match(qrManager, /panelState\(\{/);
+  assert.match(qrManager, /loading: qrCodes\.loading/);
+  assert.match(qrManager, /error: qrCodes\.error/);
+  assert.match(qrManager, /empty: qrCodes\.codes\.length === 0/);
+
+  for (const branch of [
+    /state === "loading" \? \(\s*<LoadingState/,
+    /state === "error" \? \(\s*<ErrorState/,
+    /state === "empty" \? \(\s*<EmptyState/,
+  ]) {
+    assert.match(qrManager, branch);
+  }
+
+  // The empty state has to lead somewhere: a QR code cannot exist without a
+  // table, so the way out is the table plan.
+  assert.match(qrManager, /href="\/admin\/tables"/);
+
+  // The retry has to stay reachable from the error state.
+  assert.match(qrManager, /onRetry=\{\(\) => void qrCodes\.refetch\(\)\}/);
 });

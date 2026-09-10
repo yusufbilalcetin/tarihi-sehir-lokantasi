@@ -106,10 +106,11 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     }
 
     const service = new StaffOrderService(new DrizzleStaffOrderRepository(getDb()));
-    const { open, ...filters } = parsed.data;
+    const { open, withBalance, ...filters } = parsed.data;
     const orders = await service.listOrders(principal, {
       ...filters,
       openOnly: open === "true",
+      withBalance: withBalance === "true",
     });
     return NextResponse.json(apiSuccess({ orders }), {
       status: 200,

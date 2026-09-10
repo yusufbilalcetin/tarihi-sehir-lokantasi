@@ -1,5 +1,9 @@
 import { DomainError } from "../api/domain-error";
 import { orderPlaceLabel } from "../domain/display";
+import {
+  calculateOrderBalance,
+  canRoleReadOrderBalance,
+} from "../domain/financial-operations";
 import type { OrderChannel } from "../domain/status";
 import {
   authorizeRestaurantAccess,
@@ -31,6 +35,7 @@ export interface StaffOrderListResultItem {
 }
 
 export interface StaffOrderListResult {
+  readonly version: number;
   readonly id: string;
   readonly orderNumber: string;
   readonly status: string;
@@ -50,12 +55,24 @@ export interface StaffOrderListResult {
     readonly total: string;
   };
   readonly notes: string | null;
+  /**
+   * What this order still owes, derived by the one function that derives it —
+   * `calculateOrderBalance`, the same call the ledger endpoint makes. Null when
+   * the caller did not ask for a balance; never a zero standing in for one.
+   *
+   * Only this figure crosses the wire. The takings behind it — what was paid,
+   * what was refunded, each individual collection — stay on the server: the
+   * counter needs to know what is left, not what has been taken.
+   */
+  readonly outstanding: string | null;
   readonly createdAt: string;
   readonly updatedAt: string;
   readonly items: readonly StaffOrderListResultItem[];
 }
 
 export interface UpdateOrderItemStatusCommand {
+  /** Required by the HTTP boundary; compared with the locked parent snapshot. */
+  readonly expectedOrderVersion?: number;
   readonly restaurantId: string;
   readonly orderItemId: string;
   readonly nextStatus: Extract<OrderItemStatus, "PENDING" | "PREPARING" | "READY" | "SERVED">;
@@ -123,8 +140,17 @@ export class StaffOrderService {
     filters: StaffOrderListFilters,
   ): Promise<readonly StaffOrderListResult[]> {
     const actor = requireOperationalPrincipal(principal, principal?.restaurantId ?? "");
+    // The list itself is every operational role's to read; the money on it is
+    // not. Enforced here rather than in the screen, because a query parameter
+    // is not a permission.
+    if (filters.withBalance && !canRoleReadOrderBalance(actor.role)) {
+      throw new DomainError("FORBIDDEN", "Hesap bakiyesi görüntüleme yetkiniz yok.", {
+        httpStatus: 403,
+      });
+    }
     const records = await this.repository.listOrders(actor.restaurantId, filters);
     return records.map((order) => ({
+      version: order.version,
       id: order.id,
       orderNumber: order.orderNumber,
       status: order.status,
@@ -141,6 +167,19 @@ export class StaffOrderService {
         total: order.total,
       },
       notes: order.notes,
+      // A collection counts once it is COMPLETED — the same rule the ledger
+      // applies, stated in one place and read here.
+      outstanding:
+        order.payments === null
+          ? null
+          : calculateOrderBalance(
+              order.total,
+              order.payments.map((payment) => ({
+                amount: payment.amount,
+                refundedAmount: payment.refundedAmount,
+                counted: payment.status === "COMPLETED",
+              })),
+            ).outstanding,
       createdAt: order.createdAt.toISOString(),
       updatedAt: order.updatedAt.toISOString(),
       items: order.items.map((item) => ({
@@ -169,6 +208,9 @@ export class StaffOrderService {
         throw new DomainError("ORDER_NOT_FOUND", "Sipariş kalemi bulunamadı.", {
           httpStatus: 404,
         });
+      }
+      if (command.expectedOrderVersion !== undefined && command.expectedOrderVersion !== item.orderVersion) {
+        throw new DomainError("CONFLICT", "Sipariş değişti. Güncel durumu kontrol edip tekrar deneyin.", { httpStatus: 409 });
       }
       if (item.orderStatus === "COMPLETED" || item.orderStatus === "CANCELLED") {
         throw new DomainError("INVALID_STATUS_TRANSITION", "Kapanmış sipariş değiştirilemez.", {
@@ -239,6 +281,8 @@ export class StaffOrderService {
         });
       }
 
+      const parent = await transaction.syncOrderStatusFromItems(command.restaurantId, item.orderId, at);
+
       const payload: RepositoryJsonObject = {
         scope: "ORDER_ITEM",
         orderId: item.orderId,
@@ -248,6 +292,7 @@ export class StaffOrderService {
         previousStatus: item.status,
         status: command.nextStatus,
         reverted,
+        version: parent.version,
         ...(reason ?? {}),
         updatedAt: at.toISOString(),
       };
@@ -275,6 +320,9 @@ export class StaffOrderService {
         oldValue: { status: item.status },
         newValue: { status: command.nextStatus },
         metadata: {
+          previousOrderStatus: item.orderStatus,
+          orderStatus: parent.status,
+          orderVersion: parent.version,
           orderId: item.orderId,
           orderNumber: item.orderNumber,
           from: item.status,

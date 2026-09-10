@@ -107,6 +107,11 @@
 }
 
 :root {
+  /* Keep production builds deterministic and offline-capable. The operational
+     UI uses the platform's variable sans where available, while headings keep
+     the restaurant's editorial serif contrast without a runtime font request. */
+  --font-manrope: "Segoe UI Variable", Aptos, "Segoe UI", "Noto Sans", Arial, sans-serif;
+  --font-lora: Georgia, "Noto Serif", "Times New Roman", serif;
   --background: #F5EFE4;
   --foreground: #2D2018;
   --card: #FBF7EF;
@@ -999,8 +1004,251 @@ html[data-sehir-intro="seen"] .menu-content {
   }
 }
 
+/* ---------------------------------------------------------------------------
+   Admin design tokens.
+
+   The management panel wants a calmer, more neutral ground than the guest
+   menu: near-white surfaces, hairline borders, one dark ink for primary
+   actions and brown kept for accents. The guest menu wants the opposite — it
+   is warm cream on purpose, because that is the restaurant.
+
+   So this does not introduce a parallel `--admin-*` vocabulary that every
+   className would have to be rewritten to reach. It re-points the semantic
+   tokens the panel already consumes, inside the panel's own scope. `@theme
+   inline` compiles `bg-card` to `var(--card)` rather than to a baked colour,
+   so every one of the fifty admin files picks this up through the cascade
+   without being edited, and nothing outside `[data-admin-shell]` moves.
+
+   One consequence worth knowing: the palette lives here and only here.
+   Changing the panel's ground, or taking the sidebar from dark to light, is
+   an edit to this block — not to any component.
+   --------------------------------------------------------------------------- */
+[data-admin-shell] {
+  /* Ground and paper. The ground is barely warm so that pure-white cards
+     separate from it on a hairline instead of on a shadow. */
+  --background: #F7F5F2;
+  --foreground: #1D1B19;
+  --card: #FFFFFF;
+  --card-foreground: #1D1B19;
+  --popover: #FFFFFF;
+  --popover-foreground: #1D1B19;
+
+  --surface: #F7F5F2;
+  --surface-raised: #FFFFFF;
+  --surface-elevated: #FFFFFF;
+  --surface-muted: #F4F2EF;
+  --surface-inverse: #1C1714;
+  --surface-inverse-raised: #2E2620;
+
+  --muted: #F4F2EF;
+  /* Was #8A857E, which read at 3.4:1 on the panel ground — under AA for the
+     descriptions, table labels and helper lines that all use it. */
+  --muted-foreground: #6F6A63;
+  /* The panel's one warm accent, and the whole of its identity budget: a
+     restrained burgundy that fills a selected segment, marks the current
+     screen in a domain row, and signs the sidebar. It appears nowhere else,
+     which is what keeps it meaning "this one". */
+  --accent: #F5EBE7;
+  --accent-foreground: #7A4038;
+
+  /* Primary is ink, not burgundy. Exactly one strong action per screen reads
+     as the thing to press; making it the darkest element is what does that. */
+  --primary: #26201C;
+  --primary-foreground: #FFFFFF;
+  --secondary: #FFFFFF;
+  --secondary-foreground: #1D1B19;
+
+  --border: #EDEAE5;
+  --border-subtle: #F1EEE9;
+  --border-strong: #DED9D1;
+  --input: #E2DED7;
+  --ring: #7A4038;
+  --destructive: #B3403A;
+
+  /* Pastel fill, saturated text: legible at badge size without becoming a
+     sixth accent colour on the screen. */
+  --status-success: #2E7D4F;
+  --status-success-tint: #E8F5EC;
+  --status-warning: #B4791A;
+  --status-warning-tint: #FDF3E2;
+  --status-danger: #C0392B;
+  --status-danger-tint: #FCEDEB;
+  --status-info: #3B6FB5;
+  --status-info-tint: #EAF1FB;
+
+  /* Sidebar: warm stone, a shade below the paper it sits against.
+     It used to be dark espresso, which made the menu the loudest object on
+     every screen — a permanent black column beside the one table the manager
+     actually came to read. It is now the quietest plane in the panel: darker
+     than the ground so the edge needs no shadow, lighter than the ink so the
+     eye lands on the content first. The espresso survives as the ink. */
+  --sidebar: #F1ECE5;
+  --sidebar-foreground: #2A2420;
+  --sidebar-primary: #7A4038;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #E6DED3;
+  --sidebar-accent-foreground: #241E1A;
+  --sidebar-border: #E1D9CE;
+  --sidebar-ring: #7A4038;
+
+  /* 10px controls, and cards at radius-xl land on 14px. */
+  --radius: 0.625rem;
+
+  /* Borders carry the separation; the shadow is only there to lift a card off
+     the ground by a hair. Floating layers get a real one because they must
+     read as detached. */
+  --shadow-raised: 0 1px 2px rgba(28, 23, 20, 0.04);
+  --shadow-floating: 0 4px 14px rgba(28, 23, 20, 0.08), 0 1px 3px rgba(28, 23, 20, 0.04);
+}
+
+/* Money and counts are compared down a column far more often than they are
+   read in a sentence, so digits get a fixed advance across the whole panel. */
+[data-admin-shell] table {
+  font-variant-numeric: tabular-nums;
+}
+
+/* The admin screen search opens near the top and grows downwards as results
+   arrive. Centred like the other dialogs, the field would move under the caret
+   on every keystroke. Unlayered, so it outranks `.motion-dialog`. */
+.admin-search-dialog.motion-dialog {
+  top: max(1rem, 12dvh);
+  max-height: calc(100dvh - max(1rem, 12dvh) - 1rem);
+  transform: translateX(-50%);
+}
+
+.admin-search-dialog.motion-dialog[data-starting-style],
+.admin-search-dialog.motion-dialog[data-ending-style] {
+  transform: translateX(-50%) translateY(-6px);
+}
+
+/* The manager's root is a restaurant Home Screen, not a card dashboard. The
+   atmosphere is deliberately scoped to this one route: operational tables,
+   forms and reports keep the quieter admin ground around it. */
+.admin-home {
+  position: relative;
+  isolation: isolate;
+  background-color: #f3e9da;
+  background-image:
+    radial-gradient(ellipse 70% 56% at 8% 2%, rgb(53 106 104 / 34%), transparent 68%),
+    radial-gradient(ellipse 66% 58% at 96% 10%, rgb(231 183 127 / 55%), transparent 70%),
+    radial-gradient(ellipse 54% 44% at 54% 102%, rgb(122 48 64 / 18%), transparent 74%);
+}
+
+.admin-home::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgb(255 250 243 / 8%), rgb(255 250 243 / 30%));
+}
+
+.admin-home-material {
+  border: 1px solid rgb(255 255 255 / 58%);
+  background: rgb(255 250 244 / 80%);
+  box-shadow: 0 10px 28px rgb(62 43 34 / 10%), inset 0 1px 0 rgb(255 255 255 / 54%);
+  transition: transform 150ms ease, background-color 150ms ease, box-shadow 150ms ease;
+}
+
+@supports (backdrop-filter: blur(1px)) {
+  .admin-home-material {
+    background: rgb(255 250 244 / 67%);
+    backdrop-filter: blur(18px) saturate(108%);
+  }
+}
+
+.admin-home-material:hover {
+  background-color: rgb(255 252 247 / 82%);
+  box-shadow: 0 12px 30px rgb(62 43 34 / 13%), inset 0 1px 0 rgb(255 255 255 / 62%);
+}
+
+.admin-home-metric-value {
+  display: block;
+  overflow: hidden;
+  color: #2f2520;
+  font-size: 1.125rem;
+  font-weight: 750;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.35;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (min-width: 768px) {
+  .admin-home-metric-value {
+    margin-top: 0.2rem;
+    font-size: clamp(1.15rem, 1.7vw, 1.5rem);
+  }
+}
+
+@media (forced-colors: active) {
+  .admin-home {
+    background: Canvas;
+  }
+
+  .admin-home::after {
+    display: none;
+  }
+
+  .admin-home-material {
+    border: 1px solid CanvasText;
+    background: Canvas;
+    box-shadow: none;
+    forced-color-adjust: auto;
+  }
+}
+
+/* Admin is an operational surface: compact desktop controls keep their
+   density, while phone controls retain a thumb-sized hit area. The rule is
+   deliberately scoped so the public menu and print layouts do not change. */
+@media (max-width: 639px) {
+  [data-admin-shell] [data-slot="button"] {
+    min-width: 2.75rem;
+    min-height: 2.75rem;
+  }
+
+  [data-admin-shell] input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
+  [data-admin-shell] select,
+  [data-admin-shell] [data-slot="select-trigger"] {
+    min-height: 2.75rem;
+  }
+
+  [data-admin-shell] [data-slot="table-container"] {
+    max-width: 100%;
+    overscroll-behavior-inline: contain;
+  }
+}
+
 /* Printable management report: the page becomes the document, so navigation,
    filters and action buttons drop out and tables are allowed to break. */
+/* Table QR cards are rendered to images and portalled into <body> only while a
+   print is in flight; the flag on <body> is what hands the sheet the page. */
+#qr-print-root {
+  display: none;
+}
+
+@media print {
+  body[data-qr-print="true"] > *:not(#qr-print-root) {
+    display: none !important;
+  }
+
+  body[data-qr-print="true"] #qr-print-root {
+    display: block !important;
+  }
+
+  /* The card carries its own physical width and height inline, chosen in the
+     print designer; only pagination belongs here. */
+  #qr-print-root img {
+    display: block;
+    margin: 0;
+    break-after: page;
+  }
+
+  #qr-print-root img:last-child {
+    break-after: auto;
+  }
+}
+
 @media print {
   aside,
   nav,

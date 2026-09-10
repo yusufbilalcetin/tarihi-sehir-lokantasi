@@ -100,6 +100,12 @@ export interface InsertOrderRecordInput {
   readonly notes: string | null;
   readonly createdByType: "CUSTOMER" | "STAFF" | "SYSTEM";
   readonly createdByUserId: string | null;
+  /**
+   * Which guest sitting placed this, taken from the signed table session and
+   * never from the request. Null for staff, takeaway and courier orders, which
+   * have no sitting; customer reads treat null as "not mine".
+   */
+  readonly customerSessionNonce: string | null;
 }
 
 export interface InsertOrderItemRecordInput {
@@ -240,6 +246,15 @@ export interface VoidOrderItemInput {
   readonly at: Date;
 }
 
+export interface AdvanceOrderItemsInput {
+  readonly restaurantId: string;
+  readonly orderId: string;
+  /** Only lines sitting in one of these move; everything else is left alone. */
+  readonly currentStatuses: readonly OrderItemStatus[];
+  readonly nextStatus: OrderItemStatus;
+  readonly at: Date;
+}
+
 export interface OrderTransactionRepository {
   claimIdempotency(input: ClaimIdempotencyInput): Promise<IdempotencyClaim>;
   restartIdempotency(input: RestartIdempotencyInput): Promise<void>;
@@ -260,8 +275,11 @@ export interface OrderTransactionRepository {
   insertOrder(input: InsertOrderRecordInput): Promise<{ readonly id: string }>;
   insertOrderItems(inputs: readonly InsertOrderItemRecordInput[]): Promise<void>;
   markTableWaiting(restaurantId: string, tableId: string): Promise<void>;
-  findOrderForUpdate(restaurantId: string, orderId: string): Promise<MutableOrderRecord | null>;
-  /** Locks the order row and reads its lines; the basis for every recalculation. */
+  /**
+   * Locks the order row and reads its lines; the basis for every recalculation,
+   * and for every whole-order command — the order row is a summary of the lines,
+   * so nothing may move it without seeing them.
+   */
   findOrderWithItemsForUpdate(
     restaurantId: string,
     orderId: string,
@@ -272,6 +290,12 @@ export interface OrderTransactionRepository {
   cancelOrderItem(input: CancelOrderItemInput): Promise<boolean>;
   /** Writes a served line off the bill, recording who did it and why. */
   voidOrderItem(input: VoidOrderItemInput): Promise<boolean>;
+  /**
+   * Moves the lines a whole-order command is responsible for, in one statement,
+   * under the same lock. Returns the ids that actually moved so the event and
+   * the audit trail can say which food this command claimed to have made.
+   */
+  advanceOrderItems(input: AdvanceOrderItemsInput): Promise<readonly string[]>;
   updateOrderStatus(input: UpdateOrderStatusInput): Promise<boolean>;
   insertOrderEvent(input: InsertOrderEventInput): Promise<void>;
   insertOutboxEvent(input: InsertOutboxEventInput): Promise<void>;

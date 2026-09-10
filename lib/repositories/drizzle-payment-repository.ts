@@ -44,6 +44,7 @@ const PAYMENT_SELECTION = {
   method: payments.method,
   status: payments.status,
   idempotencyKeyHash: sql<string | null>`${payments.metadata}->>'idempotencyKeyHash'`,
+  idempotencyRequestHash: sql<string | null>`${payments.metadata}->>'idempotencyRequestHash'`,
   processedAt: payments.processedAt,
   createdAt: payments.createdAt,
 } as const;
@@ -55,6 +56,7 @@ const REFUND_SELECTION = {
   amount: paymentRefunds.amount,
   reasonCode: paymentRefunds.reasonCode,
   note: paymentRefunds.note,
+  idempotencyRequestHash: sql<string | null>`${paymentRefunds.metadata}->>'idempotencyRequestHash'`,
   createdAt: paymentRefunds.createdAt,
 } as const;
 
@@ -121,12 +123,14 @@ class DrizzlePaymentTransactionRepository implements PaymentTransactionRepositor
     restaurantId: string,
     orderId: string,
   ): Promise<readonly PaymentRecord[]> {
+    // Callers hold the order lock. Collection and refund both acquire it
+    // before changing the ledger. Locking payment rows here would invert
+    // refund's payment -> order ordering, including across different shifts.
     return this.db
       .select(PAYMENT_SELECTION)
       .from(payments)
       .where(and(eq(payments.restaurantId, restaurantId), eq(payments.orderId, orderId)))
-      .orderBy(asc(payments.createdAt))
-      .for("update");
+      .orderBy(asc(payments.createdAt));
   }
 
   async findPaymentByIdempotencyKey(
@@ -188,7 +192,10 @@ class DrizzlePaymentTransactionRepository implements PaymentTransactionRepositor
         method: input.method,
         status: "COMPLETED",
         createdByUserId: input.createdByUserId,
-        metadata: { idempotencyKeyHash: input.idempotencyKeyHash },
+        metadata: {
+          idempotencyKeyHash: input.idempotencyKeyHash,
+          idempotencyRequestHash: input.idempotencyRequestHash,
+        },
         processedAt: input.at,
         createdAt: input.at,
         updatedAt: input.at,
@@ -213,7 +220,10 @@ class DrizzlePaymentTransactionRepository implements PaymentTransactionRepositor
         note: input.note,
         status: "COMPLETED",
         createdByUserId: input.createdByUserId,
-        metadata: { idempotencyKeyHash: input.idempotencyKeyHash },
+        metadata: {
+          idempotencyKeyHash: input.idempotencyKeyHash,
+          idempotencyRequestHash: input.idempotencyRequestHash,
+        },
         createdAt: input.at,
       })
       .onConflictDoNothing()

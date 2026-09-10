@@ -16,7 +16,7 @@ import { toast } from "sonner";
 import { Field } from "@/components/admin/admin-ui";
 import { QrAccessToggle } from "@/components/admin/qr-access-toggle";
 import { TableQrDialog } from "@/components/admin/table-qr-dialog";
-import { useIsDesktop } from "@/components/admin/use-menu-draft";
+import { useIsDesktop } from "@/components/shared/use-is-desktop";
 import { StatusBadge } from "@/components/shared/status-badge";
 import { TableOperationsPanel } from "@/components/staff/table-operations-panel";
 import { Button } from "@/components/ui/button";
@@ -233,7 +233,7 @@ export function TableDetailSheet({
               {editing ? (
                 <form className="grid gap-4 rounded-xl border bg-muted/20 p-4" onSubmit={save}>
                   <Field label="Masa adı"><Input value={name} maxLength={80} onChange={(event) => setName(event.target.value)} /></Field>
-                  <div className="grid grid-cols-2 gap-3">
+                  <div className="grid grid-cols-1 gap-3 min-[380px]:grid-cols-2">
                     <Field label="Masa numarası"><Input type="number" min="1" max="100000" value={number} onChange={(event) => setNumber(event.target.value)} /></Field>
                     <Field label="Kapasite"><Input type="number" min="1" max="100" value={seats} onChange={(event) => setSeats(event.target.value)} /></Field>
                   </div>

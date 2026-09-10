@@ -12,6 +12,13 @@ const LABELS: Record<StaffRealtimeStatus, string | null> = {
   unavailable: "Canlı bağlantı yok, liste düzenli olarak yenileniyor",
 };
 
+const COMPACT_LABELS: Record<StaffRealtimeStatus, string | null> = {
+  connected: null,
+  connecting: "Bağlanıyor",
+  reconnecting: "Yenileniyor",
+  unavailable: "Çevrimdışı",
+};
+
 /**
  * Only surfaces when live delivery is degraded, so a healthy panel keeps its
  * original layout untouched.
@@ -32,7 +39,8 @@ export function RealtimeStatus({ status, className }: { status: StaffRealtimeSta
       {status === "unavailable"
         ? <WifiOff className="size-3.5" strokeWidth={1.8} aria-hidden="true" />
         : <RefreshCw className="size-3.5 animate-spin" strokeWidth={1.8} aria-hidden="true" />}
-      {label}
+      <span className="sm:hidden">{COMPACT_LABELS[status]}</span>
+      <span className="hidden sm:inline">{label}</span>
     </p>
   );
 }

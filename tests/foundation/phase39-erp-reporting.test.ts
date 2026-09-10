@@ -3,6 +3,7 @@ import { readdirSync, readFileSync } from "node:fs";
 import test from "node:test";
 
 import { ERP_CSV_EXPORTS, erpCsvCell, erpCsvFilename, erpRowsToCsv } from "../../lib/domain/erp-csv";
+import { addDays, formatDay, toLocalDay } from "../../lib/domain/report-range";
 import { ERP_UI_CONFIG } from "../../lib/domain/erp-ui";
 import {
   boundWorkspaceRange,
@@ -637,7 +638,10 @@ test("no dated ERP filter is written in a form an index cannot use", () => {
       assert.doesNotMatch(template, nonSargable, `a dated filter cannot use an index: ${template.replace(/\s+/g, " ").slice(0, 120)}`);
     }
   }
-  assert.match(dashboardRepository, /const dayStart = sql`\$\{today\}::date::timestamp at time zone 'Europe\/Istanbul'`/);
+  assert.match(dashboardRepository, /const restaurantTimezone = sql`[\s\S]*restaurants\.timezone/);
+  assert.match(dashboardRepository, /const today = sql`\(now\(\) at time zone \$\{restaurantTimezone\}\)::date`/);
+  assert.match(dashboardRepository, /const dayStart = sql`\$\{today\}::timestamp at time zone \$\{restaurantTimezone\}`/);
+  assert.match(dashboardRepository, /const dayEnd = sql`\(\$\{today\} \+ 1\)::timestamp at time zone \$\{restaurantTimezone\}`/);
 });
 
 test("every new Phase 39 report predicate has an index behind it", () => {
@@ -665,4 +669,36 @@ test("every new Phase 39 report predicate has an index behind it", () => {
   for (const [index, why] of Object.entries(support)) {
     assert.ok(schema.includes(index) || migrations.includes(index), `${why} has no index (${index})`);
   }
+});
+
+/**
+ * The ERP workspace defaults its date window to the restaurant's day, not UTC's.
+ *
+ * It used to call `new Date().toISOString().slice(0, 10)`. Türkiye is UTC+3, so
+ * between 00:00 and 02:59 local — while a late service is still trading — that
+ * returns yesterday, and every workspace list (stock, production, purchasing,
+ * invoices, payroll) silently defaulted to a window that excluded the current
+ * day's rows. The sibling overview repository already carried the fix and the
+ * comment explaining it; the workspace repository did not.
+ *
+ * Asserted two ways: the offset arithmetic actually crosses the boundary, and
+ * the repository no longer derives a calendar day from a UTC ISO string.
+ */
+test("the ERP workspace dates from the restaurant's calendar day, not UTC's", () => {
+  // 21:40Z is 00:40 the next day in Istanbul — the window the bug lived in.
+  const lateNight = new Date("2026-09-03T21:40:00Z");
+  assert.equal(lateNight.toISOString().slice(0, 10), "2026-09-03");
+  assert.equal(formatDay(toLocalDay(lateNight)), "2026-09-04");
+  assert.equal(formatDay(addDays(toLocalDay(lateNight), -30)), "2026-08-05");
+
+  const workspaceRepository = readFileSync(
+    new URL("../../lib/repositories/drizzle-erp-workspace-repository.ts", import.meta.url),
+    "utf8",
+  );
+  assert.equal(
+    /toISOString\(\)\.slice\(0,\s*10\)/.test(workspaceRepository),
+    false,
+    "a calendar day is being taken from a UTC ISO string again",
+  );
+  assert.match(workspaceRepository, /formatDay\(toLocalDay\(/);
 });

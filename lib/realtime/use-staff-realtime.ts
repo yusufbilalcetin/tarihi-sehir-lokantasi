@@ -53,7 +53,6 @@ export function useStaffRealtime(options: StaffRealtimeOptions = {}): StaffRealt
     const client = getSupabaseBrowserClient();
     if (!client || !restaurantId) return;
 
-    let connectedOnce = false;
     const seenEvents = new Set<string>();
     const channel = client.channel(restaurantStaffChannelName(restaurantId), {
       config: { private: true },
@@ -74,10 +73,9 @@ export function useStaffRealtime(options: StaffRealtimeOptions = {}): StaffRealt
     channel.subscribe((channelStatus) => {
       if (channelStatus === "SUBSCRIBED") {
         setStatus("connected");
-        // Events emitted while the socket was down are never replayed, so the
-        // API is re-read on every (re)connect.
-        if (connectedOnce) handlersRef.current.onResync?.();
-        connectedOnce = true;
+        // Also cover the gap between the initial API snapshot and the first
+        // subscription: events emitted before SUBSCRIBED are not replayed.
+        handlersRef.current.onResync?.();
         return;
       }
       if (channelStatus === "CLOSED") {

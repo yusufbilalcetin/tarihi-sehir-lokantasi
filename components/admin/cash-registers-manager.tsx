@@ -4,8 +4,8 @@ import { useCallback, useMemo, useState } from "react";
 import { FileText, LockKeyhole, Plus, Wallet } from "lucide-react";
 import { toast } from "sonner";
 import { ShiftReportDialog } from "@/components/cashier/shift-report-dialog";
-import { PageHeader } from "@/components/shared/page-header";
 import { Badge } from "@/components/ui/badge";
+import { TableStateCell } from "@/components/shared/data-states";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -24,7 +24,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { ApiClientError } from "@/lib/api/client";
+import { userErrorMessage } from "@/lib/api/error-message";
 import { cashRegisterApi, cashierShiftApi } from "@/lib/api/endpoints";
 import { useApiResource } from "@/lib/hooks/use-api-resource";
 import { formatCurrency } from "@/lib/format";
@@ -53,7 +53,7 @@ function moment(value: string | null): string {
 }
 
 function message(error: unknown, fallback: string): string {
-  return error instanceof ApiClientError ? error.message : fallback;
+  return userErrorMessage(error, fallback);
 }
 
 export function CashRegistersManager() {
@@ -136,11 +136,6 @@ export function CashRegistersManager() {
 
   return (
     <div className="space-y-6">
-      <PageHeader
-        title="Kasa ve Vardiyalar"
-        description="Kasa noktalarını tanımlayın ve vardiya geçmişini inceleyin."
-      />
-
       <Card className="gap-0 py-0">
         <CardHeader className="border-b py-4">
           <CardTitle className="flex items-center gap-2 text-lg">
@@ -230,7 +225,13 @@ export function CashRegistersManager() {
                 {(registers.data?.registers.length ?? 0) === 0 ? (
                   <TableRow>
                     <TableCell colSpan={4} className="py-6 text-center text-sm text-muted-foreground">
-                      {registers.loading ? "Yükleniyor…" : "Henüz kasa tanımlanmamış."}
+                      <TableStateCell
+                            loading={registers.loading}
+                            error={registers.error}
+                            emptyText="Henüz kasa tanımlanmamış."
+                            errorText="Kasa listesi yüklenemedi."
+                            onRetry={() => void registers.refetch()}
+                          />
                     </TableCell>
                   </TableRow>
                 ) : null}
@@ -397,7 +398,13 @@ export function CashRegistersManager() {
                 {(history.data?.rows.length ?? 0) === 0 ? (
                   <TableRow>
                     <TableCell colSpan={8} className="py-6 text-center text-sm text-muted-foreground">
-                      {history.loading ? "Yükleniyor…" : "Bu filtreye uyan vardiya yok."}
+                      <TableStateCell
+                            loading={history.loading}
+                            error={history.error}
+                            emptyText="Bu filtreye uyan vardiya yok."
+                            errorText="Vardiya geçmişi yüklenemedi."
+                            onRetry={() => void history.refetch()}
+                          />
                     </TableCell>
                   </TableRow>
                 ) : null}

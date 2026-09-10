@@ -47,7 +47,7 @@ export function ErpOperationsManager() {
   }
 
   if (loading && !overview) return <div className="flex min-h-72 items-center justify-center gap-2 text-sm text-muted-foreground"><Loader2 className="size-5 animate-spin" /> İşletme verileri yükleniyor…</div>;
-  if (error && !overview) return <div className="rounded-xl border border-destructive/30 bg-destructive/5 p-6"><p className="font-semibold text-destructive">ERP verileri okunamadı</p><p className="mt-2 text-sm text-muted-foreground">{error.message}</p><Button variant="outline" className="mt-4" onClick={() => void resource.refetch()}><RefreshCw className="size-4" /> Tekrar dene</Button></div>;
+  if (error && !overview) return <div className="rounded-xl border border-destructive/30 bg-destructive/5 p-6"><p className="font-semibold text-destructive">İşletme verileri okunamadı</p><p className="mt-2 text-sm text-muted-foreground">{error.message}</p><Button variant="outline" className="mt-4" onClick={() => void resource.refetch()}><RefreshCw className="size-4" /> Tekrar dene</Button></div>;
 
   return (
     <div className="space-y-8">
@@ -125,7 +125,7 @@ export function ErpOperationsManager() {
 
           <div className="space-y-4">
             <Card><CardHeader><CardTitle>Tedarikçi borcu</CardTitle><CardDescription>Açık ve kısmi ödenmiş operasyonel faturalar.</CardDescription></CardHeader><CardContent><Money amount={overview?.outstandingSupplierPayable ?? "0.00"} className="text-2xl font-bold" /><p className="mt-2 text-xs text-muted-foreground">{overview?.counts.openSupplierInvoices ?? 0} açık belge</p></CardContent></Card>
-            <Card><CardHeader><CardTitle>Yaklaşan operasyon</CardTitle></CardHeader><CardContent className="grid grid-cols-2 gap-3 text-sm">
+            <Card><CardHeader><CardTitle>Yaklaşan operasyon</CardTitle></CardHeader><CardContent className="grid grid-cols-1 gap-3 text-sm min-[380px]:grid-cols-2">
               <div className="rounded-xl bg-muted/45 p-3"><strong className="block text-lg tabular-nums">{overview?.counts.upcomingReservations ?? 0}</strong><span className="text-muted-foreground">Yaklaşan rezervasyon</span></div>
               <div className="rounded-xl bg-muted/45 p-3"><strong className="block text-lg tabular-nums">{overview?.counts.openPurchaseOrders ?? 0}</strong><span className="text-muted-foreground">Açık satın alma</span></div>
               <div className="rounded-xl bg-muted/45 p-3"><strong className="block text-lg tabular-nums">{overview?.counts.activeRecipes ?? 0}</strong><span className="text-muted-foreground">Aktif reçete</span></div>

@@ -22,7 +22,9 @@ type Status =
   | "open"
   | "assigned"
   | "resolved"
-  | "paid";
+  | "paid"
+  /** An item status with no order-level twin: served, then written off. */
+  | "voided";
 
 type Tone =
   | "new"
@@ -75,6 +77,9 @@ const STATUS: Readonly<Record<Status, { label: string; tone: Tone; dot?: boolean
   served: { label: "Servis edildi", tone: "served" },
   completed: { label: "Tamamlandı", tone: "settled" },
   cancelled: { label: "İptal edildi", tone: "void" },
+  // Staff wording keeps the financial meaning: the food was made and served,
+  // and the money was written off — not the same event as a cancellation.
+  voided: { label: "Hesaptan düşüldü", tone: "void" },
   // Catalogue
   active: { label: "Aktif", tone: "success" },
   inactive: { label: "Pasif", tone: "neutral" },
@@ -112,5 +117,5 @@ export function StatusBadge({ status, label, size = "md", className }: StatusBad
   );
 }
 
-/** Exported so the display-language tests can walk every state this can show. */
+/** Exported so a display-language test can walk every state this can show. */
 export const STATUS_BADGE_STATES = STATUS;

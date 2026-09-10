@@ -6,6 +6,7 @@ import {
 } from "./menu-translations";
 import { getLoadedMenuCatalog } from "./menu-catalog";
 import { getMenuLanguage } from "./languages";
+import { normalizeMenuLocale } from "./catalog-localization";
 
 export const categoryNames: Record<string, LocalizedText> = {
   soups: { tr: "Çorbalar", en: "Soups", de: "Suppen", ar: "الشوربات" },
@@ -67,7 +68,8 @@ export const productNames: Record<string, LocalizedText> = {
   "cevizli-baklava": { tr: "Cevizli Baklava", en: "Walnut Baklava", de: "Walnuss-Baklava", ar: "بقلاوة بالجوز" },
 };
 
-const descriptionTemplates: Record<string, string> = {
+/** @deprecated Catalog fallback must use real default-language content. */
+export const descriptionTemplates: Record<string, string> = {
   en: "{name}, prepared daily in our traditional Turkish restaurant style.",
   de: "{name}, täglich nach traditioneller türkischer Art zubereitet.",
   ar: "{name}، يُحضّر يوميًا على الطريقة التركية التقليدية.",
@@ -126,29 +128,37 @@ function translationKey(entity: { id: string; i18nKey?: string }) {
 }
 
 export function getMenuCategoryName(category: Category, language: MenuLanguage) {
+  const safeLanguage = normalizeMenuLocale(language);
+  const requested = category.translations?.[safeLanguage];
+  if (requested?.name) return requested.name;
   const key = translationKey(category);
-  const catalogName = getLoadedMenuCatalog(language)?.categories[key];
+  const catalogName = getLoadedMenuCatalog(safeLanguage)?.categories[key];
   if (catalogName) return catalogName;
-  return getLocalizedText(categoryNames[key] ?? category.name, language);
+  const fallback = category.translations?.[normalizeMenuLocale(category.defaultLocale)];
+  if (fallback?.name) return fallback.name;
+  return getLocalizedText(categoryNames[key] ?? category.name, safeLanguage);
 }
 
 export function getMenuProductName(product: Product, language: MenuLanguage) {
+  const safeLanguage = normalizeMenuLocale(language);
+  const requested = product.translations?.[safeLanguage];
+  if (requested?.name) return requested.name;
   const key = translationKey(product);
-  const catalogName = getLoadedMenuCatalog(language)?.products[key]?.name;
+  const catalogName = getLoadedMenuCatalog(safeLanguage)?.products[key]?.name;
   if (catalogName) return catalogName;
-  return getLocalizedText(productNames[key] ?? product.name, language);
+  const fallback = product.translations?.[normalizeMenuLocale(product.defaultLocale)];
+  if (fallback?.name) return fallback.name;
+  return getLocalizedText(productNames[key] ?? product.name, safeLanguage);
 }
 
 export function getMenuProductDescription(product: Product, language: MenuLanguage) {
-  const catalogDescription = getLoadedMenuCatalog(language)?.products[translationKey(product)]?.description;
+  const safeLanguage = normalizeMenuLocale(language);
+  const requested = product.translations?.[safeLanguage];
+  if (requested?.description) return requested.description;
+  const catalogDescription = getLoadedMenuCatalog(safeLanguage)?.products[translationKey(product)]?.description;
   if (catalogDescription) return catalogDescription;
-  if (language === "tr") return product.description;
-  const baseLanguage = language.split("-")[0] ?? language;
-  const template = descriptionTemplates[language] ?? descriptionTemplates[baseLanguage] ?? descriptionTemplates.en;
-  return template.replace(
-    "{name}",
-    getMenuProductName(product, language),
-  );
+  const fallback = product.translations?.[normalizeMenuLocale(product.defaultLocale)];
+  return fallback?.description || product.description;
 }
 
 export function getMenuTag(tag: string, language: MenuLanguage) {

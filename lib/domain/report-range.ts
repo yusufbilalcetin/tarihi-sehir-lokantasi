@@ -38,11 +38,48 @@ export const REPORT_RANGE_LABELS: Readonly<Record<ReportRangePreset, string>> = 
 };
 
 /**
- * Türkiye has been on a fixed UTC+3 since 2016 with no daylight saving, so a
- * constant offset is exact here and keeps the arithmetic deterministic. If the
- * country ever reintroduces DST this is the single place that must change.
+ * The zone every calendar boundary in this file is measured in.
+ *
+ * It is the restaurant's own `timezone` column, not a constant: a fixed +03:00
+ * is exact for Türkiye and wrong for anywhere that keeps daylight saving, and
+ * the day a report covers is the day the restaurant actually worked.
+ *
+ * Used only as the last-resort default when a caller has no restaurant in
+ * hand — the column's own default is the same value.
  */
-export const RESTAURANT_UTC_OFFSET_MINUTES = 180;
+export const DEFAULT_RESTAURANT_TIME_ZONE = "Europe/Istanbul";
+
+/**
+ * How far the zone is from UTC at a given instant, in minutes.
+ *
+ * Derived by formatting the instant in the zone and reading it back as though
+ * it were UTC: the gap is the offset. That makes daylight saving a property of
+ * the instant rather than something this file has to know about.
+ */
+function zoneOffsetMinutes(instant: Date, timeZone: string): number {
+  const parts = new Intl.DateTimeFormat("en-US", {
+    timeZone,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false,
+  }).formatToParts(instant);
+  const value = (type: Intl.DateTimeFormatPartTypes): number =>
+    Number(parts.find((part) => part.type === type)?.value ?? "0");
+  const asIfUtc = Date.UTC(
+    value("year"),
+    value("month") - 1,
+    value("day"),
+    // A zone that formats midnight as "24" would otherwise jump a day.
+    value("hour") % 24,
+    value("minute"),
+    value("second"),
+  );
+  return Math.round((asIfUtc - instant.getTime()) / 60_000);
+}
 
 export interface CalendarDay {
   readonly year: number;
@@ -54,6 +91,13 @@ export interface CalendarDay {
 export interface ResolvedReportRange {
   readonly preset: ReportRangePreset;
   readonly label: string;
+  /**
+   * The zone the boundaries were measured in, carried so that whatever groups
+   * rows *inside* the period groups them by the same day the period is bounded
+   * by. Without it a caller has the right window and still has to guess the
+   * zone to bucket by, and guessing is how a fixed `+03:00` survived.
+   */
+  readonly timeZone: string;
   readonly start: Date;
   /** Exclusive, so a day boundary is never counted twice or missed. */
   readonly endExclusive: Date;
@@ -80,21 +124,38 @@ export class ReportRangeError extends Error {
   }
 }
 
-/** Midnight of a local calendar day, as the UTC instant it actually is. */
-export function startOfLocalDay(day: CalendarDay): Date {
-  return new Date(
-    Date.UTC(day.year, day.month - 1, day.day) - RESTAURANT_UTC_OFFSET_MINUTES * 60_000,
-  );
+/**
+ * Midnight of a local calendar day, as the UTC instant it actually is.
+ *
+ * Resolved twice on purpose: the offset that applies at the guessed instant can
+ * differ from the offset that applies at the real midnight — which is exactly
+ * what happens on the night a zone changes its clocks.
+ */
+export function startOfLocalDay(
+  day: CalendarDay,
+  timeZone: string = DEFAULT_RESTAURANT_TIME_ZONE,
+): Date {
+  const naive = Date.UTC(day.year, day.month - 1, day.day);
+  const guess = new Date(naive - zoneOffsetMinutes(new Date(naive), timeZone) * 60_000);
+  return new Date(naive - zoneOffsetMinutes(guess, timeZone) * 60_000);
 }
 
 /** Which local calendar day an instant falls on. */
-export function toLocalDay(instant: Date): CalendarDay {
-  const shifted = new Date(instant.getTime() + RESTAURANT_UTC_OFFSET_MINUTES * 60_000);
+export function toLocalDay(
+  instant: Date,
+  timeZone: string = DEFAULT_RESTAURANT_TIME_ZONE,
+): CalendarDay {
+  const shifted = new Date(instant.getTime() + zoneOffsetMinutes(instant, timeZone) * 60_000);
   return {
     year: shifted.getUTCFullYear(),
     month: shifted.getUTCMonth() + 1,
     day: shifted.getUTCDate(),
   };
+}
+
+/** The offset that applied in this zone on this calendar day, in minutes. */
+export function zoneOffsetForDay(day: CalendarDay, timeZone: string): number {
+  return zoneOffsetMinutes(startOfLocalDay(day, timeZone), timeZone);
 }
 
 export function addDays(day: CalendarDay, days: number): CalendarDay {
@@ -164,6 +225,8 @@ export interface ResolveReportRangeInput {
   /** First real operation date, for SINCE_SYSTEM_START. */
   readonly systemStart?: Date | null;
   readonly comparison?: ReportComparison;
+  /** The restaurant's own zone; every boundary below is measured in it. */
+  readonly timeZone?: string;
 }
 
 /** Days between two calendar days, used to build an equal previous period. */
@@ -227,6 +290,7 @@ function comparisonOf(
   kind: ReportComparison,
   start: CalendarDay,
   endExclusive: CalendarDay,
+  timeZone: string,
 ): ReportComparisonRange | null {
   if (kind === "NONE") return null;
 
@@ -236,8 +300,8 @@ function comparisonOf(
     return {
       kind,
       label: "Önceki Eşit Dönem",
-      start: startOfLocalDay(previousStart),
-      endExclusive: startOfLocalDay(start),
+      start: startOfLocalDay(previousStart, timeZone),
+      endExclusive: startOfLocalDay(start, timeZone),
     };
   }
 
@@ -245,8 +309,8 @@ function comparisonOf(
   return {
     kind: "PREVIOUS_YEAR",
     label: "Geçen Yıl Aynı Dönem",
-    start: startOfLocalDay(addMonths(start, -12)),
-    endExclusive: startOfLocalDay(addMonths(endExclusive, -12)),
+    start: startOfLocalDay(addMonths(start, -12), timeZone),
+    endExclusive: startOfLocalDay(addMonths(endExclusive, -12), timeZone),
   };
 }
 
@@ -255,7 +319,8 @@ function comparisonOf(
  * and reported as such rather than silently returning an empty period.
  */
 export function resolveReportRange(input: ResolveReportRangeInput): ResolvedReportRange {
-  const today = toLocalDay(input.now);
+  const timeZone = input.timeZone ?? DEFAULT_RESTAURANT_TIME_ZONE;
+  const today = toLocalDay(input.now, timeZone);
   const bounds = presetBounds(input, today);
 
   const tomorrow = addDays(today, 1);
@@ -267,11 +332,12 @@ export function resolveReportRange(input: ResolveReportRangeInput): ResolvedRepo
   return {
     preset: input.preset,
     label: REPORT_RANGE_LABELS[input.preset],
-    start: startOfLocalDay(start),
-    endExclusive: startOfLocalDay(endExclusive),
+    timeZone,
+    start: startOfLocalDay(start, timeZone),
+    endExclusive: startOfLocalDay(endExclusive, timeZone),
     startDay: start,
     endDayInclusive: addDays(endExclusive, -1),
-    comparison: comparisonOf(input.comparison ?? "NONE", start, endExclusive),
+    comparison: comparisonOf(input.comparison ?? "NONE", start, endExclusive, timeZone),
     clampedToToday,
   };
 }
@@ -309,4 +375,20 @@ export const WEEKDAY_LABELS = [
 /** 0 = Sunday, matching PostgreSQL's `extract(dow ...)`. */
 export function weekdayLabel(index: number): string {
   return WEEKDAY_LABELS[index] ?? "Bilinmiyor";
+}
+
+/**
+ * Today, as the restaurant counts it, in its own zone.
+ *
+ * The day-end report and the manager's home both need this, and two copies of
+ * it are two ways to disagree about which day a payment belongs to. The zone
+ * comes from the restaurant, so a London or New York restaurant rolls its day
+ * over when it actually closes rather than when Istanbul does.
+ */
+export function restaurantToday(
+  timeZone: string = DEFAULT_RESTAURANT_TIME_ZONE,
+  now: Date = new Date(),
+): string {
+  const day = toLocalDay(now, timeZone);
+  return `${day.year}-${String(day.month).padStart(2, "0")}-${String(day.day).padStart(2, "0")}`;
 }

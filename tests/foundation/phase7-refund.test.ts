@@ -136,6 +136,31 @@ test("the same key replays the refund instead of returning money twice", async (
   assert.equal(repository.transactionRepository.payments[0]?.refundedAmount, "150.00");
 });
 
+test("reusing a refund key with a different payload is a conflict", async () => {
+  const repository = new FakePaymentRepository();
+  const payment = await collected(repository);
+  const refunds = service(repository);
+  await refunds.refund(principal("MANAGER"), {
+    paymentId: payment.paymentId,
+    amount: "150.00",
+    reasonCode: "WRONG_CHARGE",
+    idempotencyKey: "refund-key-0001",
+  });
+
+  await assert.rejects(
+    () =>
+      refunds.refund(principal("MANAGER"), {
+        paymentId: payment.paymentId,
+        amount: "100.00",
+        reasonCode: "WRONG_CHARGE",
+        idempotencyKey: "refund-key-0001",
+      }),
+    (error: unknown) =>
+      error instanceof DomainError && error.code === "IDEMPOTENCY_CONFLICT",
+  );
+  assert.equal(repository.transactionRepository.refunds.length, 1);
+});
+
 test("a zero or negative refund is refused", async () => {
   const repository = new FakePaymentRepository();
   const payment = await collected(repository);

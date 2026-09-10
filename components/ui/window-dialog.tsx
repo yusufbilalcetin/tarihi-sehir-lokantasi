@@ -63,7 +63,11 @@ export function WindowDialogContent({
       <DialogPrimitive.Popup
         data-slot="window-dialog"
         className={cn(
-          "motion-dialog fixed top-1/2 left-1/2 z-50 flex -translate-x-1/2 -translate-y-1/2 flex-col overflow-hidden outline-none",
+          // Centring lives in `.motion-dialog`'s transform alone. Tailwind's
+          // translate utilities write the separate `translate` property, which
+          // composes with that transform rather than replacing it, and the
+          // window came out half its own height above centre.
+          "motion-dialog fixed top-1/2 left-1/2 z-50 flex flex-col overflow-hidden outline-none",
           // A defined edge and a real elevation are what make it read as a
           // window rather than a card lying on the page.
           "rounded-lg border border-copper/45 bg-card text-card-foreground shadow-[var(--shadow-window)]",

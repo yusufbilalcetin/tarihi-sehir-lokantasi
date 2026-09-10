@@ -37,8 +37,10 @@ import { weekdayLabel, type ResolvedReportRange } from "@/lib/domain/report-rang
 
 /** Drill-down reports. Aggregation stays in PostgreSQL, as in the summary service. */
 
-/** See the note in report-analytics-service: a bare '+03:00' inverts the sign. */
-const LOCAL_TZ = sql.raw(`interval '3 hours'`);
+/** See the note in report-analytics-service: the zone comes from the range. */
+function localTimeZone(range: ResolvedReportRange): SQL {
+  return sql`${range.timeZone}`;
+}
 
 function money(value: unknown): string {
   return Number(value ?? 0).toFixed(2);
@@ -66,7 +68,7 @@ export class ReportDetailService {
       this.inRange(orders.createdAt, range),
     );
     const live = sql`${orderItems.status} not in ('CANCELLED','VOIDED') and ${orders.status} <> 'CANCELLED'`;
-    const localTime = sql`(${orders.createdAt} at time zone ${LOCAL_TZ})`;
+    const localTime = sql`(${orders.createdAt} at time zone ${localTimeZone(range)})`;
 
     const [totals, hourly, weekly, daily] = await Promise.all([
       this.db
@@ -108,7 +110,12 @@ export class ReportDetailService {
           and(eq(orders.restaurantId, orderItems.restaurantId), eq(orders.id, orderItems.orderId)),
         )
         .where(scope)
-        .groupBy(sql`extract(hour from ${localTime})`),
+        // Grouped by output position, not by repeating the expression. The zone
+        // is a bound parameter, and PostgreSQL binds each occurrence as its own
+        // placeholder, so a repeated expression is not the *same* expression to
+        // the grouping check and the query fails with 42803. The old fixed
+        // `interval '3 hours'` was a literal, which is why it could be repeated.
+        .groupBy(sql`1`),
       this.db
         .select({
           weekday: sql<number>`extract(dow from ${localTime})::int`,
@@ -120,7 +127,7 @@ export class ReportDetailService {
           and(eq(orders.restaurantId, orderItems.restaurantId), eq(orders.id, orderItems.orderId)),
         )
         .where(scope)
-        .groupBy(sql`extract(dow from ${localTime})`),
+        .groupBy(sql`1`),
       this.db
         .select({
           date: sql<string>`to_char(${localTime}, 'YYYY-MM-DD')`,
@@ -135,8 +142,8 @@ export class ReportDetailService {
           and(eq(orders.restaurantId, orderItems.restaurantId), eq(orders.id, orderItems.orderId)),
         )
         .where(scope)
-        .groupBy(sql`to_char(${localTime}, 'YYYY-MM-DD')`)
-        .orderBy(sql`to_char(${localTime}, 'YYYY-MM-DD')`),
+        .groupBy(sql`1`)
+        .orderBy(sql`1`),
     ]);
 
     const row = totals[0];
@@ -256,7 +263,7 @@ export class ReportDetailService {
   ): Promise<KitchenReport> {
     const restaurantId = principal.restaurantId;
     const status = sql`${orderEvents.payload}->>'status'`;
-    const localTime = sql`(${orderEvents.createdAt} at time zone ${LOCAL_TZ})`;
+    const localTime = sql`(${orderEvents.createdAt} at time zone ${localTimeZone(range)})`;
     const scope = and(
       eq(orderEvents.restaurantId, restaurantId),
       eq(orderEvents.eventType, "ORDER_ITEM_STATUS_CHANGED"),
@@ -292,7 +299,7 @@ export class ReportDetailService {
         })
         .from(orderEvents)
         .where(and(scope, sql`${status} = 'READY'`))
-        .groupBy(sql`extract(hour from ${localTime})`, sql`extract(dow from ${localTime})`),
+        .groupBy(sql`1`, sql`2`),
       // Pair each item's PREPARING with its READY inside the period. A missing
       // or inverted pair is excluded rather than guessed at.
       this.db

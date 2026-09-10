@@ -48,15 +48,20 @@ test("no runtime code hardcodes a seed staff member's identity", () => {
 });
 
 test("the staff shell header reads the signed-in session", () => {
-  const source = readFileSync(
+  const shell = readFileSync(
     path.join(process.cwd(), "components/staff/staff-shell.tsx"),
     "utf8",
   );
-  assert.match(source, /useStaffSession\(\)/, "header must read the session");
-  assert.match(source, /\{name\}/, "header must print the session's name");
-  assert.match(source, /STAFF_ROLE_LABELS/, "header must label the session's real role");
+  const chrome = readFileSync(
+    path.join(process.cwd(), "components/staff/operational-ui.tsx"),
+    "utf8",
+  );
+  assert.match(shell, /<OperationalTopBar\b/, "the shell must use the shared operational header");
+  assert.match(chrome, /useStaffSession\(\)/, "header must read the session");
+  assert.match(chrome, /\{name\}/, "header must print the session's name");
+  assert.match(chrome, /STAFF_ROLE_LABELS/, "header must label the session's real role");
   // The old chip announced a shift window nothing in the session knows about.
-  assert.doesNotMatch(source, /10:00 - 18:00/, "invented shift window is back");
+  assert.doesNotMatch(shell + chrome, /10:00 - 18:00/, "invented shift window is back");
 });
 
 /**
@@ -69,30 +74,39 @@ test("the staff shell header reads the signed-in session", () => {
  * header is restyled.
  */
 test("the kitchen header reads the signed-in session rather than assuming one", () => {
-  const source = readFileSync(
+  const board = readFileSync(
     path.join(process.cwd(), "components/kitchen/kitchen-board.tsx"),
     "utf8",
   );
-  assert.match(source, /useStaffSession\(\)/, "the board must read the real session");
-  assert.match(source, /\{\s*role,\s*name\s*\}/, "the board must take its identity from the session");
-  assert.match(source, /\{name\}/, "the header must print the session's own name");
-  assert.match(source, /getInitials\(name\)/, "initials must come from the shared helper");
+  const chrome = readFileSync(
+    path.join(process.cwd(), "components/staff/operational-ui.tsx"),
+    "utf8",
+  );
+  assert.match(board, /<OperationalTopBar\b/, "the board must use the shared session-aware header");
+  assert.match(chrome, /const \{ name, role, restaurantName \} = useStaffSession\(\)/);
+  assert.match(chrome, /\{name\}/, "the header must print the session's own name");
+  assert.match(chrome, /getInitials\(name\)/, "initials must come from the shared helper");
   // The same route is opened by managers and admins; the label follows the
   // session's role instead of announcing the kitchen to whoever shows up.
-  assert.match(source, /STAFF_ROLE_LABELS\[role\]/, "the role label must follow the real role");
-  assert.doesNotMatch(source, /"Mutfak Şefi"/, "a role was invented for the header");
+  assert.match(chrome, /STAFF_ROLE_LABELS\[role\]/, "the role label must follow the real role");
+  assert.doesNotMatch(board + chrome, /"Mutfak Şefi"/, "a role was invented for the header");
 });
 
 test("the kitchen logs out through the shared control, not its own fetch", () => {
-  const source = readFileSync(
+  const board = readFileSync(
     path.join(process.cwd(), "components/kitchen/kitchen-board.tsx"),
     "utf8",
   );
-  assert.match(source, /import \{ LogoutButton \}/, "logout must reuse the shared component");
-  assert.match(source, /<LogoutButton\b/);
+  const chrome = readFileSync(
+    path.join(process.cwd(), "components/staff/operational-ui.tsx"),
+    "utf8",
+  );
+  assert.match(board, /<OperationalTopBar\b/, "the board must use the shared operational header");
+  assert.match(chrome, /import \{ LogoutButton \}/, "logout must reuse the shared component");
+  assert.match(chrome, /<LogoutButton\b/);
   // Re-implementing the call here would drop the busy state and the
   // repeat-click guard that the shared button already carries.
-  assert.doesNotMatch(source, /api\/staff\/logout/, "the board re-implemented the logout call");
+  assert.doesNotMatch(board, /api\/staff\/logout/, "the board re-implemented the logout call");
 });
 
 test("the shared logout control keeps its repeat-click guard", () => {
@@ -111,7 +125,14 @@ test("the kitchen stays a full page and never becomes a window", () => {
     path.join(process.cwd(), "components/kitchen/kitchen-board.tsx"),
     "utf8",
   );
-  assert.match(source, /<main\b/, "the board must remain a page-level surface");
+  // The page-level <main> now comes from the shared home canvas rather than
+  // from a literal tag on the board.
+  assert.match(source, /<OperationalHome role="kitchen">/, "the board must remain a page-level surface");
+  const operational = readFileSync(
+    path.join(process.cwd(), "components/staff/operational-ui.tsx"),
+    "utf8",
+  );
+  assert.match(operational, /as = "main"/, "the home canvas stopped being a <main>");
   for (const windowDependency of ["CenteredAppWindow", "ModuleWindow", "closeHref"]) {
     assert.ok(!source.includes(windowDependency), `the board pulled in ${windowDependency}`);
   }

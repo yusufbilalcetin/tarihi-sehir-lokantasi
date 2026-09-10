@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import {
   ArrowDownToLine,
   ArrowUpFromLine,
@@ -25,7 +25,18 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { ShiftReportDialog } from "@/components/cashier/shift-report-dialog";
-import { ApiClientError } from "@/lib/api/client";
+import { ApiClientError, isUnknownMutationOutcome, newIdempotencyKey } from "@/lib/api/client";
+import {
+  CashDrawerCount,
+  cashCountRequestPayload,
+  summariseCounts,
+  type CashCountState,
+} from "@/components/cashier/cash-count/cash-drawer-count";
+import {
+  formatMinorAmount,
+  totalForCurrency,
+} from "@/lib/domain/cash-denominations";
+import { minorToDecimal } from "@/lib/domain/money";
 import { cashierShiftApi } from "@/lib/api/endpoints";
 import type { ShiftMoneySummary } from "@/lib/domain/cashier-shift";
 import { formatCurrency } from "@/lib/format";
@@ -107,13 +118,20 @@ export function ShiftPanel({ state, onChanged }: ShiftPanelProps) {
   const shift = state.shift;
   const summary = state.summary;
 
+  /** Survives an in-flight duplicate and any response whose outcome is unknown. */
+  const movementKeyRef = useRef<{ readonly key: string; readonly intent: string } | null>(null);
+
   /**
    * One guard for every mutation: a second click while a request is in flight
    * does nothing. The backend's own concurrency rules are the real protection;
    * this only stops the obvious double submit.
    */
   const submit = useCallback(
-    async (work: () => Promise<unknown>, failure: string): Promise<boolean> => {
+    async (
+      work: () => Promise<unknown>,
+      failure: string,
+      onError?: (error: unknown) => void,
+    ): Promise<boolean> => {
       if (busy) return false;
       setBusy(true);
       try {
@@ -122,6 +140,7 @@ export function ShiftPanel({ state, onChanged }: ShiftPanelProps) {
         return true;
       } catch (error) {
         toast.error(errorMessage(error, failure));
+        onError?.(error);
         // A conflict means this screen was acting on a drawer state that has
         // already moved on — another till, another device, or a shift closed
         // in between. Re-reading it turns a dead end into the current truth.
@@ -279,11 +298,35 @@ export function ShiftPanel({ state, onChanged }: ShiftPanelProps) {
         busy={busy}
         onOpenChange={setMovementOpen}
         onSubmit={async (amount, reason, note) => {
+          // The payload identifies the user's intent. An identical retry keeps
+          // its key even after an unknown network result; changing any field
+          // mints a new key and therefore represents a corrected/new movement.
+          const intent = JSON.stringify([shift.id, movementType, amount, reason, note ?? null]);
+          if (!movementKeyRef.current || movementKeyRef.current.intent !== intent) {
+            movementKeyRef.current = { key: newIdempotencyKey(), intent };
+          }
+          const idempotencyKey = movementKeyRef.current.key;
           const done = await submit(
-            () => cashierShiftApi.recordMovement(shift.id, { type: movementType, amount, reason, note }),
+            () =>
+              cashierShiftApi.recordMovement(
+                shift.id,
+                { type: movementType, amount, reason, note },
+                idempotencyKey,
+              ),
             "Kasa hareketi kaydedilemedi.",
+            (error) => {
+              if (
+                !isUnknownMutationOutcome(error) &&
+                movementKeyRef.current?.key === idempotencyKey
+              ) {
+                movementKeyRef.current = null;
+              }
+            },
           );
           if (done) {
+            if (movementKeyRef.current?.key === idempotencyKey) {
+              movementKeyRef.current = null;
+            }
             setMovementOpen(false);
             toast.success(movementType === "CASH_IN" ? "Nakit girişi kaydedildi" : "Nakit çıkışı kaydedildi");
           }
@@ -332,8 +375,21 @@ function ClosedTill({
   submit: (work: () => Promise<unknown>, failure: string) => Promise<boolean>;
 }) {
   const [registerId, setRegisterId] = useState<string>(registers[0]?.id ?? "");
-  const [openingCash, setOpeningCash] = useState("0.00");
-  const normalized = useMemo(() => normalizeMoney(openingCash), [openingCash]);
+  /**
+   * The counted drawer, keyed by currency and face value. One object for all
+   * three currencies, held here rather than inside the tabs, so switching from
+   * lira to euro and back never loses a count — and so a failed request leaves
+   * every number the cashier typed exactly where it was.
+   */
+  const [counts, setCounts] = useState<CashCountState>({});
+  const summary = useMemo(() => summariseCounts(counts), [counts]);
+  const tryTotalMinor = totalForCurrency(summary.totals, "TRY");
+  /**
+   * The opening float the rest of the system reads is the counted lira total.
+   * The server recomputes it from the same counts and does not trust this — it
+   * is sent so an older server that ignores `cashCounts` still opens correctly.
+   */
+  const normalized = minorToDecimal(tryTotalMinor);
   /**
    * The select stores and submits the register id; this is what the cashier
    * reads instead of it. Without the map Base UI prints the selected value
@@ -363,17 +419,44 @@ function ClosedTill({
           </p>
         ) : (
           <form
-            className="grid gap-3 sm:grid-cols-[1fr_10rem_auto] sm:items-end"
+            className="space-y-4"
             onSubmit={async (event) => {
               event.preventDefault();
               if (!normalized || !registerId) return;
+              // A short confirmation, because this is the figure the day is
+              // reconciled against. The counts survive a "no".
+              const lines = summary.totals
+                .map((total) => formatMinorAmount(total.totalMinor, total.currency))
+                .join(" · ");
+              if (
+                !window.confirm(
+                  `Kasa şu sayımla açılacak:
+
+${lines || "Boş kasa"}
+
+Devam edilsin mi?`,
+                )
+              ) {
+                return;
+              }
               const done = await submit(
-                () => cashierShiftApi.open({ cashRegisterId: registerId, openingCash: normalized }),
+                () =>
+                  cashierShiftApi.open({
+                    cashRegisterId: registerId,
+                    openingCash: normalized,
+                    cashCounts: cashCountRequestPayload(counts),
+                  }),
                 "Kasa açılamadı.",
               );
-              if (done) toast.success("Kasa açıldı");
+              // Only a confirmed server response clears the counted drawer; a
+              // failure leaves every entered number in place to retry.
+              if (done) {
+                setCounts({});
+                toast.success("Kasa açıldı");
+              }
             }}
           >
+            <div className="grid gap-3 sm:grid-cols-[1fr_11rem] sm:items-end">
             <div>
               <label className="text-xs font-semibold text-muted-foreground" htmlFor="shift-register">
                 Kasa
@@ -396,23 +479,25 @@ function ClosedTill({
               </Select>
             </div>
             <div>
-              <label className="text-xs font-semibold text-muted-foreground" htmlFor="opening-cash">
-                Açılış Nakdi
-              </label>
-              <Input
-                id="opening-cash"
-                inputMode="decimal"
-                className="mt-1 h-11 text-right tabular-nums"
-                value={openingCash}
-                aria-invalid={normalized === null}
-                onChange={(event) => setOpeningCash(event.target.value)}
-              />
+              <span className="text-xs font-semibold text-muted-foreground">Açılış Nakdi (TL)</span>
+              {/* Derived from the count, never typed: a cashier who counts a
+                  drawer and then types a different number has created a
+                  discrepancy before the day has started. */}
+              <p
+                className="mt-1 flex h-11 items-center justify-end rounded-lg border border-border bg-muted/40 px-3 text-base font-extrabold tabular-nums text-burgundy"
+                aria-live="polite"
+              >
+                {formatMinorAmount(tryTotalMinor, "TRY")}
+              </p>
             </div>
+            </div>
+            <CashDrawerCount counts={counts} onChange={setCounts} disabled={busy} />
+
             <Button
               type="submit"
               size="lg"
-              className="h-11 bg-olive font-bold text-[#FFFDF8] hover:bg-olive/90"
-              disabled={busy || !normalized || !registerId}
+              className="h-12 w-full bg-olive text-base font-bold text-[#FFFDF8] hover:bg-olive/90"
+              disabled={busy || !registerId}
               aria-busy={busy}
             >
               Kasayı Aç

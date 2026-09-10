@@ -7,7 +7,7 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Dialog } from "@/components/ui/dialog";
 import { WindowDialogContent } from "@/components/ui/window-dialog";
-import { ApiClientError } from "@/lib/api/client";
+import { userErrorMessage } from "@/lib/api/error-message";
 import { adminApi } from "@/lib/api/endpoints";
 import { cn } from "@/lib/utils";
 
@@ -45,7 +45,7 @@ export function QrAccessToggle({
         ? "QR menü durdurulamadı."
         : "QR menü etkinleştirilemedi.";
       toast.error(fallback, {
-        description: error instanceof ApiClientError ? error.message : undefined,
+        description: userErrorMessage(error, fallback),
       });
     } finally {
       setPending(false);

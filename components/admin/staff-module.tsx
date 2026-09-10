@@ -9,8 +9,8 @@ import { StaffManager } from "@/components/admin/staff-manager";
 export function StaffManagerModule() {
   return (
     <AdminModuleWindow
-      title="Personel"
-      description="Personel hesaplarını, rollerini ve durumlarını yönet."
+      title="Personel Listesi"
+      description="Tüm personelinizi görüntüleyin ve yönetin."
       icon={UsersRound}
       size="xl"
     >

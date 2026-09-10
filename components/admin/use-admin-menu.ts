@@ -1,9 +1,10 @@
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
 
 import { ApiClientError } from "@/lib/api/client";
+import { userErrorMessage } from "@/lib/api/error-message";
 import { adminApi } from "@/lib/api/endpoints";
 import { useApiResource } from "@/lib/hooks/use-api-resource";
 import { useStaffRealtime, type StaffRealtimeStatus } from "@/lib/realtime/use-staff-realtime";
@@ -24,6 +25,8 @@ export function adminProductStatus(product: AdminProductResult): ProductStatus {
 export interface AdminMenuState {
   readonly categories: readonly AdminCategoryResult[];
   readonly products: readonly AdminProductResult[];
+  /** False when this deployment has no translation provider configured. */
+  readonly autoTranslateAvailable: boolean;
   /** Fixture-shaped projections so the existing admin tables render unchanged. */
   readonly categoryViews: readonly Category[];
   readonly productViews: readonly Product[];
@@ -40,6 +43,7 @@ export interface AdminMenuState {
 
 export function useAdminMenu(): AdminMenuState {
   const [saving, setSaving] = useState(false);
+  const savingRef = useRef(false);
   const loadMenu = useCallback((signal: AbortSignal) => adminApi.menu(signal), []);
   const resource = useApiResource(loadMenu, { pollMs: ADMIN_MENU_POLL_MS });
   const { refetch } = resource;
@@ -51,6 +55,7 @@ export function useAdminMenu(): AdminMenuState {
   // Stable empty references keep the memo dependencies from changing per render.
   const categories = resource.data?.categories ?? EMPTY_CATEGORIES;
   const products = resource.data?.products ?? EMPTY_PRODUCTS;
+  const autoTranslateAvailable = resource.data?.autoTranslateAvailable ?? false;
 
   const categoryViews = useMemo<Category[]>(
     () =>
@@ -87,7 +92,8 @@ export function useAdminMenu(): AdminMenuState {
 
   const run = useCallback(
     async <TResult>(work: () => Promise<TResult>, successMessage: string) => {
-      if (saving) return null;
+      if (savingRef.current) return null;
+      savingRef.current = true;
       setSaving(true);
       try {
         const result = await work();
@@ -95,18 +101,20 @@ export function useAdminMenu(): AdminMenuState {
         toast.success(successMessage);
         return result;
       } catch (error) {
-        toast.error(error instanceof ApiClientError ? error.message : "İşlem tamamlanamadı.");
+        toast.error(userErrorMessage(error));
         return null;
       } finally {
+        savingRef.current = false;
         setSaving(false);
       }
     },
-    [refetch, saving],
+    [refetch],
   );
 
   return {
     categories,
     products,
+    autoTranslateAvailable,
     categoryViews,
     productViews,
     loading: resource.loading,

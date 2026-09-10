@@ -1,18 +1,8 @@
 import type { Metadata, Viewport } from "next";
-import { Lora, Manrope } from "next/font/google";
+import type { ReactNode } from "react";
 import { Toaster } from "@/components/ui/sonner";
 import { MotionPlatform } from "@/components/shared/motion-platform";
 import "./globals.css";
-
-const manrope = Manrope({
-  variable: "--font-manrope",
-  subsets: ["latin"],
-});
-
-const lora = Lora({
-  variable: "--font-lora",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   title: {
@@ -31,7 +21,16 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+/**
+ * Stated rather than inferred from Next's generated types.
+ *
+ * `LayoutProps<"/">` only exists once `.next/types` has been written, so a
+ * checkout that has never been built — a release worktree, a fresh clone, CI
+ * before the build step — fails `tsc --noEmit` on this line alone. The two
+ * other layouts in this application already name the prop, and this one now
+ * matches them.
+ */
+export default function RootLayout({ children }: { readonly children: ReactNode }) {
   return (
     // The QR menu sets `data-sehir-intro` on <html> from a blocking script so a
     // returning guest never sees the splash again. React did not render that
@@ -40,7 +39,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="tr"
       suppressHydrationWarning
-      className={`${manrope.variable} ${lora.variable} h-full antialiased`}
+      className="h-full antialiased"
     >
       <body className="min-h-full text-foreground">
         <MotionPlatform />

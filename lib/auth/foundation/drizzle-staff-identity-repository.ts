@@ -37,6 +37,7 @@ export class DrizzleStaffIdentityRepository implements StaffIdentityRepository {
         restaurantName: restaurants.name,
         restaurantSlug: restaurants.slug,
         restaurantIsActive: restaurants.isActive,
+        restaurantTimezone: restaurants.timezone,
       })
       .from(staffProfiles)
       .innerJoin(restaurants, eq(restaurants.id, staffProfiles.restaurantId))
@@ -69,6 +70,7 @@ export class DrizzleStaffIdentityRepository implements StaffIdentityRepository {
         name: row.restaurantName,
         slug: row.restaurantSlug,
         isActive: row.restaurantIsActive,
+        timezone: row.restaurantTimezone,
       },
     };
   }

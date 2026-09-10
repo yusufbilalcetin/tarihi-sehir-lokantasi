@@ -54,6 +54,8 @@ const MUST_NEVER_AUTO_DELETE = [
   "cash_registers",
   "cashier_shifts",
   "cash_drawer_movements",
+  // The counted drawer behind an opening float and a closing variance.
+  "cashier_shift_cash_counts",
   // Phase 8C printing. Print history is the evidence for what reached a
   // printer, including every reprint and its reason.
   "printer_agents",
@@ -78,8 +80,9 @@ test("every public table is classified exactly once", () => {
   // The count is asserted deliberately: a new table must be classified, not
   // silently inherit a default. Phase 7F shipped 20; Phase 8A added three and
   // Phase 8C five more for printing; Phase 38 adds 29 ERP tables and Phase 39
-  // the fulfillment line items.
-  assert.equal(schemaTables.length, 58, `expected 58 tables, found ${schemaTables.length}`);
+  // the fulfillment line items; the multi-currency drawer count adds one more;
+  // catalog localization adds two additive master-data tables.
+  assert.equal(schemaTables.length, 61, `expected 61 tables, found ${schemaTables.length}`);
   assert.equal(
     DATA_RETENTION.length,
     RETENTION_BY_TABLE.size,

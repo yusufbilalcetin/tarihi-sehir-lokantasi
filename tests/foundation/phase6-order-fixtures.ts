@@ -1,6 +1,7 @@
 import type { RestaurantPrincipal } from "../../lib/domain/restaurant-scope";
 import type { OrderItemStatus, OrderStatus } from "../../lib/domain/status";
 import type {
+  AdvanceOrderItemsInput,
   CancelOrderItemInput,
   IdempotencyClaim,
   InsertAuditLogInput,
@@ -56,6 +57,7 @@ export interface OrderFixtureState {
   insertedItems: InsertOrderItemRecordInput[];
   amountUpdates: UpdateOrderAmountsInput[];
   statusUpdates: UpdateOrderStatusInput[];
+  advancedItems: AdvanceOrderItemsInput[];
   cancelledItems: CancelOrderItemInput[];
   voidedItems: VoidOrderItemInput[];
   events: InsertOrderEventInput[];
@@ -119,6 +121,7 @@ export function state(overrides: Partial<OrderFixtureState> = {}): OrderFixtureS
     fulfillmentRequests: [],
     amountUpdates: [],
     statusUpdates: [],
+    advancedItems: [],
     cancelledItems: [],
     voidedItems: [],
     events: [],
@@ -210,9 +213,6 @@ export class FakeOrderRepository implements OrderRepository {
         state.insertedItems.push(...inputs);
       },
       async markTableWaiting() {},
-      async findOrderForUpdate() {
-        return state.order;
-      },
       async findOrderWithItemsForUpdate(restaurantId, orderId) {
         return state.order?.restaurantId === restaurantId && state.order.id === orderId
           ? state.order
@@ -232,6 +232,22 @@ export class FakeOrderRepository implements OrderRepository {
         if (state.itemCancelFails) return false;
         state.voidedItems.push(input);
         return true;
+      },
+      // Mirrors the single UPDATE ... WHERE status IN (...) the repository runs:
+      // only the listed statuses move, everything else is left exactly as it is.
+      async advanceOrderItems(input) {
+        state.advancedItems.push(input);
+        if (!state.order) return [];
+        const moved: string[] = [];
+        state.order = {
+          ...state.order,
+          items: state.order.items.map((item) => {
+            if (!input.currentStatuses.includes(item.status)) return item;
+            moved.push(item.id);
+            return { ...item, status: input.nextStatus };
+          }),
+        };
+        return moved;
       },
       async updateOrderStatus(input) {
         state.statusUpdates.push(input);

@@ -367,13 +367,24 @@ export function isOrderStageCompatibleWithItemTransition(
   next: OrderItemStatus,
 ): boolean {
   if (current === "PENDING" && next === "PREPARING") {
-    return orderStatus === "CONFIRMED" || orderStatus === "PREPARING";
+    // Not the matching stages only. Adding a line to a finished ticket does not
+    // move the order back, so a late line sits PENDING under a READY — or a
+    // SERVED — order, and the kitchen has no whole-order command out of those
+    // stages. Refusing here would strand that line for ever. Starting it
+    // re-derives the parent back to PREPARING, which is where the work is.
+    return (
+      orderStatus === "CONFIRMED" ||
+      orderStatus === "PREPARING" ||
+      orderStatus === "READY" ||
+      orderStatus === "SERVED"
+    );
   }
   if (current === "PREPARING" && next === "READY") {
     return orderStatus === "PREPARING" || orderStatus === "READY";
   }
   if (current === "READY" && next === "SERVED") {
-    return orderStatus === "READY" || orderStatus === "SERVED";
+    // A plated line can leave the pass before the rest of the ticket is ready.
+    return orderStatus === "PREPARING" || orderStatus === "READY" || orderStatus === "SERVED";
   }
   // A correction is allowed wherever the order is still open in the kitchen or
   // on the floor. It is refused on a closed order by the caller, which is what
@@ -389,6 +400,57 @@ export function isOrderStageCompatibleWithItemTransition(
   return false;
 }
 
+/** A line that is still on the bill: not cancelled before it was made, not written off. */
+export function isLiveOrderItem(item: { readonly status: OrderItemStatus }): boolean {
+  return item.status !== "CANCELLED" && item.status !== "VOIDED";
+}
+
+/**
+ * What a whole-order command has to do to the lines behind it.
+ *
+ * The order row is a summary of its items, so a command that moves the summary
+ * on its own makes the order lie: READY with food still on the stove, SERVED
+ * with a line the pass never started — and the lines are then stranded, because
+ * an item may not run ahead of its parent. So the command carries its lines
+ * with it (`advance`) and is refused outright when a line is too far behind to
+ * be swept up (`blockedBy`): a late line the kitchen has never touched is not
+ * made ready by a cook finishing the earlier round.
+ *
+ * Only kitchen and floor stages appear here. COMPLETED is a payment outcome and
+ * CANCELLED a financial correction; neither is preparation, and neither may
+ * quietly mark food as made.
+ */
+export interface OrderStageItemCascade {
+  readonly to: OrderItemStatus;
+  readonly advance: readonly OrderItemStatus[];
+  readonly blockedBy: readonly OrderItemStatus[];
+}
+
+export const ORDER_STAGE_ITEM_CASCADE: Partial<Record<OrderStatus, OrderStageItemCascade>> = {
+  PREPARING: { to: "PREPARING", advance: ["PENDING"], blockedBy: [] },
+  READY: { to: "READY", advance: ["PREPARING"], blockedBy: ["PENDING"] },
+  SERVED: { to: "SERVED", advance: ["READY"], blockedBy: ["PENDING", "PREPARING"] },
+};
+
+export function orderStageItemCascade(next: OrderStatus): OrderStageItemCascade | null {
+  return ORDER_STAGE_ITEM_CASCADE[next] ?? null;
+}
+
+/**
+ * The lines that stop a whole-order command from being true.
+ *
+ * The service refuses on these; the kitchen board hides the button over them,
+ * so a cook is never offered an action the API is certain to reject.
+ */
+export function itemsBlockingOrderStage<TItem extends { readonly status: OrderItemStatus }>(
+  next: OrderStatus,
+  items: readonly TItem[],
+): readonly TItem[] {
+  const cascade = orderStageItemCascade(next);
+  if (!cascade) return [];
+  return items.filter((item) => isLiveOrderItem(item) && cascade.blockedBy.includes(item.status));
+}
+
 /**
  * Which kitchen column an order belongs in, derived from its lines.
  *
@@ -401,12 +463,25 @@ export function isOrderStageCompatibleWithItemTransition(
 export function deriveKitchenStage(
   items: readonly { readonly status: OrderItemStatus }[],
 ): "PENDING" | "PREPARING" | "READY" | null {
-  const live = items.filter(
-    (item) => item.status !== "CANCELLED" && item.status !== "VOIDED",
-  );
+  const live = items.filter(isLiveOrderItem);
   const outstanding = live.filter((item) => item.status !== "SERVED");
   if (outstanding.length === 0) return null;
   if (outstanding.some((item) => item.status === "PENDING")) return "PENDING";
   if (outstanding.some((item) => item.status === "PREPARING")) return "PREPARING";
   return "READY";
+}
+
+/** Operational progress only: preparation/service never settles a payment. */
+export function deriveOrderStatusFromItems(
+  current: OrderStatus,
+  items: readonly { readonly status: OrderItemStatus }[],
+): OrderStatus {
+  if (current === "NEW" || current === "COMPLETED" || current === "CANCELLED") return current;
+  const live = items.filter(isLiveOrderItem);
+  // An empty bill is handled by the explicit cancellation flow, not preparation.
+  if (!live.length) return current;
+  if (live.every((item) => item.status === "SERVED")) return "SERVED";
+  if (live.every((item) => item.status === "READY" || item.status === "SERVED")) return "READY";
+  if (live.some((item) => item.status !== "PENDING")) return "PREPARING";
+  return "CONFIRMED";
 }

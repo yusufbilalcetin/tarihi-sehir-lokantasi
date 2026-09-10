@@ -2,30 +2,40 @@
 
 import { useCallback, useMemo, useState, type FormEvent } from "react";
 import {
+  CircleCheck,
+  CirclePause,
   KeyRound,
   Mail,
   Plus,
-  Search,
   ShieldAlert,
   ShieldCheck,
+  UserCheck,
   UserRoundCog,
+  UserX,
   UsersRound,
 } from "lucide-react";
 import { toast } from "sonner";
 import {
+  AdminFilterButton,
+  AdminKpi,
   AdminPageHeader,
   AdminPanel,
-  DataToolbar,
+  AdminSearchInput,
+  AdminSegmentedControl,
   Field,
-  NativeSelect,
-  SummaryChip,
 } from "@/components/admin/admin-ui";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
+import {
+  AdminPagination,
+  AdminStatusBadge,
+  PersonnelActionMenu,
+  PersonnelAvatar,
+} from "@/components/admin/personnel-ui";
+import { EmptyState, ErrorState, LoadingState } from "@/components/shared/data-states";
 import { Button } from "@/components/ui/button";
 import { Dialog } from "@/components/ui/dialog";
 import { WindowDialogContent } from "@/components/ui/window-dialog";
 import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import {
   Sheet,
   SheetContent,
@@ -35,7 +45,7 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { useStaffSession } from "@/components/staff/staff-session-provider";
-import { ApiClientError } from "@/lib/api/client";
+import { userErrorMessage } from "@/lib/api/error-message";
 import { adminApi } from "@/lib/api/endpoints";
 import { PANEL_ROLE_ACCESS } from "@/lib/auth/role-access";
 import {
@@ -46,7 +56,6 @@ import {
 } from "@/lib/domain/staff-accounts";
 import { USER_ROLES, type UserRole } from "@/lib/domain/status";
 import { useApiResource } from "@/lib/hooks/use-api-resource";
-import { getInitials } from "@/lib/format";
 
 /**
  * Staff accounts.
@@ -95,6 +104,7 @@ export function StaffManager() {
   const [page, setPage] = useState(1);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [filtersOpen, setFiltersOpen] = useState(false);
   const [confirmDeactivate, setConfirmDeactivate] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
   const [newName, setNewName] = useState("");
@@ -143,7 +153,7 @@ export function StaffManager() {
       toast.success(successMessage);
       return true;
     } catch (error) {
-      toast.error(error instanceof ApiClientError ? error.message : "İşlem tamamlanamadı.");
+      toast.error(userErrorMessage(error));
       return false;
     } finally {
       setSaving(false);
@@ -179,7 +189,7 @@ export function StaffManager() {
         }
       })
       .catch((error: unknown) =>
-        toast.error(error instanceof ApiClientError ? error.message : "İşlem tamamlanamadı."),
+        toast.error(userErrorMessage(error)),
       )
       .finally(() => setSaving(false));
   }
@@ -220,12 +230,12 @@ export function StaffManager() {
   return (
     <div className="space-y-6">
       <AdminPageHeader
-        title="Personel"
-        description="Çalışan hesaplarını, şifrelerini ve hangi ekranları açabileceklerini yönetin."
+        title="Personel Listesi"
+        description="Tüm personelinizi görüntüleyin ve yönetin."
         actions={
           canManage ? (
-            <Button className="h-10" onClick={openNew}>
-              <Plus /> Personel Ekle
+            <Button onClick={openNew}>
+              <Plus aria-hidden="true" /> Personel Ekle
             </Button>
           ) : null
         }
@@ -238,205 +248,208 @@ export function StaffManager() {
         </p>
       ) : null}
 
-      {resource.error ? (
-        <p
-          role="alert"
-          className="rounded-xl border border-destructive/30 bg-destructive/5 px-4 py-3 text-sm font-semibold text-destructive"
-        >
-          Personel listesi yüklenemedi: {resource.error.message}
+      {resource.data ? <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+        <AdminKpi label="Eşleşen Personel" value={total.toLocaleString("tr-TR")} icon={UsersRound} />
+        <AdminKpi
+          label="Bu Sayfada Aktif"
+          value={staff.filter((user) => user.isActive && !user.archived).length.toLocaleString("tr-TR")}
+          icon={CircleCheck}
+          tone="success"
+        />
+        <AdminKpi
+          label="Bu Sayfada Pasif"
+          value={staff.filter((user) => !user.isActive || user.archived).length.toLocaleString("tr-TR")}
+          icon={CirclePause}
+          tone="warning"
+        />
+        <AdminKpi
+          label="Giriş Hesabı Bağlı"
+          value={staff.filter((user) => user.linkedToAuth).length.toLocaleString("tr-TR")}
+          icon={UserCheck}
+          helper="Görüntülenen sayfa"
+          tone="info"
+        />
+      </div> : null}
+
+      {resource.error && resource.data ? (
+        <p role="alert" className="rounded-xl border border-status-warning/20 bg-status-warning-tint/45 px-4 py-3 text-sm">
+          Liste yenilenemedi; son alınan veriler gösteriliyor. {resource.error.message}
         </p>
       ) : null}
 
-      <div className="flex flex-wrap gap-2">
-        <SummaryChip label="Toplam" value={total} />
-        <SummaryChip label="Aktif yönetici" value={activeAdminCount} />
-        <SummaryChip
-          label="Girişe bağlı"
-          value={staff.filter((user) => user.linkedToAuth).length}
+      <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+        <AdminSegmentedControl
+          label="Personel rolü"
+          value={role}
+          onValueChange={(nextRole) => {
+            setRole(nextRole as "all" | UserRole);
+            setPage(1);
+          }}
+          segments={[
+            { value: "all", label: "Tümü" },
+            ...USER_ROLES.map((value) => ({ value, label: STAFF_ROLE_LABELS[value] })),
+          ]}
         />
+        <div className="flex flex-col gap-2 min-[430px]:flex-row">
+          <AdminSearchInput
+            value={query}
+            onValueChange={(value) => {
+              setQuery(value);
+              setPage(1);
+            }}
+            placeholder="Personel ara…"
+            label="Personel ara"
+            className="min-[430px]:w-64"
+          />
+          <AdminFilterButton
+            onClick={() => setFiltersOpen((open) => !open)}
+            activeCount={status === "all" ? 0 : 1}
+          />
+        </div>
       </div>
 
-      <AdminPanel contentClassName="p-0 sm:p-0">
-        <DataToolbar>
-          <div className="relative min-w-0 flex-1 sm:min-w-64">
-            <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
-            <Input
-              value={query}
-              onChange={(event) => {
-                setQuery(event.target.value);
-                setPage(1);
-              }}
-              className="h-10 bg-background pl-9"
-              placeholder="Ad, e-posta veya kod ara"
-              aria-label="Personel ara"
-            />
+      {filtersOpen ? (
+        <AdminPanel title="Filtreler" description="Listeyi gerçek hesap durumuna göre daraltın.">
+          <div className="max-w-xs">
+            <label className="grid gap-1.5 text-[13px] font-medium" htmlFor="staff-status-filter">
+              Durum
+              <Select
+                items={{ all: "Tüm durumlar", ACTIVE: "Aktif", INACTIVE: "Pasif" }}
+                value={status}
+                onValueChange={(value) => {
+                  setStatus((value ?? "all") as "all" | "ACTIVE" | "INACTIVE");
+                  setPage(1);
+                }}
+              >
+                <SelectTrigger id="staff-status-filter"><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Tüm durumlar</SelectItem>
+                  <SelectItem value="ACTIVE">Aktif</SelectItem>
+                  <SelectItem value="INACTIVE">Pasif</SelectItem>
+                </SelectContent>
+              </Select>
+            </label>
           </div>
-          <NativeSelect
-            value={role}
-            onChange={(event) => {
-              setRole(event.target.value as "all" | UserRole);
-              setPage(1);
-            }}
-            className="sm:w-48"
-            aria-label="Rol filtresi"
-          >
-            <option value="all">Tüm roller</option>
-            {USER_ROLES.map((option) => (
-              <option key={option} value={option}>
-                {STAFF_ROLE_LABELS[option]}
-              </option>
-            ))}
-          </NativeSelect>
-          <NativeSelect
-            value={status}
-            onChange={(event) => {
-              setStatus(event.target.value as "all" | "ACTIVE" | "INACTIVE");
-              setPage(1);
-            }}
-            className="sm:w-40"
-            aria-label="Durum filtresi"
-          >
-            <option value="all">Tüm durumlar</option>
-            <option value="ACTIVE">Aktif</option>
-            <option value="INACTIVE">Pasif</option>
-          </NativeSelect>
-        </DataToolbar>
+        </AdminPanel>
+      ) : null}
 
-        {staff.length ? (
-          <div className="divide-y">
+      {resource.error && !resource.data ? (
+        <ErrorState
+          title="Personel listesi yüklenemedi"
+          description={resource.error.message}
+          onRetry={() => void resource.refetch()}
+        />
+      ) : resource.loading && !resource.data ? (
+        <LoadingState rows={6} />
+      ) : staff.length ? (
+        <AdminPanel contentClassName="p-0 sm:p-0">
+          {/* `relative` anchors the action column's absolutely positioned
+              `.sr-only` header inside the scroller; without it the span escaped
+              to the initial containing block and pushed the document 33px wide
+              at 768. */}
+          <div className="relative hidden overflow-x-auto md:block">
+            <table className="w-full min-w-[760px] text-left text-sm">
+              <thead>
+                <tr className="border-b border-border bg-muted/35 text-xs text-muted-foreground">
+                  <th scope="col" className="px-5 py-3 font-medium">Personel</th>
+                  <th scope="col" className="px-4 py-3 font-medium">Pozisyon</th>
+                  <th scope="col" className="px-4 py-3 font-medium">Durum</th>
+                  <th scope="col" className="px-4 py-3 font-medium">Son Giriş</th>
+                  <th scope="col" className="px-4 py-3 font-medium">İşe Başlama</th>
+                  <th scope="col" className="w-14 px-4 py-3"><span className="sr-only">İşlemler</span></th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-border">
             {staff.map((user) => {
               const active = user.isActive && !user.archived;
               const editable = mayEdit(user);
               const lastAdmin = isLastAdmin(user);
               return (
-                <div
-                  key={user.id}
-                  className="grid items-center gap-4 p-4 transition-colors hover:bg-muted/20 sm:grid-cols-[minmax(0,1.3fr)_150px_150px_110px_auto] sm:px-5"
-                >
-                  <button
-                    type="button"
-                    onClick={() => setSelectedId(user.id)}
-                    className="flex min-w-0 items-center gap-3 text-left"
-                  >
-                    <Avatar size="lg">
-                      <AvatarFallback className="bg-olive text-xs font-extrabold text-cream">
-                        {getInitials(user.name)}
-                      </AvatarFallback>
-                    </Avatar>
-                    <span className="min-w-0">
-                      <span className="block truncate text-sm font-extrabold">{user.name}</span>
-                      <span className="mt-0.5 block truncate text-xs text-muted-foreground">
-                        {user.email ?? "E-posta yok"}
+                <tr key={user.id} className="hover:bg-muted/20">
+                  <td className="px-5 py-3.5">
+                    <button type="button" onClick={() => setSelectedId(user.id)} className="flex min-w-0 items-center gap-3 text-left focus-visible:rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/30">
+                      <PersonnelAvatar name={user.name} size="lg" />
+                      <span className="min-w-0">
+                        <span className="block truncate font-semibold text-foreground">{user.name}</span>
+                        <span className="mt-0.5 block max-w-64 truncate text-xs text-muted-foreground">{user.email ?? user.loginIdentifier ?? "İkincil kimlik yok"}</span>
                       </span>
-                    </span>
-                  </button>
-                  <div>
-                    <Badge variant="outline" className="bg-background">
-                      {STAFF_ROLE_LABELS[user.role]}
-                    </Badge>
+                    </button>
+                  </td>
+                  <td className="px-4 py-3.5">
+                    <span className="font-medium">{STAFF_ROLE_LABELS[user.role]}</span>
                     {lastAdmin ? (
                       <span className="mt-1 flex items-center gap-1 text-xs font-semibold text-status-warning">
                         <ShieldAlert className="size-3" aria-hidden="true" /> Son yönetici
                       </span>
                     ) : null}
+                  </td>
+                  <td className="px-4 py-3.5"><AdminStatusBadge label={active ? "Aktif" : "Pasif"} tone={active ? "success" : "neutral"} /></td>
+                  <td className="px-4 py-3.5 text-xs tabular-nums text-muted-foreground">{moment(user.lastSignInAt)}</td>
+                  <td className="px-4 py-3.5 text-xs tabular-nums text-muted-foreground">{moment(user.createdAt)}</td>
+                  <td className="px-4 py-3.5 text-right">
+                    <PersonnelActionMenu
+                      label={`${user.name} işlemleri`}
+                      actions={[
+                        { label: "Detayları aç", icon: <UserRoundCog className="size-4" aria-hidden="true" />, onSelect: () => setSelectedId(user.id) },
+                        ...(!active ? [{ label: "Aktifleştir", icon: <UserCheck className="size-4" aria-hidden="true" />, disabled: !editable || saving, onSelect: () => setActive(user.id, true) }] : []),
+                        ...(active ? [{ label: "Pasife al", icon: <UserX className="size-4" aria-hidden="true" />, disabled: !editable || saving || lastAdmin || isSelf(user.id), danger: true, onSelect: () => setConfirmDeactivate(user.id) }] : []),
+                      ]}
+                    />
+                  </td>
+                </tr>
+              );
+            })}
+              </tbody>
+            </table>
+          </div>
+          <div className="divide-y divide-border md:hidden">
+            {staff.map((user) => {
+              const active = user.isActive && !user.archived;
+              const editable = mayEdit(user);
+              const lastAdmin = isLastAdmin(user);
+              return (
+                <article key={user.id} className="p-4">
+                  <div className="flex items-start gap-3">
+                    <PersonnelAvatar name={user.name} size="lg" />
+                    <div className="min-w-0 flex-1">
+                      <button type="button" className="block max-w-full text-left" onClick={() => setSelectedId(user.id)}>
+                        <span className="block truncate text-sm font-semibold">{user.name}</span>
+                        <span className="mt-0.5 block truncate text-xs text-muted-foreground">{user.email ?? user.loginIdentifier ?? "İkincil kimlik yok"}</span>
+                      </button>
+                      <div className="mt-2 flex flex-wrap items-center gap-2">
+                        <span className="text-xs font-medium text-muted-foreground">{STAFF_ROLE_LABELS[user.role]}</span>
+                        <AdminStatusBadge label={active ? "Aktif" : "Pasif"} tone={active ? "success" : "neutral"} />
+                      </div>
+                    </div>
+                    <PersonnelActionMenu
+                      label={`${user.name} işlemleri`}
+                      actions={[
+                        { label: "Detayları aç", icon: <UserRoundCog className="size-4" aria-hidden="true" />, onSelect: () => setSelectedId(user.id) },
+                        ...(!active ? [{ label: "Aktifleştir", icon: <UserCheck className="size-4" aria-hidden="true" />, disabled: !editable || saving, onSelect: () => setActive(user.id, true) }] : []),
+                        ...(active ? [{ label: "Pasife al", icon: <UserX className="size-4" aria-hidden="true" />, disabled: !editable || saving || lastAdmin || isSelf(user.id), danger: true, onSelect: () => setConfirmDeactivate(user.id) }] : []),
+                      ]}
+                    />
                   </div>
-                  <div className="text-xs">
-                    <p className="font-bold">Son giriş</p>
-                    <p className="mt-0.5 tabular-nums text-muted-foreground">
-                      {moment(user.lastSignInAt)}
-                    </p>
-                  </div>
-                  <div className="text-xs">
-                    <Badge
-                      variant="outline"
-                      className={active ? "text-status-success" : "text-muted-foreground"}
-                    >
-                      {active ? "Aktif" : "Pasif"}
-                    </Badge>
-                    <p className="mt-1 tabular-nums text-muted-foreground">
-                      {moment(user.createdAt)}
-                    </p>
-                  </div>
-                  <div className="flex flex-wrap justify-end gap-2">
-                    {editable && active ? (
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        disabled={saving || lastAdmin || isSelf(user.id)}
-                        title={
-                          lastAdmin
-                            ? "Restoranın son aktif yöneticisi pasifleştirilemez."
-                            : isSelf(user.id)
-                              ? "Kendi hesabınızı pasifleştiremezsiniz."
-                              : undefined
-                        }
-                        onClick={() => setConfirmDeactivate(user.id)}
-                      >
-                        Pasife Al
-                      </Button>
-                    ) : null}
-                    {editable && !active ? (
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        disabled={saving}
-                        onClick={() => setActive(user.id, true)}
-                      >
-                        Aktifleştir
-                      </Button>
-                    ) : null}
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => setSelectedId(user.id)}
-                    >
-                      <UserRoundCog /> Detay
-                    </Button>
-                  </div>
-                </div>
+                  <dl className="mt-3 grid grid-cols-2 gap-3 rounded-lg bg-muted/45 p-3 text-xs">
+                    <div><dt className="text-muted-foreground">Son giriş</dt><dd className="mt-1 font-medium tabular-nums">{moment(user.lastSignInAt)}</dd></div>
+                    <div><dt className="text-muted-foreground">İşe başlama</dt><dd className="mt-1 font-medium tabular-nums">{moment(user.createdAt)}</dd></div>
+                  </dl>
+                </article>
               );
             })}
           </div>
-        ) : (
-          <div className="grid min-h-64 place-items-center p-8 text-center">
-            <div>
-              <UsersRound className="mx-auto size-9 text-muted-foreground" />
-              <p className="mt-3 font-bold">
-                {resource.loading ? "Personel yükleniyor…" : "Personel bulunamadı"}
-              </p>
-              <p className="mt-1 text-sm text-muted-foreground">
-                Arama metnini veya filtreleri değiştirin.
-              </p>
-            </div>
-          </div>
-        )}
-
-        {pageCount > 1 ? (
-          <div className="flex items-center justify-between gap-3 border-t px-4 py-3 sm:px-5">
-            <p className="text-xs text-muted-foreground">
-              Sayfa {page} / {pageCount} · {total} kayıt
-            </p>
-            <div className="flex gap-2">
-              <Button
-                variant="outline"
-                size="sm"
-                disabled={page <= 1}
-                onClick={() => setPage((current) => Math.max(1, current - 1))}
-              >
-                Önceki
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                disabled={page >= pageCount}
-                onClick={() => setPage((current) => current + 1)}
-              >
-                Sonraki
-              </Button>
-            </div>
-          </div>
-        ) : null}
-      </AdminPanel>
+          <AdminPagination page={page} totalPages={pageCount} total={total} onPageChange={setPage} />
+        </AdminPanel>
+      ) : (
+        <EmptyState
+          icon={UsersRound}
+          title="Personel bulunamadı"
+          description="Arama metnini veya filtreleri değiştirin."
+          action={(query || role !== "all" || status !== "all") ? (
+            <Button type="button" variant="outline" onClick={() => { setQuery(""); setRole("all"); setStatus("all"); setPage(1); }}>Filtreleri temizle</Button>
+          ) : undefined}
+        />
+      )}
 
       <Sheet open={Boolean(selected)} onOpenChange={(open) => !open && setSelectedId(null)}>
         <SheetContent className="w-full overflow-y-auto sm:max-w-lg">
@@ -444,11 +457,7 @@ export function StaffManager() {
             <>
               <SheetHeader className="border-b px-5 py-5 pr-12">
                 <div className="flex items-center gap-3">
-                  <Avatar size="lg">
-                    <AvatarFallback className="bg-olive font-extrabold text-cream">
-                      {getInitials(selected.name)}
-                    </AvatarFallback>
-                  </Avatar>
+                  <PersonnelAvatar name={selected.name} size="lg" />
                   <div>
                     <SheetTitle className="text-xl">{selected.name}</SheetTitle>
                     <SheetDescription>{STAFF_ROLE_LABELS[selected.role]}</SheetDescription>
@@ -456,14 +465,14 @@ export function StaffManager() {
                 </div>
               </SheetHeader>
               <div className="space-y-6 px-5">
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 gap-3 min-[380px]:grid-cols-2">
                   <div className="rounded-xl border bg-background p-3">
-                    <Mail className="size-4 text-burgundy" />
+                    <Mail className="size-4 text-muted-foreground" />
                     <p className="mt-2 text-xs text-muted-foreground">E-posta</p>
                     <p className="mt-1 truncate text-sm font-bold">{selected.email ?? "Tanımsız"}</p>
                   </div>
                   <div className="rounded-xl border bg-background p-3">
-                    <KeyRound className="size-4 text-burgundy" />
+                    <KeyRound className="size-4 text-muted-foreground" />
                     <p className="mt-2 text-xs text-muted-foreground">Son giriş</p>
                     <p className="mt-1 text-sm font-bold tabular-nums">
                       {moment(selected.lastSignInAt)}
@@ -473,7 +482,7 @@ export function StaffManager() {
 
                 <div>
                   <div className="flex items-center gap-2">
-                    <ShieldCheck className="size-5 text-burgundy" />
+                    <ShieldCheck className="size-5 text-muted-foreground" />
                     <h3 className="font-heading text-lg font-semibold">Rol ve erişim</h3>
                   </div>
                   <p className="mt-1 text-xs leading-5 text-muted-foreground">
@@ -481,7 +490,8 @@ export function StaffManager() {
                   </p>
                   <div className="mt-3 space-y-3">
                     <Field label="Rol">
-                      <NativeSelect
+                      <Select
+                        items={Object.fromEntries(roleChoices.map((option) => [option, STAFF_ROLE_LABELS[option]]))}
                         value={selected.role}
                         disabled={
                           !mayEdit(selected) ||
@@ -489,19 +499,14 @@ export function StaffManager() {
                           isSelf(selected.id) ||
                           isLastAdmin(selected)
                         }
-                        onChange={(event) =>
-                          changeRole(selected.id, event.target.value as UserRole)
-                        }
+                        onValueChange={(value) => value && changeRole(selected.id, value as UserRole)}
                       >
-                        {roleChoices.map((option) => (
-                          <option key={option} value={option}>
-                            {STAFF_ROLE_LABELS[option]}
-                          </option>
-                        ))}
-                        {roleChoices.includes(selected.role) ? null : (
-                          <option value={selected.role}>{STAFF_ROLE_LABELS[selected.role]}</option>
-                        )}
-                      </NativeSelect>
+                        <SelectTrigger><SelectValue /></SelectTrigger>
+                        <SelectContent>
+                          {roleChoices.map((option) => <SelectItem key={option} value={option}>{STAFF_ROLE_LABELS[option]}</SelectItem>)}
+                          {roleChoices.includes(selected.role) ? null : <SelectItem value={selected.role}>{STAFF_ROLE_LABELS[selected.role]}</SelectItem>}
+                        </SelectContent>
+                      </Select>
                     </Field>
                     {isLastAdmin(selected) ? (
                       <p className="rounded-lg bg-status-warning-tint px-3 py-2 text-xs font-medium text-status-warning">
@@ -631,16 +636,16 @@ export function StaffManager() {
                 />
               </Field>
               <Field label="Rol">
-                <NativeSelect
+                <Select
+                  items={Object.fromEntries(roleChoices.map((option) => [option, STAFF_ROLE_LABELS[option]]))}
                   value={newRole}
-                  onChange={(event) => setNewRole(event.target.value as UserRole)}
+                  onValueChange={(value) => value && setNewRole(value as UserRole)}
                 >
-                  {roleChoices.map((option) => (
-                    <option key={option} value={option}>
-                      {STAFF_ROLE_LABELS[option]}
-                    </option>
-                  ))}
-                </NativeSelect>
+                  <SelectTrigger><SelectValue /></SelectTrigger>
+                  <SelectContent>
+                    {roleChoices.map((option) => <SelectItem key={option} value={option}>{STAFF_ROLE_LABELS[option]}</SelectItem>)}
+                  </SelectContent>
+                </Select>
               </Field>
               <Field label="Giriş kodu" hint="İsteğe bağlı.">
                 <Input

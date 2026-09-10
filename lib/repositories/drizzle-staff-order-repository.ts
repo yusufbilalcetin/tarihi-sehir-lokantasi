@@ -2,7 +2,7 @@ import "server-only";
 
 import { and, asc, desc, eq, inArray, sql, type SQL } from "drizzle-orm";
 
-import { OPEN_ORDER_STATUSES } from "../domain/status";
+import { OPEN_ORDER_STATUSES, deriveOrderStatusFromItems } from "../domain/status";
 import type { Database } from "../../db";
 import {
   auditLogs,
@@ -10,6 +10,7 @@ import {
   orderItems,
   orders,
   outboxEvents,
+  payments,
   restaurants,
   restaurantTables,
 } from "../../db/schema";
@@ -18,6 +19,7 @@ import type {
   MutableOrderItemRecord,
   StaffOrderListFilters,
   StaffOrderListRecord,
+  StaffOrderPaymentRecord,
   StaffOrderRepository,
   StaffOrderTransactionRepository,
   UpdateOrderItemStatusRecordInput,
@@ -39,6 +41,7 @@ class DrizzleStaffOrderTransactionRepository implements StaffOrderTransactionRep
         orderId: orderItems.orderId,
         orderNumber: orders.orderNumber,
         orderStatus: orders.status,
+        orderVersion: orders.version,
         productName: orderItems.productNameSnapshot,
         status: orderItems.status,
       })
@@ -78,6 +81,28 @@ class DrizzleStaffOrderTransactionRepository implements StaffOrderTransactionRep
       )
       .returning({ id: orderItems.id });
     return Boolean(rows[0]);
+  }
+
+  async syncOrderStatusFromItems(restaurantId: string, orderId: string, at: Date) {
+    // The parent is already locked by findOrderItemForUpdate. Its version also
+    // changes for partial progress so readers can invalidate the full snapshot.
+    const [order] = await this.db.select({ status: orders.status }).from(orders)
+      .where(and(eq(orders.restaurantId, restaurantId), eq(orders.id, orderId)));
+    if (!order) throw new Error("Locked order disappeared");
+    const items = await this.db.select({ status: orderItems.status }).from(orderItems)
+      .where(and(eq(orderItems.restaurantId, restaurantId), eq(orderItems.orderId, orderId)));
+    const status = deriveOrderStatusFromItems(order.status, items);
+    const [updated] = await this.db.update(orders).set({
+      status,
+      version: sql`${orders.version} + 1`,
+      updatedAt: at,
+      ...(status !== order.status && status === "PREPARING" ? { preparingAt: at } : {}),
+      ...(status !== order.status && status === "READY" ? { readyAt: at } : {}),
+      ...(status !== order.status && status === "SERVED" ? { servedAt: at } : {}),
+    }).where(and(eq(orders.restaurantId, restaurantId), eq(orders.id, orderId)))
+      .returning({ status: orders.status, version: orders.version });
+    if (!updated) throw new Error("Locked order disappeared");
+    return updated;
   }
 
   async insertOrderEvent(
@@ -145,6 +170,7 @@ export class DrizzleStaffOrderRepository implements StaffOrderRepository {
         notes: orders.notes,
         createdAt: orders.createdAt,
         updatedAt: orders.updatedAt,
+        version: orders.version,
       })
       .from(orders)
       // A takeaway or courier order has no table. An inner join here would
@@ -184,6 +210,32 @@ export class DrizzleStaffOrderRepository implements StaffOrderRepository {
       )
       .orderBy(asc(orderItems.orderId), asc(orderItems.sortOrder), asc(orderItems.id));
 
+    // Batched exactly like the lines above: one indexed read for the page, not
+    // one per order. Only when the caller asked, so the pass and the floor keep
+    // the query they had.
+    const paymentsByOrder = new Map<string, StaffOrderPaymentRecord[]>();
+    if (filters.withBalance) {
+      const paymentRows = await this.db
+        .select({
+          orderId: payments.orderId,
+          amount: payments.amount,
+          refundedAmount: payments.refundedAmount,
+          status: payments.status,
+        })
+        .from(payments)
+        .where(and(eq(payments.restaurantId, restaurantId), inArray(payments.orderId, ids)));
+      for (const payment of paymentRows) {
+        const bucket = paymentsByOrder.get(payment.orderId);
+        const record: StaffOrderPaymentRecord = {
+          amount: payment.amount,
+          refundedAmount: payment.refundedAmount ?? "0.00",
+          status: payment.status,
+        };
+        if (bucket) bucket.push(record);
+        else paymentsByOrder.set(payment.orderId, [record]);
+      }
+    }
+
     const itemsByOrder = new Map<string, typeof itemRows>();
     for (const item of itemRows) {
       const items = itemsByOrder.get(item.orderId);
@@ -193,6 +245,7 @@ export class DrizzleStaffOrderRepository implements StaffOrderRepository {
 
     return headers.map((order) => ({
       ...order,
+      payments: filters.withBalance ? paymentsByOrder.get(order.id) ?? [] : null,
       items: (itemsByOrder.get(order.id) ?? []).map((item) => ({
         id: item.id,
         productName: item.productName,

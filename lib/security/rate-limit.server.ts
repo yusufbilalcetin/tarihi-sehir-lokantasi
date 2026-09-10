@@ -10,6 +10,7 @@ import {
   RATE_LIMIT_POLICIES,
   createRateLimitKey,
   type RateLimitAction,
+  type RateLimitActorType,
   type RateLimitIdentity,
 } from "@/lib/security/rate-limit";
 import { consumeFixedWindow } from "@/lib/security/rate-limit-window";
@@ -18,6 +19,8 @@ interface RateLimitScope {
   readonly restaurantId?: string;
   readonly tableId?: string;
   readonly identifier?: string;
+  /** Defaults to the identifier's shape; name it when the actor is a signed-in user. */
+  readonly actorType?: RateLimitActorType;
 }
 
 const DEVELOPMENT_LIMITS = new Map<string, { count: number; resetAt: number }>();
@@ -57,7 +60,7 @@ function identityFor(
   return {
     action,
     restaurantId: scope.restaurantId,
-    actorType: scope.tableId ? "TABLE_SESSION" : "CLIENT_IP",
+    actorType: scope.actorType ?? (scope.tableId ? "TABLE_SESSION" : "CLIENT_IP"),
     actorId,
     clientFingerprint: privacyFingerprint(ip),
   };
@@ -170,14 +173,16 @@ export async function enforceRateLimit(
   action: RateLimitAction,
   scope: RateLimitScope = {},
 ): Promise<void> {
-  const policy = RATE_LIMIT_POLICIES[action];
   const now = Date.now();
   const secret = keySecret();
+  // Staff login is checked twice: once against the account being named, and
+  // once against the address it is being named from. They are different
+  // questions and carry their own policies — see STAFF_LOGIN_IP.
   const identities: readonly RateLimitIdentity[] =
     action === "STAFF_LOGIN" && scope.identifier
       ? [
           {
-            action,
+            action: "STAFF_LOGIN_IP",
             actorType: "CLIENT_IP",
             actorId: privacyFingerprint(clientAddress(request)),
           },
@@ -186,6 +191,7 @@ export async function enforceRateLimit(
       : [identityFor(request, action, scope)];
 
   for (const identity of identities) {
+    const policy = RATE_LIMIT_POLICIES[identity.action];
     const key = createRateLimitKey(identity, secret);
     const result = await consumeWindow(key, policy.limit, policy.windowMs, now);
     if (!result.allowed) {

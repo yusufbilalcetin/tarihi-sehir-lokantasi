@@ -63,7 +63,7 @@ function CurrencyThumbnail({ src, alt }: { src: string; alt: string }) {
 }
 
 export function CurrencySelector({ variant = "header" }: { variant?: "header" | "surface" }) {
-  const { currency, direction, setCurrency, t } = useMenuPreferences();
+  const { currency, direction, languageDefinition, setCurrency, t } = useMenuPreferences();
   const [open, setOpen] = useState(false);
   const selected = currencyOptions.find((option) => option.id === currency)!;
 
@@ -93,6 +93,7 @@ export function CurrencySelector({ variant = "header" }: { variant?: "header" | 
 
       <DialogContent
         dir={direction}
+        lang={languageDefinition.locale}
         showCloseButton={false}
         className="flex max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] max-w-[32rem] flex-col gap-0 overflow-hidden rounded-[24px] border border-[#D8C7AF] bg-[#F8F0E4] p-0 text-[#292D25] shadow-[0_24px_70px_rgba(24,30,23,0.24)] sm:max-h-[82dvh] sm:max-w-[32rem]"
       >

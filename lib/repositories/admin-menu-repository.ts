@@ -1,4 +1,13 @@
 import type { RepositoryJsonObject } from "./order-repository";
+import type { CatalogTranslationInput } from "@/lib/i18n/catalog-localization";
+
+export interface AdminCategoryTranslationRecord extends CatalogTranslationInput {
+  readonly categoryId: string;
+}
+
+export interface AdminProductTranslationRecord extends CatalogTranslationInput {
+  readonly productId: string;
+}
 
 export interface AdminCategoryRecord {
   readonly id: string;
@@ -98,6 +107,18 @@ export interface AdminMenuTransactionRepository {
   updateCategory(input: UpsertCategoryInput): Promise<AdminCategoryRecord | null>;
   insertProduct(input: UpsertProductInput): Promise<AdminProductRecord | null>;
   updateProduct(input: UpsertProductInput): Promise<AdminProductRecord | null>;
+  upsertCategoryTranslations(input: {
+    restaurantId: string;
+    categoryId: string;
+    translations: readonly CatalogTranslationInput[];
+    at: Date;
+  }): Promise<void>;
+  upsertProductTranslations(input: {
+    restaurantId: string;
+    productId: string;
+    translations: readonly CatalogTranslationInput[];
+    at: Date;
+  }): Promise<void>;
   insertAuditLog(input: AdminMenuAuditInput): Promise<void>;
   insertOutboxEvent(input: AdminMenuOutboxInput): Promise<void>;
 }
@@ -105,6 +126,8 @@ export interface AdminMenuTransactionRepository {
 export interface AdminMenuRepository {
   listCategories(restaurantId: string): Promise<readonly AdminCategoryRecord[]>;
   listProducts(restaurantId: string): Promise<readonly AdminProductRecord[]>;
+  listCategoryTranslations(restaurantId: string): Promise<readonly AdminCategoryTranslationRecord[]>;
+  listProductTranslations(restaurantId: string): Promise<readonly AdminProductTranslationRecord[]>;
   transaction<TResult>(
     work: (repository: AdminMenuTransactionRepository) => Promise<TResult>,
   ): Promise<TResult>;

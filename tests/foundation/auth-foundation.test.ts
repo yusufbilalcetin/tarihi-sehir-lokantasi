@@ -37,6 +37,7 @@ const activeIdentity: StaffIdentityContext = {
     name: "Tarihi Şehir Lokantası",
     slug: "tarihi-sehir-lokantasi",
     isActive: true,
+    timezone: "Europe/Istanbul",
   },
 };
 

@@ -11,6 +11,7 @@ import type {
   CashierShiftRepository,
   CashierShiftTransactionRepository,
   CloseShiftInput,
+  InsertCashCountInput,
   InsertCashMovementInput,
   OpenShiftInput,
   ShiftHistoryPage,
@@ -124,9 +125,80 @@ export class FakeShiftRepository implements CashierShiftRepository {
   outbox: InsertOutboxEventInput[] = [];
   audits: InsertAuditLogInput[] = [];
   closes: CloseShiftInput[] = [];
+  /** What was counted into the drawer, in write order. */
+  cashCounts: InsertCashCountInput[] = [];
+  /** Set to make the denomination write fail, to test atomicity. */
+  failCashCounts = false;
+  /**
+   * The `idempotency_keys` table, modelled on its unique index.
+   *
+   * Keyed exactly as the database is — (restaurant, scope, key hash) — so a
+   * replay, a conflicting payload and a concurrent claim resolve here the way
+   * they resolve in Postgres.
+   */
+  idempotency = new Map<string, {
+    id: string;
+    requestHash: string;
+    status: "PROCESSING" | "COMPLETED" | "FAILED";
+    responseStatus: number | null;
+    responseBody: never;
+    lockedUntil: Date | null;
+    expiresAt: Date;
+  }>();
+  /** Transaction failure injection for money-path rollback tests. */
+  failAt: "movement" | "outbox" | "audit" | "complete" | null = null;
   private sequence = 0;
+  /** Serialises fake transactions like the database row/unique-key locks do. */
+  private transactionTail: Promise<void> = Promise.resolve();
 
   private transactionRepository: CashierShiftTransactionRepository = {
+    claimIdempotency: async (input) => {
+      const slot = `${input.restaurantId}|${input.scope}|${input.keyHash}`;
+      const existing = this.idempotency.get(slot);
+      if (existing) return { acquired: false, record: { ...existing } };
+      const id = `idem-${++this.sequence}`;
+      this.idempotency.set(slot, {
+        id,
+        requestHash: input.requestHash,
+        status: "PROCESSING",
+        responseStatus: null,
+        responseBody: null as never,
+        lockedUntil: input.lockedUntil,
+        expiresAt: input.expiresAt,
+      });
+      return { acquired: true, id };
+    },
+    restartIdempotency: async (input) => {
+      for (const [slot, record] of this.idempotency) {
+        if (record.id !== input.id) continue;
+        this.idempotency.set(slot, {
+          ...record,
+          requestHash: input.requestHash,
+          status: "PROCESSING",
+          responseStatus: null,
+          responseBody: null as never,
+          lockedUntil: input.lockedUntil,
+          expiresAt: input.expiresAt,
+        });
+        return;
+      }
+      throw new Error("Idempotency record could not be restarted.");
+    },
+    completeIdempotency: async (input) => {
+      if (this.failAt === "complete") throw new Error("idempotency completion failed");
+      for (const [slot, record] of this.idempotency) {
+        if (record.id !== input.id) continue;
+        this.idempotency.set(slot, {
+          ...record,
+          status: "COMPLETED",
+          responseStatus: input.responseStatus,
+          responseBody: input.responseBody as never,
+          lockedUntil: null,
+        });
+        return;
+      }
+      throw new Error("Idempotency record could not be completed.");
+    },
     findRegisterForUpdate: async (restaurantId, registerId) =>
       restaurantId === RESTAURANT
         ? this.registers.find((register) => register.id === registerId) ?? null
@@ -184,7 +256,18 @@ export class FakeShiftRepository implements CashierShiftRepository {
       this.shifts[index] = closed;
       return closed;
     },
+    /**
+     * Records what was written so a test can assert the drawer count landed in
+     * the same transaction as the shift, and can make that write fail.
+     */
+    listCashCounts: async (restaurantId: string, shiftId: string) =>
+      this.listCashCounts(restaurantId, shiftId),
+    insertCashCounts: async (input: InsertCashCountInput) => {
+      if (this.failCashCounts) throw new Error("cash count insert failed");
+      this.cashCounts.push(input);
+    },
     insertMovement: async (input: InsertCashMovementInput) => {
+      if (this.failAt === "movement") throw new Error("movement insert failed");
       const movement: CashDrawerMovementRecord = {
         id: `movement-${this.movements.length + 1}`,
         type: input.type,
@@ -206,9 +289,11 @@ export class FakeShiftRepository implements CashierShiftRepository {
       closedByName: "Kapatan",
     }),
     insertOutboxEvent: async (input) => {
+      if (this.failAt === "outbox") throw new Error("outbox insert failed");
       this.outbox.push(input);
     },
     insertAuditLog: async (input) => {
+      if (this.failAt === "audit") throw new Error("audit insert failed");
       this.audits.push(input);
     },
   };
@@ -216,7 +301,41 @@ export class FakeShiftRepository implements CashierShiftRepository {
   transaction<TResult>(
     work: (repository: CashierShiftTransactionRepository) => Promise<TResult>,
   ): Promise<TResult> {
-    return work(this.transactionRepository);
+    const previous = this.transactionTail;
+    let release = () => {};
+    this.transactionTail = new Promise<void>((resolve) => {
+      release = resolve;
+    });
+
+    return previous.then(async () => {
+      const snapshot = {
+        shifts: [...this.shifts],
+        movements: [...this.movements],
+        outbox: [...this.outbox],
+        audits: [...this.audits],
+        closes: [...this.closes],
+        cashCounts: [...this.cashCounts],
+        idempotency: new Map(
+          [...this.idempotency].map(([slot, record]) => [slot, { ...record }]),
+        ),
+        sequence: this.sequence,
+      };
+      try {
+        return await work(this.transactionRepository);
+      } catch (error) {
+        this.shifts = snapshot.shifts;
+        this.movements = snapshot.movements;
+        this.outbox = snapshot.outbox;
+        this.audits = snapshot.audits;
+        this.closes = snapshot.closes;
+        this.cashCounts = snapshot.cashCounts;
+        this.idempotency = snapshot.idempotency;
+        this.sequence = snapshot.sequence;
+        throw error;
+      } finally {
+        release();
+      }
+    });
   }
 
   private withNames(shift: CashierShiftRecord): ShiftHistoryRow {
@@ -245,6 +364,21 @@ export class FakeShiftRepository implements CashierShiftRepository {
     return this.movements;
   }
 
+  /** Reads back what insertCashCounts recorded, scoped the way the real one is. */
+  async listCashCounts(restaurantId: string, shiftId: string) {
+    return this.cashCounts
+      .filter((entry) => entry.restaurantId === restaurantId && entry.shiftId === shiftId)
+      .flatMap((entry) =>
+        entry.lines.map((line) => ({
+          phase: entry.phase,
+          currency: line.currency,
+          denominationMinor: line.denominationMinor,
+          pieceCount: line.pieceCount,
+          subtotalMinor: line.subtotalMinor,
+        })),
+      );
+  }
+
   async listShifts(query: ShiftHistoryQuery): Promise<ShiftHistoryPage> {
     const rows = this.shifts
       .filter((shift) => !query.status || shift.status === query.status)
@@ -262,8 +396,8 @@ export class FakeShiftRepository implements CashierShiftRepository {
     return this.registers.filter((register) => register.isActive && !register.deletedAt);
   }
 
-  async findRestaurantName() {
-    return "PHASE8B Restoran";
+  async findRestaurantProfile() {
+    return { name: "PHASE8B Restoran", timezone: "Europe/Istanbul" };
   }
 
   // The daily report is aggregated in SQL and is exercised against real

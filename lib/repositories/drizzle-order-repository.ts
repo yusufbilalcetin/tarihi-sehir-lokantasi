@@ -2,12 +2,16 @@ import "server-only";
 
 import { and, eq, inArray, sql } from "drizzle-orm";
 
+import {
+  claimIdempotencyRow,
+  completeIdempotencyRow,
+  restartIdempotencyRow,
+} from "./drizzle-idempotency";
 import type { Database } from "../../db";
 import {
   auditLogs,
   fulfillmentRequests,
   categories,
-  idempotencyKeys,
   orderEvents,
   orderItems,
   orders,
@@ -21,6 +25,7 @@ import {
 } from "../../db/schema";
 import { enqueueKitchenTickets } from "../services/kitchen-print";
 import type {
+  AdvanceOrderItemsInput,
   CancelOrderItemInput,
   ClaimIdempotencyInput,
   IdempotencyClaim,
@@ -30,112 +35,36 @@ import type {
   InsertOrderRecordInput,
   InsertOutboxEventInput,
   KitchenPrintEvent,
-  MutableOrderRecord,
   MutableOrderWithItems,
   OrderContextRecord,
   OrderProductRecord,
   OrderRepository,
   OrderTransactionRepository,
   RestartIdempotencyInput,
-  StoredIdempotencyRecord,
   UpdateOrderAmountsInput,
   UpdateOrderStatusInput,
   VoidOrderItemInput,
 } from "./order-repository";
-
-const IDEMPOTENCY_SELECTION = {
-  id: idempotencyKeys.id,
-  requestHash: idempotencyKeys.requestHash,
-  status: idempotencyKeys.status,
-  responseStatus: idempotencyKeys.responseStatus,
-  responseBody: idempotencyKeys.responseBody,
-  lockedUntil: idempotencyKeys.lockedUntil,
-  expiresAt: idempotencyKeys.expiresAt,
-} as const;
 
 type TransactionDatabase = Parameters<Parameters<Database["transaction"]>[0]>[0];
 
 class DrizzleOrderTransactionRepository implements OrderTransactionRepository {
   constructor(private readonly db: TransactionDatabase) {}
 
+  // The three below delegate to `drizzle-idempotency`, which the cash drawer
+  // uses too. Same protocol, one implementation.
   async claimIdempotency(input: ClaimIdempotencyInput): Promise<IdempotencyClaim> {
-    const inserted = await this.db
-      .insert(idempotencyKeys)
-      .values({
-        restaurantId: input.restaurantId,
-        scope: input.scope,
-        keyHash: input.keyHash,
-        requestHash: input.requestHash,
-        status: "PROCESSING",
-        lockedUntil: input.lockedUntil,
-        expiresAt: input.expiresAt,
-      })
-      .onConflictDoNothing({
-        target: [idempotencyKeys.restaurantId, idempotencyKeys.scope, idempotencyKeys.keyHash],
-      })
-      .returning({ id: idempotencyKeys.id });
-    if (inserted[0]) return { acquired: true, id: inserted[0].id };
-
-    const rows = await this.db
-      .select(IDEMPOTENCY_SELECTION)
-      .from(idempotencyKeys)
-      .where(
-        and(
-          eq(idempotencyKeys.restaurantId, input.restaurantId),
-          eq(idempotencyKeys.scope, input.scope),
-          eq(idempotencyKeys.keyHash, input.keyHash),
-        ),
-      )
-      .for("update")
-      .limit(1);
-    const existing = rows[0] as StoredIdempotencyRecord | undefined;
-    if (!existing) throw new Error("Idempotency conflict row disappeared.");
-    return { acquired: false, record: existing };
+    return claimIdempotencyRow(this.db, input);
   }
 
   async restartIdempotency(input: RestartIdempotencyInput): Promise<void> {
-    const rows = await this.db
-      .update(idempotencyKeys)
-      .set({
-        requestHash: input.requestHash,
-        status: "PROCESSING",
-        responseStatus: null,
-        responseBody: null,
-        lockedUntil: input.lockedUntil,
-        expiresAt: input.expiresAt,
-        updatedAt: input.now,
-      })
-      .where(
-        and(
-          eq(idempotencyKeys.id, input.id),
-          eq(idempotencyKeys.restaurantId, input.restaurantId),
-        ),
-      )
-      .returning({ id: idempotencyKeys.id });
-    if (!rows[0]) throw new Error("Idempotency record could not be restarted.");
+    return restartIdempotencyRow(this.db, input);
   }
 
-  async completeIdempotency(input: Parameters<OrderTransactionRepository["completeIdempotency"]>[0]): Promise<void> {
-    const rows = await this.db
-      .update(idempotencyKeys)
-      .set({
-        status: "COMPLETED",
-        responseStatus: input.responseStatus,
-        responseBody: input.responseBody,
-        resourceType: input.resourceType,
-        resourceId: input.resourceId,
-        lockedUntil: null,
-        updatedAt: input.completedAt,
-      })
-      .where(
-        and(
-          eq(idempotencyKeys.id, input.id),
-          eq(idempotencyKeys.restaurantId, input.restaurantId),
-          eq(idempotencyKeys.scope, input.scope),
-        ),
-      )
-      .returning({ id: idempotencyKeys.id });
-    if (!rows[0]) throw new Error("Idempotency record could not be completed.");
+  async completeIdempotency(
+    input: Parameters<OrderTransactionRepository["completeIdempotency"]>[0],
+  ): Promise<void> {
+    return completeIdempotencyRow(this.db, input);
   }
 
   async findOrderContext(restaurantId: string, tableId: string | null): Promise<OrderContextRecord | null> {
@@ -300,24 +229,6 @@ class DrizzleOrderTransactionRepository implements OrderTransactionRepository {
       );
   }
 
-  async findOrderForUpdate(restaurantId: string, orderId: string): Promise<MutableOrderRecord | null> {
-    const rows = await this.db
-      .select({
-        id: orders.id,
-        restaurantId: orders.restaurantId,
-        tableId: orders.tableId,
-        channel: orders.channel,
-        orderNumber: orders.orderNumber,
-        status: orders.status,
-        version: orders.version,
-      })
-      .from(orders)
-      .where(and(eq(orders.restaurantId, restaurantId), eq(orders.id, orderId)))
-      .for("update")
-      .limit(1);
-    return rows[0] ?? null;
-  }
-
   async findOrderWithItemsForUpdate(
     restaurantId: string,
     orderId: string,
@@ -454,6 +365,22 @@ class DrizzleOrderTransactionRepository implements OrderTransactionRepository {
       )
       .returning({ id: orderItems.id });
     return Boolean(rows[0]);
+  }
+
+  async advanceOrderItems(input: AdvanceOrderItemsInput): Promise<readonly string[]> {
+    if (input.currentStatuses.length === 0) return [];
+    const rows = await this.db
+      .update(orderItems)
+      .set({ status: input.nextStatus, updatedAt: input.at })
+      .where(
+        and(
+          eq(orderItems.restaurantId, input.restaurantId),
+          eq(orderItems.orderId, input.orderId),
+          inArray(orderItems.status, [...input.currentStatuses]),
+        ),
+      )
+      .returning({ id: orderItems.id });
+    return rows.map((row) => row.id);
   }
 
   async updateOrderStatus(input: UpdateOrderStatusInput): Promise<boolean> {

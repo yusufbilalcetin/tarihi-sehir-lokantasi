@@ -5,7 +5,7 @@ import { OrderTracking } from "@/components/guest/order-tracking";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Sipariş Takibi | Tarihi Şehir Lokantası",
+  title: "Sipariş Takibi",
   description: "Paket ve kurye siparişinizin durumunu takip edin.",
 };
 

@@ -16,11 +16,23 @@ import {
 } from "drizzle-orm";
 import { alias } from "drizzle-orm/pg-core";
 
+import {
+  claimIdempotencyRow,
+  completeIdempotencyRow,
+  restartIdempotencyRow,
+  type CompleteIdempotencyInput,
+} from "./drizzle-idempotency";
+import type {
+  ClaimIdempotencyInput,
+  IdempotencyClaim,
+  RestartIdempotencyInput,
+} from "./order-repository";
 import type { Database } from "@/db";
 import {
   auditLogs,
   cashDrawerMovements,
   cashRegisters,
+  cashierShiftCashCounts,
   cashierShifts,
   orderItems,
   orders,
@@ -47,6 +59,8 @@ import type {
   DailyMoneyTotals,
   DailyShiftRow,
   DailyWindow,
+  CashCountRecord,
+  InsertCashCountInput,
   InsertCashMovementInput,
   OpenShiftInput,
   ShiftHistoryPage,
@@ -306,6 +320,19 @@ class DrizzleCashierShiftTransactionRepository
 {
   constructor(private readonly db: TransactionDatabase) {}
 
+  // One implementation, shared with the order path.
+  async claimIdempotency(input: ClaimIdempotencyInput): Promise<IdempotencyClaim> {
+    return claimIdempotencyRow(this.db, input);
+  }
+
+  async restartIdempotency(input: RestartIdempotencyInput): Promise<void> {
+    return restartIdempotencyRow(this.db, input);
+  }
+
+  async completeIdempotency(input: CompleteIdempotencyInput): Promise<void> {
+    return completeIdempotencyRow(this.db, input);
+  }
+
   async findRegisterForUpdate(
     restaurantId: string,
     registerId: string,
@@ -374,6 +401,49 @@ class DrizzleCashierShiftTransactionRepository
       .onConflictDoNothing()
       .returning(SHIFT_SELECTION);
     return rows[0] ?? null;
+  }
+
+  async listCashCounts(
+    restaurantId: string,
+    shiftId: string,
+  ): Promise<readonly CashCountRecord[]> {
+    return this.db
+      .select({
+        phase: cashierShiftCashCounts.phase,
+        currency: cashierShiftCashCounts.currency,
+        denominationMinor: cashierShiftCashCounts.denominationMinor,
+        pieceCount: cashierShiftCashCounts.pieceCount,
+        subtotalMinor: cashierShiftCashCounts.subtotalMinor,
+      })
+      .from(cashierShiftCashCounts)
+      .where(
+        and(
+          eq(cashierShiftCashCounts.restaurantId, restaurantId),
+          eq(cashierShiftCashCounts.shiftId, shiftId),
+        ),
+      )
+      .orderBy(
+        asc(cashierShiftCashCounts.phase),
+        asc(cashierShiftCashCounts.currency),
+        desc(cashierShiftCashCounts.denominationMinor),
+      );
+  }
+
+  async insertCashCounts(input: InsertCashCountInput): Promise<void> {
+    if (input.lines.length === 0) return;
+    await this.db.insert(cashierShiftCashCounts).values(
+      input.lines.map((line) => ({
+        restaurantId: input.restaurantId,
+        shiftId: input.shiftId,
+        phase: input.phase,
+        currency: line.currency,
+        denominationMinor: line.denominationMinor,
+        pieceCount: line.pieceCount,
+        subtotalMinor: line.subtotalMinor,
+        countedByStaffId: input.countedByStaffId,
+        createdAt: input.at,
+      })),
+    );
   }
 
   async closeShift(input: CloseShiftInput): Promise<CashierShiftRecord | null> {
@@ -467,6 +537,40 @@ class DrizzleCashierShiftTransactionRepository
 }
 
 export class DrizzleCashierShiftRepository implements CashierShiftRepository {
+  /**
+   * The counted drawer, read back.
+   *
+   * Scoped by restaurant as well as shift. The composite foreign key already
+   * makes a cross-tenant row impossible to write, and this predicate makes it
+   * impossible to read even if one somehow existed.
+   */
+  async listCashCounts(
+    restaurantId: string,
+    shiftId: string,
+  ): Promise<readonly CashCountRecord[]> {
+    return this.db
+      .select({
+        phase: cashierShiftCashCounts.phase,
+        currency: cashierShiftCashCounts.currency,
+        denominationMinor: cashierShiftCashCounts.denominationMinor,
+        pieceCount: cashierShiftCashCounts.pieceCount,
+        subtotalMinor: cashierShiftCashCounts.subtotalMinor,
+      })
+      .from(cashierShiftCashCounts)
+      .where(
+        and(
+          eq(cashierShiftCashCounts.restaurantId, restaurantId),
+          eq(cashierShiftCashCounts.shiftId, shiftId),
+        ),
+      )
+      // Highest face value first, the order a drawer is counted in.
+      .orderBy(
+        asc(cashierShiftCashCounts.phase),
+        asc(cashierShiftCashCounts.currency),
+        desc(cashierShiftCashCounts.denominationMinor),
+      );
+  }
+
   constructor(private readonly db: Database) {}
 
   transaction<TResult>(
@@ -588,13 +692,15 @@ export class DrizzleCashierShiftRepository implements CashierShiftRepository {
       .orderBy(asc(cashRegisters.name));
   }
 
-  async findRestaurantName(restaurantId: string): Promise<string | null> {
+  async findRestaurantProfile(
+    restaurantId: string,
+  ): Promise<{ readonly name: string; readonly timezone: string } | null> {
     const [row] = await this.db
-      .select({ name: restaurants.name })
+      .select({ name: restaurants.name, timezone: restaurants.timezone })
       .from(restaurants)
       .where(eq(restaurants.id, restaurantId))
       .limit(1);
-    return row?.name ?? null;
+    return row ?? null;
   }
 
   /**

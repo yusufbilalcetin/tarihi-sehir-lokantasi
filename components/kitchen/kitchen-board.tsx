@@ -1,29 +1,20 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
-import {
-  BellRing,
-  Check,
-  ChefHat,
-  CircleCheckBig,
-  Clock3,
-  CookingPot,
-  MessageSquareText,
-  Play,
-  Printer,
-  PrinterCheck,
-  Undo2,
-  ReceiptText,
-  TriangleAlert,
-  Utensils,
-} from "lucide-react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { BellRing, ChefHat, CircleCheckBig, Clock3, CookingPot, ReceiptText, Undo2 } from "lucide-react";
 import { toast } from "sonner";
-import { BrandMark } from "@/components/shared/brand-mark";
 import { EmptyState } from "@/components/shared/data-states";
-import { LogoutButton } from "@/components/staff/logout-button";
-import { RealtimeStatus } from "@/components/staff/realtime-status";
+import { KitchenFilters, type KitchenFilter } from "@/components/kitchen/kitchen-filters";
+import {
+  OperationalBackdrop,
+  OperationalHero,
+  OperationalHome,
+  OperationalMetric,
+  OperationalMetricGrid,
+  OperationalSectionHeading,
+  OperationalTopBar,
+} from "@/components/staff/operational-ui";
 import { useStaffSession } from "@/components/staff/staff-session-provider";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   staffOrderToViewModel,
@@ -32,22 +23,28 @@ import {
 } from "@/lib/adapters/staff-view-model";
 import { ApiClientError } from "@/lib/api/client";
 import { printApi, staffApi } from "@/lib/api/endpoints";
+import { NewEntityTracker } from "@/lib/audio/new-entity-tracker";
+import { resolveTicketUrgency, sortKitchenTickets } from "@/lib/domain/kitchen-board";
+import { playSound } from "@/lib/audio/sound-effects";
 import {
   canRoleTransitionOrderItemStatus,
   canRoleTransitionOrderStatus,
   deriveKitchenStage,
+  itemsBlockingOrderStage,
 } from "@/lib/domain/status";
 import { Dialog } from "@/components/ui/dialog";
 import { WindowDialogContent } from "@/components/ui/window-dialog";
 import { useApiResource } from "@/lib/hooks/use-api-resource";
 import { useStaffRealtime } from "@/lib/realtime/use-staff-realtime";
-import { STAFF_ROLE_LABELS } from "@/lib/domain/staff-accounts";
-import { formatElapsed, getInitials } from "@/lib/format";
-import { cn } from "@/lib/utils";
 import type { Order, OrderItemStatus, OrderStatus } from "@/types";
 
-type KitchenStage = Extract<OrderStatus, "confirmed" | "preparing" | "ready">;
-type PrintTicketStatus = "PENDING" | "PRINTED" | "FAILED";
+import {
+  KitchenOrderCard,
+  getAction,
+  stages,
+  type KitchenStage,
+  type PrintTicketStatus,
+} from "@/components/kitchen/kitchen-ticket";
 
 const KITCHEN_POLL_MS = 15_000;
 
@@ -77,61 +74,6 @@ const ROLLBACK_REASONS: { value: string; label: string }[] = [
   { value: "OTHER", label: "Diğer" },
 ];
 
-const ITEM_ACTION_LABELS: Partial<Record<OrderItemStatus, string>> = {
-  pending: "Başla",
-  preparing: "Hazır",
-  ready: "Servis",
-};
-
-const ITEM_STATUS_LABELS: Record<OrderItemStatus, string> = {
-  pending: "Bekliyor",
-  preparing: "Hazırlanıyor",
-  ready: "Hazır",
-  served: "Servis edildi",
-  cancelled: "İptal",
-  voided: "Hesaptan çıkarıldı",
-};
-
-interface StageConfig {
-  id: KitchenStage;
-  title: string;
-  icon: typeof ReceiptText;
-  headerClassName: string;
-  countClassName: string;
-  emptyTitle: string;
-  emptyDescription: string;
-}
-
-const stages: StageConfig[] = [
-  {
-    id: "confirmed",
-    title: "Yeni",
-    icon: ReceiptText,
-    headerClassName: "border-order-new/25 bg-order-new-tint",
-    countClassName: "bg-order-new text-white",
-    emptyTitle: "Yeni sipariş yok",
-    emptyDescription: "Gelen siparişler burada görünecek.",
-  },
-  {
-    id: "preparing",
-    title: "Hazırlanıyor",
-    icon: CookingPot,
-    headerClassName: "border-order-preparing/25 bg-order-preparing-tint",
-    countClassName: "bg-order-preparing text-white",
-    emptyTitle: "Hazırlık sırası boş",
-    emptyDescription: "Başlatılan siparişler burada izlenir.",
-  },
-  {
-    id: "ready",
-    title: "Hazır",
-    icon: BellRing,
-    headerClassName: "border-order-ready/25 bg-order-ready-tint",
-    countClassName: "bg-order-ready text-white",
-    emptyTitle: "Teslim bekleyen yok",
-    emptyDescription: "Hazır siparişler servis için burada bekler.",
-  },
-];
-
 function formatClock(date: Date | null) {
   if (!date) return "--:--";
   return new Intl.DateTimeFormat("tr-TR", {
@@ -139,280 +81,6 @@ function formatClock(date: Date | null) {
     minute: "2-digit",
     second: "2-digit",
   }).format(date);
-}
-
-function getUrgency(minutes: number) {
-  if (minutes >= 15) {
-    return {
-      label: "Gecikti",
-      className: "border-status-danger/25 bg-status-danger-tint text-status-danger",
-      timeClassName: "text-status-danger",
-    };
-  }
-
-  if (minutes >= 8) {
-    return {
-      label: "Öncelikli",
-      className: "border-status-warning/25 bg-status-warning-tint text-status-warning",
-      timeClassName: "text-status-warning",
-    };
-  }
-
-  return {
-    label: "Zamanında",
-    // Deliberately quiet: green already means "ready" on this board, and a
-    // ticket that is merely on schedule must not compete with one that is not.
-    className: "border-border-strong bg-surface-muted text-text-secondary",
-    timeClassName: "text-text-secondary",
-  };
-}
-
-function getAction(stage: KitchenStage) {
-  if (stage === "confirmed") {
-    return {
-      label: "Hazırlamaya başla",
-      ariaLabel: "hazırlamaya başlat",
-      icon: Play,
-      nextStatus: "preparing" as const,
-      buttonClassName: "bg-order-preparing text-white hover:bg-order-preparing/90",
-    };
-  }
-
-  if (stage === "preparing") {
-    return {
-      label: "Hazır olarak işaretle",
-      ariaLabel: "hazır olarak işaretle",
-      icon: Check,
-      nextStatus: "ready" as const,
-      buttonClassName: "bg-copper text-[#2D2018] hover:bg-copper/85",
-    };
-  }
-
-  return {
-    label: "Servise teslim et",
-    ariaLabel: "servise teslim et",
-    icon: Utensils,
-    nextStatus: "served" as const,
-    buttonClassName: "bg-status-success text-[#FBF7EF] hover:bg-status-success/90",
-  };
-}
-
-/**
- * The ticket's own progress, kept deliberately quiet: it sits next to the
- * order number and never competes with the cooking status. "Yazdırıldı" means
- * the bytes reached the printer, not that anyone tore the paper off.
- */
-const PRINT_STATUS: Record<
-  PrintTicketStatus,
-  { label: string; icon: typeof Printer; className: string }
-> = {
-  PENDING: { label: "Yazdırma bekliyor", icon: Printer, className: "text-muted-foreground" },
-  PRINTED: { label: "Yazdırıldı", icon: PrinterCheck, className: "text-status-success" },
-  FAILED: { label: "Yazdırılamadı", icon: TriangleAlert, className: "text-burgundy" },
-};
-
-function PrintStatusNote({ status }: { status: PrintTicketStatus | undefined }) {
-  if (!status) return null;
-  const view = PRINT_STATUS[status];
-  const Icon = view.icon;
-  return (
-    <span className={cn("flex items-center gap-1 text-xs font-medium", view.className)}>
-      <Icon className="size-3.5" aria-hidden="true" />
-      {view.label}
-    </span>
-  );
-}
-
-function KitchenOrderCard({
-  order,
-  elapsedMinutes,
-  canAdvance,
-  pending,
-  printStatus,
-  itemAction,
-  itemRollback,
-  onAdvance,
-  onAdvanceItem,
-  onRollbackItem,
-}: {
-  order: Order;
-  elapsedMinutes: number;
-  printStatus: PrintTicketStatus | undefined;
-  canAdvance: boolean;
-  pending: boolean;
-  itemAction: (order: Order, item: Order["items"][number]) => OrderItemStatus | null;
-  itemRollback: (item: Order["items"][number]) => OrderItemStatus | null;
-  onAdvance: (orderId: string, nextStatus: OrderStatus) => void;
-  onAdvanceItem: (itemId: string, nextStatus: OrderItemStatus) => void;
-  onRollbackItem: (item: Order["items"][number], target: OrderItemStatus) => void;
-}) {
-  const stage = order.status as KitchenStage;
-  const action = getAction(stage);
-  const ActionIcon = action.icon;
-  const urgency = getUrgency(elapsedMinutes);
-
-  return (
-    <article data-motion-enter="true" className="motion-table motion-operational-state overflow-hidden rounded-lg border border-border bg-card shadow-[var(--shadow-raised)]">
-      <div className="border-b border-border px-4 py-3.5">
-        <div className="flex items-start justify-between gap-3">
-          <div className="min-w-0">
-            <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
-              <h3 className="text-2xl font-extrabold leading-none tracking-tight text-foreground">
-                {order.tableName}
-              </h3>
-              <span className="text-base font-bold tabular-nums text-burgundy">
-                {order.orderNumber}
-              </span>
-            </div>
-            <p className="mt-1.5 text-xs font-medium text-muted-foreground">
-              {order.createdAt} siparişi
-              {order.waiterName ? `, ${order.waiterName}` : ", QR menü"}
-            </p>
-            <div className="mt-1">
-              <PrintStatusNote status={printStatus} />
-            </div>
-          </div>
-          <div className="shrink-0 text-right">
-            <div className={cn("flex items-center justify-end gap-1 text-base font-extrabold tabular-nums", urgency.timeClassName)}>
-              <Clock3 className="size-4" aria-hidden="true" />
-              {formatElapsed(elapsedMinutes)}
-            </div>
-            <Badge variant="outline" className={cn("mt-1.5 font-semibold", urgency.className)}>
-              {urgency.label}
-            </Badge>
-          </div>
-        </div>
-      </div>
-
-      <div className="px-4 py-3">
-        <ul className="space-y-3" aria-label={`${order.tableName} sipariş kalemleri`}>
-          {order.items.map((item) => {
-            const itemStatus = item.status ?? "pending";
-            const nextItemStatus = itemAction(order, item);
-            const previousItemStatus = itemRollback(item);
-            // A voided line was served then written off; either way the kitchen
-            // has no work left on it.
-            const cancelled = itemStatus === "cancelled" || itemStatus === "voided";
-            // A line still pending while the order is already being cooked or
-            // plated is a later addition, so it needs to stand out.
-            const lateAddition =
-              !cancelled &&
-              itemStatus === "pending" &&
-              (order.status === "preparing" || order.status === "ready");
-
-            return (
-              <li
-                key={item.id}
-                className={cn("grid grid-cols-[2.5rem_1fr] gap-2.5", cancelled && "opacity-55")}
-              >
-                <span
-                  className={cn(
-                    "flex h-9 items-center justify-center rounded-lg text-base font-extrabold tabular-nums",
-                    cancelled
-                      ? "bg-muted/60 text-muted-foreground line-through"
-                      : "bg-muted text-foreground",
-                  )}
-                >
-                  {item.quantity}×
-                </span>
-                <div className="min-w-0 pt-1">
-                  <div className="flex flex-wrap items-center justify-between gap-2">
-                    <p
-                      className={cn(
-                        "text-base font-semibold leading-6",
-                        cancelled
-                          ? "text-muted-foreground line-through"
-                          : "text-foreground",
-                      )}
-                    >
-                      {item.productName}
-                      {lateAddition ? (
-                        <Badge
-                          variant="outline"
-                          className="ml-2 border-copper/40 bg-copper/[0.14] align-middle text-xs font-bold text-[#6A4526]"
-                        >
-                          Yeni eklendi
-                        </Badge>
-                      ) : null}
-                    </p>
-                    {nextItemStatus || previousItemStatus ? (
-                      <span className="flex shrink-0 items-center gap-1.5">
-                        {previousItemStatus ? (
-                          <Button
-                            type="button"
-                            size="sm"
-                            variant="ghost"
-                            disabled={pending}
-                            aria-busy={pending}
-                            className="h-8 px-2 text-xs font-semibold text-muted-foreground hover:text-foreground"
-                            title="Bir önceki aşamaya döndür"
-                            aria-label={`${item.productName}: geri al`}
-                            onClick={() => onRollbackItem(item, previousItemStatus)}
-                          >
-                            <Undo2 className="size-3.5" aria-hidden="true" /> Geri Al
-                          </Button>
-                        ) : null}
-                        {nextItemStatus ? (
-                          <Button
-                            type="button"
-                            size="sm"
-                            variant="outline"
-                            disabled={pending}
-                            aria-busy={pending}
-                            className="h-8 px-2.5 text-xs font-bold"
-                            aria-label={`${item.productName}: ${ITEM_ACTION_LABELS[itemStatus] ?? "Güncelle"}`}
-                            onClick={() => onAdvanceItem(item.id, nextItemStatus)}
-                          >
-                            {ITEM_ACTION_LABELS[itemStatus] ?? "Güncelle"}
-                          </Button>
-                        ) : (
-                          <span className="text-xs font-semibold text-muted-foreground">
-                            {ITEM_STATUS_LABELS[itemStatus]}
-                          </span>
-                        )}
-                      </span>
-                    ) : (
-                      <span
-                        className={cn(
-                          "shrink-0 text-xs font-semibold",
-                          cancelled ? "text-destructive" : "text-muted-foreground",
-                        )}
-                      >
-                        {ITEM_STATUS_LABELS[itemStatus]}
-                      </span>
-                    )}
-                  </div>
-                  {item.note ? (
-                    <p className="mt-1.5 flex items-start gap-1.5 rounded-lg bg-burgundy/[0.08] px-2.5 py-2 text-sm font-bold leading-5 text-burgundy">
-                      <MessageSquareText className="mt-0.5 size-4 shrink-0" aria-hidden="true" />
-                      <span>{item.note}</span>
-                    </p>
-                  ) : null}
-                </div>
-              </li>
-            );
-          })}
-        </ul>
-      </div>
-
-      {canAdvance ? (
-        <div className="border-t border-border bg-muted/35 p-3">
-          <Button
-            type="button"
-            size="lg"
-            disabled={pending}
-            aria-busy={pending}
-            className={cn("h-12 w-full text-base font-bold", action.buttonClassName)}
-            aria-label={`${order.tableName} ${order.orderNumber} siparişini ${action.ariaLabel}`}
-            onClick={() => onAdvance(order.id, action.nextStatus)}
-          >
-            <ActionIcon className="size-4" aria-hidden="true" />
-            {action.label}
-          </Button>
-        </div>
-      ) : null}
-    </article>
-  );
 }
 
 /**
@@ -430,8 +98,11 @@ export function KitchenBoard() {
   const [rollback, setRollback] = useState<{
     item: Order["items"][number];
     target: OrderItemStatus;
+    expectedOrderVersion: number;
   } | null>(null);
   const [rollbackReason, setRollbackReason] = useState<string>("MARKED_BY_MISTAKE");
+  const [mobileFilter, setMobileFilter] = useState<KitchenFilter>("all");
+  const newOrderTracker = useRef(new NewEntityTracker());
 
   // Only what the kitchen still owes a table: the list is newest-first and
   // capped, so settled orders would use up the rows a ticket that is still
@@ -448,6 +119,14 @@ export function KitchenBoard() {
   });
 
   useEffect(() => {
+    const orders = resource.data?.orders;
+    if (!orders) return;
+    if (newOrderTracker.current.update(orders.map((order) => order.id))) {
+      void playSound("new-order");
+    }
+  }, [resource.data?.orders]);
+
+  useEffect(() => {
     // Deferred so the ticking clock never sets state inside the effect body.
     const timer = window.setTimeout(() => setNow(new Date()), 0);
     const interval = window.setInterval(() => setNow(new Date()), 1_000);
@@ -457,6 +136,7 @@ export function KitchenBoard() {
     };
   }, []);
 
+  const dataReady = resource.data !== null;
   // Zero until the first client tick; minutesSince clamps negatives to 0.
   const nowMs = now?.getTime() ?? 0;
   /**
@@ -486,6 +166,11 @@ export function KitchenBoard() {
     }));
   }, [nowMs, resource.data]);
   const activeOrders = useMemo(() => board.map((entry) => entry.order), [board]);
+  /** Which lane a ticket is in, so its card and its button agree with it. */
+  const stageById = useMemo(
+    () => new Map(board.map((entry) => [entry.order.id, entry.column])),
+    [board],
+  );
 
   // Asked for separately so the shared order feed stays one cheap query for
   // every other screen that reads it.
@@ -517,13 +202,69 @@ export function KitchenBoard() {
 
   const visibleOrderCount = counts.confirmed + counts.preparing + counts.ready;
 
+  /**
+   * The phone's single column.
+   *
+   * "Geciken" cuts across the three stages rather than being a fourth one: on a
+   * phone the question is "what is going cold", not "what stage is it in". The
+   * board itself is untouched — this only decides which of its tickets are in
+   * the column.
+   */
+  const lateCount = useMemo(
+    () =>
+      board.filter((entry) => resolveTicketUrgency(entry.order.elapsedMinutes) === "late").length,
+    [board],
+  );
+
+  // Before the first read there is no board to count, so every rail badge is a
+  // dash. A zero here is a claim that nothing is cooking, which nobody knows yet.
+  const filterOptions = useMemo(
+    () => [
+      { id: "all" as const, label: "Tümü", count: dataReady ? visibleOrderCount : null },
+      { id: "late" as const, label: "Geciken", count: dataReady ? lateCount : null, urgent: true },
+      { id: "confirmed" as const, label: "Yeni", count: dataReady ? counts.confirmed : null },
+      { id: "preparing" as const, label: "Hazırlanıyor", count: dataReady ? counts.preparing : null },
+      { id: "ready" as const, label: "Hazır", count: dataReady ? counts.ready : null },
+    ],
+    [counts, dataReady, lateCount, visibleOrderCount],
+  );
+
+  const mobileTickets = useMemo(() => {
+    const matching = board.filter((entry) => {
+      if (mobileFilter === "all") return true;
+      if (mobileFilter === "late") {
+        return resolveTicketUrgency(entry.order.elapsedMinutes) === "late";
+      }
+      return entry.column === mobileFilter;
+    });
+    return sortKitchenTickets(matching.map((entry) => entry.order));
+  }, [board, mobileFilter]);
+
+  const mobileEmpty =
+    mobileFilter === "late"
+      ? { title: "Geciken sipariş yok", description: "Bütün fişler süresinde ilerliyor." }
+      : mobileFilter === "all"
+        ? { title: "Bekleyen sipariş yok", description: "Gelen siparişler burada görünecek." }
+        : {
+            title: stages.find((stage) => stage.id === mobileFilter)?.emptyTitle ?? "Sipariş yok",
+            description:
+              stages.find((stage) => stage.id === mobileFilter)?.emptyDescription ?? "",
+          };
+
   const canAdvanceOrder = useCallback(
-    (order: Order) => {
-      const action = getAction(order.status as KitchenStage);
-      return canRoleTransitionOrderStatus(
-        role,
-        toApiOrderStatus(order.status),
-        toApiOrderStatus(action.nextStatus),
+    (order: Order, stage: KitchenStage) => {
+      const action = getAction(stage);
+      const nextStatus = toApiOrderStatus(action.nextStatus);
+      // A line added after the round went in has not been cooked, so the whole
+      // ticket cannot be called ready over it. The server refuses; the button
+      // goes away rather than becoming a 409 the cook has to read.
+      const blocked = itemsBlockingOrderStage(
+        nextStatus,
+        order.items.map((item) => ({ status: toApiOrderItemStatus(item.status ?? "pending") })),
+      );
+      return (
+        blocked.length === 0 &&
+        canRoleTransitionOrderStatus(role, toApiOrderStatus(order.status), nextStatus)
       );
     },
     [role],
@@ -569,6 +310,7 @@ export function KitchenBoard() {
       await work();
       await refetch();
     } catch (error) {
+      void playSound("error");
       toast.error(error instanceof ApiClientError ? error.message : "İşlem tamamlanamadı.");
     } finally {
       setPending(false);
@@ -580,15 +322,19 @@ export function KitchenBoard() {
   };
 
   const advanceItem = (itemId: string, nextStatus: OrderItemStatus) => {
+    const order = resource.data?.orders.find((entry) => entry.items.some((item) => item.id === itemId));
+    if (!order) return;
     void runMutation(() =>
-      staffApi.updateOrderItemStatus(itemId, toApiOrderItemStatus(nextStatus)),
+      staffApi.updateOrderItemStatus(itemId, toApiOrderItemStatus(nextStatus), { expectedOrderVersion: order.version }),
     );
   };
 
   /** Undoing a step is confirmed first; the reason is recorded with it. */
   const requestRollback = (item: Order["items"][number], target: OrderItemStatus) => {
+    const order = resource.data?.orders.find((entry) => entry.items.some((line) => line.id === item.id));
+    if (!order) return;
     setRollbackReason("MARKED_BY_MISTAKE");
-    setRollback({ item, target });
+    setRollback({ item, target, expectedOrderVersion: order.version });
   };
 
   const confirmRollback = () => {
@@ -599,127 +345,96 @@ export function KitchenBoard() {
       staffApi.updateOrderItemStatus(
         request.item.id,
         toApiOrderItemStatus(request.target),
-        { reasonCode: rollbackReason },
+        { reasonCode: rollbackReason, expectedOrderVersion: request.expectedOrderVersion },
       ),
     );
   };
 
   return (
-    <main className="flex min-h-[100dvh] flex-col bg-background lg:h-[100dvh]">
-      {/* One line. The date, the badge and the tagline told the kitchen nothing
-          it did not already know, and each cost a row of tickets. */}
-      <header className="shrink-0 border-b border-sidebar-primary/35 bg-sidebar text-[#FBF7EF]">
-        <div className="flex items-center justify-between gap-4 px-4 py-2.5 sm:px-6">
-          <div className="flex min-w-0 items-center gap-3">
-            <BrandMark compact className="size-9 shrink-0 border-gold/35" />
-            <h1 className="truncate text-lg font-bold tracking-tight sm:text-xl">Mutfak</h1>
-          </div>
+    <OperationalBackdrop>
+      <OperationalTopBar
+        title="Mutfak"
+        homeHref="/kitchen"
+        realtimeStatus={realtimeStatus}
+        sound
+      />
 
-          <div className="flex shrink-0 items-center gap-3 sm:gap-4">
-            {/* A live feed that has quietly stopped is the worst failure this
-                screen can have, so its state is never hidden behind a
-                breakpoint. */}
-            <RealtimeStatus status={realtimeStatus} />
-            <div className="flex items-baseline gap-1.5">
-              <span className="text-xs text-[#F5EBDD]/60">Aktif fiş</span>
-              <span className="text-lg font-extrabold tabular-nums">{visibleOrderCount}</span>
-            </div>
-            <p className="text-lg font-extrabold tabular-nums tracking-tight" suppressHydrationWarning>
-              {formatClock(now)}
+      <OperationalHome role="kitchen">
+        <OperationalHero
+          title="Mutfak"
+          person={name}
+          description="Bugünün servis akışı"
+          aside={<span className="hidden text-sm font-bold tabular-nums text-[#5D493B] sm:block" suppressHydrationWarning>{formatClock(now)}</span>}
+        />
+
+        <section aria-labelledby="kitchen-live-title">
+          <h2 id="kitchen-live-title" className="sr-only">Canlı mutfak durumu</h2>
+          <OperationalMetricGrid ariaLabel="Canlı mutfak durumu">
+            <OperationalMetric label="Yeni" value={counts.confirmed} icon={ReceiptText} tone="blue" iconClassName="bg-[#397FC5] text-white" ready={dataReady} loading={resource.loading} />
+            <OperationalMetric label="Hazırlanıyor" value={counts.preparing} icon={CookingPot} tone="amber" iconClassName="bg-[#E29A2F] text-[#2B211D]" ready={dataReady} loading={resource.loading} />
+            <OperationalMetric label="Geciken" value={lateCount} icon={Clock3} tone="burgundy" iconClassName="bg-[#B53C48] text-white" ready={dataReady} loading={resource.loading} />
+            <OperationalMetric label="Hazır" value={counts.ready} icon={BellRing} tone="green" iconClassName="bg-[#4E8A62] text-white" ready={dataReady} loading={resource.loading} />
+          </OperationalMetricGrid>
+          {resource.error ? (
+            <p className="mt-2 rounded-xl border border-status-warning/25 bg-status-warning-tint/75 px-3 py-2 text-sm font-semibold text-status-warning" role="alert">
+              {dataReady
+                ? "Mutfak listesi yenilenemedi; son alınan durum gösteriliyor."
+                : `Mutfak siparişleri yüklenemedi: ${resource.error.message}`}
             </p>
+          ) : null}
+        </section>
 
-            <span className="hidden h-8 w-px bg-white/15 sm:block" aria-hidden="true" />
+      <section className="mt-6" aria-labelledby="kitchen-modes-title">
+        <OperationalSectionHeading id="kitchen-modes-title" title="Çalışma görünümü" />
+        <KitchenFilters
+          options={filterOptions}
+          active={mobileFilter}
+          onChange={setMobileFilter}
+        />
+      </section>
 
-            {/*
-              Who is signed in, at the weight it deserves: a cook needs it to
-              know whose shift the board is being worked under, and never more
-              than that. The tickets stay the loudest thing on the screen.
-
-              The same route is legitimately opened by a manager or an admin, so
-              the role is read from the session and labelled with the product's
-              own mapping rather than assumed to be the kitchen.
-            */}
-            <div className="flex shrink-0 items-center gap-2">
-              <span
-                className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-white/10 text-xs font-bold text-gold"
-                aria-hidden="true"
-              >
-                {getInitials(name)}
-              </span>
-              {/* Below lg the board needs the width more than the name does;
-                  the initials and the logout control stay either way. */}
-              <span className="hidden min-w-0 max-w-40 leading-tight lg:block">
-                <span className="block truncate text-xs font-semibold text-[#FFFDF8]">{name}</span>
-                <span className="block truncate text-xs text-[#F5EBDD]/60">{STAFF_ROLE_LABELS[role]}</span>
-              </span>
-              <LogoutButton className="shrink-0 text-[#F5EBDD]/70 hover:bg-white/10 hover:text-[#FFFDF8]" />
+      <section className="mt-6" aria-labelledby="kitchen-priority-title">
+        <OperationalSectionHeading
+          id="kitchen-priority-title"
+          title="Şimdi hazırlanacaklar"
+          detail={<span className="tabular-nums">{dataReady ? `${mobileTickets.length} sipariş` : "—"}</span>}
+        />
+        {!dataReady ? (
+          // A failed first read is not an empty pass: the alert above says what
+          // happened, and no "bekleyen sipariş yok" is claimed over it.
+          resource.loading ? (
+            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3" aria-label="Mutfak siparişleri yükleniyor">
+              {Array.from({ length: 6 }, (_, index) => (
+                <div key={index} className="h-72 animate-pulse rounded-[24px] border border-[#6B4A32]/10 bg-white/48 motion-reduce:animate-none" />
+              ))}
             </div>
+          ) : null
+        ) : mobileTickets.length ? (
+          <div className="grid content-start gap-4 md:grid-cols-2 xl:grid-cols-3">
+            {mobileTickets.map((order) => (
+              <KitchenOrderCard
+                key={order.id}
+                order={order}
+                stage={stageById.get(order.id) ?? "confirmed"}
+                elapsedMinutes={order.elapsedMinutes}
+                canAdvance={canAdvanceOrder(order, stageById.get(order.id) ?? "confirmed")}
+                pending={pending}
+                printStatus={printStatuses[order.id]}
+                itemAction={itemAction}
+                itemRollback={itemRollback}
+                onAdvance={advanceOrder}
+                onAdvanceItem={advanceItem}
+                onRollbackItem={requestRollback}
+              />
+            ))}
           </div>
-        </div>
-      </header>
-
-      {/* No max width: on a 24-inch pass screen a centred column would throw
-          away a third of the board. */}
-      <section
-        className="min-h-0 flex-1 px-3 py-3 sm:px-4"
-        aria-label="Mutfak sipariş panosu"
-      >
-        <div className="grid gap-3 lg:h-full lg:min-h-0 lg:grid-cols-3 xl:gap-4">
-          {stages.map((stage) => {
-            const StageIcon = stage.icon;
-            const stageOrders = board
-              .filter((entry) => entry.column === stage.id)
-              .map((entry) => entry.order);
-
-            return (
-              <section
-                key={stage.id}
-                className="flex min-w-0 flex-col lg:min-h-0"
-                aria-labelledby={`stage-${stage.id}`}
-              >
-                <div className={cn("mb-2 flex shrink-0 items-center justify-between gap-3 rounded-lg border px-3 py-2", stage.headerClassName)}>
-                  <div className="flex min-w-0 items-center gap-2.5">
-                    <StageIcon className="size-5 shrink-0 text-foreground" strokeWidth={2} aria-hidden="true" />
-                    <h2 id={`stage-${stage.id}`} className="truncate text-base font-bold tracking-tight text-foreground">
-                      {stage.title}
-                    </h2>
-                  </div>
-                  <span className={cn("flex size-7 shrink-0 items-center justify-center rounded-md text-sm font-extrabold tabular-nums", stage.countClassName)} aria-label={`${counts[stage.id]} sipariş`}>
-                    {counts[stage.id]}
-                  </span>
-                </div>
-
-                {/* Each column scrolls alone, so a long queue in one stage never
-                    pushes the other two off the screen. */}
-                <div className="space-y-3 lg:min-h-0 lg:flex-1 lg:overflow-y-auto">
-                  {stageOrders.length ? (
-                    stageOrders.map((order) => (
-                      <KitchenOrderCard
-                        key={order.id}
-                        order={order}
-                        elapsedMinutes={order.elapsedMinutes}
-                        canAdvance={canAdvanceOrder(order)}
-                        pending={pending}
-                        printStatus={printStatuses[order.id]}
-                        itemAction={itemAction}
-                        itemRollback={itemRollback}
-                        onAdvance={advanceOrder}
-                        onAdvanceItem={advanceItem}
-                        onRollbackItem={requestRollback}
-                      />
-                    ))
-                  ) : (
-                    <EmptyState
-                      icon={stage.id === "ready" ? CircleCheckBig : ChefHat}
-                      title={stage.emptyTitle}
-                      description={stage.emptyDescription}
-                    />
-                  )}
-                </div>
-              </section>
-            );
-          })}
-        </div>
+        ) : (
+          <EmptyState
+            icon={mobileFilter === "ready" ? CircleCheckBig : ChefHat}
+            title={mobileEmpty.title}
+            description={mobileEmpty.description}
+          />
+        )}
       </section>
 
       {/* Undoing a step is deliberate: it is confirmed, and it says why. */}
@@ -775,6 +490,7 @@ export function KitchenBoard() {
           </div>
         </WindowDialogContent>
       </Dialog>
-    </main>
+      </OperationalHome>
+    </OperationalBackdrop>
   );
 }

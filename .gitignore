@@ -50,3 +50,8 @@ tools/printer-agent/*.journal.json
 
 # Personal editor state, not project configuration.
 .vscode/
+
+# One-off database probes and maintenance scripts. They load the real
+# DATABASE_URL through @next/env, and one of them can clear business data, so
+# they must never become committable by a stray `git add -A`.
+tmp-*.mjs

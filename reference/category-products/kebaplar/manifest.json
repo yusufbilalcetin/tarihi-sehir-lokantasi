@@ -1,0 +1,91 @@
+{
+  "source": "https://tarihi-sehir-lokantasi.vercel.app/menu/demo-table",
+  "category": "Kebaplar",
+  "slug": "kebaplar",
+  "productCount": 3,
+  "declaredCount": 3,
+  "categoryCover": {
+    "assetType": "category-cover",
+    "sourcePath": "reference/live/assets/images/food/kuzu-tandir.jpg",
+    "file": "kuzu-tandir.jpg",
+    "width": 1200,
+    "height": 800,
+    "format": "jpeg",
+    "fileSize": 182549,
+    "sha256": "45f7f5b08674c7dd5e801a4ecebfd0019641d9b55bcfa40d750951bf4fb09b49"
+  },
+  "products": [
+    {
+      "name": "Tas Kebabı",
+      "description": "Dana eti, mevsim sebzeleri ve lokantamızın ağır pişmiş özel sosu.",
+      "price": "₺320",
+      "badges": [
+        "Şefin Önerisi",
+        "Günün Yemeği"
+      ],
+      "availability": "available",
+      "image": {
+        "assetType": "product-image",
+        "file": "kebaplar/images/tas-kebabi.webp",
+        "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/tas-kebabi.webp",
+        "sourceType": "existing-reference",
+        "originalReference": "reference/live/assets/images/food/tas-kebabi.webp",
+        "renamedFrom": null,
+        "width": 1200,
+        "height": 800,
+        "format": "webp",
+        "fileSize": 141646,
+        "sha256": "312cab25277bfa3105c5e3eb4a87f985a4c22802c4bcb8a970273618e5281afd"
+      },
+      "sharedImage": false
+    },
+    {
+      "name": "Kuzu Tandır",
+      "description": "Ağır ateşte uzun süre pişirilmiş, lokantamızın imza kuzu tandırı.",
+      "price": "₺420",
+      "badges": [
+        "Şefin Önerisi",
+        "Popüler"
+      ],
+      "availability": "available",
+      "image": {
+        "assetType": "product-image",
+        "file": "kebaplar/images/kuzu-tandir.webp",
+        "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/kuzu-tandir.webp",
+        "sourceType": "existing-reference",
+        "originalReference": "reference/live/assets/images/food/kuzu-tandir.webp",
+        "renamedFrom": null,
+        "width": 1200,
+        "height": 800,
+        "format": "webp",
+        "fileSize": 171254,
+        "sha256": "215b8fe9183936f83698845c5aa5589d6a677ec76b3468acb8a4b0f209383af7"
+      },
+      "sharedImage": false
+    },
+    {
+      "name": "Bursa İskender Kebabı",
+      "description": "Tırnak pide üzerinde döner, domates sosu, kızgın tereyağı ve yoğurtla servis edilir.",
+      "price": "₺395",
+      "badges": [
+        "Bursa Lezzeti",
+        "Şefin Önerisi"
+      ],
+      "availability": "available",
+      "image": {
+        "assetType": "product-image",
+        "file": "kebaplar/images/bursa-iskender-kebabi.webp",
+        "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/bursa-iskender-kebabi.webp",
+        "sourceType": "existing-reference",
+        "originalReference": "reference/live/assets/images/food/bursa-iskender-kebabi.webp",
+        "renamedFrom": null,
+        "width": 1200,
+        "height": 800,
+        "format": "webp",
+        "fileSize": 141612,
+        "sha256": "d0454f0c9ea35e1f104fb401148d79ca023ad5fd22763a2d972a0b649512c450"
+      },
+      "sharedImage": false
+    }
+  ]
+}

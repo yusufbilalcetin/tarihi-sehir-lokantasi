@@ -4,7 +4,7 @@ import { QrCode } from "lucide-react";
 import { BrandMark } from "@/components/shared/brand-mark";
 
 export const metadata = {
-  title: "Geçersiz QR | Tarihi Şehir Lokantası",
+  title: "Geçersiz QR",
   description: "QR menü bağlantısı doğrulanamadı.",
 };
 

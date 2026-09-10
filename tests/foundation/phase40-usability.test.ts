@@ -2,6 +2,12 @@ import assert from "node:assert/strict";
 import { readdirSync, readFileSync } from "node:fs";
 import test from "node:test";
 
+import {
+  ADMIN_HOME,
+  ADMIN_SEARCHABLE,
+  ADMIN_SHELL_ROW_APPS,
+} from "../../components/admin/admin-navigation";
+
 /**
  * Phase 40 — usability, guarded structurally.
  *
@@ -30,46 +36,79 @@ function sourceFiles(): readonly (readonly [string, string])[] {
 }
 
 const adminShell = read("components/admin/admin-shell.tsx");
+const adminNavigation = read("components/admin/admin-navigation.ts");
 const todayPanel = read("components/admin/today-panel.tsx");
+
+/** Every destination the panel offers, whichever surface links it. */
+const NAV_HREFS: ReadonlySet<string> = new Set([
+  ADMIN_HOME.href,
+  ...ADMIN_SEARCHABLE.map((row) => row.destination.href),
+]);
 const dashboardView = read("components/admin/dashboard-view.tsx");
 const kitchenBoard = read("components/kitchen/kitchen-board.tsx");
+// The ticket became its own module when the board grew a phone layout and a
+// pass-screen layout; the contracts below moved with the markup, unchanged.
+const kitchenTicket = read("components/kitchen/kitchen-ticket.tsx");
+const kitchenFilters = read("components/kitchen/kitchen-filters.tsx");
 const staffShell = read("components/staff/staff-shell.tsx");
 const cashier = read("components/cashier/cashier-dashboard.tsx");
 
 /* ------------------------------------------------ navigation ------------- */
 
 test("the admin sidebar presents sections, not forty links at once", () => {
-  const sections = [...adminShell.matchAll(/\{ label: "([^"]+)", items: \w+ \}/g)].map((match) => match[1]);
-  assert.ok(sections.length >= 6 && sections.length <= 9, `expected a handful of sections, found ${sections.length}`);
-  // Collapsed by default, except the one holding the current page — so the
-  // resting state of the menu is the section count, not the link count.
-  assert.match(adminShell, /const holdsCurrentPage = items\.some\(\(item\) => isActivePath\(pathname, item\.href\)\)/);
-  assert.match(adminShell, /useState\(holdsCurrentPage\)/);
-  assert.match(adminShell, /aria-expanded=\{open\}/);
-  assert.match(adminShell, /aria-controls=\{panelId\}/);
+  const domains = [ADMIN_HOME, ...ADMIN_SHELL_ROW_APPS].map((row) => row.label);
+  assert.deepEqual(domains, [
+    "Genel Bakış",
+    "Siparişler",
+    "Menü",
+    "Masalar",
+    "Personel",
+    "Kasa",
+    "Raporlar",
+    "Ayarlar",
+  ]);
+  // The rows are eight links to eight screens. A row that carried a list would
+  // have to be unfolded before it could be read.
+  for (const row of [ADMIN_HOME, ...ADMIN_SHELL_ROW_APPS]) assert.match(row.href, /^\/admin\//);
+  assert.doesNotMatch(adminShell, /items:/, "a business-domain row must not contain nested navigation");
+  assert.doesNotMatch(adminShell, /function NavGroup|aria-expanded=/, "the flat sidebar must not become a disclosure menu");
 });
 
 test("no route was deleted to achieve that grouping", () => {
-  // Every admin page on disk must still be reachable from the menu.
+  // Every admin page on disk is either in the menu or redirects to a target
+  // that is. Compatibility URLs do not need to become duplicate sidebar rows.
   const pages = readdirSync(new URL("../../app/admin", import.meta.url), { withFileTypes: true })
     .filter((entry) => entry.isDirectory())
     .map((entry) => `/admin/${entry.name}`);
-  const missing = pages.filter((href) => !adminShell.includes(`"${href}"`) && !href.includes("["));
+  const missing = pages.filter((href) => {
+    if (href.includes("[") || NAV_HREFS.has(href)) return false;
+    const page = read(`app${href}/page.tsx`);
+    const redirectTarget = page.match(/redirect\("([^"]+)"\)/)?.[1];
+    return !redirectTarget || !NAV_HREFS.has(redirectTarget);
+  });
   assert.deepEqual(missing, [], "an admin route exists with no way to navigate to it");
 });
 
-test("a collapsed section still says it holds the page you are on", () => {
-  assert.match(adminShell, /!open && holdsCurrentPage \? <span[^>]*rounded-full/);
+test("the current page identifies one active business domain", () => {
+  // Ownership is one question asked of the table, so one app lights up.
+  const switcher = read("components/admin/admin-app-switcher.tsx");
+  assert.match(switcher, /const currentApp = adminAppForPath\(pathname\)/);
+  assert.match(switcher, /const current = app\.id === currentApp\?\.id/);
+  assert.match(switcher, /aria-current=\{current \? "true" : undefined\}/);
+  assert.match(adminShell, /aria-current=\{active \? "page" : undefined\}/);
 });
 
 test("finding a screen does not require knowing which section owns it", () => {
-  assert.match(adminShell, /function searchNav\(/);
-  assert.match(adminShell, /NAV_SECTIONS/);
+  // The search moved into the navigation table with the rest of the menu, so
+  // the shell's search dialog reads it rather than keeping a second copy.
+  assert.match(read("components/admin/admin-navigation-search.tsx"), /searchAdminNavigation\(query\)/);
+  assert.match(adminNavigation, /export function searchAdminNavigation\(/);
   // Discovery searches the menu already in memory. A per-keystroke database
   // query is exactly the unbounded search Phase 39's budget forbids.
-  const search = adminShell.slice(adminShell.indexOf("function searchNav("), adminShell.indexOf("function isActivePath("));
+  const search = adminNavigation.slice(adminNavigation.indexOf("export function searchAdminNavigation("));
   assert.doesNotMatch(search, /fetch\(|useApiResource|await /, "navigation search must not hit the network");
   assert.match(search, /toLocaleLowerCase\("tr"\)/, "Turkish casing, so 'İ' and 'ı' match as a Turkish speaker expects");
+  assert.match(search, /slice\(0, ADMIN_SEARCH_LIMIT\)/, "the result list must stay bounded");
 });
 
 /* ------------------------------------------------ manager home ----------- */
@@ -78,7 +117,8 @@ test("the manager lands on today's work, and the fortnight lives in the reports"
   // The chart used to open this screen, above the day's own figures. It was
   // not deleted — it moved one screen across, to where history is read. What
   // the home keeps is today's state and the two panels that act on it.
-  assert.ok(dashboardView.includes("<TodayPanel"), "the manager home does not show today's state");
+  assert.match(dashboardView, /readOverview/, "the manager home does not read today's state");
+  assert.match(dashboardView, /HOME_APP_SHORTCUTS/, "the manager home is not an app launcher");
   for (const historical of ["14 Günlük Ciro", "DashboardSalesChart", "En çok satanlar"]) {
     assert.equal(dashboardView.includes(historical), false, `${historical} still outranks today's work`);
   }
@@ -93,7 +133,7 @@ test("today is answered once, on the manager's home, and not again on the ERP sc
   // remember which one they were reading. Today belongs to Genel Bakış; the ERP
   // screen is the advanced work and starts with it.
   const erp = read("components/admin/erp-operations-manager.tsx");
-  assert.match(dashboardView, /<TodayPanel/, "the manager home no longer shows today's state");
+  assert.match(dashboardView, /Bugünün canlı özeti/, "the manager home no longer shows today's state");
   assert.doesNotMatch(erp, /<TodayPanel/, "the ERP screen repeats the manager home's today block");
 
   // One reader, one endpoint, still shared: the ERP screen derives its setup
@@ -104,6 +144,7 @@ test("today is answered once, on the manager's home, and not again on the ERP sc
     // two start disagreeing about what needs attention.
     assert.doesNotMatch(source, /counts\.criticalStock > 0/, `${name} re-derives a warning`);
   }
+  assert.match(dashboardView, /warningsFor\(overview\.data\)/);
   assert.match(todayPanel, /function warningsFor\(/);
   assert.match(todayPanel, /export function TodayPanel/, "the shared panel was deleted rather than un-duplicated");
 });
@@ -113,7 +154,7 @@ test("every warning names the screen where the work is actually done", () => {
   const entries = [...warnings.matchAll(/href: "(\/admin\/[a-z-]+)", action: "([^"]+)"/g)];
   assert.ok(entries.length >= 5, "the attention list lost its warnings");
   for (const [, href, action] of entries) {
-    assert.ok(adminShell.includes(`"${href}"`), `${href} is not a real destination`);
+    assert.ok(NAV_HREFS.has(href), `${href} is not a real destination`);
     assert.ok(/git|Aç|İncele/.test(action), `"${action}" does not read as an action`);
   }
 });
@@ -216,7 +257,7 @@ test("no screen asks 'emin misiniz' where it could say what will happen", () => 
 });
 
 test("moving an order forward in the kitchen is one tap, with no dialog", () => {
-  assert.match(kitchenBoard, /onClick=\{\(\) => onAdvance\(order\.id, action\.nextStatus\)\}/);
+  assert.match(kitchenTicket, /onClick=\{\(\) => onAdvance\(order\.id, action\.nextStatus\)\}/);
   // The only dialog on this screen is the deliberate backwards step, which also
   // collects a reason.
   const dialogs = [...kitchenBoard.matchAll(/<Dialog\s/g)];
@@ -269,20 +310,41 @@ test("the guest is never shown the channel enum the database stores", () => {
 
 /* ------------------------------------------------ responsive ------------- */
 
-test("the kitchen board does not squeeze three lanes into a tablet portrait", () => {
-  // At 768px three lanes leave roughly 229px per card, which has to hold a
-  // quantity chip, a product name, a note and a touch target. The three-lane
-  // layout starts at lg (1024px), where a lane is about 314px.
+test("the kitchen board does not squeeze three tickets into a tablet portrait", () => {
+  // At 768px three columns leave roughly 229px per ticket, which has to hold a
+  // quantity chip, a product name, a note and a touch target. The third column
+  // is held back to xl (1280px), where a ticket is about 400px.
   // Asserted as intent, not as one literal class string: what matters is that
-  // the three-lane layout is gated at lg and never earlier.
-  assert.match(kitchenBoard, /className="grid gap-3[^"]*lg:grid-cols-3/);
-  assert.doesNotMatch(kitchenBoard, /(sm|md):grid-cols-3/);
-  assert.doesNotMatch(kitchenBoard, /grid gap-4 md:grid-cols-3/);
+  // the third column is gated at xl and never earlier.
+  assert.match(kitchenBoard, /className="grid content-start gap-4 md:grid-cols-2 xl:grid-cols-3"/);
+  assert.doesNotMatch(kitchenBoard, /\b(sm|md|lg):grid-cols-3\b/);
 });
 
 test("staff surfaces keep touch-sized controls", () => {
-  for (const [name, source] of [["kitchen", kitchenBoard], ["cashier", cashier], ["staff shell", staffShell]] as const) {
-    assert.match(source, /min-h-1[012]|h-1[124]|size-1[12]/, `${name} has no touch-sized control`);
+  // The board delegates every control it has to these modules, so they are
+  // where the sizes live. The board is checked separately for not rolling its
+  // own undersized one.
+  for (const [name, source] of [
+    ["kitchen ticket", kitchenTicket],
+    ["kitchen filters", kitchenFilters],
+    ["cashier", cashier],
+    ["staff shell", staffShell],
+  ] as const) {
+    // 44px, however it is written: a scale step or an explicit pixel size.
+    assert.match(
+      source,
+      /min-h-1[012]|h-1[124]|size-1[12]|min-h-\[(?:4[4-9]|[5-9]\d|\d{3})px\]/,
+      `${name} has no touch-sized control`,
+    );
+  }
+  // Skeleton placeholders are not controls, so they are excluded by name.
+  for (const [, className] of kitchenBoard.matchAll(/className="([^"]*)"/g)) {
+    if (className.includes("animate-pulse")) continue;
+    assert.doesNotMatch(
+      className,
+      /(?:^|\s)(?:h-[5-9]|size-[5-9]|min-h-[5-9])(?:\s|$)/,
+      "the kitchen board grew a control smaller than a finger",
+    );
   }
 });
 

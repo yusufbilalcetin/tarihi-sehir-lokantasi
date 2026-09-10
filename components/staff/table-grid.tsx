@@ -1,36 +1,24 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, type ReactNode } from "react";
 import {
   BadgeCheck,
   Ban,
   BellRing,
-  Clock3,
   Loader2,
   Plus,
   ReceiptText,
   StickyNote,
-  UsersRound,
   Utensils,
-  X,
 } from "lucide-react";
 import { toast } from "sonner";
 import { CancellationReasonForm } from "@/components/staff/cancellation-reason-form";
-import { TableCard } from "@/components/staff/table-card";
 import { TableOperationsPanel } from "@/components/staff/table-operations-panel";
 import { TableOrderComposer } from "@/components/staff/table-order-composer";
 import { useStaffSession } from "@/components/staff/staff-session-provider";
 import { StatusBadge } from "@/components/shared/status-badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle,
-} from "@/components/ui/sheet";
 import { Textarea } from "@/components/ui/textarea";
 import { toApiOrderItemStatus, toApiOrderStatus } from "@/lib/adapters/staff-view-model";
 import { ApiClientError } from "@/lib/api/client";
@@ -47,14 +35,15 @@ import {
   canRoleCancelOrderItem,
   itemCancellationNeedsConfirmation,
 } from "@/lib/domain/order-mutations";
-import type { UserRole } from "@/lib/domain/status";
+import { readyOrderItems } from "@/lib/domain/service-attention";
+import { canRoleTransitionOrderItemStatus, type UserRole } from "@/lib/domain/status";
 import {
   TABLE_NOTE_LABEL,
   resolveTableQuickActions,
   type TableQuickAction,
   type TableQuickActionId,
 } from "@/lib/domain/table-actions";
-import { formatCurrency, formatElapsed } from "@/lib/format";
+import { formatCurrency } from "@/lib/format";
 import { cn } from "@/lib/utils";
 import type { Order, RestaurantTable } from "@/types";
 
@@ -131,13 +120,23 @@ function TableOrderDetails({
   pendingItemId,
   onCancelItem,
   onVoidItem,
+  onServeItem,
 }: {
   order: Order;
   role: UserRole;
   pendingItemId: string | null;
   onCancelItem: (item: Order["items"][number]) => void;
   onVoidItem: (item: Order["items"][number]) => void;
+  onServeItem: (item: Order["items"][number]) => void;
 }) {
+  // A round is rarely finished at once. While the order itself still reads
+  // "hazırlanıyor" there can be a plate at the pass going cold, and the order
+  // status alone will never say so.
+  const ready = readyOrderItems(order);
+  const stillCooking = order.items.some(
+    (item) => item.status === "pending" || item.status === "preparing",
+  );
+
   return (
     <div className="overflow-hidden rounded-xl border border-border bg-card">
       <div className="flex items-center justify-between gap-3 bg-muted/55 px-4 py-3">
@@ -147,13 +146,23 @@ function TableOrderDetails({
         </div>
         <StatusBadge status={order.status} />
       </div>
+      {ready.length && stillCooking ? (
+        <p className="flex items-center gap-2 border-b border-border/70 bg-order-ready-tint px-4 py-2.5 text-sm font-semibold text-order-ready">
+          <Utensils className="size-4 shrink-0" strokeWidth={2} aria-hidden="true" />
+          {ready.length} ürün hazır, kalanı hazırlanıyor. Hazır olanı şimdi servis edebilirsiniz.
+        </p>
+      ) : null}
       <div className="divide-y divide-border/70 px-4">
         {order.items.map((item) => {
-          const itemStatus = toApiOrderItemStatus(item.status ?? "pending");
-          const cancelled = itemStatus === "CANCELLED" || itemStatus === "VOIDED";
+          const viewStatus = item.status ?? "pending";
+          const itemStatus = toApiOrderItemStatus(viewStatus);
+          const cancelled = viewStatus === "cancelled" || viewStatus === "voided";
           const canCancel = !cancelled && canRoleCancelOrderItem(role, itemStatus);
           // A served line leaves the bill through a void, not a cancellation.
           const canVoid = !cancelled && isItemVoidable(itemStatus) && canRoleVoidItem(role);
+          // One plate at a time: the API already allows a ready line to leave
+          // the pass while the rest of the ticket is still cooking.
+          const canServe = canRoleTransitionOrderItemStatus(role, itemStatus, "SERVED");
           const busy = pendingItemId === item.id;
 
           return (
@@ -182,7 +191,11 @@ function TableOrderDetails({
                   <p className="mt-1 text-xs font-semibold text-muted-foreground">
                     {itemStatus === "VOIDED" ? "Hesaptan çıkarıldı" : "İptal edildi"}
                   </p>
-                ) : null}
+                ) : (
+                  // Which line is where: without it the waiter cannot tell the
+                  // plated dish from the one still on the stove.
+                  <StatusBadge status={viewStatus} size="sm" className="mt-1.5" />
+                )}
               </div>
               <div className="flex shrink-0 items-start gap-2">
                 <span
@@ -193,6 +206,24 @@ function TableOrderDetails({
                 >
                   {formatCurrency(item.quantity * item.unitPrice)}
                 </span>
+                {canServe ? (
+                  <Button
+                    type="button"
+                    size="sm"
+                    className="h-9 px-3 text-xs font-bold"
+                    disabled={busy}
+                    aria-busy={busy}
+                    aria-label={`${item.productName} kalemini servis edildi olarak işaretle`}
+                    onClick={() => onServeItem(item)}
+                  >
+                    {busy ? (
+                      <Loader2 className="size-3.5 animate-spin" strokeWidth={1.8} />
+                    ) : (
+                      <Utensils className="size-3.5" strokeWidth={1.8} />
+                    )}
+                    Servis Et
+                  </Button>
+                ) : null}
                 {canCancel || canVoid ? (
                   <Button
                     type="button"
@@ -225,18 +256,33 @@ function TableOrderDetails({
   );
 }
 
+/**
+ * The parts a caller may arrange itself.
+ *
+ * `detailBody` is the selected table's order list, quick actions and composer —
+ * the same node the sheet shows, so a cockpit column and a phone sheet can
+ * never drift apart in what they let a waiter do.
+ */
+export interface TableGridLayoutParts {
+  readonly detailBody: ReactNode;
+  readonly selectedTable: RestaurantTable | null;
+  readonly selectTable: (tableId: string | null) => void;
+  readonly close: () => void;
+}
+
 export function TableGrid({
   tables,
   orders,
   calls,
   onChanged,
-  compact = false,
+  renderLayout,
 }: {
   tables: RestaurantTable[];
   orders: readonly Order[];
   calls: readonly StaffCallPayload[];
   onChanged: () => Promise<void> | void;
-  compact?: boolean;
+  /** The caller frames the parts; this component owns only the behaviour. */
+  renderLayout: (parts: TableGridLayoutParts) => ReactNode;
 }) {
   const { role } = useStaffSession();
   const [selectedTableId, setSelectedTableId] = useState<string | null>(null);
@@ -250,6 +296,7 @@ export function TableGrid({
     | null
   >(null);
   const [cancelPending, setCancelPending] = useState(false);
+  const [servingItemId, setServingItemId] = useState<string | null>(null);
 
   // Re-read from the refreshed list so the sheet follows server state instead
   // of a snapshot taken when the card was tapped.
@@ -299,6 +346,29 @@ export function TableGrid({
     selectedOrder && canAddItemsToOrder(toApiOrderStatus(selectedOrder.status))
       ? selectedOrder.id
       : undefined;
+
+  /**
+   * Carrying one plate.
+   *
+   * The version travels with the command: if the kitchen has pulled that line
+   * back since this screen drew it, the server refuses rather than recording a
+   * dish as served that is now on the stove again.
+   */
+  async function serveItem(item: Order["items"][number]) {
+    if (!selectedOrder || servingItemId) return;
+    setServingItemId(item.id);
+    try {
+      await staffApi.updateOrderItemStatus(item.id, "SERVED", {
+        expectedOrderVersion: selectedOrder.version,
+      });
+      await onChanged();
+      toast.success(`${item.productName} servis edildi.`);
+    } catch (error) {
+      toast.error(error instanceof ApiClientError ? error.message : "İşlem tamamlanamadı.");
+    } finally {
+      setServingItemId(null);
+    }
+  }
 
   function requestItemCancellation(item: Order["items"][number]) {
     const status = toApiOrderItemStatus(item.status ?? "pending");
@@ -434,284 +504,229 @@ export function TableGrid({
     });
   }
 
-  return (
-    <>
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
-        {tables.map((table) => (
-          <TableCard
-            key={table.id}
-            table={table}
-            compact={compact}
-            onSelect={(selected) => setSelectedTableId(selected.id)}
-          />
-        ))}
+  // The scrollable body is plain markup on purpose: the sheet supplies its own
+  // header and footer, and the cockpit renders this same node inline in its
+  // right-hand column. One body, two frames — no second implementation of the
+  // order list, the quick actions or the composer.
+  const detailBody = selectedTable ? (
+    <div className="flex-1 space-y-5 overflow-y-auto px-5 py-5">
+      {selectedOrder ? (
+        <TableOrderDetails
+          order={selectedOrder}
+          role={role}
+          pendingItemId={
+            servingItemId ??
+            (cancelPending && cancelTarget?.kind === "item" ? cancelTarget.item.id : null)
+          }
+          onCancelItem={requestItemCancellation}
+          onVoidItem={(item) => setCancelTarget({ kind: "void", item })}
+          onServeItem={(item) => void serveItem(item)}
+        />
+      ) : (
+        <div className="rounded-xl border border-dashed border-border bg-muted/25 p-6 text-center">
+          <Utensils className="mx-auto size-6 text-muted-foreground" strokeWidth={1.6} />
+          <p className="mt-3 font-semibold text-foreground">Aktif sipariş yok</p>
+          <p className="mt-1 text-sm leading-6 text-muted-foreground">
+            Bu masa için yeni sipariş ekleyebilirsiniz.
+          </p>
+        </div>
+      )}
+
+      {openCalls.length ? (
+        <ul className="space-y-2" aria-label="Masanın açık talepleri">
+          {openCalls.map((call) => (
+            <li
+              key={call.id}
+              className="flex items-start gap-2.5 rounded-lg border border-border bg-muted/30 px-3 py-2.5 text-sm"
+            >
+              <BellRing
+                className="mt-0.5 size-4 shrink-0 text-burgundy"
+                strokeWidth={1.8}
+              />
+              <div className="min-w-0">
+                <p className="font-semibold text-foreground">
+                  {call.requestLabel ?? CALL_FALLBACK_LABELS[call.type]}
+                </p>
+                {call.notes ? (
+                  <p className="mt-0.5 leading-5 text-muted-foreground">{call.notes}</p>
+                ) : null}
+              </div>
+            </li>
+          ))}
+        </ul>
+      ) : null}
+
+      <div className="rounded-lg border border-gold/25 bg-sidebar p-4 text-card shadow-[var(--shadow-floating)]">
+        <div className="flex items-end justify-between gap-3">
+          <div>
+            <p className="text-xs font-semibold text-cream/65">Masa toplamı</p>
+            <p className="mt-1 text-3xl font-semibold tabular-nums">
+              {formatCurrency(selectedTable.total ?? selectedOrder?.total ?? 0)}
+            </p>
+          </div>
+          <p className="text-right text-xs leading-5 text-cream/60">
+            Son hareket<br />{selectedTable.lastActivity}
+          </p>
+        </div>
       </div>
 
-      <Sheet open={Boolean(selectedTable)} onOpenChange={(open) => !open && closeSheet()}>
-        <SheetContent
-          side="right"
-          showCloseButton={false}
-          className="w-full max-w-full gap-0 data-[side=right]:sm:max-w-md"
-        >
-          {selectedTable ? (
-            <>
-              <Button
-                type="button"
-                variant="ghost"
-                className="absolute right-2 top-2 z-10 size-11 p-0"
-                onClick={closeSheet}
-                aria-label="Masa detayını kapat"
-              >
-                <X className="size-5" strokeWidth={1.8} />
-              </Button>
-              <SheetHeader className="border-b border-border bg-muted/35 px-5 py-5 pr-14">
-                <div className="flex items-center gap-2.5">
-                  <SheetTitle className="text-2xl font-semibold tracking-tight">
-                    {selectedTable.name}
-                  </SheetTitle>
-                  <StatusBadge status={selectedTable.status} />
-                </div>
-                <SheetDescription className="mt-1 flex flex-wrap items-center gap-x-4 gap-y-1">
-                  <span className="flex items-center gap-1.5">
-                    <UsersRound className="size-4" strokeWidth={1.8} />
-                    {selectedTable.seats} kişilik
-                  </span>
-                  <span className="flex items-center gap-1.5">
-                    <Clock3 className="size-4" strokeWidth={1.8} />
-                    {selectedTable.activeMinutes
-                      ? `${formatElapsed(selectedTable.activeMinutes)} açık`
-                      : "Şu an boş"}
-                  </span>
-                </SheetDescription>
-              </SheetHeader>
+      <Separator />
 
-              <div className="flex-1 space-y-5 overflow-y-auto px-5 py-5">
-                {selectedOrder ? (
-                  <TableOrderDetails
-                    order={selectedOrder}
-                    role={role}
-                    pendingItemId={
-                      cancelPending && cancelTarget?.kind === "item"
-                        ? cancelTarget.item.id
-                        : null
-                    }
-                    onCancelItem={requestItemCancellation}
-                    onVoidItem={(item) => setCancelTarget({ kind: "void", item })}
-                  />
-                ) : (
-                  <div className="rounded-xl border border-dashed border-border bg-muted/25 p-6 text-center">
-                    <Utensils className="mx-auto size-6 text-muted-foreground" strokeWidth={1.6} />
-                    <p className="mt-3 font-semibold text-foreground">Aktif sipariş yok</p>
-                    <p className="mt-1 text-sm leading-6 text-muted-foreground">
-                      Bu masa için yeni sipariş ekleyebilirsiniz.
-                    </p>
-                  </div>
-                )}
+      <div>
+        <h3 className="font-heading text-lg font-semibold">Masa işlemleri</h3>
+        <p className="mt-1 text-sm text-muted-foreground">
+          Servis sırasında en sık kullanılan işlemler.
+        </p>
+        <div className="mt-4 grid grid-cols-2 gap-2.5">
+          {tableActions.map((item) => {
+            const Icon = item.icon;
+            const action = quickActions.find((candidate) => candidate.id === item.id);
+            if (!action) return null;
+            const busy = pendingAction === item.id;
+            const blocked =
+              pendingAction !== null &&
+              ACTION_GROUPS[pendingAction] === ACTION_GROUPS[item.id];
+            const disabled = !action.enabled || blocked;
 
-                {openCalls.length ? (
-                  <ul className="space-y-2" aria-label="Masanın açık talepleri">
-                    {openCalls.map((call) => (
-                      <li
-                        key={call.id}
-                        className="flex items-start gap-2.5 rounded-lg border border-border bg-muted/30 px-3 py-2.5 text-sm"
-                      >
-                        <BellRing
-                          className="mt-0.5 size-4 shrink-0 text-burgundy"
-                          strokeWidth={1.8}
-                        />
-                        <div className="min-w-0">
-                          <p className="font-semibold text-foreground">
-                            {call.requestLabel ?? CALL_FALLBACK_LABELS[call.type]}
-                          </p>
-                          {call.notes ? (
-                            <p className="mt-0.5 leading-5 text-muted-foreground">{call.notes}</p>
-                          ) : null}
-                        </div>
-                      </li>
-                    ))}
-                  </ul>
-                ) : null}
+            const hint = action.disabledReason ?? actionEffect(action);
 
-                <div className="rounded-lg border border-gold/25 bg-sidebar p-4 text-card shadow-[var(--shadow-floating)]">
-                  <div className="flex items-end justify-between gap-3">
-                    <div>
-                      <p className="text-xs font-semibold text-cream/65">Masa toplamı</p>
-                      <p className="mt-1 text-3xl font-semibold tabular-nums">
-                        {formatCurrency(selectedTable.total ?? selectedOrder?.total ?? 0)}
-                      </p>
-                    </div>
-                    <p className="text-right text-xs leading-5 text-cream/60">
-                      Son hareket<br />{selectedTable.lastActivity}
-                    </p>
-                  </div>
-                </div>
-
-                <Separator />
-
-                <div>
-                  <h3 className="font-heading text-lg font-semibold">Masa işlemleri</h3>
-                  <p className="mt-1 text-sm text-muted-foreground">
-                    Servis sırasında en sık kullanılan işlemler.
-                  </p>
-                  <div className="mt-4 grid grid-cols-2 gap-2.5">
-                    {tableActions.map((item) => {
-                      const Icon = item.icon;
-                      const action = quickActions.find((candidate) => candidate.id === item.id);
-                      if (!action) return null;
-                      const busy = pendingAction === item.id;
-                      const blocked =
-                        pendingAction !== null &&
-                        ACTION_GROUPS[pendingAction] === ACTION_GROUPS[item.id];
-                      const disabled = !action.enabled || blocked;
-
-                      const hint = action.disabledReason ?? actionEffect(action);
-
-                      return (
-                        // A disabled button drops pointer events, so the reason
-                        // lives on a wrapper that still has a hit area.
-                        <span key={item.id} className="block" title={hint}>
-                          <Button
-                            type="button"
-                            variant={item.variant}
-                            className="min-h-12 w-full justify-start whitespace-normal px-3 text-left leading-tight"
-                            disabled={disabled}
-                            aria-busy={busy}
-                            aria-label={`${item.label}. ${hint}`}
-                            onClick={() => activate(action)}
-                          >
-                            {busy ? (
-                              <Loader2 className="size-4 animate-spin" strokeWidth={1.8} />
-                            ) : (
-                              <Icon className="size-4" strokeWidth={1.8} />
-                            )}
-                            {item.label}
-                          </Button>
-                        </span>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                {composer === "order" ? (
-                  <TableOrderComposer
-                    tableId={selectedTable.id}
-                    appendToOrderId={appendToOrderId}
-                    onCancel={() => setComposer(null)}
-                    onCreated={async () => {
-                      await onChanged();
-                      setComposer(null);
-                    }}
-                  />
-                ) : null}
-
-                {cancelTarget ? (
-                  <CancellationReasonForm
-                    title={
-                      cancelTarget.kind === "void"
-                        ? `${cancelTarget.item.productName} hesaptan çıkarılıyor`
-                        : cancelTarget.kind === "item"
-                          ? `${cancelTarget.item.productName} iptali`
-                          : `${selectedOrder?.orderNumber ?? "Sipariş"} iptali`
-                    }
-                    description={
-                      cancelTarget.kind === "void"
-                        ? "Servis edilmiş kalem kayıtta kalır, yalnızca hesaptan düşülür."
-                        : cancelTarget.kind === "item"
-                          ? "Kalem kayıtta kalır, yalnızca iptal olarak işaretlenir."
-                          : "Sipariş kayıtta kalır, yalnızca iptal olarak işaretlenir."
-                    }
-                    confirmLabel={
-                      cancelTarget.kind === "void" ? "Hesaptan Çıkar" : "İptali Onayla"
-                    }
-                    reasons={
-                      cancelTarget.kind === "void" ? VOID_REASON_CODES : undefined
-                    }
-                    otherValue={cancelTarget.kind === "void" ? "OTHER" : "Diğer"}
-                    labelFor={
-                      cancelTarget.kind === "void"
-                        ? (code) => displayLabel(VOID_REASON_LABELS, code, "Diğer")
-                        : undefined
-                    }
-                    pending={cancelPending}
-                    onCancel={() => setCancelTarget(null)}
-                    onSubmit={(submission) => void submitCancellation(submission)}
-                  />
-                ) : null}
-
-                {selectedOrder && canRoleCancelOrder(role) && !cancelTarget ? (
-                  <Button
-                    type="button"
-                    variant="destructive"
-                    className="min-h-11 w-full"
-                    onClick={() => setCancelTarget({ kind: "order" })}
-                  >
-                    <Ban className="size-4" strokeWidth={1.8} />
-                    Siparişi İptal Et
-                  </Button>
-                ) : null}
-
-                <Separator />
-
-                <TableOperationsPanel
-                  table={selectedTable}
-                  tables={tables}
-                  onChanged={onChanged}
-                />
-
-                {composer === "note" ? (
-                  <div className="space-y-2.5 rounded-xl border border-border bg-card p-4">
-                    <label
-                      className="text-sm font-semibold text-foreground"
-                      htmlFor="table-note-input"
-                    >
-                      Masa notu
-                    </label>
-                    <Textarea
-                      id="table-note-input"
-                      value={noteText}
-                      onChange={(event) => setNoteText(event.target.value)}
-                      maxLength={500}
-                      rows={3}
-                      placeholder="Ekibin görmesi gereken not"
-                    />
-                    <div className="flex justify-end gap-2">
-                      <Button
-                        type="button"
-                        variant="ghost"
-                        className="min-h-11"
-                        onClick={() => setComposer(null)}
-                      >
-                        Vazgeç
-                      </Button>
-                      <Button
-                        type="button"
-                        className="min-h-11"
-                        disabled={!noteText.trim() || pendingAction === "table-note"}
-                        aria-busy={pendingAction === "table-note"}
-                        onClick={submitNote}
-                      >
-                        Notu Kaydet
-                      </Button>
-                    </div>
-                  </div>
-                ) : null}
-
-              </div>
-
-              <SheetFooter className="border-t border-border bg-card px-5 py-4">
+            return (
+              // A disabled button drops pointer events, so the reason
+              // lives on a wrapper that still has a hit area.
+              <span key={item.id} className="block" title={hint}>
                 <Button
                   type="button"
-                  variant="outline"
-                  className="min-h-11 w-full"
-                  onClick={closeSheet}
+                  variant={item.variant}
+                  className="min-h-12 w-full justify-start whitespace-normal px-3 text-left leading-tight"
+                  disabled={disabled}
+                  aria-busy={busy}
+                  aria-label={`${item.label}. ${hint}`}
+                  onClick={() => activate(action)}
                 >
-                  Detayı Kapat
+                  {busy ? (
+                    <Loader2 className="size-4 animate-spin" strokeWidth={1.8} />
+                  ) : (
+                    <Icon className="size-4" strokeWidth={1.8} />
+                  )}
+                  {item.label}
                 </Button>
-              </SheetFooter>
-            </>
-          ) : null}
-        </SheetContent>
-      </Sheet>
-    </>
-  );
+              </span>
+            );
+          })}
+        </div>
+      </div>
+
+      {composer === "order" ? (
+        <TableOrderComposer
+          tableId={selectedTable.id}
+          appendToOrderId={appendToOrderId}
+          onCancel={() => setComposer(null)}
+          onCreated={async () => {
+            await onChanged();
+            setComposer(null);
+          }}
+        />
+      ) : null}
+
+      {cancelTarget ? (
+        <CancellationReasonForm
+          title={
+            cancelTarget.kind === "void"
+              ? `${cancelTarget.item.productName} hesaptan çıkarılıyor`
+              : cancelTarget.kind === "item"
+                ? `${cancelTarget.item.productName} iptali`
+                : `${selectedOrder?.orderNumber ?? "Sipariş"} iptali`
+          }
+          description={
+            cancelTarget.kind === "void"
+              ? "Servis edilmiş kalem kayıtta kalır, yalnızca hesaptan düşülür."
+              : cancelTarget.kind === "item"
+                ? "Kalem kayıtta kalır, yalnızca iptal olarak işaretlenir."
+                : "Sipariş kayıtta kalır, yalnızca iptal olarak işaretlenir."
+          }
+          confirmLabel={
+            cancelTarget.kind === "void" ? "Hesaptan Çıkar" : "İptali Onayla"
+          }
+          reasons={
+            cancelTarget.kind === "void" ? VOID_REASON_CODES : undefined
+          }
+          otherValue={cancelTarget.kind === "void" ? "OTHER" : "Diğer"}
+          labelFor={
+            cancelTarget.kind === "void"
+              ? (code) => displayLabel(VOID_REASON_LABELS, code, "Diğer")
+              : undefined
+          }
+          pending={cancelPending}
+          onCancel={() => setCancelTarget(null)}
+          onSubmit={(submission) => void submitCancellation(submission)}
+        />
+      ) : null}
+
+      {selectedOrder && canRoleCancelOrder(role) && !cancelTarget ? (
+        <Button
+          type="button"
+          variant="destructive"
+          className="min-h-11 w-full"
+          onClick={() => setCancelTarget({ kind: "order" })}
+        >
+          <Ban className="size-4" strokeWidth={1.8} />
+          Siparişi İptal Et
+        </Button>
+      ) : null}
+
+      <Separator />
+
+      <TableOperationsPanel
+        table={selectedTable}
+        tables={tables}
+        onChanged={onChanged}
+      />
+
+      {composer === "note" ? (
+        <div className="space-y-2.5 rounded-xl border border-border bg-card p-4">
+          <label
+            className="text-sm font-semibold text-foreground"
+            htmlFor="table-note-input"
+          >
+            Masa notu
+          </label>
+          <Textarea
+            id="table-note-input"
+            value={noteText}
+            onChange={(event) => setNoteText(event.target.value)}
+            maxLength={500}
+            rows={3}
+            placeholder="Ekibin görmesi gereken not"
+          />
+          <div className="flex justify-end gap-2">
+            <Button
+              type="button"
+              variant="ghost"
+              className="min-h-11"
+              onClick={() => setComposer(null)}
+            >
+              Vazgeç
+            </Button>
+            <Button
+              type="button"
+              className="min-h-11"
+              disabled={!noteText.trim() || pendingAction === "table-note"}
+              aria-busy={pendingAction === "table-note"}
+              onClick={submitNote}
+            >
+              Notu Kaydet
+            </Button>
+          </div>
+        </div>
+      ) : null}
+
+    </div>
+  ) : null;
+
+  return renderLayout({
+    detailBody,
+    selectedTable,
+    selectTable: setSelectedTableId,
+    close: closeSheet,
+  });
 }

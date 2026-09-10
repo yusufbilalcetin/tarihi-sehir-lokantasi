@@ -1,12 +1,14 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { BellRing, CheckCircle2, ChevronLeft, CircleCheck, Loader2, ReceiptText, Send, ShoppingBag, UtensilsCrossed, X } from "lucide-react";
+import { BellRing, CheckCircle2, ChevronLeft, CircleCheck, Loader2, ReceiptText, Search, Send, ShoppingBag, UtensilsCrossed, X } from "lucide-react";
 import { toast } from "sonner";
 import { BottomNavigation, type MenuTab } from "@/components/menu/bottom-navigation";
 import { CartBar } from "@/components/menu/cart-bar";
 import { CategoryJump } from "@/components/menu/category-jump";
-import { HighlightCard } from "@/components/menu/highlight-card";
+import { MenuLoadingSkeleton } from "@/components/menu/menu-loading-skeleton";
+import { MenuSections } from "@/components/menu/menu-sections";
+import { buildCustomerMenuSections } from "@/lib/adapters/customer-menu-sections";
 import { CartItem } from "@/components/menu/cart-item";
 import { CustomerFeedbackForm } from "@/components/menu/customer-feedback-form";
 import { CurrencySelector } from "@/components/menu/currency-selector";
@@ -15,21 +17,23 @@ import { MenuStateCard } from "@/components/menu/menu-state-card";
 import { OrderStatusTimeline } from "@/components/menu/order-status-timeline";
 import { OrderDetailsDisclosure, isServableLine } from "@/components/menu/order-details-disclosure";
 import { rememberSessionOrder, useSessionOrderIds } from "@/components/menu/session-orders";
-import { ProductCard } from "@/components/menu/product-card";
 import { ProductDetailSheet } from "@/components/menu/product-detail-sheet";
 import { RestaurantHeader } from "@/components/menu/restaurant-header";
 import { SplashIntro } from "@/components/menu/splash-intro";
 import { EmptyState } from "@/components/shared/data-states";
 import { MotionValue } from "@/components/shared/motion-value";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { menuApiToViewModel, type MenuViewCategory } from "@/lib/adapters/menu-view-model";
 import { ApiClientError, newIdempotencyKey } from "@/lib/api/client";
 import { menuApi, orderApi, type CreateOrderPayload } from "@/lib/api/endpoints";
-import { customerCallStatusTranslationKey } from "@/lib/domain/customer-menu";
-import { addMoney, decimalToMinor, minorToDecimal } from "@/lib/domain/money";
+import { playSound } from "@/lib/audio/sound-effects";
+import { customerCallStatusTranslationKey, matchesCustomerMenuSearch } from "@/lib/domain/customer-menu";
+import { addMoney, decimalToMinor, minorToDecimal, multiplyMoney } from "@/lib/domain/money";
+import { calculateOrderAmounts } from "@/lib/domain/order-mutations";
 import { useApiResource } from "@/lib/hooks/use-api-resource";
-import { getMenuCategoryName, getMenuProductName, getMenuTag } from "@/lib/i18n/menu-content";
+import { getMenuCategoryName, getMenuProductDescription, getMenuProductName } from "@/lib/i18n/menu-content";
 import type { MenuTranslationKey } from "@/lib/i18n/menu-translations";
 import { cn } from "@/lib/utils";
 import type { CartItem as CartItemType, Product, WaiterCallType } from "@/types";
@@ -50,9 +54,6 @@ const MENU_PRODUCT_KEY = "tarihiSehirMenuProduct";
 const MENU_POLL_MS = 30_000;
 const ACTIVE_ORDER_POLL_MS = 12_000;
 const ACTIVE_CALL_POLL_MS = 15_000;
-
-/** Three suggestions is a recommendation; ten is the menu a second time. */
-const MENU_HIGHLIGHT_LIMIT = 3;
 
 const EMPTY_CATEGORIES: readonly MenuViewCategory[] = [];
 const EMPTY_PRODUCTS: readonly Product[] = [];
@@ -136,6 +137,7 @@ function MenuExperienceContent({ tableNumber }: { tableNumber: number }) {
   const [activeTab, setActiveTab] = useState<MenuTab>("menu");
   const [navigationDirection, setNavigationDirection] = useState<"forward" | "back">("forward");
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [menuQuery, setMenuQuery] = useState("");
   const [storedCart, setCart] = useState<CartItemType[]>([]);
   const [waiterOpen, setWaiterOpen] = useState(false);
   const [waiterSending, setWaiterSending] = useState(false);
@@ -263,23 +265,32 @@ function MenuExperienceContent({ tableNumber }: { tableNumber: number }) {
     },
     [menu?.table?.number, tableNumber, t],
   );
-  const groupedProducts = useMemo(
-    () => menuCategories
-      .map((category) => ({
-        category,
-        products: publicProducts.filter((product) => product.categoryId === category.id),
-      }))
-      .filter((section) => section.products.length > 0),
-    [menuCategories, publicProducts],
-  );
-  const featuredProducts = useMemo(
-    () => publicProducts.filter((product) => product.featured),
-    [publicProducts],
-  );
-  const popularProducts = useMemo(
-    () => publicProducts.filter((product) => product.popular),
-    [publicProducts],
-  );
+  // One derivation for the sections, both rails, the category bar and its
+  // popover — and for the administrator's preview, which reads the same
+  // function so what they approve is what a guest gets.
+  const visibleProducts = useMemo(() => {
+    if (!menuQuery.trim()) return publicProducts;
+    const categoriesById = new Map(menuCategories.map((category) => [category.id, category]));
+    return publicProducts.filter((product) => {
+      const category = categoriesById.get(product.categoryId);
+      return matchesCustomerMenuSearch(
+        menuQuery,
+        [
+          getMenuProductName(product, language),
+          getMenuProductDescription(product, language),
+          category ? getMenuCategoryName(category, language) : "",
+          product.name,
+        ],
+        languageDefinition.locale,
+      );
+    });
+  }, [language, languageDefinition.locale, menuCategories, menuQuery, publicProducts]);
+
+  const { sections: groupedProducts, featured: featuredProducts, popular: popularProducts } =
+    useMemo(
+      () => buildCustomerMenuSections(menuCategories, visibleProducts),
+      [menuCategories, visibleProducts],
+    );
 
   // A live menu can retire a product while it sits in the cart. Deriving the
   // orderable list keeps a sold-out item out of checkout without an effect.
@@ -293,8 +304,48 @@ function MenuExperienceContent({ tableNumber }: { tableNumber: number }) {
   );
 
   const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
-  const subtotal = cart.reduce((sum, item) => sum + item.unitPrice * item.quantity, 0);
+
+  /**
+   * What this basket will actually cost, derived by the server's own function.
+   *
+   * The panel used to print `serviceFee` as a hard-coded zero and set the total
+   * equal to the subtotal, while the server charges service on the subtotal and
+   * then tax on subtotal *plus* service. Both rates are zero today, so the
+   * numbers happened to agree — the moment a restaurant sets either, the guest
+   * pressed a button reading one figure and was billed another.
+   *
+   * `calculateOrderAmounts` is imported rather than reimplemented: it is a pure
+   * domain function over primitives, already used by three other client
+   * components, and it is the single place order money is derived. A second
+   * copy of the formula here is exactly how the two would drift apart again.
+   *
+   * The lines are summed in minor units too. The old `reduce` added binary
+   * floats, which could land a kuruş away from the order the guest is shown
+   * next.
+   */
+  const basket = useMemo(() => {
+    const lines = cart.map((item) => ({
+      lineTotalMinor: multiplyMoney(decimalToMinor(item.unitPrice.toFixed(2)), item.quantity),
+      cancelled: false,
+    }));
+    return calculateOrderAmounts(
+      lines,
+      menu?.settings.serviceFeeRate ?? "0.00",
+      menu?.settings.taxRate ?? "0.00",
+    );
+  }, [cart, menu?.settings.serviceFeeRate, menu?.settings.taxRate]);
+
+  const subtotal = Number(basket.subtotal);
+  const serviceCharge = Number(basket.serviceCharge);
+  const basketTotal = Number(basket.total);
   const sessionTotal = sessionSummary.total;
+
+  // The tab title follows the guest's language. It lives here rather than in
+  // the preferences provider, which the admin editor and the tracking page
+  // also mount — neither of them wants its own <title> overwritten.
+  useEffect(() => {
+    document.title = `${t("menu")} | Tarihi Şehir Lokantası`;
+  }, [t]);
 
   // History restore waits for the first payload; before that a product id
   // cannot be resolved.
@@ -486,6 +537,7 @@ function MenuExperienceContent({ tableNumber }: { tableNumber: number }) {
   }
 
   function reportFailure(error: unknown) {
+    void playSound("error");
     const unavailableId = unavailableProductId(error);
     const unavailable = unavailableId
       ? publicProducts.find((product) => product.id === unavailableId)
@@ -558,6 +610,7 @@ function MenuExperienceContent({ tableNumber }: { tableNumber: number }) {
         undefined,
         idempotencyKeyRef.current,
       );
+      void playSound("customer-order-success");
       resetIdempotency();
       setCart([]);
       // The server just told this browser which order is its own.
@@ -594,7 +647,7 @@ function MenuExperienceContent({ tableNumber }: { tableNumber: number }) {
     <>
       <SplashIntro onComplete={finishIntro} />
       {introComplete && !contentReady ? (
-        <div className="fixed inset-0 z-[90] min-h-[100dvh] bg-[#120c08]" role="status" aria-label={t("loadingLanguage")} />
+        <MenuLoadingSkeleton label={t("loadingLanguage")} />
       ) : null}
       <div dir={direction} lang={languageDefinition.locale} className={cn("menu-content min-h-[100dvh]", cartCount > 0 ? "pb-[9.5rem]" : "pb-24", contentReady && "menu-content-ready")} aria-hidden={!contentReady} inert={!contentReady}>
         {activeTab === "menu" ? (
@@ -602,6 +655,27 @@ function MenuExperienceContent({ tableNumber }: { tableNumber: number }) {
             <RestaurantHeader tableName={tableName} />
             <main className="menu-shell pb-6">
               <h1 className="sr-only">{t("menu")}</h1>
+              <div className="relative mx-auto mb-3 max-w-3xl">
+                <Search className="pointer-events-none absolute start-3 top-1/2 size-5 -translate-y-1/2 text-muted-foreground" aria-hidden="true" />
+                <Input
+                  type="search"
+                  value={menuQuery}
+                  onChange={(event) => setMenuQuery(event.target.value)}
+                  placeholder={t("search")}
+                  aria-label={t("searchLabel")}
+                  className="h-11 ps-10 pe-11 text-base"
+                />
+                {menuQuery ? (
+                  <button
+                    type="button"
+                    onClick={() => setMenuQuery("")}
+                    className="absolute end-0 top-0 flex size-11 items-center justify-center rounded-lg text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                    aria-label={t("clearSearch")}
+                  >
+                    <X className="size-4" aria-hidden="true" />
+                  </button>
+                ) : null}
+              </div>
               <CategoryJump sections={groupedProducts} />
               {currency !== "TRY" ? (
                 <p className="mx-auto max-w-3xl text-center text-xs leading-5 text-[#70665C]">
@@ -609,65 +683,19 @@ function MenuExperienceContent({ tableNumber }: { tableNumber: number }) {
                 </p>
               ) : null}
               <section className={cn("motion-page pt-4", currency !== "TRY" && "pt-3")} data-navigation-direction={navigationDirection}>
-                {/*
-                  Discovery, capped at three.
-
-                  These rails used to carry full-size product cards, so the top
-                  of the menu was a second copy of dishes the guest was about to
-                  meet again under their own category. Three small suggestions
-                  is a recommendation; ten full cards is the menu twice.
-                */}
-                {popularProducts.length ? (
-                  <section className="mb-7" aria-labelledby="popular-products-title">
-                    <h2 id="popular-products-title" className="mb-2.5 font-heading text-lg font-semibold text-text-primary">
-                      {getMenuTag("Popüler", language)}
-                    </h2>
-                    <div className="-mx-[var(--menu-gutter)] flex snap-x snap-mandatory gap-2.5 overflow-x-auto px-[var(--menu-gutter)] pb-1 scrollbar-none">
-                      {popularProducts.slice(0, MENU_HIGHLIGHT_LIMIT).map((product) => (
-                        <div key={`popular-${product.id}`} className="w-[17rem] shrink-0 snap-start">
-                          <HighlightCard product={product} onOpen={() => openProduct(product)} />
-                        </div>
-                      ))}
-                    </div>
-                  </section>
-                ) : null}
-
-                {featuredProducts.length ? (
-                  <section className="mb-7" aria-labelledby="featured-products-heading">
-                    <h2 id="featured-products-heading" className="mb-2.5 font-heading text-lg font-semibold text-text-primary">
-                      {getMenuTag("Şefin Önerisi", language)}
-                    </h2>
-                    <div className="-mx-[var(--menu-gutter)] flex snap-x snap-mandatory gap-2.5 overflow-x-auto px-[var(--menu-gutter)] pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-                      {featuredProducts.slice(0, MENU_HIGHLIGHT_LIMIT).map((product) => (
-                        <div key={`featured-${product.id}`} className="w-[17rem] shrink-0 snap-start">
-                          <HighlightCard product={product} onOpen={() => openProduct(product)} />
-                        </div>
-                      ))}
-                    </div>
-                  </section>
-                ) : null}
-
-                {groupedProducts.length ? (
-                  <div data-customer-menu-content="category-sections" className="space-y-7">
-                    {groupedProducts.map(({ category, products }) => (
-                      <section key={category.id} aria-labelledby={`menu-category-${category.id}`}>
-                        <div className="mb-3 flex items-end justify-between gap-4 border-b border-border/50 pb-2">
-                          <h2 id={`menu-category-${category.id}`} className="font-heading text-[22px] font-semibold text-text-primary sm:text-3xl">
-                            {getMenuCategoryName(category, language)}
-                          </h2>
-                          <p className="shrink-0 text-xs font-medium tabular-nums text-[#70665C]">
-                            {t("itemCount", { count: products.length })}
-                          </p>
-                        </div>
-                        <div className="grid gap-2 lg:grid-cols-2 lg:gap-3">
-                          {products.map((product, index) => (
-                            <ProductCard key={product.id} product={product} index={index} canOrder={orderingEnabled} onOpen={() => openProduct(product)} onAdd={() => addToCart(product)} />
-                          ))}
-                        </div>
-                      </section>
-                    ))}
-                  </div>
-                ) : <EmptyState icon={UtensilsCrossed} title={t("menuUnavailable")} description={t("somethingWentWrong")} />}
+                <MenuSections
+                  sections={groupedProducts}
+                  featured={featuredProducts}
+                  popular={popularProducts}
+                  canOrder={orderingEnabled}
+                  onOpenProduct={openProduct}
+                  onAddProduct={addToCart}
+                  emptyState={
+                    menuQuery.trim()
+                      ? <EmptyState icon={Search} title={t("noResults")} description={t("noResultsDescription")} />
+                      : <EmptyState icon={UtensilsCrossed} title={t("menuUnavailable")} description={t("somethingWentWrong")} />
+                  }
+                />
               </section>
             </main>
           </>
@@ -697,14 +725,14 @@ function MenuExperienceContent({ tableNumber }: { tableNumber: number }) {
                 {/* §32: with a long basket the totals and the button that sends
                     it were below the fold. They stay above the tab bar now. */}
                 <section className="sticky bottom-[calc(4.5rem+env(safe-area-inset-bottom))] mt-5 rounded-lg border bg-card p-5 shadow-[var(--shadow-raised)]">
-                  <dl className="space-y-3 text-sm"><div className="flex justify-between text-muted-foreground"><dt>{t("subtotal")}</dt><dd dir="ltr"><MotionValue value={formatPrice(subtotal)} numericValue={subtotal} delayMs={20} /></dd></div><div className="flex justify-between text-muted-foreground"><dt>{t("serviceFee")}</dt><dd dir="ltr"><MotionValue value={formatPrice(0)} numericValue={0} delayMs={30} /></dd></div><div className="flex justify-between border-t pt-3 text-base font-bold"><dt>{t("total")}</dt><dd dir="ltr" className="text-burgundy"><MotionValue value={formatPrice(subtotal)} numericValue={subtotal} delayMs={40} /></dd></div></dl>
-                  <OrderCurrencyPanel amount={subtotal} />
+                  <dl className="space-y-3 text-sm"><div className="flex justify-between text-muted-foreground"><dt>{t("subtotal")}</dt><dd dir="ltr"><MotionValue value={formatPrice(subtotal)} numericValue={subtotal} delayMs={20} /></dd></div><div className="flex justify-between text-muted-foreground"><dt>{t("serviceFee")}</dt><dd dir="ltr"><MotionValue value={formatPrice(serviceCharge)} numericValue={serviceCharge} delayMs={30} /></dd></div><div className="flex justify-between border-t pt-3 text-base font-bold"><dt>{t("total")}</dt><dd dir="ltr" className="text-burgundy"><MotionValue value={formatPrice(basketTotal)} numericValue={basketTotal} delayMs={40} /></dd></div></dl>
+                  <OrderCurrencyPanel amount={basketTotal} />
                   <Button type="button" onClick={() => void sendOrder()} disabled={submitting || !orderingEnabled} aria-busy={submitting} className="motion-cta mt-5 h-12 w-full rounded-xl text-sm font-bold">
                     {/* The catalogue does carry a translated pending string, so
                         the button says what is happening rather than only
                         spinning at the guest. */}
                     {submitting ? <Loader2 className="size-4 animate-spin" aria-hidden="true" /> : <Send className="size-4" aria-hidden="true" />}
-                    {submitting ? t("sending") : <>{t("sendOrder")} · <MotionValue value={formatPrice(subtotal)} numericValue={subtotal} delayMs={40} /></>}
+                    {submitting ? t("sending") : <>{t("sendOrder")} · <MotionValue value={formatPrice(basketTotal)} numericValue={basketTotal} delayMs={40} /></>}
                   </Button>
                 </section>
               </>
@@ -747,7 +775,7 @@ function MenuExperienceContent({ tableNumber }: { tableNumber: number }) {
       <ProductDetailSheet key={selectedProduct?.id ?? "none"} product={selectedProduct} open={Boolean(selectedProduct)} canOrder={orderingEnabled} onOpenChange={(open) => { if (!open) closeProduct(); }} onAdd={addToCart} />
 
       <Dialog open={waiterOpen} onOpenChange={setWaiterOpen}>
-        <DialogContent dir={direction} showCloseButton={false} className="menu-dialog-scroll flex max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] max-w-xl flex-col gap-0 overflow-y-auto rounded-xl border-copper/35 p-0 sm:max-w-xl">
+        <DialogContent dir={direction} lang={languageDefinition.locale} showCloseButton={false} className="menu-dialog-scroll flex max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] max-w-xl flex-col gap-0 overflow-y-auto rounded-xl border-copper/35 p-0 sm:max-w-xl">
           <DialogClose className="absolute end-4 top-4 z-10 inline-flex size-10 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
             <X className="size-4" aria-hidden="true" />
             <span className="sr-only">{t("close")}</span>
@@ -776,7 +804,7 @@ function MenuExperienceContent({ tableNumber }: { tableNumber: number }) {
           cartCount={cartCount}
           cartSlot={
             activeTab === "menu" ? (
-              <CartBar count={cartCount} total={subtotal} onOpen={() => handleTabChange("order")} />
+              <CartBar count={cartCount} total={basketTotal} onOpen={() => handleTabChange("order")} />
             ) : null
           }
           onChange={handleTabChange}

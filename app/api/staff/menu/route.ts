@@ -6,6 +6,7 @@ import { requireCurrentStaffPrincipal } from "@/lib/auth/current-staff";
 import { DrizzleMenuRepository } from "@/lib/repositories/drizzle-menu-repository";
 import { createLogger } from "@/lib/security/logger";
 import { MenuService } from "@/lib/services/menu-service";
+import { normalizeMenuLocale } from "@/lib/i18n/catalog-localization";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -20,11 +21,12 @@ const logger = createLogger("api.staff.menu");
  * The same catalog the guest sees, resolved from the staff principal's tenant
  * instead of a table session, so a waiter can build an order at the table.
  */
-export async function GET(): Promise<NextResponse> {
+export async function GET(request: Request): Promise<NextResponse> {
   try {
     const principal = await requireCurrentStaffPrincipal();
     const service = new MenuService(new DrizzleMenuRepository(getDb()));
-    const menu = await service.getPublicMenu(principal.restaurantId);
+    const locale = normalizeMenuLocale(new URL(request.url).searchParams.get("locale"));
+    const menu = await service.getPublicMenu(principal.restaurantId, locale);
     return NextResponse.json(apiSuccess(menu), { status: 200, headers: RESPONSE_HEADERS });
   } catch (error) {
     const failure = apiFailureFromUnknown(error);

@@ -1,0 +1,300 @@
+{
+  "source": "https://tarihi-sehir-lokantasi.vercel.app/menu/demo-table",
+  "category": "Çorbalar",
+  "slug": "corbalar",
+  "productCount": 12,
+  "declaredCount": 12,
+  "categoryCover": {
+    "assetType": "category-cover",
+    "sourcePath": "reference/live/assets/images/food/mercimek-corbasi.jpg",
+    "file": "mercimek-corbasi.jpg",
+    "width": 1200,
+    "height": 800,
+    "format": "jpeg",
+    "fileSize": 139139,
+    "sha256": "6d912e2cff366bf54154532e1c40f890d830834983df78a994756ce4dfc33f4c"
+  },
+  "products": [
+    {
+      "name": "Mercimek Çorbası",
+      "description": "Klasik usulde hazırlanan, tereyağlı sosla tamamlanan ev yapımı mercimek çorbası.",
+      "price": "₺120",
+      "badges": [
+        "Popüler",
+        "Vejetaryen"
+      ],
+      "availability": "available",
+      "image": {
+        "assetType": "product-image",
+        "file": "corbalar/images/mercimek-corbasi.webp",
+        "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/mercimek-corbasi.webp",
+        "sourceType": "existing-reference",
+        "originalReference": "reference/live/assets/images/food/mercimek-corbasi.webp",
+        "renamedFrom": null,
+        "width": 1200,
+        "height": 800,
+        "format": "webp",
+        "fileSize": 89400,
+        "sha256": "9ae4e4f8b728d3ac5505aac40dbb2b800c295c005cceedb928d9ff8e4396d8ca"
+      },
+      "sharedImage": false
+    },
+    {
+      "name": "Ezogelin Çorbası",
+      "description": "Kırmızı mercimek, bulgur ve pirincin nane ile buluştuğu geleneksel lokanta çorbası.",
+      "price": "₺125",
+      "badges": [
+        "Acılı",
+        "Vejetaryen"
+      ],
+      "availability": "available",
+      "image": {
+        "assetType": "product-image",
+        "file": "corbalar/images/ezogelin-corbasi.webp",
+        "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/ezogelin-corbasi.webp",
+        "sourceType": "existing-reference",
+        "originalReference": "reference/live/assets/images/food/ezogelin-corbasi.webp",
+        "renamedFrom": null,
+        "width": 1200,
+        "height": 800,
+        "format": "webp",
+        "fileSize": 127780,
+        "sha256": "62236954332700ee958b7e91304f17ed9e9d6225910586075cdbfce9f74c5fd0"
+      },
+      "sharedImage": false
+    },
+    {
+      "name": "Tarhana Çorbası",
+      "description": "Ev yapımı tarhana, domates ve kuru nane ile ağır ağır pişirilen Anadolu klasiği.",
+      "price": "₺115",
+      "badges": [
+        "Ev Yapımı"
+      ],
+      "availability": "available",
+      "image": {
+        "assetType": "product-image",
+        "file": "corbalar/images/tarhana-corbasi.webp",
+        "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/tarhana-corbasi.webp",
+        "sourceType": "existing-reference",
+        "originalReference": "reference/live/assets/images/food/tarhana-corbasi.webp",
+        "renamedFrom": null,
+        "width": 1200,
+        "height": 800,
+        "format": "webp",
+        "fileSize": 103706,
+        "sha256": "6303c3159f87bdc5350483aac3e7d3524bbf9dfd608de79c94f6644c7bd66f2f"
+      },
+      "sharedImage": false
+    },
+    {
+      "name": "Yayla Çorbası",
+      "description": "Yoğurt, pirinç ve kuru naneyle hazırlanan ferah ve kıvamlı yayla çorbası.",
+      "price": "₺125",
+      "badges": [
+        "Vejetaryen"
+      ],
+      "availability": "available",
+      "image": {
+        "assetType": "product-image",
+        "file": "corbalar/images/yayla-corbasi.webp",
+        "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/yayla-corbasi.webp",
+        "sourceType": "existing-reference",
+        "originalReference": "reference/live/assets/images/food/yayla-corbasi.webp",
+        "renamedFrom": null,
+        "width": 1200,
+        "height": 800,
+        "format": "webp",
+        "fileSize": 114988,
+        "sha256": "429c03b78f3dde7f1f712ad536b7d639c8db8805b4c4ac771f5153c0aa966a94"
+      },
+      "sharedImage": false
+    },
+    {
+      "name": "İşkembe Çorbası",
+      "description": "Terbiyesi ve sarımsaklı sirkesiyle servis edilen usulüne uygun dana işkembe çorbası.",
+      "price": "₺180",
+      "badges": [
+        "Lokanta Klasiği"
+      ],
+      "availability": "available",
+      "image": {
+        "assetType": "product-image",
+        "file": "corbalar/images/iskembe-corbasi.webp",
+        "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/iskembe-corbasi.webp",
+        "sourceType": "existing-reference",
+        "originalReference": "reference/live/assets/images/food/iskembe-corbasi.webp",
+        "renamedFrom": null,
+        "width": 1200,
+        "height": 800,
+        "format": "webp",
+        "fileSize": 108324,
+        "sha256": "e449e084ecc58490e6af4371c9fdbecb98f738f99cbf4c030664accbd04f9ae3"
+      },
+      "sharedImage": false
+    },
+    {
+      "name": "Düğün Çorbası",
+      "description": "Didiklenmiş kuzu eti ve limonlu terbiyeyle hazırlanan geleneksel düğün çorbası.",
+      "price": "₺145",
+      "badges": [
+        "Günün Çorbası"
+      ],
+      "availability": "available",
+      "image": {
+        "assetType": "product-image",
+        "file": "corbalar/images/dugun-corbasi.webp",
+        "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/dugun-corbasi.webp",
+        "sourceType": "existing-reference",
+        "originalReference": "reference/live/assets/images/food/dugun-corbasi.webp",
+        "renamedFrom": null,
+        "width": 1200,
+        "height": 800,
+        "format": "webp",
+        "fileSize": 123386,
+        "sha256": "f5f88d008f4a8a9f1083b1e8ea430f31bbed9a01ca4559b2aedef8d12c263242"
+      },
+      "sharedImage": false
+    },
+    {
+      "name": "Tavuk Suyu Çorbası",
+      "description": "Kemik suyunda pişen tel şehriye ve didik tavuk etiyle hazırlanan şifalı çorba.",
+      "price": "₺155",
+      "badges": [
+        "Şefin Önerisi"
+      ],
+      "availability": "available",
+      "image": {
+        "assetType": "product-image",
+        "file": "corbalar/images/tavuk-suyu-corbasi.webp",
+        "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/tavuk-suyu-corbasi.webp",
+        "sourceType": "existing-reference",
+        "originalReference": "reference/live/assets/images/food/tavuk-suyu-corbasi.webp",
+        "renamedFrom": null,
+        "width": 1200,
+        "height": 800,
+        "format": "webp",
+        "fileSize": 87250,
+        "sha256": "46e3d86a64334412fddb77a69e14dea93392509f31419f34b3da293cae3c4df6"
+      },
+      "sharedImage": false
+    },
+    {
+      "name": "Domates Çorbası",
+      "description": "Olgun domates, tereyağı ve fesleğenle pişirilip kaşarla tamamlanan yoğun lezzet.",
+      "price": "₺120",
+      "badges": [
+        "Vejetaryen"
+      ],
+      "availability": "available",
+      "image": {
+        "assetType": "product-image",
+        "file": "corbalar/images/domates-corbasi.webp",
+        "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/domates-corbasi.webp",
+        "sourceType": "existing-reference",
+        "originalReference": "reference/live/assets/images/food/domates-corbasi.webp",
+        "renamedFrom": null,
+        "width": 1200,
+        "height": 800,
+        "format": "webp",
+        "fileSize": 106116,
+        "sha256": "5c7e6ece6cac85517c14535461133f3a79a565823a19b034b116c5cd239c8389"
+      },
+      "sharedImage": false
+    },
+    {
+      "name": "Sebze Çorbası",
+      "description": "Mevsim sebzeleri, zeytinyağı ve taze otlarla hazırlanan hafif lokanta çorbası.",
+      "price": "₺120",
+      "badges": [
+        "Vegan",
+        "Hafif"
+      ],
+      "availability": "available",
+      "image": {
+        "assetType": "product-image",
+        "file": "corbalar/images/sebze-corbasi.webp",
+        "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/sebze-corbasi.webp",
+        "sourceType": "existing-reference",
+        "originalReference": "reference/live/assets/images/food/sebze-corbasi.webp",
+        "renamedFrom": null,
+        "width": 1200,
+        "height": 800,
+        "format": "webp",
+        "fileSize": 114382,
+        "sha256": "31010760e74ab568131cb5c9996328e995aa5f6028753218c9bc0c14d59828f3"
+      },
+      "sharedImage": false
+    },
+    {
+      "name": "Beyran Çorbası",
+      "description": "Kuzu eti, pirinç, sarımsak ve acı biberle yüksek ateşte hazırlanan yöresel çorba.",
+      "price": "₺240",
+      "badges": [
+        "Acılı",
+        "Yöresel"
+      ],
+      "availability": "available",
+      "image": {
+        "assetType": "product-image",
+        "file": "corbalar/images/beyran-corbasi.webp",
+        "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/beyran-corbasi.webp",
+        "sourceType": "existing-reference",
+        "originalReference": "reference/live/assets/images/food/beyran-corbasi.webp",
+        "renamedFrom": null,
+        "width": 1200,
+        "height": 800,
+        "format": "webp",
+        "fileSize": 162600,
+        "sha256": "c2f4e116c3268ce478c92334fa4f840c7ce3a598449dda121e65ccb70d8141c6"
+      },
+      "sharedImage": false
+    },
+    {
+      "name": "Kelle Paça Çorbası",
+      "description": "Uzun saatler kaynatılan dana paça ve kelle etiyle hazırlanan yoğun kemik suyu çorbası.",
+      "price": "₺220",
+      "badges": [
+        "Lokanta Klasiği",
+        "Bugün Tükendi"
+      ],
+      "availability": "sold-out",
+      "image": {
+        "assetType": "product-image",
+        "file": "corbalar/images/kelle-paca-corbasi.webp",
+        "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/kelle-paca-corbasi.webp",
+        "sourceType": "existing-reference",
+        "originalReference": "reference/live/assets/images/food/kelle-paca-corbasi.webp",
+        "renamedFrom": null,
+        "width": 1200,
+        "height": 800,
+        "format": "webp",
+        "fileSize": 121870,
+        "sha256": "a9b3a1adb9f2c8d64a85aaff1953da24031cc279e62cd0cb70fb906d59d83bb3"
+      },
+      "sharedImage": false
+    },
+    {
+      "name": "Şehriye Çorbası",
+      "description": "Domatesli tavuk suyunda tel şehriye ve maydanozla hazırlanan günlük çorba.",
+      "price": "₺115",
+      "badges": [
+        "Günün Çorbası"
+      ],
+      "availability": "available",
+      "image": {
+        "assetType": "product-image",
+        "file": "corbalar/images/sehriye-corbasi.webp",
+        "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/sehriye-corbasi.webp",
+        "sourceType": "existing-reference",
+        "originalReference": "reference/live/assets/images/food/sehriye-corbasi.webp",
+        "renamedFrom": null,
+        "width": 1200,
+        "height": 800,
+        "format": "webp",
+        "fileSize": 96310,
+        "sha256": "f48936e673ace9e8ba2be8a580a2d070ca1afee3c5c9f30efd1fbc3247063834"
+      },
+      "sharedImage": false
+    }
+  ]
+}

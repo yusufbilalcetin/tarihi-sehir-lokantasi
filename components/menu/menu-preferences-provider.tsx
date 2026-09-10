@@ -74,15 +74,6 @@ export function MenuPreferencesProvider({ children }: { children: ReactNode }) {
   const [exchangeRatesUpdatedAt, setExchangeRatesUpdatedAt] = useState<string | null>(null);
 
   useEffect(() => {
-    const previousLanguage = document.documentElement.lang;
-    const previousDirection = document.documentElement.dir;
-    return () => {
-      document.documentElement.lang = previousLanguage;
-      document.documentElement.dir = previousDirection;
-    };
-  }, []);
-
-  useEffect(() => {
     let active = true;
     let receivedServerSnapshot = false;
     let requestInFlight: Promise<void> | null = null;
@@ -184,11 +175,6 @@ export function MenuPreferencesProvider({ children }: { children: ReactNode }) {
           );
         await loadMenuCatalog(initialLanguage);
         setLanguageState(initialLanguage);
-        const definition = getMenuLanguage(initialLanguage);
-        if (definition) {
-          document.documentElement.lang = definition.locale;
-          document.documentElement.dir = definition.direction;
-        }
         if (!hasStoredLanguage) window.localStorage.setItem(MENU_LANGUAGE_STORAGE_KEY, initialLanguage);
         if (storedRecentLanguages) {
           try {
@@ -219,11 +205,6 @@ export function MenuPreferencesProvider({ children }: { children: ReactNode }) {
     } catch {
       setLanguageLoading(false);
       return false;
-    }
-    const definition = getMenuLanguage(nextLanguage);
-    if (definition) {
-      document.documentElement.lang = definition.locale;
-      document.documentElement.dir = definition.direction;
     }
     setLanguageState(nextLanguage);
     setRecentLanguages((currentLanguages) => {
@@ -275,18 +256,16 @@ export function MenuPreferencesProvider({ children }: { children: ReactNode }) {
     [language],
   );
 
-  useEffect(() => {
-    document.title = `${t("menu")} | Tarihi Şehir Lokantası`;
-  }, [t]);
+  const languageDefinition = getMenuLanguage(language) ?? getMenuLanguage(DEFAULT_MENU_LANGUAGE)!;
 
   const value = useMemo<MenuPreferencesValue>(
     () => ({
       language,
-      languageDefinition: getMenuLanguage(language) ?? getMenuLanguage(DEFAULT_MENU_LANGUAGE)!,
+      languageDefinition,
       recentLanguages,
       currency,
       exchangeRatesUpdatedAt,
-      direction: getMenuLanguage(language)?.direction ?? "ltr",
+      direction: languageDefinition.direction,
       preferencesReady,
       languageLoading,
       setLanguage,
@@ -295,12 +274,21 @@ export function MenuPreferencesProvider({ children }: { children: ReactNode }) {
       formatNumber,
       formatPrice,
     }),
-    [currency, exchangeRatesUpdatedAt, formatNumber, formatPrice, language, languageLoading, preferencesReady, recentLanguages, setCurrency, setLanguage, t],
+    [currency, exchangeRatesUpdatedAt, formatNumber, formatPrice, language, languageDefinition, languageLoading, preferencesReady, recentLanguages, setCurrency, setLanguage, t],
   );
 
   return (
     <MenuPreferencesContext.Provider value={value}>
-      {children}
+      {/*
+        The guest locale is announced here and nowhere else. Writing it onto
+        <html> made the whole document take it on, which is wrong the moment
+        this tree is not the whole document: the admin menu editor renders the
+        guest menu inside a Turkish admin page. `display: contents` keeps the
+        element out of layout, so it carries lang/dir and nothing else.
+      */}
+      <div lang={languageDefinition.locale} dir={languageDefinition.direction} style={{ display: "contents" }}>
+        {children}
+      </div>
     </MenuPreferencesContext.Provider>
   );
 }

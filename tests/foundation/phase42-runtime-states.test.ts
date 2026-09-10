@@ -41,18 +41,13 @@ test("failure outranks loading, and neither is emptiness", () => {
 
 /* ------------------------------------------------ dashboard panels ------- */
 
-test("every dashboard panel distinguishes loading, failure and emptiness", () => {
-  // One notice per independent resource. The count is the dashboard's own
-  // business — it has been four and is now two — but every panel that has one
-  // must pass its own three states and its own copy, never a shared sentence.
-  const notices = [...dashboard.matchAll(/<PanelNotice[\s\S]*?\/>/g)].map((match) => match[0]);
-  assert.ok(notices.length > 0, "the dashboard reports no resource state at all");
-  for (const notice of notices) {
-    assert.match(notice, /loading=\{/, "a panel notice has no loading input");
-    assert.match(notice, /error=\{/, "a panel notice has no error input");
-    assert.match(notice, /empty=\{/, "a panel notice has no empty input");
-    assert.match(notice, /errorText="/, "a panel notice has no failure copy");
-    assert.match(notice, /emptyText="/, "a panel notice has no empty copy");
+test("every dashboard widget distinguishes ready, loading and failure", () => {
+  const value = dashboard.slice(dashboard.indexOf("function ResourceValue"), dashboard.indexOf("function MobileMetric"));
+  assert.match(value, /if \(ready\)/);
+  assert.match(value, /error \? "Alınamadı" : "Yükleniyor"/);
+  assert.match(value, />—</);
+  for (const resource of ["overview", "collections", "tableResource"]) {
+    assert.match(dashboard, new RegExp(`error=\\{${resource}\\.error\\}`), `${resource} failure never reaches its widget`);
   }
 });
 
@@ -75,10 +70,10 @@ test("a failing panel does not take the admin shell or its siblings down", () =>
     /if \((?:reports|tables|orderResource|overview)\.error\)\s*return/,
     "a single failed resource returns early and blanks the whole dashboard",
   );
-  // The header renders unconditionally, above every panel.
-  const headerAt = dashboard.indexOf("<AdminPageHeader");
-  const firstNotice = dashboard.indexOf("<PanelNotice");
-  assert.ok(headerAt !== -1 && headerAt < firstNotice, "the page header is no longer rendered before the panels");
+  // The greeting and launcher render independently from every resource.
+  assert.match(dashboard, /<h1[^>]*>\{clock\.greeting\}<\/h1>/);
+  assert.match(dashboard, /<AppLauncher \/>/);
+  assert.doesNotMatch(dashboard, /if \([^)]*\.error\)\s*return/);
 });
 
 /* ------------------------------------------------ today panel ------------ */
@@ -94,8 +89,11 @@ test("the today panel says a figure failed rather than pretending it is loading"
   assert.ok(failedAt !== -1 && pendingAt > failedAt, "failure must be checked before the loading branch");
 });
 
-test("both callers hand the today panel its failure, not just its absence of data", () => {
-  assert.match(dashboard, /<TodayPanel[^/]*error=\{overview\.error\}/, "the manager home swallows the ERP failure");
+test("the Home Screen hands every failure to its local state renderer", () => {
+  assert.match(dashboard, /ready=\{overviewReady\} error=\{overview\.error\}/);
+  assert.match(dashboard, /ready=\{collectionsReady\} error=\{collections\.error\}/);
+  assert.match(dashboard, /ready=\{tablesReady\} error=\{tableResource\.error\}/);
+  assert.match(dashboard, /const attentionFailure =/);
 });
 
 /* ------------------------------------------------ error copy ------------- */

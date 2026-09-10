@@ -4,6 +4,7 @@ import {
   type UserRole,
   type WaiterCallType,
 } from "./status";
+import type { TableStatus } from "@/types";
 
 /**
  * The six table-card shortcuts. Ids are stable; the Turkish labels are the ones
@@ -168,4 +169,19 @@ export function resolveTableQuickActions(
     const reason = inactive ?? callAvailability(intent, context.role);
     return { id, enabled: !reason, disabledReason: reason, intent };
   });
+}
+
+/**
+ * A table the restaurant currently has on its hands.
+ *
+ * The table's own status is the authority here, not its orders. A table can be
+ * seated with nothing ordered yet, and it can still be occupied after a round
+ * has been settled — counting distinct tables across open orders misses both,
+ * which is exactly how a floor of six looks like a floor of four.
+ *
+ * "Kapalı" is the restaurant not using it (inactive) and "boş" is nobody at it;
+ * everything between those is a table somebody is responsible for.
+ */
+export function isTableOpen(status: TableStatus): boolean {
+  return status !== "available" && status !== "inactive";
 }

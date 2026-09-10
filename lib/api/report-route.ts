@@ -66,6 +66,7 @@ export function reportRoute(
       try {
         range = resolveReportRange({
           preset: parsed.data.range,
+          timeZone: principal.restaurant.timezone,
           now: new Date(),
           from: parsed.data.from,
           to: parsed.data.to,

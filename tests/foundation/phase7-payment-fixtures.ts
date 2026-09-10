@@ -62,6 +62,7 @@ export class FakePaymentTransaction implements PaymentTransactionRepository {
   audits: InsertAuditLogInput[] = [];
   freedTables: string[] = [];
   occupiedTables: string[] = [];
+  lockCalls: string[] = [];
   /** Split checks on the order, when the bill has been divided. */
   checks: {
     id: string;
@@ -87,6 +88,7 @@ export class FakePaymentTransaction implements PaymentTransactionRepository {
   private sequence = 0;
 
   async findActiveShiftForUpdate(restaurantId: string, staffId: string) {
+    this.lockCalls.push("shift");
     if (restaurantId !== this.restaurantId || !this.activeShift) return null;
     // The real predicate is (restaurant, staff, status = OPEN), so the row that
     // comes back always belongs to the asking actor.
@@ -94,6 +96,7 @@ export class FakePaymentTransaction implements PaymentTransactionRepository {
   }
 
   async findPayableOrderForUpdate(restaurantId: string, orderId: string) {
+    this.lockCalls.push("order");
     if (!this.order) return null;
     return this.order.restaurantId === restaurantId && this.order.id === orderId
       ? this.order
@@ -116,6 +119,7 @@ export class FakePaymentTransaction implements PaymentTransactionRepository {
   }
 
   async findPaymentForUpdate(restaurantId: string, paymentId: string) {
+    this.lockCalls.push("payment");
     if (!this.inTenant(restaurantId)) return null;
     return this.payments.find((payment) => payment.id === paymentId) ?? null;
   }
@@ -141,6 +145,7 @@ export class FakePaymentTransaction implements PaymentTransactionRepository {
       method: input.method,
       status: "COMPLETED",
       idempotencyKeyHash: input.idempotencyKeyHash,
+      idempotencyRequestHash: input.idempotencyRequestHash,
       processedAt: input.at,
       createdAt: input.at,
     };
@@ -158,6 +163,7 @@ export class FakePaymentTransaction implements PaymentTransactionRepository {
       amount: input.amount,
       reasonCode: input.reasonCode,
       note: input.note,
+      idempotencyRequestHash: input.idempotencyRequestHash,
       createdAt: input.at,
     };
     this.refunds.push(refund);

@@ -1,0 +1,253 @@
+{
+  "source": "https://tarihi-sehir-lokantasi.vercel.app/menu/demo-table",
+  "category": "Tatlılar",
+  "slug": "tatlilar",
+  "productCount": 10,
+  "declaredCount": 10,
+  "categoryCover": {
+    "assetType": "category-cover",
+    "sourcePath": "reference/live/assets/images/food/firin-sutlac.jpg",
+    "file": "firin-sutlac.jpg",
+    "width": 1200,
+    "height": 800,
+    "format": "jpeg",
+    "fileSize": 165485,
+    "sha256": "7743ebb10d02745268295e3dde4db6fd4218a7897f711b14ddf14e0eb86e5573"
+  },
+  "products": [
+    {
+      "name": "Fırın Sütlaç",
+      "description": "Geleneksel usulde fırınlanmış, günlük manda sütüyle hazırlanan sütlaç.",
+      "price": "₺140",
+      "badges": [
+        "Popüler"
+      ],
+      "availability": "available",
+      "image": {
+        "assetType": "product-image",
+        "file": "tatlilar/images/firin-sutlac.webp",
+        "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/firin-sutlac.webp",
+        "sourceType": "existing-reference",
+        "originalReference": "reference/live/assets/images/food/firin-sutlac.webp",
+        "renamedFrom": null,
+        "width": 1200,
+        "height": 800,
+        "format": "webp",
+        "fileSize": 105240,
+        "sha256": "485b58b9f343b6f7fe3c8600230b1ae581e81881d9b9c43117cc65381b205da9"
+      },
+      "sharedImage": false
+    },
+    {
+      "name": "Kazandibi",
+      "description": "Altı usulünce karamelize edilmiş, ipeksi kıvamlı geleneksel sütlü tatlı.",
+      "price": "₺140",
+      "badges": [
+        "Sütlü Tatlı"
+      ],
+      "availability": "available",
+      "image": {
+        "assetType": "product-image",
+        "file": "tatlilar/images/kazandibi.webp",
+        "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/kazandibi.webp",
+        "sourceType": "existing-reference",
+        "originalReference": "reference/live/assets/images/food/kazandibi.webp",
+        "renamedFrom": null,
+        "width": 1200,
+        "height": 800,
+        "format": "webp",
+        "fileSize": 136062,
+        "sha256": "1757fb06a773c8d22996c74075fbbde83d64fa987927a2cc4dc39cb300408193"
+      },
+      "sharedImage": false
+    },
+    {
+      "name": "Tavuk Göğsü",
+      "description": "Geleneksel reçeteyle hazırlanan, tarçınla servis edilen hafif ve lifli sütlü tatlı.",
+      "price": "₺145",
+      "badges": [
+        "Sütlü Tatlı"
+      ],
+      "availability": "available",
+      "image": {
+        "assetType": "product-image",
+        "file": "tatlilar/images/tavuk-gogsu.webp",
+        "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/tavuk-gogsu.webp",
+        "sourceType": "existing-reference",
+        "originalReference": "reference/live/assets/images/food/tavuk-gogsu.webp",
+        "renamedFrom": null,
+        "width": 1200,
+        "height": 800,
+        "format": "webp",
+        "fileSize": 108938,
+        "sha256": "92cb19479cd995be099e01ba5efaa103ee575cddf5d093d3662cf2b69ffb0c90"
+      },
+      "sharedImage": false
+    },
+    {
+      "name": "Keşkül",
+      "description": "Badem aroması ve Hindistan ceviziyle tamamlanan Osmanlı usulü sütlü tatlı.",
+      "price": "₺145",
+      "badges": [
+        "Sütlü Tatlı"
+      ],
+      "availability": "available",
+      "image": {
+        "assetType": "product-image",
+        "file": "tatlilar/images/keskul.webp",
+        "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/keskul.webp",
+        "sourceType": "existing-reference",
+        "originalReference": "reference/live/assets/images/food/keskul.webp",
+        "renamedFrom": null,
+        "width": 1200,
+        "height": 800,
+        "format": "webp",
+        "fileSize": 122328,
+        "sha256": "8b507ca084ab0755099cc8948035ac201eeb2906f79be2ab25bc1ec1f76bdb19"
+      },
+      "sharedImage": false
+    },
+    {
+      "name": "İrmik Helvası",
+      "description": "Tereyağı ve çam fıstığıyla kavrulan, sıcak servis edilen tane tane irmik helvası.",
+      "price": "₺130",
+      "badges": [
+        "Sıcak Tatlı"
+      ],
+      "availability": "available",
+      "image": {
+        "assetType": "product-image",
+        "file": "tatlilar/images/irmik-helvasi.webp",
+        "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/irmik-helvasi.webp",
+        "sourceType": "existing-reference",
+        "originalReference": "reference/live/assets/images/food/irmik-helvasi.webp",
+        "renamedFrom": null,
+        "width": 1200,
+        "height": 800,
+        "format": "webp",
+        "fileSize": 151326,
+        "sha256": "1fdeb56925841f0e4222711fa809cca600cb187d1f65a286a7d4dddae6e0d7fa"
+      },
+      "sharedImage": false
+    },
+    {
+      "name": "Tahinli Kabak Tatlısı",
+      "description": "Kendi suyunda ağır ağır pişen bal kabağı, tahin ve cevizle servis edilir.",
+      "price": "₺160",
+      "badges": [
+        "Vegan",
+        "Mevsimlik"
+      ],
+      "availability": "available",
+      "image": {
+        "assetType": "product-image",
+        "file": "tatlilar/images/tahinli-kabak-tatlisi.webp",
+        "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/tahinli-kabak-tatlisi.webp",
+        "sourceType": "existing-reference",
+        "originalReference": "reference/live/assets/images/food/tahinli-kabak-tatlisi.webp",
+        "renamedFrom": null,
+        "width": 1200,
+        "height": 800,
+        "format": "webp",
+        "fileSize": 137862,
+        "sha256": "ed24864a52d10b613d8fad9f95a6591c9b60287074cd8cbb2c25c488bdbc758c"
+      },
+      "sharedImage": false
+    },
+    {
+      "name": "Ayva Tatlısı",
+      "description": "Karanfil ve tarçınla pişirilen ayva, kaymak ve ceviz eşliğinde servis edilir.",
+      "price": "₺175",
+      "badges": [
+        "Mevsimlik",
+        "Bugün Tükendi"
+      ],
+      "availability": "sold-out",
+      "image": {
+        "assetType": "product-image",
+        "file": "tatlilar/images/ayva-tatlisi.webp",
+        "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/ayva-tatlisi.webp",
+        "sourceType": "existing-reference",
+        "originalReference": "reference/live/assets/images/food/ayva-tatlisi.webp",
+        "renamedFrom": null,
+        "width": 1200,
+        "height": 800,
+        "format": "webp",
+        "fileSize": 131870,
+        "sha256": "91f9c4470856e2f3f85552cd912e4a152fb474e973e2e1039231d4dc3d17700d"
+      },
+      "sharedImage": false
+    },
+    {
+      "name": "Revani",
+      "description": "İrmikli yumuşak kekin limon kokulu şerbetle buluştuğu klasik lokanta tatlısı.",
+      "price": "₺135",
+      "badges": [
+        "Şerbetli"
+      ],
+      "availability": "available",
+      "image": {
+        "assetType": "product-image",
+        "file": "tatlilar/images/revani.webp",
+        "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/revani.webp",
+        "sourceType": "existing-reference",
+        "originalReference": "reference/live/assets/images/food/revani.webp",
+        "renamedFrom": null,
+        "width": 1200,
+        "height": 800,
+        "format": "webp",
+        "fileSize": 131152,
+        "sha256": "eaf2389f2dc49e38696e007271c7086787f5f448436029f87bc32f8d50dcfa37"
+      },
+      "sharedImage": false
+    },
+    {
+      "name": "Kaymaklı Ekmek Kadayıfı",
+      "description": "Karamelize şerbetle dinlendirilen ekmek kadayıfı, manda kaymağıyla servis edilir.",
+      "price": "₺180",
+      "badges": [
+        "Bursa Lezzeti",
+        "Şerbetli"
+      ],
+      "availability": "available",
+      "image": {
+        "assetType": "product-image",
+        "file": "tatlilar/images/kaymakli-ekmek-kadayifi.webp",
+        "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/kaymakli-ekmek-kadayifi.webp",
+        "sourceType": "existing-reference",
+        "originalReference": "reference/live/assets/images/food/kaymakli-ekmek-kadayifi.webp",
+        "renamedFrom": null,
+        "width": 1200,
+        "height": 800,
+        "format": "webp",
+        "fileSize": 125932,
+        "sha256": "6832328d086115be31b109c60dc42904f8f5028755838be63e1acf12664ed653"
+      },
+      "sharedImage": false
+    },
+    {
+      "name": "Cevizli Baklava",
+      "description": "İncecik açılmış katlar, bol ceviz ve sade yağla hazırlanan çıtır baklava.",
+      "price": "₺220",
+      "badges": [
+        "Şerbetli",
+        "Paylaşmalık"
+      ],
+      "availability": "available",
+      "image": {
+        "assetType": "product-image",
+        "file": "tatlilar/images/cevizli-baklava.webp",
+        "originalSource": "https://tarihi-sehir-lokantasi.vercel.app/images/food/cevizli-baklava.webp",
+        "sourceType": "existing-reference",
+        "originalReference": "reference/live/assets/images/food/cevizli-baklava.webp",
+        "renamedFrom": null,
+        "width": 1200,
+        "height": 800,
+        "format": "webp",
+        "fileSize": 153406,
+        "sha256": "f6afd5137de27dff6855b1bde0d36e3d21b72693d21a283a086b581041add55f"
+      },
+      "sharedImage": false
+    }
+  ]
+}

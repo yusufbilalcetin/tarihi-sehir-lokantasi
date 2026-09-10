@@ -3,6 +3,8 @@
 import { useCallback, useMemo } from "react";
 
 import { staffOrderToViewModel, staffTableToViewModel } from "@/lib/adapters/staff-view-model";
+import { hasReadyFood } from "@/lib/domain/service-attention";
+import { isTableOpen } from "@/lib/domain/table-actions";
 import { staffApi, type StaffCallPayload } from "@/lib/api/endpoints";
 import { useApiResource } from "@/lib/hooks/use-api-resource";
 import { useStaffRealtime, type StaffRealtimeStatus } from "@/lib/realtime/use-staff-realtime";
@@ -25,6 +27,8 @@ export interface StaffFloorState {
     readonly billRequestCount: number;
   };
   readonly loading: boolean;
+  /** True after at least one authoritative floor snapshot has arrived. */
+  readonly ready: boolean;
   readonly error: ApiClientError | null;
   readonly realtimeStatus: StaffRealtimeStatus;
   /** Re-reads the floor after a mutation; the API stays the source of truth. */
@@ -70,11 +74,11 @@ export function useStaffFloor(): StaffFloorState {
     );
     return {
       tableCount: tables.length,
-      activeTableCount: tables.filter(
-        (table) => table.status !== "available" && table.status !== "inactive",
-      ).length,
+      activeTableCount: tables.filter((table) => isTableOpen(table.status)).length,
       newOrderCount: orders.filter((order) => order.status === "pending").length,
-      readyOrderCount: orders.filter((order) => order.status === "ready").length,
+      // Plated food, not finished tickets: half a round waiting on the pass
+      // is exactly what this badge exists to surface.
+      readyOrderCount: orders.filter(hasReadyFood).length,
       openCallCount: openCalls.filter((call) => call.type === "WAITER_CALL").length,
       billRequestCount: openCalls.filter((call) => call.type === "BILL_REQUEST").length,
     };
@@ -86,6 +90,7 @@ export function useStaffFloor(): StaffFloorState {
     calls,
     summary,
     loading: resource.loading,
+    ready: resource.data !== null,
     error: resource.error,
     realtimeStatus,
     refetch,

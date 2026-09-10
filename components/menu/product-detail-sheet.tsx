@@ -52,7 +52,7 @@ export function ProductDetailSheet({
   onOpenChange: (open: boolean) => void;
   onAdd: (product: Product, quantity: number, note: string) => void;
 }) {
-  const { direction, formatNumber, formatPrice, language, t } = useMenuPreferences();
+  const { direction, formatNumber, formatPrice, language, languageDefinition, t } = useMenuPreferences();
   const [quantity, setQuantity] = useState(1);
   const [quantityDirection, setQuantityDirection] = useState<"up" | "down">("up");
   const [note, setNote] = useState("");
@@ -73,6 +73,7 @@ export function ProductDetailSheet({
       <SheetContent
         side="bottom"
         dir={direction}
+        lang={languageDefinition.locale}
         className="max-h-[90dvh] gap-0 rounded-t-2xl border-copper/30 p-0"
         showCloseButton={false}
       >
@@ -177,7 +178,7 @@ export function ProductDetailSheet({
           {/* However long the dish reads, the price and the button that spends
               money are the last thing under the thumb. */}
           <div className="sticky bottom-0 flex items-center gap-3 border-t bg-card/96 px-4 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-3 backdrop-blur sm:px-6">
-            <div className="flex h-13 shrink-0 items-center rounded-xl border bg-background">
+            <div className="flex h-12 shrink-0 items-center rounded-xl border bg-background">
               <button
                 type="button"
                 className="motion-press motion-ripple flex size-11 items-center justify-center"
@@ -208,7 +209,7 @@ export function ProductDetailSheet({
               type="button"
               onClick={handleAdd}
               disabled={soldOut || !canOrder}
-              className="motion-cta h-13 min-w-0 flex-1 rounded-xl px-4 text-sm font-bold"
+              className="motion-cta h-12 min-w-0 flex-1 rounded-xl px-4 text-sm font-bold"
             >
               {soldOut ? (
                 t("soldOut")

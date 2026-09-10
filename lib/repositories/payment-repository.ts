@@ -28,6 +28,7 @@ export interface PaymentRecord {
   readonly method: PaymentMethod;
   readonly status: PaymentStatus;
   readonly idempotencyKeyHash: string | null;
+  readonly idempotencyRequestHash: string | null;
   readonly processedAt: Date | null;
   readonly createdAt: Date;
 }
@@ -43,6 +44,8 @@ export interface InsertPaymentInput {
   /** Resolved from the actor's own open shift; never accepted from a client. */
   readonly cashierShiftId: string;
   readonly idempotencyKeyHash: string;
+  /** Hash of the normalized request intent; the key alone never proves equality. */
+  readonly idempotencyRequestHash: string;
   readonly at: Date;
 }
 
@@ -64,6 +67,7 @@ export interface InsertRefundInput {
   readonly note: string | null;
   readonly createdByUserId: string;
   readonly idempotencyKeyHash: string;
+  readonly idempotencyRequestHash: string;
   readonly at: Date;
 }
 
@@ -74,6 +78,7 @@ export interface RefundRecord {
   readonly amount: string;
   readonly reasonCode: string;
   readonly note: string | null;
+  readonly idempotencyRequestHash: string | null;
   readonly createdAt: Date;
 }
 

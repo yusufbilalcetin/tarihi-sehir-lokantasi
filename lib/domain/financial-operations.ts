@@ -42,6 +42,19 @@ export type RefundReasonCode = (typeof REFUND_REASON_CODES)[number];
 export const FINANCIAL_NOTE_MAX_LENGTH = 300;
 
 /** Voiding writes off food that was already produced, so it stays supervisory. */
+/**
+ * Who may see or move an order's money: collect, refund, read the ledger, and
+ * read a balance on any list that carries one.
+ *
+ * Stated once. A second copy in a service is how one surface quietly ends up
+ * more permissive than the rest.
+ */
+export const PAYMENT_ROLES = ["ADMIN", "MANAGER", "CASHIER"] as const satisfies readonly UserRole[];
+
+export function canRoleReadOrderBalance(role: UserRole): boolean {
+  return (PAYMENT_ROLES as readonly UserRole[]).includes(role);
+}
+
 export const VOID_ROLES = ["ADMIN", "MANAGER"] as const satisfies readonly UserRole[];
 
 /**

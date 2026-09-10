@@ -54,7 +54,9 @@ test("active and paused cards expose the correct reversible state action", async
   assert.match(toggle, /aynı kodla tekrar etkinleştirilebilir/);
   assert.match(manager, /activeQrCount = qrCodes\.codes\.filter\(\(code\) => !code\.revoked\)\.length/);
   assert.match(manager, /active = !code\.revoked/);
-  assert.match(manager, /paused\n\s+onChanged=\{refreshAll\}/);
+  // The whitespace class already spans the line break; hard-coding a
+  // newline made this pass only where the checkout used LF endings.
+  assert.match(manager, /paused\s+onChanged=\{refreshAll\}/);
   assert.match(detail, /paused=\{qr\.revoked\}/);
   assert.doesNotMatch(`${manager}\n${detail}\n${toggle}`, /revokeTableToken/);
 });
