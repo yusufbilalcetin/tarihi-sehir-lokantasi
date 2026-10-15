@@ -20,10 +20,20 @@ import type { TestAccount } from "./simple-test-login";
  * and without one the single active restaurant is used. More than one and no
  * slug is a configuration the resolver refuses to guess at.
  */
-async function findProfileEmail(role: UserRole): Promise<string | null> {
+interface DemoProfile {
+  id: string;
+  email: string;
+  authUserId: string | null;
+}
+
+async function findProfile(role: UserRole): Promise<DemoProfile | null> {
   const slug = process.env.DEMO_RESTAURANT_SLUG?.trim();
   const rows = await getDb()
-    .select({ email: staffProfiles.email, restaurantId: staffProfiles.restaurantId })
+    .select({
+      id: staffProfiles.id,
+      email: staffProfiles.email,
+      authUserId: staffProfiles.authUserId,
+    })
     .from(staffProfiles)
     .innerJoin(restaurants, eq(restaurants.id, staffProfiles.restaurantId))
     .where(
@@ -43,7 +53,21 @@ async function findProfileEmail(role: UserRole): Promise<string | null> {
   // Without a configured slug the resolver only picks when there is nothing to
   // pick between.
   if (!slug && rows.length > 1) return null;
-  return rows[0].email;
+  const [row] = rows;
+  return row.email ? { id: row.id, email: row.email, authUserId: row.authUserId } : null;
+}
+
+/**
+ * Seeded profiles are created without a login account (`auth_user_id` null), so
+ * the session below would otherwise resolve to no identity at all. The first
+ * successful demo sign-in links the profile to the account it just minted.
+ * Only an unlinked profile is ever touched, never one that already has an owner.
+ */
+async function linkProfileToAuthUser(profileId: string, authUserId: string): Promise<void> {
+  await getDb()
+    .update(staffProfiles)
+    .set({ authUserId })
+    .where(and(eq(staffProfiles.id, profileId), isNull(staffProfiles.authUserId)));
 }
 
 /**
@@ -57,8 +81,9 @@ async function findProfileEmail(role: UserRole): Promise<string | null> {
 export async function signInTestAccount(
   account: TestAccount,
 ): Promise<StaffPrincipal | null> {
-  const email = await findProfileEmail(account.role);
-  if (!email) return null;
+  const profile = await findProfile(account.role);
+  if (!profile) return null;
+  const { email } = profile;
 
   const supabase = await createSupabaseServerClient();
   if (!supabase) return null;
@@ -72,6 +97,7 @@ export async function signInTestAccount(
   if (verified.error || !verified.data.user) return null;
 
   try {
+    if (!profile.authUserId) await linkProfileToAuthUser(profile.id, verified.data.user.id);
     const principal = await resolveStaffPrincipal(
       verified.data.user,
       new DrizzleStaffIdentityRepository(getDb()),
